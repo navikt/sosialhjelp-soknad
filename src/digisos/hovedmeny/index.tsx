@@ -7,7 +7,6 @@ import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import {State} from "../redux/reducers";
 import {useTitle} from "../../nav-soknad/hooks/useTitle";
-
 import {NedetidPanel} from "../../components/common/NedetidPanel";
 import {NySoknadPanel} from "./paneler/NySoknad";
 import {PabegynteSoknaderPanel} from "./paneler/PabegynteSoknader";

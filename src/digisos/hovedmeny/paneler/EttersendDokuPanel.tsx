@@ -8,8 +8,8 @@ export const EttersendDokuPanel = () => (
     <Ekspanderbartpanel
         tittel={
             <div className="flex items-center px-4 py-2">
-                <div className={"rounded-full bg-green-500/40 p-3 mr-4 hidden lg:block"}>
-                    <Attachment className={"w-8 h-8"} />
+                <div className={"rounded-full bg-green-500/40 p-3 mr-5 hidden lg:block"}>
+                    <Attachment className={"w-9 h-9"} />
                 </div>
                 <Heading level="2" size="small">
                     Send dokumentasjon til en innsendt søknad
@@ -17,7 +17,7 @@ export const EttersendDokuPanel = () => (
             </div>
         }
     >
-        <div className={"pl-28"}>
+        <div className={"pl-24"}>
             Dokumentasjon kan sendes til søknader du har sendt inn tidligere.
             <ul className={"list-disc list-inside py-5"}>
                 <li>

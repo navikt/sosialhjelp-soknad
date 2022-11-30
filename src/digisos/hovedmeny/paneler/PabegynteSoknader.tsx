@@ -63,8 +63,8 @@ const PabegynteSoknaderCount = ({num}: {num: number}) => {
 
 export const PabegynteSoknaderTitle = ({antallPabegynteSoknader}: {antallPabegynteSoknader: number}) => (
     <div className={"flex flex-row items-center px-4 py-2"}>
-        <div className={"rounded-full bg-green-500/40 p-3 mr-4 hidden lg:block"}>
-            <FileProgress className={"w-8 h-8"} />
+        <div className={"rounded-full bg-green-500/40 p-3 mr-5 hidden lg:block"}>
+            <FileProgress className={"w-9 h-9"} />
         </div>
         <Heading level="2" size="small" className={"flex flex-row"}>
             Fortsett på en påbegynt søknad
@@ -76,7 +76,7 @@ export const PabegynteSoknaderTitle = ({antallPabegynteSoknader}: {antallPabegyn
 export const PabegynteSoknaderPanel = ({pabegynteSoknader}: {pabegynteSoknader: PabegyntSoknadData[]}) => {
     return (
         <Ekspanderbartpanel tittel={<PabegynteSoknaderTitle antallPabegynteSoknader={pabegynteSoknader.length} />}>
-            <div className={"pl-28"}>
+            <div className={"pl-24"}>
                 <BodyShort className={"pb-4"}>
                     Vær oppmerksom på at påbegynte søknader slettes etter {DAYS_BEFORE_DELETION} dager.
                 </BodyShort>
