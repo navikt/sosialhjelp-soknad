@@ -8,17 +8,31 @@ import {State} from "../../digisos/redux/reducers";
 export const NedetidPanel = () => {
     const {nedetid} = useSelector((state: State) => state.soknad);
 
-    if (!nedetid?.isNedetid) return null;
+    if (nedetid?.isNedetid)
+        return (
+            <Alert variant="error" style={{justifyContent: "center"}}>
+                <FormattedMessage
+                    id="nedetid.alertstripe.infoside"
+                    values={{
+                        nedetidstart: nedetid.nedetidStart,
+                        nedetidslutt: nedetid.nedetidSlutt,
+                    }}
+                />
+            </Alert>
+        );
 
-    return (
-        <Alert variant="error" style={{justifyContent: "center"}}>
-            <FormattedMessage
-                id="nedetid.alertstripe.infoside"
-                values={{
-                    nedetidstart: nedetid.nedetidStart,
-                    nedetidslutt: nedetid.nedetidSlutt,
-                }}
-            />
-        </Alert>
-    );
+    if (nedetid?.isPlanlagtNedetid)
+        return (
+            <Alert variant="info">
+                <FormattedMessage
+                    id="nedetid.alertstripe.infoside"
+                    values={{
+                        nedetidstart: nedetid.nedetidStart,
+                        nedetidslutt: nedetid.nedetidSlutt,
+                    }}
+                />
+            </Alert>
+        );
+
+    return null;
 };
