@@ -1,48 +1,40 @@
+import styled from "styled-components";
+import {Alert, BodyLong, BodyShort, Button, Heading, Label, Loader, Panel} from "@navikt/ds-react";
+import {FormattedMessage, useIntl} from "react-intl";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {FormattedMessage, useIntl} from "react-intl";
-import {getIntlTextOrKey} from "../../nav-soknad/utils";
-import IkkeTilgang from "./IkkeTilgang";
-import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
-import Personopplysninger from "./Personopplysninger";
-import {opprettSoknad} from "../redux/soknad/soknadActions";
-import Snakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
-import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
-import {State} from "../redux/reducers";
-import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
-import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
-import {Soknadsoversikt} from "./Soknadsoversikt";
-import {useTitle} from "../../nav-soknad/hooks/useTitle";
-import {Alert, BodyLong, BodyShort, Button, Heading, Label, Loader, Panel} from "@navikt/ds-react";
+import {State} from "../../redux/reducers";
 import {useHistory} from "react-router";
-import styled from "styled-components";
-import {SkjemaContent} from "../../nav-soknad/components/SkjemaContent";
-import {WhiteBackground} from "../../nav-soknad/components/WhiteBackground";
+import {createSkjemaEventData, logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
+import {opprettSoknad} from "../../redux/soknad/soknadActions";
+import {SkjemaContent} from "../../../nav-soknad/components/SkjemaContent";
+import Snakkeboble from "../../../nav-soknad/components/snakkeboble/Snakkeboble";
+import EllaBlunk from "../../../nav-soknad/components/animasjoner/ellaBlunk";
+import Personopplysninger from "./Personopplysninger";
+import {getIntlTextOrKey} from "../../../nav-soknad/utils";
+import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
+import {Notes} from "@navikt/ds-icons";
 
 const Greeting = (props: {name: string}) => (
     <Label spacing>
         <FormattedMessage id="informasjon.hilsen.hei" values={{fornavn: props.name}} />
     </Label>
 );
-
 const InformasjonFraElla = styled.div`
     margin: 1rem 0;
     display: block;
     text-align: center;
 `;
-
 const GrayContainer = styled(Panel)`
     padding-bottom: 2rem;
     margin-bottom: 0rem !important;
     background-color: var(--navds-semantic-color-canvas-background);
 `;
-
 const CenteredContent = styled.div`
     margin-top: 1rem;
     text-align: center;
 `;
-
-export const InformasjonSide = (props: {antallPabegynteSoknader: number}) => {
+export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
     const antallNyligInnsendteSoknader: number =
         useSelector((state: State) => state.soknad.harNyligInnsendteSoknader?.antallNyligInnsendte) ?? 0;
     const {startSoknadPending, startSoknadFeilet, nedetid, fornavn, visNedetidPanel} = useSelector(
@@ -76,7 +68,7 @@ export const InformasjonSide = (props: {antallPabegynteSoknader: number}) => {
             <SkjemaContent>
                 <InformasjonFraElla>
                     <Snakkeboble>
-                        {fornavn && fornavn.length > 0 && <Greeting name={fornavn} />}
+                        {fornavn?.length && <Greeting name={fornavn} />}
                         <BodyShort>
                             <FormattedMessage id="informasjon.hilsen.tittel" />
                         </BodyShort>
@@ -188,53 +180,19 @@ export const InformasjonSide = (props: {antallPabegynteSoknader: number}) => {
     );
 };
 
-const Informasjon = () => {
-    const harTilgang: boolean = useSelector((state: State) => state.soknad.tilgang?.harTilgang) ?? false;
-    const sperrekode = useSelector((state: State) => state.soknad.tilgang?.sperrekode);
-
-    const {nedetid} = useSelector((state: State) => state.soknad);
-
-    const intl = useIntl();
-    const title = getIntlTextOrKey(intl, "applikasjon.sidetittel");
-
-    useTitle(title);
-
-    React.useEffect(() => {
-        skjulToppMeny();
-    }, []);
-
-    if (!harTilgang) {
-        return (
-            <WhiteBackground>
-                <AppBanner />
-                <div className="skjema-content">
-                    <IkkeTilgang sperrekode={sperrekode ? sperrekode : "pilot"} />
+export const NySoknadPanel = ({antallPabegynteSoknader}: {antallPabegynteSoknader: number}) => (
+    <Ekspanderbartpanel
+        tittel={
+            <div className={"flex items-center px-4 py-2"}>
+                <div className={"rounded-full bg-green-500/40 p-3 mr-4 hidden lg:block"}>
+                    <Notes className={"w-8 h-8"} />
                 </div>
-            </WhiteBackground>
-        );
-    }
-
-    return (
-        <WhiteBackground>
-            <AppBanner />
-
-            <span>
-                {nedetid?.isNedetid && (
-                    <Alert variant="error" style={{justifyContent: "center"}}>
-                        <FormattedMessage
-                            id="nedetid.alertstripe.infoside"
-                            values={{
-                                nedetidstart: nedetid.nedetidStart,
-                                nedetidslutt: nedetid.nedetidSlutt,
-                            }}
-                        />
-                    </Alert>
-                )}
-
-                <Soknadsoversikt />
-            </span>
-        </WhiteBackground>
-    );
-};
-
-export default Informasjon;
+                <Heading level="2" size="small">
+                    Start en ny søknad
+                </Heading>
+            </div>
+        }
+    >
+        <NySoknadInfo antallPabegynteSoknader={antallPabegynteSoknader} />
+    </Ekspanderbartpanel>
+);
