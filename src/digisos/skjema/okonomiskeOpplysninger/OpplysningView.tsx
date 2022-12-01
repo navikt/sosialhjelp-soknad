@@ -13,8 +13,8 @@ import styled from "styled-components";
 
 const OkonomiskeOpplysningerSporsmal = styled.div`
     margin-bottom: 2px;
-    background-color: var(--navds-semantic-color-canvas-background);
-    border: 1px solid var(--navds-semantic-color-border-muted);
+    background-color: var(--a-bg-subtle);
+    border: 1px solid var(--a-border-default);
     padding: 2rem;
 
     .skjema-sporsmal {

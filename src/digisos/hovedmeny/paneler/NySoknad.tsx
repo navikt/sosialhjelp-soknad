@@ -24,7 +24,7 @@ const Greeting = (props: {name: string}) => (
 const GrayContainer = styled(Panel)`
     padding-bottom: 2rem;
     margin-bottom: 0rem !important;
-    background-color: var(--navds-semantic-color-canvas-background);
+    background-color: var(--a-bg-subtle);
 `;
 const CenteredContent = styled.div`
     margin-top: 1rem;
