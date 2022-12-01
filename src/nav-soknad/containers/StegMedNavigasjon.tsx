@@ -31,7 +31,6 @@ import {createSkjemaEventData, logAmplitudeEvent} from "../utils/amplitude";
 import {useTitle} from "../hooks/useTitle";
 import {logInfo} from "../utils/loggerUtils";
 import {Alert, Link} from "@navikt/ds-react";
-import {WhiteBackground} from "../components/WhiteBackground";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -210,7 +209,7 @@ const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) 
     useTitle(`${stegTittel} - ${documentTitle}`);
 
     return (
-        <WhiteBackground className="app-digisos">
+        <div className="app-digisos bg-green-500/20">
             <AppBanner />
             {isNedetid && (
                 <Alert variant="error" style={{justifyContent: "center"}}>
@@ -251,89 +250,95 @@ const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) 
                         />
                     </div>
                 )}
-                <form id="soknadsskjema" onSubmit={stopEvent}>
-                    <div className="skjema-steg__ikon">{ikon}</div>
-                    <div className="skjema-steg__tittel" tabIndex={-1}>
-                        <Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
-                    </div>
-
-                    {children}
-
-                    {soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 1 && !(aktivtSteg === 9 && isNedetid) && (
-                        <Alert variant="error">
-                            <FormattedMessage
-                                id="adresse.alertstripe.feil.v2"
-                                values={{
-                                    kommuneNavn: finnKommunenavn(),
-                                    a: (msg) => (
-                                        <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
-                                            {msg}
-                                        </Link>
-                                    ),
-                                }}
-                            />
-                        </Alert>
-                    )}
-                    {soknad.visIkkePakobletPanel && aktivtSteg !== 1 && !(aktivtSteg === 9 && isNedetid) && (
-                        <Alert variant="warning">
-                            <FormattedMessage
-                                id="adresse.alertstripe.advarsel.v2"
-                                values={{
-                                    kommuneNavn: finnKommunenavn(),
-                                    a: (msg) => (
-                                        <Link
-                                            href="https://husbanken.no/bostotte"
-                                            target="_blank"
-                                            rel="noreferrer noopener"
-                                        >
-                                            {msg}
-                                        </Link>
-                                    ),
-                                }}
-                            />
-                        </Alert>
-                    )}
-
-                    {aktivtStegConfig && (
-                        <Knapperad
-                            gaViderePending={nextButtonPending}
-                            gaVidereLabel={erOppsummering ? getIntlTextOrKey(intl, "skjema.knapper.send") : undefined}
-                            gaVidere={() => handleGaVidere(aktivtStegConfig)}
-                            gaTilbake={
-                                aktivtStegConfig.stegnummer > 1
-                                    ? () => handleGaTilbake(aktivtStegConfig.stegnummer)
-                                    : undefined
-                            }
-                            avbryt={() => dispatch(avbrytSoknad())}
-                            sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
-                            lastOppVedleggPending={lastOppVedleggPending}
-                        />
-                    )}
-
-                    {soknad.showSendingFeiletPanel && aktivtSteg === 9 && (
-                        <div role="alert">
-                            <Alert variant="error" style={{marginTop: "1rem"}}>
-                                Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg prøve
-                                igjen. Søknaden din er lagret og dersom problemet fortsetter kan du forsøke igjen
-                                senere. Kontakt ditt NAV kontor dersom du er i en nødsituasjon.
-                            </Alert>
+                <div className={"bg-white max-w-[768px] mx-auto rounded-2xl p-8"}>
+                    <form id="soknadsskjema" onSubmit={stopEvent}>
+                        <div className="skjema-steg__ikon">{ikon}</div>
+                        <div className="skjema-steg__tittel" tabIndex={-1}>
+                            <Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
                         </div>
-                    )}
 
-                    {soknad.visMidlertidigDeaktivertPanel && isNedetid && aktivtSteg === 9 && (
-                        <Alert variant="error" style={{marginTop: "1rem"}}>
-                            <FormattedMessage
-                                id="nedetid.alertstripe.send"
-                                values={{
-                                    nedetidstart: nedetidstart,
-                                    nedetidslutt: nedetidslutt,
-                                }}
+                        {children}
+
+                        {soknad.visMidlertidigDeaktivertPanel &&
+                            aktivtSteg !== 1 &&
+                            !(aktivtSteg === 9 && isNedetid) && (
+                                <Alert variant="error">
+                                    <FormattedMessage
+                                        id="adresse.alertstripe.feil.v2"
+                                        values={{
+                                            kommuneNavn: finnKommunenavn(),
+                                            a: (msg) => (
+                                                <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                                                    {msg}
+                                                </Link>
+                                            ),
+                                        }}
+                                    />
+                                </Alert>
+                            )}
+                        {soknad.visIkkePakobletPanel && aktivtSteg !== 1 && !(aktivtSteg === 9 && isNedetid) && (
+                            <Alert variant="warning">
+                                <FormattedMessage
+                                    id="adresse.alertstripe.advarsel.v2"
+                                    values={{
+                                        kommuneNavn: finnKommunenavn(),
+                                        a: (msg) => (
+                                            <Link
+                                                href="https://husbanken.no/bostotte"
+                                                target="_blank"
+                                                rel="noreferrer noopener"
+                                            >
+                                                {msg}
+                                            </Link>
+                                        ),
+                                    }}
+                                />
+                            </Alert>
+                        )}
+
+                        {aktivtStegConfig && (
+                            <Knapperad
+                                gaViderePending={nextButtonPending}
+                                gaVidereLabel={
+                                    erOppsummering ? getIntlTextOrKey(intl, "skjema.knapper.send") : undefined
+                                }
+                                gaVidere={() => handleGaVidere(aktivtStegConfig)}
+                                gaTilbake={
+                                    aktivtStegConfig.stegnummer > 1
+                                        ? () => handleGaTilbake(aktivtStegConfig.stegnummer)
+                                        : undefined
+                                }
+                                avbryt={() => dispatch(avbrytSoknad())}
+                                sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
+                                lastOppVedleggPending={lastOppVedleggPending}
                             />
-                        </Alert>
-                    )}
-                </form>
+                        )}
+
+                        {soknad.showSendingFeiletPanel && aktivtSteg === 9 && (
+                            <div role="alert">
+                                <Alert variant="error" style={{marginTop: "1rem"}}>
+                                    Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg
+                                    prøve igjen. Søknaden din er lagret og dersom problemet fortsetter kan du forsøke
+                                    igjen senere. Kontakt ditt NAV kontor dersom du er i en nødsituasjon.
+                                </Alert>
+                            </div>
+                        )}
+
+                        {soknad.visMidlertidigDeaktivertPanel && isNedetid && aktivtSteg === 9 && (
+                            <Alert variant="error" style={{marginTop: "1rem"}}>
+                                <FormattedMessage
+                                    id="nedetid.alertstripe.send"
+                                    values={{
+                                        nedetidstart: nedetidstart,
+                                        nedetidslutt: nedetidslutt,
+                                    }}
+                                />
+                            </Alert>
+                        )}
+                    </form>
+                </div>
             </div>
-        </WhiteBackground>
+        </div>
     );
 };
 
