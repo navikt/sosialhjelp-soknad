@@ -8,7 +8,7 @@ export const EttersendDokuPanel = () => (
     <Ekspanderbartpanel
         tittel={
             <div className="flex items-center px-4 py-2">
-                <div className={"rounded-full bg-green-500/40 p-3 mr-5 hidden lg:block"}>
+                <div className={"rounded-full bg-green-500/40 p-3 mr-5 tw-hidden lg:block"}>
                     <Attachment className={"w-9 h-9"} />
                 </div>
                 <Heading level="2" size="small">

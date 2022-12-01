@@ -2,12 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    .tw-hidden {
+        @apply hidden;
+    }
+}
+
 @nodeModulesPath: "./../../";
 @coreModulePath: "./../../";
 
-//Denne importen inkluderer en override av className "hidden" til
-// "display: none !important", som ikke er kompatibelt med Tailwind
-//@import "../node_modules/nav-frontend-core/less/core";
+@import "../node_modules/nav-frontend-core/less/core";
 @import "../node_modules/nav-frontend-ekspanderbartpanel-style/src/index.less";
 @import "../node_modules/nav-frontend-lesmerpanel-style/src/lesmerpanel-style.less";
 @import "../node_modules/nav-frontend-lenker-style/src/lenker-style.less";

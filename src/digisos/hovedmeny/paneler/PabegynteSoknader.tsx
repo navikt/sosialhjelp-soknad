@@ -63,7 +63,7 @@ const PabegynteSoknaderCount = ({num}: {num: number}) => {
 
 export const PabegynteSoknaderTitle = ({antallPabegynteSoknader}: {antallPabegynteSoknader: number}) => (
     <div className={"flex flex-row items-center px-4 py-2"}>
-        <div className={"rounded-full bg-green-500/40 p-3 mr-5 hidden lg:block"}>
+        <div className={"rounded-full bg-green-500/40 p-3 mr-5 tw-hidden lg:block"}>
             <FileProgress className={"w-9 h-9"} />
         </div>
         <Heading level="2" size="small" className={"flex flex-row"}>
