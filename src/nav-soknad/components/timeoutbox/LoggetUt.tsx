@@ -4,11 +4,11 @@ import {FormattedMessage} from "react-intl";
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
 import {Button} from "@navikt/ds-react";
 
-interface Props {
+interface LoggetUtProps {
     onLoginAgainClick: () => void;
 }
 
-const LoggetUt: React.StatelessComponent<Props> = (props) => {
+const LoggetUt = ({onLoginAgainClick}: LoggetUtProps) => {
     return (
         <div>
             <Innholdstittel className="blokk-s timeoutbox__overskrift">
@@ -18,7 +18,7 @@ const LoggetUt: React.StatelessComponent<Props> = (props) => {
                 <FormattedMessage id={"timeout.utlopt"} />
             </Normaltekst>
             <div className="timeoutbox__knapperad">
-                <Button variant="primary" onClick={props.onLoginAgainClick}>
+                <Button variant="primary" onClick={onLoginAgainClick}>
                     <FormattedMessage id={"timeout.logginn"} />
                 </Button>
             </div>

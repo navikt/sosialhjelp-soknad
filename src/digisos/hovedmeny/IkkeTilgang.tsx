@@ -18,7 +18,7 @@ const IkkeTilgangInformasjon = () => (
                 <FormattedMessage
                     id="informasjon.ikketilgang.bruker.tekst.v2"
                     values={{
-                        a: (msg: string) => (
+                        a: (msg) => (
                             <Link href="https://www.nav.no/person/personopplysninger/#ditt-nav-kontor" target="_blank">
                                 {msg}
                             </Link>

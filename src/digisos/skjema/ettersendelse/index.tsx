@@ -12,8 +12,8 @@ import {EttersendelseFeilkode} from "../../redux/ettersendelse/ettersendelseType
 import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import {Prompt} from "react-router";
-import {erEttersendelseSide, NAVIGASJONSPROMT} from "../../../nav-soknad/utils";
-import SoknadAlleredeSendtPromt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPromt";
+import {erEttersendelseSide, NAVIGASJONSPROMPT} from "../../../nav-soknad/utils";
+import SoknadAlleredeSendtPrompt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPrompt";
 import HotjarTriggerEttersendelse from "../../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
 import {useTitle} from "../../../nav-soknad/hooks/useTitle";
 import {Alert, BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
@@ -61,19 +61,11 @@ const Ettersendelse = () => {
         event.returnValue = "";
     };
 
-    const skrivUt = () => {
-        window.print();
-    };
+    const skrivUt = () => window.print();
 
-    const antallManglendeVedlegg = () => {
-        return data.filter((item: any) => {
-            return !(item.type === "annet|annet");
-        }).length;
-    };
+    const antallManglendeVedlegg = () => data.filter(({type}) => type !== "annet|annet").length;
 
-    const isEttersendelseAktivert = () => {
-        return originalSoknad != null && originalSoknad.orgnummer != null;
-    };
+    const isEttersendelseAktivert = () => !!originalSoknad?.orgnummer;
 
     const opprettNyEttersendelseFeilet: boolean = feilKode === EttersendelseFeilkode.NY_ETTERSENDELSE_FEILET;
 
@@ -113,26 +105,22 @@ const Ettersendelse = () => {
                     </AvsnittMedMarger>
                 )}
 
-                {ettersendelser &&
-                    ettersendelser.length > 0 &&
-                    ettersendelser.map((ettersendelse: any) => {
-                        return (
-                            <AvsnittMedMarger venstreIkon={MargIkoner.OK} key={ettersendelse.behandlingsId}>
-                                <Heading level="2" size="small">
-                                    <FormattedMessage id="ettersendelse.vedlegg_sendt" />
-                                </Heading>
-                                <BodyShort>
-                                    <FormattedMessage
-                                        id="ettersendelse.dato_tid"
-                                        values={{
-                                            dato: ettersendelse.innsendtDato,
-                                            tid: ettersendelse.innsendtTidspunkt,
-                                        }}
-                                    />
-                                </BodyShort>
-                            </AvsnittMedMarger>
-                        );
-                    })}
+                {ettersendelser?.map(({behandlingsId, innsendtTidspunkt, innsendtDato}) => (
+                    <AvsnittMedMarger venstreIkon={MargIkoner.OK} key={behandlingsId}>
+                        <Heading level="2" size="small">
+                            <FormattedMessage id="ettersendelse.vedlegg_sendt" />
+                        </Heading>
+                        <BodyShort>
+                            <FormattedMessage
+                                id="ettersendelse.dato_tid"
+                                values={{
+                                    dato: innsendtDato,
+                                    tid: innsendtTidspunkt,
+                                }}
+                            />
+                        </BodyShort>
+                    </AvsnittMedMarger>
+                ))}
 
                 <HotjarTriggerEttersendelse
                     opprettNyEttersendelseFeilet={opprettNyEttersendelseFeilet}
@@ -156,7 +144,7 @@ const Ettersendelse = () => {
                                 <Heading level="2" size="small">
                                     Vedlegg mangler
                                 </Heading>
-                                <BodyShort>Det gjenstår {antallManglendeVedlegg} vedlegg</BodyShort>
+                                <BodyShort>Det gjenstår {antallManglendeVedlegg()} vedlegg</BodyShort>
                             </span>
                         )}
                         {antallManglendeVedlegg() === 0 && (
@@ -175,7 +163,7 @@ const Ettersendelse = () => {
                         <FormattedMessage
                             id="ettersendelse.samtale.info.v2"
                             values={{
-                                a: (msg: string) => (
+                                a: (msg) => (
                                     <Link href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote">{msg}</Link>
                                 ),
                             }}
@@ -195,10 +183,10 @@ const Ettersendelse = () => {
             <span>
                 <Prompt
                     message={(loc) => {
-                        return erEttersendelseSide(loc.pathname) ? true : NAVIGASJONSPROMT.ETTERSENDELSE;
+                        return erEttersendelseSide(loc.pathname) ? true : NAVIGASJONSPROMPT.ETTERSENDELSE;
                     }}
                 />
-                <SoknadAlleredeSendtPromt />
+                <SoknadAlleredeSendtPrompt />
             </span>
         </div>
     );

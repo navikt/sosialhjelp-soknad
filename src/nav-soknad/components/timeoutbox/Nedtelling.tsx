@@ -4,14 +4,12 @@ import {FormattedMessage} from "react-intl";
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
 import {Button} from "@navikt/ds-react";
 
-interface OwnProps {
+interface NedtellingProps {
     onContinueClick: () => void;
     utloggingsUrl: string;
 }
 
-type Props = OwnProps;
-
-const Nedtelling: React.StatelessComponent<Props> = ({onContinueClick, utloggingsUrl}) => {
+const Nedtelling = ({onContinueClick, utloggingsUrl}: NedtellingProps) => {
     return (
         <div>
             <Innholdstittel className="blokk-s timeoutbox__overskrift">

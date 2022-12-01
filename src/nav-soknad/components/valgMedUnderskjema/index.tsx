@@ -1,11 +1,11 @@
 import * as React from "react";
 
-interface Props {
+interface ValgMedUnderskjemaProps {
     children: React.ReactNode;
     underskjema: React.ReactNode;
 }
 
-const ValgMedUnderskjema: React.StatelessComponent<Props> = ({children, underskjema}) => (
+const ValgMedUnderskjema = ({children, underskjema}: ValgMedUnderskjemaProps) => (
     <div className="valgMedUnderskjema">
         {React.Children.map(children, (child) => (
             <div className="valgMedUnderskjema__valg">{child}</div>

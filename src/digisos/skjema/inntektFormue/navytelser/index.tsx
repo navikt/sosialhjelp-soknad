@@ -83,7 +83,7 @@ const NavYtelserView = () => {
                         <FormattedMessage
                             id={"utbetalinger.infotekst.tekst.v2"}
                             values={{
-                                a: (msg: string) => (
+                                a: (msg) => (
                                     <Link
                                         href={intl.formatMessage({id: "utbetalinger.infotekst.tekst.url"})}
                                         target="_blank"

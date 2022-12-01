@@ -86,7 +86,7 @@ export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
                         <FormattedMessage
                             id="informasjon.start.tekst_del3"
                             values={{
-                                a: (msg: string) => (
+                                a: (msg) => (
                                     // Disable target-blank-rule on internal urls
                                     /* eslint-disable react/jsx-no-target-blank */
                                     <a href="https://www.nav.no/okonomisk-sosialhjelp#soknad" target="_blank">
@@ -110,7 +110,7 @@ export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
                         <FormattedMessage
                             id="informasjon.nodsituasjon.tekst"
                             values={{
-                                a: (msg: string) => (
+                                a: (msg) => (
                                     // Disable target-blank-rule on internal urls
                                     /* eslint-disable react/jsx-no-target-blank */
                                     <a href="https://www.nav.no/sok-nav-kontor" target="_blank">

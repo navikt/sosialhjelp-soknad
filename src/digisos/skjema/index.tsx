@@ -16,7 +16,7 @@ import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
 import {State} from "../redux/reducers";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 import {hentSoknad, hentSoknadOk, showServerFeil, showSideIkkeFunnet} from "../redux/soknad/soknadActions";
-import {erSkjemaEllerEttersendelseSide, NAVIGASJONSPROMT} from "../../nav-soknad/utils";
+import {erSkjemaEllerEttersendelseSide, NAVIGASJONSPROMPT} from "../../nav-soknad/utils";
 import TimeoutBox from "../../nav-soknad/components/timeoutbox/TimeoutBox";
 import {AvbrytSoknad} from "../../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
 import {useEffect} from "react";
@@ -39,7 +39,7 @@ interface UrlParams {
     stegFraUrl: string;
 }
 
-type Props = OwnProps & RouterProps;
+type SkjemaRouterProps = OwnProps & RouterProps;
 
 const getSoknad = async (behandlingsId: string, dispatch: Dispatch) => {
     try {
@@ -55,7 +55,7 @@ const getSoknad = async (behandlingsId: string, dispatch: Dispatch) => {
     }
 };
 
-const SkjemaRouter: React.FC<Props> = (props: Props) => {
+const SkjemaRouter = (props: SkjemaRouterProps) => {
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const visSideIkkeFunnet = useSelector((state: State) => state.soknad.showSideIkkeFunnet);
     const visServerFeil = useSelector((state: State) => state.soknad.showServerFeil);
@@ -72,9 +72,7 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
             if (behandlingsId && behandlingsId !== behandlingsIdFraUrl) {
                 dispatch(showSideIkkeFunnet(true));
             }
-            if (!behandlingsId) {
-                getSoknad(behandlingsIdFraUrl, dispatch);
-            }
+            if (!behandlingsId) getSoknad(behandlingsIdFraUrl, dispatch);
         } else {
             dispatch(showSideIkkeFunnet(true));
         }
@@ -87,16 +85,14 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
                 <Prompt
                     message={(loc) => {
                         dispatch(showServerFeil(false));
-                        return erSkjemaEllerEttersendelseSide(loc.pathname) ? true : NAVIGASJONSPROMT.SKJEMA;
+                        return erSkjemaEllerEttersendelseSide(loc.pathname) ? true : NAVIGASJONSPROMPT.SKJEMA;
                     }}
                 />
             </div>
         );
     }
 
-    if (visSideIkkeFunnet) {
-        return <SideIkkeFunnet />;
-    }
+    if (visSideIkkeFunnet) return <SideIkkeFunnet />;
 
     if (behandlingsId) {
         const path = "/skjema/:behandingsId";
@@ -117,7 +113,7 @@ const SkjemaRouter: React.FC<Props> = (props: Props) => {
                 </Switch>
                 <Prompt
                     message={(loc) => {
-                        return erSkjemaEllerEttersendelseSide(loc.pathname) ? true : NAVIGASJONSPROMT.SKJEMA;
+                        return erSkjemaEllerEttersendelseSide(loc.pathname) ? true : NAVIGASJONSPROMPT.SKJEMA;
                     }}
                 />
                 <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />

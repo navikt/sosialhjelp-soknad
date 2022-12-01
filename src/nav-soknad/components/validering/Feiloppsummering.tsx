@@ -16,7 +16,7 @@ const scrollToFaktum = (evt: React.MouseEvent<any>, faktumKey: string) => {
     }
 };
 
-const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({faktumKey, feilkode}) => {
+const FeillisteMelding = ({faktumKey, feilkode}: Valideringsfeil) => {
     return (
         <li className="feiloppsummering__feil">
             <LinkButtonValidation onClick={(evt) => scrollToFaktum(evt, faktumKey)}>

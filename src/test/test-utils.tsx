@@ -18,7 +18,7 @@ function configureStore() {
 
 const store = configureStore();
 
-const Wrapper: React.FC = ({children}) => (
+const Wrapper = ({children}: {children: React.ReactNode}) => (
     <Provider store={store}>
         <IntlProvider defaultLocale="nb" locale="nb">
             {children}

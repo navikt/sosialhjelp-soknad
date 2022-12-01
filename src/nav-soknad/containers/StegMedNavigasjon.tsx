@@ -38,15 +38,15 @@ const stopEvent = (evt: React.FormEvent<any>) => {
     evt.preventDefault();
 };
 
-const StegMedNavigasjon = (
-    props: {
-        stegKey: string;
-        skjemaConfig: SkjemaConfig;
-        pending?: boolean;
-        ikon?: React.ReactNode;
-        children?: any;
-    } & RouteComponentProps
-) => {
+interface StegMedNavigasjonProps {
+    stegKey: string;
+    skjemaConfig: SkjemaConfig;
+    pending?: boolean;
+    ikon?: React.ReactNode;
+    children?: any;
+}
+
+const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const soknad = useSelector((state: State) => state.soknad);
@@ -65,44 +65,37 @@ const StegMedNavigasjon = (
         scrollToTop();
     }, []);
 
-    const nedetidstart = soknad.nedetid ? soknad.nedetid.nedetidStartText : "";
-    const nedetidslutt = soknad.nedetid ? soknad.nedetid.nedetidSluttText : "";
-    const isNedetid = soknad.nedetid ? soknad.nedetid.isNedetid : false;
+    const nedetidstart = soknad.nedetid?.nedetidStartText ?? "";
+    const nedetidslutt = soknad.nedetid?.nedetidSluttText ?? "";
+    const isNedetid = soknad.nedetid?.isNedetid;
+
     const adresseValgRestStatus = soknadsdata.restStatus.personalia.adresser;
     const isAdresseValgRestPending =
         adresseValgRestStatus === REST_STATUS.INITIALISERT || adresseValgRestStatus === REST_STATUS.PENDING;
 
     const loggAdresseTypeTilGrafana = () => {
-        const adresseTypeValg = soknadsdata.personalia.adresser.valg;
-        if (adresseTypeValg) {
-            logInfo("klikk--" + adresseTypeValg);
-        }
+        const {valg} = soknadsdata.personalia.adresser;
+        if (valg) logInfo("klikk--" + valg);
     };
 
     const getAttributesForSkjemaFullfortEvent = () => {
-        const attributes: Record<string, any> = {};
-        oppsummering.forEach((steg) => {
-            return steg.avsnitt.forEach((avsnitt) => {
-                return avsnitt.sporsmal.forEach((sporsmal) => {
-                    if (sporsmal.tittel === "bosituasjon.sporsmal") {
-                        attributes["valgtBosted"] = !!sporsmal.felt && sporsmal.felt.length > 0;
-                    }
-                    if (sporsmal.tittel === "arbeidsforhold.infotekst") {
-                        attributes["harArbeidsforhold"] = !!sporsmal.felt && sporsmal.felt.length > 0;
-                    }
-                    if (sporsmal.tittel === "utbetalinger.inntekt.skattbar.har_gitt_samtykke") {
-                        attributes["skattSamtykke"] = true;
-                    }
-                    if (sporsmal.tittel === "utbetalinger.inntekt.skattbar.mangler_samtykke") {
-                        attributes["skattSamtykke"] = false;
-                    }
-                });
-            });
-        });
-        return attributes;
+        const attr: Record<string, any> = {};
+
+        oppsummering.forEach((steg) =>
+            steg.avsnitt.forEach((avsnitt) =>
+                avsnitt.sporsmal.forEach(({tittel, felt}) => {
+                    if (tittel === "bosituasjon.sporsmal") attr["valgtBosted"] = !!felt?.length;
+                    if (tittel === "arbeidsforhold.infotekst") attr["harArbeidsforhold"] = !!felt?.length;
+                    if (tittel === "utbetalinger.inntekt.skattbar.har_gitt_samtykke") attr["skattSamtykke"] = true;
+                    if (tittel === "utbetalinger.inntekt.skattbar.mangler_samtykke") attr["skattSamtykke"] = false;
+                })
+            )
+        );
+
+        return attr;
     };
 
-    const handleGaTilSkjemaSteg = (aktivtSteg: SkjemaSteg | undefined, steg: number) => {
+    const handleGaTilSkjemaSteg = (steg: number, aktivtSteg?: SkjemaSteg) => {
         if (aktivtSteg && behandlingsId) {
             const {feil} = validering;
 
@@ -110,7 +103,7 @@ const StegMedNavigasjon = (
             if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
                 handleNavEnhetErUgyldigFeil(valgtNavEnhet);
             } else {
-                if (feil.length === 0) {
+                if (!feil.length) {
                     dispatch(clearAllValideringsfeil());
                     history.push(getStegUrl(behandlingsId, steg));
                 } else {
@@ -254,7 +247,7 @@ const StegMedNavigasjon = (
                                 };
                             })}
                             onBeforeChange={() => kanGaTilSkjemasteg(aktivtStegConfig)}
-                            onChange={(s: number) => handleGaTilSkjemaSteg(aktivtStegConfig, s + 1)}
+                            onChange={(s: number) => handleGaTilSkjemaSteg(s + 1, aktivtStegConfig)}
                         />
                     </div>
                 )}
@@ -272,7 +265,7 @@ const StegMedNavigasjon = (
                                 id="adresse.alertstripe.feil.v2"
                                 values={{
                                     kommuneNavn: finnKommunenavn(),
-                                    a: (msg: string) => (
+                                    a: (msg) => (
                                         <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
                                             {msg}
                                         </Link>
@@ -287,7 +280,7 @@ const StegMedNavigasjon = (
                                 id="adresse.alertstripe.advarsel.v2"
                                 values={{
                                     kommuneNavn: finnKommunenavn(),
-                                    a: (msg: string) => (
+                                    a: (msg) => (
                                         <Link
                                             href="https://husbanken.no/bostotte"
                                             target="_blank"
