@@ -1,3 +1,5 @@
+import {z} from "zod";
+
 export interface AdressesokTreff {
     adresse: null | string;
     husnummer: null | string;
@@ -12,16 +14,18 @@ export interface AdressesokTreff {
     type: null | string;
 }
 
-export interface NavEnhet {
-    orgnr: null | string;
-    enhetsnr: null | string;
-    isMottakMidlertidigDeaktivert: boolean;
-    isMottakDeaktivert: boolean;
-    enhetsnavn: string;
-    kommunenavn: string;
-    kommuneNr: string;
-    valgt: boolean;
-}
+export const NavEnhetSchema = z.object({
+    orgnr: z.string().nullable(),
+    enhetsnr: z.string().nullable(),
+    isMottakMidlertidigDeaktivert: z.boolean(),
+    isMottakDeaktivert: z.boolean(),
+    enhetsnavn: z.string(),
+    kommunenavn: z.string(),
+    kommuneNr: z.string(),
+    valgt: z.boolean(),
+});
+
+export type NavEnhet = z.infer<typeof NavEnhetSchema>;
 
 export enum AdresseKategori {
     FOLKEREGISTRERT = "folkeregistrert",
