@@ -26,11 +26,12 @@ import {
 } from "../../digisos/redux/validering/valideringActions";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {State} from "../../digisos/redux/reducers";
-import {erPaStegEnOgValgtNavEnhetErUgyldig, sjekkOmValgtNavEnhetErGyldig} from "./containerUtils";
+import {erAktiv, navEnhetGyldigEllerIkkeSatt} from "./containerUtils";
 import {createSkjemaEventData, logAmplitudeEvent} from "../utils/amplitude";
 import {useTitle} from "../hooks/useTitle";
 import {logInfo} from "../utils/loggerUtils";
 import {Alert, Link} from "@navikt/ds-react";
+import {NedetidPanel} from "../../components/common/NedetidPanel";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -95,19 +96,20 @@ const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) 
     };
 
     const handleGaTilSkjemaSteg = (steg: number, aktivtSteg?: SkjemaSteg) => {
-        if (aktivtSteg && behandlingsId) {
-            const {feil} = validering;
+        if (!aktivtSteg || !behandlingsId) return;
 
-            const valgtNavEnhet = finnSoknadsMottaker();
-            if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
-                handleNavEnhetErUgyldigFeil(valgtNavEnhet);
+        const valgtNavEnhet = finnSoknadsMottaker();
+
+        if (!valgtNavEnhet) return;
+
+        if (aktivtSteg.stegnummer === 1 && erAktiv(valgtNavEnhet)) {
+            handleNavEnhetErUgyldigFeil(valgtNavEnhet);
+        } else {
+            if (!validering.feil.length) {
+                dispatch(clearAllValideringsfeil());
+                history.push(getStegUrl(behandlingsId, steg));
             } else {
-                if (!feil.length) {
-                    dispatch(clearAllValideringsfeil());
-                    history.push(getStegUrl(behandlingsId, steg));
-                } else {
-                    dispatch(visValideringsfeilPanel());
-                }
+                dispatch(visValideringsfeilPanel());
             }
         }
     };
@@ -115,7 +117,7 @@ const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) 
     const kanGaTilSkjemasteg = (aktivtSteg: SkjemaSteg | undefined): boolean => {
         if (aktivtSteg && behandlingsId) {
             const valgtNavEnhet = finnSoknadsMottaker();
-            if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
+            if (!valgtNavEnhet || !erAktiv(valgtNavEnhet)) {
                 handleNavEnhetErUgyldigFeil(valgtNavEnhet);
                 return false;
             }
@@ -123,39 +125,41 @@ const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) 
         return true;
     };
 
-    const handleGaVidere = (aktivtSteg: SkjemaSteg) => {
-        if (behandlingsId) {
-            if (aktivtSteg.type === SkjemaStegType.oppsummering) {
-                if (oppsummeringBekreftet) {
-                    logAmplitudeEvent("skjema fullført", createSkjemaEventData(getAttributesForSkjemaFullfortEvent()));
-                    loggAdresseTypeTilGrafana();
-                    dispatch(sendSoknadPending());
-                    dispatch(sendSoknad(behandlingsId, history));
-                } else {
-                    dispatch(setVisBekreftMangler(true));
-                }
-                return;
-            }
+    const handleGaVidere = async (aktivtSteg: SkjemaSteg) => {
+        if (!behandlingsId) return;
 
-            const {feil} = validering;
-            const valgtNavEnhet = finnSoknadsMottaker();
-
-            if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
-                handleNavEnhetErUgyldigFeil(valgtNavEnhet);
+        if (aktivtSteg.type === SkjemaStegType.oppsummering) {
+            if (oppsummeringBekreftet) {
+                logAmplitudeEvent("skjema fullført", createSkjemaEventData(getAttributesForSkjemaFullfortEvent()));
+                loggAdresseTypeTilGrafana();
+                dispatch(sendSoknadPending());
+                dispatch(sendSoknad(behandlingsId, history));
             } else {
-                if (feil.length === 0) {
-                    sjekkOmValgtNavEnhetErGyldig(behandlingsId, dispatch, () => {
-                        logAmplitudeEvent("skjemasteg fullført", {
-                            ...createSkjemaEventData(),
-                            steg: aktivtSteg.stegnummer,
-                        });
-                        history.push(getStegUrl(behandlingsId, aktivtSteg.stegnummer + 1));
-                    });
-                } else {
-                    dispatch(visValideringsfeilPanel());
-                }
+                dispatch(setVisBekreftMangler(true));
             }
+            return;
         }
+
+        const valgtNavEnhet = finnSoknadsMottaker();
+
+        if (aktivtSteg.stegnummer == 1 && (!valgtNavEnhet || !erAktiv(valgtNavEnhet))) {
+            handleNavEnhetErUgyldigFeil(valgtNavEnhet);
+            return;
+        }
+
+        if (validering.feil.length) {
+            dispatch(visValideringsfeilPanel());
+            return;
+        }
+
+        if (!(await navEnhetGyldigEllerIkkeSatt(behandlingsId, dispatch))) return;
+
+        logAmplitudeEvent("skjemasteg fullført", {
+            ...createSkjemaEventData(),
+            steg: aktivtSteg.stegnummer,
+        });
+
+        history.push(getStegUrl(behandlingsId, aktivtSteg.stegnummer + 1));
     };
 
     const handleNavEnhetErUgyldigFeil = (valgtNavEnhet: NavEnhet | null) => {
@@ -197,41 +201,26 @@ const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) 
     const nextButtonPending =
         soknad.sendSoknadPending || (aktivtStegConfig?.key === "kontakt" ? isAdresseValgRestPending : false);
 
-    const erOppsummering: boolean = aktivtStegConfig ? aktivtStegConfig.type === SkjemaStegType.oppsummering : false;
     const stegTittel = getIntlTextOrKey(intl, `${stegKey}.tittel`);
-    const documentTitle = intl.formatMessage({
-        id: skjemaConfig.tittelId,
-    });
+    const documentTitle = intl.formatMessage({id: skjemaConfig.tittelId});
     const synligeSteg = skjemaConfig.steg.filter((s) => s.type === SkjemaStegType.skjema);
 
-    const aktivtSteg: number = aktivtStegConfig ? aktivtStegConfig.stegnummer : 1;
+    const aktivtSteg = aktivtStegConfig?.stegnummer ?? 1;
+    const aktivtStegErOppsummering = aktivtStegConfig?.type === SkjemaStegType.oppsummering;
 
     useTitle(`${stegTittel} - ${documentTitle}`);
 
     return (
         <div className="app-digisos bg-green-500/20">
             <AppBanner />
-            {isNedetid && (
-                <Alert variant="error" style={{justifyContent: "center"}}>
-                    <FormattedMessage
-                        id="nedetid.alertstripe.infoside"
-                        values={{
-                            nedetidstart: nedetidstart,
-                            nedetidslutt: nedetidslutt,
-                        }}
-                    />
-                </Alert>
-            )}
-
+            <NedetidPanel varselType={"infoside"} />
             <div className="skjema-steg skjema-content">
-                <div className="skjema-steg__feiloppsummering">
-                    <Feiloppsummering
-                        skjemanavn={skjemaConfig.skjemanavn}
-                        valideringsfeil={feil}
-                        visFeilliste={visValideringsfeil}
-                    />
-                </div>
-                {!erOppsummering && (
+                <Feiloppsummering
+                    skjemanavn={skjemaConfig.skjemanavn}
+                    valideringsfeil={feil}
+                    visFeilliste={visValideringsfeil}
+                />
+                {!aktivtStegErOppsummering && (
                     <div className="skjema__stegindikator">
                         <Stegindikator
                             autoResponsiv={true}
@@ -300,7 +289,7 @@ const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) 
                             <Knapperad
                                 gaViderePending={nextButtonPending}
                                 gaVidereLabel={
-                                    erOppsummering ? getIntlTextOrKey(intl, "skjema.knapper.send") : undefined
+                                    aktivtStegErOppsummering ? getIntlTextOrKey(intl, "skjema.knapper.send") : undefined
                                 }
                                 gaVidere={() => handleGaVidere(aktivtStegConfig)}
                                 gaTilbake={

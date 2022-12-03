@@ -4,31 +4,42 @@ import * as React from "react";
 import {useSelector} from "react-redux";
 import {State} from "../../digisos/redux/reducers";
 
-// Vis nedetid-varsel om det er satt
-export const NedetidPanel = () => {
-    const {nedetid} = useSelector((state: State) => state.soknad);
+type NetetidPanelType = "infoside" | "ettersendelse" | "avbryt";
 
-    if (nedetid?.isNedetid)
+const NedetidPanelMessageID: Record<NetetidPanelType, string> = {
+    infoside: "nedetid.alertstripe.infoside",
+    ettersendelse: "nedetid.alertstripe.ettersendelse",
+    avbryt: "nedetid.alertstripe.avbryt",
+};
+
+// Vis nedetid-varsel om det er satt
+export const NedetidPanel = ({varselType}: {varselType: NetetidPanelType}) => {
+    const {isNedetid, isPlanlagtNedetid, nedetidStartText, nedetidSluttText} =
+        useSelector((state: State) => state.soknad).nedetid || {};
+
+    const messageId = NedetidPanelMessageID[varselType];
+
+    if (isNedetid)
         return (
             <Alert variant="error" style={{justifyContent: "center"}}>
                 <FormattedMessage
-                    id="nedetid.alertstripe.infoside"
+                    id={messageId}
                     values={{
-                        nedetidstart: nedetid.nedetidStart,
-                        nedetidslutt: nedetid.nedetidSlutt,
+                        nedetidstart: nedetidStartText,
+                        nedetidslutt: nedetidSluttText,
                     }}
                 />
             </Alert>
         );
 
-    if (nedetid?.isPlanlagtNedetid)
+    if (isPlanlagtNedetid)
         return (
-            <Alert variant="info">
+            <Alert variant="info" style={{justifyContent: "center"}}>
                 <FormattedMessage
-                    id="nedetid.alertstripe.infoside"
+                    id={messageId}
                     values={{
-                        nedetidstart: nedetid.nedetidStart,
-                        nedetidslutt: nedetid.nedetidSlutt,
+                        nedetidstart: nedetidStartText,
+                        nedetidslutt: nedetidSluttText,
                     }}
                 />
             </Alert>

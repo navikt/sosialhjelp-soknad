@@ -30,7 +30,7 @@ const Informasjon = () => {
     return (
         <div className={"bg-green-500/20"}>
             <AppBanner />
-            <NedetidPanel />
+            <NedetidPanel varselType={"infoside"} />
             <div className="max-w-3xl mx-auto space-y-5 lg:py-24">
                 <NySoknadPanel antallPabegynteSoknader={pabegynteSoknader.length} />
                 <PabegynteSoknaderPanel pabegynteSoknader={pabegynteSoknader} />
