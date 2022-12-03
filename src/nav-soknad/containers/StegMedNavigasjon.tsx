@@ -100,9 +100,7 @@ const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) 
 
         const valgtNavEnhet = finnSoknadsMottaker();
 
-        if (!valgtNavEnhet) return;
-
-        if (aktivtSteg.stegnummer === 1 && erAktiv(valgtNavEnhet)) {
+        if (aktivtSteg.stegnummer === 1 && !erAktiv(valgtNavEnhet)) {
             handleNavEnhetErUgyldigFeil(valgtNavEnhet);
         } else {
             if (!validering.feil.length) {
@@ -117,7 +115,7 @@ const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) 
     const kanGaTilSkjemasteg = (aktivtSteg: SkjemaSteg | undefined): boolean => {
         if (aktivtSteg && behandlingsId) {
             const valgtNavEnhet = finnSoknadsMottaker();
-            if (!valgtNavEnhet || !erAktiv(valgtNavEnhet)) {
+            if (!erAktiv(valgtNavEnhet)) {
                 handleNavEnhetErUgyldigFeil(valgtNavEnhet);
                 return false;
             }
@@ -142,7 +140,7 @@ const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) 
 
         const valgtNavEnhet = finnSoknadsMottaker();
 
-        if (aktivtSteg.stegnummer == 1 && (!valgtNavEnhet || !erAktiv(valgtNavEnhet))) {
+        if (aktivtSteg.stegnummer == 1 && !erAktiv(valgtNavEnhet)) {
             handleNavEnhetErUgyldigFeil(valgtNavEnhet);
             return;
         }

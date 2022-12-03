@@ -11,7 +11,7 @@ import {
 import {logWarning} from "../utils/loggerUtils";
 import {Dispatch} from "redux";
 
-export const erAktiv = (e: NavEnhet) => !e.isMottakDeaktivert && !e.isMottakMidlertidigDeaktivert;
+export const erAktiv = (e: NavEnhet | null) => !!e && !e.isMottakDeaktivert && !e.isMottakMidlertidigDeaktivert;
 export const erMidlDeaktivert = (e: NavEnhet) => !e.isMottakDeaktivert && e.isMottakMidlertidigDeaktivert;
 
 const fetchNavEnhet = async (dispatch: Dispatch, behandlingsId: string) => {

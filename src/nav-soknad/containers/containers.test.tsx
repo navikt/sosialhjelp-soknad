@@ -43,6 +43,10 @@ test("erAktiv returnerer false ved alle inaktive NAV-kontorer", () => {
     expect(erAktiv(midlertidigDeaktivertNavEnhet)).toBe(false);
 });
 
+test("erAktiv returnerer false gitt null", () => {
+    expect(erAktiv(null)).toBe(false);
+});
+
 test("erMidlDeaktivert returnerer true kun ved midlertidig deaktiverte", () => {
     expect(erMidlDeaktivert(aktivNavEnhet)).toBe(false);
     expect(erMidlDeaktivert(deaktivertNavEnhet)).toBe(false);
