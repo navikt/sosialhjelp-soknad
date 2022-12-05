@@ -40,8 +40,7 @@ class Feiloppsummering extends React.Component<Props, {}> {
     componentDidUpdate(prevProps: Props) {
         if (
             this.props.visFeilliste &&
-            this.props.valideringsfeil &&
-            this.props.valideringsfeil.length > 0 &&
+            this.props.valideringsfeil?.length &&
             this.props.visFeilliste !== prevProps.visFeilliste
         ) {
             scrollToElement(COMP_ID);
