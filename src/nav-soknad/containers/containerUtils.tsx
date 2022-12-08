@@ -1,4 +1,4 @@
-import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
+import {NavEnhet, NavEnhetSchema} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {fetchToJson, HttpStatus} from "../utils/rest-utils";
 import {soknadsdataUrl} from "../../digisos/redux/soknadsdata/soknadsdataActions";
 import {oppdaterSoknadsdataSti, SoknadsSti} from "../../digisos/redux/soknadsdata/soknadsdataReducer";
@@ -11,69 +11,44 @@ import {
 import {logWarning} from "../utils/loggerUtils";
 import {Dispatch} from "redux";
 
-export const erPaStegEnOgValgtNavEnhetErUgyldig = (stegnummer: number, valgtNavEnhet: NavEnhet | null): boolean => {
-    return (
-        stegnummer === 1 &&
-        (!valgtNavEnhet || valgtNavEnhet.isMottakDeaktivert || valgtNavEnhet.isMottakMidlertidigDeaktivert)
-    );
+export const erAktiv = (e: NavEnhet | null) => !!e && !e.isMottakDeaktivert && !e.isMottakMidlertidigDeaktivert;
+export const erMidlDeaktivert = (e: NavEnhet) => !e.isMottakDeaktivert && e.isMottakMidlertidigDeaktivert;
+
+const fetchNavEnhet = async (dispatch: Dispatch, behandlingsId: string) => {
+    try {
+        const response = await fetchToJson(soknadsdataUrl(behandlingsId, SoknadsSti.VALGT_NAV_ENHET));
+
+        if (response === null) return null;
+
+        return NavEnhetSchema.parse(response);
+    } catch (e: any) {
+        if (e.message !== HttpStatus.UNAUTHORIZED) {
+            logWarning("Henting/parsing av navEnhet feilet: " + e);
+            dispatch(showServerFeil(true));
+        }
+
+        return null;
+    }
 };
 
-export const valgtNavKontorErGyldig = (valgtNavKontor: NavEnhet | undefined): boolean => {
-    return (
-        valgtNavKontor !== undefined &&
-        !valgtNavKontor.isMottakDeaktivert &&
-        !valgtNavKontor.isMottakMidlertidigDeaktivert
-    );
-};
+export const navEnhetGyldigEllerIkkeSatt = async (behandlingsId: string, dispatch: Dispatch) => {
+    const navEnhet = await fetchNavEnhet(dispatch, behandlingsId);
 
-export const valgtNavKontorErGyldigMenMottakErMidlertidigDeaktivert = (
-    valgtNavKontor: NavEnhet | undefined
-): boolean => {
-    return (
-        valgtNavKontor !== undefined &&
-        !valgtNavKontor.isMottakDeaktivert &&
-        valgtNavKontor.isMottakMidlertidigDeaktivert
-    );
-};
+    if (navEnhet === null) return true;
 
-export const responseIsOfTypeNavEnhet = (response: any) => {
-    if (response === null || response === undefined || typeof response === "string") {
+    dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, navEnhet));
+
+    if (!erAktiv(navEnhet)) {
+        if (erMidlDeaktivert(navEnhet)) {
+            dispatch(visMidlertidigDeaktivertPanel(true));
+        } else {
+            dispatch(visIkkePakobletPanel(true));
+        }
         return false;
     }
-    const navEnhet: NavEnhet = response;
-    return navEnhet.kommunenavn != null && navEnhet.kommuneNr != null;
-};
 
-export const sjekkOmValgtNavEnhetErGyldig = (
-    behandlingsId: string,
-    dispatch: Dispatch,
-    callbackHvisGyldigEllerIkkeSatt: () => void
-) => {
-    fetchToJson(soknadsdataUrl(behandlingsId, SoknadsSti.VALGT_NAV_ENHET))
-        .then((response) => {
-            if (responseIsOfTypeNavEnhet(response)) {
-                const valgtNavKontor: NavEnhet | undefined = response as NavEnhet;
-                dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, valgtNavKontor));
-
-                if (valgtNavKontorErGyldig(valgtNavKontor)) {
-                    dispatch(clearAllValideringsfeil());
-                    dispatch(visMidlertidigDeaktivertPanel(false));
-                    dispatch(visIkkePakobletPanel(false));
-                    callbackHvisGyldigEllerIkkeSatt();
-                } else if (valgtNavKontorErGyldigMenMottakErMidlertidigDeaktivert(valgtNavKontor)) {
-                    dispatch(visMidlertidigDeaktivertPanel(true));
-                } else {
-                    dispatch(visIkkePakobletPanel(true));
-                }
-            } else {
-                callbackHvisGyldigEllerIkkeSatt();
-            }
-        })
-        .catch((reason: any) => {
-            if (reason.message === HttpStatus.UNAUTHORIZED) {
-                return;
-            }
-            logWarning("Henting av navEnhet feilet: " + reason);
-            dispatch(showServerFeil(true));
-        });
+    dispatch(clearAllValideringsfeil());
+    dispatch(visMidlertidigDeaktivertPanel(false));
+    dispatch(visIkkePakobletPanel(false));
+    return true;
 };

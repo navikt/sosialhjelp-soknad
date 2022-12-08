@@ -2,9 +2,9 @@ import * as React from "react";
 import {FormattedMessage} from "react-intl";
 import {useDispatch} from "react-redux";
 import BehandlingAvPersonopplysningerModal from "./BehandlingAvPersonopplysningerModal";
-import {getContextPathForStaticContent} from "../../configuration";
-import {visSamtykkeInfo} from "../redux/soknad/soknadActions";
-import {LinkButton} from "../../nav-soknad/components/linkButton/LinkButton";
+import {getContextPathForStaticContent} from "../../../configuration";
+import {visSamtykkeInfo} from "../../redux/soknad/soknadActions";
+import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {BodyLong, Heading} from "@navikt/ds-react";
 import styled from "styled-components";
 

@@ -57,7 +57,7 @@ const StudielanView = () => {
 
     const studielan: Studielan | undefined = soknadsdata.inntekt.studielan;
     const restStatus = soknadsdata.restStatus.inntekt.studielan;
-    if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+    if (oppstartsModus && restStatus === REST_STATUS.OK) {
         setOppstartsModus(false);
     }
 
@@ -81,7 +81,7 @@ const StudielanView = () => {
                         <FormattedMessage
                             id={STUDERER_INFO_DEL1}
                             values={{
-                                a: (msg: string) => (
+                                a: (msg) => (
                                     <Link
                                         href={intl.formatMessage({id: "informasjon.student.studielan.url"})}
                                         target="_blank"

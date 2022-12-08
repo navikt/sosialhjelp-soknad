@@ -6,7 +6,7 @@ const StyledSystemList = styled.ul`
     list-style: none;
     padding: 0.5rem 0 0.5rem 1rem;
     margin: 0;
-    border-left: 1px solid var(--navds-semantic-color-border-muted);
+    border-left: 1px solid var(--a-border-default);
     margin-bottom: 1rem;
 `;
 

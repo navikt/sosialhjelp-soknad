@@ -17,9 +17,8 @@ import sagas from "./rootSaga";
 import IntlProvider from "./intlProvider";
 import App from "./digisos";
 import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
-import {NAVIGASJONSPROMT} from "./nav-soknad/utils";
+import {NAVIGASJONSPROMPT} from "./nav-soknad/utils";
 import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/ettersendelseActions";
-import {SoknadState} from "./digisos/redux/soknad/soknadTypes";
 import LoadContainer from "./LoadContainer";
 import Modal from "react-modal";
 import {initAmplitude} from "./nav-soknad/utils/amplitude";
@@ -29,25 +28,29 @@ import {Integrations} from "@sentry/tracing";
 import {BrowserRouter} from "react-router-dom";
 import {createBrowserHistory} from "history";
 import {getContextPathForStaticContent} from "./configuration";
+import {RouterHistory} from "@sentry/react/types/reactrouter";
 
 Modal.setAppElement("#root");
 
 const history = createBrowserHistory();
 
-const getUserConfirmation = (msg: any, callback: (flag: boolean) => void) => {
-    if (msg === NAVIGASJONSPROMT.SKJEMA) {
-        const soknad: SoknadState = store.getState().soknad;
-        if (soknad.behandlingsId && soknad.avbrytSoknadSjekkAktiv) {
-            store.dispatch(avbrytSoknad());
+const getNavigationConfirmation = (msg: any, callback: (flag: boolean) => void) => {
+    switch (msg) {
+        case NAVIGASJONSPROMPT.SKJEMA:
+            const {behandlingsId, avbrytSoknadSjekkAktiv} = store.getState().soknad;
+            if (behandlingsId && avbrytSoknadSjekkAktiv) {
+                store.dispatch(avbrytSoknad());
+                callback(false);
+            } else callback(true);
+
+            break;
+        case NAVIGASJONSPROMPT.ETTERSENDELSE:
+            store.dispatch(visSoknadAlleredeSendtPrompt(true));
             callback(false);
-        } else {
+
+            break;
+        default:
             callback(true);
-        }
-    } else if (msg === NAVIGASJONSPROMT.ETTERSENDELSE) {
-        store.dispatch(visSoknadAlleredeSendtPrompt(true));
-        callback(false);
-    } else {
-        callback(true);
     }
 };
 
@@ -55,7 +58,7 @@ Sentry.init({
     dsn: "https://e81d69cb0fb645068f8b9329fd3a138a@sentry.gc.nav.no/99",
     integrations: [
         new Integrations.BrowserTracing({
-            routingInstrumentation: Sentry.reactRouterV5Instrumentation(history),
+            routingInstrumentation: Sentry.reactRouterV5Instrumentation(history as unknown as RouterHistory),
         }),
     ],
     environment: process.env.REACT_APP_ENVIRONMENT,
@@ -107,7 +110,10 @@ ReactDOM.render(
     <Provider store={store}>
         <IntlProvider>
             <LoadContainer>
-                <BrowserRouter basename={getContextPathForStaticContent()} getUserConfirmation={getUserConfirmation}>
+                <BrowserRouter
+                    basename={getContextPathForStaticContent()}
+                    getUserConfirmation={getNavigationConfirmation}
+                >
                     <App />
                 </BrowserRouter>
             </LoadContainer>

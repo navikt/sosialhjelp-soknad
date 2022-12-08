@@ -4,7 +4,7 @@ import {logWarning} from "../../utils/loggerUtils";
 
 type Sizes = "small" | "large";
 
-interface Props extends React.Props<any> {
+interface Props {
     tittel?: string;
     visible: boolean;
     children: React.ReactNode;
@@ -25,21 +25,13 @@ class NivaTreSkjema extends React.Component<Props, State> {
     }
 
     componentDidUpdate(prevProps: Props, prevState: State, snapshot: any) {
-        if (prevProps.visible === false && this.props.visible === true) {
+        if (!prevProps.visible && this.props.visible) {
             this.setState({expanded: true});
-            if (prevState.expanded === false) {
-                this.setState({animate: true});
-            } else {
-                this.setState({animate: false});
-            }
+            this.setState({animate: !prevState.expanded});
         }
-        if (prevProps.visible === true && this.props.visible === false) {
+        if (prevProps.visible && !this.props.visible) {
             this.setState({expanded: false});
-            if (prevState.expanded === true) {
-                this.setState({animate: true});
-            } else {
-                this.setState({animate: false});
-            }
+            this.setState({animate: prevState.expanded});
         }
     }
 
@@ -61,7 +53,7 @@ class NivaTreSkjema extends React.Component<Props, State> {
         } catch (e) {
             logWarning("Feil ved rendering av nivå tre skjema: " + e.toString());
         }
-        if (this.state.animate === true) {
+        if (this.state.animate) {
             return (
                 <UnmountClosed isOpened={visible} className="underskjemaWrapper">
                     {content}

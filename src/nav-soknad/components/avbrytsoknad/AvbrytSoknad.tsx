@@ -36,7 +36,7 @@ const InfoIkon = styled.div`
     top: 0;
     z-index: 1;
     transform: translate(-50%, -50%);
-    background: var(--navds-semantic-color-feedback-warning-icon);
+    background: var(--a-icon-warning);
     border-radius: 100%;
     height: 5rem;
     width: 5rem;
@@ -57,7 +57,7 @@ const InfoIkon = styled.div`
 `;
 
 const ButtonRow = styled.div`
-    margin-top: var(--navds-spacing-3);
+    margin-top: var(--a-spacing-3);
     display: flex;
     gap: 1rem;
 `;

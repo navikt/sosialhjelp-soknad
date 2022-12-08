@@ -9,7 +9,7 @@ import {Modal} from "@navikt/ds-react";
 
 const KEY = "visSoknadAlleredeSendtPrompt";
 
-const SoknadAlleredeSendtPromt = () => {
+const SoknadAlleredeSendtPrompt = () => {
     const dispatch = useDispatch();
 
     const visPrompt = useSelector((state: State) => state.ettersendelse.visSoknadAlleredeSendtPromt);
@@ -38,4 +38,4 @@ const SoknadAlleredeSendtPromt = () => {
     );
 };
 
-export default SoknadAlleredeSendtPromt;
+export default SoknadAlleredeSendtPrompt;

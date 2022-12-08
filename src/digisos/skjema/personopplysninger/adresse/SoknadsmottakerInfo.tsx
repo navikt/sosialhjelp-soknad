@@ -37,7 +37,7 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
                     id="adresse.alertstripe.advarsel.v2"
                     values={{
                         kommuneNavn: kommunenavn,
-                        a: (msg: string) => (
+                        a: (msg) => (
                             <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
                                 {msg}
                             </Link>
@@ -54,7 +54,7 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
                     id="adresse.alertstripe.feil.v2"
                     values={{
                         kommuneNavn: kommunenavn,
-                        a: (msg: string) => (
+                        a: (msg) => (
                             <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
                                 {msg}
                             </Link>

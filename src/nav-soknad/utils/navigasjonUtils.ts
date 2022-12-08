@@ -14,7 +14,7 @@ export function erSkjemaEllerEttersendelseSide(pathname: string): boolean {
     return pathname.indexOf("/skjema/") >= 0;
 }
 
-export enum NAVIGASJONSPROMT {
+export enum NAVIGASJONSPROMPT {
     SKJEMA = "SKJEMA",
     ETTERSENDELSE = "ETTERSENDELSE",
     SERVERFEIL = "SERVERFEIL",

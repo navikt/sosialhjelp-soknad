@@ -16,6 +16,7 @@ const UnderskjemaArrow = styled.div`
 
 interface NyttUnderskjemaProps {
     hidden?: boolean;
+    children: React.ReactNode;
 }
 
 const UnderskjemaContainer = styled.div`

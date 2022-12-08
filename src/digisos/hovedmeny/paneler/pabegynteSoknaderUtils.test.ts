@@ -1,5 +1,5 @@
 import {addDays, subDays} from "date-fns";
-import {PabegynteSoknaderResponse} from "../redux/soknad/soknadTypes";
+import {PabegynteSoknaderResponse} from "../../redux/soknad/soknadTypes";
 import {filterAndSortPabegynteSoknader} from "./pabegynteSoknaderUtils";
 
 describe("Util funksjoner for påbegynte søknader", () => {

@@ -9,9 +9,9 @@ import {BodyShort, GuidePanel, Heading} from "@navikt/ds-react";
 import {NavEnhet} from "../personopplysninger/adresse/AdresseTypes";
 
 const StyledGuidePanel = styled(GuidePanel)`
-    /* TODO: Bytte ut --navds-global-color-orange-200 med eks --navds-semantic-color-feedback-warning-background ? */
-    --navds-guide-panel-color-border: var(--navds-global-color-orange-200);
-    --navds-guide-panel-color-illustration-background: var(--navds-global-color-orange-200);
+    /* TODO: Bytte ut --a-orange-200 med eks --a-surface-warning-subtle ? */
+    --ac-guide-panel-border: var(--a-orange-200);
+    --ac-guide-panel-illustration-bg: var(--a-orange-200);
     margin-top: 2rem;
     margin-bottom: 2rem;
 `;

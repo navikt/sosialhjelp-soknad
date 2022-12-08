@@ -99,7 +99,7 @@ export const BoutgifterView = () => {
                     <FormattedMessage
                         id="informasjon.husbanken.bostotte.v2"
                         values={{
-                            a: (msg: string) => (
+                            a: (msg) => (
                                 <Link
                                     href={intl.formatMessage({id: "informasjon.husbanken.bostotte.url"})}
                                     target="_blank"

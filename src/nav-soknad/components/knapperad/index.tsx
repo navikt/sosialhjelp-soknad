@@ -1,5 +1,5 @@
 import * as React from "react";
-import {getIntlTextOrKey} from "../../utils/intlUtils";
+import {getIntlTextOrKey} from "../../utils";
 import {useIntl} from "react-intl";
 import {Button, Loader} from "@navikt/ds-react";
 
@@ -23,43 +23,17 @@ const SkjemaKnapperad: React.FC<Props> = ({
     lastOppVedleggPending,
 }) => {
     const intl = useIntl();
-    const isDisabled = (): boolean => {
-        if (sendSoknadServiceUnavailable) {
-            return true;
-        }
-        if (gaViderePending) {
-            return true;
-        }
-        if (lastOppVedleggPending) {
-            return true;
-        }
-        return false;
-    };
-    const shouldShowSpinner = (): boolean => {
-        if (sendSoknadServiceUnavailable) {
-            return false;
-        }
-        if (gaViderePending) {
-            return true;
-        }
-        if (lastOppVedleggPending) {
-            return true;
-        }
-        return false;
-    };
+    const loading = gaViderePending || lastOppVedleggPending;
+    const forwardInhibited = loading || sendSoknadServiceUnavailable;
+    const backwardInhibited = loading || !gaTilbake;
 
     return (
         <div className="skjema-knapperad ikke-juridisk-tekst">
-            <Button variant="primary" id="gaa_videre_button" onClick={gaVidere} disabled={isDisabled()}>
+            <Button variant="primary" id="gaa_videre_button" onClick={gaVidere} disabled={forwardInhibited}>
                 {gaVidereLabel ? gaVidereLabel : getIntlTextOrKey(intl, "skjema.knapper.gaavidere")}
-                {shouldShowSpinner() && <Loader />}
+                {loading && <Loader />}
             </Button>
-            <Button
-                variant="primary"
-                id="gaa_tilbake_button"
-                onClick={gaTilbake}
-                disabled={gaViderePending || lastOppVedleggPending || !gaTilbake}
-            >
+            <Button variant="primary" id="gaa_tilbake_button" onClick={gaTilbake} disabled={backwardInhibited}>
                 {getIntlTextOrKey(intl, "skjema.knapper.tilbake")}
                 {lastOppVedleggPending && <Loader />}
             </Button>

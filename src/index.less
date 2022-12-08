@@ -1,3 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* We can't use "hidden" with tailwind because ye olde nav-frontend-core
+   overrides it -- so we declare an alias tw-hidden which should enable
+   a very fast search-and-replace once we're done migrating to ds-react
+*/
+@layer utilities {
+    .tw-hidden {
+        display: none;
+    }
+}
+
 @nodeModulesPath: "./../../";
 @coreModulePath: "./../../";
 

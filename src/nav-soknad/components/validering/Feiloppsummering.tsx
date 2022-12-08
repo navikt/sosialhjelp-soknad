@@ -16,7 +16,7 @@ const scrollToFaktum = (evt: React.MouseEvent<any>, faktumKey: string) => {
     }
 };
 
-const FeillisteMelding: React.StatelessComponent<Valideringsfeil> = ({faktumKey, feilkode}) => {
+const FeillisteMelding = ({faktumKey, feilkode}: Valideringsfeil) => {
     return (
         <li className="feiloppsummering__feil">
             <LinkButtonValidation onClick={(evt) => scrollToFaktum(evt, faktumKey)}>
@@ -40,8 +40,7 @@ class Feiloppsummering extends React.Component<Props, {}> {
     componentDidUpdate(prevProps: Props) {
         if (
             this.props.visFeilliste &&
-            this.props.valideringsfeil &&
-            this.props.valideringsfeil.length > 0 &&
+            this.props.valideringsfeil?.length &&
             this.props.visFeilliste !== prevProps.visFeilliste
         ) {
             scrollToElement(COMP_ID);
@@ -51,27 +50,29 @@ class Feiloppsummering extends React.Component<Props, {}> {
 
     render() {
         const {valideringsfeil} = this.props;
-        if (valideringsfeil && (valideringsfeil.length === 0 || !this.props.visFeilliste)) {
-            return null;
-        }
+
+        if (valideringsfeil?.length === 0 || !this.props.visFeilliste) return null;
+
         return (
-            <div
-                id={COMP_ID}
-                className="panel panel--feiloppsummering"
-                tabIndex={-1}
-                ref={(c) => {
-                    if (c) {
-                        this.oppsummering = c;
-                    }
-                }}
-            >
-                <Undertittel className="feiloppsummering__tittel blokk-s">
-                    Det er {valideringsfeil ? valideringsfeil.length : 1} feil i skjemaet
-                </Undertittel>
-                <ul className="feiloppsummering__liste">
-                    {valideringsfeil &&
-                        valideringsfeil.map((feilmld, index) => <FeillisteMelding key={index} {...feilmld} />)}
-                </ul>
+            <div id={"skjema-steg__feiloppsummering"} className={"pb-6"}>
+                <div
+                    id={COMP_ID}
+                    className="panel panel--feiloppsummering"
+                    tabIndex={-1}
+                    ref={(c) => {
+                        if (c) {
+                            this.oppsummering = c;
+                        }
+                    }}
+                >
+                    <Undertittel className="feiloppsummering__tittel blokk-s">
+                        Det er {valideringsfeil ? valideringsfeil.length : 1} feil i skjemaet
+                    </Undertittel>
+                    <ul className="feiloppsummering__liste">
+                        {valideringsfeil &&
+                            valideringsfeil.map((feilmld, index) => <FeillisteMelding key={index} {...feilmld} />)}
+                    </ul>
+                </div>
             </div>
         );
     }

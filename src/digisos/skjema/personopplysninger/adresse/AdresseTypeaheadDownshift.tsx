@@ -39,7 +39,7 @@ const FetchAddress = (props: FetchAddressProps) => {
                     setResult(res);
                     setIsLoading(false);
                 })
-                .catch((err) => {
+                .catch(() => {
                     setIsLoading(false);
                     setIsError(true);
                     setResult([]);
@@ -60,9 +60,9 @@ const SelectMenu = styled.ul`
 
     box-sizing: border-box;
     width: 25rem;
-    border: 1px solid var(--navds-semantic-color-border-muted);
-    border-radius: var(--navds-spacing-2);
-    background-color: var(--navds-semantic-color-component-background-light);
+    border: 1px solid var(--a-border-default);
+    border-radius: var(--a-spacing-2);
+    background-color: var(--a-surface-default);
 
     list-style: none;
     padding: 0.5rem 0;
@@ -75,8 +75,8 @@ const SelectMenu = styled.ul`
 const Item = styled.li<{isHighlighted: boolean}>`
     padding: 0.25rem 0.5rem;
 
-    color: ${(props) => (props.isHighlighted ? "var(--navds-semantic-color-component-background-light)" : "inherit")};
-    background-color: ${(props) => (props.isHighlighted ? "var(--navds-global-color-blue-400)" : "inherit")};
+    color: ${(props) => (props.isHighlighted ? "var(--a-surface-default)" : "inherit")};
+    background-color: ${(props) => (props.isHighlighted ? "var(--a-blue-400)" : "inherit")};
 `;
 
 const StyledInput = styled(Input)`

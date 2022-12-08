@@ -7,7 +7,7 @@ import {MargIkon, MargIkoner} from "./margIkoner";
 const StyledAvsnittMedMarger = styled.div`
     display: flex;
     width: 100%;
-    background-color: var(--navds-semantic-color-canvas-background-light);
+    background-color: var(--a-bg-default);
     margin-top: 1rem;
     margin-bottom: 1rem;
 `;

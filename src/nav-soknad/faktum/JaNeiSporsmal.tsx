@@ -5,7 +5,7 @@ import Sporsmal, {LegendTittleStyle} from "../components/sporsmal/Sporsmal";
 import {erMobilVisning} from "../utils/domUtils";
 import RadioEnhanced from "./RadioEnhanced";
 
-interface Props {
+interface JaNeiSporsmalProps {
     faktumKey: string;
     skjemaTilhorerValg?: "ja" | "nei";
     visible?: boolean;
@@ -15,9 +15,10 @@ interface Props {
     verdi: null | boolean;
     onChange?: (verdi: boolean) => void;
     visPlaceholder?: boolean;
+    children?: React.ReactNode;
 }
 
-class JaNeiSporsmal extends React.Component<Props, {}> {
+class JaNeiSporsmal extends React.Component<JaNeiSporsmalProps, {}> {
     handleOnChange(verdi: any): void {
         if (this.props.onChange) {
             this.props.onChange(verdi);
@@ -30,8 +31,8 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
         const harUnderSkjema = children !== undefined;
         const visUnderSkjema = harUnderSkjema && verdi === true;
 
-        let idRadioJa: string = "";
-        let idRadioNei: string = "";
+        let idRadioJa: string;
+        let idRadioNei: string;
         if (this.props.id) {
             idRadioJa = this.props.id + "_radio_ja";
             idRadioNei = this.props.id + "_radio_nei";
@@ -62,7 +63,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
                         faktumKey={this.props.faktumKey}
                         id={idRadioJa}
                         value={"true"}
-                        checked={verdi && verdi === true}
+                        checked={verdi}
                         className="jaNeiSpormal"
                         onChange={() => this.handleOnChange(true)}
                         visPlaceholder={this.props.visPlaceholder}
@@ -72,7 +73,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
                             faktumKey={this.props.faktumKey}
                             id={idRadioNei}
                             value={"false"}
-                            checked={verdi !== null && verdi === false}
+                            checked={!verdi}
                             name={radioName}
                             onChange={() => this.handleOnChange(false)}
                             className="jaNeiSpormal"
@@ -85,7 +86,7 @@ class JaNeiSporsmal extends React.Component<Props, {}> {
                         faktumKey={this.props.faktumKey}
                         id={idRadioNei}
                         value={"false"}
-                        checked={verdi !== null && verdi === false}
+                        checked={!verdi}
                         name={radioName}
                         onChange={() => this.handleOnChange(false)}
                         className={

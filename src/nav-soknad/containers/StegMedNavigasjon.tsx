@@ -26,27 +26,27 @@ import {
 } from "../../digisos/redux/validering/valideringActions";
 import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {State} from "../../digisos/redux/reducers";
-import {erPaStegEnOgValgtNavEnhetErUgyldig, sjekkOmValgtNavEnhetErGyldig} from "./containerUtils";
+import {erAktiv, navEnhetGyldigEllerIkkeSatt} from "./containerUtils";
 import {createSkjemaEventData, logAmplitudeEvent} from "../utils/amplitude";
 import {useTitle} from "../hooks/useTitle";
 import {logInfo} from "../utils/loggerUtils";
 import {Alert, Link} from "@navikt/ds-react";
-import {WhiteBackground} from "../components/WhiteBackground";
+import {NedetidPanel} from "../../components/common/NedetidPanel";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
     evt.preventDefault();
 };
 
-const StegMedNavigasjon = (
-    props: {
-        stegKey: string;
-        skjemaConfig: SkjemaConfig;
-        pending?: boolean;
-        ikon?: React.ReactNode;
-        children?: any;
-    } & RouteComponentProps
-) => {
+interface StegMedNavigasjonProps {
+    stegKey: string;
+    skjemaConfig: SkjemaConfig;
+    pending?: boolean;
+    ikon?: React.ReactNode;
+    children?: any;
+}
+
+const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const soknad = useSelector((state: State) => state.soknad);
@@ -65,57 +65,49 @@ const StegMedNavigasjon = (
         scrollToTop();
     }, []);
 
-    const nedetidstart = soknad.nedetid ? soknad.nedetid.nedetidStartText : "";
-    const nedetidslutt = soknad.nedetid ? soknad.nedetid.nedetidSluttText : "";
-    const isNedetid = soknad.nedetid ? soknad.nedetid.isNedetid : false;
+    const nedetidstart = soknad.nedetid?.nedetidStartText ?? "";
+    const nedetidslutt = soknad.nedetid?.nedetidSluttText ?? "";
+    const isNedetid = soknad.nedetid?.isNedetid;
+
     const adresseValgRestStatus = soknadsdata.restStatus.personalia.adresser;
     const isAdresseValgRestPending =
         adresseValgRestStatus === REST_STATUS.INITIALISERT || adresseValgRestStatus === REST_STATUS.PENDING;
 
     const loggAdresseTypeTilGrafana = () => {
-        const adresseTypeValg = soknadsdata.personalia.adresser.valg;
-        if (adresseTypeValg) {
-            logInfo("klikk--" + adresseTypeValg);
-        }
+        const {valg} = soknadsdata.personalia.adresser;
+        if (valg) logInfo("klikk--" + valg);
     };
 
     const getAttributesForSkjemaFullfortEvent = () => {
-        const attributes: Record<string, any> = {};
-        oppsummering.forEach((steg) => {
-            return steg.avsnitt.forEach((avsnitt) => {
-                return avsnitt.sporsmal.forEach((sporsmal) => {
-                    if (sporsmal.tittel === "bosituasjon.sporsmal") {
-                        attributes["valgtBosted"] = !!sporsmal.felt && sporsmal.felt.length > 0;
-                    }
-                    if (sporsmal.tittel === "arbeidsforhold.infotekst") {
-                        attributes["harArbeidsforhold"] = !!sporsmal.felt && sporsmal.felt.length > 0;
-                    }
-                    if (sporsmal.tittel === "utbetalinger.inntekt.skattbar.har_gitt_samtykke") {
-                        attributes["skattSamtykke"] = true;
-                    }
-                    if (sporsmal.tittel === "utbetalinger.inntekt.skattbar.mangler_samtykke") {
-                        attributes["skattSamtykke"] = false;
-                    }
-                });
-            });
-        });
-        return attributes;
+        const attr: Record<string, any> = {};
+
+        oppsummering.forEach((steg) =>
+            steg.avsnitt.forEach((avsnitt) =>
+                avsnitt.sporsmal.forEach(({tittel, felt}) => {
+                    if (tittel === "bosituasjon.sporsmal") attr["valgtBosted"] = !!felt?.length;
+                    if (tittel === "arbeidsforhold.infotekst") attr["harArbeidsforhold"] = !!felt?.length;
+                    if (tittel === "utbetalinger.inntekt.skattbar.har_gitt_samtykke") attr["skattSamtykke"] = true;
+                    if (tittel === "utbetalinger.inntekt.skattbar.mangler_samtykke") attr["skattSamtykke"] = false;
+                })
+            )
+        );
+
+        return attr;
     };
 
-    const handleGaTilSkjemaSteg = (aktivtSteg: SkjemaSteg | undefined, steg: number) => {
-        if (aktivtSteg && behandlingsId) {
-            const {feil} = validering;
+    const handleGaTilSkjemaSteg = (steg: number, aktivtSteg?: SkjemaSteg) => {
+        if (!aktivtSteg || !behandlingsId) return;
 
-            const valgtNavEnhet = finnSoknadsMottaker();
-            if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
-                handleNavEnhetErUgyldigFeil(valgtNavEnhet);
+        const valgtNavEnhet = finnSoknadsMottaker();
+
+        if (aktivtSteg.stegnummer === 1 && !erAktiv(valgtNavEnhet)) {
+            handleNavEnhetErUgyldigFeil(valgtNavEnhet);
+        } else {
+            if (!validering.feil.length) {
+                dispatch(clearAllValideringsfeil());
+                history.push(getStegUrl(behandlingsId, steg));
             } else {
-                if (feil.length === 0) {
-                    dispatch(clearAllValideringsfeil());
-                    history.push(getStegUrl(behandlingsId, steg));
-                } else {
-                    dispatch(visValideringsfeilPanel());
-                }
+                dispatch(visValideringsfeilPanel());
             }
         }
     };
@@ -123,7 +115,7 @@ const StegMedNavigasjon = (
     const kanGaTilSkjemasteg = (aktivtSteg: SkjemaSteg | undefined): boolean => {
         if (aktivtSteg && behandlingsId) {
             const valgtNavEnhet = finnSoknadsMottaker();
-            if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
+            if (!erAktiv(valgtNavEnhet)) {
                 handleNavEnhetErUgyldigFeil(valgtNavEnhet);
                 return false;
             }
@@ -131,39 +123,41 @@ const StegMedNavigasjon = (
         return true;
     };
 
-    const handleGaVidere = (aktivtSteg: SkjemaSteg) => {
-        if (behandlingsId) {
-            if (aktivtSteg.type === SkjemaStegType.oppsummering) {
-                if (oppsummeringBekreftet) {
-                    logAmplitudeEvent("skjema fullført", createSkjemaEventData(getAttributesForSkjemaFullfortEvent()));
-                    loggAdresseTypeTilGrafana();
-                    dispatch(sendSoknadPending());
-                    dispatch(sendSoknad(behandlingsId, history));
-                } else {
-                    dispatch(setVisBekreftMangler(true));
-                }
-                return;
-            }
+    const handleGaVidere = async (aktivtSteg: SkjemaSteg) => {
+        if (!behandlingsId) return;
 
-            const {feil} = validering;
-            const valgtNavEnhet = finnSoknadsMottaker();
-
-            if (erPaStegEnOgValgtNavEnhetErUgyldig(aktivtSteg.stegnummer, valgtNavEnhet)) {
-                handleNavEnhetErUgyldigFeil(valgtNavEnhet);
+        if (aktivtSteg.type === SkjemaStegType.oppsummering) {
+            if (oppsummeringBekreftet) {
+                logAmplitudeEvent("skjema fullført", createSkjemaEventData(getAttributesForSkjemaFullfortEvent()));
+                loggAdresseTypeTilGrafana();
+                dispatch(sendSoknadPending());
+                dispatch(sendSoknad(behandlingsId, history));
             } else {
-                if (feil.length === 0) {
-                    sjekkOmValgtNavEnhetErGyldig(behandlingsId, dispatch, () => {
-                        logAmplitudeEvent("skjemasteg fullført", {
-                            ...createSkjemaEventData(),
-                            steg: aktivtSteg.stegnummer,
-                        });
-                        history.push(getStegUrl(behandlingsId, aktivtSteg.stegnummer + 1));
-                    });
-                } else {
-                    dispatch(visValideringsfeilPanel());
-                }
+                dispatch(setVisBekreftMangler(true));
             }
+            return;
         }
+
+        const valgtNavEnhet = finnSoknadsMottaker();
+
+        if (aktivtSteg.stegnummer == 1 && !erAktiv(valgtNavEnhet)) {
+            handleNavEnhetErUgyldigFeil(valgtNavEnhet);
+            return;
+        }
+
+        if (validering.feil.length) {
+            dispatch(visValideringsfeilPanel());
+            return;
+        }
+
+        if (!(await navEnhetGyldigEllerIkkeSatt(behandlingsId, dispatch))) return;
+
+        logAmplitudeEvent("skjemasteg fullført", {
+            ...createSkjemaEventData(),
+            steg: aktivtSteg.stegnummer,
+        });
+
+        history.push(getStegUrl(behandlingsId, aktivtSteg.stegnummer + 1));
     };
 
     const handleNavEnhetErUgyldigFeil = (valgtNavEnhet: NavEnhet | null) => {
@@ -205,41 +199,26 @@ const StegMedNavigasjon = (
     const nextButtonPending =
         soknad.sendSoknadPending || (aktivtStegConfig?.key === "kontakt" ? isAdresseValgRestPending : false);
 
-    const erOppsummering: boolean = aktivtStegConfig ? aktivtStegConfig.type === SkjemaStegType.oppsummering : false;
     const stegTittel = getIntlTextOrKey(intl, `${stegKey}.tittel`);
-    const documentTitle = intl.formatMessage({
-        id: skjemaConfig.tittelId,
-    });
+    const documentTitle = intl.formatMessage({id: skjemaConfig.tittelId});
     const synligeSteg = skjemaConfig.steg.filter((s) => s.type === SkjemaStegType.skjema);
 
-    const aktivtSteg: number = aktivtStegConfig ? aktivtStegConfig.stegnummer : 1;
+    const aktivtSteg = aktivtStegConfig?.stegnummer ?? 1;
+    const aktivtStegErOppsummering = aktivtStegConfig?.type === SkjemaStegType.oppsummering;
 
     useTitle(`${stegTittel} - ${documentTitle}`);
 
     return (
-        <WhiteBackground className="app-digisos">
+        <div className="app-digisos bg-green-500/20">
             <AppBanner />
-            {isNedetid && (
-                <Alert variant="error" style={{justifyContent: "center"}}>
-                    <FormattedMessage
-                        id="nedetid.alertstripe.infoside"
-                        values={{
-                            nedetidstart: nedetidstart,
-                            nedetidslutt: nedetidslutt,
-                        }}
-                    />
-                </Alert>
-            )}
-
+            <NedetidPanel varselType={"infoside"} />
             <div className="skjema-steg skjema-content">
-                <div className="skjema-steg__feiloppsummering">
-                    <Feiloppsummering
-                        skjemanavn={skjemaConfig.skjemanavn}
-                        valideringsfeil={feil}
-                        visFeilliste={visValideringsfeil}
-                    />
-                </div>
-                {!erOppsummering && (
+                <Feiloppsummering
+                    skjemanavn={skjemaConfig.skjemanavn}
+                    valideringsfeil={feil}
+                    visFeilliste={visValideringsfeil}
+                />
+                {!aktivtStegErOppsummering && (
                     <div className="skjema__stegindikator">
                         <Stegindikator
                             autoResponsiv={true}
@@ -254,93 +233,99 @@ const StegMedNavigasjon = (
                                 };
                             })}
                             onBeforeChange={() => kanGaTilSkjemasteg(aktivtStegConfig)}
-                            onChange={(s: number) => handleGaTilSkjemaSteg(aktivtStegConfig, s + 1)}
+                            onChange={(s: number) => handleGaTilSkjemaSteg(s + 1, aktivtStegConfig)}
                         />
                     </div>
                 )}
-                <form id="soknadsskjema" onSubmit={stopEvent}>
-                    <div className="skjema-steg__ikon">{ikon}</div>
-                    <div className="skjema-steg__tittel" tabIndex={-1}>
-                        <Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
-                    </div>
-
-                    {children}
-
-                    {soknad.visMidlertidigDeaktivertPanel && aktivtSteg !== 1 && !(aktivtSteg === 9 && isNedetid) && (
-                        <Alert variant="error">
-                            <FormattedMessage
-                                id="adresse.alertstripe.feil.v2"
-                                values={{
-                                    kommuneNavn: finnKommunenavn(),
-                                    a: (msg: string) => (
-                                        <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
-                                            {msg}
-                                        </Link>
-                                    ),
-                                }}
-                            />
-                        </Alert>
-                    )}
-                    {soknad.visIkkePakobletPanel && aktivtSteg !== 1 && !(aktivtSteg === 9 && isNedetid) && (
-                        <Alert variant="warning">
-                            <FormattedMessage
-                                id="adresse.alertstripe.advarsel.v2"
-                                values={{
-                                    kommuneNavn: finnKommunenavn(),
-                                    a: (msg: string) => (
-                                        <Link
-                                            href="https://husbanken.no/bostotte"
-                                            target="_blank"
-                                            rel="noreferrer noopener"
-                                        >
-                                            {msg}
-                                        </Link>
-                                    ),
-                                }}
-                            />
-                        </Alert>
-                    )}
-
-                    {aktivtStegConfig && (
-                        <Knapperad
-                            gaViderePending={nextButtonPending}
-                            gaVidereLabel={erOppsummering ? getIntlTextOrKey(intl, "skjema.knapper.send") : undefined}
-                            gaVidere={() => handleGaVidere(aktivtStegConfig)}
-                            gaTilbake={
-                                aktivtStegConfig.stegnummer > 1
-                                    ? () => handleGaTilbake(aktivtStegConfig.stegnummer)
-                                    : undefined
-                            }
-                            avbryt={() => dispatch(avbrytSoknad())}
-                            sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
-                            lastOppVedleggPending={lastOppVedleggPending}
-                        />
-                    )}
-
-                    {soknad.showSendingFeiletPanel && aktivtSteg === 9 && (
-                        <div role="alert">
-                            <Alert variant="error" style={{marginTop: "1rem"}}>
-                                Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg prøve
-                                igjen. Søknaden din er lagret og dersom problemet fortsetter kan du forsøke igjen
-                                senere. Kontakt ditt NAV kontor dersom du er i en nødsituasjon.
-                            </Alert>
+                <div className={"bg-white max-w-[768px] mx-auto rounded-2xl p-8"}>
+                    <form id="soknadsskjema" onSubmit={stopEvent}>
+                        <div className="skjema-steg__ikon">{ikon}</div>
+                        <div className="skjema-steg__tittel" tabIndex={-1}>
+                            <Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
                         </div>
-                    )}
 
-                    {soknad.visMidlertidigDeaktivertPanel && isNedetid && aktivtSteg === 9 && (
-                        <Alert variant="error" style={{marginTop: "1rem"}}>
-                            <FormattedMessage
-                                id="nedetid.alertstripe.send"
-                                values={{
-                                    nedetidstart: nedetidstart,
-                                    nedetidslutt: nedetidslutt,
-                                }}
+                        {children}
+
+                        {soknad.visMidlertidigDeaktivertPanel &&
+                            aktivtSteg !== 1 &&
+                            !(aktivtSteg === 9 && isNedetid) && (
+                                <Alert variant="error">
+                                    <FormattedMessage
+                                        id="adresse.alertstripe.feil.v2"
+                                        values={{
+                                            kommuneNavn: finnKommunenavn(),
+                                            a: (msg) => (
+                                                <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                                                    {msg}
+                                                </Link>
+                                            ),
+                                        }}
+                                    />
+                                </Alert>
+                            )}
+                        {soknad.visIkkePakobletPanel && aktivtSteg !== 1 && !(aktivtSteg === 9 && isNedetid) && (
+                            <Alert variant="warning">
+                                <FormattedMessage
+                                    id="adresse.alertstripe.advarsel.v2"
+                                    values={{
+                                        kommuneNavn: finnKommunenavn(),
+                                        a: (msg) => (
+                                            <Link
+                                                href="https://husbanken.no/bostotte"
+                                                target="_blank"
+                                                rel="noreferrer noopener"
+                                            >
+                                                {msg}
+                                            </Link>
+                                        ),
+                                    }}
+                                />
+                            </Alert>
+                        )}
+
+                        {aktivtStegConfig && (
+                            <Knapperad
+                                gaViderePending={nextButtonPending}
+                                gaVidereLabel={
+                                    aktivtStegErOppsummering ? getIntlTextOrKey(intl, "skjema.knapper.send") : undefined
+                                }
+                                gaVidere={() => handleGaVidere(aktivtStegConfig)}
+                                gaTilbake={
+                                    aktivtStegConfig.stegnummer > 1
+                                        ? () => handleGaTilbake(aktivtStegConfig.stegnummer)
+                                        : undefined
+                                }
+                                avbryt={() => dispatch(avbrytSoknad())}
+                                sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
+                                lastOppVedleggPending={lastOppVedleggPending}
                             />
-                        </Alert>
-                    )}
-                </form>
+                        )}
+
+                        {soknad.showSendingFeiletPanel && aktivtSteg === 9 && (
+                            <div role="alert">
+                                <Alert variant="error" style={{marginTop: "1rem"}}>
+                                    Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg
+                                    prøve igjen. Søknaden din er lagret og dersom problemet fortsetter kan du forsøke
+                                    igjen senere. Kontakt ditt NAV kontor dersom du er i en nødsituasjon.
+                                </Alert>
+                            </div>
+                        )}
+
+                        {soknad.visMidlertidigDeaktivertPanel && isNedetid && aktivtSteg === 9 && (
+                            <Alert variant="error" style={{marginTop: "1rem"}}>
+                                <FormattedMessage
+                                    id="nedetid.alertstripe.send"
+                                    values={{
+                                        nedetidstart: nedetidstart,
+                                        nedetidslutt: nedetidslutt,
+                                    }}
+                                />
+                            </Alert>
+                        )}
+                    </form>
+                </div>
             </div>
-        </WhiteBackground>
+        </div>
     );
 };
 
