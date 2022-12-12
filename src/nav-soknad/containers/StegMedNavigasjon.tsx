@@ -140,7 +140,7 @@ const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) 
 
         const valgtNavEnhet = finnSoknadsMottaker();
 
-        if (aktivtSteg.stegnummer == 1 && !erAktiv(valgtNavEnhet)) {
+        if (aktivtSteg.stegnummer === 1 && !erAktiv(valgtNavEnhet)) {
             handleNavEnhetErUgyldigFeil(valgtNavEnhet);
             return;
         }
