@@ -7,7 +7,7 @@ import {useEffect} from "react";
 import Stegindikator from "nav-frontend-stegindikator/lib/stegindikator";
 
 import Feiloppsummering from "../components/validering/Feiloppsummering";
-import Knapperad from "../components/knapperad";
+import {SkjemaStegNavigasjon} from "../components/SkjemaSteg/SkjemaStegNavigasjon";
 import {REST_STATUS, SkjemaConfig, SkjemaSteg, SkjemaStegType} from "../../digisos/redux/soknad/soknadTypes";
 import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
 import {setVisBekreftMangler} from "../../digisos/redux/oppsummering/oppsummeringActions";
@@ -237,7 +237,7 @@ const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) 
                         />
                     </div>
                 )}
-                <div className={"bg-white max-w-[768px] mx-auto rounded-2xl p-8"}>
+                <div className={"bg-white max-w-[768px] mx-auto rounded-2xl p-16 pt-8"}>
                     <form id="soknadsskjema" onSubmit={stopEvent}>
                         <div className="skjema-steg__ikon">{ikon}</div>
                         <div className="skjema-steg__tittel" tabIndex={-1}>
@@ -284,7 +284,7 @@ const StegMedNavigasjon = (props: StegMedNavigasjonProps & RouteComponentProps) 
                         )}
 
                         {aktivtStegConfig && (
-                            <Knapperad
+                            <SkjemaStegNavigasjon
                                 gaViderePending={nextButtonPending}
                                 gaVidereLabel={
                                     aktivtStegErOppsummering ? getIntlTextOrKey(intl, "skjema.knapper.send") : undefined
