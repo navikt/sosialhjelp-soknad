@@ -1,7 +1,6 @@
 import {FileProgress} from "@navikt/ds-icons";
-import {BodyShort, Heading, Label, LinkPanel} from "@navikt/ds-react";
+import {Accordion, BodyShort, Heading, Label, LinkPanel} from "@navikt/ds-react";
 import React from "react";
-import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import {DAYS_BEFORE_DELETION} from "./pabegynteSoknaderUtils";
 import type {PabegyntSoknadData} from "./pabegynteSoknaderUtils";
 import {useHistory} from "react-router";
@@ -40,7 +39,7 @@ const PabegyntSoknad = ({
                 border
                 className={"!p-4"}
             >
-                <LinkPanel.Title className={"flex align-center"}>
+                <LinkPanel.Title className={"flex flex-col lg:flex-row align-center"}>
                     <Label style={{marginRight: "1rem"}}>
                         Sist oppdatert {format(lastUpdatedDate, "d MMM yyyy", {locale: nb})}
                     </Label>
@@ -52,7 +51,7 @@ const PabegyntSoknad = ({
 };
 
 const PabegynteSoknaderCount = ({num}: {num: number}) => {
-    const className = "opacity-70 pl-4 font-normal";
+    const className = "opacity-70 lg:pl-4 font-normal";
 
     if (!num) return null;
 
@@ -66,7 +65,7 @@ export const PabegynteSoknaderTitle = ({antallPabegynteSoknader}: {antallPabegyn
         <div className={"rounded-full bg-green-500/40 p-3 mr-5 tw-hidden lg:block"}>
             <FileProgress className={"w-9 h-9"} />
         </div>
-        <Heading level="2" size="small" className={"flex flex-row"}>
+        <Heading level="2" size="small" className={"flex flex-col lg:flex-row"}>
             Fortsett på en påbegynt søknad
             <PabegynteSoknaderCount num={antallPabegynteSoknader} />
         </Heading>
@@ -75,24 +74,31 @@ export const PabegynteSoknaderTitle = ({antallPabegynteSoknader}: {antallPabegyn
 
 export const PabegynteSoknaderPanel = ({pabegynteSoknader}: {pabegynteSoknader: PabegyntSoknadData[]}) => {
     return (
-        <Ekspanderbartpanel tittel={<PabegynteSoknaderTitle antallPabegynteSoknader={pabegynteSoknader.length} />}>
-            <div className={"pl-24"}>
-                <BodyShort className={"pb-4"}>
-                    Vær oppmerksom på at påbegynte søknader slettes etter {DAYS_BEFORE_DELETION} dager.
-                </BodyShort>
-                <ul>
-                    {pabegynteSoknader.map(({lastUpdatedDate, deleteDate, behandlingsId}) => (
-                        <PabegyntSoknad
-                            key={behandlingsId}
-                            lastUpdatedDate={lastUpdatedDate}
-                            deleteDate={deleteDate}
-                            behandlingsId={behandlingsId}
-                            antallPabegynteSoknader={pabegynteSoknader.length}
-                            currentDate={new Date()}
-                        />
-                    ))}
-                </ul>
-            </div>
-        </Ekspanderbartpanel>
+        <Accordion>
+            <Accordion.Item className={"bg-white rounded-md border-[1px]"}>
+                <Accordion.Header className={"!items-center !border-0"}>
+                    <PabegynteSoknaderTitle antallPabegynteSoknader={pabegynteSoknader.length} />
+                </Accordion.Header>
+                <Accordion.Content className={"!px-0 !border-0"}>
+                    <div className={"p-4 lg:pl-24"}>
+                        <BodyShort className={"pb-4"}>
+                            Vær oppmerksom på at påbegynte søknader slettes etter {DAYS_BEFORE_DELETION} dager.
+                        </BodyShort>
+                        <ul>
+                            {pabegynteSoknader.map(({lastUpdatedDate, deleteDate, behandlingsId}) => (
+                                <PabegyntSoknad
+                                    key={behandlingsId}
+                                    lastUpdatedDate={lastUpdatedDate}
+                                    deleteDate={deleteDate}
+                                    behandlingsId={behandlingsId}
+                                    antallPabegynteSoknader={pabegynteSoknader.length}
+                                    currentDate={new Date()}
+                                />
+                            ))}
+                        </ul>
+                    </div>
+                </Accordion.Content>
+            </Accordion.Item>
+        </Accordion>
     );
 };
