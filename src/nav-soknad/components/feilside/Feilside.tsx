@@ -3,28 +3,6 @@ import UtropstegnSirkelGraIkon from "./UtropstegnSirkelGraIkon";
 import Banner from "../banner/Banner";
 import {useTitle} from "../../hooks/useTitle";
 import {BodyShort, Button, Heading, Link} from "@navikt/ds-react";
-import styled from "styled-components";
-
-const StyledFeilside = styled.div`
-    text-align: center;
-`;
-
-const Ikon = styled.div`
-    margin-top: 40px;
-`;
-
-const LinkList = styled.ul`
-    margin-top: 20px;
-    padding-left: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 2.5rem;
-
-    li {
-        display: inline-block;
-    }
-`;
 
 export interface FeilsideProps {
     tittel?: string;
@@ -49,10 +27,10 @@ const Feilside: React.FC<FeilsideProps> = ({
     return (
         <>
             <Banner>Søknad om økonomisk sosialhjelp</Banner>
-            <StyledFeilside>
-                <Ikon>
+            <div className={"text-center space-y-4 py-10"}>
+                <div className={"flex justify-center"}>
                     <UtropstegnSirkelGraIkon />
-                </Ikon>
+                </div>
                 <Heading level="1" size="large" spacing>
                     {tittel}
                 </Heading>
@@ -62,26 +40,21 @@ const Feilside: React.FC<FeilsideProps> = ({
                         {knappTekst}
                     </Button>
                 ) : null}
-                <LinkList>
-                    <li>
-                        <BodyShort>
-                            <Link href="https://www.nav.no">Gå til forsiden nav.no</Link>
-                        </BodyShort>
-                    </li>
-                    <li>
-                        <BodyShort>
-                            <Link href="https://www.nav.no/minside">Gå til Min side</Link>
-                        </BodyShort>
-                    </li>
-                    <li>
-                        <BodyShort>
-                            <Link href="https://www.nav.no/person/kontakt-oss/nb/tilbakemeldinger/feil-og-mangler">
-                                Meld fra om feil
-                            </Link>
-                        </BodyShort>
-                    </li>
-                </LinkList>
-            </StyledFeilside>
+
+                <BodyShort>
+                    <Link href="https://www.nav.no">Gå til nav.no</Link>
+                </BodyShort>
+
+                <BodyShort>
+                    <Link href="https://www.nav.no/minside">Gå til Min side</Link>
+                </BodyShort>
+
+                <BodyShort>
+                    <Link href="https://www.nav.no/person/kontakt-oss/nb/tilbakemeldinger/feil-og-mangler">
+                        Meld fra om feil
+                    </Link>
+                </BodyShort>
+            </div>
         </>
     );
 };
