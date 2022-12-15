@@ -13,7 +13,7 @@ interface SkjemaStegNavigasjonProps {
     lastOppVedleggPending?: boolean;
 }
 
-export const SkjemaStegNavigasjon = ({
+export const SkjemaStegNavKnapper = ({
     gaViderePending,
     sendSoknadServiceUnavailable,
     gaVidere,
@@ -28,7 +28,7 @@ export const SkjemaStegNavigasjon = ({
     const backwardInhibited = loading || !gaTilbake;
 
     return (
-        <div className={"space-y-16 px-6"}>
+        <div className={"space-y-16 px-6 pt-10"}>
             <div className="space-x-3">
                 <Button variant="primary" id="gaa_tilbake_button" onClick={gaTilbake} disabled={backwardInhibited}>
                     {getIntlTextOrKey(intl, "skjema.knapper.tilbake")}
@@ -46,4 +46,4 @@ export const SkjemaStegNavigasjon = ({
     );
 };
 
-export default SkjemaStegNavigasjon;
+export default SkjemaStegNavKnapper;

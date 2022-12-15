@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
+import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import SkjemaIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/SkjemaIllustrasjon";
 import Gruppe from "./Gruppe";
 import {OpplysningGruppe, Opplysning} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
@@ -13,6 +13,7 @@ import {OpplysningerIkkeBesvartPanel} from "./OpplysningerIkkeBesvartPanel";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 import styled from "styled-components";
 import {mobile} from "../../../nav-soknad/styles/variables";
+import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
 
 const OkonomiskeOpplysningerContainer = styled.div`
     padding: 0 2rem;
@@ -38,7 +39,11 @@ const OkonomiskeOpplysningerView = () => {
 
     if (restStatus === REST_STATUS.OK) {
         return (
-            <DigisosSkjemaSteg steg={DigisosSteg.opplysningerbolk} ikon={<SkjemaIllustrasjon />}>
+            <StegMedNavigasjon
+                skjemaConfig={digisosSkjemaConfig}
+                steg={"opplysningerbolk"}
+                ikon={<SkjemaIllustrasjon />}
+            >
                 <OkonomiskeOpplysningerContainer>
                     {!ikkeBesvartMeldingSkalVises && <OpplysningerInformasjonspanel />}
                     {ikkeBesvartMeldingSkalVises && <OpplysningerIkkeBesvartPanel />}
@@ -54,7 +59,7 @@ const OkonomiskeOpplysningerView = () => {
                         );
                     })}
                 </OkonomiskeOpplysningerContainer>
-            </DigisosSkjemaSteg>
+            </StegMedNavigasjon>
         );
     }
 

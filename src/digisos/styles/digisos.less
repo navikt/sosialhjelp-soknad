@@ -11,18 +11,23 @@
 @import "../skjema/personopplysninger/tps/oppholdsadresse.less";
 @import "../skjema/okonomiskeOpplysninger/vedleggSlettet/vedleggSlettet.less";
 
+.top-stepper {
+    .navds-stepper__item {
+        flex: 1 1 0;
+        gap: 0;
+    }
+    :not(.navds-stepper__step--active) > .navds-stepper__circle {
+        background-color: white;
+    }
+    .navds-stepper__content {
+        display: none;
+    }
+}
+
 @navRosa: #f3e3e3;
 
 body {
     background-color: @white;
-}
-
-.app-digisos {
-    padding-bottom: 10rem;
-
-    @media @mobile {
-        padding-bottom: 4rem;
-    }
 }
 
 .hidden-topnavsection {

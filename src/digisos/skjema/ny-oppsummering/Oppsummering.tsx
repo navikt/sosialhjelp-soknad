@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
-import {Accordion, ConfirmationPanel, Link, Label} from "@navikt/ds-react";
+import {Accordion, ConfirmationPanel, Link, Label, Alert} from "@navikt/ds-react";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../redux/reducers";
 import {finnOgOppdaterSoknadsmottakerStatus} from "../../redux/soknad/soknadActions";
@@ -27,6 +26,9 @@ import {useHistory} from "react-router";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 import {Link as ReactRouterLink} from "react-router-dom";
 import styled from "styled-components";
+import {useSoknad} from "../../redux/soknad/useSoknad";
+import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
+import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
@@ -44,40 +46,43 @@ export const Oppsummering = () => {
     const [loading, setLoading] = useState(true);
 
     const {bekreftet, visBekreftMangler, nyOppsummering} = useSelector((state: State) => state.oppsummering);
-    const {behandlingsId, valgtSoknadsmottaker} = useSelector((state: State) => state.soknad);
+    const {behandlingsId, valgtSoknadsmottaker, showSendingFeiletPanel, nedetid, visMidlertidigDeaktivertPanel} =
+        useSoknad();
+
+    const nedetidstart = nedetid?.nedetidStartText ?? "";
+    const nedetidslutt = nedetid?.nedetidSluttText ?? "";
+    const isNedetid = nedetid?.isNedetid;
 
     const history = useHistory();
 
     const intl = useIntl();
 
     useEffect(() => {
-        if (behandlingsId) {
-            dispatch(finnOgOppdaterSoknadsmottakerStatus(behandlingsId, history));
-            dispatch(hentNyOppsummering());
-            fetchToJson<NyOppsummeringResponse>(`soknader/${behandlingsId}/oppsummering`)
-                .then((response) => {
-                    dispatch(setNyOppsummering(response));
-                })
-                .catch((reason) => {
-                    if (reason.message === HttpStatus.UNAUTHORIZED) {
-                        return;
-                    }
-                    dispatch(hentOppsumeringFeilet(reason));
-                });
-            setLoading(false);
-        }
+        if (!behandlingsId) return;
+
+        dispatch(finnOgOppdaterSoknadsmottakerStatus(behandlingsId, history));
+        dispatch(hentNyOppsummering());
+        fetchToJson<NyOppsummeringResponse>(`soknader/${behandlingsId}/oppsummering`)
+            .then((response) => {
+                dispatch(setNyOppsummering(response));
+            })
+            .catch((reason) => {
+                if (reason.message === HttpStatus.UNAUTHORIZED) {
+                    return;
+                }
+                dispatch(hentOppsumeringFeilet(reason));
+            });
+        setLoading(false);
     }, [behandlingsId, history, dispatch]);
 
     const bekreftOpplysninger: string = intl.formatMessage({
         id: "soknadsosialhjelp.oppsummering.harLestSamtykker",
     });
 
-    if (loading) {
-        return <ApplicationSpinner />;
-    }
+    if (loading) return <ApplicationSpinner />;
 
     return (
-        <DigisosSkjemaSteg steg={DigisosSteg.oppsummering}>
+        <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"oppsummering"}>
             {nyOppsummering.map((bolk: NyOppsummeringBolk) => {
                 return (
                     <OppsummeringBolk bolk={bolk} key={bolk.stegNr}>
@@ -127,7 +132,29 @@ export const Oppsummering = () => {
             </ConfirmationPanel>
 
             <BehandlingAvPersonopplysningerModal />
-        </DigisosSkjemaSteg>
+
+            {showSendingFeiletPanel && (
+                <div role="alert">
+                    <Alert variant="error" style={{marginTop: "1rem"}}>
+                        Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg prøve igjen.
+                        Søknaden din er lagret og dersom problemet fortsetter kan du forsøke igjen senere. Kontakt ditt
+                        NAV kontor dersom du er i en nødsituasjon.
+                    </Alert>
+                </div>
+            )}
+
+            {visMidlertidigDeaktivertPanel && isNedetid && (
+                <Alert variant="error" style={{marginTop: "1rem"}}>
+                    <FormattedMessage
+                        id="nedetid.alertstripe.send"
+                        values={{
+                            nedetidstart: nedetidstart,
+                            nedetidslutt: nedetidslutt,
+                        }}
+                    />
+                </Alert>
+            )}
+        </StegMedNavigasjon>
     );
 };
 

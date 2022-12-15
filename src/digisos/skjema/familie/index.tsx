@@ -1,14 +1,15 @@
 import * as React from "react";
-import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
+import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import FamilieIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/FamilieIllustrasjon";
 import ForsorgerPlikt from "./forsorgerplikt/ForsorgerPlikt";
 import DinSivilstatus from "./sivilstatus/DinSivilstatus";
+import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
 
 const Familie = () => (
-    <DigisosSkjemaSteg steg={DigisosSteg.familiebolk} ikon={<FamilieIllustrasjon />}>
+    <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"familiebolk"} ikon={<FamilieIllustrasjon />}>
         <DinSivilstatus />
         <ForsorgerPlikt />
-    </DigisosSkjemaSteg>
+    </StegMedNavigasjon>
 );
 
 export default Familie;
