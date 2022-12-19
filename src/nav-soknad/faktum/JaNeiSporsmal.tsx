@@ -19,10 +19,8 @@ interface JaNeiSporsmalProps {
 }
 
 class JaNeiSporsmal extends React.Component<JaNeiSporsmalProps, {}> {
-    handleOnChange(verdi: any): void {
-        if (this.props.onChange) {
-            this.props.onChange(verdi);
-        }
+    handleOnChange(verdi: any) {
+        this.props.onChange && this.props.onChange(verdi);
     }
 
     render() {
@@ -46,9 +44,8 @@ class JaNeiSporsmal extends React.Component<JaNeiSporsmalProps, {}> {
 
         const mobilVisning = erMobilVisning();
 
-        if (this.props.visible === false) {
-            return null;
-        }
+        if (this.props.visible === false) return null;
+
         return (
             <Sporsmal
                 tekster={this.props.tekster}
@@ -63,7 +60,7 @@ class JaNeiSporsmal extends React.Component<JaNeiSporsmalProps, {}> {
                         faktumKey={this.props.faktumKey}
                         id={idRadioJa}
                         value={"true"}
-                        checked={verdi}
+                        checked={verdi === true}
                         className="jaNeiSpormal"
                         onChange={() => this.handleOnChange(true)}
                         visPlaceholder={this.props.visPlaceholder}
@@ -73,7 +70,7 @@ class JaNeiSporsmal extends React.Component<JaNeiSporsmalProps, {}> {
                             faktumKey={this.props.faktumKey}
                             id={idRadioNei}
                             value={"false"}
-                            checked={!verdi}
+                            checked={verdi === false}
                             name={radioName}
                             onChange={() => this.handleOnChange(false)}
                             className="jaNeiSpormal"

@@ -1,6 +1,6 @@
 import * as React from "react";
 import BoligIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/BoligIllustrasjon";
-import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
+import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import AntallPersoner from "./AntallPersoner";
 import Botype from "./Botype";
 import {useBosituasjon} from "./useBosituasjon";
@@ -8,6 +8,7 @@ import {Loader} from "@navikt/ds-react";
 import styled from "styled-components";
 import {showServerFeil} from "../../redux/soknad/soknadActions";
 import {useDispatch} from "react-redux";
+import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
 
 interface BosituasjonViewProps {
     behandlingsId: string;
@@ -31,12 +32,12 @@ export const Bosituasjon = ({behandlingsId}: BosituasjonViewProps) => {
     if (isError) dispatch(showServerFeil(true));
 
     return (
-        <DigisosSkjemaSteg steg={DigisosSteg.bosituasjonbolk} ikon={<BoligIllustrasjon />}>
+        <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"bosituasjonbolk"} ikon={<BoligIllustrasjon />}>
             <StegSkjema>
                 <Botype behandlingsId={behandlingsId} />
                 <AntallPersoner behandlingsId={behandlingsId} />
             </StegSkjema>
-        </DigisosSkjemaSteg>
+        </StegMedNavigasjon>
     );
 };
 

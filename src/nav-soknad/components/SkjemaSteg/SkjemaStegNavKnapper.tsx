@@ -3,7 +3,7 @@ import {getIntlTextOrKey} from "../../utils";
 import {useIntl} from "react-intl";
 import {Button, Loader} from "@navikt/ds-react";
 
-interface Props {
+interface SkjemaStegNavigasjonProps {
     gaViderePending?: boolean;
     sendSoknadServiceUnavailable?: boolean;
     gaVidereLabel?: string;
@@ -13,7 +13,7 @@ interface Props {
     lastOppVedleggPending?: boolean;
 }
 
-const SkjemaKnapperad: React.FC<Props> = ({
+export const SkjemaStegNavKnapper = ({
     gaViderePending,
     sendSoknadServiceUnavailable,
     gaVidere,
@@ -21,22 +21,24 @@ const SkjemaKnapperad: React.FC<Props> = ({
     avbryt,
     gaVidereLabel,
     lastOppVedleggPending,
-}) => {
+}: SkjemaStegNavigasjonProps) => {
     const intl = useIntl();
     const loading = gaViderePending || lastOppVedleggPending;
     const forwardInhibited = loading || sendSoknadServiceUnavailable;
     const backwardInhibited = loading || !gaTilbake;
 
     return (
-        <div className="skjema-knapperad ikke-juridisk-tekst">
-            <Button variant="primary" id="gaa_videre_button" onClick={gaVidere} disabled={forwardInhibited}>
-                {gaVidereLabel ? gaVidereLabel : getIntlTextOrKey(intl, "skjema.knapper.gaavidere")}
-                {loading && <Loader />}
-            </Button>
-            <Button variant="primary" id="gaa_tilbake_button" onClick={gaTilbake} disabled={backwardInhibited}>
-                {getIntlTextOrKey(intl, "skjema.knapper.tilbake")}
-                {lastOppVedleggPending && <Loader />}
-            </Button>
+        <div className={"space-y-16 px-6 pt-10"}>
+            <div className="space-x-3">
+                <Button variant="primary" id="gaa_tilbake_button" onClick={gaTilbake} disabled={backwardInhibited}>
+                    {getIntlTextOrKey(intl, "skjema.knapper.tilbake")}
+                    {lastOppVedleggPending && <Loader />}
+                </Button>
+                <Button variant="primary" id="gaa_videre_button" onClick={gaVidere} disabled={forwardInhibited}>
+                    {gaVidereLabel ? gaVidereLabel : getIntlTextOrKey(intl, "skjema.knapper.gaavidere")}
+                    {loading && <Loader />}
+                </Button>
+            </div>
             <Button onClick={gaViderePending ? undefined : avbryt} variant="tertiary">
                 {getIntlTextOrKey(intl, "skjema.knapper.avbryt")}
             </Button>
@@ -44,4 +46,4 @@ const SkjemaKnapperad: React.FC<Props> = ({
     );
 };
 
-export default SkjemaKnapperad;
+export default SkjemaStegNavKnapper;

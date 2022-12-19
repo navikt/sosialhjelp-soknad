@@ -2,7 +2,6 @@
 @import "skjema.less";
 
 @import "../components/informasjonspanel/informasjonspanel.less";
-@import "../components/knapperad/knapperad.less";
 @import "../components/nivaTreSkjema/nivaTreSkjema.less";
 @import "../components/skjemapanel/skjemapanel.less";
 @import "../components/timeoutbox/timeoutbox.less";
@@ -36,10 +35,6 @@ textarea.skjema-texarea--normal {
 
 textarea.skjema-textarea--large {
     min-height: 12em;
-}
-
-.skjema__stegindikator {
-    margin-bottom: 2rem;
 }
 
 .detaljeliste {
@@ -85,9 +80,6 @@ textarea.skjema-textarea--large {
 }
 
 @media @mobile {
-    .skjema__stegindikator {
-        margin-bottom: 2rem;
-    }
     .stegindikator {
         &__steg {
             &:not(&--aktiv) {

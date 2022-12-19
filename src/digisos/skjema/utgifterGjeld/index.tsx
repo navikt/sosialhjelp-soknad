@@ -1,15 +1,16 @@
 import * as React from "react";
-import DigisosSkjemaSteg, {DigisosSteg} from "../DigisosSkjemaSteg";
+import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import KredittkortIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/KredittkortIllustrasjon";
 import Boutgifter from "./boutgifter/Boutgifter";
 import Barneutgifter from "./barneutgifter/Barneutgifter";
+import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
 
 const UtgifterGjeld: React.FC = () => {
     return (
-        <DigisosSkjemaSteg steg={DigisosSteg.utgifterbolk} ikon={<KredittkortIllustrasjon />}>
+        <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"utgifterbolk"} ikon={<KredittkortIllustrasjon />}>
             <Boutgifter />
             <Barneutgifter />
-        </DigisosSkjemaSteg>
+        </StegMedNavigasjon>
     );
 };
 
