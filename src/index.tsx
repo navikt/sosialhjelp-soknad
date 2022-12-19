@@ -28,13 +28,12 @@ import {BrowserRouter} from "react-router-dom";
 import {createBrowserHistory} from "history";
 import {basePath} from "./configuration";
 import {RouterHistory} from "@sentry/react/types/reactrouter";
-import {NavigasjonsPromptType} from "./nav-soknad/utils";
 
 Modal.setAppElement("#root");
 
 const history = createBrowserHistory();
 
-const getNavigationConfirmation = (msg: NavigasjonsPromptType, callback: (flag: boolean) => void) => {
+const getNavigationConfirmation = (msg: string, callback: (flag: boolean) => void) => {
     switch (msg) {
         case "skjema":
             const {behandlingsId, avbrytSoknadSjekkAktiv} = store.getState().soknad;
