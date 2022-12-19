@@ -2,7 +2,7 @@ import React from "react";
 import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {downloadAttachedFile} from "../../../nav-soknad/utils/rest-utils";
 import {Fil} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
-import {getContextPathForStaticContent} from "../../../configuration";
+import {getBasePath} from "../../../configuration";
 
 export const OpplastetVedlegg = (props: {behandlingsId: string | undefined; fil: Fil; onSlett: (fil: Fil) => void}) => {
     const handleSlett = (fil: Fil) => {
@@ -18,7 +18,7 @@ export const OpplastetVedlegg = (props: {behandlingsId: string | undefined; fil:
             </span>
             <span className="vedleggsliste__slett_ikon">
                 <LinkButton onClick={() => handleSlett(props.fil)} aria-label={`Slett ${props.fil.filNavn}`}>
-                    <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_trashcan.svg`} alt={""} />
+                    <img src={`${getBasePath()}/statisk/bilder/ikon_trashcan.svg`} alt={""} />
                 </LinkButton>
             </span>
         </div>

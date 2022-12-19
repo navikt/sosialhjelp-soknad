@@ -1,7 +1,7 @@
-export const CONTEXT_PATH = "sosialhjelp/soknad";
+const BASE_PATH = "/sosialhjelp/soknad";
 
-export const getContextPathForStaticContent = (): string => "/sosialhjelp/soknad";
+export const getBasePath = () => BASE_PATH;
 
 export function getRedirectPathname(): string {
-    return `/${CONTEXT_PATH}/link`;
+    return `${BASE_PATH}/link`;
 }

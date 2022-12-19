@@ -2,7 +2,7 @@ import * as React from "react";
 import {Opplysning} from "../../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {getSpcForOpplysning} from "../../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
-import {getContextPathForStaticContent} from "../../../../configuration";
+import {getBasePath} from "../../../../configuration";
 import {useIntl} from "react-intl";
 
 interface OwnProps {
@@ -23,10 +23,7 @@ const VedleggSlettet: React.FC<Props> = (props: Props) => {
             <div className="vedlegg_slettet_boks">
                 <div className="vedlegg_slettet_ikon">
                     <div className="vedlegg_slettet_border">
-                        <img
-                            src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_reportProblemCircle.svg`}
-                            alt=""
-                        />
+                        <img src={`${getBasePath()}/statisk/bilder/ikon_reportProblemCircle.svg`} alt="" />
                     </div>
                 </div>
                 <div className="vedlegg_slettet_tekst">{intlTextOrKey}</div>

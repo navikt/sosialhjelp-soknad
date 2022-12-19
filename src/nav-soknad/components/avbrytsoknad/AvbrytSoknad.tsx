@@ -2,7 +2,7 @@ import * as React from "react";
 import {fortsettSoknad, showServerFeil} from "../../../digisos/redux/soknad/soknadActions";
 import {FormattedMessage} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
-import {getContextPathForStaticContent} from "../../../configuration";
+import {getBasePath} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
 import {fetchDelete, HttpStatus} from "../../utils/rest-utils";
 import {logWarning} from "../../utils/loggerUtils";
@@ -103,7 +103,7 @@ export const AvbrytSoknad = () => {
         <StyledModal open={avbrytDialog.synlig || false} onClose={() => onFortsett()}>
             <ModalContent>
                 <InfoIkon>
-                    <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""} />
+                    <img src={`${getBasePath()}/statisk/bilder/ikon_ark.svg`} alt={""} />
                 </InfoIkon>
                 <Heading level="1" size="large" spacing>
                     <FormattedMessage id={"avbryt.overskrift"} />

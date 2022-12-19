@@ -27,7 +27,7 @@ import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
 import {Integrations} from "@sentry/tracing";
 import {BrowserRouter} from "react-router-dom";
 import {createBrowserHistory} from "history";
-import {getContextPathForStaticContent} from "./configuration";
+import {getBasePath} from "./configuration";
 import {RouterHistory} from "@sentry/react/types/reactrouter";
 
 Modal.setAppElement("#root");
@@ -110,10 +110,7 @@ ReactDOM.render(
     <Provider store={store}>
         <IntlProvider>
             <LoadContainer>
-                <BrowserRouter
-                    basename={getContextPathForStaticContent()}
-                    getUserConfirmation={getNavigationConfirmation}
-                >
+                <BrowserRouter basename={getBasePath()} getUserConfirmation={getNavigationConfirmation}>
                     <App />
                 </BrowserRouter>
             </LoadContainer>
