@@ -16,7 +16,7 @@ import SideIkkeFunnet from "../../nav-soknad/feilsider/SideIkkeFunnet";
 import {State} from "../redux/reducers";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 import {hentSoknad, hentSoknadOk, showServerFeil, showSideIkkeFunnet} from "../redux/soknad/soknadActions";
-import {erSkjemaEllerEttersendelseSide, NAVIGASJONSPROMPT} from "../../nav-soknad/utils";
+import {erSkjemaEllerEttersendelseSide} from "../../nav-soknad/utils";
 import TimeoutBox from "../../nav-soknad/components/timeoutbox/TimeoutBox";
 import {AvbrytSoknad} from "../../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
 import {useEffect} from "react";
@@ -84,7 +84,7 @@ const SkjemaRouter = (props: SkjemaRouterProps) => {
                 <Prompt
                     message={(loc) => {
                         dispatch(showServerFeil(false));
-                        return erSkjemaEllerEttersendelseSide(loc.pathname) ? true : NAVIGASJONSPROMPT.SKJEMA;
+                        return erSkjemaEllerEttersendelseSide(loc.pathname) ? true : "skjema";
                     }}
                 />
             </div>
@@ -112,10 +112,10 @@ const SkjemaRouter = (props: SkjemaRouterProps) => {
                 </Switch>
                 <Prompt
                     message={(loc) => {
-                        // If this page resides under /skjema, do not inhibit navigation.
+                        // If the path includes "/skjema", do not inhibit navigation.
                         if (erSkjemaEllerEttersendelseSide(loc.pathname)) return true;
 
-                        return NAVIGASJONSPROMPT.SKJEMA;
+                        return "skjema";
                     }}
                 />
                 <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />

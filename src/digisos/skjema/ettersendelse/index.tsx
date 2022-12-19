@@ -12,7 +12,7 @@ import {EttersendelseFeilkode} from "../../redux/ettersendelse/ettersendelseType
 import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
 import {Prompt} from "react-router";
-import {erEttersendelseSide, NAVIGASJONSPROMPT} from "../../../nav-soknad/utils";
+import {erEttersendelseSide} from "../../../nav-soknad/utils";
 import SoknadAlleredeSendtPrompt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPrompt";
 import HotjarTriggerEttersendelse from "../../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
 import {useTitle} from "../../../nav-soknad/hooks/useTitle";
@@ -183,7 +183,7 @@ const Ettersendelse = () => {
             <span>
                 <Prompt
                     message={(loc) => {
-                        return erEttersendelseSide(loc.pathname) ? true : NAVIGASJONSPROMPT.ETTERSENDELSE;
+                        return erEttersendelseSide(loc.pathname) ? true : "ettersendelse";
                     }}
                 />
                 <SoknadAlleredeSendtPrompt />

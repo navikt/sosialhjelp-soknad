@@ -17,7 +17,6 @@ import sagas from "./rootSaga";
 import IntlProvider from "./intlProvider";
 import App from "./digisos";
 import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
-import {NAVIGASJONSPROMPT} from "./nav-soknad/utils";
 import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/ettersendelseActions";
 import LoadContainer from "./LoadContainer";
 import Modal from "react-modal";
@@ -29,14 +28,15 @@ import {BrowserRouter} from "react-router-dom";
 import {createBrowserHistory} from "history";
 import {getBasePath} from "./configuration";
 import {RouterHistory} from "@sentry/react/types/reactrouter";
+import {NavigasjonsPromptType} from "./nav-soknad/utils";
 
 Modal.setAppElement("#root");
 
 const history = createBrowserHistory();
 
-const getNavigationConfirmation = (msg: any, callback: (flag: boolean) => void) => {
+const getNavigationConfirmation = (msg: NavigasjonsPromptType, callback: (flag: boolean) => void) => {
     switch (msg) {
-        case NAVIGASJONSPROMPT.SKJEMA:
+        case "skjema":
             const {behandlingsId, avbrytSoknadSjekkAktiv} = store.getState().soknad;
             if (behandlingsId && avbrytSoknadSjekkAktiv) {
                 store.dispatch(avbrytSoknad());
@@ -44,7 +44,7 @@ const getNavigationConfirmation = (msg: any, callback: (flag: boolean) => void) 
             } else callback(true);
 
             break;
-        case NAVIGASJONSPROMPT.ETTERSENDELSE:
+        case "ettersendelse":
             store.dispatch(visSoknadAlleredeSendtPrompt(true));
             callback(false);
 
