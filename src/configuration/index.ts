@@ -1,7 +1,5 @@
-const BASE_PATH = "/sosialhjelp/soknad";
-
-export const getBasePath = () => BASE_PATH;
+export const basePath = "/sosialhjelp/soknad" as const;
 
 export function getRedirectPathname(): string {
-    return `${BASE_PATH}/link`;
+    return `${basePath}/link`;
 }

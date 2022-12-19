@@ -3,25 +3,11 @@ export * from "./intlUtils";
 export * from "./faktumUtils";
 export * from "./navigasjonUtils";
 
-export function erDev(): boolean {
-    const url = window.location.href;
-    return url.indexOf("localhost:") > 0;
-}
+// Fanger ikke opp www-q*.dev.nav.no
+export const mockMiljoer = ["sosialhjelp-soknad-mock.dev.nav.no", "digisos.ekstern.dev.nav.no"];
 
-export function erMockMiljoEllerDev(): boolean {
-    if (erDev()) {
-        return true;
-    }
-    return erMockAltMiljo();
-}
+// FIXME: Disse bør ikke utledes fra URL
+export const erDev = () => window.location.href.indexOf("localhost:");
+export const erMockAlt = () => mockMiljoer.some((miljo) => miljo.indexOf(window.location.href));
 
-export function erMockAltMiljo(): boolean {
-    const url = window.location.href;
-    return (
-        url.indexOf("sosialhjelp-soknad-mock.dev.nav.no") > 0 || url.indexOf("digisos.ekstern.dev.nav.no") > 0 // Fanger ikke opp www-q*.dev.nav.no
-    );
-}
-
-export const now = (): number => {
-    return new Date().getTime();
-};
+export const now = (): number => new Date().getTime();

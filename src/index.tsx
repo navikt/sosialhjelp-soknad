@@ -26,7 +26,7 @@ import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
 import {Integrations} from "@sentry/tracing";
 import {BrowserRouter} from "react-router-dom";
 import {createBrowserHistory} from "history";
-import {getBasePath} from "./configuration";
+import {basePath} from "./configuration";
 import {RouterHistory} from "@sentry/react/types/reactrouter";
 import {NavigasjonsPromptType} from "./nav-soknad/utils";
 
@@ -110,7 +110,7 @@ ReactDOM.render(
     <Provider store={store}>
         <IntlProvider>
             <LoadContainer>
-                <BrowserRouter basename={getBasePath()} getUserConfirmation={getNavigationConfirmation}>
+                <BrowserRouter basename={basePath} getUserConfirmation={getNavigationConfirmation}>
                     <App />
                 </BrowserRouter>
             </LoadContainer>
