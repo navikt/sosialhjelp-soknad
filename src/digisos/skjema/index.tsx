@@ -2,7 +2,6 @@ import * as React from "react";
 import {Route, RouterProps, Switch, withRouter, matchPath, Prompt} from "react-router";
 import {Location} from "history";
 import {useDispatch, useSelector} from "react-redux";
-import Samtykke from "./samtykke/SamtykkeView";
 import Steg1 from "./personopplysninger";
 import Steg2 from "./begrunnelse";
 import Steg3 from "./arbeidUtdanning";
@@ -99,7 +98,6 @@ const SkjemaRouter = (props: SkjemaRouterProps) => {
         return (
             <>
                 <Switch>
-                    <SentryRoute path={`${path}/0`} component={Samtykke} />
                     <SentryRoute path={`${path}/1`} component={Steg1} />
                     <SentryRoute path={`${path}/2`} component={Steg2} />
                     <SentryRoute path={`${path}/3`} component={Steg3} />
