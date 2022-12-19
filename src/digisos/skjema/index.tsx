@@ -12,7 +12,7 @@ import Steg6 from "./inntektFormue";
 import Steg7 from "./utgifterGjeld";
 import Steg8 from "./okonomiskeOpplysninger";
 import NyOppsummering from "./ny-oppsummering/Oppsummering";
-import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
+import SideIkkeFunnet from "../../nav-soknad/feilsider/SideIkkeFunnet";
 import {State} from "../redux/reducers";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 import {hentSoknad, hentSoknadOk, showServerFeil, showSideIkkeFunnet} from "../redux/soknad/soknadActions";
@@ -20,7 +20,7 @@ import {erSkjemaEllerEttersendelseSide, NAVIGASJONSPROMPT} from "../../nav-sokna
 import TimeoutBox from "../../nav-soknad/components/timeoutbox/TimeoutBox";
 import {AvbrytSoknad} from "../../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
 import {useEffect} from "react";
-import ServerFeil from "../../nav-soknad/containers/ServerFeil";
+import ServerFeil from "../../nav-soknad/feilsider/ServerFeil";
 import {fetchToJson, HttpStatus} from "../../nav-soknad/utils/rest-utils";
 import {logWarning} from "../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
@@ -47,9 +47,8 @@ const getSoknad = async (behandlingsId: string, dispatch: Dispatch) => {
         const xsrfCookieIsOk: boolean = await fetchToJson(`soknader/${behandlingsId}/xsrfCookie`);
         dispatch(hentSoknadOk(xsrfCookieIsOk, behandlingsId ?? ""));
     } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            return;
-        }
+        if (reason.message === HttpStatus.UNAUTHORIZED) return;
+
         logWarning("hent soknad feilet: " + reason);
         dispatch(showSideIkkeFunnet(true));
     }
@@ -113,7 +112,10 @@ const SkjemaRouter = (props: SkjemaRouterProps) => {
                 </Switch>
                 <Prompt
                     message={(loc) => {
-                        return erSkjemaEllerEttersendelseSide(loc.pathname) ? true : NAVIGASJONSPROMPT.SKJEMA;
+                        // If this page resides under /skjema, do not inhibit navigation.
+                        if (erSkjemaEllerEttersendelseSide(loc.pathname)) return true;
+
+                        return NAVIGASJONSPROMPT.SKJEMA;
                     }}
                 />
                 <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />

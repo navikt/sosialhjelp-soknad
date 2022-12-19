@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Redirect, Route, Switch} from "react-router";
-import SideIkkeFunnet from "../nav-soknad/containers/SideIkkeFunnet";
+import SideIkkeFunnet from "../nav-soknad/feilsider/SideIkkeFunnet";
 import Informasjon from "./hovedmeny";
 import SkjemaRouter from "./skjema";
 import Ettersendelse from "./skjema/ettersendelse";

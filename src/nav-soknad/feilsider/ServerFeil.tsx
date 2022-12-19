@@ -2,7 +2,7 @@ import * as React from "react";
 import Feilside from "../components/feilside/Feilside";
 import {useIntl, FormattedMessage} from "react-intl";
 import {Undertittel} from "nav-frontend-typografi";
-import {getIntlTextOrKey} from "../utils/intlUtils";
+import {getIntlTextOrKey} from "../utils";
 import {Sider} from "../../digisos/redux/navigasjon/navigasjonTypes";
 
 const ServerFeil: React.FC = () => {
