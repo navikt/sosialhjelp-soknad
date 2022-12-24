@@ -19,8 +19,8 @@ import {
     setErSystemdataEndret,
     setSendSoknadServiceUnavailable,
     showSendingFeiletPanel,
-    showServerFeil,
-    showSideIkkeFunnet,
+    setShowServerError,
+    setShowPageNotFound,
     startSoknadOk,
     startSoknadServiceUnavailable,
     visMidlertidigDeaktivertPanel,
@@ -54,7 +54,7 @@ function* opprettSoknadSaga(action: {type: string; history: History}) {
             yield put(startSoknadServiceUnavailable());
         } else {
             yield call(logWarning, "opprett soknad saga feilet: " + reason);
-            yield put(showServerFeil(true));
+            yield put(setShowServerError(true));
             yield put(opprettSoknadFeilet());
         }
     }
@@ -69,7 +69,7 @@ function* hentSamtykker(action: HentSamtykker) {
             return;
         }
         yield call(logWarning, "hent samtykker saga feilet: " + reason);
-        yield put(showSideIkkeFunnet(true));
+        yield put(setShowPageNotFound(true));
     }
 }
 
@@ -99,7 +99,7 @@ function* oppdaterSamtykke(action: {
             yield put(startSoknadServiceUnavailable());
         } else {
             yield call(logWarning, "oppdater samtykke saga feilet: " + reason);
-            yield put(showServerFeil(true));
+            yield put(setShowServerError(true));
         }
     }
 }

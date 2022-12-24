@@ -48,12 +48,10 @@ const Ettersendelse = () => {
     }, [behandlingsId, dispatch]);
 
     useEffect(() => {
-        if (data.filter((vedlegg) => vedlegg.filer.length > 0).length > 0) {
+        if (data.filter((vedlegg) => vedlegg.filer.length).length) {
             window.addEventListener("beforeunload", alertUser);
         }
-        return function unload() {
-            window.removeEventListener("beforeunload", alertUser);
-        };
+        return () => window.removeEventListener("beforeunload", alertUser);
     }, [data]);
 
     const alertUser = (event: any) => {

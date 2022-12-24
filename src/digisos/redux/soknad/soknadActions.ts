@@ -216,7 +216,7 @@ export const visLasteOppVedleggModal = (skalVises: boolean): SoknadActionType =>
     };
 };
 
-export function showServerFeil(shouldShow: boolean): SoknadActionType {
+export function setShowServerError(shouldShow: boolean): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SHOW_SERVER_FEIL,
         shouldShow: shouldShow,
@@ -230,7 +230,7 @@ export function showSendingFeiletPanel(shouldShow: boolean): SoknadActionType {
     };
 }
 
-export function showSideIkkeFunnet(shouldShow: boolean): SoknadActionType {
+export function setShowPageNotFound(shouldShow: boolean): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET,
         shouldShow,

@@ -14,7 +14,7 @@ const ServerFeil: React.FC = () => {
 
     return (
         <Feilside visKnapp={true} onClick={onClick} knappTekst={intl.formatMessage({id: "feilside.serverfeil.knapp"})}>
-            <div className="blokk-m">
+            <div className="max-w-3xl mx-auto">
                 <p className="blokk-m">{intl.formatMessage({id: "feilside.serverfeil.feilmelding"})}</p>
                 <Undertittel key="feilside.serverfeil.nodsituasjon.tittel">
                     {getIntlTextOrKey(intl, "feilside.serverfeil.nodsituasjon.tittel")}

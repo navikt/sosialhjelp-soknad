@@ -8,7 +8,7 @@ import {
 } from "./opplysningerTypes";
 import {getOpplysningerUrl} from "./opplysningerUtils";
 import {fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
-import {showServerFeil} from "../soknad/soknadActions";
+import {setShowServerError} from "../soknad/soknadActions";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
 
@@ -50,7 +50,7 @@ export function hentOpplysninger(behandlingsId: string, dispatch: Dispatch) {
                 return;
             }
             logWarning("Henting av økonomiske opplysninger feilet: " + reason);
-            dispatch(showServerFeil(true));
+            dispatch(setShowServerError(true));
         });
 }
 

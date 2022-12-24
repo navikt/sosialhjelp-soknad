@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Route, RouterProps, Switch, withRouter, matchPath, Prompt} from "react-router";
 import {Location} from "history";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import Samtykke from "./samtykke/SamtykkeView";
 import Steg1 from "./personopplysninger";
 import Steg2 from "./begrunnelse";
@@ -13,9 +13,8 @@ import Steg7 from "./utgifterGjeld";
 import Steg8 from "./okonomiskeOpplysninger";
 import NyOppsummering from "./ny-oppsummering/Oppsummering";
 import SideIkkeFunnet from "../../nav-soknad/feilsider/SideIkkeFunnet";
-import {State} from "../redux/reducers";
 import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
-import {hentSoknad, hentSoknadOk, showServerFeil, showSideIkkeFunnet} from "../redux/soknad/soknadActions";
+import {hentSoknad, hentSoknadOk, setShowPageNotFound} from "../redux/soknad/soknadActions";
 import {erSkjemaEllerEttersendelseSide} from "../../nav-soknad/utils";
 import TimeoutBox from "../../nav-soknad/components/timeoutbox/TimeoutBox";
 import {AvbrytSoknad} from "../../nav-soknad/components/avbrytsoknad/AvbrytSoknad";
@@ -26,6 +25,7 @@ import {logWarning} from "../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
 import * as Sentry from "@sentry/react";
 import {ApplicationSpinner} from "../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
+import {useSoknad} from "../redux/soknad/useSoknad";
 
 const SentryRoute = Sentry.withSentryRouting(Route);
 
@@ -50,48 +50,33 @@ const getSoknad = async (behandlingsId: string, dispatch: Dispatch) => {
         if (reason.message === HttpStatus.UNAUTHORIZED) return;
 
         logWarning("hent soknad feilet: " + reason);
-        dispatch(showSideIkkeFunnet(true));
+        dispatch(setShowPageNotFound(true));
     }
 };
 
-const SkjemaRouter = (props: SkjemaRouterProps) => {
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
-    const visSideIkkeFunnet = useSelector((state: State) => state.soknad.showSideIkkeFunnet);
-    const visServerFeil = useSelector((state: State) => state.soknad.showServerFeil);
+const SkjemaRouter = ({location}: SkjemaRouterProps) => {
+    const {behandlingsId, showSideIkkeFunnet, showServerFeil} = useSoknad();
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         skjulToppMeny();
-        const match = matchPath(props.location.pathname, {
+        const match = matchPath(location.pathname, {
             path: "/skjema/:behandlingsIdFraUrl/:stegFraUrl",
         });
         if (match) {
             const {behandlingsIdFraUrl} = match.params as UrlParams;
             if (behandlingsId && behandlingsId !== behandlingsIdFraUrl) {
-                dispatch(showSideIkkeFunnet(true));
+                dispatch(setShowPageNotFound(true));
             }
             if (!behandlingsId) getSoknad(behandlingsIdFraUrl, dispatch);
         } else {
-            dispatch(showSideIkkeFunnet(true));
+            dispatch(setShowPageNotFound(true));
         }
-    }, [behandlingsId, dispatch, props.location.pathname]);
+    }, [behandlingsId, dispatch, location.pathname]);
 
-    if (visServerFeil) {
-        return (
-            <div>
-                <ServerFeil />
-                <Prompt
-                    message={(loc) => {
-                        dispatch(showServerFeil(false));
-                        return erSkjemaEllerEttersendelseSide(loc.pathname) ? true : "skjema";
-                    }}
-                />
-            </div>
-        );
-    }
-
-    if (visSideIkkeFunnet) return <SideIkkeFunnet />;
+    if (showServerFeil) return <ServerFeil />;
+    if (showSideIkkeFunnet) return <SideIkkeFunnet />;
 
     if (behandlingsId) {
         const path = "/skjema/:behandingsId";

@@ -14,7 +14,7 @@ import OpplastetVedlegg from "./OpplastetVedlegg";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {State} from "../../redux/reducers";
 import {fetchDelete, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
-import {showServerFeil} from "../../redux/soknad/soknadActions";
+import {setShowServerError} from "../../redux/soknad/soknadActions";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {REST_FEIL} from "../../redux/soknad/soknadTypes";
 
@@ -27,18 +27,18 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
 
     const dispatch = useDispatch();
 
-    const handleAlleredeLastetOpp = (event: any) => {
-        if (behandlingsId) {
-            const opplysningUpdated = {...props.okonomiskOpplysning};
+    const handleAlleredeLastetOpp = (_: any) => {
+        if (!behandlingsId) return;
 
-            if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND) {
-                opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGGALLEREDESEND;
-            } else {
-                opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
-            }
+        const opplysningUpdated = {...props.okonomiskOpplysning};
 
-            dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feil));
+        if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND) {
+            opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGGALLEREDESEND;
+        } else {
+            opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
         }
+
+        dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feil));
     };
 
     const slettVedlegg = (fil: Fil) => {
@@ -69,7 +69,7 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
                         return;
                     }
                     logWarning("Slett vedlegg feilet: " + reason);
-                    dispatch(showServerFeil(true));
+                    dispatch(setShowServerError(true));
                 });
         }
     };

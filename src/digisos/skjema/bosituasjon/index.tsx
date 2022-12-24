@@ -6,7 +6,7 @@ import Botype from "./Botype";
 import {useBosituasjon} from "./useBosituasjon";
 import {Loader} from "@navikt/ds-react";
 import styled from "styled-components";
-import {showServerFeil} from "../../redux/soknad/soknadActions";
+import {setShowServerError} from "../../redux/soknad/soknadActions";
 import {useDispatch} from "react-redux";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
 
@@ -29,7 +29,7 @@ export const Bosituasjon = ({behandlingsId}: BosituasjonViewProps) => {
 
     if (isLoading) return <Loader />;
 
-    if (isError) dispatch(showServerFeil(true));
+    if (isError) dispatch(setShowServerError(true));
 
     return (
         <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"bosituasjonbolk"} ikon={<BoligIllustrasjon />}>

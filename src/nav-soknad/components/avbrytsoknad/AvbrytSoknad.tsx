@@ -1,5 +1,5 @@
 import * as React from "react";
-import {fortsettSoknad, showServerFeil} from "../../../digisos/redux/soknad/soknadActions";
+import {fortsettSoknad, setShowServerError} from "../../../digisos/redux/soknad/soknadActions";
 import {FormattedMessage} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {basePath} from "../../../configuration";
@@ -86,7 +86,7 @@ export const AvbrytSoknad = () => {
                         return;
                     }
                     logWarning("slett soknad saga feilet: " + reason);
-                    dispatch(showServerFeil(true));
+                    dispatch(setShowServerError(true));
                 });
         }
     };

@@ -4,7 +4,7 @@ import {soknadsdataUrl} from "../../digisos/redux/soknadsdata/soknadsdataActions
 import {oppdaterSoknadsdataSti, SoknadsSti} from "../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {clearAllValideringsfeil} from "../../digisos/redux/validering/valideringActions";
 import {
-    showServerFeil,
+    setShowServerError,
     visIkkePakobletPanel,
     visMidlertidigDeaktivertPanel,
 } from "../../digisos/redux/soknad/soknadActions";
@@ -24,7 +24,7 @@ const fetchNavEnhet = async (dispatch: Dispatch, behandlingsId: string) => {
     } catch (e: any) {
         if (e.message !== HttpStatus.UNAUTHORIZED) {
             logWarning("Henting/parsing av navEnhet feilet: " + e);
-            dispatch(showServerFeil(true));
+            dispatch(setShowServerError(true));
         }
 
         return null;
