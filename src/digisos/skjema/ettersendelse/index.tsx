@@ -7,7 +7,6 @@ import {lesEttersendelser, opprettEttersendelse} from "../../redux/ettersendelse
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
 import {MargIkoner} from "./margIkoner";
-import {visToppMeny} from "../../../nav-soknad/utils/domUtils";
 import {EttersendelseFeilkode} from "../../redux/ettersendelse/ettersendelseTypes";
 import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
@@ -39,7 +38,6 @@ const Ettersendelse = () => {
     useTitle("Ettersendelse - Søknad om økonomisk sosialhjelp");
 
     useEffect(() => {
-        visToppMeny();
         const brukerbehandlingskjedeId = lesBrukerbehandlingskjedeId(behandlingsId);
         if (brukerbehandlingskjedeId) {
             dispatch(opprettEttersendelse(brukerbehandlingskjedeId));

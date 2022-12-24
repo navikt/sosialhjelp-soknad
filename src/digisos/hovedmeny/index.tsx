@@ -3,7 +3,6 @@ import {useSelector} from "react-redux";
 import {useIntl} from "react-intl";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
 import IkkeTilgang from "./IkkeTilgang";
-import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import {State} from "../redux/reducers";
 import {useTitle} from "../../nav-soknad/hooks/useTitle";
@@ -20,10 +19,6 @@ const Informasjon = () => {
         useSelector((state: State) => state.soknad.pabegynteSoknader),
         new Date()
     );
-
-    React.useEffect(() => {
-        skjulToppMeny();
-    }, []);
 
     if (!harTilgang) return <IkkeTilgang />;
 

@@ -14,7 +14,6 @@ import Steg8 from "./okonomiskeOpplysninger";
 import NyOppsummering from "./ny-oppsummering/Oppsummering";
 import SideIkkeFunnet from "../../nav-soknad/containers/SideIkkeFunnet";
 import {State} from "../redux/reducers";
-import {skjulToppMeny} from "../../nav-soknad/utils/domUtils";
 import {hentSoknad, hentSoknadOk, showServerFeil, showSideIkkeFunnet} from "../redux/soknad/soknadActions";
 import {erSkjemaEllerEttersendelseSide, NAVIGASJONSPROMPT} from "../../nav-soknad/utils";
 import TimeoutBox from "../../nav-soknad/components/timeoutbox/TimeoutBox";
@@ -63,7 +62,6 @@ const SkjemaRouter = (props: SkjemaRouterProps) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        skjulToppMeny();
         const match = matchPath(props.location.pathname, {
             path: "/skjema/:behandlingsIdFraUrl/:stegFraUrl",
         });
