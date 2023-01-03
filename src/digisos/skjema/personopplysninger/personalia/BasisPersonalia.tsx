@@ -26,9 +26,8 @@ const BasisPersonaliaView = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.BASIS_PERSONALIA, dispatch);
-        }
+        if (!behandlingsId) return;
+        hentSoknadsdata(behandlingsId, SoknadsSti.BASIS_PERSONALIA, dispatch);
     }, [behandlingsId, dispatch]);
 
     const basisPersonalia = soknadsdata.personalia.basisPersonalia;
@@ -42,10 +41,10 @@ const BasisPersonaliaView = () => {
             <Sporsmal
                 faktumKey="kontakt.system.personalia"
                 stil={"system"}
-                visLedetekst={visAnimerteStreker !== true}
+                visLedetekst={!visAnimerteStreker}
                 sprakNokkel="kontakt.system.personalia"
             >
-                {visAnimerteStreker !== true && basisPersonalia && (
+                {!visAnimerteStreker && basisPersonalia && (
                     <Systeminfo
                         systeminfoMap={[
                             {
