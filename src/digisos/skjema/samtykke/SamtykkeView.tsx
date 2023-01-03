@@ -11,7 +11,6 @@ import {State} from "../../redux/reducers";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {ErSystemdataEndret, Samtykke} from "../../redux/soknad/soknadActionTypes";
 import EllaKompakt from "../../../nav-soknad/components/svg/EllaKompakt";
-import {useHistory} from "react-router";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 import {Button, GuidePanel} from "@navikt/ds-react";
 import styled from "styled-components";
@@ -34,8 +33,6 @@ const SamtykkeView: React.FC = () => {
     const samtykkeRestStatus: REST_STATUS = useSelector((state: State) => state.soknad.samtykkeRestStatus);
     let samtykkerTekst: string = "";
 
-    const history = useHistory();
-
     useEffect(() => {
         if (behandlingsId) {
             dispatch(getErSystemdataEndret(behandlingsId));
@@ -57,12 +54,10 @@ const SamtykkeView: React.FC = () => {
     }
 
     if (harLastetinnSamtykker && behandlingsId && !harSamtykker && erSystemdataEndret === ErSystemdataEndret.NO) {
-        history.push(getStegUrl(behandlingsId, 1));
     }
 
     function knappOppdaterSamtykkeOgGaTilSteg1() {
         if (behandlingsId && samtykker) {
-            dispatch(oppdaterSamtykke(behandlingsId, harAvsjekketSamtykkeBoksen, samtykker, history));
         }
     }
 

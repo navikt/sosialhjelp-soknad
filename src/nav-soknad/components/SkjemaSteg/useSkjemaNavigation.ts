@@ -1,8 +1,11 @@
 import {createSkjemaEventData, logAmplitudeEvent} from "../../utils/amplitude";
 import {
     resetSendSoknadServiceUnavailable,
-    sendSoknad,
+    sendSoknadOk,
     sendSoknadPending,
+    setSendSoknadServiceUnavailable,
+    showSendingFeiletPanel,
+    visMidlertidigDeaktivertPanel,
 } from "../../../digisos/redux/soknad/soknadActions";
 import {setVisBekreftMangler} from "../../../digisos/redux/oppsummering/oppsummeringActions";
 import {erAktiv, navEnhetGyldigEllerIkkeSatt} from "../../containers/containerUtils";
@@ -16,14 +19,43 @@ import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../digisos/redux/reducers";
 import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
-import {logInfo} from "../../utils/loggerUtils";
-import {useHistory} from "react-router";
+import {logInfo, logWarning} from "../../utils/loggerUtils";
 import {SkjemaSteg} from "./digisosSkjema";
+import {useNavigate} from "react-router";
+import {SendSoknadResponse} from "../../../digisos/redux/soknad/soknadTypes";
+import {fetchPost, getInnsynUrl, HttpStatus} from "../../utils/rest-utils";
+import {AnyAction, Dispatch} from "redux";
+
+const sendSoknad = async (behandlingsId: string, dispatch: Dispatch<AnyAction>) => {
+    try {
+        const response = await fetchPost<SendSoknadResponse>(
+            `soknader/${behandlingsId}/actions/send`,
+            JSON.stringify({behandlingsId}),
+            true
+        );
+
+        dispatch(sendSoknadOk(behandlingsId));
+
+        if (!response) return `/skjema/${behandlingsId}/ettersendelse`;
+        if (response.sendtTil === "FIKS_DIGISOS_API") return `${getInnsynUrl()}${response.id}/status`;
+        if (response?.id) return `/skjema/${response.id}/ettersendelse`;
+    } catch (reason) {
+        if (reason.message === HttpStatus.UNAUTHORIZED) return;
+
+        logWarning("send soknad saga feilet: " + reason);
+
+        if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
+            dispatch(visMidlertidigDeaktivertPanel(true));
+            dispatch(setSendSoknadServiceUnavailable());
+        } else {
+            dispatch(showSendingFeiletPanel(true));
+        }
+    }
+};
 
 export const useSkjemaNavigation = () => {
     const {soknadsdata, soknad, validering, oppsummering} = useSelector((state: State) => state);
-    const history = useHistory();
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const {behandlingsId} = soknad;
     const finnSoknadsMottaker = () => soknadsdata.personalia.navEnhet;
@@ -65,7 +97,8 @@ export const useSkjemaNavigation = () => {
                 logAmplitudeEvent("skjema fullført", createSkjemaEventData(getAttributesForSkjemaFullfortEvent()));
                 loggAdresseTypeTilGrafana();
                 dispatch(sendSoknadPending());
-                dispatch(sendSoknad(behandlingsId, history));
+                const nextPage = await sendSoknad(behandlingsId, dispatch);
+                if (nextPage) window.location.href = nextPage;
             } else {
                 dispatch(setVisBekreftMangler(true));
             }
@@ -91,7 +124,7 @@ export const useSkjemaNavigation = () => {
             steg: aktivtSteg.id,
         });
 
-        history.push(getStegUrl(behandlingsId, aktivtSteg.id + 1));
+        navigate(getStegUrl(behandlingsId, aktivtSteg.id + 1));
     };
 
     const handleGaTilSkjemaSteg = (steg: number, aktivtSteg?: SkjemaSteg) => {
@@ -104,7 +137,7 @@ export const useSkjemaNavigation = () => {
         } else {
             if (!validering.feil.length) {
                 dispatch(clearAllValideringsfeil());
-                history.push(getStegUrl(behandlingsId, steg));
+                navigate(getStegUrl(behandlingsId, steg));
             } else {
                 dispatch(visValideringsfeilPanel());
             }
@@ -114,7 +147,7 @@ export const useSkjemaNavigation = () => {
         if (!behandlingsId) return;
         dispatch(clearAllValideringsfeil());
         dispatch(resetSendSoknadServiceUnavailable());
-        history.push(getStegUrl(behandlingsId, aktivtSteg - 1));
+        navigate(getStegUrl(behandlingsId, aktivtSteg - 1));
     };
 
     const kanGaTilSkjemasteg = (aktivtSteg?: SkjemaSteg): boolean => {

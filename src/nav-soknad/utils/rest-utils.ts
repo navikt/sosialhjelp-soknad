@@ -122,8 +122,8 @@ export function fetchPut(urlPath: string, body: string, withAccessToken?: boolea
     return serverRequest(RequestMethod.PUT, urlPath, body, withAccessToken);
 }
 
-export function fetchPost(urlPath: string, body: string, withAccessToken?: boolean) {
-    return serverRequest(RequestMethod.POST, urlPath, body, withAccessToken);
+export function fetchPost<T>(urlPath: string, body: string, withAccessToken?: boolean) {
+    return serverRequest<T>(RequestMethod.POST, urlPath, body, withAccessToken);
 }
 
 export function fetchDelete(urlPath: string) {

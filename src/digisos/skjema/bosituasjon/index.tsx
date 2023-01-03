@@ -9,6 +9,8 @@ import styled from "styled-components";
 import {setShowServerError} from "../../redux/soknad/soknadActions";
 import {useDispatch} from "react-redux";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
+import {UrlParams} from "../index";
+import {useParams} from "react-router";
 
 interface BosituasjonViewProps {
     behandlingsId: string;
@@ -23,13 +25,16 @@ const StegSkjema = styled.div`
     margin-bottom: 5rem;
 `;
 
-export const Bosituasjon = ({behandlingsId}: BosituasjonViewProps) => {
+export const Bosituasjon = () => {
+    const {behandlingsId} = useParams<UrlParams>();
     const {isLoading, isError} = useBosituasjon(behandlingsId);
     const dispatch = useDispatch();
 
     if (isLoading) return <Loader />;
 
     if (isError) dispatch(setShowServerError(true));
+
+    if (!behandlingsId) return null;
 
     return (
         <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"bosituasjonbolk"} ikon={<BoligIllustrasjon />}>

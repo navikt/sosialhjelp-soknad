@@ -17,23 +17,9 @@ import {
 import {IntlShape} from "react-intl";
 import {History} from "history";
 
-export function startSoknadOk() {
+export function startSoknadDone() {
     return {
-        type: SoknadActionTypeKeys.START_SOKNAD_OK,
-    };
-}
-
-export function startSoknadServiceUnavailable() {
-    return {
-        type: SoknadActionTypeKeys.START_SOKNAD_SERVICE_UNAVAILABLE,
-    };
-}
-
-export function opprettSoknad(intl: IntlShape, history: History) {
-    return {
-        type: SoknadActionTypeKeys.OPPRETT_SOKNAD,
-        intl,
-        history,
+        type: SoknadActionTypeKeys.START_SOKNAD_DONE,
     };
 }
 
@@ -107,14 +93,6 @@ export function avbrytSoknad(): SoknadActionType {
 export function fortsettSoknad(): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.FORTSETT_SOKNAD,
-    };
-}
-
-export function finnOgOppdaterSoknadsmottakerStatus(brukerbehandlingId: string, history: History): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS,
-        brukerbehandlingId,
-        history,
     };
 }
 
@@ -244,7 +222,7 @@ export const visMidlertidigDeaktivertPanel = (shouldShow: boolean): VisMidlertid
     };
 };
 
-export const visNedetidPanel = (shouldShow: boolean): VisNedetidPanel => {
+export const showDowntimeError = (shouldShow: boolean): VisNedetidPanel => {
     return {
         type: SoknadActionTypeKeys.VIS_NEDETID_PANEL,
         shouldShow,

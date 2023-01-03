@@ -1,6 +1,5 @@
 import * as React from "react";
 import {useEffect} from "react";
-import {RouteComponentProps, withRouter} from "react-router";
 import {FormattedMessage, useIntl} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {Innholdstittel} from "nav-frontend-typografi";
@@ -19,6 +18,7 @@ import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepper} from "./SkjemaStegNavStepper";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapper from "./SkjemaStegNavKnapper";
+import SkjemaRouter from "../../../digisos/skjema";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -82,7 +82,7 @@ const IkkePakobletPanel = () => {
     );
 };
 
-const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps & RouteComponentProps) => {
+export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps) => {
     const {soknadsdata, soknad, validering, okonomiskeOpplysninger} = useSelector((state: State) => state);
     const {enFilLastesOpp} = okonomiskeOpplysninger;
     const {nedetid} = soknad;
@@ -111,17 +111,16 @@ const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps
 
     return (
         <div className="pb-40 bg-green-500/20">
+            <SkjemaRouter />
             <AppBanner />
             <SkjemaStegNavStepper skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={handleGaTilSkjemaSteg} />
             <div className={"p-12 pt-0 mt-0 max-w-2xl mx-auto skjema-steg skjema-content"}>
                 <NedetidPanel varselType={"infoside"} />
-
                 <Feiloppsummering
                     skjemanavn={skjemaConfig.skjemanavn}
                     valideringsfeil={feil}
                     visFeilliste={visValideringsfeil}
                 />
-
                 <div className={"bg-white max-w-2xl w-full mx-auto rounded-2xl p-16 pt-8"}>
                     <form id="soknadsskjema" onSubmit={stopEvent}>
                         <div className="skjema-steg__ikon">{ikon}</div>
@@ -158,4 +157,4 @@ const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps
     );
 };
 
-export default withRouter(SkjemaSteg);
+export default SkjemaSteg;

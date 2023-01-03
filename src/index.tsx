@@ -15,43 +15,21 @@ import * as Sentry from "@sentry/react";
 import reducers from "./digisos/redux/reducers";
 import sagas from "./rootSaga";
 import IntlProvider from "./intlProvider";
-import App from "./digisos";
-import {avbrytSoknad} from "./digisos/redux/soknad/soknadActions";
-import {visSoknadAlleredeSendtPrompt} from "./digisos/redux/ettersendelse/ettersendelseActions";
 import LoadContainer from "./LoadContainer";
 import Modal from "react-modal";
 import {initAmplitude} from "./nav-soknad/utils/amplitude";
 import {logException, NavLogEntry, NavLogLevel} from "./nav-soknad/utils/loggerUtils";
 import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
 import {Integrations} from "@sentry/tracing";
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, RouterProvider} from "react-router-dom";
 import {createBrowserHistory} from "history";
 import {basePath} from "./configuration";
 import {RouterHistory} from "@sentry/react/types/reactrouter";
+import {router} from "./digisos";
 
 Modal.setAppElement("#root");
 
 const history = createBrowserHistory();
-
-const getNavigationConfirmation = (msg: string, callback: (flag: boolean) => void) => {
-    switch (msg) {
-        case "skjema":
-            const {behandlingsId, avbrytSoknadSjekkAktiv} = store.getState().soknad;
-            if (behandlingsId && avbrytSoknadSjekkAktiv) {
-                store.dispatch(avbrytSoknad());
-                callback(false);
-            } else callback(true);
-
-            break;
-        case "ettersendelse":
-            store.dispatch(visSoknadAlleredeSendtPrompt(true));
-            callback(false);
-
-            break;
-        default:
-            callback(true);
-    }
-};
 
 Sentry.init({
     dsn: "https://e81d69cb0fb645068f8b9329fd3a138a@sentry.gc.nav.no/99",
@@ -109,9 +87,7 @@ ReactDOM.render(
     <Provider store={store}>
         <IntlProvider>
             <LoadContainer>
-                <BrowserRouter basename={basePath} getUserConfirmation={getNavigationConfirmation}>
-                    <App />
-                </BrowserRouter>
+                <RouterProvider router={router} />
             </LoadContainer>
         </IntlProvider>
     </Provider>,

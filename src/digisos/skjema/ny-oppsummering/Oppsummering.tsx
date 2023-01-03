@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Accordion, ConfirmationPanel, Link, Label, Alert} from "@navikt/ds-react";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../redux/reducers";
-import {finnOgOppdaterSoknadsmottakerStatus} from "../../redux/soknad/soknadActions";
+import {oppdaterSoknadsmottakerStatus} from "../../redux/soknad/soknadActions";
 import {
     bekreftOppsummering,
     hentNyOppsummering,
@@ -22,13 +22,17 @@ import {FreeText} from "./question/FreeText";
 import {Warning} from "./question/Warning";
 import {SystemDataMap} from "./question/SystemDataMap";
 import {Attachment} from "./question/Attachment";
-import {useHistory} from "react-router";
+import {useNavigate} from "react-router";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 import {Link as ReactRouterLink} from "react-router-dom";
 import styled from "styled-components";
 import {useSoknad} from "../../redux/soknad/useSoknad";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
+import {NavEnhet} from "../personopplysninger/adresse/AdresseTypes";
+import {soknadsdataUrl} from "../../redux/soknadsdata/soknadsdataActions";
+import {SoknadsSti} from "../../redux/soknadsdata/soknadsdataReducer";
+import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
@@ -53,27 +57,34 @@ export const Oppsummering = () => {
     const nedetidslutt = nedetid?.nedetidSluttText ?? "";
     const isNedetid = nedetid?.isNedetid;
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const intl = useIntl();
 
     useEffect(() => {
         if (!behandlingsId) return;
 
-        dispatch(finnOgOppdaterSoknadsmottakerStatus(behandlingsId, history));
+        fetchToJson<NavEnhet[]>(soknadsdataUrl(behandlingsId, SoknadsSti.NAV_ENHETER)).then((enheter) => {
+            const valgtSoknadsmottaker = enheter.find((n) => n.valgt);
+            if (!valgtSoknadsmottaker || valgtSoknadsmottaker.isMottakMidlertidigDeaktivert) {
+                logWarning(`Ugyldig søknadsmottaker ${valgtSoknadsmottaker} på side 9, sender bruker til side 1`);
+                navigate("1");
+                return;
+            }
+            dispatch(oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker));
+        });
+
         dispatch(hentNyOppsummering());
         fetchToJson<NyOppsummeringResponse>(`soknader/${behandlingsId}/oppsummering`)
             .then((response) => {
                 dispatch(setNyOppsummering(response));
             })
             .catch((reason) => {
-                if (reason.message === HttpStatus.UNAUTHORIZED) {
-                    return;
-                }
+                if (reason.message === HttpStatus.UNAUTHORIZED) return;
                 dispatch(hentOppsumeringFeilet(reason));
             });
         setLoading(false);
-    }, [behandlingsId, history, dispatch]);
+    }, [behandlingsId, dispatch]);
 
     const bekreftOpplysninger: string = intl.formatMessage({
         id: "soknadsosialhjelp.oppsummering.harLestSamtykker",

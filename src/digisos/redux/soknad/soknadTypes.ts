@@ -1,5 +1,6 @@
 import {ErSystemdataEndret, Samtykke} from "./soknadActionTypes";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
+import {SoknadSendtTil} from "./soknadSaga";
 
 export interface SoknadState {
     // Visning state
@@ -83,7 +84,7 @@ export interface OpprettSoknadResponse {
 }
 
 export interface SendSoknadResponse {
-    sendtTil: string;
+    sendtTil: SoknadSendtTil;
     id: string;
 }
 
