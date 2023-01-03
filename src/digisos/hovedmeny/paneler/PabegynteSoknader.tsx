@@ -3,10 +3,10 @@ import {Accordion, BodyShort, Heading, Label, LinkPanel} from "@navikt/ds-react"
 import React from "react";
 import {DAYS_BEFORE_DELETION} from "./pabegynteSoknaderUtils";
 import type {PabegyntSoknadData} from "./pabegynteSoknaderUtils";
-import {useHistory} from "react-router";
 import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
 import {format, formatDistance} from "date-fns";
 import {nb} from "date-fns/locale";
+import {useNavigate} from "react-router";
 
 const PabegyntSoknad = ({
     behandlingsId,
@@ -21,14 +21,14 @@ const PabegyntSoknad = ({
     deleteDate: Date;
     antallPabegynteSoknader: number;
 }) => {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const onPabegyntSoknadClick = (event: React.SyntheticEvent, href: string) => {
         event.preventDefault();
         logAmplitudeEvent("Klikk på påbegynt søknad", {
             antallPabegynteSoknader,
         });
-        history.push(href);
+        navigate(href);
     };
 
     return (
