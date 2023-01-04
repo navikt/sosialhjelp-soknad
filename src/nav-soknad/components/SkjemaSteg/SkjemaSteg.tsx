@@ -6,7 +6,7 @@ import {Innholdstittel} from "nav-frontend-typografi";
 import Feiloppsummering from "../validering/Feiloppsummering";
 import {REST_STATUS} from "../../../digisos/redux/soknad/soknadTypes";
 import {getIntlTextOrKey, scrollToTop} from "../../utils";
-import {avbrytSoknad} from "../../../digisos/redux/soknad/soknadActions";
+import {avbrytSoknad, hentSoknad, hentSoknadOk, setShowPageNotFound} from "../../../digisos/redux/soknad/soknadActions";
 import AppBanner from "../appHeader/AppHeader";
 import {State} from "../../../digisos/redux/reducers";
 import {useTitle} from "../../hooks/useTitle";
@@ -18,11 +18,33 @@ import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepper} from "./SkjemaStegNavStepper";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapper from "./SkjemaStegNavKnapper";
-import SkjemaRouter from "../../../digisos/skjema";
+import {useParams} from "react-router";
+import ServerFeil from "../../feilsider/ServerFeil";
+import SideIkkeFunnet from "../../feilsider/SideIkkeFunnet";
+import TimeoutBox from "../timeoutbox/TimeoutBox";
+import {AvbrytSoknad} from "../avbrytsoknad/AvbrytSoknad";
+import {Dispatch} from "redux";
+import {fetchToJson, HttpStatus} from "../../utils/rest-utils";
+import {logWarning} from "../../utils/loggerUtils";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
     evt.preventDefault();
+};
+
+export type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
+
+export const getSoknad = async (behandlingsId: string, dispatch: Dispatch) => {
+    try {
+        dispatch(hentSoknad(behandlingsId));
+        const xsrfCookieIsOk = await fetchToJson<boolean>(`soknader/${behandlingsId}/xsrfCookie`);
+        dispatch(hentSoknadOk(xsrfCookieIsOk, behandlingsId ?? ""));
+    } catch (reason) {
+        if (reason.message === HttpStatus.UNAUTHORIZED) return;
+
+        logWarning("hent soknad feilet: " + reason);
+        dispatch(setShowPageNotFound(true));
+    }
 };
 
 interface StegMedNavigasjonProps {
@@ -109,9 +131,20 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
 
     useTitle(`${stegTittel} - ${documentTitle}`);
 
+    const {behandlingsId, showSideIkkeFunnet, showServerFeil} = useSoknad();
+    const params = useParams<UrlParams>();
+
+    useEffect(() => {
+        if (!behandlingsId && params.behandlingsId) getSoknad(params.behandlingsId, dispatch);
+        else if (behandlingsId !== params.behandlingsId) dispatch(setShowPageNotFound(true));
+    }, [behandlingsId, dispatch, params]);
+
+    if (showServerFeil) return <ServerFeil />;
+
+    if (showSideIkkeFunnet) return <SideIkkeFunnet />;
+
     return (
         <div className="pb-40 bg-green-500/20">
-            <SkjemaRouter />
             <AppBanner />
             <SkjemaStegNavStepper skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={handleGaTilSkjemaSteg} />
             <div className={"p-12 pt-0 mt-0 max-w-2xl mx-auto skjema-steg skjema-content"}>
@@ -129,7 +162,8 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
                         </div>
 
                         {children}
-
+                        <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
+                        <AvbrytSoknad />
                         {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && (
                             <>
                                 <MidlertidigDeaktivertPanel />

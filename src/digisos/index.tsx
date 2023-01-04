@@ -1,4 +1,4 @@
-import {Route} from "react-router";
+import {createRoutesFromChildren, matchRoutes, Route, useLocation, useNavigationType} from "react-router";
 import SideIkkeFunnet from "../nav-soknad/feilsider/SideIkkeFunnet";
 import Informasjon from "./hovedmeny";
 import {erDev, erMockAlt} from "../nav-soknad/utils";
@@ -15,6 +15,8 @@ import Steg6 from "./skjema/inntektFormue";
 import Steg7 from "./skjema/utgifterGjeld";
 import Steg8 from "./skjema/okonomiskeOpplysninger";
 import NyOppsummering from "./skjema/ny-oppsummering/Oppsummering";
+import * as Sentry from "@sentry/react";
+import {BrowserTracing} from "@sentry/tracing";
 
 const redirectFromLogin = async () => {
     const url = window.location.href;
@@ -45,4 +47,23 @@ const Routes = (
     </Route>
 );
 
-export const router = createBrowserRouter(createRoutesFromElements(Routes), {basename: basePath});
+Sentry.init({
+    dsn: "https://e81d69cb0fb645068f8b9329fd3a138a@sentry.gc.nav.no/99",
+    integrations: [
+        new BrowserTracing({
+            routingInstrumentation: Sentry.reactRouterV6Instrumentation(
+                React.useEffect,
+                useLocation,
+                useNavigationType,
+                createRoutesFromChildren,
+                matchRoutes
+            ),
+        }),
+    ],
+    environment: process.env.REACT_APP_ENVIRONMENT,
+    tracesSampleRate: 1.0,
+});
+
+const sentryCreateBrowserRouter = Sentry.wrapCreateBrowserRouter(createBrowserRouter);
+
+export const router = sentryCreateBrowserRouter(createRoutesFromElements(Routes), {basename: basePath});

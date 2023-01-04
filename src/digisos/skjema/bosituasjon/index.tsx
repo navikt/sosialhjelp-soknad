@@ -8,13 +8,8 @@ import {Loader} from "@navikt/ds-react";
 import styled from "styled-components";
 import {setShowServerError} from "../../redux/soknad/soknadActions";
 import {useDispatch} from "react-redux";
-import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
-import {UrlParams} from "../index";
+import StegMedNavigasjon, {UrlParams} from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
 import {useParams} from "react-router";
-
-interface BosituasjonViewProps {
-    behandlingsId: string;
-}
 
 // Dette blir sannsynligvis <Steg.Skjema />
 const StegSkjema = styled.div`
