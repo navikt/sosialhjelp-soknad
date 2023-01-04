@@ -36,6 +36,7 @@ export function opprettSoknadOk(behandlingsId: string): SoknadActionType {
     };
 }
 
+// This function only sets the soknad REST status to Pending
 export function hentSoknad(behandlingsId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.HENT_SOKNAD,
@@ -43,6 +44,7 @@ export function hentSoknad(behandlingsId: string): SoknadActionType {
     };
 }
 
+// This function sets xsrfCookieReceived and behandlingsId
 export function hentSoknadOk(xsrfCookieReceived: boolean, behandlingsId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.HENT_SOKNAD_OK,

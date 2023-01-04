@@ -9,11 +9,8 @@ import {setShowServerError} from "../soknad/soknadActions";
 import {setValideringsfeil} from "../validering/valideringActions";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 
-export function getFeilForOpplysning(feil: Valideringsfeil[], opplysningTextKey: string) {
-    return feil.filter((f: Valideringsfeil) => {
-        return f.faktumKey.indexOf(opplysningTextKey) > -1;
-    });
-}
+export const getFeilForOpplysning = (feil: Valideringsfeil[], opplysningTextKey: string) =>
+    feil.filter(({faktumKey}) => faktumKey.indexOf(opplysningTextKey) > -1);
 
 function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
     const {behandlingsId, opplysning, feil} = action;

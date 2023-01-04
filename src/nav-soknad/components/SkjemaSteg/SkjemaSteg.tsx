@@ -6,7 +6,7 @@ import {Innholdstittel} from "nav-frontend-typografi";
 import Feiloppsummering from "../validering/Feiloppsummering";
 import {REST_STATUS} from "../../../digisos/redux/soknad/soknadTypes";
 import {getIntlTextOrKey, scrollToTop} from "../../utils";
-import {avbrytSoknad, hentSoknad, hentSoknadOk, setShowPageNotFound} from "../../../digisos/redux/soknad/soknadActions";
+import {avbrytSoknad, setShowPageNotFound} from "../../../digisos/redux/soknad/soknadActions";
 import AppBanner from "../appHeader/AppHeader";
 import {State} from "../../../digisos/redux/reducers";
 import {useTitle} from "../../hooks/useTitle";
@@ -23,9 +23,7 @@ import ServerFeil from "../../feilsider/ServerFeil";
 import SideIkkeFunnet from "../../feilsider/SideIkkeFunnet";
 import TimeoutBox from "../timeoutbox/TimeoutBox";
 import {AvbrytSoknad} from "../avbrytsoknad/AvbrytSoknad";
-import {Dispatch} from "redux";
-import {fetchToJson, HttpStatus} from "../../utils/rest-utils";
-import {logWarning} from "../../utils/loggerUtils";
+import {getSoknad} from "../../../lib/getSoknad";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
@@ -33,19 +31,6 @@ const stopEvent = (evt: React.FormEvent<any>) => {
 };
 
 export type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
-
-export const getSoknad = async (behandlingsId: string, dispatch: Dispatch) => {
-    try {
-        dispatch(hentSoknad(behandlingsId));
-        const xsrfCookieIsOk = await fetchToJson<boolean>(`soknader/${behandlingsId}/xsrfCookie`);
-        dispatch(hentSoknadOk(xsrfCookieIsOk, behandlingsId ?? ""));
-    } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) return;
-
-        logWarning("hent soknad feilet: " + reason);
-        dispatch(setShowPageNotFound(true));
-    }
-};
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;

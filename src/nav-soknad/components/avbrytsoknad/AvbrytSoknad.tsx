@@ -11,6 +11,7 @@ import {useEffect} from "react";
 import ReactModal from "react-modal";
 import styled from "styled-components";
 import {mobile} from "../../styles/variables";
+import {slettSoknad} from "../../../lib/slettSoknad";
 
 const StyledModal = styled(Modal)`
     max-width: 40rem;
@@ -62,14 +63,10 @@ const ButtonRow = styled.div`
     gap: 1rem;
 `;
 
-const getMinSideUrl = () => {
-    return `${process.env.REACT_APP_MIN_SIDE_URL}`;
-};
+export const minSideUrl = `${process.env.REACT_APP_MIN_SIDE_URL}`;
 
 export const AvbrytSoknad = () => {
     const {behandlingsId, avbrytDialog, nedetid} = useSelector((state: State) => state.soknad);
-
-    const minSideUrl = getMinSideUrl();
 
     const dispatch = useDispatch();
 
@@ -77,15 +74,13 @@ export const AvbrytSoknad = () => {
         ReactModal.setAppElement("#root");
     }, []);
 
-    const onAvbryt = () => {
+    const onAvbryt = async () => {
         if (!behandlingsId) return;
-        fetchDelete(`soknader/${behandlingsId}`)
-            .then(() => (window.location.href = minSideUrl))
-            .catch((reason) => {
-                if (reason.message === HttpStatus.UNAUTHORIZED) return;
-                logWarning("slett soknad saga feilet: " + reason);
-                dispatch(setShowServerError(true));
-            });
+        if (!(await slettSoknad(behandlingsId))) {
+            dispatch(setShowServerError(true));
+        } else {
+            window.location.href = minSideUrl;
+        }
     };
 
     const onFortsett = () => {
