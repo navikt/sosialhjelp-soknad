@@ -27,7 +27,9 @@ export const SkjemaStegNavStepper = ({
                 {Object.entries(skjemaConfig.steg)
                     .filter(([_, s]) => s.type === "skjema")
                     .map(([key, _]) => (
-                        <Stepper.Step as="button">{intl.formatMessage({id: `${key}.tittel`})}</Stepper.Step>
+                        <Stepper.Step key={key} as="button">
+                            {intl.formatMessage({id: `${key}.tittel`})}
+                        </Stepper.Step>
                     ))}
             </Stepper>
         </div>
