@@ -78,17 +78,14 @@ export const AvbrytSoknad = () => {
     }, []);
 
     const onAvbryt = () => {
-        if (behandlingsId) {
-            fetchDelete(`soknader/${behandlingsId}`)
-                .then(() => (window.location.href = minSideUrl))
-                .catch((reason) => {
-                    if (reason.message === HttpStatus.UNAUTHORIZED) {
-                        return;
-                    }
-                    logWarning("slett soknad saga feilet: " + reason);
-                    dispatch(setShowServerError(true));
-                });
-        }
+        if (!behandlingsId) return;
+        fetchDelete(`soknader/${behandlingsId}`)
+            .then(() => (window.location.href = minSideUrl))
+            .catch((reason) => {
+                if (reason.message === HttpStatus.UNAUTHORIZED) return;
+                logWarning("slett soknad saga feilet: " + reason);
+                dispatch(setShowServerError(true));
+            });
     };
 
     const onFortsett = () => {
