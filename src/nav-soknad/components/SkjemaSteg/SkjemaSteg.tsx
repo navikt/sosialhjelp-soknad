@@ -165,7 +165,6 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
                             }
                             gaVidere={() => handleGaVidere(aktivtSteg)}
                             gaTilbake={aktivtSteg.id > 1 ? () => handleGaTilbake(aktivtSteg.id) : undefined}
-                            avbryt={() => dispatch(avbrytSoknad())}
                             sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
                             lastOppVedleggPending={enFilLastesOpp}
                         />

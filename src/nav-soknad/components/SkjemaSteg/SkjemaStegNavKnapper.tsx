@@ -15,7 +15,6 @@ interface SkjemaStegNavigasjonProps {
     gaVidereLabel?: string;
     gaVidere?: () => void;
     gaTilbake?: () => void;
-    avbryt?: () => void;
     lastOppVedleggPending?: boolean;
 }
 
@@ -24,7 +23,6 @@ export const SkjemaStegNavKnapper = ({
     sendSoknadServiceUnavailable,
     gaVidere,
     gaTilbake,
-    avbryt,
     gaVidereLabel,
     lastOppVedleggPending,
 }: SkjemaStegNavigasjonProps) => {
