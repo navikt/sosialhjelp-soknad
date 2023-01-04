@@ -27,7 +27,8 @@ const redirectFromLogin = async () => {
 
 const Routes = (
     <Route errorElement={<SideIkkeFunnet />}>
-        <Route index path={`/`} element={<Informasjon />} />
+        <Route index path={`/`} loader={() => redirect("/informasjon")} />
+        <Route path={`/informasjon`} element={<Informasjon />} />
         <Route path={`/link`} loader={redirectFromLogin} />
         {!erMockAlt() && !erDev() && <Route path={`/mock-login`} loader={redirectFromLogin} />}
         <Route path={"/skjema/:behandlingsId/*"}>
