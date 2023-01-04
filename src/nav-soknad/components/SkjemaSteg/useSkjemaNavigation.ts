@@ -1,12 +1,5 @@
 import {createSkjemaEventData, logAmplitudeEvent} from "../../utils/amplitude";
-import {
-    resetSendSoknadServiceUnavailable,
-    sendSoknadOk,
-    sendSoknadPending,
-    setSendSoknadServiceUnavailable,
-    showSendingFeiletPanel,
-    visMidlertidigDeaktivertPanel,
-} from "../../../digisos/redux/soknad/soknadActions";
+import {resetSendSoknadServiceUnavailable, sendSoknadPending} from "../../../digisos/redux/soknad/soknadActions";
 import {setVisBekreftMangler} from "../../../digisos/redux/oppsummering/oppsummeringActions";
 import {erAktiv, navEnhetGyldigEllerIkkeSatt} from "../../containers/containerUtils";
 import {
@@ -19,39 +12,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../digisos/redux/reducers";
 import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
-import {logInfo, logWarning} from "../../utils/loggerUtils";
+import {logInfo} from "../../utils/loggerUtils";
 import {SkjemaSteg} from "./digisosSkjema";
 import {useNavigate} from "react-router";
-import {SendSoknadResponse} from "../../../digisos/redux/soknad/soknadTypes";
-import {fetchPost, getInnsynUrl, HttpStatus} from "../../utils/rest-utils";
-import {AnyAction, Dispatch} from "redux";
-
-const sendSoknad = async (behandlingsId: string, dispatch: Dispatch<AnyAction>) => {
-    try {
-        const response = await fetchPost<SendSoknadResponse>(
-            `soknader/${behandlingsId}/actions/send`,
-            JSON.stringify({behandlingsId}),
-            true
-        );
-
-        dispatch(sendSoknadOk(behandlingsId));
-
-        if (!response) return `/skjema/${behandlingsId}/ettersendelse`;
-        if (response.sendtTil === "FIKS_DIGISOS_API") return `${getInnsynUrl()}${response.id}/status`;
-        if (response?.id) return `/skjema/${response.id}/ettersendelse`;
-    } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) return;
-
-        logWarning("send soknad saga feilet: " + reason);
-
-        if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
-            dispatch(visMidlertidigDeaktivertPanel(true));
-            dispatch(setSendSoknadServiceUnavailable());
-        } else {
-            dispatch(showSendingFeiletPanel(true));
-        }
-    }
-};
+import {sendSoknad} from "../../../lib/sendSoknad";
 
 export const useSkjemaNavigation = () => {
     const {soknadsdata, soknad, validering, oppsummering} = useSelector((state: State) => state);
