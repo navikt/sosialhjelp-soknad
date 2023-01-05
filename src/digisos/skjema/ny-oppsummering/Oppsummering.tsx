@@ -84,7 +84,7 @@ export const Oppsummering = () => {
                 dispatch(hentOppsumeringFeilet(reason));
             });
         setLoading(false);
-    }, [behandlingsId, dispatch]);
+    }, [behandlingsId, dispatch, navigate]);
 
     const bekreftOpplysninger: string = intl.formatMessage({
         id: "soknadsosialhjelp.oppsummering.harLestSamtykker",

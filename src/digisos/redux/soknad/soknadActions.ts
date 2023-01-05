@@ -14,7 +14,6 @@ import {
     PabegynteSoknaderResponse,
     TilgangResponse,
 } from "./soknadTypes";
-import {IntlShape} from "react-intl";
 import {History} from "history";
 
 export function startSoknadDone() {

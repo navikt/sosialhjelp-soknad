@@ -3,9 +3,8 @@ import {getIntlTextOrKey} from "../../utils";
 import {FormattedMessage, useIntl} from "react-intl";
 import {Button, Loader} from "@navikt/ds-react";
 import {slettSoknad} from "../../../lib/slettSoknad";
-import {fortsettSoknad, setShowServerError} from "../../../digisos/redux/soknad/soknadActions";
-import {useDispatch, useSelector} from "react-redux";
-import {State} from "../../../digisos/redux/reducers";
+import {setShowServerError} from "../../../digisos/redux/soknad/soknadActions";
+import {useDispatch} from "react-redux";
 import {useSoknad} from "../../../digisos/redux/soknad/useSoknad";
 import {minSideUrl} from "../avbrytsoknad/AvbrytSoknad";
 

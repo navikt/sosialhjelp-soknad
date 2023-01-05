@@ -4,8 +4,6 @@ import {FormattedMessage} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {basePath} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
-import {fetchDelete, HttpStatus} from "../../utils/rest-utils";
-import {logWarning} from "../../utils/loggerUtils";
 import {Alert, BodyShort, Button, Modal, Heading} from "@navikt/ds-react";
 import {useEffect} from "react";
 import ReactModal from "react-modal";

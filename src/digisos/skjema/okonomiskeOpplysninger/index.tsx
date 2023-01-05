@@ -44,6 +44,7 @@ const OkonomiskeOpplysningerView = () => {
                         return (
                             <Gruppe key={opplysningGruppe} gruppeKey={opplysningGruppe} gruppe={opplysningerIGruppe} />
                         );
+                    return null;
                 })}
             </OkonomiskeOpplysningerContainer>
         </StegMedNavigasjon>

@@ -14,7 +14,7 @@ import {useParams} from "react-router";
 import SoknadAlleredeSendtPrompt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPrompt";
 import HotjarTriggerEttersendelse from "../../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
 import {useTitle} from "../../../nav-soknad/hooks/useTitle";
-import {Alert, BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
+import {BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
 import {BlokkCenter} from "./BlokkCenter";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
 

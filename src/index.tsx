@@ -21,9 +21,8 @@ import {initAmplitude} from "./nav-soknad/utils/amplitude";
 import {logException, NavLogEntry, NavLogLevel} from "./nav-soknad/utils/loggerUtils";
 import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
 import {Integrations} from "@sentry/tracing";
-import {BrowserRouter, RouterProvider} from "react-router-dom";
+import {RouterProvider} from "react-router-dom";
 import {createBrowserHistory} from "history";
-import {basePath} from "./configuration";
 import {RouterHistory} from "@sentry/react/types/reactrouter";
 import {router} from "./digisos";
 

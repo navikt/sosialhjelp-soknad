@@ -6,7 +6,7 @@ import {Innholdstittel} from "nav-frontend-typografi";
 import Feiloppsummering from "../validering/Feiloppsummering";
 import {REST_STATUS} from "../../../digisos/redux/soknad/soknadTypes";
 import {getIntlTextOrKey, scrollToTop} from "../../utils";
-import {avbrytSoknad, setShowPageNotFound} from "../../../digisos/redux/soknad/soknadActions";
+import {setShowPageNotFound} from "../../../digisos/redux/soknad/soknadActions";
 import AppBanner from "../appHeader/AppHeader";
 import {State} from "../../../digisos/redux/reducers";
 import {useTitle} from "../../hooks/useTitle";
