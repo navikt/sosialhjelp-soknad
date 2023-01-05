@@ -6,6 +6,7 @@ import type {PabegyntSoknadData} from "./pabegynteSoknaderUtils";
 import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
 import {format, formatDistance} from "date-fns";
 import {nb} from "date-fns/locale";
+import {basePath} from "../../../configuration";
 import {useNavigate} from "react-router";
 
 const PabegyntSoknad = ({
@@ -28,14 +29,14 @@ const PabegyntSoknad = ({
         logAmplitudeEvent("Klikk på påbegynt søknad", {
             antallPabegynteSoknader,
         });
-        navigate(href);
+        window.location.href = href;
     };
 
     return (
         <li>
             <LinkPanel
-                href={`skjema/${behandlingsId}/1`}
-                onClick={(event) => onPabegyntSoknadClick(event, `skjema/${behandlingsId}/1`)}
+                href={`${basePath}/skjema/${behandlingsId}/1`}
+                onClick={(event) => onPabegyntSoknadClick(event, `${basePath}/skjema/${behandlingsId}/1`)}
                 border
                 className={"!p-4"}
             >
