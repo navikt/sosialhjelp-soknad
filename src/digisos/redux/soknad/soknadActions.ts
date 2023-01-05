@@ -85,17 +85,13 @@ export function sendSoknadOk(behandlingsId: string): SoknadActionType {
     };
 }
 
-export function avbrytSoknad(): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.AVBRYT_SOKNAD,
-    };
-}
+export const visAvbrytSoknadModal = (): SoknadActionType => ({
+    type: SoknadActionTypeKeys.VIS_AVBRYT_SOKNAD_MODAL,
+});
 
-export function fortsettSoknad(): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.FORTSETT_SOKNAD,
-    };
-}
+export const skjulAvbrytSoknadModal = (): SoknadActionType => ({
+    type: SoknadActionTypeKeys.SKJUL_AVBRYT_SOKNAD_MODAL,
+});
 
 export function oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker: NavEnhet): SoknadActionType {
     return {

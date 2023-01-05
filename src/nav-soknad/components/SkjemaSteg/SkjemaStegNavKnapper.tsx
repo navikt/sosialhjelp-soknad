@@ -2,10 +2,8 @@ import * as React from "react";
 import {getIntlTextOrKey} from "../../utils";
 import {FormattedMessage, useIntl} from "react-intl";
 import {Button, Loader} from "@navikt/ds-react";
-import {slettSoknad} from "../../../lib/slettSoknad";
-import {setShowServerError} from "../../../digisos/redux/soknad/soknadActions";
+import {visAvbrytSoknadModal} from "../../../digisos/redux/soknad/soknadActions";
 import {useDispatch} from "react-redux";
-import {useSoknad} from "../../../digisos/redux/soknad/useSoknad";
 import {minSideUrl} from "../avbrytsoknad/AvbrytSoknad";
 
 interface SkjemaStegNavigasjonProps {
@@ -25,27 +23,12 @@ export const SkjemaStegNavKnapper = ({
     gaVidereLabel,
     lastOppVedleggPending,
 }: SkjemaStegNavigasjonProps) => {
-    const {behandlingsId} = useSoknad();
-
     const dispatch = useDispatch();
     const intl = useIntl();
 
     const loading = gaViderePending || lastOppVedleggPending;
     const forwardInhibited = loading || sendSoknadServiceUnavailable;
     const backwardInhibited = loading || !gaTilbake;
-
-    const onAvbrytSlett = async () => {
-        if (!behandlingsId) return;
-        if (!(await slettSoknad(behandlingsId))) {
-            dispatch(setShowServerError(true));
-        } else {
-            window.location.href = minSideUrl;
-        }
-    };
-
-    const onAvbrytFortsettSenere = () => {
-        window.location.href = minSideUrl;
-    };
 
     return (
         <div className={"space-y-16 px-6 pt-10"}>
@@ -59,10 +42,10 @@ export const SkjemaStegNavKnapper = ({
                     {loading && <Loader />}
                 </Button>
             </div>
-            <Button variant="tertiary" onClick={onAvbrytFortsettSenere}>
+            <Button variant="tertiary" onClick={() => (window.location.href = minSideUrl)}>
                 <FormattedMessage id={"avbryt.fortsettsenere"} />
             </Button>
-            <Button variant="tertiary" onClick={onAvbrytSlett}>
+            <Button variant="tertiary" onClick={() => dispatch(visAvbrytSoknadModal())}>
                 <FormattedMessage id={"avbryt.slett"} />
             </Button>
         </div>

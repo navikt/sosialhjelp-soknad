@@ -1,15 +1,16 @@
 import * as React from "react";
-import {fortsettSoknad, setShowServerError} from "../../../digisos/redux/soknad/soknadActions";
+import {skjulAvbrytSoknadModal, setShowServerError} from "../../../digisos/redux/soknad/soknadActions";
 import {FormattedMessage} from "react-intl";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {basePath} from "../../../configuration";
-import {State} from "../../../digisos/redux/reducers";
-import {Alert, BodyShort, Button, Modal, Heading} from "@navikt/ds-react";
+import {BodyShort, Button, Modal, Heading} from "@navikt/ds-react";
 import {useEffect} from "react";
 import ReactModal from "react-modal";
 import styled from "styled-components";
 import {mobile} from "../../styles/variables";
 import {slettSoknad} from "../../../lib/slettSoknad";
+import {NedetidPanel} from "../../../components/common/NedetidPanel";
+import {useSoknad} from "../../../digisos/redux/soknad/useSoknad";
 
 const StyledModal = styled(Modal)`
     max-width: 40rem;
@@ -64,7 +65,7 @@ const ButtonRow = styled.div`
 export const minSideUrl = `${process.env.REACT_APP_MIN_SIDE_URL}`;
 
 export const AvbrytSoknad = () => {
-    const {behandlingsId, avbrytDialog, nedetid} = useSelector((state: State) => state.soknad);
+    const {behandlingsId, visAvbrytOgSlettModal} = useSoknad();
 
     const dispatch = useDispatch();
 
@@ -82,15 +83,11 @@ export const AvbrytSoknad = () => {
     };
 
     const onFortsett = () => {
-        dispatch(fortsettSoknad());
-    };
-
-    const onFortsettSenere = () => {
-        window.location.href = minSideUrl;
+        dispatch(skjulAvbrytSoknadModal());
     };
 
     return (
-        <StyledModal open={avbrytDialog.synlig || false} onClose={() => onFortsett()}>
+        <StyledModal open={visAvbrytOgSlettModal} onClose={() => onFortsett()}>
             <ModalContent>
                 <InfoIkon>
                     <img src={`${basePath}/statisk/bilder/ikon_ark.svg`} alt={""} />
@@ -101,20 +98,9 @@ export const AvbrytSoknad = () => {
                 <BodyShort spacing>
                     <FormattedMessage id={"avbryt.forklaring"} />
                 </BodyShort>
-                {nedetid?.isPlanlagtNedetid && (
-                    <Alert variant="info">
-                        <FormattedMessage
-                            id="nedetid.alertstripe.avbryt"
-                            values={{
-                                nedetidstart: nedetid?.nedetidStart,
-                                nedetidslutt: nedetid?.nedetidSlutt,
-                            }}
-                        />
-                    </Alert>
-                )}
-
+                <NedetidPanel varselType={"infoside"} />
                 <ButtonRow>
-                    <Button variant="primary" onClick={() => onFortsettSenere()}>
+                    <Button variant="primary" onClick={() => onAvbryt()}>
                         <FormattedMessage id={"avbryt.fortsettsenere"} />
                     </Button>
                     <Button variant="primary" onClick={() => onAvbryt()}>
