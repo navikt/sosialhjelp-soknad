@@ -55,14 +55,11 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^13.4.0",
     "@types/amplitude-js": "^8.16.0",
-    "@types/classnames": "^2.3.1",
     "@types/jest": "^29.2.3",
     "@types/node": "^18.11.10",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
-    "@types/react-inlinesvg": "^1.0.0",
-    "@types/react-intl": "^3.0.0",
-    "@types/react-modal": "^3.10.6",
+    "@types/react-modal": "^3.12.1",
     "@types/react-redux": "^7.1.23",
     "@types/react-scroll": "^1.8.3",
     "@types/styled-components": "^5.1.24",
@@ -105,6 +102,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "react-scripts": {
+      "@svgr/webpack": "6.5.1"
+    }
   },
   "lint-staged": {
     "*.{ts,tsx,less,css,md}": "prettier --write"
