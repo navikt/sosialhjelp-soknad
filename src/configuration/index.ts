@@ -1,7 +1,6 @@
-export const CONTEXT_PATH = "sosialhjelp/soknad";
-
-export const getContextPathForStaticContent = (): string => "/sosialhjelp/soknad";
+// Note: This value is duplicated in server.js because the imports are weird
+export const basePath = "/sosialhjelp/soknad" as const;
 
 export function getRedirectPathname(): string {
-    return `/${CONTEXT_PATH}/link`;
+    return `${basePath}/link`;
 }

@@ -1,5 +1,6 @@
 import {ErSystemdataEndret, Samtykke} from "./soknadActionTypes";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
+import {SoknadSendtTil} from "../../../lib/sendSoknad";
 
 export interface SoknadState {
     // Visning state
@@ -32,10 +33,7 @@ export interface SoknadState {
     sendSoknadPending: boolean;
 
     // Avbryt state
-    avbrytSoknadSjekkAktiv: boolean;
-    avbrytDialog: {
-        synlig: boolean;
-    };
+    visAvbrytOgSlettModal: boolean;
 
     // Soknad state
     behandlingsId: string | undefined;
@@ -83,7 +81,7 @@ export interface OpprettSoknadResponse {
 }
 
 export interface SendSoknadResponse {
-    sendtTil: string;
+    sendtTil: SoknadSendtTil;
     id: string;
 }
 

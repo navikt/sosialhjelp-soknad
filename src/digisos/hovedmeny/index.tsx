@@ -23,10 +23,10 @@ const Informasjon = () => {
     if (!harTilgang) return <IkkeTilgang />;
 
     return (
-        <div className={"bg-green-500/20"}>
+        <div className={"bg-green-500/20 flex flex-col"}>
             <AppBanner />
             <NedetidPanel varselType={"infoside"} />
-            <div className="max-w-3xl mx-auto space-y-5 lg:py-24">
+            <div className="max-w-3xl mx-auto space-y-5 py-12 lg:py-24">
                 <NySoknadPanel antallPabegynteSoknader={pabegynteSoknader.length} />
                 <PabegynteSoknaderPanel pabegynteSoknader={pabegynteSoknader} />
                 <EttersendDokuPanel />

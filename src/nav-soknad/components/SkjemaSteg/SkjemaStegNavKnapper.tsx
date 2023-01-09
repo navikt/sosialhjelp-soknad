@@ -1,7 +1,10 @@
 import * as React from "react";
 import {getIntlTextOrKey} from "../../utils";
-import {useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import {Button, Loader} from "@navikt/ds-react";
+import {visAvbrytSoknadModal} from "../../../digisos/redux/soknad/soknadActions";
+import {useDispatch} from "react-redux";
+import {minSideUrl} from "../avbrytsoknad/AvbrytSoknad";
 
 interface SkjemaStegNavigasjonProps {
     gaViderePending?: boolean;
@@ -9,7 +12,6 @@ interface SkjemaStegNavigasjonProps {
     gaVidereLabel?: string;
     gaVidere?: () => void;
     gaTilbake?: () => void;
-    avbryt?: () => void;
     lastOppVedleggPending?: boolean;
 }
 
@@ -18,11 +20,12 @@ export const SkjemaStegNavKnapper = ({
     sendSoknadServiceUnavailable,
     gaVidere,
     gaTilbake,
-    avbryt,
     gaVidereLabel,
     lastOppVedleggPending,
 }: SkjemaStegNavigasjonProps) => {
+    const dispatch = useDispatch();
     const intl = useIntl();
+
     const loading = gaViderePending || lastOppVedleggPending;
     const forwardInhibited = loading || sendSoknadServiceUnavailable;
     const backwardInhibited = loading || !gaTilbake;
@@ -30,7 +33,7 @@ export const SkjemaStegNavKnapper = ({
     return (
         <div className={"space-y-16 px-6 pt-10"}>
             <div className="space-x-3">
-                <Button variant="primary" id="gaa_tilbake_button" onClick={gaTilbake} disabled={backwardInhibited}>
+                <Button variant="secondary" id="gaa_tilbake_button" onClick={gaTilbake} disabled={backwardInhibited}>
                     {getIntlTextOrKey(intl, "skjema.knapper.tilbake")}
                     {lastOppVedleggPending && <Loader />}
                 </Button>
@@ -39,8 +42,11 @@ export const SkjemaStegNavKnapper = ({
                     {loading && <Loader />}
                 </Button>
             </div>
-            <Button onClick={gaViderePending ? undefined : avbryt} variant="tertiary">
-                {getIntlTextOrKey(intl, "skjema.knapper.avbryt")}
+            <Button variant="tertiary" onClick={() => (window.location.href = minSideUrl)}>
+                <FormattedMessage id={"avbryt.fortsettsenere"} />
+            </Button>
+            <Button variant="tertiary" onClick={() => dispatch(visAvbrytSoknadModal())}>
+                <FormattedMessage id={"avbryt.slett"} />
             </Button>
         </div>
     );

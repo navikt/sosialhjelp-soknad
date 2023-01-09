@@ -1,4 +1,3 @@
-import {History} from "history";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {
     FornavnResponse,
@@ -8,24 +7,22 @@ import {
     TilgangResponse,
 } from "./soknadTypes";
 
-export enum SoknadActionTypeKeys {
-    START_SOKNAD_OK = "soknad/START_SOKNAD_OK",
-    START_SOKNAD_SERVICE_UNAVAILABLE = "soknad/START_SOKNAD_SERVICE_UNAVAILABLE",
+export const enum SoknadActionTypeKeys {
+    START_SOKNAD_DONE = "soknad/START_SOKNAD_DONE",
     OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
     OPPRETT_SOKNAD_FEILET = "soknad/OPPRETT_SOKNAD_FEILET",
     OPPRETT_SOKNAD_OK = "soknad/OPPRETT_SOKNAD_OK",
     HENT_SOKNAD = "soknad/HENT_SOKNAD",
     HENT_SOKNAD_OK = "soknad/HENT_SOKNAD_OK",
 
-    AVBRYT_SOKNAD = "soknad/AVBRYT_SOKNAD",
-    FORTSETT_SOKNAD = "soknad/FORTSETT_SOKNAD",
+    VIS_AVBRYT_SOKNAD_MODAL = "soknad/AVBRYT_SOKNAD",
+    SKJUL_AVBRYT_SOKNAD_MODAL = "soknad/FORTSETT_SOKNAD",
     SEND_SOKNAD_KNAPP_PENDING = "soknad/SEND_SOKNAD_KNAPP_PENDING",
     SEND_SOKNAD = "soknad/SEND_SOKNAD",
     SEND_SOKNAD_OK = "soknad/SEND_SOKNAD_OK",
 
     GET_ER_SYSTEMDATA_ENDRET = "soknad/GET_ER_SYSTEMDATA_ENDRET",
     SET_ER_SYSTEMDATA_ENDRET = "soknad/SET_ER_SYSTEMDATA_ENDRET",
-    FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS = "soknad/FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS",
     OPPDATER_SOKNADSMOTTAKER_STATUS = "soknad/OPPDATER_SOKNADSMOTTAKER_STATUS",
 
     HENT_SAMTYKKE = "soknad/HENT_SAMTYKKE",
@@ -53,8 +50,7 @@ export enum SoknadActionTypeKeys {
 
 // 24
 export type SoknadActionType =
-    | StartSoknadOkAction
-    | StartSoknadServerUnavailableAction
+    | StartSoknadDoneAction
     | OpprettSoknadAction
     | OpprettSoknadFeiletAction
     | OpprettSoknadOkAction
@@ -67,7 +63,6 @@ export type SoknadActionType =
     | SendSoknadOkAction
     | GetErSystemdataEndret
     | SetErSystemdataEndret
-    | FinnOgOppdaterSoknadsmottakerStatus
     | OppdaterSoknadsmottakerStatus
     | HentSamtykker
     | HentSamtykkerOk
@@ -103,7 +98,6 @@ export interface OppdaterSamtykke {
     behandlingsId: string;
     harSamtykket: boolean;
     samtykker: Samtykke[];
-    history: History;
 }
 
 export interface Samtykke {
@@ -137,23 +131,13 @@ export interface VisLasteOppVedleggModal {
     skalVises: boolean;
 }
 
-export interface FinnOgOppdaterSoknadsmottakerStatus {
-    type: SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS;
-    brukerbehandlingId: string;
-    history: History;
-}
-
 export interface OppdaterSoknadsmottakerStatus {
     type: SoknadActionTypeKeys.OPPDATER_SOKNADSMOTTAKER_STATUS;
     valgtSoknadsmottaker: NavEnhet;
 }
 
-export interface StartSoknadOkAction {
-    type: SoknadActionTypeKeys.START_SOKNAD_OK;
-}
-
-export interface StartSoknadServerUnavailableAction {
-    type: SoknadActionTypeKeys.START_SOKNAD_SERVICE_UNAVAILABLE;
+export interface StartSoknadDoneAction {
+    type: SoknadActionTypeKeys.START_SOKNAD_DONE;
 }
 
 export interface OpprettSoknadAction {
@@ -187,7 +171,6 @@ export interface SendSoknadPendingAction {
 export interface SendSoknadAction {
     type: SoknadActionTypeKeys.SEND_SOKNAD;
     behandlingsId: string;
-    history: History;
 }
 
 export interface SendSoknadOkAction {
@@ -196,11 +179,11 @@ export interface SendSoknadOkAction {
 }
 
 export interface AvbrytSoknadAction {
-    type: SoknadActionTypeKeys.AVBRYT_SOKNAD;
+    type: SoknadActionTypeKeys.VIS_AVBRYT_SOKNAD_MODAL;
 }
 
 export interface FortsettSoknadAction {
-    type: SoknadActionTypeKeys.FORTSETT_SOKNAD;
+    type: SoknadActionTypeKeys.SKJUL_AVBRYT_SOKNAD_MODAL;
 }
 
 export interface GetErSystemdataEndret {

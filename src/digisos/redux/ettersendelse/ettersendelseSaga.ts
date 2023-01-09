@@ -35,12 +35,11 @@ import {
     opprettEttersendelse,
 } from "./ettersendelseActions";
 import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
-import {showServerFeil} from "../soknad/soknadActions";
+import {setShowServerError} from "../soknad/soknadActions";
 import {REST_FEIL} from "../soknad/soknadTypes";
 import {settFilOpplastingFerdig} from "../okonomiskeOpplysninger/opplysningerActions";
 import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {State} from "../reducers";
-import {lesBrukerbehandlingskjedeId} from "../../skjema/ettersendelse";
 
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
     try {
@@ -71,7 +70,7 @@ function* lesEttersendelserSaga(action: LesEttersendelserAction) {
             return;
         }
         yield call(logWarning, "Les ettersendelser feilet: " + reason.toString());
-        yield put(showServerFeil(true));
+        yield put(setShowServerError(true));
     }
 }
 
@@ -87,7 +86,7 @@ function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction) {
             return;
         }
         yield call(logWarning, "Lese ettersendte vedlegg feilet: " + reason.toString());
-        yield put(showServerFeil(true));
+        yield put(setShowServerError(true));
     }
 }
 
@@ -104,7 +103,7 @@ function* slettEttersendelsesVedleggSaga(action: SlettEttersendtVedleggAction): 
             return;
         }
         yield call(logWarning, "Slett ettersendt vedlegg feilet: " + reason);
-        yield put(showServerFeil(true));
+        yield put(setShowServerError(true));
     }
 }
 
@@ -162,17 +161,16 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
         yield put(lastOppEttersendtVedleggOk());
 
         const behandlingsId = yield select((state: State) => state.soknad.behandlingsId);
-        const brukerbehandlingskjedeId = lesBrukerbehandlingskjedeId(behandlingsId);
-        if (brukerbehandlingskjedeId) {
-            yield put(opprettEttersendelse(brukerbehandlingskjedeId));
-            yield put(lesEttersendelser(brukerbehandlingskjedeId));
+        if (behandlingsId) {
+            yield put(opprettEttersendelse(behandlingsId));
+            yield put(lesEttersendelser(behandlingsId));
         }
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
         }
         yield call(logWarning, "Send ettersendelse feilet: " + reason.toString());
-        yield put(showServerFeil(true));
+        yield put(setShowServerError(true));
     }
 }
 

@@ -1,13 +1,12 @@
 import * as React from "react";
 import {useEffect} from "react";
-import {RouteComponentProps, withRouter} from "react-router";
 import {FormattedMessage, useIntl} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {Innholdstittel} from "nav-frontend-typografi";
 import Feiloppsummering from "../validering/Feiloppsummering";
 import {REST_STATUS} from "../../../digisos/redux/soknad/soknadTypes";
 import {getIntlTextOrKey, scrollToTop} from "../../utils";
-import {avbrytSoknad} from "../../../digisos/redux/soknad/soknadActions";
+import {setShowPageNotFound} from "../../../digisos/redux/soknad/soknadActions";
 import AppBanner from "../appHeader/AppHeader";
 import {State} from "../../../digisos/redux/reducers";
 import {useTitle} from "../../hooks/useTitle";
@@ -19,11 +18,19 @@ import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepper} from "./SkjemaStegNavStepper";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapper from "./SkjemaStegNavKnapper";
+import {useParams} from "react-router";
+import ServerFeil from "../../feilsider/ServerFeil";
+import SideIkkeFunnet from "../../feilsider/SideIkkeFunnet";
+import TimeoutBox from "../timeoutbox/TimeoutBox";
+import {AvbrytSoknad} from "../avbrytsoknad/AvbrytSoknad";
+import {getSoknad} from "../../../lib/getSoknad";
 
 const stopEvent = (evt: React.FormEvent<any>) => {
     evt.stopPropagation();
     evt.preventDefault();
 };
+
+export type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
@@ -82,7 +89,7 @@ const IkkePakobletPanel = () => {
     );
 };
 
-const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps & RouteComponentProps) => {
+export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps) => {
     const {soknadsdata, soknad, validering, okonomiskeOpplysninger} = useSelector((state: State) => state);
     const {enFilLastesOpp} = okonomiskeOpplysninger;
     const {nedetid} = soknad;
@@ -109,19 +116,29 @@ const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps
 
     useTitle(`${stegTittel} - ${documentTitle}`);
 
+    const {behandlingsId, showSideIkkeFunnet, showServerFeil} = useSoknad();
+    const params = useParams<UrlParams>();
+
+    useEffect(() => {
+        if (!behandlingsId && params.behandlingsId) getSoknad(params.behandlingsId, dispatch);
+        else if (behandlingsId !== params.behandlingsId) dispatch(setShowPageNotFound(true));
+    }, [behandlingsId, dispatch, params]);
+
+    if (showServerFeil) return <ServerFeil />;
+
+    if (showSideIkkeFunnet) return <SideIkkeFunnet />;
+
     return (
         <div className="pb-40 bg-green-500/20">
             <AppBanner />
             <SkjemaStegNavStepper skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={handleGaTilSkjemaSteg} />
             <div className={"p-12 pt-0 mt-0 max-w-2xl mx-auto skjema-steg skjema-content"}>
                 <NedetidPanel varselType={"infoside"} />
-
                 <Feiloppsummering
                     skjemanavn={skjemaConfig.skjemanavn}
                     valideringsfeil={feil}
                     visFeilliste={visValideringsfeil}
                 />
-
                 <div className={"bg-white max-w-2xl w-full mx-auto rounded-2xl p-16 pt-8"}>
                     <form id="soknadsskjema" onSubmit={stopEvent}>
                         <div className="skjema-steg__ikon">{ikon}</div>
@@ -130,7 +147,8 @@ const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps
                         </div>
 
                         {children}
-
+                        <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
+                        <AvbrytSoknad />
                         {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && (
                             <>
                                 <MidlertidigDeaktivertPanel />
@@ -147,7 +165,6 @@ const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps
                             }
                             gaVidere={() => handleGaVidere(aktivtSteg)}
                             gaTilbake={aktivtSteg.id > 1 ? () => handleGaTilbake(aktivtSteg.id) : undefined}
-                            avbryt={() => dispatch(avbrytSoknad())}
                             sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
                             lastOppVedleggPending={enFilLastesOpp}
                         />
@@ -158,4 +175,4 @@ const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps
     );
 };
 
-export default withRouter(SkjemaSteg);
+export default SkjemaSteg;

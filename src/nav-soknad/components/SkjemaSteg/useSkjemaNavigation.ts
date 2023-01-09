@@ -1,9 +1,5 @@
 import {createSkjemaEventData, logAmplitudeEvent} from "../../utils/amplitude";
-import {
-    resetSendSoknadServiceUnavailable,
-    sendSoknad,
-    sendSoknadPending,
-} from "../../../digisos/redux/soknad/soknadActions";
+import {resetSendSoknadServiceUnavailable, sendSoknadPending} from "../../../digisos/redux/soknad/soknadActions";
 import {setVisBekreftMangler} from "../../../digisos/redux/oppsummering/oppsummeringActions";
 import {erAktiv, navEnhetGyldigEllerIkkeSatt} from "../../containers/containerUtils";
 import {
@@ -17,13 +13,13 @@ import {State} from "../../../digisos/redux/reducers";
 import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
 import {logInfo} from "../../utils/loggerUtils";
-import {useHistory} from "react-router";
 import {SkjemaSteg} from "./digisosSkjema";
+import {useNavigate} from "react-router";
+import {sendSoknad} from "../../../lib/sendSoknad";
 
 export const useSkjemaNavigation = () => {
     const {soknadsdata, soknad, validering, oppsummering} = useSelector((state: State) => state);
-    const history = useHistory();
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const {behandlingsId} = soknad;
     const finnSoknadsMottaker = () => soknadsdata.personalia.navEnhet;
@@ -65,7 +61,8 @@ export const useSkjemaNavigation = () => {
                 logAmplitudeEvent("skjema fullført", createSkjemaEventData(getAttributesForSkjemaFullfortEvent()));
                 loggAdresseTypeTilGrafana();
                 dispatch(sendSoknadPending());
-                dispatch(sendSoknad(behandlingsId, history));
+                const nextPage = await sendSoknad(behandlingsId, dispatch);
+                if (nextPage) window.location.href = nextPage;
             } else {
                 dispatch(setVisBekreftMangler(true));
             }
@@ -91,7 +88,7 @@ export const useSkjemaNavigation = () => {
             steg: aktivtSteg.id,
         });
 
-        history.push(getStegUrl(behandlingsId, aktivtSteg.id + 1));
+        navigate(getStegUrl(behandlingsId, aktivtSteg.id + 1));
     };
 
     const handleGaTilSkjemaSteg = (steg: number, aktivtSteg?: SkjemaSteg) => {
@@ -104,7 +101,7 @@ export const useSkjemaNavigation = () => {
         } else {
             if (!validering.feil.length) {
                 dispatch(clearAllValideringsfeil());
-                history.push(getStegUrl(behandlingsId, steg));
+                navigate(getStegUrl(behandlingsId, steg));
             } else {
                 dispatch(visValideringsfeilPanel());
             }
@@ -114,7 +111,7 @@ export const useSkjemaNavigation = () => {
         if (!behandlingsId) return;
         dispatch(clearAllValideringsfeil());
         dispatch(resetSendSoknadServiceUnavailable());
-        history.push(getStegUrl(behandlingsId, aktivtSteg - 1));
+        navigate(getStegUrl(behandlingsId, aktivtSteg - 1));
     };
 
     const kanGaTilSkjemasteg = (aktivtSteg?: SkjemaSteg): boolean => {

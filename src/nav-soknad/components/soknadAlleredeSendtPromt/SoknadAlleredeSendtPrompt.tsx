@@ -3,7 +3,7 @@ import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
 import {FormattedMessage} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {visSoknadAlleredeSendtPrompt} from "../../../digisos/redux/ettersendelse/ettersendelseActions";
-import {getContextPathForStaticContent} from "../../../configuration";
+import {basePath} from "../../../configuration";
 import {State} from "../../../digisos/redux/reducers";
 import {Modal} from "@navikt/ds-react";
 
@@ -23,7 +23,7 @@ const SoknadAlleredeSendtPrompt = () => {
             <Modal.Content>
                 <div className="avbrytmodal">
                     <div className="avbrytmodal__infoikon_wrapper">
-                        <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""} />
+                        <img src={`${basePath}/statisk/bilder/ikon_ark.svg`} alt={""} />
                     </div>
 
                     <Innholdstittel className="blokk-s avbrytmodal__overskrift">

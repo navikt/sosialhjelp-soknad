@@ -10,27 +10,20 @@ import {MargIkoner} from "./margIkoner";
 import {EttersendelseFeilkode} from "../../redux/ettersendelse/ettersendelseTypes";
 import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
-import {Prompt} from "react-router";
-import {erEttersendelseSide, NAVIGASJONSPROMPT} from "../../../nav-soknad/utils";
+import {useParams} from "react-router";
 import SoknadAlleredeSendtPrompt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPrompt";
 import HotjarTriggerEttersendelse from "../../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
 import {useTitle} from "../../../nav-soknad/hooks/useTitle";
-import {Alert, BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
+import {BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
 import {BlokkCenter} from "./BlokkCenter";
+import {NedetidPanel} from "../../../components/common/NedetidPanel";
 
-export const lesBrukerbehandlingskjedeId = (behandlingsId?: string) => {
-    if (!behandlingsId) {
-        const match = window.location.pathname.match(/\/skjema\/(.*)\/ettersendelse/);
-        if (match) {
-            return match[1];
-        }
-    }
-    return behandlingsId;
-};
+type EttersendelseParams = Record<"behandlingsId", string>;
 
 const Ettersendelse = () => {
     const dispatch = useDispatch();
 
+    const params = useParams<EttersendelseParams>();
     const {behandlingsId, nedetid} = useSelector((state: State) => state.soknad);
     const {data, feilKode} = useSelector((state: State) => state.ettersendelse);
     const {originalSoknad, ettersendelser} = useSelector((state: State) => state.ettersendelse.innsendte);
@@ -38,20 +31,17 @@ const Ettersendelse = () => {
     useTitle("Ettersendelse - Søknad om økonomisk sosialhjelp");
 
     useEffect(() => {
-        const brukerbehandlingskjedeId = lesBrukerbehandlingskjedeId(behandlingsId);
-        if (brukerbehandlingskjedeId) {
-            dispatch(opprettEttersendelse(brukerbehandlingskjedeId));
-            dispatch(lesEttersendelser(brukerbehandlingskjedeId));
-        }
-    }, [behandlingsId, dispatch]);
+        if (!params.behandlingsId) return;
+
+        dispatch(opprettEttersendelse(params.behandlingsId));
+        dispatch(lesEttersendelser(params.behandlingsId));
+    }, [behandlingsId, dispatch, params]);
 
     useEffect(() => {
-        if (data.filter((vedlegg) => vedlegg.filer.length > 0).length > 0) {
+        if (data.filter((vedlegg) => vedlegg.filer.length).length) {
             window.addEventListener("beforeunload", alertUser);
         }
-        return function unload() {
-            window.removeEventListener("beforeunload", alertUser);
-        };
+        return () => window.removeEventListener("beforeunload", alertUser);
     }, [data]);
 
     const alertUser = (event: any) => {
@@ -62,27 +52,15 @@ const Ettersendelse = () => {
     const skrivUt = () => window.print();
 
     const antallManglendeVedlegg = () => data.filter(({type}) => type !== "annet|annet").length;
-
     const isEttersendelseAktivert = () => !!originalSoknad?.orgnummer;
-
-    const opprettNyEttersendelseFeilet: boolean = feilKode === EttersendelseFeilkode.NY_ETTERSENDELSE_FEILET;
+    const opprettNyEttersendelseFeilet = feilKode === EttersendelseFeilkode.NY_ETTERSENDELSE_FEILET;
 
     return (
         <div className="ettersendelse">
             <BannerEttersendelse>
                 <FormattedMessage id="applikasjon.sidetittel" />
             </BannerEttersendelse>
-            {nedetid?.isNedetid && (
-                <Alert variant="error" style={{justifyContent: "center"}}>
-                    <FormattedMessage
-                        id="nedetid.alertstripe.ettersendelse"
-                        values={{
-                            nedetidstart: nedetid?.nedetidStartText,
-                            nedetidslutt: nedetid?.nedetidSluttText,
-                        }}
-                    />
-                </Alert>
-            )}
+            <NedetidPanel varselType={"ettersendelse"} />
             <BlokkCenter>
                 <Ingress spacing>
                     <FormattedMessage id="ettersendelse.ingress" />
@@ -179,11 +157,6 @@ const Ettersendelse = () => {
                 </AvsnittMedMarger>
             </BlokkCenter>
             <span>
-                <Prompt
-                    message={(loc) => {
-                        return erEttersendelseSide(loc.pathname) ? true : NAVIGASJONSPROMPT.ETTERSENDELSE;
-                    }}
-                />
                 <SoknadAlleredeSendtPrompt />
             </span>
         </div>

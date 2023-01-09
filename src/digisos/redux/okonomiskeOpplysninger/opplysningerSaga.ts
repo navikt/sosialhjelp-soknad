@@ -5,15 +5,12 @@ import {getOpplysningerUrl, getSpcForOpplysning, transformToBackendOpplysning} f
 import {detekterInternFeilKode, fetchPut, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {updateOpplysning} from "./opplysningerActions";
 import {Valideringsfeil, ValideringsFeilKode} from "../validering/valideringActionTypes";
-import {showServerFeil} from "../soknad/soknadActions";
+import {setShowServerError} from "../soknad/soknadActions";
 import {setValideringsfeil} from "../validering/valideringActions";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 
-export function getFeilForOpplysning(feil: Valideringsfeil[], opplysningTextKey: string) {
-    return feil.filter((f: Valideringsfeil) => {
-        return f.faktumKey.indexOf(opplysningTextKey) > -1;
-    });
-}
+export const getFeilForOpplysning = (feil: Valideringsfeil[], opplysningTextKey: string) =>
+    feil.filter(({faktumKey}) => faktumKey.indexOf(opplysningTextKey) > -1);
 
 function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
     const {behandlingsId, opplysning, feil} = action;
@@ -46,7 +43,7 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
                     yield put(setValideringsfeil(ValideringsFeilKode.FELT_EKSISTERER_IKKE, opplysning.type));
                 } else {
                     yield call(logWarning, "Lagring av økonomisk opplysning feilet. Reason: " + reason);
-                    yield put(showServerFeil(true));
+                    yield put(setShowServerError(true));
                 }
             }
         }

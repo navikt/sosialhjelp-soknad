@@ -2,6 +2,9 @@ const express = require("express");
 const {injectDecoratorServerSide} = require("@navikt/nav-dekoratoren-moduler/ssr");
 const path = require("path");
 
+// This value is duplicated in src/config because imports are weird
+const basePath = "/sosialhjelp/soknad";
+
 const decoratorParams = {
     env: process.env.DEKORATOR_MILJO || "prod",
     simple: true,
@@ -15,13 +18,11 @@ app.disable("x-powered-by");
 
 const buildPath = path.resolve(__dirname, "build");
 
-const basePath = "/sosialhjelp/soknad";
-
 app.use(basePath, express.static(buildPath, {index: false}));
 
 app.get(`${basePath}/internal/isAlive|isReady`, (req, res) => res.sendStatus(200));
 
-app.use(basePath, (req, res, next) => {
+app.use(basePath, (req, res, _) => {
     injectDecoratorServerSide({
         filePath: `${buildPath}/index.html`,
         ...decoratorParams,

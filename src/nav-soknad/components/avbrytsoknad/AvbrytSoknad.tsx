@@ -1,16 +1,16 @@
 import * as React from "react";
-import {fortsettSoknad, showServerFeil} from "../../../digisos/redux/soknad/soknadActions";
+import {skjulAvbrytSoknadModal, setShowServerError} from "../../../digisos/redux/soknad/soknadActions";
 import {FormattedMessage} from "react-intl";
-import {useDispatch, useSelector} from "react-redux";
-import {getContextPathForStaticContent} from "../../../configuration";
-import {State} from "../../../digisos/redux/reducers";
-import {fetchDelete, HttpStatus} from "../../utils/rest-utils";
-import {logWarning} from "../../utils/loggerUtils";
-import {Alert, BodyShort, Button, Modal, Heading} from "@navikt/ds-react";
+import {useDispatch} from "react-redux";
+import {basePath} from "../../../configuration";
+import {BodyShort, Button, Modal, Heading} from "@navikt/ds-react";
 import {useEffect} from "react";
 import ReactModal from "react-modal";
 import styled from "styled-components";
 import {mobile} from "../../styles/variables";
+import {slettSoknad} from "../../../lib/slettSoknad";
+import {NedetidPanel} from "../../../components/common/NedetidPanel";
+import {useSoknad} from "../../../digisos/redux/soknad/useSoknad";
 
 const StyledModal = styled(Modal)`
     max-width: 40rem;
@@ -62,14 +62,10 @@ const ButtonRow = styled.div`
     gap: 1rem;
 `;
 
-const getMinSideUrl = () => {
-    return `${process.env.REACT_APP_MIN_SIDE_URL}`;
-};
+export const minSideUrl = `${process.env.REACT_APP_MIN_SIDE_URL}`;
 
 export const AvbrytSoknad = () => {
-    const {behandlingsId, avbrytDialog, nedetid} = useSelector((state: State) => state.soknad);
-
-    const minSideUrl = getMinSideUrl();
+    const {behandlingsId, visAvbrytOgSlettModal} = useSoknad();
 
     const dispatch = useDispatch();
 
@@ -77,33 +73,24 @@ export const AvbrytSoknad = () => {
         ReactModal.setAppElement("#root");
     }, []);
 
-    const onAvbryt = () => {
-        if (behandlingsId) {
-            fetchDelete(`soknader/${behandlingsId}`)
-                .then(() => (window.location.href = minSideUrl))
-                .catch((reason) => {
-                    if (reason.message === HttpStatus.UNAUTHORIZED) {
-                        return;
-                    }
-                    logWarning("slett soknad saga feilet: " + reason);
-                    dispatch(showServerFeil(true));
-                });
+    const onAvbryt = async () => {
+        if (!behandlingsId) return;
+        if (!(await slettSoknad(behandlingsId))) {
+            dispatch(setShowServerError(true));
+        } else {
+            window.location.href = minSideUrl;
         }
     };
 
     const onFortsett = () => {
-        dispatch(fortsettSoknad());
-    };
-
-    const onFortsettSenere = () => {
-        window.location.href = minSideUrl;
+        dispatch(skjulAvbrytSoknadModal());
     };
 
     return (
-        <StyledModal open={avbrytDialog.synlig || false} onClose={() => onFortsett()}>
+        <StyledModal open={visAvbrytOgSlettModal} onClose={() => onFortsett()}>
             <ModalContent>
                 <InfoIkon>
-                    <img src={`${getContextPathForStaticContent()}/statisk/bilder/ikon_ark.svg`} alt={""} />
+                    <img src={`${basePath}/statisk/bilder/ikon_ark.svg`} alt={""} />
                 </InfoIkon>
                 <Heading level="1" size="large" spacing>
                     <FormattedMessage id={"avbryt.overskrift"} />
@@ -111,20 +98,9 @@ export const AvbrytSoknad = () => {
                 <BodyShort spacing>
                     <FormattedMessage id={"avbryt.forklaring"} />
                 </BodyShort>
-                {nedetid?.isPlanlagtNedetid && (
-                    <Alert variant="info">
-                        <FormattedMessage
-                            id="nedetid.alertstripe.avbryt"
-                            values={{
-                                nedetidstart: nedetid?.nedetidStart,
-                                nedetidslutt: nedetid?.nedetidSlutt,
-                            }}
-                        />
-                    </Alert>
-                )}
-
+                <NedetidPanel varselType={"infoside"} />
                 <ButtonRow>
-                    <Button variant="primary" onClick={() => onFortsettSenere()}>
+                    <Button variant="primary" onClick={() => onAvbryt()}>
                         <FormattedMessage id={"avbryt.fortsettsenere"} />
                     </Button>
                     <Button variant="primary" onClick={() => onAvbryt()}>

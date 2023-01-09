@@ -43,10 +43,7 @@ export const defaultState: SoknadState = {
     samtykkeRestStatus: REST_STATUS.INITIALISERT,
 
     // Avbryt
-    avbrytDialog: {
-        synlig: false,
-    },
-    avbrytSoknadSjekkAktiv: true,
+    visAvbrytOgSlettModal: false,
 
     pabegynteSoknader: [],
 };
@@ -109,26 +106,20 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             };
         }
 
-        case SoknadActionTypeKeys.START_SOKNAD_OK:
-        case SoknadActionTypeKeys.START_SOKNAD_SERVICE_UNAVAILABLE:
+        case SoknadActionTypeKeys.START_SOKNAD_DONE:
             return {
                 ...state,
                 startSoknadPending: false,
             };
-        case SoknadActionTypeKeys.AVBRYT_SOKNAD:
+        case SoknadActionTypeKeys.VIS_AVBRYT_SOKNAD_MODAL:
             return {
                 ...state,
-                avbrytDialog: {
-                    synlig: true,
-                },
+                visAvbrytOgSlettModal: true,
             };
-        case SoknadActionTypeKeys.FORTSETT_SOKNAD:
+        case SoknadActionTypeKeys.SKJUL_AVBRYT_SOKNAD_MODAL:
             return {
                 ...state,
-                avbrytDialog: {
-                    synlig: false,
-                    destinasjon: null,
-                },
+                visAvbrytOgSlettModal: false,
             };
         case SoknadActionTypeKeys.SEND_SOKNAD:
             return {

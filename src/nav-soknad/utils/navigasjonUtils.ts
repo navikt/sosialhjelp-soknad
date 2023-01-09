@@ -1,21 +1,6 @@
-export function getStegUrl(brukerBehandlingId: string, steg: number) {
-    return `/skjema/${brukerBehandlingId}/${steg}`;
-}
+export const getStegUrl = (brukerBehandlingId: string, steg: number) => `/skjema/${brukerBehandlingId}/${steg}`;
+export const erSkjemaSide = (pathname: string) => pathname.indexOf("/skjema/") >= 0 && !erEttersendelseSide(pathname);
+export const erEttersendelseSide = (pathname: string) => pathname.indexOf("/ettersendelse") >= 0;
+export const erSkjemaEllerEttersendelseSide = (pathname: string) => pathname.indexOf("/skjema/") >= 0;
 
-export function erSkjemaSide(pathname: string): boolean {
-    return pathname.indexOf("/skjema/") >= 0 && !erEttersendelseSide(pathname);
-}
-
-export function erEttersendelseSide(pathname: string): boolean {
-    return pathname.indexOf("/ettersendelse") >= 0;
-}
-
-export function erSkjemaEllerEttersendelseSide(pathname: string): boolean {
-    return pathname.indexOf("/skjema/") >= 0;
-}
-
-export enum NAVIGASJONSPROMPT {
-    SKJEMA = "SKJEMA",
-    ETTERSENDELSE = "ETTERSENDELSE",
-    SERVERFEIL = "SERVERFEIL",
-}
+export type NavigasjonsPromptType = "skjema" | "ettersendelse";

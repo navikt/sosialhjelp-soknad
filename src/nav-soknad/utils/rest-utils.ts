@@ -122,8 +122,8 @@ export function fetchPut(urlPath: string, body: string, withAccessToken?: boolea
     return serverRequest(RequestMethod.PUT, urlPath, body, withAccessToken);
 }
 
-export function fetchPost(urlPath: string, body: string, withAccessToken?: boolean) {
-    return serverRequest(RequestMethod.POST, urlPath, body, withAccessToken);
+export function fetchPost<T>(urlPath: string, body: string, withAccessToken?: boolean) {
+    return serverRequest<T>(RequestMethod.POST, urlPath, body, withAccessToken);
 }
 
 export function fetchDelete(urlPath: string) {
@@ -189,9 +189,8 @@ export function fetchUploadIgnoreErrors(urlPath: string, formData: FormData, met
 }
 
 export function toJson<T>(response: Response): Promise<T> {
-    if (response.status === 204) {
-        return response.text() as Promise<any>;
-    }
+    if (response.status === 204) return response.text() as Promise<any>;
+
     return response.json();
 }
 

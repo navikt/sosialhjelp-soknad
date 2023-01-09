@@ -6,13 +6,10 @@ import Botype from "./Botype";
 import {useBosituasjon} from "./useBosituasjon";
 import {Loader} from "@navikt/ds-react";
 import styled from "styled-components";
-import {showServerFeil} from "../../redux/soknad/soknadActions";
+import {setShowServerError} from "../../redux/soknad/soknadActions";
 import {useDispatch} from "react-redux";
-import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
-
-interface BosituasjonViewProps {
-    behandlingsId: string;
-}
+import StegMedNavigasjon, {UrlParams} from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
+import {useParams} from "react-router";
 
 // Dette blir sannsynligvis <Steg.Skjema />
 const StegSkjema = styled.div`
@@ -23,13 +20,16 @@ const StegSkjema = styled.div`
     margin-bottom: 5rem;
 `;
 
-export const Bosituasjon = ({behandlingsId}: BosituasjonViewProps) => {
+export const Bosituasjon = () => {
+    const {behandlingsId} = useParams<UrlParams>();
     const {isLoading, isError} = useBosituasjon(behandlingsId);
     const dispatch = useDispatch();
 
     if (isLoading) return <Loader />;
 
-    if (isError) dispatch(showServerFeil(true));
+    if (isError) dispatch(setShowServerError(true));
+
+    if (!behandlingsId) return null;
 
     return (
         <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"bosituasjonbolk"} ikon={<BoligIllustrasjon />}>

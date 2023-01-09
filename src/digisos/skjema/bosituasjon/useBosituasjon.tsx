@@ -4,13 +4,14 @@ import {SoknadsSti} from "../../redux/soknadsdata/soknadsdataReducer";
 import {BosituasjonData} from "./bosituasjonTypes";
 import {soknadsdataUrl} from "../../redux/soknadsdata/soknadsdataActions";
 
-export const useBosituasjon = (behandlingsId: string) => {
-    const soknadUrl = soknadsdataUrl(behandlingsId, SoknadsSti.BOSITUASJON);
+export const useBosituasjon = (behandlingsId?: string) => {
+    const soknadUrl = behandlingsId ? soknadsdataUrl(behandlingsId, SoknadsSti.BOSITUASJON) : null;
 
-    const {data, error, mutate} = useSWR<BosituasjonData>([soknadUrl], fetchToJson);
+    const {data, error, mutate} = useSWR<BosituasjonData>(soknadUrl, fetchToJson);
 
     // Updates local bosituasjon state first, then stores it to server.
     const setBosituasjon = async (nyBosituasjon: Partial<BosituasjonData>) => {
+        if (!soknadUrl) return;
         const updatedBosituasjon = {...(data as BosituasjonData), ...nyBosituasjon};
         await mutate(
             async (dataPayload) => {
@@ -26,7 +27,7 @@ export const useBosituasjon = (behandlingsId: string) => {
     return {
         bosituasjon: data,
         setBosituasjon,
-        isLoading: !error && !data,
+        isLoading: behandlingsId && !error && !data,
         isError: error,
     };
 };

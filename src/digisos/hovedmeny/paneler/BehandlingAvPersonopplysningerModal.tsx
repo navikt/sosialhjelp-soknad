@@ -1,7 +1,7 @@
 import * as React from "react";
 import {FormattedMessage, useIntl} from "react-intl";
 import {useSelector, useDispatch} from "react-redux";
-import {finnValgtEnhetsNavn} from "../../data/kommuner";
+import {finnValgtEnhetsNavn} from "../../../lib/kommuner";
 import {Soknadsdata} from "../../redux/soknadsdata/soknadsdataReducer";
 import {State} from "../../redux/reducers";
 import {visSamtykkeInfo} from "../../redux/soknad/soknadActions";

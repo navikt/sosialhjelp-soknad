@@ -2,18 +2,18 @@ import * as React from "react";
 import Feilside from "../components/feilside/Feilside";
 import {useIntl} from "react-intl";
 import {Sider} from "../../digisos/redux/navigasjon/navigasjonTypes";
-import {useHistory} from "react-router";
+import {useNavigate} from "react-router";
 
 const IkkeFunnet: React.FC = () => {
     const intl = useIntl();
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const onClick = () => {
-        if (history.length === 1) {
-            window.location.href = Sider.FORSIDEN;
+        if (navigate.length === 1) {
+            navigate(Sider.FORSIDEN);
         } else {
-            history.goBack();
+            navigate(-1);
         }
     };
 

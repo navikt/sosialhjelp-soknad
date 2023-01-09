@@ -14,26 +14,10 @@ import {
     PabegynteSoknaderResponse,
     TilgangResponse,
 } from "./soknadTypes";
-import {IntlShape} from "react-intl";
-import {History} from "history";
 
-export function startSoknadOk() {
+export function startSoknadDone() {
     return {
-        type: SoknadActionTypeKeys.START_SOKNAD_OK,
-    };
-}
-
-export function startSoknadServiceUnavailable() {
-    return {
-        type: SoknadActionTypeKeys.START_SOKNAD_SERVICE_UNAVAILABLE,
-    };
-}
-
-export function opprettSoknad(intl: IntlShape, history: History) {
-    return {
-        type: SoknadActionTypeKeys.OPPRETT_SOKNAD,
-        intl,
-        history,
+        type: SoknadActionTypeKeys.START_SOKNAD_DONE,
     };
 }
 
@@ -50,6 +34,7 @@ export function opprettSoknadOk(behandlingsId: string): SoknadActionType {
     };
 }
 
+// This function only sets the soknad REST status to Pending
 export function hentSoknad(behandlingsId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.HENT_SOKNAD,
@@ -57,6 +42,7 @@ export function hentSoknad(behandlingsId: string): SoknadActionType {
     };
 }
 
+// This function sets xsrfCookieReceived and behandlingsId
 export function hentSoknadOk(xsrfCookieReceived: boolean, behandlingsId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.HENT_SOKNAD_OK,
@@ -68,14 +54,6 @@ export function hentSoknadOk(xsrfCookieReceived: boolean, behandlingsId: string)
 export function sendSoknadPending(): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SEND_SOKNAD_KNAPP_PENDING,
-    };
-}
-
-export function sendSoknad(behandlingsId: string, history: History): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.SEND_SOKNAD,
-        behandlingsId,
-        history,
     };
 }
 
@@ -98,25 +76,13 @@ export function sendSoknadOk(behandlingsId: string): SoknadActionType {
     };
 }
 
-export function avbrytSoknad(): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.AVBRYT_SOKNAD,
-    };
-}
+export const visAvbrytSoknadModal = (): SoknadActionType => ({
+    type: SoknadActionTypeKeys.VIS_AVBRYT_SOKNAD_MODAL,
+});
 
-export function fortsettSoknad(): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.FORTSETT_SOKNAD,
-    };
-}
-
-export function finnOgOppdaterSoknadsmottakerStatus(brukerbehandlingId: string, history: History): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.FINN_OG_OPPDATER_SOKNADSMOTTAKER_STATUS,
-        brukerbehandlingId,
-        history,
-    };
-}
+export const skjulAvbrytSoknadModal = (): SoknadActionType => ({
+    type: SoknadActionTypeKeys.SKJUL_AVBRYT_SOKNAD_MODAL,
+});
 
 export function oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker: NavEnhet): SoknadActionType {
     return {
@@ -125,41 +91,12 @@ export function oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker: NavEnhet): S
     };
 }
 
-export const getErSystemdataEndret = (behandlingsId: string): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.GET_ER_SYSTEMDATA_ENDRET,
-        behandlingsId,
-    };
-};
-
 export const setErSystemdataEndret = (erSystemdataEndret: boolean): SoknadActionType => {
     return {
         type: SoknadActionTypeKeys.SET_ER_SYSTEMDATA_ENDRET,
         erSystemdataEndret,
     };
 };
-
-export const oppdaterSamtykke = (
-    behandlingsId: string,
-    harSamtykket: boolean,
-    samtykker: Samtykke[],
-    history: History
-): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.OPPDATER_SAMTYKKE,
-        behandlingsId: behandlingsId,
-        harSamtykket: harSamtykket,
-        samtykker: samtykker,
-        history,
-    };
-};
-
-export function hentSamtykker(behandlingsId: string): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.HENT_SAMTYKKE,
-        behandlingsId,
-    };
-}
 
 export function hentSamtykkerOk(samtykker: Samtykke[]): SoknadActionType {
     return {
@@ -216,7 +153,7 @@ export const visLasteOppVedleggModal = (skalVises: boolean): SoknadActionType =>
     };
 };
 
-export function showServerFeil(shouldShow: boolean): SoknadActionType {
+export function setShowServerError(shouldShow: boolean): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SHOW_SERVER_FEIL,
         shouldShow: shouldShow,
@@ -230,7 +167,7 @@ export function showSendingFeiletPanel(shouldShow: boolean): SoknadActionType {
     };
 }
 
-export function showSideIkkeFunnet(shouldShow: boolean): SoknadActionType {
+export function setShowPageNotFound(shouldShow: boolean): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET,
         shouldShow,
@@ -244,7 +181,7 @@ export const visMidlertidigDeaktivertPanel = (shouldShow: boolean): VisMidlertid
     };
 };
 
-export const visNedetidPanel = (shouldShow: boolean): VisNedetidPanel => {
+export const showDowntimeError = (shouldShow: boolean): VisNedetidPanel => {
     return {
         type: SoknadActionTypeKeys.VIS_NEDETID_PANEL,
         shouldShow,
