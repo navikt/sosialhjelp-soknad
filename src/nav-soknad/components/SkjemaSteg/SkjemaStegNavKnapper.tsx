@@ -33,7 +33,7 @@ export const SkjemaStegNavKnapper = ({
     return (
         <div className={"space-y-16 px-6 pt-10"}>
             <div className="space-x-3">
-                <Button variant="primary" id="gaa_tilbake_button" onClick={gaTilbake} disabled={backwardInhibited}>
+                <Button variant="secondary" id="gaa_tilbake_button" onClick={gaTilbake} disabled={backwardInhibited}>
                     {getIntlTextOrKey(intl, "skjema.knapper.tilbake")}
                     {lastOppVedleggPending && <Loader />}
                 </Button>
