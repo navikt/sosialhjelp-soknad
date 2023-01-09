@@ -11,21 +11,14 @@ export const getFaktumSporsmalTekst = (intl: IntlShape, key: string): SporsmalTe
     hjelpetekst: getIntlText(intl, `${key}.hjelpetekst.tekst`),
 });
 
-export function getRadioFaktumTekst(intl: IntlShape, key: string, value: string): string {
-    return getIntlTextOrKey(intl, `${key}.${value}`);
-}
+export type SporsmalInputTekstTyper = "label" | "sporsmal" | "infotekst" | "hjelpetekst" | "pattern";
 
-export function getInputFaktumTekst(intl: IntlShape, key: string, property?: string): any {
-    const propertyKey = getPropertyKey(property);
-    return {
-        label: getIntlTextOrKey(intl, `${key}${propertyKey}.label`),
-        sporsmal: getIntlTextOrKey(intl, `${key}${propertyKey}.sporsmal`),
-        infotekst: getIntlText(intl, `${key}${propertyKey}.infotekst.tekst`),
-        hjelpetekst: getIntlText(intl, `${key}${propertyKey}.hjelpetekst.tekst`),
-        pattern: getIntlText(intl, `${key}${propertyKey}.pattern`),
-    };
-}
+export type SporsmalInputTekst = Partial<Record<SporsmalInputTekstTyper, string>>;
 
-function getPropertyKey(property?: string) {
-    return property === undefined ? "" : `.${property}`;
-}
+export const getInputFaktumTekst = (intl: IntlShape, key: string, property?: string): SporsmalInputTekst => ({
+    label: getIntlTextOrKey(intl, `${key}.label`),
+    sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
+    infotekst: getIntlText(intl, `${key}.infotekst.tekst`),
+    hjelpetekst: getIntlText(intl, `${key}.hjelpetekst.tekst`),
+    pattern: getIntlText(intl, `${key}.pattern`),
+});

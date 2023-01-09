@@ -1,5 +1,5 @@
 import {Familie, lagBlankPerson, Status} from "./FamilieTypes";
-import {FormattedMessage} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -12,6 +12,7 @@ import PersonSkjema from "./PersonSkjema";
 import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {State} from "../../../redux/reducers";
 import {lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 
 interface RadioProps {
     id?: string;
@@ -39,6 +40,7 @@ const SivilstatusComponent = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
 
     const dispatch = useDispatch();
+    const intl = useIntl();
 
     const onClickSivilstatus = (verdi: Status) => {
         if (behandlingsId) {
@@ -68,7 +70,7 @@ const SivilstatusComponent = () => {
 
     return (
         <div className="skjema-sporsmal">
-            <Sporsmal sprakNokkel="familie.sivilstatus">
+            <Sporsmal tekster={getFaktumSporsmalTekst(intl, "familie.sivilstatus")}>
                 <SivilstatusRadioknapp
                     verdi={Status.GIFT}
                     checked={sivilstatus === Status.GIFT}
@@ -78,7 +80,7 @@ const SivilstatusComponent = () => {
                     <div className="skjema-sporsmal--jaNeiSporsmal">
                         <Underskjema visible={sivilstatus === Status.GIFT} arrow={true}>
                             <Sporsmal
-                                sprakNokkel="familie.sivilstatus.gift.ektefelle"
+                                tekster={getFaktumSporsmalTekst(intl, "familie.sivilstatus.gift.ektefelle")}
                                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                             >
                                 <div className="blokk-s">

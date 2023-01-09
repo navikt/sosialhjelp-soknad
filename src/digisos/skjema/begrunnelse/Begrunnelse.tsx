@@ -6,7 +6,7 @@ import {useIntl} from "react-intl";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../redux/soknadsdata/soknadsdataReducer";
-import {replaceDotWithUnderscore} from "../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../nav-soknad/utils";
 
 import {State} from "../../redux/reducers";
 import {clearValideringsfeil} from "../../redux/validering/valideringActions";
@@ -84,7 +84,10 @@ const BegrunnelseSkjema = () => {
     const faktumKeyHvorforId = replaceDotWithUnderscore(FAKTUM_KEY_HVORFOR);
     return (
         <div>
-            <Sporsmal sprakNokkel={FAKTUM_KEY_HVA} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
+            <Sporsmal
+                tekster={getFaktumSporsmalTekst(intl, FAKTUM_KEY_HVA)}
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+            >
                 <TextareaEnhanced
                     id={faktumKeyHvaId}
                     placeholder={intl.formatMessage({
@@ -99,7 +102,10 @@ const BegrunnelseSkjema = () => {
                     value={begrunnelse.hvaSokesOm ? begrunnelse.hvaSokesOm : ""}
                 />
             </Sporsmal>
-            <Sporsmal sprakNokkel={FAKTUM_KEY_HVORFOR} legendTittelStyle={LegendTittleStyle.FET_NORMAL}>
+            <Sporsmal
+                tekster={getFaktumSporsmalTekst(intl, FAKTUM_KEY_HVORFOR)}
+                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+            >
                 <TextareaEnhanced
                     id={faktumKeyHvorforId}
                     placeholder={intl.formatMessage({

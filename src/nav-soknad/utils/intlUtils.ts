@@ -8,13 +8,10 @@ export function intlHasKey(intl: IntlShape, key: string) {
 }
 
 export function getIntlText(intl?: IntlShape, key?: string) {
-    if (!intl) {
-        return key;
-    }
+    if (!intl) return key;
 
-    if (!key) {
-        return undefined;
-    }
+    if (!key) return undefined;
+
     return intlHasKey(intl, key) ? intl.formatMessage({id: key}) : undefined;
 }
 
@@ -24,14 +21,6 @@ export function getIntlTextOrKey(intl: IntlShape, key: string): string {
     }
     const tekst = getIntlText(intl, key);
     return tekst || key;
-}
-
-function getIkkeTomIntlText(intl: IntlShape, key?: string) {
-    return intlTextIkkeTom(intl, key ? key : "") ? intl.formatMessage({id: key ? key : ""}) : undefined;
-}
-
-function intlTextIkkeTom(intl: IntlShape, key: string) {
-    return intl.messages[key] !== undefined && intl.messages[key] !== "";
 }
 
 export const replaceDotWithUnderscore = (verdi: string): string => {

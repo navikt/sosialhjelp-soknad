@@ -8,6 +8,8 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {SingleLineElement, Systeminfo} from "../../../../nav-soknad/components/systeminfo/Systeminfo";
 import {capitalizeText} from "../../../../nav-soknad/utils/stringUtils";
+import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import {useIntl} from "react-intl";
 
 export const getFormatedStatsborgerskap = (statsborgerskap: string | null) => {
     if (statsborgerskap === "xxx" || statsborgerskap === "XXX") {
@@ -24,6 +26,7 @@ const BasisPersonaliaView = () => {
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
     const dispatch = useDispatch();
+    const intl = useIntl();
 
     useEffect(() => {
         if (!behandlingsId) return;
@@ -38,7 +41,7 @@ const BasisPersonaliaView = () => {
 
     return (
         <Sporsmal
-            faktumKey="kontakt.system.personalia"
+            tekster={getFaktumSporsmalTekst(intl, "kontakt.system.personalia")}
             stil={"system"}
             skjulLedetekst={visAnimerteStreker}
             sprakNokkel="kontakt.system.personalia"

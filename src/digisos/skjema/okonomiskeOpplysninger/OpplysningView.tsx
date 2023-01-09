@@ -10,6 +10,7 @@ import {useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
 import {Valideringsfeil} from "../../redux/validering/valideringActionTypes";
 import styled from "styled-components";
+import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 
 const OkonomiskeOpplysningerSporsmal = styled.div`
     margin-bottom: 2px;
@@ -40,7 +41,7 @@ const OpplysningView = (props: {opplysning: Opplysning; gruppeIndex: number}) =>
     return (
         <OkonomiskeOpplysningerSporsmal>
             <Sporsmal
-                sprakNokkel={opplysningSpc && opplysningSpc.textKey ? opplysningSpc.textKey : ""}
+                tekster={getFaktumSporsmalTekst(intl, opplysningSpc?.textKey ?? "")}
                 feil={sporsmalsFeil}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >

@@ -1,8 +1,7 @@
 import * as React from "react";
 import classNames from "classnames";
 import {SkjemaGruppe} from "nav-frontend-skjema";
-import {useIntl} from "react-intl";
-import {getFaktumSporsmalTekst, SporsmalTekster} from "../../utils";
+import {SporsmalTekster} from "../../utils";
 import {SporsmalHjelpetekst, SporsmalInfotekst} from "./SporsmalHjelpetekst";
 
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
@@ -21,7 +20,7 @@ interface SporsmalProps {
     handleOnBlur?: (evt: any) => void;
     feil?: string;
     feilkode?: string;
-    tekster?: SporsmalTekster;
+    tekster: SporsmalTekster;
     sprakNokkel?: string;
     legendTittelStyle?: LegendTittleStyle;
     faktumKey?: string;
@@ -30,22 +29,7 @@ interface SporsmalProps {
     skjulLedetekst?: boolean;
 }
 
-const Sporsmal = ({
-    id,
-    children,
-    feil,
-    feilkode,
-    tekster,
-    sprakNokkel,
-    skjulLedetekst,
-    stil,
-    legendTittelStyle,
-}: SporsmalProps) => {
-    const intl = useIntl();
-
-    const ledeTekster = tekster || getFaktumSporsmalTekst(intl, sprakNokkel || "");
-    const {sporsmal} = ledeTekster;
-
+const Sporsmal = ({id, children, feil, feilkode, tekster, skjulLedetekst, stil, legendTittelStyle}: SporsmalProps) => {
     const sporsmalCls = classNames("skjema-sporsmal", {
         "skjema-sporsmal--noBottomPadding": stil === "system" || stil === "jaNeiSporsmal",
         "skjema-sporsmal--systeminfo": stil === "system",
@@ -65,11 +49,11 @@ const Sporsmal = ({
                 className={cls}
                 legend={
                     <div className={legendCls}>
-                        {sporsmal}
-                        {!skjulLedetekst && ledeTekster.hjelpetekst && <SporsmalHjelpetekst tekster={ledeTekster} />}
+                        {tekster.sporsmal}
+                        {!skjulLedetekst && tekster.hjelpetekst && <SporsmalHjelpetekst tekster={tekster} />}
                     </div>
                 }
-                description={!skjulLedetekst && ledeTekster.infotekst && <SporsmalInfotekst tekster={ledeTekster} />}
+                description={!skjulLedetekst && tekster.infotekst && <SporsmalInfotekst tekster={tekster} />}
             >
                 <div className="skjema-sporsmal__innhold">{children}</div>
             </SkjemaGruppe>
