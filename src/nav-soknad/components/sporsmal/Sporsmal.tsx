@@ -2,9 +2,21 @@ import * as React from "react";
 import classNames from "classnames";
 import {SkjemaGruppe} from "nav-frontend-skjema";
 import {SporsmalTekster} from "../../utils";
-import {SporsmalHjelpetekst, SporsmalInfotekst} from "./SporsmalHjelpetekst";
+import styled from "styled-components";
+import {HelpText} from "@navikt/ds-react";
 
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
+
+const StyledHelpText = styled.div`
+    margin-left: 0.5rem;
+    font-weight: 400;
+    font-size: 1.125rem;
+    display: inline-block;
+
+    .navds-popover__content {
+        max-width: 390px;
+    }
+`;
 
 export enum LegendTittleStyle {
     DEFAULT = "skjema-fieldset--legend-title-default",
@@ -56,10 +68,17 @@ const Sporsmal = ({
                 legend={
                     <div className={legendTittelStyle}>
                         {tekster.sporsmal}
-                        {!skjulLedetekst && tekster.hjelpetekst && <SporsmalHjelpetekst tekster={tekster} />}
+                        {!skjulLedetekst && tekster.hjelpetekst && (
+                            <StyledHelpText>
+                                <HelpText>{tekster.hjelpetekst}</HelpText>
+                            </StyledHelpText>
+                        )}
                     </div>
                 }
-                description={!skjulLedetekst && tekster.infotekst && <SporsmalInfotekst tekster={tekster} />}
+                description={
+                    !skjulLedetekst &&
+                    tekster.infotekst && <div className="skjema-sporsmal__infotekst">{tekster.infotekst}</div>
+                }
             >
                 <div className="skjema-sporsmal__innhold">{children}</div>
             </SkjemaGruppe>
