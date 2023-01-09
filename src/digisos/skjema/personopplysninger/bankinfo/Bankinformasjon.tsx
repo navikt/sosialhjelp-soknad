@@ -148,7 +148,6 @@ const Bankinformasjon = () => {
             <Sporsmal
                 tekster={{
                     sporsmal: "Kontonummer",
-                    infotekst: {tittel: undefined, tekst: undefined},
                 }}
             >
                 <TextPlaceholder lines={3} />
@@ -162,7 +161,7 @@ const Bankinformasjon = () => {
                 <Sporsmal
                     tekster={{
                         sporsmal: "Kontonummer",
-                        infotekst: {tittel: undefined, tekst: infotekst},
+                        infotekst,
                     }}
                 >
                     <div>
@@ -203,7 +202,7 @@ const Bankinformasjon = () => {
                     faktumKey={FAKTUM_KEY_KONTONUMMER}
                     tekster={{
                         sporsmal: "Kontonummer",
-                        infotekst: {tittel: undefined, tekst: infotekst},
+                        infotekst,
                     }}
                 >
                     <SysteminfoMedSkjema

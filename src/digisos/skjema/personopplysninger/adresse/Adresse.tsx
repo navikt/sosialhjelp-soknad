@@ -297,9 +297,9 @@ const AdresseView = () => {
                     <Underskjema visible={adresser.valg === AdresseKategori.SOKNAD}>
                         <div className="utvidetAddresseSok">
                             <Sporsmal
-                                tittelRenderer={() =>
-                                    getIntlTextOrKey(intl, "kontakt.system.oppholdsadresse.hvorOppholder")
-                                }
+                                tekster={{
+                                    sporsmal: getIntlTextOrKey(intl, "kontakt.system.oppholdsadresse.hvorOppholder"),
+                                }}
                                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                             >
                                 <div style={{marginBottom: "1rem"}}>

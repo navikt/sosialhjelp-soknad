@@ -26,18 +26,6 @@ export function getIntlTextOrKey(intl: IntlShape, key: string): string {
     return tekst || key;
 }
 
-export function getIntlInfoTekst(intl: IntlShape, key: string): any | undefined {
-    const tittel = getIntlText(intl, `${key}.tittel`);
-    const tekst = getIntlText(intl, `${key}.tekst`);
-    return tittel || tekst ? {tittel, tekst} : undefined;
-}
-
-export function getIntlHjelpeTekst(intl: IntlShape, key: string): any | undefined {
-    const tittel = getIkkeTomIntlText(intl, `${key}.tittel`);
-    const tekst = getIkkeTomIntlText(intl, `${key}.tekst`);
-    return tittel || tekst ? {tittel, tekst} : undefined;
-}
-
 function getIkkeTomIntlText(intl: IntlShape, key?: string) {
     return intlTextIkkeTom(intl, key ? key : "") ? intl.formatMessage({id: key ? key : ""}) : undefined;
 }

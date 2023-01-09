@@ -126,7 +126,7 @@ const TelefonView = () => {
                 <Sporsmal
                     tekster={{
                         sporsmal,
-                        infotekst: {tittel: undefined, tekst: infotekst},
+                        infotekst,
                     }}
                 >
                     <InputEnhanced
@@ -150,7 +150,7 @@ const TelefonView = () => {
                 <Sporsmal
                     tekster={{
                         sporsmal,
-                        infotekst: {tittel: undefined, tekst: infotekst},
+                        infotekst,
                     }}
                 >
                     <SysteminfoMedSkjema
