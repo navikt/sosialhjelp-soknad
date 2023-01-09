@@ -21,7 +21,6 @@ interface SporsmalProps {
     feil?: string;
     feilkode?: string;
     tekster: SporsmalTekster;
-    sprakNokkel?: string;
     legendTittelStyle?: LegendTittleStyle;
     faktumKey?: string;
     required?: boolean;
@@ -29,7 +28,16 @@ interface SporsmalProps {
     skjulLedetekst?: boolean;
 }
 
-const Sporsmal = ({id, children, feil, feilkode, tekster, skjulLedetekst, stil, legendTittelStyle}: SporsmalProps) => {
+const Sporsmal = ({
+    id,
+    children,
+    feil,
+    feilkode,
+    tekster,
+    skjulLedetekst,
+    stil,
+    legendTittelStyle = LegendTittleStyle.DEFAULT,
+}: SporsmalProps) => {
     const sporsmalCls = classNames("skjema-sporsmal", {
         "skjema-sporsmal--noBottomPadding": stil === "system" || stil === "jaNeiSporsmal",
         "skjema-sporsmal--systeminfo": stil === "system",
@@ -37,10 +45,8 @@ const Sporsmal = ({id, children, feil, feilkode, tekster, skjulLedetekst, stil, 
     });
 
     const cls = classNames("skjema-fieldset", {
-        "skjema-fieldset--harFeil": feilkode !== null && feilkode !== undefined,
+        "skjema-fieldset--harFeil": !!feilkode,
     });
-
-    const legendCls = legendTittelStyle ?? LegendTittleStyle.DEFAULT;
 
     return (
         <div id={id} className={sporsmalCls}>
@@ -48,7 +54,7 @@ const Sporsmal = ({id, children, feil, feilkode, tekster, skjulLedetekst, stil, 
                 feil={feil}
                 className={cls}
                 legend={
-                    <div className={legendCls}>
+                    <div className={legendTittelStyle}>
                         {tekster.sporsmal}
                         {!skjulLedetekst && tekster.hjelpetekst && <SporsmalHjelpetekst tekster={tekster} />}
                     </div>

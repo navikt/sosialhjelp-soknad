@@ -44,7 +44,6 @@ const BasisPersonaliaView = () => {
             tekster={getFaktumSporsmalTekst(intl, "kontakt.system.personalia")}
             stil={"system"}
             skjulLedetekst={visAnimerteStreker}
-            sprakNokkel="kontakt.system.personalia"
         >
             {!visAnimerteStreker && basisPersonalia && (
                 <Systeminfo
