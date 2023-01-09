@@ -37,34 +37,32 @@ const BasisPersonaliaView = () => {
     const visAnimerteStreker = restStatus !== REST_STATUS.OK;
 
     return (
-        <>
-            <Sporsmal
-                faktumKey="kontakt.system.personalia"
-                stil={"system"}
-                visLedetekst={!visAnimerteStreker}
-                sprakNokkel="kontakt.system.personalia"
-            >
-                {!visAnimerteStreker && basisPersonalia && (
-                    <Systeminfo
-                        systeminfoMap={[
-                            {
-                                key: "kontakt.system.personalia.navn",
-                                value: <SingleLineElement value={basisPersonalia.navn.fulltNavn} />,
-                            },
-                            {
-                                key: "kontakt.system.personalia.fnr",
-                                value: <SingleLineElement value={basisPersonalia.fodselsnummer} />,
-                            },
-                            {
-                                key: "kontakt.system.personalia.statsborgerskap",
-                                value: <SingleLineElement value={statsborgerskap} />,
-                            },
-                        ]}
-                    />
-                )}
-                {visAnimerteStreker && <TextPlaceholder lines={3} />}
-            </Sporsmal>
-        </>
+        <Sporsmal
+            faktumKey="kontakt.system.personalia"
+            stil={"system"}
+            skjulLedetekst={visAnimerteStreker}
+            sprakNokkel="kontakt.system.personalia"
+        >
+            {!visAnimerteStreker && basisPersonalia && (
+                <Systeminfo
+                    systeminfoMap={[
+                        {
+                            key: "kontakt.system.personalia.navn",
+                            value: <SingleLineElement value={basisPersonalia.navn.fulltNavn} />,
+                        },
+                        {
+                            key: "kontakt.system.personalia.fnr",
+                            value: <SingleLineElement value={basisPersonalia.fodselsnummer} />,
+                        },
+                        {
+                            key: "kontakt.system.personalia.statsborgerskap",
+                            value: <SingleLineElement value={statsborgerskap} />,
+                        },
+                    ]}
+                />
+            )}
+            {visAnimerteStreker && <TextPlaceholder lines={3} />}
+        </Sporsmal>
     );
 };
 

@@ -2,7 +2,7 @@ import * as React from "react";
 import classNames from "classnames";
 import {SkjemaGruppe} from "nav-frontend-skjema";
 import {useIntl} from "react-intl";
-import {getFaktumSporsmalTekst} from "../../utils";
+import {getFaktumSporsmalTekst, SporsmalTekster} from "../../utils";
 import {SporsmalHjelpetekst, SporsmalInfotekst} from "./SporsmalHjelpetekst";
 
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
@@ -13,42 +13,38 @@ export enum LegendTittleStyle {
     FET_NORMAL = "skjema-fieldset--legend-title-normal-fet",
 }
 
-export interface Props {
+interface SporsmalProps {
     id?: string;
     children: React.ReactNode;
-    visible?: boolean;
     htmlRef?: (c: any) => HTMLElement;
     stil?: SporsmalStyle;
-    tittelRenderer?: (title: string) => React.ReactNode;
     handleOnBlur?: (evt: any) => void;
     feil?: string;
     feilkode?: string;
-    tekster?: any;
+    tekster?: SporsmalTekster;
     sprakNokkel?: string;
     legendTittelStyle?: LegendTittleStyle;
     faktumKey?: string;
     required?: boolean;
     noValidateOnBlur?: boolean;
-    visLedetekst?: boolean;
+    skjulLedetekst?: boolean;
 }
 
 const Sporsmal = ({
     id,
-    visible,
     children,
     feil,
     feilkode,
     tekster,
     sprakNokkel,
-    visLedetekst,
+    skjulLedetekst,
     stil,
     legendTittelStyle,
-    tittelRenderer,
-}: Props) => {
+}: SporsmalProps) => {
     const intl = useIntl();
-    if (visible === false) return null;
 
-    const ledeTekster: any = tekster || getFaktumSporsmalTekst(intl, sprakNokkel || "");
+    const ledeTekster = tekster || getFaktumSporsmalTekst(intl, sprakNokkel || "");
+    const {sporsmal} = ledeTekster;
 
     const sporsmalCls = classNames("skjema-sporsmal", {
         "skjema-sporsmal--noBottomPadding": stil === "system" || stil === "jaNeiSporsmal",
@@ -60,8 +56,8 @@ const Sporsmal = ({
         "skjema-fieldset--harFeil": feilkode !== null && feilkode !== undefined,
     });
 
-    const legendCls = legendTittelStyle ? legendTittelStyle : LegendTittleStyle.DEFAULT;
-    const sporsmal = tittelRenderer ? tittelRenderer(ledeTekster.sporsmal) : ledeTekster.sporsmal;
+    const legendCls = legendTittelStyle ?? LegendTittleStyle.DEFAULT;
+
     return (
         <div id={id} className={sporsmalCls}>
             <SkjemaGruppe
@@ -70,14 +66,10 @@ const Sporsmal = ({
                 legend={
                     <div className={legendCls}>
                         {sporsmal}
-                        {visLedetekst !== false && ledeTekster.hjelpetekst && (
-                            <SporsmalHjelpetekst tekster={ledeTekster} />
-                        )}
+                        {!skjulLedetekst && ledeTekster.hjelpetekst && <SporsmalHjelpetekst tekster={ledeTekster} />}
                     </div>
                 }
-                description={
-                    visLedetekst !== false && ledeTekster.infotekst && <SporsmalInfotekst tekster={ledeTekster} />
-                }
+                description={!skjulLedetekst && ledeTekster.infotekst && <SporsmalInfotekst tekster={ledeTekster} />}
             >
                 <div className="skjema-sporsmal__innhold">{children}</div>
             </SkjemaGruppe>
