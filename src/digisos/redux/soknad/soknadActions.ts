@@ -14,7 +14,6 @@ import {
     PabegynteSoknaderResponse,
     TilgangResponse,
 } from "./soknadTypes";
-import {History} from "history";
 
 export function startSoknadDone() {
     return {
@@ -58,14 +57,6 @@ export function sendSoknadPending(): SoknadActionType {
     };
 }
 
-export function sendSoknad(behandlingsId: string, history: History): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.SEND_SOKNAD,
-        behandlingsId,
-        history,
-    };
-}
-
 export function setSendSoknadServiceUnavailable(): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SET_SEND_SOKNAD_SERVICE_UNAVAILABLE,
@@ -100,41 +91,12 @@ export function oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker: NavEnhet): S
     };
 }
 
-export const getErSystemdataEndret = (behandlingsId: string): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.GET_ER_SYSTEMDATA_ENDRET,
-        behandlingsId,
-    };
-};
-
 export const setErSystemdataEndret = (erSystemdataEndret: boolean): SoknadActionType => {
     return {
         type: SoknadActionTypeKeys.SET_ER_SYSTEMDATA_ENDRET,
         erSystemdataEndret,
     };
 };
-
-export const oppdaterSamtykke = (
-    behandlingsId: string,
-    harSamtykket: boolean,
-    samtykker: Samtykke[],
-    history: History
-): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.OPPDATER_SAMTYKKE,
-        behandlingsId: behandlingsId,
-        harSamtykket: harSamtykket,
-        samtykker: samtykker,
-        history,
-    };
-};
-
-export function hentSamtykker(behandlingsId: string): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.HENT_SAMTYKKE,
-        behandlingsId,
-    };
-}
 
 export function hentSamtykkerOk(samtykker: Samtykke[]): SoknadActionType {
     return {

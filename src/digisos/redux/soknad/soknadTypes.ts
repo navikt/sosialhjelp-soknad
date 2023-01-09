@@ -1,6 +1,6 @@
 import {ErSystemdataEndret, Samtykke} from "./soknadActionTypes";
 import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
-import {SoknadSendtTil} from "./soknadSaga";
+import {SoknadSendtTil} from "../../../lib/sendSoknad";
 
 export interface SoknadState {
     // Visning state

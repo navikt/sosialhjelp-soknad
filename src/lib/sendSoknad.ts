@@ -9,10 +9,13 @@ import {
 } from "../digisos/redux/soknad/soknadActions";
 import {logWarning} from "../nav-soknad/utils/loggerUtils";
 
+export type SoknadSendtTil = "SVARUT" | "FIKS_DIGISOS_API";
+
 /**
- * Sender inn søknad og flytter brukeren til relevant status-side
+ * Sender inn søknad og returnerer relevant status-side
  * @param behandlingsId
  * @param dispatch
+ * @return URL til neste steg
  */
 export const sendSoknad = async (behandlingsId: string, dispatch: Dispatch<AnyAction>) => {
     try {

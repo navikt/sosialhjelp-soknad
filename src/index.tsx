@@ -10,7 +10,6 @@ import * as ReactDOM from "react-dom";
 import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import createSagaMiddleware from "redux-saga";
-import * as Sentry from "@sentry/react";
 
 import reducers from "./digisos/redux/reducers";
 import sagas from "./rootSaga";
@@ -20,26 +19,10 @@ import Modal from "react-modal";
 import {initAmplitude} from "./nav-soknad/utils/amplitude";
 import {logException, NavLogEntry, NavLogLevel} from "./nav-soknad/utils/loggerUtils";
 import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
-import {Integrations} from "@sentry/tracing";
 import {RouterProvider} from "react-router-dom";
-import {createBrowserHistory} from "history";
-import {RouterHistory} from "@sentry/react/types/reactrouter";
 import {router} from "./digisos";
 
 Modal.setAppElement("#root");
-
-const history = createBrowserHistory();
-
-Sentry.init({
-    dsn: "https://e81d69cb0fb645068f8b9329fd3a138a@sentry.gc.nav.no/99",
-    integrations: [
-        new Integrations.BrowserTracing({
-            routingInstrumentation: Sentry.reactRouterV5Instrumentation(history as unknown as RouterHistory),
-        }),
-    ],
-    environment: process.env.REACT_APP_ENVIRONMENT,
-    tracesSampleRate: 1.0,
-});
 
 function configureStore() {
     const saga = createSagaMiddleware();

@@ -1,8 +1,16 @@
-import {createRoutesFromChildren, matchRoutes, Route, useLocation, useNavigationType} from "react-router";
+import {
+    createRoutesFromChildren,
+    matchRoutes,
+    Route,
+    useLocation,
+    useNavigationType,
+    createBrowserRouter,
+    createRoutesFromElements,
+    redirect,
+} from "react-router-dom";
 import SideIkkeFunnet from "../nav-soknad/feilsider/SideIkkeFunnet";
 import Informasjon from "./hovedmeny";
 import {erDev, erMockAlt} from "../nav-soknad/utils";
-import {createBrowserRouter, createRoutesFromElements, redirect} from "react-router-dom";
 import {basePath} from "../configuration";
 import * as React from "react";
 import Ettersendelse from "./skjema/ettersendelse";
