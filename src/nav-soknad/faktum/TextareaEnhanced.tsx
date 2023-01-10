@@ -17,7 +17,6 @@ interface Props {
     placeholder?: string;
     hideLabel?: boolean;
     faktumKey: string;
-    property?: string;
     faktumId?: number;
     getName?: () => string;
     getFeil?: (intl: IntlShape) => string; // Fjern
@@ -71,8 +70,8 @@ const TextareaEnhanced = (props: Props) => {
         return !feilkode ? null : intl.formatMessage({id: feilkode.feilkode});
     };
 
-    const {labelId, disabled, textareaClass, faktumKey, property, value} = props;
-    const tekster = getInputFaktumTekst(intl, faktumKey, property);
+    const {labelId, disabled, textareaClass, faktumKey, value} = props;
+    const tekster = getInputFaktumTekst(intl, faktumKey);
 
     let label = labelId ? getIntlTextOrKey(intl, labelId) : tekster.label;
     label = props.hideLabel ? "" : label;

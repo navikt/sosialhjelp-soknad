@@ -1,4 +1,4 @@
-import {FormattedMessage} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useState, useEffect} from "react";
@@ -11,11 +11,13 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 
 const ForsorgerPliktView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
 
     const dispatch = useDispatch();
+    const intl = useIntl();
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
@@ -41,14 +43,14 @@ const ForsorgerPliktView = () => {
     }
     if (oppstartsModus) {
         return (
-            <Sporsmal sprakNokkel="familierelasjon.faktum">
+            <Sporsmal tekster={getFaktumSporsmalTekst(intl, "familierelasjon.faktum")}>
                 <TextPlaceholder style={{marginTop: "1rem"}} />
             </Sporsmal>
         );
     }
     if (ansvar && antallBarn === 0) {
         return (
-            <Sporsmal sprakNokkel="familierelasjon.faktum">
+            <Sporsmal tekster={getFaktumSporsmalTekst(intl, "familierelasjon.faktum")}>
                 <p>
                     <FormattedMessage id="familierelasjon.ingen_registrerte_barn_tittel" />
                 </p>
@@ -62,7 +64,11 @@ const ForsorgerPliktView = () => {
     }
     if (ansvar && antallBarn > 0) {
         return (
-            <Sporsmal sprakNokkel="familierelasjon.faktum" stil="system" legendTittelStyle={LegendTittleStyle.DEFAULT}>
+            <Sporsmal
+                tekster={getFaktumSporsmalTekst(intl, "familierelasjon.faktum")}
+                stil="system"
+                legendTittelStyle={LegendTittleStyle.DEFAULT}
+            >
                 <p>
                     <FormattedMessage id="familierelasjon.ingress_folkeregisteret" />
                 </p>

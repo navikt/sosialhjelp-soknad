@@ -11,6 +11,8 @@ import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/place
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import {useIntl} from "react-intl";
 
 const DinSivilstatusView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
@@ -19,6 +21,7 @@ const DinSivilstatusView = () => {
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
     const dispatch = useDispatch();
+    const intl = useIntl();
 
     useEffect(() => {
         if (behandlingsId) {
@@ -41,7 +44,7 @@ const DinSivilstatusView = () => {
     if (oppstartsModus) {
         return (
             <div className="skjema-sporsmal">
-                <Sporsmal sprakNokkel="familie.sivilstatus">
+                <Sporsmal tekster={getFaktumSporsmalTekst(intl, "familie.sivilstatus")}>
                     <TextPlaceholder lines={6} />
                 </Sporsmal>
             </div>

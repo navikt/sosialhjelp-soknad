@@ -1,7 +1,7 @@
 import {FormattedMessage, useIntl} from "react-intl";
 import * as React from "react";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
-import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import AdresseDetaljer from "./AdresseDetaljer";
@@ -253,9 +253,8 @@ const AdresseView = () => {
         <div className="sosialhjelp-oppholdsadresse skjema-sporsmal" id="soknadsmottaker">
             <Sporsmal
                 id="soknadsmottaker"
-                faktumKey={FAKTUM_KEY}
                 noValidateOnBlur={true}
-                sprakNokkel="soknadsmottaker"
+                tekster={getFaktumSporsmalTekst(intl, "soknadsmottaker")}
                 feil={feilkode ? feilmelding : undefined}
             >
                 <span>
@@ -297,9 +296,9 @@ const AdresseView = () => {
                     <Underskjema visible={adresser.valg === AdresseKategori.SOKNAD}>
                         <div className="utvidetAddresseSok">
                             <Sporsmal
-                                tittelRenderer={() =>
-                                    getIntlTextOrKey(intl, "kontakt.system.oppholdsadresse.hvorOppholder")
-                                }
+                                tekster={{
+                                    sporsmal: getIntlTextOrKey(intl, "kontakt.system.oppholdsadresse.hvorOppholder"),
+                                }}
                                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                             >
                                 <div style={{marginBottom: "1rem"}}>

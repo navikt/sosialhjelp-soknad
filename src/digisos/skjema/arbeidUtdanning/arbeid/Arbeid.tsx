@@ -1,7 +1,7 @@
 import React from "react";
 import {FormattedMessage, useIntl} from "react-intl";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
-import Sporsmal, {SporsmalStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
+import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import ArbeidDetaljer from "./ArbeidDetaljer";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
@@ -83,15 +83,13 @@ const Arbeid = () => {
             alleArbeidsforhold = arbeid.arbeidsforhold;
         }
     }
-    const restStatus = soknadsdata.restStatus.arbeid;
-    if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
-        setOppstartsModus(false);
-    }
-    const style: SporsmalStyle = "system";
+
     if (oppstartsModus) {
+        if (soknadsdata.restStatus.arbeid === REST_STATUS.OK) setOppstartsModus(false);
+
         return (
             <div className="skjema-sporsmal">
-                <Sporsmal sprakNokkel="arbeidsforhold" stil={style}>
+                <Sporsmal tekster={getFaktumSporsmalTekst(intl, "arbeidsforhold")} stil={"system"}>
                     <TextPlaceholder lines={6} />
                 </Sporsmal>
             </div>

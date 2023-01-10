@@ -1,29 +1,24 @@
 import {IntlShape} from "react-intl";
-import {getIntlTextOrKey, getIntlInfoTekst, getIntlHjelpeTekst, getIntlText} from "./intlUtils";
+import {getIntlTextOrKey, getIntlText} from "./intlUtils";
 
-export function getFaktumSporsmalTekst(intl: IntlShape, key: string): any {
-    return {
-        sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
-        infotekst: getIntlInfoTekst(intl, `${key}.infotekst`),
-        hjelpetekst: getIntlHjelpeTekst(intl, `${key}.hjelpetekst`),
-    };
-}
+export type SporsmalTekstTyper = "sporsmal" | "infotekst" | "hjelpetekst";
 
-export function getRadioFaktumTekst(intl: IntlShape, key: string, value: string): string {
-    return getIntlTextOrKey(intl, `${key}.${value}`);
-}
+export type SporsmalTekster = Partial<Record<SporsmalTekstTyper, string>>;
 
-export function getInputFaktumTekst(intl: IntlShape, key: string, property?: string): any {
-    const propertyKey = getPropertyKey(property);
-    return {
-        label: getIntlTextOrKey(intl, `${key}${propertyKey}.label`),
-        sporsmal: getIntlTextOrKey(intl, `${key}${propertyKey}.sporsmal`),
-        infotekst: getIntlInfoTekst(intl, `${key}${propertyKey}.infotekst`),
-        hjelpetekst: getIntlHjelpeTekst(intl, `${key}${propertyKey}.hjelpetekst`),
-        pattern: getIntlText(intl, `${key}${propertyKey}.pattern`),
-    };
-}
+export const getFaktumSporsmalTekst = (intl: IntlShape, key: string): SporsmalTekster => ({
+    sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
+    infotekst: getIntlText(intl, `${key}.infotekst.tekst`),
+    hjelpetekst: getIntlText(intl, `${key}.hjelpetekst.tekst`),
+});
 
-function getPropertyKey(property?: string) {
-    return property === undefined ? "" : `.${property}`;
-}
+export type SporsmalInputTekstTyper = "label" | "sporsmal" | "infotekst" | "hjelpetekst" | "pattern";
+
+export type SporsmalInputTekst = Partial<Record<SporsmalInputTekstTyper, string>>;
+
+export const getInputFaktumTekst = (intl: IntlShape, key: string): SporsmalInputTekst => ({
+    label: getIntlTextOrKey(intl, `${key}.label`),
+    sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
+    infotekst: getIntlText(intl, `${key}.infotekst.tekst`),
+    hjelpetekst: getIntlText(intl, `${key}.hjelpetekst.tekst`),
+    pattern: getIntlText(intl, `${key}.pattern`),
+});

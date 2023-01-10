@@ -1,11 +1,22 @@
 import * as React from "react";
 import classNames from "classnames";
 import {SkjemaGruppe} from "nav-frontend-skjema";
-import {useIntl} from "react-intl";
-import {getFaktumSporsmalTekst} from "../../utils";
-import {SporsmalHjelpetekst, SporsmalInfotekst} from "./SporsmalHjelpetekst";
+import {SporsmalTekster} from "../../utils";
+import styled from "styled-components";
+import {HelpText} from "@navikt/ds-react";
 
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
+
+const StyledHelpText = styled.div`
+    margin-left: 0.5rem;
+    font-weight: 400;
+    font-size: 1.125rem;
+    display: inline-block;
+
+    .navds-popover__content {
+        max-width: 390px;
+    }
+`;
 
 export enum LegendTittleStyle {
     DEFAULT = "skjema-fieldset--legend-title-default",
@@ -13,43 +24,32 @@ export enum LegendTittleStyle {
     FET_NORMAL = "skjema-fieldset--legend-title-normal-fet",
 }
 
-export interface Props {
+interface SporsmalProps {
     id?: string;
     children: React.ReactNode;
-    visible?: boolean;
     htmlRef?: (c: any) => HTMLElement;
     stil?: SporsmalStyle;
-    tittelRenderer?: (title: string) => React.ReactNode;
     handleOnBlur?: (evt: any) => void;
     feil?: string;
     feilkode?: string;
-    tekster?: any;
-    sprakNokkel?: string;
+    tekster: SporsmalTekster;
     legendTittelStyle?: LegendTittleStyle;
     faktumKey?: string;
     required?: boolean;
     noValidateOnBlur?: boolean;
-    visLedetekst?: boolean;
+    skjulLedetekst?: boolean;
 }
 
 const Sporsmal = ({
     id,
-    visible,
     children,
     feil,
     feilkode,
     tekster,
-    sprakNokkel,
-    visLedetekst,
+    skjulLedetekst,
     stil,
-    legendTittelStyle,
-    tittelRenderer,
-}: Props) => {
-    const intl = useIntl();
-    if (visible === false) return null;
-
-    const ledeTekster: any = tekster || getFaktumSporsmalTekst(intl, sprakNokkel || "");
-
+    legendTittelStyle = LegendTittleStyle.DEFAULT,
+}: SporsmalProps) => {
     const sporsmalCls = classNames("skjema-sporsmal", {
         "skjema-sporsmal--noBottomPadding": stil === "system" || stil === "jaNeiSporsmal",
         "skjema-sporsmal--systeminfo": stil === "system",
@@ -57,26 +57,27 @@ const Sporsmal = ({
     });
 
     const cls = classNames("skjema-fieldset", {
-        "skjema-fieldset--harFeil": feilkode !== null && feilkode !== undefined,
+        "skjema-fieldset--harFeil": !!feilkode,
     });
 
-    const legendCls = legendTittelStyle ? legendTittelStyle : LegendTittleStyle.DEFAULT;
-    const sporsmal = tittelRenderer ? tittelRenderer(ledeTekster.sporsmal) : ledeTekster.sporsmal;
     return (
         <div id={id} className={sporsmalCls}>
             <SkjemaGruppe
                 feil={feil}
                 className={cls}
                 legend={
-                    <div className={legendCls}>
-                        {sporsmal}
-                        {visLedetekst !== false && ledeTekster.hjelpetekst && (
-                            <SporsmalHjelpetekst tekster={ledeTekster} />
+                    <div className={legendTittelStyle}>
+                        {tekster.sporsmal}
+                        {!skjulLedetekst && tekster.hjelpetekst && (
+                            <StyledHelpText>
+                                <HelpText>{tekster.hjelpetekst}</HelpText>
+                            </StyledHelpText>
                         )}
                     </div>
                 }
                 description={
-                    visLedetekst !== false && ledeTekster.infotekst && <SporsmalInfotekst tekster={ledeTekster} />
+                    !skjulLedetekst &&
+                    tekster.infotekst && <div className="skjema-sporsmal__infotekst">{tekster.infotekst}</div>
                 }
             >
                 <div className="skjema-sporsmal__innhold">{children}</div>

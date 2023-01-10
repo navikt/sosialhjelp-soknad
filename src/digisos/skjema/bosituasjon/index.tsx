@@ -3,11 +3,7 @@ import BoligIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import AntallPersoner from "./AntallPersoner";
 import Botype from "./Botype";
-import {useBosituasjon} from "./useBosituasjon";
-import {Loader} from "@navikt/ds-react";
 import styled from "styled-components";
-import {setShowServerError} from "../../redux/soknad/soknadActions";
-import {useDispatch} from "react-redux";
 import StegMedNavigasjon, {UrlParams} from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
 import {useParams} from "react-router";
 
@@ -22,12 +18,6 @@ const StegSkjema = styled.div`
 
 export const Bosituasjon = () => {
     const {behandlingsId} = useParams<UrlParams>();
-    const {isLoading, isError} = useBosituasjon(behandlingsId);
-    const dispatch = useDispatch();
-
-    if (isLoading) return <Loader />;
-
-    if (isError) dispatch(setShowServerError(true));
 
     if (!behandlingsId) return null;
 

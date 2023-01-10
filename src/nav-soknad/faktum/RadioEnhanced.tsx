@@ -1,6 +1,6 @@
 import React from "react";
 import {RadioPanel} from "nav-frontend-skjema";
-import {getRadioFaktumTekst} from "../utils";
+import {getIntlTextOrKey} from "../utils";
 import TextPlaceholder from "../components/animasjoner/placeholder/TextPlaceholder";
 import {useIntl} from "react-intl";
 
@@ -35,7 +35,7 @@ const RadioEnhanced = (props: Props) => {
         return !!props.checked;
     };
 
-    const label = getRadioFaktumTekst(intl, props.faktumKey ? props.faktumKey : "", props.value);
+    const label = getIntlTextOrKey(intl, props.faktumKey ? `${props.faktumKey}.${props.value}` : "");
     const faktumKey = props.faktumKey ? props.faktumKey.replace(/\./g, "_") : "";
     const id = props.id ? props.id : faktumKey;
 
