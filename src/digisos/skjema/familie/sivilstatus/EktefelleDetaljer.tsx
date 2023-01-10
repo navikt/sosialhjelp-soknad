@@ -29,17 +29,17 @@ const EktefelleInformasjon = () => {
 
     if (ektefelle?.navn?.fulltNavn) {
         systeminfo.push({
-            key: INTL_ID_EKTEFELLE + ".navn",
+            key: <FormattedMessage id={`${INTL_ID_EKTEFELLE}.navn`} />,
             value: <SingleLineElement value={ektefelle.navn.fulltNavn} />,
         });
         if (ektefelle?.fodselsdato) {
             systeminfo.push({
-                key: INTL_ID_EKTEFELLE + ".fodselsdato",
+                key: <FormattedMessage id={`${INTL_ID_EKTEFELLE}.fodselsdato`} />,
                 value: <SingleLineDateElement value={ektefelle.fodselsdato} />,
             });
         }
         systeminfo.push({
-            key: INTL_ID_EKTEFELLE + ".folkereg",
+            key: <FormattedMessage id={`${INTL_ID_EKTEFELLE}.folkereg`} />,
             value: <SingleLineElement value={erFolkeregistrertSammen ? "Ja" : "Nei"} />,
         });
     }
