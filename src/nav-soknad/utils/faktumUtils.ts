@@ -15,7 +15,7 @@ export type SporsmalInputTekstTyper = "label" | "sporsmal" | "infotekst" | "hjel
 
 export type SporsmalInputTekst = Partial<Record<SporsmalInputTekstTyper, string>>;
 
-export const getInputFaktumTekst = (intl: IntlShape, key: string, property?: string): SporsmalInputTekst => ({
+export const getInputFaktumTekst = (intl: IntlShape, key: string): SporsmalInputTekst => ({
     label: getIntlTextOrKey(intl, `${key}.label`),
     sporsmal: getIntlTextOrKey(intl, `${key}.sporsmal`),
     infotekst: getIntlText(intl, `${key}.infotekst.tekst`),
