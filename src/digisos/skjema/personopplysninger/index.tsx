@@ -7,15 +7,13 @@ import BasisPersonalia from "./personalia/BasisPersonalia";
 import {SkjemaSteg} from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 
-const Personopplysninger = () => {
-    return (
-        <SkjemaSteg skjemaConfig={digisosSkjemaConfig} steg={"kontakt"} ikon={<William />}>
-            <BasisPersonalia />
-            <Adresse />
-            <Telefon />
-            <Bankinformasjon />
-        </SkjemaSteg>
-    );
-};
+const Personopplysninger = () => (
+    <SkjemaSteg skjemaConfig={digisosSkjemaConfig} steg={"kontakt"} ikon={<William />}>
+        <BasisPersonalia />
+        <Adresse />
+        <Telefon />
+        <Bankinformasjon />
+    </SkjemaSteg>
+);
 
 export default Personopplysninger;

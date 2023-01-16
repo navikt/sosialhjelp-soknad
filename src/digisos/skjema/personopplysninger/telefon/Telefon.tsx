@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import {useSelector, useDispatch} from "react-redux";
 
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -14,6 +14,7 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {clearValideringsfeil, setValideringsfeil} from "../../../redux/validering/valideringActions";
 import {SingleLineElement, Systeminfo} from "../../../../nav-soknad/components/systeminfo/Systeminfo";
+import * as React from "react";
 
 const FAKTUM_KEY_TELEFON = "kontakt.telefon";
 const FAKTUM_KEY_SYSTEM_TELEFON = "kontakt.system.telefoninfo";
@@ -180,7 +181,7 @@ const TelefonView = () => {
                             <Systeminfo
                                 systeminfoMap={[
                                     {
-                                        key: "kontakt.system.telefon.label",
+                                        key: <FormattedMessage id={"kontakt.system.telefon.label"} />,
                                         value: <SingleLineElement value={systemverdi} />,
                                     },
                                 ]}

@@ -1,6 +1,6 @@
 import {BodyShort, Label} from "@navikt/ds-react";
-import React from "react";
-import {FormattedDate, FormattedMessage} from "react-intl";
+import React, {ReactNode} from "react";
+import {FormattedDate} from "react-intl";
 import styled from "styled-components";
 
 const List = styled.ul`
@@ -9,6 +9,9 @@ const List = styled.ul`
 
     margin: 0;
     padding: 0.5rem 0 0.5rem 1rem;
+    &:empty {
+        display: none;
+    }
 `;
 
 const ListItem = styled.li<{multiline?: boolean}>`
@@ -25,20 +28,18 @@ export const SingleLineDateElement = (props: {value?: string}) => (
     </BodyShort>
 );
 
-export const Systeminfo = (props: {systeminfoMap: {key: string; value: React.ReactNode}[]; multiline?: boolean}) => {
-    if (props.systeminfoMap.length === 0) {
-        return null;
-    }
-    return (
-        <List>
-            {props.systeminfoMap.map((elem) => (
-                <ListItem key={elem.key} multiline={props.multiline}>
-                    <Label size="small">
-                        <FormattedMessage id={elem.key} />
-                    </Label>
-                    {elem.value}
-                </ListItem>
-            ))}
-        </List>
-    );
-};
+interface SysteminfoProps {
+    systeminfoMap: {key: ReactNode; value: ReactNode}[];
+    multiline?: boolean;
+}
+
+export const Systeminfo = (props: SysteminfoProps) => (
+    <List>
+        {props.systeminfoMap.map(({key, value}, index) => (
+            <ListItem key={index} multiline={props.multiline}>
+                <Label size="small">{key}</Label>
+                {value}
+            </ListItem>
+        ))}
+    </List>
+);

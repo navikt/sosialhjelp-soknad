@@ -8,7 +8,9 @@ import {Dispatch} from "redux";
 export const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string =>
     `soknader/${brukerBehandlingId}/${sti}`;
 
-export function hentSoknadsdata(brukerBehandlingId: string, sti: string, dispatch: Dispatch) {
+export function hentSoknadsdata(brukerBehandlingId: string | undefined | null, sti: string, dispatch: Dispatch) {
+    if (!brukerBehandlingId) return undefined;
+
     dispatch(settRestStatus(sti, REST_STATUS.PENDING));
     fetchToJson(soknadsdataUrl(brukerBehandlingId, sti))
         .then((response: any) => {

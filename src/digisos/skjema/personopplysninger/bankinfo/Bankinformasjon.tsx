@@ -2,7 +2,7 @@ import * as React from "react";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {CheckboksPanel} from "nav-frontend-skjema";
 import {erKontonummer} from "../../../../nav-soknad/validering/valideringer";
-import {useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
@@ -247,7 +247,7 @@ const Bankinformasjon = () => {
                             <Systeminfo
                                 systeminfoMap={[
                                     {
-                                        key: FAKTUM_KEY_KONTONUMMER + ".label",
+                                        key: <FormattedMessage id={`${FAKTUM_KEY_KONTONUMMER}.label`} />,
                                         value: <SingleLineElement value={kontonummer.systemverdi} />,
                                     },
                                 ]}

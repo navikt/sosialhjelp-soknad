@@ -28,25 +28,27 @@ const createLogEntry = (message: string, level: NavLogLevel, jsFileUrl?: string)
 };
 
 export const logInfo = (message: string) => {
+    if (process.env.NODE_ENV === "development") console.info(message);
     logToServer(createLogEntry(message, NavLogLevel.INFO));
 };
 
 export const logWarning = (message: string) => {
+    if (process.env.NODE_ENV === "development") console.warn(message);
     logToServer(createLogEntry(message, NavLogLevel.WARN));
 };
 
 export const logError = (message: string, jsFileUrl?: string) => {
+    if (process.env.NODE_ENV === "development") console.error(message);
     logToServer(createLogEntry(message, NavLogLevel.ERROR, jsFileUrl));
 };
 
 export const logException = (logEntry: NavLogEntry) => {
+    if (process.env.NODE_ENV === "development") console.warn(logEntry.message);
     logToServer(logEntry);
 };
 
 function logToServer(navLogEntry: NavLogEntry) {
-    try {
-        fetchPost("informasjon/actions/logg", JSON.stringify(navLogEntry));
-    } catch (e) {
-        console.warn("Logg to server failed.");
-    }
+    fetchPost("informasjon/actions/logg", JSON.stringify(navLogEntry)).catch((e) => {
+        console.warn("Logg til server failed.");
+    });
 }

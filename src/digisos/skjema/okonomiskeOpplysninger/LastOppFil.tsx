@@ -123,7 +123,7 @@ const LastOppFil = (props: {
     return (
         <div>
             <Button
-                variant="primary"
+                variant="secondary"
                 id={props.opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
                 disabled={props.isDisabled}
                 onClick={() => {
