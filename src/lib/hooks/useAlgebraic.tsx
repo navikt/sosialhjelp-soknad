@@ -1,13 +1,18 @@
-import {UseQueryResult} from "@tanstack/react-query";
 import {AsyncData, Result} from "@swan-io/boxed";
 import {useEffect, useState} from "react";
+import {QueryStatus} from "@tanstack/query-core/src/types";
 
-// TODO: Document this better
-export const useAlgebraic = <A, E = unknown>(
-    orvalRequest: UseQueryResult<A | undefined, E>
-): AsyncData<Result<A, E>> => {
-    const [request, setRequest] = useState(AsyncData.NotAsked<Result<A, E>>);
-    const {data, status, error} = orvalRequest;
+export const useAlgebraic = <TData, TError>({
+    data,
+    status,
+    error,
+    ...rest
+}: {
+    data: TData;
+    status: QueryStatus;
+    error: TError;
+}) => {
+    const [request, setRequest] = useState(AsyncData.NotAsked<Result<TData, TError>>);
 
     useEffect(() => {
         switch (status) {
@@ -22,5 +27,5 @@ export const useAlgebraic = <A, E = unknown>(
         }
     }, [status, data, error]);
 
-    return request;
+    return {...rest, status, data, error, request};
 };
