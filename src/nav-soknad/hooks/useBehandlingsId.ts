@@ -21,5 +21,5 @@ export const useBehandlingsId = () => {
         logError("useBehandlingsId er invokert, men idFraUrl == false");
     }
 
-    return idFraUrl;
+    return idFraUrl!;
 };
