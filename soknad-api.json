@@ -1,0 +1,2353 @@
+{
+    "openapi": "3.0.1",
+    "info": {"title": "OpenAPI definition", "version": "v0"},
+    "servers": [{"url": "http://localhost:8181/sosialhjelp/soknad-api", "description": "Generated server url"}],
+    "paths": {
+        "/soknader/{behandlingsId}/utgifter/boutgifter": {
+            "get": {
+                "tags": ["boutgift-ressurs"],
+                "operationId": "hentBoutgifter",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BoutgifterFrontend"}}}
+                    }
+                }
+            },
+            "put": {
+                "tags": ["boutgift-ressurs"],
+                "operationId": "updateBoutgifter",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BoutgifterFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/utgifter/barneutgifter": {
+            "get": {
+                "tags": ["barneutgift-ressurs"],
+                "operationId": "hentBarneutgifter",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/BarneutgifterFrontend"}}
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["barneutgift-ressurs"],
+                "operationId": "updateBarneutgifter",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BarneutgifterFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/utdanning": {
+            "get": {
+                "tags": ["utdanning-ressurs"],
+                "operationId": "hentUtdanning",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UtdanningFrontend"}}}
+                    }
+                }
+            },
+            "put": {
+                "tags": ["utdanning-ressurs"],
+                "operationId": "updateUtdanning",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UtdanningFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/personalia/telefonnummer": {
+            "get": {
+                "tags": ["telefonnummer-ressurs"],
+                "operationId": "hentTelefonnummer",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/TelefonnummerFrontend"}}
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["telefonnummer-ressurs"],
+                "operationId": "updateTelefonnummer",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/TelefonnummerFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/personalia/navEnheter": {
+            "get": {
+                "tags": ["nav-enhet-ressurs"],
+                "operationId": "hentNavEnheter",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/NavEnhetFrontend"}}
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["nav-enhet-ressurs"],
+                "operationId": "updateNavEnhet",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/NavEnhetFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/personalia/kontonummer": {
+            "get": {
+                "tags": ["kontonummer-ressurs"],
+                "operationId": "hentKontonummer",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/KontonummerFrontend"}}
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["kontonummer-ressurs"],
+                "operationId": "updateKontonummer",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/KontonummerFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/personalia/adresser": {
+            "get": {
+                "tags": ["adresse-ressurs"],
+                "operationId": "hentAdresser",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AdresserFrontend"}}}
+                    }
+                }
+            },
+            "put": {
+                "tags": ["adresse-ressurs"],
+                "operationId": "updateAdresse",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AdresserFrontendInput"}}},
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/NavEnhetFrontend"}}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/soknader/{behandlingsId}/okonomiskeOpplysninger": {
+            "get": {
+                "tags": ["okonomiske-opplysninger-ressurs"],
+                "operationId": "hentOkonomiskeOpplysninger",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/VedleggFrontends"}}}
+                    }
+                }
+            },
+            "put": {
+                "tags": ["okonomiske-opplysninger-ressurs"],
+                "operationId": "updateOkonomiskOpplysning",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/VedleggFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/inntekt/verdier": {
+            "get": {
+                "tags": ["verdi-ressurs"],
+                "operationId": "hentVerdier",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/VerdierFrontend"}}}
+                    }
+                }
+            },
+            "put": {
+                "tags": ["verdi-ressurs"],
+                "operationId": "updateVerdier",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/VerdierFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/inntekt/utbetalinger": {
+            "get": {
+                "tags": ["utbetaling-ressurs"],
+                "operationId": "hentUtbetalinger",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/UtbetalingerFrontend"}}
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["utbetaling-ressurs"],
+                "operationId": "updateUtbetalinger",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UtbetalingerFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/inntekt/studielan": {
+            "get": {
+                "tags": ["studielan-ressurs"],
+                "operationId": "hentStudielanBekreftelse",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudielanFrontend"}}}
+                    }
+                }
+            },
+            "put": {
+                "tags": ["studielan-ressurs"],
+                "operationId": "updateStudielan",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudielanFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/inntekt/formue": {
+            "get": {
+                "tags": ["formue-ressurs"],
+                "operationId": "hentFormue",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FormueFrontend"}}}
+                    }
+                }
+            },
+            "put": {
+                "tags": ["formue-ressurs"],
+                "operationId": "updateFormue",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FormueFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/inntekt/bostotte": {
+            "get": {
+                "tags": ["bostotte-ressurs"],
+                "operationId": "hentBostotte",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BostotteFrontend"}}}
+                    }
+                }
+            },
+            "put": {
+                "tags": ["bostotte-ressurs"],
+                "operationId": "updateBostotte",
+                "parameters": [
+                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
+                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
+                ],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BostotteFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/familie/sivilstatus": {
+            "get": {
+                "tags": ["sivilstatus-ressurs"],
+                "operationId": "hentSivilstatus",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/SivilstatusFrontend"}}
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["sivilstatus-ressurs"],
+                "operationId": "updateSivilstatus",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SivilstatusFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/familie/forsorgerplikt": {
+            "get": {
+                "tags": ["forsorgerplikt-ressurs"],
+                "operationId": "hentForsorgerplikt",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/ForsorgerpliktFrontend"}}
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["forsorgerplikt-ressurs"],
+                "operationId": "updateForsorgerplikt",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {
+                        "application/json": {"schema": {"$ref": "#/components/schemas/ForsorgerpliktFrontend"}}
+                    },
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/bosituasjon": {
+            "get": {
+                "tags": ["bosituasjon-ressurs"],
+                "operationId": "hentBosituasjon",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/BosituasjonFrontend"}}
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["bosituasjon-ressurs"],
+                "operationId": "updateBosituasjon",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BosituasjonFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/begrunnelse": {
+            "get": {
+                "tags": ["begrunnelse-ressurs"],
+                "operationId": "hentBegrunnelse",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/BegrunnelseFrontend"}}
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["begrunnelse-ressurs"],
+                "operationId": "updateBegrunnelse",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BegrunnelseFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/arbeid": {
+            "get": {
+                "tags": ["arbeid-ressurs"],
+                "operationId": "hentArbeid",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ArbeidFrontend"}}}
+                    }
+                }
+            },
+            "put": {
+                "tags": ["arbeid-ressurs"],
+                "operationId": "updateArbeid",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ArbeidFrontend"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/oppdaterSamtykker": {
+            "post": {
+                "tags": ["soknad-ressurs"],
+                "operationId": "oppdaterSamtykker",
+                "parameters": [
+                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
+                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {"type": "array", "items": {"$ref": "#/components/schemas/BekreftelseRessurs"}}
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/inntekt/skattbarinntektogforskuddstrekk/samtykke": {
+            "post": {
+                "tags": ["skattbar-inntekt-ressurs"],
+                "operationId": "updateSamtykke",
+                "parameters": [
+                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
+                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
+                ],
+                "requestBody": {"content": {"application/json": {"schema": {"type": "boolean"}}}, "required": true},
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/inntekt/bostotte/samtykke": {
+            "post": {
+                "tags": ["bostotte-ressurs"],
+                "operationId": "updateSamtykke_1",
+                "parameters": [
+                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
+                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
+                ],
+                "requestBody": {"content": {"application/json": {"schema": {"type": "boolean"}}}, "required": true},
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/soknader/{behandlingsId}/actions/send": {
+            "post": {
+                "tags": ["soknad-actions"],
+                "operationId": "sendSoknad",
+                "parameters": [
+                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
+                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SendTilUrlFrontend"}}}
+                    }
+                }
+            }
+        },
+        "/soknader/opprettSoknad": {
+            "post": {
+                "tags": ["soknad-ressurs"],
+                "operationId": "opprettSoknad",
+                "parameters": [
+                    {"name": "ettersendTil", "in": "query", "required": false, "schema": {"type": "string"}},
+                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {"type": "object", "additionalProperties": {"type": "string"}}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/opplastetVedlegg/{behandlingsId}/{type}": {
+            "post": {
+                "tags": ["opplastet-vedlegg-ressurs"],
+                "operationId": "saveVedlegg",
+                "parameters": [
+                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
+                    {"name": "type", "in": "path", "required": true, "schema": {"type": "string"}}
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": ["file"],
+                                "type": "object",
+                                "properties": {"file": {"type": "string", "format": "binary"}}
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FilFrontend"}}}
+                    }
+                }
+            }
+        },
+        "/informasjon/actions/logg": {
+            "post": {
+                "tags": ["informasjon-ressurs"],
+                "operationId": "loggFraKlient",
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Logg"}}},
+                    "required": true
+                },
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/dittnav/pabegynte/lest": {
+            "post": {
+                "tags": ["ditt-nav-metadata-ressurs"],
+                "operationId": "settLestForPabegyntSoknad",
+                "requestBody": {
+                    "content": {
+                        "application/json": {"schema": {"$ref": "#/components/schemas/MarkerPabegyntSoknadSomLestDto"}}
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
+                }
+            }
+        },
+        "/soknadoversikt/soknader": {
+            "get": {
+                "tags": ["soknad-oversikt-ressurs"],
+                "operationId": "hentInnsendteSoknaderForBruker",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/SoknadOversiktDto"}}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/soknader/{behandlingsId}/xsrfCookie": {
+            "get": {
+                "tags": ["soknad-ressurs"],
+                "operationId": "hentXsrfCookie",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
+                }
+            }
+        },
+        "/soknader/{behandlingsId}/personalia/navEnhet": {
+            "get": {
+                "tags": ["nav-enhet-ressurs"],
+                "operationId": "hentValgtNavEnhet",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/NavEnhetFrontend"}}}
+                    }
+                }
+            }
+        },
+        "/soknader/{behandlingsId}/personalia/basisPersonalia": {
+            "get": {
+                "tags": ["basis-personalia-ressurs"],
+                "operationId": "hentBasisPersonalia",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/BasisPersonaliaFrontend"}}
+                        }
+                    }
+                }
+            }
+        },
+        "/soknader/{behandlingsId}/oppsummering": {
+            "get": {
+                "tags": ["oppsummering-ressurs"],
+                "operationId": "getOppsummering",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Oppsummering"}}}
+                    }
+                }
+            }
+        },
+        "/soknader/{behandlingsId}/inntekt/systemdata": {
+            "get": {
+                "tags": ["systemregistrert-inntekt-ressurs"],
+                "operationId": "hentSystemregistrerteInntekter",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/SysteminntekterFrontend"}}
+                        }
+                    }
+                }
+            }
+        },
+        "/soknader/{behandlingsId}/inntekt/skattbarinntektogforskuddstrekk": {
+            "get": {
+                "tags": ["skattbar-inntekt-ressurs"],
+                "operationId": "hentSkattbareInntekter",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/SkattbarInntektFrontend"}}
+                        }
+                    }
+                }
+            }
+        },
+        "/soknader/{behandlingsId}/hentSamtykker": {
+            "get": {
+                "tags": ["soknad-ressurs"],
+                "operationId": "hentSamtykker",
+                "parameters": [
+                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
+                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {"$ref": "#/components/schemas/BekreftelseRessurs"}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/soknader/{behandlingsId}/erSystemdataEndret": {
+            "get": {
+                "tags": ["soknad-ressurs"],
+                "operationId": "sjekkOmSystemdataErEndret",
+                "parameters": [
+                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
+                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
+                ],
+                "responses": {
+                    "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
+                }
+            }
+        },
+        "/opplastetVedlegg/{vedleggId}/fil": {
+            "get": {
+                "tags": ["opplastet-vedlegg-ressurs"],
+                "operationId": "getVedleggFil",
+                "parameters": [{"name": "vedleggId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"type": "string", "format": "byte"}}}
+                    }
+                }
+            }
+        },
+        "/opplastetVedlegg/{behandlingsId}/{vedleggId}/fil": {
+            "get": {
+                "tags": ["opplastet-vedlegg-ressurs"],
+                "operationId": "getVedleggFil_1",
+                "parameters": [
+                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
+                    {"name": "vedleggId", "in": "path", "required": true, "schema": {"type": "string"}}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"type": "string", "format": "byte"}}}
+                    }
+                }
+            }
+        },
+        "/nedetid": {
+            "get": {
+                "tags": ["nedetid-ressurs"],
+                "operationId": "hentNedetidInformasjon",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/NedetidFrontend"}}}
+                    }
+                }
+            }
+        },
+        "/minesaker/ping": {
+            "get": {
+                "tags": ["mine-saker-metadata-ressurs"],
+                "operationId": "ping",
+                "responses": {
+                    "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "string"}}}}
+                }
+            }
+        },
+        "/minesaker/innsendte": {
+            "get": {
+                "tags": ["mine-saker-metadata-ressurs"],
+                "operationId": "hentInnsendteSoknaderForBruker_1",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/InnsendtSoknadDto"}}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/selftest": {
+            "get": {
+                "tags": ["internal-ressurs"],
+                "operationId": "getSelftest",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SelftestResult"}}}
+                    }
+                }
+            }
+        },
+        "/internal/migration/sjekksum": {
+            "get": {
+                "tags": ["migration-feed-ressurs"],
+                "operationId": "getSjekksum",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SjekksumDto"}}}
+                    }
+                }
+            }
+        },
+        "/internal/migration/feed": {
+            "get": {
+                "tags": ["migration-feed-ressurs"],
+                "operationId": "getNextSoknadForMigration",
+                "parameters": [
+                    {"name": "sistEndretDato", "in": "query", "required": false, "schema": {"type": "string"}}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ReplicationDto"}}}
+                    }
+                }
+            }
+        },
+        "/internal/isAlive": {
+            "get": {
+                "tags": ["internal-ressurs"],
+                "operationId": "isAlive",
+                "responses": {"200": {"description": "OK", "content": {"text/plain": {"schema": {"type": "string"}}}}}
+            }
+        },
+        "/informasjon/utslagskriterier/sosialhjelp": {
+            "get": {
+                "tags": ["informasjon-ressurs"],
+                "operationId": "getUtslagskriterier",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {"type": "object", "additionalProperties": {"type": "object"}}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/informasjon/tekster": {
+            "get": {
+                "tags": ["informasjon-ressurs"],
+                "operationId": "hentTekster",
+                "parameters": [
+                    {"name": "type", "in": "query", "required": true, "schema": {"type": "string"}},
+                    {"name": "sprak", "in": "query", "required": false, "schema": {"type": "string"}}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"*/*": {"schema": {"type": "object", "additionalProperties": {"type": "string"}}}}
+                    }
+                }
+            }
+        },
+        "/informasjon/pabegynteSoknader": {
+            "get": {
+                "tags": ["informasjon-ressurs"],
+                "operationId": "hentPabegynteSoknader",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/PabegyntSoknad"}}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/informasjon/kommunestatus": {
+            "get": {
+                "tags": ["informasjon-ressurs"],
+                "operationId": "hentKommunestatus",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {"$ref": "#/components/schemas/KommunestatusFrontend"}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/informasjon/kommunelogg": {
+            "get": {
+                "tags": ["informasjon-ressurs"],
+                "operationId": "triggeKommunelogg",
+                "parameters": [
+                    {"name": "kommunenummer", "in": "query", "required": true, "schema": {"type": "string"}}
+                ],
+                "responses": {"200": {"description": "OK", "content": {"*/*": {"schema": {"type": "string"}}}}}
+            }
+        },
+        "/informasjon/harNyligInnsendteSoknader": {
+            "get": {
+                "tags": ["informasjon-ressurs"],
+                "operationId": "harNyligInnsendteSoknader",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/NyligInnsendteSoknaderResponse"}}}
+                    }
+                }
+            }
+        },
+        "/informasjon/fornavn": {
+            "get": {
+                "tags": ["informasjon-ressurs"],
+                "operationId": "hentFornavn",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"*/*": {"schema": {"type": "object", "additionalProperties": {"type": "string"}}}}
+                    }
+                }
+            }
+        },
+        "/informasjon/adressesok": {
+            "get": {
+                "tags": ["informasjon-ressurs"],
+                "operationId": "adresseSok",
+                "parameters": [{"name": "sokestreng", "in": "query", "required": false, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/AdresseForslag"}}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/feature-toggle": {
+            "get": {
+                "tags": ["feature-toggle-ressurs"],
+                "operationId": "featureToggles",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {"type": "object", "additionalProperties": {"type": "boolean"}}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ettersendelse/innsendte/{behandlingsId}": {
+            "get": {
+                "tags": ["ettersending-ressurs"],
+                "operationId": "hentBehandlingskjede",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BehandlingsKjede"}}}
+                    }
+                }
+            }
+        },
+        "/ettersendelse/ettersendteVedlegg/{behandlingsId}": {
+            "get": {
+                "tags": ["ettersending-ressurs"],
+                "operationId": "hentVedlegg",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/EttersendtVedlegg"}}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/dittnav/pabegynte/inaktive": {
+            "get": {
+                "tags": ["ditt-nav-metadata-ressurs"],
+                "operationId": "hentPabegynteSoknaderForBrukerSomErLest",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/PabegyntSoknadDto"}}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/dittnav/pabegynte/aktive": {
+            "get": {
+                "tags": ["ditt-nav-metadata-ressurs"],
+                "operationId": "hentPabegynteSoknaderForBruker",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/PabegyntSoknadDto"}}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/soknader/{behandlingsId}": {
+            "delete": {
+                "tags": ["soknad-ressurs"],
+                "operationId": "slettSoknad",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {"200": {"description": "OK"}}
+            }
+        },
+        "/opplastetVedlegg/{behandlingsId}/{vedleggId}": {
+            "delete": {
+                "tags": ["opplastet-vedlegg-ressurs"],
+                "operationId": "deleteVedlegg",
+                "parameters": [
+                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
+                    {"name": "vedleggId", "in": "path", "required": true, "schema": {"type": "string"}}
+                ],
+                "responses": {"200": {"description": "OK"}}
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "BoutgifterFrontend": {
+                "required": [
+                    "annet",
+                    "boliglan",
+                    "husleie",
+                    "kommunalAvgift",
+                    "oppvarming",
+                    "skalViseInfoVedBekreftelse",
+                    "strom"
+                ],
+                "type": "object",
+                "properties": {
+                    "bekreftelse": {"type": "boolean"},
+                    "husleie": {"type": "boolean"},
+                    "strom": {"type": "boolean"},
+                    "kommunalAvgift": {"type": "boolean"},
+                    "oppvarming": {"type": "boolean"},
+                    "boliglan": {"type": "boolean"},
+                    "annet": {"type": "boolean"},
+                    "skalViseInfoVedBekreftelse": {"type": "boolean"}
+                }
+            },
+            "BarneutgifterFrontend": {
+                "required": ["annet", "barnehage", "fritidsaktiviteter", "harForsorgerplikt", "sfo", "tannregulering"],
+                "type": "object",
+                "properties": {
+                    "harForsorgerplikt": {"type": "boolean"},
+                    "bekreftelse": {"type": "boolean"},
+                    "fritidsaktiviteter": {"type": "boolean"},
+                    "barnehage": {"type": "boolean"},
+                    "sfo": {"type": "boolean"},
+                    "tannregulering": {"type": "boolean"},
+                    "annet": {"type": "boolean"}
+                }
+            },
+            "UtdanningFrontend": {
+                "type": "object",
+                "properties": {"erStudent": {"type": "boolean"}, "studengradErHeltid": {"type": "boolean"}}
+            },
+            "TelefonnummerFrontend": {
+                "required": ["brukerdefinert"],
+                "type": "object",
+                "properties": {
+                    "brukerdefinert": {"type": "boolean"},
+                    "systemverdi": {"type": "string"},
+                    "brukerutfyltVerdi": {"type": "string"}
+                }
+            },
+            "NavEnhetFrontend": {
+                "required": ["enhetsnavn"],
+                "type": "object",
+                "properties": {
+                    "orgnr": {"type": "string"},
+                    "enhetsnr": {"type": "string"},
+                    "enhetsnavn": {"type": "string"},
+                    "kommunenavn": {"type": "string"},
+                    "kommuneNr": {"type": "string"},
+                    "behandlingsansvarlig": {"type": "string"},
+                    "valgt": {"type": "boolean"},
+                    "isMottakMidlertidigDeaktivert": {"type": "boolean"},
+                    "isMottakDeaktivert": {"type": "boolean"}
+                }
+            },
+            "KontonummerFrontend": {
+                "required": ["brukerdefinert"],
+                "type": "object",
+                "properties": {
+                    "brukerdefinert": {"type": "boolean"},
+                    "systemverdi": {"type": "string"},
+                    "brukerutfyltVerdi": {"type": "string"},
+                    "harIkkeKonto": {"type": "boolean"}
+                }
+            },
+            "AdresseFrontend": {
+                "type": "object",
+                "properties": {
+                    "type": {"type": "string", "enum": ["gateadresse", "matrikkeladresse", "postboks", "ustrukturert"]},
+                    "gateadresse": {"$ref": "#/components/schemas/GateadresseFrontend"},
+                    "matrikkeladresse": {"$ref": "#/components/schemas/MatrikkeladresseFrontend"},
+                    "ustrukturert": {"$ref": "#/components/schemas/UstrukturertAdresseFrontend"}
+                }
+            },
+            "AdresserFrontendInput": {
+                "type": "object",
+                "properties": {
+                    "valg": {"type": "string", "enum": ["folkeregistrert", "midlertidig", "soknad"]},
+                    "folkeregistrert": {"$ref": "#/components/schemas/AdresseFrontend"},
+                    "midlertidig": {"$ref": "#/components/schemas/AdresseFrontend"},
+                    "soknad": {"$ref": "#/components/schemas/AdresseFrontend"}
+                }
+            },
+            "GateadresseFrontend": {
+                "type": "object",
+                "properties": {
+                    "landkode": {"type": "string"},
+                    "kommunenummer": {"type": "string"},
+                    "adresselinjer": {"type": "array", "items": {"type": "string"}},
+                    "bolignummer": {"type": "string"},
+                    "postnummer": {"type": "string"},
+                    "poststed": {"type": "string"},
+                    "gatenavn": {"type": "string"},
+                    "husnummer": {"type": "string"},
+                    "husbokstav": {"type": "string"}
+                }
+            },
+            "MatrikkeladresseFrontend": {
+                "type": "object",
+                "properties": {
+                    "kommunenummer": {"type": "string"},
+                    "gaardsnummer": {"type": "string"},
+                    "bruksnummer": {"type": "string"},
+                    "festenummer": {"type": "string"},
+                    "seksjonsnummer": {"type": "string"},
+                    "undernummer": {"type": "string"}
+                }
+            },
+            "UstrukturertAdresseFrontend": {
+                "type": "object",
+                "properties": {"adresse": {"type": "array", "items": {"type": "string"}}}
+            },
+            "FilFrontend": {
+                "type": "object",
+                "properties": {"filNavn": {"type": "string"}, "uuid": {"type": "string"}}
+            },
+            "VedleggFrontend": {
+                "type": "object",
+                "properties": {
+                    "type": {"type": "string"},
+                    "gruppe": {"type": "string"},
+                    "rader": {"type": "array", "items": {"$ref": "#/components/schemas/VedleggRadFrontend"}},
+                    "vedleggStatus": {"type": "string"},
+                    "filer": {"type": "array", "items": {"$ref": "#/components/schemas/FilFrontend"}}
+                }
+            },
+            "VedleggRadFrontend": {
+                "type": "object",
+                "properties": {
+                    "beskrivelse": {"type": "string"},
+                    "belop": {"type": "integer", "format": "int32"},
+                    "brutto": {"type": "integer", "format": "int32"},
+                    "netto": {"type": "integer", "format": "int32"},
+                    "avdrag": {"type": "integer", "format": "int32"},
+                    "renter": {"type": "integer", "format": "int32"}
+                }
+            },
+            "VerdierFrontend": {
+                "required": ["annet", "bolig", "campingvogn", "fritidseiendom", "kjoretoy"],
+                "type": "object",
+                "properties": {
+                    "bekreftelse": {"type": "boolean"},
+                    "bolig": {"type": "boolean"},
+                    "campingvogn": {"type": "boolean"},
+                    "kjoretoy": {"type": "boolean"},
+                    "fritidseiendom": {"type": "boolean"},
+                    "annet": {"type": "boolean"},
+                    "beskrivelseAvAnnet": {"type": "string"}
+                }
+            },
+            "UtbetalingerFrontend": {
+                "required": ["annet", "forsikring", "salg", "utbytte"],
+                "type": "object",
+                "properties": {
+                    "bekreftelse": {"type": "boolean"},
+                    "utbytte": {"type": "boolean"},
+                    "salg": {"type": "boolean"},
+                    "forsikring": {"type": "boolean"},
+                    "annet": {"type": "boolean"},
+                    "beskrivelseAvAnnet": {"type": "string"},
+                    "utbetalingerFraNavFeilet": {"type": "boolean"}
+                }
+            },
+            "StudielanFrontend": {
+                "required": ["skalVises"],
+                "type": "object",
+                "properties": {"skalVises": {"type": "boolean"}, "bekreftelse": {"type": "boolean"}}
+            },
+            "FormueFrontend": {
+                "required": ["annet", "brukskonto", "bsu", "livsforsikring", "sparekonto", "verdipapirer"],
+                "type": "object",
+                "properties": {
+                    "brukskonto": {"type": "boolean"},
+                    "sparekonto": {"type": "boolean"},
+                    "bsu": {"type": "boolean"},
+                    "livsforsikring": {"type": "boolean"},
+                    "verdipapirer": {"type": "boolean"},
+                    "annet": {"type": "boolean"},
+                    "beskrivelseAvAnnet": {"type": "string"}
+                }
+            },
+            "BostotteFrontend": {
+                "type": "object",
+                "properties": {
+                    "bekreftelse": {"type": "boolean"},
+                    "samtykke": {"type": "boolean"},
+                    "utbetalinger": {
+                        "type": "array",
+                        "items": {"$ref": "#/components/schemas/JsonOkonomiOpplysningUtbetaling"}
+                    },
+                    "saker": {"type": "array", "items": {"$ref": "#/components/schemas/JsonBostotteSak"}},
+                    "stotteFraHusbankenFeilet": {"type": "boolean"},
+                    "samtykkeTidspunkt": {"type": "string"}
+                }
+            },
+            "JsonBostotteSak": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["system", "utdatert"]},
+                    "type": {"type": "string"},
+                    "dato": {"type": "string"},
+                    "status": {"type": "string"},
+                    "beskrivelse": {"type": "string"},
+                    "vedtaksstatus": {"type": "string", "enum": ["INNVILGET", "AVSLAG", "AVVIST"]}
+                }
+            },
+            "JsonOkonomiOpplysningUtbetaling": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "type": {"type": "string"},
+                    "tittel": {"type": "string"},
+                    "organisasjon": {"$ref": "#/components/schemas/JsonOrganisasjon"},
+                    "belop": {"type": "integer", "format": "int32"},
+                    "netto": {"type": "number", "format": "double"},
+                    "brutto": {"type": "number", "format": "double"},
+                    "skattetrekk": {"type": "number", "format": "double"},
+                    "andreTrekk": {"type": "number", "format": "double"},
+                    "utbetalingsdato": {"type": "string"},
+                    "periodeFom": {"type": "string"},
+                    "periodeTom": {"type": "string"},
+                    "komponenter": {
+                        "type": "array",
+                        "items": {"$ref": "#/components/schemas/JsonOkonomiOpplysningUtbetalingKomponent"}
+                    },
+                    "overstyrtAvBruker": {"type": "boolean"},
+                    "mottaker": {"type": "string", "enum": ["Husstand", "Kommune"]}
+                }
+            },
+            "JsonOkonomiOpplysningUtbetalingKomponent": {
+                "type": "object",
+                "properties": {
+                    "type": {"type": "string"},
+                    "belop": {"type": "number", "format": "double"},
+                    "satsType": {"type": "string"},
+                    "satsAntall": {"type": "number", "format": "double"},
+                    "satsBelop": {"type": "number", "format": "double"}
+                }
+            },
+            "JsonOrganisasjon": {
+                "type": "object",
+                "properties": {"navn": {"type": "string"}, "organisasjonsnummer": {"type": "string"}}
+            },
+            "EktefelleFrontend": {
+                "type": "object",
+                "properties": {
+                    "navn": {"$ref": "#/components/schemas/NavnFrontend"},
+                    "fodselsdato": {"type": "string"},
+                    "personnummer": {"type": "string"}
+                }
+            },
+            "NavnFrontend": {
+                "type": "object",
+                "properties": {
+                    "fornavn": {"type": "string"},
+                    "mellomnavn": {"type": "string"},
+                    "etternavn": {"type": "string"},
+                    "fulltNavn": {"type": "string"}
+                }
+            },
+            "SivilstatusFrontend": {
+                "type": "object",
+                "properties": {
+                    "kildeErSystem": {"type": "boolean"},
+                    "sivilstatus": {
+                        "type": "string",
+                        "enum": ["gift", "ugift", "samboer", "enke", "skilt", "separert"]
+                    },
+                    "ektefelle": {"$ref": "#/components/schemas/EktefelleFrontend"},
+                    "harDiskresjonskode": {"type": "boolean"},
+                    "borSammenMed": {"type": "boolean"},
+                    "erFolkeregistrertSammen": {"type": "boolean"}
+                }
+            },
+            "AnsvarFrontend": {
+                "type": "object",
+                "properties": {
+                    "barn": {"$ref": "#/components/schemas/BarnFrontend"},
+                    "borSammenMed": {"type": "boolean"},
+                    "erFolkeregistrertSammen": {"type": "boolean"},
+                    "harDeltBosted": {"type": "boolean"},
+                    "samvarsgrad": {"type": "integer", "format": "int32"}
+                }
+            },
+            "BarnFrontend": {
+                "type": "object",
+                "properties": {
+                    "navn": {"$ref": "#/components/schemas/NavnFrontend"},
+                    "fodselsdato": {"type": "string"},
+                    "personnummer": {"type": "string"},
+                    "fodselsnummer": {"type": "string"}
+                }
+            },
+            "ForsorgerpliktFrontend": {
+                "type": "object",
+                "properties": {
+                    "harForsorgerplikt": {"type": "boolean"},
+                    "barnebidrag": {"type": "string", "enum": ["betaler", "mottar", "begge", "ingen"]},
+                    "ansvar": {"type": "array", "items": {"$ref": "#/components/schemas/AnsvarFrontend"}}
+                }
+            },
+            "BosituasjonFrontend": {
+                "type": "object",
+                "properties": {
+                    "botype": {
+                        "type": "string",
+                        "enum": [
+                            "eier",
+                            "leier",
+                            "kommunal",
+                            "ingen",
+                            "institusjon",
+                            "krisesenter",
+                            "fengsel",
+                            "venner",
+                            "foreldre",
+                            "familie",
+                            "annet"
+                        ]
+                    },
+                    "antallPersoner": {"type": "integer", "format": "int32"}
+                }
+            },
+            "BegrunnelseFrontend": {
+                "type": "object",
+                "properties": {"hvaSokesOm": {"type": "string"}, "hvorforSoke": {"type": "string"}}
+            },
+            "ArbeidFrontend": {
+                "type": "object",
+                "properties": {
+                    "arbeidsforhold": {
+                        "type": "array",
+                        "items": {"$ref": "#/components/schemas/ArbeidsforholdFrontend"}
+                    },
+                    "kommentarTilArbeidsforhold": {"type": "string"}
+                }
+            },
+            "ArbeidsforholdFrontend": {
+                "type": "object",
+                "properties": {
+                    "arbeidsgivernavn": {"type": "string"},
+                    "fom": {"type": "string"},
+                    "tom": {"type": "string"},
+                    "stillingstypeErHeltid": {"type": "boolean"},
+                    "stillingsprosent": {"type": "integer", "format": "int32"},
+                    "overstyrtAvBruker": {"type": "boolean"}
+                }
+            },
+            "BekreftelseRessurs": {
+                "type": "object",
+                "properties": {"type": {"type": "string"}, "verdi": {"type": "boolean"}}
+            },
+            "SendTilUrlFrontend": {
+                "type": "object",
+                "properties": {"sendtTil": {"type": "string"}, "id": {"type": "string"}}
+            },
+            "Logg": {
+                "type": "object",
+                "properties": {
+                    "level": {"type": "string"},
+                    "message": {"type": "string"},
+                    "jsFileUrl": {"type": "string"},
+                    "lineNumber": {"type": "string"},
+                    "columnNumber": {"type": "string"},
+                    "url": {"type": "string"},
+                    "userAgent": {"type": "string"}
+                }
+            },
+            "MarkerPabegyntSoknadSomLestDto": {
+                "required": ["eventId", "grupperingsId"],
+                "type": "object",
+                "properties": {"eventId": {"type": "string"}, "grupperingsId": {"type": "string"}}
+            },
+            "SoknadOversiktDto": {
+                "type": "object",
+                "properties": {
+                    "fiksDigisosId": {"type": "string"},
+                    "soknadTittel": {"type": "string"},
+                    "sistOppdatert": {"type": "string", "format": "date-time"},
+                    "kilde": {"type": "string"},
+                    "url": {"type": "string"}
+                }
+            },
+            "BasisPersonaliaFrontend": {
+                "required": ["fornavn", "fulltNavn", "navn"],
+                "type": "object",
+                "properties": {
+                    "navn": {"$ref": "#/components/schemas/NavnFrontend"},
+                    "fornavn": {"type": "string"},
+                    "fulltNavn": {"type": "string"},
+                    "fodselsnummer": {"type": "string"},
+                    "statsborgerskap": {"type": "string"},
+                    "nordiskBorger": {"type": "boolean"}
+                }
+            },
+            "JsonNavn": {
+                "type": "object",
+                "properties": {
+                    "fornavn": {"type": "string"},
+                    "mellomnavn": {"type": "string"},
+                    "etternavn": {"type": "string"}
+                }
+            },
+            "AdresserFrontend": {
+                "type": "object",
+                "properties": {
+                    "valg": {"type": "string", "enum": ["folkeregistrert", "midlertidig", "soknad"]},
+                    "folkeregistrert": {"$ref": "#/components/schemas/AdresseFrontend"},
+                    "midlertidig": {"$ref": "#/components/schemas/AdresseFrontend"},
+                    "soknad": {"$ref": "#/components/schemas/AdresseFrontend"},
+                    "navEnhet": {"$ref": "#/components/schemas/NavEnhetFrontend"}
+                }
+            },
+            "Avsnitt": {
+                "required": ["sporsmal", "tittel"],
+                "type": "object",
+                "properties": {
+                    "tittel": {"type": "string"},
+                    "sporsmal": {"type": "array", "items": {"$ref": "#/components/schemas/Sporsmal"}}
+                }
+            },
+            "Felt": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {
+                    "label": {"type": "string"},
+                    "svar": {"$ref": "#/components/schemas/Svar"},
+                    "labelSvarMap": {"type": "object", "additionalProperties": {"$ref": "#/components/schemas/Svar"}},
+                    "type": {
+                        "type": "string",
+                        "enum": ["TEKST", "CHECKBOX", "SYSTEMDATA", "SYSTEMDATA_MAP", "VEDLEGG"]
+                    },
+                    "vedlegg": {"type": "array", "items": {"$ref": "#/components/schemas/Vedlegg"}}
+                }
+            },
+            "Oppsummering": {
+                "required": ["steg"],
+                "type": "object",
+                "properties": {"steg": {"type": "array", "items": {"$ref": "#/components/schemas/Steg"}}}
+            },
+            "Sporsmal": {
+                "required": ["erUtfylt"],
+                "type": "object",
+                "properties": {
+                    "tittel": {"type": "string"},
+                    "felt": {"type": "array", "items": {"$ref": "#/components/schemas/Felt"}},
+                    "erUtfylt": {"type": "boolean"}
+                }
+            },
+            "Steg": {
+                "required": ["avsnitt", "stegNr", "tittel"],
+                "type": "object",
+                "properties": {
+                    "stegNr": {"type": "integer", "format": "int32"},
+                    "tittel": {"type": "string"},
+                    "avsnitt": {"type": "array", "items": {"$ref": "#/components/schemas/Avsnitt"}}
+                }
+            },
+            "Svar": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {
+                    "value": {"type": "string"},
+                    "type": {"type": "string", "enum": ["LOCALE_TEKST", "TEKST", "DATO", "TIDSPUNKT"]}
+                }
+            },
+            "Vedlegg": {
+                "required": ["filnavn"],
+                "type": "object",
+                "properties": {"filnavn": {"type": "string"}, "uuid": {"type": "string"}}
+            },
+            "VedleggFrontends": {
+                "required": ["isOkonomiskeOpplysningerBekreftet"],
+                "type": "object",
+                "properties": {
+                    "okonomiskeOpplysninger": {
+                        "type": "array",
+                        "items": {"$ref": "#/components/schemas/VedleggFrontend"}
+                    },
+                    "slettedeVedlegg": {"type": "array", "items": {"$ref": "#/components/schemas/VedleggFrontend"}},
+                    "isOkonomiskeOpplysningerBekreftet": {"type": "boolean"}
+                }
+            },
+            "SysteminntektFrontend": {
+                "type": "object",
+                "properties": {
+                    "inntektType": {"type": "string"},
+                    "utbetalingsdato": {"type": "string"},
+                    "belop": {"type": "number", "format": "double"}
+                }
+            },
+            "SysteminntekterFrontend": {
+                "type": "object",
+                "properties": {
+                    "systeminntekter": {
+                        "type": "array",
+                        "items": {"$ref": "#/components/schemas/SysteminntektFrontend"}
+                    },
+                    "utbetalingerFraNavFeilet": {"type": "boolean"}
+                }
+            },
+            "Organisasjon": {
+                "type": "object",
+                "properties": {
+                    "utbetalinger": {"type": "array", "items": {"$ref": "#/components/schemas/Utbetaling"}},
+                    "organisasjonsnavn": {"type": "string"},
+                    "orgnr": {"type": "string"},
+                    "fom": {"type": "string"},
+                    "tom": {"type": "string"}
+                }
+            },
+            "SkattbarInntektFrontend": {
+                "type": "object",
+                "properties": {
+                    "inntektFraSkatteetaten": {
+                        "type": "array",
+                        "items": {"$ref": "#/components/schemas/SkattbarInntektOgForskuddstrekk"}
+                    },
+                    "inntektFraSkatteetatenFeilet": {"type": "boolean"},
+                    "samtykke": {"type": "boolean"},
+                    "samtykkeTidspunkt": {"type": "string"}
+                }
+            },
+            "SkattbarInntektOgForskuddstrekk": {
+                "type": "object",
+                "properties": {
+                    "organisasjoner": {"type": "array", "items": {"$ref": "#/components/schemas/Organisasjon"}}
+                }
+            },
+            "Utbetaling": {
+                "type": "object",
+                "properties": {
+                    "brutto": {"type": "number", "format": "double"},
+                    "forskuddstrekk": {"type": "number", "format": "double"},
+                    "tittel": {"type": "string"}
+                }
+            },
+            "NedetidFrontend": {
+                "required": ["isNedetid", "isPlanlagtNedetid"],
+                "type": "object",
+                "properties": {
+                    "isNedetid": {"type": "boolean"},
+                    "isPlanlagtNedetid": {"type": "boolean"},
+                    "nedetidStart": {"type": "string"},
+                    "nedetidSlutt": {"type": "string"},
+                    "nedetidStartText": {"type": "string"},
+                    "nedetidSluttText": {"type": "string"},
+                    "nedetidStartTextEn": {"type": "string"},
+                    "nedetidSluttTextEn": {"type": "string"}
+                }
+            },
+            "InnsendtSoknadDto": {
+                "required": ["kode", "navn", "sistEndret"],
+                "type": "object",
+                "properties": {"navn": {"type": "string"}, "kode": {"type": "string"}, "sistEndret": {"type": "string"}}
+            },
+            "DependencyCheckResult": {
+                "required": ["address", "endpoint", "importance", "result", "type"],
+                "type": "object",
+                "properties": {
+                    "endpoint": {"type": "string"},
+                    "result": {"type": "string", "enum": ["OK", "WARNING", "ERROR"]},
+                    "address": {"type": "string"},
+                    "errorMessage": {"type": "string"},
+                    "type": {"type": "string", "enum": ["REST", "DB"]},
+                    "importance": {"type": "string", "enum": ["CRITICAL", "WARNING"]},
+                    "responseTime": {"type": "string"}
+                }
+            },
+            "SelftestResult": {
+                "required": ["appName", "dependencyCheckResults", "result", "version"],
+                "type": "object",
+                "properties": {
+                    "appName": {"type": "string"},
+                    "version": {"type": "string"},
+                    "result": {"type": "string", "enum": ["OK", "WARNING", "ERROR"]},
+                    "dependencyCheckResults": {
+                        "type": "array",
+                        "items": {"$ref": "#/components/schemas/DependencyCheckResult"}
+                    }
+                }
+            },
+            "SjekksumDto": {
+                "required": [
+                    "oppgaveSum",
+                    "opplastetVedleggSum",
+                    "sendtSoknadSum",
+                    "soknadMetadataSum",
+                    "soknadUnderArbeidSum"
+                ],
+                "type": "object",
+                "properties": {
+                    "soknadMetadataSum": {"type": "integer", "format": "int32"},
+                    "sendtSoknadSum": {"type": "integer", "format": "int32"},
+                    "soknadUnderArbeidSum": {"type": "integer", "format": "int32"},
+                    "opplastetVedleggSum": {"type": "integer", "format": "int32"},
+                    "oppgaveSum": {"type": "integer", "format": "int32"}
+                }
+            },
+            "DokumentInfoDto": {
+                "type": "object",
+                "properties": {
+                    "uuid": {"type": "string"},
+                    "filnavn": {"type": "string"},
+                    "mimetype": {"type": "string"},
+                    "ekskluderesFraPrint": {"type": "boolean"}
+                }
+            },
+            "FiksDataDto": {
+                "type": "object",
+                "properties": {
+                    "behandlingsId": {"type": "string"},
+                    "avsenderFodselsnummer": {"type": "string"},
+                    "mottakerOrgNr": {"type": "string"},
+                    "mottakerNavn": {"type": "string"},
+                    "dokumentInfoer": {"type": "array", "items": {"$ref": "#/components/schemas/DokumentInfoDto"}},
+                    "innsendtDato": {"type": "string", "format": "date-time"},
+                    "ettersendelsePa": {"type": "string"}
+                }
+            },
+            "FiksResultatDto": {
+                "type": "object",
+                "properties": {"fiksForsendelsesId": {"type": "string"}, "feilmelding": {"type": "string"}}
+            },
+            "JsonAdresse": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "type": {"type": "string", "enum": ["gateadresse", "matrikkeladresse", "postboks", "ustrukturert"]},
+                    "adresseValg": {"type": "string", "enum": ["folkeregistrert", "midlertidig", "soknad"]}
+                }
+            },
+            "JsonAnsvar": {
+                "type": "object",
+                "properties": {
+                    "barn": {"$ref": "#/components/schemas/JsonBarn"},
+                    "borSammenMed": {"$ref": "#/components/schemas/JsonBorSammenMed"},
+                    "erFolkeregistrertSammen": {"$ref": "#/components/schemas/JsonErFolkeregistrertSammen"},
+                    "harDeltBosted": {"$ref": "#/components/schemas/JsonHarDeltBosted"},
+                    "samvarsgrad": {"$ref": "#/components/schemas/JsonSamvarsgrad"}
+                }
+            },
+            "JsonArbeid": {
+                "type": "object",
+                "properties": {
+                    "forhold": {"type": "array", "items": {"$ref": "#/components/schemas/JsonArbeidsforhold"}},
+                    "situasjon": {"$ref": "#/components/schemas/JsonArbeidssituasjon"},
+                    "kommentarTilArbeidsforhold": {"$ref": "#/components/schemas/JsonKommentarTilArbeidsforhold"}
+                }
+            },
+            "JsonArbeidsforhold": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "arbeidsgivernavn": {"type": "string"},
+                    "fom": {"type": "string"},
+                    "tom": {"type": "string"},
+                    "stillingsprosent": {"type": "integer", "format": "int32"},
+                    "stillingstype": {"type": "string", "enum": ["variabel", "fast", "fastOgVariabel"]},
+                    "overstyrtAvBruker": {"type": "boolean"}
+                }
+            },
+            "JsonArbeidssituasjon": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "utdatert"]},
+                    "erIJobb": {"type": "boolean"},
+                    "jobbGrad": {"type": "string", "enum": ["heltid", "deltid"]}
+                }
+            },
+            "JsonBarn": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "navn": {"$ref": "#/components/schemas/JsonNavn"},
+                    "fodselsdato": {"type": "string"},
+                    "personIdentifikator": {"type": "string"},
+                    "harDiskresjonskode": {"type": "boolean"}
+                }
+            },
+            "JsonBarnebidrag": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "utdatert"]},
+                    "verdi": {"type": "string", "enum": ["betaler", "mottar", "begge", "ingen"]}
+                }
+            },
+            "JsonBegrunnelse": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "utdatert"]},
+                    "hvorforSoke": {"type": "string"},
+                    "hvaSokesOm": {"type": "string"}
+                }
+            },
+            "JsonBorSammenMed": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "utdatert"]},
+                    "verdi": {"type": "boolean"}
+                }
+            },
+            "JsonBosituasjon": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "utdatert"]},
+                    "botype": {
+                        "type": "string",
+                        "enum": [
+                            "eier",
+                            "leier",
+                            "kommunal",
+                            "ingen",
+                            "institusjon",
+                            "krisesenter",
+                            "fengsel",
+                            "venner",
+                            "foreldre",
+                            "familie",
+                            "annet"
+                        ]
+                    },
+                    "antallPersoner": {"type": "integer", "format": "int32"}
+                }
+            },
+            "JsonBostotte": {
+                "type": "object",
+                "properties": {"saker": {"type": "array", "items": {"$ref": "#/components/schemas/JsonBostotteSak"}}}
+            },
+            "JsonData": {
+                "type": "object",
+                "properties": {
+                    "personalia": {"$ref": "#/components/schemas/JsonPersonalia"},
+                    "arbeid": {"$ref": "#/components/schemas/JsonArbeid"},
+                    "utdanning": {"$ref": "#/components/schemas/JsonUtdanning"},
+                    "familie": {"$ref": "#/components/schemas/JsonFamilie"},
+                    "begrunnelse": {"$ref": "#/components/schemas/JsonBegrunnelse"},
+                    "bosituasjon": {"$ref": "#/components/schemas/JsonBosituasjon"},
+                    "okonomi": {"$ref": "#/components/schemas/JsonOkonomi"}
+                }
+            },
+            "JsonDriftsinformasjon": {
+                "type": "object",
+                "properties": {
+                    "utbetalingerFraNavFeilet": {"type": "boolean"},
+                    "inntektFraSkatteetatenFeilet": {"type": "boolean"},
+                    "stotteFraHusbankenFeilet": {"type": "boolean"}
+                }
+            },
+            "JsonEktefelle": {
+                "type": "object",
+                "properties": {
+                    "navn": {"$ref": "#/components/schemas/JsonNavn"},
+                    "fodselsdato": {"type": "string"},
+                    "personIdentifikator": {"type": "string"}
+                }
+            },
+            "JsonErFolkeregistrertSammen": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["system", "utdatert"]},
+                    "verdi": {"type": "boolean"}
+                }
+            },
+            "JsonFamilie": {
+                "type": "object",
+                "properties": {
+                    "sivilstatus": {"$ref": "#/components/schemas/JsonSivilstatus"},
+                    "folkeregistrertMedEktefelleAvviksforklaring": {
+                        "$ref": "#/components/schemas/JsonFolkeregistrertMedEktefelleAvviksforklaring"
+                    },
+                    "forsorgerplikt": {"$ref": "#/components/schemas/JsonForsorgerplikt"}
+                }
+            },
+            "JsonFiler": {
+                "type": "object",
+                "properties": {"filnavn": {"type": "string"}, "sha512": {"type": "string"}}
+            },
+            "JsonFolkeregistrertMedEktefelleAvviksforklaring": {
+                "type": "object",
+                "properties": {"kilde": {"type": "string", "enum": ["bruker", "utdatert"]}, "verdi": {"type": "string"}}
+            },
+            "JsonForsorgerplikt": {
+                "type": "object",
+                "properties": {
+                    "harForsorgerplikt": {"$ref": "#/components/schemas/JsonHarForsorgerplikt"},
+                    "barnebidrag": {"$ref": "#/components/schemas/JsonBarnebidrag"},
+                    "ansvar": {"type": "array", "items": {"$ref": "#/components/schemas/JsonAnsvar"}}
+                }
+            },
+            "JsonHarDeltBosted": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "utdatert"]},
+                    "verdi": {"type": "boolean"}
+                }
+            },
+            "JsonHarForsorgerplikt": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "verdi": {"type": "boolean"}
+                }
+            },
+            "JsonInternalSoknad": {
+                "type": "object",
+                "properties": {
+                    "soknad": {"$ref": "#/components/schemas/JsonSoknad"},
+                    "vedlegg": {"$ref": "#/components/schemas/JsonVedleggSpesifikasjon"},
+                    "mottaker": {"$ref": "#/components/schemas/JsonSoknadsmottaker"},
+                    "midlertidigAdresse": {"$ref": "#/components/schemas/JsonAdresse"}
+                }
+            },
+            "JsonKommentarTilArbeidsforhold": {
+                "type": "object",
+                "properties": {"kilde": {"type": "string", "enum": ["bruker", "utdatert"]}, "verdi": {"type": "string"}}
+            },
+            "JsonKompatibilitet": {
+                "type": "object",
+                "properties": {
+                    "minVersion": {"type": "string"},
+                    "maxVersion": {"type": "string"},
+                    "text": {"type": "string"}
+                }
+            },
+            "JsonKontonummer": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "harIkkeKonto": {"type": "boolean"},
+                    "verdi": {"type": "string"}
+                }
+            },
+            "JsonNordiskBorger": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "verdi": {"type": "boolean"}
+                }
+            },
+            "JsonOkonomi": {
+                "type": "object",
+                "properties": {
+                    "opplysninger": {"$ref": "#/components/schemas/JsonOkonomiopplysninger"},
+                    "oversikt": {"$ref": "#/components/schemas/JsonOkonomioversikt"}
+                }
+            },
+            "JsonOkonomiOpplysningUtgift": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "type": {"type": "string"},
+                    "tittel": {"type": "string"},
+                    "belop": {"type": "integer", "format": "int32"},
+                    "overstyrtAvBruker": {"type": "boolean"}
+                }
+            },
+            "JsonOkonomibekreftelse": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "type": {"type": "string"},
+                    "tittel": {"type": "string"},
+                    "verdi": {"type": "boolean"},
+                    "bekreftelsesDato": {"type": "string"}
+                }
+            },
+            "JsonOkonomibeskrivelserAvAnnet": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "utdatert"]},
+                    "verdi": {"type": "string"},
+                    "sparing": {"type": "string"},
+                    "utbetaling": {"type": "string"},
+                    "boutgifter": {"type": "string"},
+                    "barneutgifter": {"type": "string"}
+                }
+            },
+            "JsonOkonomiopplysninger": {
+                "type": "object",
+                "properties": {
+                    "bekreftelse": {"type": "array", "items": {"$ref": "#/components/schemas/JsonOkonomibekreftelse"}},
+                    "beskrivelseAvAnnet": {"$ref": "#/components/schemas/JsonOkonomibeskrivelserAvAnnet"},
+                    "utbetaling": {
+                        "type": "array",
+                        "items": {"$ref": "#/components/schemas/JsonOkonomiOpplysningUtbetaling"}
+                    },
+                    "utgift": {"type": "array", "items": {"$ref": "#/components/schemas/JsonOkonomiOpplysningUtgift"}},
+                    "bostotte": {"$ref": "#/components/schemas/JsonBostotte"}
+                }
+            },
+            "JsonOkonomioversikt": {
+                "type": "object",
+                "properties": {
+                    "inntekt": {"type": "array", "items": {"$ref": "#/components/schemas/JsonOkonomioversiktInntekt"}},
+                    "utgift": {"type": "array", "items": {"$ref": "#/components/schemas/JsonOkonomioversiktUtgift"}},
+                    "formue": {"type": "array", "items": {"$ref": "#/components/schemas/JsonOkonomioversiktFormue"}}
+                }
+            },
+            "JsonOkonomioversiktFormue": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "type": {"type": "string"},
+                    "tittel": {"type": "string"},
+                    "belop": {"type": "integer", "format": "int32"},
+                    "overstyrtAvBruker": {"type": "boolean"}
+                }
+            },
+            "JsonOkonomioversiktInntekt": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "type": {"type": "string"},
+                    "tittel": {"type": "string"},
+                    "brutto": {"type": "integer", "format": "int32"},
+                    "netto": {"type": "integer", "format": "int32"},
+                    "overstyrtAvBruker": {"type": "boolean"}
+                }
+            },
+            "JsonOkonomioversiktUtgift": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "type": {"type": "string"},
+                    "tittel": {"type": "string"},
+                    "belop": {"type": "integer", "format": "int32"},
+                    "overstyrtAvBruker": {"type": "boolean"}
+                }
+            },
+            "JsonPersonIdentifikator": {
+                "type": "object",
+                "properties": {"kilde": {"type": "string", "enum": ["system"]}, "verdi": {"type": "string"}}
+            },
+            "JsonPersonalia": {
+                "type": "object",
+                "properties": {
+                    "personIdentifikator": {"$ref": "#/components/schemas/JsonPersonIdentifikator"},
+                    "navn": {"$ref": "#/components/schemas/JsonSokernavn"},
+                    "statsborgerskap": {"$ref": "#/components/schemas/JsonStatsborgerskap"},
+                    "nordiskBorger": {"$ref": "#/components/schemas/JsonNordiskBorger"},
+                    "telefonnummer": {"$ref": "#/components/schemas/JsonTelefonnummer"},
+                    "kontonummer": {"$ref": "#/components/schemas/JsonKontonummer"},
+                    "folkeregistrertAdresse": {"$ref": "#/components/schemas/JsonAdresse"},
+                    "oppholdsadresse": {"$ref": "#/components/schemas/JsonAdresse"},
+                    "postadresse": {"$ref": "#/components/schemas/JsonAdresse"}
+                }
+            },
+            "JsonSamvarsgrad": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "utdatert"]},
+                    "verdi": {"type": "integer", "format": "int32"}
+                }
+            },
+            "JsonSivilstatus": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "status": {"type": "string", "enum": ["gift", "ugift", "samboer", "enke", "skilt", "separert"]},
+                    "ektefelle": {"$ref": "#/components/schemas/JsonEktefelle"},
+                    "ektefelleHarDiskresjonskode": {"type": "boolean"},
+                    "folkeregistrertMedEktefelle": {"type": "boolean"},
+                    "borSammenMed": {"type": "boolean"},
+                    "borIkkeSammenMedBegrunnelse": {"type": "string"}
+                }
+            },
+            "JsonSokernavn": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["system"]},
+                    "fornavn": {"type": "string"},
+                    "mellomnavn": {"type": "string"},
+                    "etternavn": {"type": "string"}
+                }
+            },
+            "JsonSoknad": {
+                "type": "object",
+                "properties": {
+                    "version": {"type": "string"},
+                    "data": {"$ref": "#/components/schemas/JsonData"},
+                    "innsendingstidspunkt": {"type": "string"},
+                    "mottaker": {"$ref": "#/components/schemas/JsonSoknadsmottaker"},
+                    "driftsinformasjon": {"$ref": "#/components/schemas/JsonDriftsinformasjon"},
+                    "kompatibilitet": {"type": "array", "items": {"$ref": "#/components/schemas/JsonKompatibilitet"}}
+                }
+            },
+            "JsonSoknadsmottaker": {
+                "type": "object",
+                "properties": {"organisasjonsnummer": {"type": "string"}, "navEnhetsnavn": {"type": "string"}}
+            },
+            "JsonStatsborgerskap": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "verdi": {"type": "string"}
+                }
+            },
+            "JsonTelefonnummer": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "verdi": {"type": "string"}
+                }
+            },
+            "JsonUtdanning": {
+                "type": "object",
+                "properties": {
+                    "kilde": {"type": "string", "enum": ["bruker", "system", "utdatert"]},
+                    "erStudent": {"type": "boolean"},
+                    "studentgrad": {"type": "string", "enum": ["heltid", "deltid"]}
+                }
+            },
+            "JsonVedlegg": {
+                "type": "object",
+                "properties": {
+                    "type": {"type": "string"},
+                    "tilleggsinfo": {"type": "string"},
+                    "status": {"type": "string"},
+                    "filer": {"type": "array", "items": {"$ref": "#/components/schemas/JsonFiler"}},
+                    "hendelseType": {
+                        "type": "string",
+                        "enum": ["dokumentasjonEtterspurt", "dokumentasjonkrav", "soknad", "bruker"]
+                    },
+                    "hendelseReferanse": {"type": "string"}
+                }
+            },
+            "JsonVedleggSpesifikasjon": {
+                "type": "object",
+                "properties": {"vedlegg": {"type": "array", "items": {"$ref": "#/components/schemas/JsonVedlegg"}}}
+            },
+            "OppgaveDto": {
+                "required": ["behandlingsId", "id", "retries", "status", "steg"],
+                "type": "object",
+                "properties": {
+                    "id": {"type": "integer", "format": "int64"},
+                    "behandlingsId": {"type": "string"},
+                    "type": {"type": "string"},
+                    "status": {"type": "string", "enum": ["KLAR", "UNDER_ARBEID", "FERDIG", "FEILET"]},
+                    "steg": {"type": "integer", "format": "int32"},
+                    "oppgaveData": {"$ref": "#/components/schemas/FiksDataDto"},
+                    "oppgaveResultat": {"$ref": "#/components/schemas/FiksResultatDto"},
+                    "opprettet": {"type": "string", "format": "date-time"},
+                    "sistKjort": {"type": "string", "format": "date-time"},
+                    "nesteForsok": {"type": "string", "format": "date-time"},
+                    "retries": {"type": "integer", "format": "int32"}
+                }
+            },
+            "OpplastetVedleggDto": {
+                "required": ["data", "eier", "filnavn", "sha512", "soknadId", "uuid", "vedleggType"],
+                "type": "object",
+                "properties": {
+                    "uuid": {"type": "string"},
+                    "eier": {"type": "string"},
+                    "vedleggType": {"$ref": "#/components/schemas/OpplastetVedleggType"},
+                    "data": {"type": "string", "format": "byte"},
+                    "soknadId": {"type": "integer", "format": "int64"},
+                    "filnavn": {"type": "string"},
+                    "sha512": {"type": "string"}
+                }
+            },
+            "OpplastetVedleggType": {
+                "required": ["sammensattType", "tilleggsinfo", "type"],
+                "type": "object",
+                "properties": {
+                    "sammensattType": {"type": "string"},
+                    "tilleggsinfo": {"type": "string"},
+                    "type": {"type": "string"}
+                }
+            },
+            "ReplicationDto": {
+                "required": ["behandlingsId", "soknadMetadata"],
+                "type": "object",
+                "properties": {
+                    "behandlingsId": {"type": "string"},
+                    "soknadMetadata": {"$ref": "#/components/schemas/SoknadMetadataDto"},
+                    "soknadUnderArbeid": {"$ref": "#/components/schemas/SoknadUnderArbeidDto"},
+                    "sendtSoknad": {"$ref": "#/components/schemas/SendtSoknadDto"},
+                    "oppgave": {"$ref": "#/components/schemas/OppgaveDto"}
+                }
+            },
+            "SendtSoknadDto": {
+                "required": [
+                    "behandlingsId",
+                    "brukerFerdigDato",
+                    "brukerOpprettetDato",
+                    "eier",
+                    "navEnhetsnavn",
+                    "orgnummer",
+                    "sendtSoknadId"
+                ],
+                "type": "object",
+                "properties": {
+                    "sendtSoknadId": {"type": "integer", "format": "int64"},
+                    "behandlingsId": {"type": "string"},
+                    "tilknyttetBehandlingsId": {"type": "string"},
+                    "eier": {"type": "string"},
+                    "fiksforsendelseId": {"type": "string"},
+                    "orgnummer": {"type": "string"},
+                    "navEnhetsnavn": {"type": "string"},
+                    "brukerOpprettetDato": {"type": "string", "format": "date-time"},
+                    "brukerFerdigDato": {"type": "string", "format": "date-time"},
+                    "sendtDato": {"type": "string", "format": "date-time"}
+                }
+            },
+            "SoknadMetadataDto": {
+                "required": ["behandlingsId", "fnr", "id", "lest", "opprettetDato", "sistEndretDato"],
+                "type": "object",
+                "properties": {
+                    "id": {"type": "integer", "format": "int64"},
+                    "behandlingsId": {"type": "string"},
+                    "tilknyttetBehandlingsId": {"type": "string"},
+                    "fnr": {"type": "string"},
+                    "skjema": {"type": "string"},
+                    "orgnr": {"type": "string"},
+                    "navEnhet": {"type": "string"},
+                    "fiksForsendelseId": {"type": "string"},
+                    "vedlegg": {"$ref": "#/components/schemas/VedleggMetadataListeDto"},
+                    "type": {"type": "string", "enum": ["SEND_SOKNAD_KOMMUNAL", "SEND_SOKNAD_KOMMUNAL_ETTERSENDING"]},
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "UNDER_ARBEID",
+                            "FERDIG",
+                            "AVBRUTT_AV_BRUKER",
+                            "AVBRUTT_AUTOMATISK",
+                            "SENDT_MED_DIGISOS_API"
+                        ]
+                    },
+                    "opprettetDato": {"type": "string", "format": "date-time"},
+                    "sistEndretDato": {"type": "string", "format": "date-time"},
+                    "innsendtDato": {"type": "string", "format": "date-time"},
+                    "lest": {"type": "boolean"}
+                }
+            },
+            "SoknadUnderArbeidDto": {
+                "required": [
+                    "behandlingsId",
+                    "eier",
+                    "opplastetVedleggList",
+                    "opprettetDato",
+                    "sistEndretDato",
+                    "soknadId",
+                    "status",
+                    "versjon"
+                ],
+                "type": "object",
+                "properties": {
+                    "soknadId": {"type": "integer", "format": "int64"},
+                    "versjon": {"type": "integer", "format": "int64"},
+                    "behandlingsId": {"type": "string"},
+                    "tilknyttetBehandlingsId": {"type": "string"},
+                    "eier": {"type": "string"},
+                    "jsonInternalSoknad": {"$ref": "#/components/schemas/JsonInternalSoknad"},
+                    "status": {"type": "string", "enum": ["UNDER_ARBEID", "LAAST"]},
+                    "opprettetDato": {"type": "string", "format": "date-time"},
+                    "sistEndretDato": {"type": "string", "format": "date-time"},
+                    "opplastetVedleggList": {
+                        "type": "array",
+                        "items": {"$ref": "#/components/schemas/OpplastetVedleggDto"}
+                    }
+                }
+            },
+            "VedleggMetadataDto": {
+                "type": "object",
+                "properties": {
+                    "filUuid": {"type": "string"},
+                    "filnavn": {"type": "string"},
+                    "mimeType": {"type": "string"},
+                    "filStorrelse": {"type": "string"},
+                    "status": {"type": "string", "enum": ["VedleggKreves", "LastetOpp", "VedleggAlleredeSendt"]},
+                    "skjema": {"type": "string"},
+                    "tillegg": {"type": "string"},
+                    "hendelseType": {
+                        "type": "string",
+                        "enum": ["dokumentasjonEtterspurt", "dokumentasjonkrav", "soknad", "bruker"]
+                    },
+                    "hendelseReferanse": {"type": "string"}
+                }
+            },
+            "VedleggMetadataListeDto": {
+                "required": ["vedleggListe"],
+                "type": "object",
+                "properties": {
+                    "vedleggListe": {"type": "array", "items": {"$ref": "#/components/schemas/VedleggMetadataDto"}}
+                }
+            },
+            "PabegyntSoknad": {
+                "required": ["behandlingsId", "sistOppdatert"],
+                "type": "object",
+                "properties": {"sistOppdatert": {"type": "string"}, "behandlingsId": {"type": "string"}}
+            },
+            "KommunestatusFrontend": {
+                "required": [
+                    "harMidlertidigDeaktivertMottak",
+                    "harMidlertidigDeaktivertOppdateringer",
+                    "harNksTilgang",
+                    "kanMottaSoknader",
+                    "kanOppdatereStatus",
+                    "kommunenummer"
+                ],
+                "type": "object",
+                "properties": {
+                    "kommunenummer": {"type": "string"},
+                    "kanMottaSoknader": {"type": "boolean"},
+                    "kanOppdatereStatus": {"type": "boolean"},
+                    "harMidlertidigDeaktivertMottak": {"type": "boolean"},
+                    "harMidlertidigDeaktivertOppdateringer": {"type": "boolean"},
+                    "harNksTilgang": {"type": "boolean"},
+                    "behandlingsansvarlig": {"type": "string"},
+                    "kontaktPersoner": {"$ref": "#/components/schemas/KontaktPersonerFrontend"}
+                }
+            },
+            "KontaktPersonerFrontend": {
+                "required": ["fagansvarligEpost", "tekniskAnsvarligEpost"],
+                "type": "object",
+                "properties": {
+                    "fagansvarligEpost": {"type": "array", "items": {"type": "string"}},
+                    "tekniskAnsvarligEpost": {"type": "array", "items": {"type": "string"}}
+                }
+            },
+            "NyligInnsendteSoknaderResponse": {
+                "required": ["antallNyligInnsendte"],
+                "type": "object",
+                "properties": {"antallNyligInnsendte": {"type": "integer", "format": "int32"}}
+            },
+            "AdresseForslag": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {
+                    "adresse": {"type": "string"},
+                    "husnummer": {"type": "string"},
+                    "husbokstav": {"type": "string"},
+                    "kommunenummer": {"type": "string"},
+                    "kommunenavn": {"type": "string"},
+                    "postnummer": {"type": "string"},
+                    "poststed": {"type": "string"},
+                    "geografiskTilknytning": {"type": "string"},
+                    "gatekode": {"type": "string"},
+                    "bydel": {"type": "string"},
+                    "type": {"type": "string", "enum": ["GATEADRESSE", "MATRIKKELADRESSE"]}
+                }
+            },
+            "BehandlingsKjede": {
+                "type": "object",
+                "properties": {
+                    "originalSoknad": {"$ref": "#/components/schemas/InnsendtSoknad"},
+                    "ettersendelser": {"type": "array", "items": {"$ref": "#/components/schemas/InnsendtSoknad"}}
+                }
+            },
+            "InnsendtSoknad": {
+                "type": "object",
+                "properties": {
+                    "behandlingsId": {"type": "string"},
+                    "innsendtDato": {"type": "string"},
+                    "innsendtTidspunkt": {"type": "string"},
+                    "soknadsalderIMinutter": {"type": "integer", "format": "int64"},
+                    "innsendteVedlegg": {"type": "array", "items": {"$ref": "#/components/schemas/Vedlegg"}},
+                    "ikkeInnsendteVedlegg": {"type": "array", "items": {"$ref": "#/components/schemas/Vedlegg"}},
+                    "navenhet": {"type": "string"},
+                    "orgnummer": {"type": "string"}
+                }
+            },
+            "EttersendtVedlegg": {
+                "type": "object",
+                "properties": {
+                    "type": {"type": "string"},
+                    "vedleggStatus": {"type": "string"},
+                    "filer": {"type": "array", "items": {"$ref": "#/components/schemas/FilFrontend"}}
+                }
+            },
+            "PabegyntSoknadDto": {
+                "required": [
+                    "eventId",
+                    "eventTidspunkt",
+                    "grupperingsId",
+                    "isAktiv",
+                    "link",
+                    "sikkerhetsnivaa",
+                    "sistOppdatert",
+                    "tekst"
+                ],
+                "type": "object",
+                "properties": {
+                    "eventTidspunkt": {"type": "string"},
+                    "eventId": {"type": "string"},
+                    "grupperingsId": {"type": "string"},
+                    "tekst": {"type": "string"},
+                    "link": {"type": "string"},
+                    "sikkerhetsnivaa": {"type": "integer", "format": "int32"},
+                    "sistOppdatert": {"type": "string"},
+                    "isAktiv": {"type": "boolean"}
+                }
+            }
+        }
+    }
+}

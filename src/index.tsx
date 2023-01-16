@@ -21,6 +21,7 @@ import {logException, NavLogEntry, NavLogLevel} from "./nav-soknad/utils/loggerU
 import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
 import {RouterProvider} from "react-router-dom";
 import {router} from "./digisos";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 Modal.setAppElement("#root");
 
@@ -53,6 +54,7 @@ window.onerror = (errorMessage, url, line, column, error) => {
 };
 
 initAmplitude();
+const queryClient = new QueryClient();
 
 // Dersom appen bygges og deployes med docker-image vil dekoratøren bli lagt på serverside med express i Docker (eks ved deploy til miljø)
 if (process.env.NODE_ENV !== "production") {
@@ -69,7 +71,9 @@ ReactDOM.render(
     <Provider store={store}>
         <IntlProvider>
             <LoadContainer>
-                <RouterProvider router={router} />
+                <QueryClientProvider client={queryClient}>
+                    <RouterProvider router={router} />
+                </QueryClientProvider>
             </LoadContainer>
         </IntlProvider>
     </Provider>,
