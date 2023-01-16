@@ -9,9 +9,9 @@ import type {GateadresseFrontend} from "./gateadresseFrontend";
 import type {MatrikkeladresseFrontend} from "./matrikkeladresseFrontend";
 import type {UstrukturertAdresseFrontend} from "./ustrukturertAdresseFrontend";
 
-export interface AdresseFrontend {
+export type AdresseFrontend = {
     type?: AdresseFrontendType;
     gateadresse?: GateadresseFrontend;
     matrikkeladresse?: MatrikkeladresseFrontend;
     ustrukturert?: UstrukturertAdresseFrontend;
-}
+} | null;

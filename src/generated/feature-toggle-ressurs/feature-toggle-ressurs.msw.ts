@@ -8,7 +8,7 @@ import {rest} from "msw";
 import {faker} from "@faker-js/faker";
 
 export const getFeatureTogglesMock = () => ({
-    clcxqocf10006cis98u6ah1fh: faker.datatype.boolean(),
+    clcz3q95q0006ecs9eglf9uxo: faker.datatype.boolean(),
 });
 
 export const getFeatureToggleRessursMSW = () => [

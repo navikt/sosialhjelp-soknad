@@ -27,7 +27,7 @@ export const getGetOppsummeringMock = () => ({
                         ]),
                         labelSvarMap: faker.helpers.arrayElement([
                             {
-                                clcxqoceo0001cis9htl53ku1: {
+                                clcz3q95d0001ecs9gijq3yy8: {
                                     value: faker.helpers.arrayElement([faker.random.word(), undefined]),
                                     type: faker.helpers.arrayElement(["LOCALE_TEKST", "TEKST", "DATO", "TIDSPUNKT"]),
                                 },

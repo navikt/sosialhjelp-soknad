@@ -12,4 +12,5 @@ export const AdresserFrontendInputValg = {
     folkeregistrert: "folkeregistrert",
     midlertidig: "midlertidig",
     soknad: "soknad",
+    null: null,
 } as const;

@@ -9,7 +9,7 @@ import type {AdresseFrontend} from "./adresseFrontend";
 
 export interface AdresserFrontendInput {
     valg?: AdresserFrontendInputValg;
-    folkeregistrert?: AdresseFrontend;
     midlertidig?: AdresseFrontend;
     soknad?: AdresseFrontend;
+    folkeregistrert?: AdresseFrontend;
 }

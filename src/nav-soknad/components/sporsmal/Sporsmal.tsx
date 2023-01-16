@@ -1,7 +1,7 @@
 import * as React from "react";
 import classNames from "classnames";
 import {SkjemaGruppe} from "nav-frontend-skjema";
-import {getIntlText, getIntlTextOrKey, SporsmalTekster} from "../../utils";
+import {SporsmalTekster} from "../../utils";
 import styled from "styled-components";
 import {HelpText} from "@navikt/ds-react";
 
@@ -20,7 +20,6 @@ const StyledHelpText = styled.div`
 
 export enum LegendTittleStyle {
     DEFAULT = "skjema-fieldset--legend-title-default",
-    NORMAL = "skjema-fieldset--legend-title-normal-tekst",
     FET_NORMAL = "skjema-fieldset--legend-title-normal-fet",
 }
 

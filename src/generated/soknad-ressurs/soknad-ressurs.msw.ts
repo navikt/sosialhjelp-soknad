@@ -8,7 +8,7 @@ import {rest} from "msw";
 import {faker} from "@faker-js/faker";
 
 export const getOpprettSoknadMock = () => ({
-    clcxqocei0000cis9glm14czq: faker.random.word(),
+    clcz3q9580000ecs9hhyebbhf: faker.random.word(),
 });
 
 export const getHentXsrfCookieMock = () => faker.datatype.boolean();

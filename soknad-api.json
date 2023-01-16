@@ -1126,15 +1126,16 @@
                     "gateadresse": {"$ref": "#/components/schemas/GateadresseFrontend"},
                     "matrikkeladresse": {"$ref": "#/components/schemas/MatrikkeladresseFrontend"},
                     "ustrukturert": {"$ref": "#/components/schemas/UstrukturertAdresseFrontend"}
-                }
+                },
+                "nullable": true
             },
             "AdresserFrontendInput": {
                 "type": "object",
                 "properties": {
-                    "valg": {"type": "string", "enum": ["folkeregistrert", "midlertidig", "soknad"]},
-                    "folkeregistrert": {"$ref": "#/components/schemas/AdresseFrontend"},
+                    "valg": {"type": "string", "nullable": true, "enum": ["folkeregistrert", "midlertidig", "soknad"]},
                     "midlertidig": {"$ref": "#/components/schemas/AdresseFrontend"},
-                    "soknad": {"$ref": "#/components/schemas/AdresseFrontend"}
+                    "soknad": {"$ref": "#/components/schemas/AdresseFrontend"},
+                    "folkeregistrert": {"$ref": "#/components/schemas/AdresseFrontend"}
                 }
             },
             "GateadresseFrontend": {

@@ -8,11 +8,11 @@ import {rest} from "msw";
 import {faker} from "@faker-js/faker";
 
 export const getGetUtslagskriterierMock = () => ({
-    clcxqocex0002cis9gakrbob5: {},
+    clcz3q95l0002ecs97sxn9rnz: {},
 });
 
 export const getHentTeksterMock = () => ({
-    clcxqocex0003cis98nic7hsf: faker.random.word(),
+    clcz3q95m0003ecs99t376j2x: faker.random.word(),
 });
 
 export const getHentPabegynteSoknaderMock = () =>
@@ -22,7 +22,7 @@ export const getHentPabegynteSoknaderMock = () =>
     }));
 
 export const getHentKommunestatusMock = () => ({
-    clcxqocey0004cis906frcdre: {
+    clcz3q95n0004ecs97sdacg6g: {
         kommunenummer: faker.random.word(),
         kanMottaSoknader: faker.datatype.boolean(),
         kanOppdatereStatus: faker.datatype.boolean(),
@@ -52,7 +52,7 @@ export const getHarNyligInnsendteSoknaderMock = () => ({
 });
 
 export const getHentFornavnMock = () => ({
-    clcxqocez0005cis9ac732fhv: faker.random.word(),
+    clcz3q95o0005ecs916jw9vpd: faker.random.word(),
 });
 
 export const getAdresseSokMock = () =>
