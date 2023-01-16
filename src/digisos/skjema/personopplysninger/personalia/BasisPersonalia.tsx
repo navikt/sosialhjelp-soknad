@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -12,9 +11,7 @@ import {useHentBasisPersonalia} from "../../../../generated/basis-personalia-res
 
 // TODO: Figure out error handling
 const BasisPersonaliaData = () => {
-    const behandlingsId = useBehandlingsId();
-
-    const request = useAlgebraic<BasisPersonaliaFrontend>(useHentBasisPersonalia(behandlingsId));
+    const request = useAlgebraic<BasisPersonaliaFrontend>(useHentBasisPersonalia(useBehandlingsId()));
 
     return request.match({
         NotAsked: () => null,
