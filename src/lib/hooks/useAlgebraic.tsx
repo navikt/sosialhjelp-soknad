@@ -20,7 +20,7 @@ export const useAlgebraic = <A, E = unknown>(
             case "error":
                 setRequest(AsyncData.Done(Result.Error(error)));
         }
-    }, [status]);
+    }, [status, data, error]);
 
     return request;
 };
