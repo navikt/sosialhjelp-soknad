@@ -15,8 +15,8 @@ import {Input} from "nav-frontend-skjema";
 import {getFeil} from "../../../../nav-soknad/utils/enhancedComponentUtils";
 import {
     SingleLineDateElement,
-    SingleLineElement,
-    Systeminfo,
+    OldSingleLineElement,
+    OldSysteminfo,
 } from "../../../../nav-soknad/components/systeminfo/Systeminfo";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
@@ -77,11 +77,11 @@ const RegistrerteBarn = () => {
                 const feil_: string | undefined = getFeil(feil, intl, samvaersgradBarnKeyMedIndex, undefined);
                 return (
                     <div key={index} className={index + 1 === barn.length ? "barn barn_siste_liste_element" : "barn"}>
-                        <Systeminfo
+                        <OldSysteminfo
                             systeminfoMap={[
                                 {
                                     key: <FormattedMessage id={"kontakt.system.personalia.navn"} />,
-                                    value: <SingleLineElement value={barnet.barn.navn.fulltNavn} />,
+                                    value: <OldSingleLineElement value={barnet.barn.navn.fulltNavn} />,
                                 },
                                 {
                                     key: <FormattedMessage id={"familierelasjon.fodselsdato"} />,
@@ -89,7 +89,9 @@ const RegistrerteBarn = () => {
                                 },
                                 {
                                     key: <FormattedMessage id={"familierelasjon.samme_folkeregistrerte_adresse"} />,
-                                    value: <SingleLineElement value={barnet.erFolkeregistrertSammen ? "Ja" : "Nei"} />,
+                                    value: (
+                                        <OldSingleLineElement value={barnet.erFolkeregistrertSammen ? "Ja" : "Nei"} />
+                                    ),
                                 },
                             ]}
                         />

@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import SideIkkeFunnet from "../nav-soknad/feilsider/SideIkkeFunnet";
 import Informasjon from "./hovedmeny";
-import {erDev, erMockAlt} from "../nav-soknad/utils";
+import {isLocalhost, isMockAlt} from "../nav-soknad/utils";
 import {basePath} from "../configuration";
 import * as React from "react";
 import Ettersendelse from "./skjema/ettersendelse";
@@ -38,7 +38,9 @@ const Routes = (
         <Route index path={`/`} loader={() => redirect("/informasjon")} />
         <Route path={`/informasjon`} element={<Informasjon />} />
         <Route path={`/link`} loader={redirectFromLogin} />
-        {!erMockAlt() && !erDev() && <Route path={`/mock-login`} loader={redirectFromLogin} />}
+        {!isMockAlt(window.location.origin) && !isLocalhost(window.location.origin) && (
+            <Route path={`/mock-login`} loader={redirectFromLogin} />
+        )}
         <Route path={"/skjema/:behandlingsId/*"}>
             <Route index path="1" element={<Steg1 />} />
             <Route path="2" element={<Steg2 />} />
