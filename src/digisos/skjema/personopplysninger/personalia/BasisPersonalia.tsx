@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
