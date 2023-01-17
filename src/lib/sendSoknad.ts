@@ -8,6 +8,7 @@ import {
     visMidlertidigDeaktivertPanel,
 } from "../digisos/redux/soknad/soknadActions";
 import {logWarning} from "../nav-soknad/utils/loggerUtils";
+import {basePath} from "../configuration";
 
 export type SoknadSendtTil = "SVARUT" | "FIKS_DIGISOS_API";
 
@@ -27,9 +28,9 @@ export const sendSoknad = async (behandlingsId: string, dispatch: Dispatch<AnyAc
 
         dispatch(sendSoknadOk(behandlingsId));
 
-        if (!response) return `/skjema/${behandlingsId}/ettersendelse`;
+        if (!response) return `${basePath}/skjema/${behandlingsId}/ettersendelse`;
         if (response.sendtTil === "FIKS_DIGISOS_API") return `${getInnsynUrl()}${response.id}/status`;
-        if (response?.id) return `/skjema/${response.id}/ettersendelse`;
+        if (response?.id) return `${basePath}/skjema/${response.id}/ettersendelse`;
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) return;
 
