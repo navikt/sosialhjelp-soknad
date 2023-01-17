@@ -6,10 +6,12 @@ import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 import {useAlgebraic} from "../../../../lib/hooks/useAlgebraic";
 import {useHentBasisPersonalia} from "../../../../generated/basis-personalia-ressurs/basis-personalia-ressurs";
 import {useErrorHandler} from "../../../../lib/hooks/useErrorHandler";
+import {useTranslation} from "react-i18next";
 
 // TODO: Figure out error handling
 export const BasisPersonaliaData = () => {
     const {request} = useAlgebraic(useHentBasisPersonalia(useBehandlingsId()));
+    const {t} = useTranslation("skjema", {keyPrefix: "kontakt.system.personalia"});
     const errorHandler = useErrorHandler();
 
     return request.match({
@@ -18,17 +20,11 @@ export const BasisPersonaliaData = () => {
         Done: (response) =>
             response.match({
                 Error: errorHandler,
-                Ok: ({fulltNavn, fodselsnummer, statsborgerskap}) => (
+                Ok: ({fulltNavn, fodselsnummer, statsborgerskap = "Ukjent/statsløs"}) => (
                     <Systeminfo>
-                        <SysteminfoItem label={<FormattedMessage id={"kontakt.system.personalia.navn"} />}>
-                            {fulltNavn}
-                        </SysteminfoItem>
-                        <SysteminfoItem label={<FormattedMessage id={"kontakt.system.personalia.fnr"} />}>
-                            {fodselsnummer}
-                        </SysteminfoItem>
-                        <SysteminfoItem label={<FormattedMessage id={"kontakt.system.personalia.statsborgerskap"} />}>
-                            {statsborgerskap ?? "Ukjent/statsløs"}
-                        </SysteminfoItem>
+                        <SysteminfoItem label={t("navn")}>{fulltNavn}</SysteminfoItem>
+                        <SysteminfoItem label={t("fnr")}>{fodselsnummer}</SysteminfoItem>
+                        <SysteminfoItem label={t("statsborgerskap")}>{statsborgerskap}</SysteminfoItem>
                     </Systeminfo>
                 ),
             }),

@@ -1,7 +1,5 @@
-import {FormattedMessage, useIntl} from "react-intl";
 import * as React from "react";
 import {useState} from "react";
-import {getIntlText} from "../../../../nav-soknad/utils";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
@@ -20,6 +18,7 @@ import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../redux/soknadsdata/sok
 import {useDispatch} from "react-redux";
 import {Adresser, NavEnhet} from "./AdresseTypes";
 import {clearValideringsfeil} from "../../../redux/validering/valideringActions";
+import {useTranslation} from "react-i18next";
 
 const HorizontalRadioGroup = styled(RadioGroup)`
     .navds-radio {
@@ -48,7 +47,7 @@ const AdresseView = () => {
     const dispatch = useDispatch();
 
     const [uncommittedAdressevalg, setUncommittedAdressevalg] = useState<AdresserFrontendValg | null>(null);
-    const intl = useIntl();
+    const {t} = useTranslation();
 
     const setAdresser = async (adresser: AdresserFrontend, valg: AdresserFrontendValg, soknad?: AdresseFrontend) => {
         const inputAdresser = {
@@ -74,11 +73,11 @@ const AdresseView = () => {
                     <Sporsmal
                         id="soknadsmottaker"
                         noValidateOnBlur={true}
-                        sporsmal={getIntlText(intl, `soknadsmottaker.sporsmal`)}
-                        hjelpetekst={getIntlText(intl, `soknadsmottaker.hjelpetekst.tekst`)}
+                        sporsmal={t(`soknadsmottaker.sporsmal`)}
+                        hjelpetekst={t("soknadsmottaker.hjelpetekst.tekst")}
                     >
                         <HorizontalRadioGroup
-                            legend={getIntlText(intl, `soknadsmottaker.infotekst.tekst`)}
+                            legend={t("soknadsmottaker.infotekst.tekst")}
                             value={uncommittedAdressevalg}
                             onChange={async (valg) => {
                                 setUncommittedAdressevalg(valg);
@@ -86,16 +85,14 @@ const AdresseView = () => {
                             }}
                         >
                             <Radio value={"folkeregistrert"}>
-                                <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse" />
+                                {t("kontakt.system.oppholdsadresse.folkeregistrertAdresse")}
                                 <AdresseVisning adresse={adresser.folkeregistrert} />
                             </Radio>
                             <Radio value={"midlertidig"} className={cx({hidden: !adresser.midlertidig})}>
-                                <FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
+                                {t("kontakt.system.oppholdsadresse.midlertidigAdresse")}
                                 <AdresseVisning adresse={adresser.midlertidig} />
                             </Radio>
-                            <Radio value={"soknad"}>
-                                <FormattedMessage id="kontakt.system.oppholdsadresse.valg.soknad" />
-                            </Radio>
+                            <Radio value={"soknad"}>{t("kontakt.system.oppholdsadresse.valg.soknad")}</Radio>
                             {uncommittedAdressevalg === "soknad" && (
                                 <AdresseSok
                                     defaultValue={formaterSoknadsadresse(adresser.soknad?.gateadresse)}
