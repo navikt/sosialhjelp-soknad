@@ -37,10 +37,10 @@ const AdresseView = () => {
     const [showSearchAnyway, setShowSearchAnyway] = useState<boolean>(false);
     const intl = useIntl();
 
-    const setAdresser = async (adresser: AdresserFrontend, valg: AdresserFrontendValg, soknad: AdresseFrontend) => {
+    const setAdresser = async (adresser: AdresserFrontend, valg: AdresserFrontendValg, soknad?: AdresseFrontend) => {
         await updateAdresse(behandlingsId, {
             ...{...adresser, navEnhet: undefined},
-            valg: soknad ? "soknad" : null,
+            valg: soknad ? "soknad" : valg,
             soknad,
         });
         await refetch();
@@ -68,17 +68,17 @@ const AdresseView = () => {
                                         setShowSearchAnyway(true);
                                     } else {
                                         setShowSearchAnyway(false);
-                                        await setAdresser(adresser, valg, null);
+                                        await setAdresser(adresser, valg);
                                     }
                                 }}
                             >
                                 <Radio value={"folkeregistrert"}>
                                     <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse" />
-                                    <AdresseVisning valg={"folkeregistrert"} />
+                                    <AdresseVisning adresse={adresser.folkeregistrert} />
                                 </Radio>
                                 <Radio value={"midlertidig"} className={cx({hidden: !adresser.midlertidig})}>
                                     <FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
-                                    <AdresseVisning valg={"midlertidig"} />
+                                    <AdresseVisning adresse={adresser.midlertidig} />
                                 </Radio>
                                 <Radio value={"soknad"}>
                                     <FormattedMessage id="kontakt.system.oppholdsadresse.valg.soknad" />

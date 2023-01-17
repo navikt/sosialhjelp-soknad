@@ -102,11 +102,3 @@ export const initialAdresserState: Adresser = {
     midlertidig: null,
     soknad: null,
 };
-
-export enum SoknadsMottakerStatus {
-    IKKE_VALGT = "ikke_valgt",
-    VALGT = "valgt",
-    GYLDIG = "gyldig",
-    UGYLDIG = "ugyldig",
-    MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT = "mottak_er_midlertidig_deaktivert",
-}

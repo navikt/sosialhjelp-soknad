@@ -1,5 +1,3 @@
-// TODO: Make this unnecessary by making the input type on the backend to soknad
-//       equal to the output type from adressesok
 import {AdresseForslag, AdresseFrontend} from "../../../../generated/model";
 import {Heading} from "@navikt/ds-react";
 import {FormattedMessage} from "react-intl";
@@ -7,6 +5,8 @@ import {AdresseTypeahead} from "./AdresseTypeaheadDownshift";
 import * as React from "react";
 import styled from "styled-components";
 
+// TODO: Make this unnecessary by making the input type on the backend to soknad
+//       equal to the output type from adressesok
 export const adresseForslagTilAdresse = ({
     adresse,
     husbokstav,
@@ -51,7 +51,6 @@ export const AdresseSok = ({
                     <Heading size={"xsmall"}>
                         <FormattedMessage id="kontakt.system.oppholdsadresse.hvorOppholder" />
                     </Heading>
-
                     <FormattedMessage id="kontakt.system.kontaktinfo.infotekst.tekst" />
                 </div>
                 <div>
@@ -59,12 +58,8 @@ export const AdresseSok = ({
                 </div>
                 <AdresseTypeahead
                     defaultValue={defaultValue}
-                    onVelgAnnenAdresse={async (forslag) => {
-                        await onChange(adresseForslagTilAdresse(forslag));
-                    }}
-                    onNullstill={async () => {
-                        await onChange(null);
-                    }}
+                    onVelgAnnenAdresse={async (forslag) => onChange(adresseForslagTilAdresse(forslag))}
+                    onNullstill={async () => onChange(null)}
                 />
             </div>
         </div>
