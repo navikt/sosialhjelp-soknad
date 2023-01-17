@@ -35,7 +35,15 @@ const HorizontalRadioGroup = styled(RadioGroup)`
 
 const AdresseView = () => {
     const behandlingsId = useBehandlingsId();
-    const {request, refetch} = useAlgebraic(useHentAdresser(behandlingsId));
+    const {request, refetch} = useAlgebraic(
+        useHentAdresser(behandlingsId, {
+            query: {
+                onSuccess: ({valg}) => {
+                    setUncommittedAdressevalg(valg!);
+                },
+            },
+        })
+    );
     const errorHandler = useErrorHandler();
     const dispatch = useDispatch();
 
