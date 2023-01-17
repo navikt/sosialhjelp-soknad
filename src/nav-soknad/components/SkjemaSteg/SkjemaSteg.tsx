@@ -104,15 +104,12 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
         scrollToTop();
     }, []);
 
-    const adresseValgRestStatus = soknadsdata.restStatus.personalia.adresser;
-    const isAdresseValgRestPending = [REST_STATUS.INITIALISERT, REST_STATUS.PENDING].includes(adresseValgRestStatus);
-
     const {feil, visValideringsfeil} = validering;
 
     const stegTittel = getIntlTextOrKey(intl, `${steg}.tittel`);
     const documentTitle = intl.formatMessage({id: skjemaConfig.tittelId});
     const aktivtSteg = skjemaConfig.steg[steg];
-    const nextButtonPending = soknad.sendSoknadPending || (steg === "kontakt" && isAdresseValgRestPending);
+    const nextButtonPending = soknad.sendSoknadPending;
 
     useTitle(`${stegTittel} - ${documentTitle}`);
 

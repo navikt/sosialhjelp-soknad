@@ -40,9 +40,11 @@ interface SporsmalProps {
     required?: boolean;
     noValidateOnBlur?: boolean;
     skjulLedetekst?: boolean;
+    className?: string;
 }
 
 const Sporsmal = ({
+    className,
     id,
     children,
     feil,
@@ -53,7 +55,7 @@ const Sporsmal = ({
     legendTittelStyle = LegendTittleStyle.DEFAULT,
     ...restProps
 }: SporsmalProps) => {
-    const sporsmalCls = classNames("skjema-sporsmal", {
+    const sporsmalCls = classNames(className, "skjema-sporsmal", {
         "skjema-sporsmal--noBottomPadding": stil === "system" || stil === "jaNeiSporsmal",
         "skjema-sporsmal--systeminfo": stil === "system",
         "skjema-sporsmal--jaNeiSporsmal": stil === "jaNeiSporsmal",

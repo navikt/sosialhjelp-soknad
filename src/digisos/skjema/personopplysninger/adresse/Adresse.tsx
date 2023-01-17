@@ -29,6 +29,8 @@ const HorizontalRadioGroup = styled(RadioGroup)`
         margin: 1rem 0 0 0;
         border-radius: 5px;
     }
+
+    margin-bottom: 1rem !important;
 `;
 
 const AdresseView = () => {
@@ -67,34 +69,32 @@ const AdresseView = () => {
                         sporsmal={getIntlText(intl, `soknadsmottaker.sporsmal`)}
                         hjelpetekst={getIntlText(intl, `soknadsmottaker.hjelpetekst.tekst`)}
                     >
-                        <div className={"mb-4"}>
-                            <HorizontalRadioGroup
-                                legend={getIntlText(intl, `soknadsmottaker.infotekst.tekst`)}
-                                value={uncommittedAdressevalg}
-                                onChange={async (valg) => {
-                                    setUncommittedAdressevalg(valg);
-                                    if (valg !== "soknad") await setAdresser(adresser, valg);
-                                }}
-                            >
-                                <Radio value={"folkeregistrert"}>
-                                    <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse" />
-                                    <AdresseVisning adresse={adresser.folkeregistrert} />
-                                </Radio>
-                                <Radio value={"midlertidig"} className={cx({hidden: !adresser.midlertidig})}>
-                                    <FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
-                                    <AdresseVisning adresse={adresser.midlertidig} />
-                                </Radio>
-                                <Radio value={"soknad"}>
-                                    <FormattedMessage id="kontakt.system.oppholdsadresse.valg.soknad" />
-                                </Radio>
-                                {uncommittedAdressevalg === "soknad" && (
-                                    <AdresseSok
-                                        defaultValue={formaterSoknadsadresse(adresser.soknad?.gateadresse)}
-                                        onChange={async (soknad) => setAdresser(adresser, "soknad", soknad)}
-                                    />
-                                )}
-                            </HorizontalRadioGroup>
-                        </div>
+                        <HorizontalRadioGroup
+                            legend={getIntlText(intl, `soknadsmottaker.infotekst.tekst`)}
+                            value={uncommittedAdressevalg}
+                            onChange={async (valg) => {
+                                setUncommittedAdressevalg(valg);
+                                if (valg !== "soknad") await setAdresser(adresser, valg);
+                            }}
+                        >
+                            <Radio value={"folkeregistrert"}>
+                                <FormattedMessage id="kontakt.system.oppholdsadresse.folkeregistrertAdresse" />
+                                <AdresseVisning adresse={adresser.folkeregistrert} />
+                            </Radio>
+                            <Radio value={"midlertidig"} className={cx({hidden: !adresser.midlertidig})}>
+                                <FormattedMessage id="kontakt.system.oppholdsadresse.midlertidigAdresse" />
+                                <AdresseVisning adresse={adresser.midlertidig} />
+                            </Radio>
+                            <Radio value={"soknad"}>
+                                <FormattedMessage id="kontakt.system.oppholdsadresse.valg.soknad" />
+                            </Radio>
+                            {uncommittedAdressevalg === "soknad" && (
+                                <AdresseSok
+                                    defaultValue={formaterSoknadsadresse(adresser.soknad?.gateadresse)}
+                                    onChange={async (soknad) => setAdresser(adresser, "soknad", soknad)}
+                                />
+                            )}
+                        </HorizontalRadioGroup>
                         <SoknadsmottakerInfo navEnhet={adresser.navEnhet} />
                     </Sporsmal>
                 ),

@@ -1,27 +1,8 @@
 import {AdressesokTreff} from "./AdresseTypes";
 import {GateadresseFrontend} from "../../../../generated/model";
 
-const formaterAdresseString = (adresse: AdressesokTreff) => {
-    let returverdi = adresse.adresse;
-    const husbokstav: string = adresse.husbokstav != null ? adresse.husbokstav : "";
-    try {
-        if (adresse.postnummer != null && adresse.poststed != null) {
-            if (adresse.husnummer !== "" && adresse.husnummer !== null) {
-                returverdi += " " + adresse.husnummer + husbokstav + ", " + adresse.postnummer + " " + adresse.poststed;
-            } else {
-                returverdi += ", " + adresse.postnummer + " " + adresse.poststed;
-            }
-        } else if (adresse.kommunenavn != null) {
-            if (adresse.husnummer !== "" && adresse.husnummer !== null) {
-                returverdi += " " + adresse.husnummer + husbokstav + ", " + adresse.kommunenavn;
-            } else {
-                returverdi += ", " + adresse.kommunenavn;
-            }
-        }
-    } catch (error) {
-        console.warn("error: " + error);
-    }
-    return returverdi;
+const formaterAdresseString = ({adresse, husnummer, postnummer, poststed, husbokstav}: AdressesokTreff) => {
+    return `${adresse} ${husnummer}${husbokstav || ""}, ${postnummer} ${poststed}`;
 };
 
 const formaterSoknadsadresse = (soknadAdresse?: GateadresseFrontend | null) => {
@@ -29,7 +10,7 @@ const formaterSoknadsadresse = (soknadAdresse?: GateadresseFrontend | null) => {
 
     const {gatenavn, husnummer, husbokstav, postnummer, poststed} = soknadAdresse;
 
-    return `${gatenavn} ${husnummer}${husbokstav ? ` ${husbokstav}` : ""}, ${postnummer}, ${poststed}`;
+    return `${gatenavn} ${husnummer}${husbokstav ? ` ${husbokstav}` : ""}, ${postnummer} ${poststed}`;
 };
 
 const removeDuplicatesAfterTransform = (myArray: any[], transform: (item: any) => any) => {

@@ -30,7 +30,7 @@ const Triangle = styled.div`
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 0 10px 15px 10px;
+    border-width: 0 10px 1rem 10px;
     border-color: transparent;
 `;
 
