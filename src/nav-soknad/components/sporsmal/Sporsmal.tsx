@@ -32,9 +32,9 @@ interface SporsmalProps {
     feil?: string;
     feilkode?: string;
     tekster?: SporsmalTekster;
-    sporsmal?: string;
-    infotekst?: string;
-    hjelpetekst?: string;
+    sporsmal?: string | null;
+    infotekst?: string | null;
+    hjelpetekst?: string | null;
     legendTittelStyle?: LegendTittleStyle;
     faktumKey?: string;
     required?: boolean;

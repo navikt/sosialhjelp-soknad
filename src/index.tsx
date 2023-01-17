@@ -23,6 +23,10 @@ import {RouterProvider} from "react-router-dom";
 import {router} from "./digisos";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
+import "./i18n";
+import {Suspense} from "react";
+import {Loader} from "@navikt/ds-react";
+
 Modal.setAppElement("#root");
 
 function configureStore() {
@@ -70,11 +74,13 @@ if (process.env.NODE_ENV !== "production") {
 ReactDOM.render(
     <Provider store={store}>
         <IntlProvider>
-            <LoadContainer>
-                <QueryClientProvider client={queryClient}>
-                    <RouterProvider router={router} />
-                </QueryClientProvider>
-            </LoadContainer>
+            <Suspense fallback={<Loader />}>
+                <LoadContainer>
+                    <QueryClientProvider client={queryClient}>
+                        <RouterProvider router={router} />
+                    </QueryClientProvider>
+                </LoadContainer>
+            </Suspense>
         </IntlProvider>
     </Provider>,
     document.getElementById("root") as HTMLElement

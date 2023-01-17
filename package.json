@@ -22,6 +22,9 @@
     "dotenv": "^16.0.0",
     "downshift": "^7.0.4",
     "express": "^4.18.1",
+    "i18next": "^22.4.9",
+    "i18next-browser-languagedetector": "^7.0.1",
+    "i18next-http-backend": "^2.1.1",
     "nav-frontend-chevron": "^1.0.30",
     "nav-frontend-chevron-style": "^1.0.4",
     "nav-frontend-core": "^6.0.1",
@@ -41,6 +44,7 @@
     "react": "^18.2.0",
     "react-collapse": "^5.1.1",
     "react-dom": "^18.2.0",
+    "react-i18next": "^12.1.4",
     "react-intl": "^6.2.4",
     "react-modal": "^3.12.1",
     "react-redux": "^8.0.5",
@@ -94,7 +98,8 @@
     "dev": "concurrently --kill-others \"npm run start\" \"npm run start:css\"",
     "prepare": "husky install",
     "fetch-api": "curl -o ./soknad-api.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs && prettier --write soknad-api.json",
-    "orval": "rm -rf ./src/generated & orval --prettier"
+    "orval": "rm -rf ./src/generated & orval --prettier",
+    "fetch-locale": "curl  'http://localhost:8181/sosialhjelp/soknad-api/informasjon/tekster?sprak=nb_NO&type=soknad' | jq --indent 4 -S > public/locales/nb/skjema.json"
   },
   "eslintConfig": {
     "extends": "react-app"
