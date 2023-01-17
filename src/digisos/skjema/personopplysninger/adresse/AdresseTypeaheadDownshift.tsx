@@ -7,6 +7,7 @@ import styled from "styled-components";
 import {fetchToJson} from "../../../../nav-soknad/utils/rest-utils";
 import {AdressesokTreff} from "./AdresseTypes";
 import {formaterAdresseString, removeDuplicatesAfterTransform} from "./AdresseUtils";
+import {AdresseForslag} from "../../../../generated/model";
 
 const searchForAddress = async (value: string): Promise<AdressesokTreff[]> => {
     try {
@@ -82,19 +83,15 @@ const Item = styled.li<{isHighlighted: boolean}>`
 const StyledInput = styled(Input)`
     margin-top: 1rem;
     margin-bottom: 0rem !important;
-    width: 25rem;
-
-    @media only screen and (max-width: 565px) {
-        width: 100%;
-    }
+    width: 100%;
 `;
 
 export const AdresseTypeahead = (props: {
-    valgtAdresse?: string;
+    defaultValue?: string;
     onNullstill: () => void;
-    onVelgAnnenAdresse: (adresse: AdressesokTreff) => void;
+    onVelgAnnenAdresse: (adresse: AdresseForslag) => void;
 }) => {
-    const onSelect = (adresse?: AdressesokTreff) => {
+    const onSelect = (adresse?: AdresseForslag) => {
         if (adresse === undefined) {
             props.onNullstill();
         } else {
@@ -107,7 +104,7 @@ export const AdresseTypeahead = (props: {
                 onSelect(adresse);
             }}
             itemToString={(adresse) => formaterAdresseString(adresse ?? "") ?? ""}
-            initialInputValue={props.valgtAdresse}
+            initialInputValue={props.defaultValue}
         >
             {({getLabelProps, getInputProps, getItemProps, getMenuProps, highlightedIndex, inputValue, isOpen}) => (
                 <div>

@@ -4,7 +4,6 @@ import {FormattedMessage, useIntl} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {Innholdstittel} from "nav-frontend-typografi";
 import Feiloppsummering from "../validering/Feiloppsummering";
-import {REST_STATUS} from "../../../digisos/redux/soknad/soknadTypes";
 import {getIntlTextOrKey, scrollToTop} from "../../utils";
 import {setShowPageNotFound} from "../../../digisos/redux/soknad/soknadActions";
 import AppBanner from "../appHeader/AppHeader";
@@ -90,7 +89,7 @@ const IkkePakobletPanel = () => {
 };
 
 export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps) => {
-    const {soknadsdata, soknad, validering, okonomiskeOpplysninger} = useSelector((state: State) => state);
+    const {soknad, validering, okonomiskeOpplysninger} = useSelector((state: State) => state);
     const {enFilLastesOpp} = okonomiskeOpplysninger;
     const {nedetid} = soknad;
 
@@ -104,15 +103,12 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
         scrollToTop();
     }, []);
 
-    const adresseValgRestStatus = soknadsdata.restStatus.personalia.adresser;
-    const isAdresseValgRestPending = [REST_STATUS.INITIALISERT, REST_STATUS.PENDING].includes(adresseValgRestStatus);
-
     const {feil, visValideringsfeil} = validering;
 
     const stegTittel = getIntlTextOrKey(intl, `${steg}.tittel`);
     const documentTitle = intl.formatMessage({id: skjemaConfig.tittelId});
     const aktivtSteg = skjemaConfig.steg[steg];
-    const nextButtonPending = soknad.sendSoknadPending || (steg === "kontakt" && isAdresseValgRestPending);
+    const nextButtonPending = soknad.sendSoknadPending;
 
     useTitle(`${stegTittel} - ${documentTitle}`);
 

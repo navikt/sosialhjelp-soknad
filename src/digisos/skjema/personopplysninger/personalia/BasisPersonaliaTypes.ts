@@ -4,7 +4,6 @@ export interface BasisPersonalia {
     navn: Navn;
     fodselsnummer: string;
     statsborgerskap: string;
-    nordiskBorger: boolean;
 }
 
 export const initialBasisPersonalia: BasisPersonalia = {
@@ -16,5 +15,4 @@ export const initialBasisPersonalia: BasisPersonalia = {
     },
     fodselsnummer: "",
     statsborgerskap: "",
-    nordiskBorger: false,
 };

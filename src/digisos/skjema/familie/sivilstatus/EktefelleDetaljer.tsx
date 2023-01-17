@@ -10,8 +10,8 @@ import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/c
 import {State} from "../../../redux/reducers";
 import {
     SingleLineDateElement,
-    SingleLineElement,
-    Systeminfo,
+    OldSingleLineElement,
+    OldSysteminfo,
 } from "../../../../nav-soknad/components/systeminfo/Systeminfo";
 
 const INTL_ID_EKTEFELLE = "system.familie.sivilstatus.gift.ektefelle";
@@ -30,7 +30,7 @@ const EktefelleInformasjon = () => {
     if (ektefelle?.navn?.fulltNavn) {
         systeminfo.push({
             key: <FormattedMessage id={`${INTL_ID_EKTEFELLE}.navn`} />,
-            value: <SingleLineElement value={ektefelle.navn.fulltNavn} />,
+            value: <OldSingleLineElement value={ektefelle.navn.fulltNavn} />,
         });
         if (ektefelle?.fodselsdato) {
             systeminfo.push({
@@ -40,12 +40,12 @@ const EktefelleInformasjon = () => {
         }
         systeminfo.push({
             key: <FormattedMessage id={`${INTL_ID_EKTEFELLE}.folkereg`} />,
-            value: <SingleLineElement value={erFolkeregistrertSammen ? "Ja" : "Nei"} />,
+            value: <OldSingleLineElement value={erFolkeregistrertSammen ? "Ja" : "Nei"} />,
         });
     }
     return (
         <div className="sivilstatus__ektefelleinfo">
-            <Systeminfo systeminfoMap={systeminfo} />
+            <OldSysteminfo systeminfoMap={systeminfo} />
         </div>
     );
 };

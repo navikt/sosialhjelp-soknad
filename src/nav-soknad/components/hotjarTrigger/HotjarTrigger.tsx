@@ -1,11 +1,11 @@
-import {erDev, erMockAlt} from "../../utils";
+import {isLocalhost, isMockAlt} from "../../utils";
 import {useEffect} from "react";
 
 export const HotjarTrigger = (props: {hotjarTrigger: string}) => {
     useEffect(() => {
         // hotjar ligger ikke på window som default
         // @ts-ignore
-        if (typeof window.hj === "function" && !(erMockAlt() || erDev())) {
+        if (typeof window.hj === "function" && !(isMockAlt() || isLocalhost())) {
             // @ts-ignore
             window.hj("trigger", props.hotjarTrigger);
         }

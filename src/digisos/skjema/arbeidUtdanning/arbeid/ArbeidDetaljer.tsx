@@ -2,8 +2,8 @@ import * as React from "react";
 import {Arbeidsforhold} from "./arbeidTypes";
 import {
     SingleLineDateElement,
-    SingleLineElement,
-    Systeminfo,
+    OldSingleLineElement,
+    OldSysteminfo,
 } from "../../../../nav-soknad/components/systeminfo/Systeminfo";
 import {FormattedMessage} from "react-intl";
 
@@ -14,7 +14,7 @@ const ArbeidDetaljer: React.FunctionComponent<{arbeidsforhold: Arbeidsforhold}> 
     const systeminfoMap = [
         {
             key: <FormattedMessage id={"arbeidsforhold.arbeidsgivernavn.label"} />,
-            value: <SingleLineElement value={arbeidsgivernavn} />,
+            value: <OldSingleLineElement value={arbeidsgivernavn} />,
         },
         {key: <FormattedMessage id={"arbeidsforhold.fom.label"} />, value: <SingleLineDateElement value={fom} />},
     ];
@@ -27,10 +27,10 @@ const ArbeidDetaljer: React.FunctionComponent<{arbeidsforhold: Arbeidsforhold}> 
     }
     systeminfoMap.push({
         key: <FormattedMessage id={"arbeidsforhold.stillingsprosent.label"} />,
-        value: <SingleLineElement value={stillingsprosentVisning} />,
+        value: <OldSingleLineElement value={stillingsprosentVisning} />,
     });
 
-    return <Systeminfo systeminfoMap={systeminfoMap} />;
+    return <OldSysteminfo systeminfoMap={systeminfoMap} />;
 };
 
 export default ArbeidDetaljer;

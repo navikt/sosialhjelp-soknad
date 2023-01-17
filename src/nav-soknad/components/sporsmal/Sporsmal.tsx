@@ -20,7 +20,6 @@ const StyledHelpText = styled.div`
 
 export enum LegendTittleStyle {
     DEFAULT = "skjema-fieldset--legend-title-default",
-    NORMAL = "skjema-fieldset--legend-title-normal-tekst",
     FET_NORMAL = "skjema-fieldset--legend-title-normal-fet",
 }
 
@@ -32,15 +31,20 @@ interface SporsmalProps {
     handleOnBlur?: (evt: any) => void;
     feil?: string;
     feilkode?: string;
-    tekster: SporsmalTekster;
+    tekster?: SporsmalTekster;
+    sporsmal?: string;
+    infotekst?: string;
+    hjelpetekst?: string;
     legendTittelStyle?: LegendTittleStyle;
     faktumKey?: string;
     required?: boolean;
     noValidateOnBlur?: boolean;
     skjulLedetekst?: boolean;
+    className?: string;
 }
 
 const Sporsmal = ({
+    className,
     id,
     children,
     feil,
@@ -49,8 +53,9 @@ const Sporsmal = ({
     skjulLedetekst,
     stil,
     legendTittelStyle = LegendTittleStyle.DEFAULT,
+    ...restProps
 }: SporsmalProps) => {
-    const sporsmalCls = classNames("skjema-sporsmal", {
+    const sporsmalCls = classNames(className, "skjema-sporsmal", {
         "skjema-sporsmal--noBottomPadding": stil === "system" || stil === "jaNeiSporsmal",
         "skjema-sporsmal--systeminfo": stil === "system",
         "skjema-sporsmal--jaNeiSporsmal": stil === "jaNeiSporsmal",
@@ -60,6 +65,8 @@ const Sporsmal = ({
         "skjema-fieldset--harFeil": !!feilkode,
     });
 
+    const {sporsmal, hjelpetekst, infotekst} = tekster || restProps;
+
     return (
         <div id={id} className={sporsmalCls}>
             <SkjemaGruppe
@@ -67,17 +74,16 @@ const Sporsmal = ({
                 className={cls}
                 legend={
                     <div className={legendTittelStyle}>
-                        {tekster.sporsmal}
-                        {!skjulLedetekst && tekster.hjelpetekst && (
+                        {sporsmal}
+                        {!skjulLedetekst && hjelpetekst && (
                             <StyledHelpText>
-                                <HelpText>{tekster.hjelpetekst}</HelpText>
+                                <HelpText>{hjelpetekst}</HelpText>
                             </StyledHelpText>
                         )}
                     </div>
                 }
                 description={
-                    !skjulLedetekst &&
-                    tekster.infotekst && <div className="skjema-sporsmal__infotekst">{tekster.infotekst}</div>
+                    !skjulLedetekst && infotekst && <div className="skjema-sporsmal__infotekst">{infotekst}</div>
                 }
             >
                 <div className="skjema-sporsmal__innhold">{children}</div>

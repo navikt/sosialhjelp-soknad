@@ -1,35 +1,34 @@
 import * as React from "react";
 import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
-import {SoknadsMottakerStatus} from "./AdresseTypes";
-import {soknadsmottakerStatus} from "./AdresseUtils";
 import {FormattedMessage} from "react-intl";
-import {useSelector} from "react-redux";
-import {State} from "../../../redux/reducers";
 import {Alert, Link} from "@navikt/ds-react";
+import {NavEnhetFrontend} from "../../../../generated/model";
 
-const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+const SoknadsmottakerInfo = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
+    if (!navEnhet) return null;
 
-    const valgtNavEnhet = soknadsdata.personalia.navEnhet;
-    const enhetsnavn = valgtNavEnhet?.enhetsnavn ?? "";
-    const kommunenavn = valgtNavEnhet?.kommunenavn ?? "";
+    const {enhetsnavn, kommunenavn, isMottakDeaktivert, isMottakMidlertidigDeaktivert} = navEnhet;
 
-    const mottakerStatus: SoknadsMottakerStatus = soknadsmottakerStatus(soknadsdata);
-
-    if (props.skjul) {
-        return null;
-    }
-    if (mottakerStatus === SoknadsMottakerStatus.GYLDIG) {
-        // GRØNN
-        const tekst = `Søknaden vil bli sendt til: ${enhetsnavn}, ${kommunenavn} kommune.`;
+    if (isMottakMidlertidigDeaktivert) {
         return (
-            <Informasjonspanel ikon={InformasjonspanelIkon.BREVKONVOLUTT} farge={DigisosFarge.SUKSESS}>
-                {tekst}
-            </Informasjonspanel>
+            <Alert variant="error">
+                <FormattedMessage
+                    id="adresse.alertstripe.feil.v2"
+                    values={{
+                        kommuneNavn: kommunenavn,
+                        a: (msg) => (
+                            <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                                {msg}
+                            </Link>
+                        ),
+                    }}
+                />
+            </Alert>
         );
     }
-    if (mottakerStatus === SoknadsMottakerStatus.UGYLDIG) {
+
+    if (isMottakDeaktivert) {
         // ORANSJE
         return (
             <Alert variant="warning">
@@ -47,24 +46,12 @@ const SoknadsmottakerInfo = (props: {skjul: boolean}) => {
             </Alert>
         );
     }
-    if (mottakerStatus === SoknadsMottakerStatus.MOTTAK_ER_MIDLERTIDIG_DEAKTIVERT) {
-        return (
-            <Alert variant="error">
-                <FormattedMessage
-                    id="adresse.alertstripe.feil.v2"
-                    values={{
-                        kommuneNavn: kommunenavn,
-                        a: (msg) => (
-                            <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
-                                {msg}
-                            </Link>
-                        ),
-                    }}
-                />
-            </Alert>
-        );
-    }
-    return null;
+
+    return (
+        <Informasjonspanel ikon={InformasjonspanelIkon.BREVKONVOLUTT} farge={DigisosFarge.SUKSESS}>
+            {`Søknaden vil bli sendt til: ${enhetsnavn}, ${kommunenavn} kommune.`}
+        </Informasjonspanel>
+    );
 };
 
 export default SoknadsmottakerInfo;

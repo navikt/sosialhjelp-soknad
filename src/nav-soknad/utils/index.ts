@@ -7,7 +7,7 @@ export * from "./navigasjonUtils";
 export const mockMiljoer = ["sosialhjelp-soknad-mock.dev.nav.no", "digisos.ekstern.dev.nav.no"];
 
 // FIXME: Disse bør ikke utledes fra URL
-export const erDev = () => window.location.href.indexOf("localhost:");
-export const erMockAlt = () => mockMiljoer.some((miljo) => miljo.indexOf(window.location.href));
+export const isLocalhost = (location: string) => !!location.indexOf("localhost:");
+export const isMockAlt = (location: string) => mockMiljoer.some((miljo) => miljo.indexOf(location));
 
 export const now = (): number => new Date().getTime();

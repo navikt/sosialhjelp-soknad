@@ -19,7 +19,7 @@ import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {clearValideringsfeil, setValideringsfeil} from "../../../redux/validering/valideringActions";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
-import {SingleLineElement, Systeminfo} from "../../../../nav-soknad/components/systeminfo/Systeminfo";
+import {OldSingleLineElement, OldSysteminfo} from "../../../../nav-soknad/components/systeminfo/Systeminfo";
 
 const FAKTUM_KEY_KONTONUMMER = "kontakt.kontonummer";
 
@@ -244,11 +244,11 @@ const Bankinformasjon = () => {
                         }
                     >
                         {!kontonummer.brukerdefinert && (
-                            <Systeminfo
+                            <OldSysteminfo
                                 systeminfoMap={[
                                     {
                                         key: <FormattedMessage id={`${FAKTUM_KEY_KONTONUMMER}.label`} />,
-                                        value: <SingleLineElement value={kontonummer.systemverdi} />,
+                                        value: <OldSingleLineElement value={kontonummer.systemverdi} />,
                                     },
                                 ]}
                             />

@@ -44,7 +44,8 @@ For å kunne kjøre `npm install` lokalt må du logge inn mot Github package reg
 ### Frontend
 
 ```shell
-npm install # Hent avhengigheter
+npm --include=dev install # Hent avhengigheter
+npm run orval # Genererer API-kode
 npm run dev # Bygger less og starter dev-server
 npm test # Kjør enhetstestene
 ```
