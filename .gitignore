@@ -12,6 +12,7 @@ target
 .env.local
 
 src/index.css
+src/generated
 
 *.project
 *.settings
