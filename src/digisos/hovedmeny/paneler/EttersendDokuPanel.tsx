@@ -9,7 +9,7 @@ export const EttersendDokuPanel = () => (
             <Accordion.Header className={"!items-center !border-0"}>
                 <div className={"flex items-center px-4 py-2"}>
                     <div className={"rounded-full bg-green-500/40 p-3 mr-5 tw-hidden lg:block"}>
-                        <Attachment className={"w-9 h-9"} />
+                        <Attachment className={"w-9 h-9"} aria-hidden="true" />
                     </div>
                     <Heading level="2" size="small">
                         Send dokumentasjon til en innsendt søknad
