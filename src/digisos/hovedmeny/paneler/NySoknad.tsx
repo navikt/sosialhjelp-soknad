@@ -95,7 +95,7 @@ export const NySoknadPanel = ({antallPabegynteSoknader}: {antallPabegynteSoknade
             <Accordion.Header className={"!items-center !border-0"}>
                 <div className={"flex items-center px-4 py-2"}>
                     <div className={"rounded-full bg-green-500/40 p-3 mr-5 tw-hidden lg:block"}>
-                        <Notes className={"w-9 h-9"} />
+                        <Notes className={"w-9 h-9"} aria-hidden="true" />
                     </div>
                     <Heading level="2" size="small">
                         Start en ny søknad
