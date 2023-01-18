@@ -19,7 +19,7 @@ const IkkeFunnet: React.FC = () => {
 
     return (
         <Feilside onClick={onClick} visKnapp={true}>
-            <p>{intl.formatMessage({id: "feilside.ikkefunnet.feilmelding"})}</p>
+            {intl.formatMessage({id: "feilside.ikkefunnet.feilmelding"})}
         </Feilside>
     );
 };

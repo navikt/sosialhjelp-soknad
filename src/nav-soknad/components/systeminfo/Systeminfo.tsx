@@ -74,4 +74,4 @@ export const SysteminfoItem = ({
     </ListItem>
 );
 
-export const Systeminfo = ({children}: {children: React.ReactNode[]}) => <SysteminfoList>{children}</SysteminfoList>;
+export const Systeminfo = ({children}: {children: React.ReactNode}) => <SysteminfoList>{children}</SysteminfoList>;

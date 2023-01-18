@@ -27,6 +27,7 @@ import {
 import {Systeminntekter, initialSysteminntekter} from "../../skjema/inntektFormue/navytelser/navYtelserTypes";
 import {Studielan, initialStudielanState} from "../../skjema/inntektFormue/studielan/StudielanTypes";
 import {REST_STATUS} from "../soknad/soknadTypes";
+import {NavEnhetFrontend} from "../../../generated/model";
 
 export enum SoknadsdataActionTypeKeys {
     OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
@@ -170,8 +171,8 @@ export type SoknadsdataType =
     | Utgifter
     | Adresser
     | AdresseValg
-    | NavEnhet[]
-    | NavEnhet
+    | NavEnhetFrontend[]
+    | NavEnhetFrontend
     | Utbetalinger
     | Barneutgifter
     | Boutgifter
@@ -220,16 +221,10 @@ export const initialSoknadsdataState: Soknadsdata = {
 
 const reducer = (state: Soknadsdata = initialSoknadsdataState, action: SoknadsdataActionType): any => {
     switch (action.type) {
-        case SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA_STI: {
-            return {
-                ...setPath(state, action.sti, action.verdi),
-            };
-        }
-        case SoknadsdataActionTypeKeys.SETT_REST_STATUS: {
-            return {
-                ...setPath(state, "restStatus/" + action.sti, action.restStatus),
-            };
-        }
+        case SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA_STI:
+            return {...setPath(state, action.sti, action.verdi)};
+        case SoknadsdataActionTypeKeys.SETT_REST_STATUS:
+            return {...setPath(state, "restStatus/" + action.sti, action.restStatus)};
         default:
             return state;
     }

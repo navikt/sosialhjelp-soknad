@@ -16,9 +16,10 @@ import cx from "classnames";
 import {useErrorHandler} from "../../../../lib/hooks/useErrorHandler";
 import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {useDispatch} from "react-redux";
-import {Adresser, NavEnhet} from "./AdresseTypes";
+import {Adresser} from "./AdresseTypes";
 import {clearValideringsfeil} from "../../../redux/validering/valideringActions";
 import {useTranslation} from "react-i18next";
+import {updateNavEnhet} from "../../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
 
 const HorizontalRadioGroup = styled(RadioGroup)`
     .navds-radio {
@@ -55,11 +56,22 @@ const AdresseView = () => {
             valg: soknad ? "soknad" : valg,
             soknad,
         };
-        const navEnheter = (await updateAdresse(behandlingsId, inputAdresser)) as unknown as NavEnhet[];
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, navEnheter[0] ?? null));
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, navEnheter));
+
+        // TODO: Fiks PUT /adresser så den returnerer Adresser
+        const navEnheter = await updateAdresse(behandlingsId, inputAdresser);
+
+        // Velg den første NAV-enheten
+        // TODO: Fiks PUT /adresser så navEnhet[0].valgt = true
+        const navEnhet = {...navEnheter[0], valgt: true};
+        await updateNavEnhet(behandlingsId, navEnhet);
+
+        // Fortell Redux-verden at alt er OK
+        // TODO: Finn ut hvor denne valideringen sitter i koden
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, navEnhet));
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, [navEnhet]));
         dispatch(oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, inputAdresser as unknown as Adresser));
         dispatch(clearValideringsfeil("soknadsmottaker"));
+
         await refetch();
     };
 

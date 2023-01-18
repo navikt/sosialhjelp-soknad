@@ -1,7 +1,6 @@
 import * as React from "react";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {Systeminfo, SysteminfoItem} from "../../../../nav-soknad/components/systeminfo/Systeminfo";
-import {FormattedMessage} from "react-intl";
 import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 import {useAlgebraic} from "../../../../lib/hooks/useAlgebraic";
 import {useHentBasisPersonalia} from "../../../../generated/basis-personalia-ressurs/basis-personalia-ressurs";

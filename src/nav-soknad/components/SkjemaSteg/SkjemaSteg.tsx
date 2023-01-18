@@ -24,11 +24,6 @@ import TimeoutBox from "../timeoutbox/TimeoutBox";
 import {AvbrytSoknad} from "../avbrytsoknad/AvbrytSoknad";
 import {getSoknad} from "../../../lib/getSoknad";
 
-const stopEvent = (evt: React.FormEvent<any>) => {
-    evt.stopPropagation();
-    evt.preventDefault();
-};
-
 export type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
 
 interface StegMedNavigasjonProps {
@@ -136,35 +131,33 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
                     visFeilliste={visValideringsfeil}
                 />
                 <div className={"bg-white max-w-2xl w-full mx-auto rounded-2xl p-16 pt-8"}>
-                    <form id="soknadsskjema" onSubmit={stopEvent}>
-                        <div className="skjema-steg__ikon">{ikon}</div>
-                        <div className="skjema-steg__tittel" tabIndex={-1}>
-                            <Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
-                        </div>
+                    <div className="skjema-steg__ikon">{ikon}</div>
+                    <div className="skjema-steg__tittel" tabIndex={-1}>
+                        <Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
+                    </div>
 
-                        {children}
-                        <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
-                        <AvbrytSoknad />
-                        {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && (
-                            <>
-                                <MidlertidigDeaktivertPanel />
-                                <IkkePakobletPanel />
-                            </>
-                        )}
+                    {children}
+                    <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
+                    <AvbrytSoknad />
+                    {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && (
+                        <>
+                            <MidlertidigDeaktivertPanel />
+                            <IkkePakobletPanel />
+                        </>
+                    )}
 
-                        <SkjemaStegNavKnapper
-                            gaViderePending={nextButtonPending}
-                            gaVidereLabel={
-                                aktivtSteg.type === "oppsummering"
-                                    ? getIntlTextOrKey(intl, "skjema.knapper.send")
-                                    : undefined
-                            }
-                            gaVidere={() => handleGaVidere(aktivtSteg)}
-                            gaTilbake={aktivtSteg.id > 1 ? () => handleGaTilbake(aktivtSteg.id) : undefined}
-                            sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
-                            lastOppVedleggPending={enFilLastesOpp}
-                        />
-                    </form>
+                    <SkjemaStegNavKnapper
+                        gaViderePending={nextButtonPending}
+                        gaVidereLabel={
+                            aktivtSteg.type === "oppsummering"
+                                ? getIntlTextOrKey(intl, "skjema.knapper.send")
+                                : undefined
+                        }
+                        gaVidere={() => handleGaVidere(aktivtSteg)}
+                        gaTilbake={aktivtSteg.id > 1 ? () => handleGaTilbake(aktivtSteg.id) : undefined}
+                        sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
+                        lastOppVedleggPending={enFilLastesOpp}
+                    />
                 </div>
             </div>
         </div>
