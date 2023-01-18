@@ -5,6 +5,8 @@
   "homepage": "/sosialhjelp/soknad/",
   "dependencies": {
     "@amplitude/analytics-browser": "^1.6.7",
+    "@fremtind/jkl-formatters-util": "^3.0.22",
+    "@fremtind/jkl-validators-util": "^2.5.3",
     "@navikt/ds-css": "^2.0.5",
     "@navikt/ds-icons": "^2.0.5",
     "@navikt/ds-react": "^2.0.5",
@@ -44,6 +46,7 @@
     "react": "^18.2.0",
     "react-collapse": "^5.1.1",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.42.1",
     "react-i18next": "^12.1.4",
     "react-intl": "^6.2.4",
     "react-modal": "^3.12.1",

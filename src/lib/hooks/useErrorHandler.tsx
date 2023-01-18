@@ -9,6 +9,7 @@ export const useErrorHandler = () => {
     const dispatch = useDispatch();
 
     return (error: any) => {
+        console.log(error);
         if (error instanceof AxiosError && error.response?.status === 401) {
             window.location.href = "/sosialhjelp/soknad/informasjon";
             return <></>;

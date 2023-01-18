@@ -39,7 +39,7 @@ const PabegyntSoknad = ({
             >
                 <LinkPanel.Title className={"flex flex-col lg:flex-row align-center"}>
                     <Label style={{marginRight: "1rem"}}>
-                        Sist oppdatert {format(lastUpdatedDate, "d MMM yyyy", {locale: nb})}
+                        Sist oppdatert {format(lastUpdatedDate, "d. MMMM H  HH:mm", {locale: nb})}
                     </Label>
                     <BodyShort>Slettes om {formatDistance(deleteDate, currentDate, {locale: nb})}</BodyShort>
                 </LinkPanel.Title>
@@ -82,7 +82,7 @@ export const PabegynteSoknaderPanel = ({pabegynteSoknader}: {pabegynteSoknader: 
                         <BodyShort className={"pb-4"}>
                             Vær oppmerksom på at påbegynte søknader slettes etter {DAYS_BEFORE_DELETION} dager.
                         </BodyShort>
-                        <ul>
+                        <ul className={"space-y-4"}>
                             {pabegynteSoknader.map(({lastUpdatedDate, deleteDate, behandlingsId}) => (
                                 <PabegyntSoknad
                                     key={behandlingsId}
