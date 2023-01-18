@@ -1132,10 +1132,10 @@
             "AdresserFrontendInput": {
                 "type": "object",
                 "properties": {
-                    "valg": {"type": "string", "nullable": true, "enum": ["folkeregistrert", "midlertidig", "soknad"]},
+                    "valg": {"type": "string", "enum": ["folkeregistrert", "midlertidig", "soknad"]},
+                    "folkeregistrert": {"$ref": "#/components/schemas/AdresseFrontend"},
                     "midlertidig": {"$ref": "#/components/schemas/AdresseFrontend"},
-                    "soknad": {"$ref": "#/components/schemas/AdresseFrontend"},
-                    "folkeregistrert": {"$ref": "#/components/schemas/AdresseFrontend"}
+                    "soknad": {"$ref": "#/components/schemas/AdresseFrontend"}
                 }
             },
             "GateadresseFrontend": {
@@ -1408,8 +1408,12 @@
                 "properties": {"type": {"type": "string"}, "verdi": {"type": "boolean"}}
             },
             "SendTilUrlFrontend": {
+                "required": ["id", "sendtTil"],
                 "type": "object",
-                "properties": {"sendtTil": {"type": "string"}, "id": {"type": "string"}}
+                "properties": {
+                    "sendtTil": {"type": "string", "enum": ["FIKS_DIGISOS_API", "SVARUT"]},
+                    "id": {"type": "string"}
+                }
             },
             "Logg": {
                 "type": "object",
@@ -1439,23 +1443,12 @@
                 }
             },
             "BasisPersonaliaFrontend": {
-                "required": ["fornavn", "fulltNavn", "navn"],
                 "type": "object",
                 "properties": {
                     "navn": {"$ref": "#/components/schemas/NavnFrontend"},
-                    "fornavn": {"type": "string"},
-                    "fulltNavn": {"type": "string"},
                     "fodselsnummer": {"type": "string"},
                     "statsborgerskap": {"type": "string"},
                     "nordiskBorger": {"type": "boolean"}
-                }
-            },
-            "JsonNavn": {
-                "type": "object",
-                "properties": {
-                    "fornavn": {"type": "string"},
-                    "mellomnavn": {"type": "string"},
-                    "etternavn": {"type": "string"}
                 }
             },
             "AdresserFrontend": {
@@ -1638,17 +1631,10 @@
                 }
             },
             "SjekksumDto": {
-                "required": [
-                    "oppgaveSum",
-                    "opplastetVedleggSum",
-                    "sendtSoknadSum",
-                    "soknadMetadataSum",
-                    "soknadUnderArbeidSum"
-                ],
+                "required": ["oppgaveSum", "opplastetVedleggSum", "soknadMetadataSum", "soknadUnderArbeidSum"],
                 "type": "object",
                 "properties": {
                     "soknadMetadataSum": {"type": "integer", "format": "int32"},
-                    "sendtSoknadSum": {"type": "integer", "format": "int32"},
                     "soknadUnderArbeidSum": {"type": "integer", "format": "int32"},
                     "opplastetVedleggSum": {"type": "integer", "format": "int32"},
                     "oppgaveSum": {"type": "integer", "format": "int32"}
@@ -1888,6 +1874,14 @@
                     "verdi": {"type": "string"}
                 }
             },
+            "JsonNavn": {
+                "type": "object",
+                "properties": {
+                    "fornavn": {"type": "string"},
+                    "mellomnavn": {"type": "string"},
+                    "etternavn": {"type": "string"}
+                }
+            },
             "JsonNordiskBorger": {
                 "type": "object",
                 "properties": {
@@ -2121,8 +2115,8 @@
                 "type": "object",
                 "properties": {
                     "sammensattType": {"type": "string"},
-                    "tilleggsinfo": {"type": "string"},
-                    "type": {"type": "string"}
+                    "type": {"type": "string"},
+                    "tilleggsinfo": {"type": "string"}
                 }
             },
             "ReplicationDto": {
@@ -2132,32 +2126,7 @@
                     "behandlingsId": {"type": "string"},
                     "soknadMetadata": {"$ref": "#/components/schemas/SoknadMetadataDto"},
                     "soknadUnderArbeid": {"$ref": "#/components/schemas/SoknadUnderArbeidDto"},
-                    "sendtSoknad": {"$ref": "#/components/schemas/SendtSoknadDto"},
                     "oppgave": {"$ref": "#/components/schemas/OppgaveDto"}
-                }
-            },
-            "SendtSoknadDto": {
-                "required": [
-                    "behandlingsId",
-                    "brukerFerdigDato",
-                    "brukerOpprettetDato",
-                    "eier",
-                    "navEnhetsnavn",
-                    "orgnummer",
-                    "sendtSoknadId"
-                ],
-                "type": "object",
-                "properties": {
-                    "sendtSoknadId": {"type": "integer", "format": "int64"},
-                    "behandlingsId": {"type": "string"},
-                    "tilknyttetBehandlingsId": {"type": "string"},
-                    "eier": {"type": "string"},
-                    "fiksforsendelseId": {"type": "string"},
-                    "orgnummer": {"type": "string"},
-                    "navEnhetsnavn": {"type": "string"},
-                    "brukerOpprettetDato": {"type": "string", "format": "date-time"},
-                    "brukerFerdigDato": {"type": "string", "format": "date-time"},
-                    "sendtDato": {"type": "string", "format": "date-time"}
                 }
             },
             "SoknadMetadataDto": {

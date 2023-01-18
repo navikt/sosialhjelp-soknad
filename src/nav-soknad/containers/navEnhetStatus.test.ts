@@ -1,7 +1,7 @@
-import {erAktiv, erMidlDeaktivert} from "./containerUtils";
-import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
+import {erAktiv, erMidlDeaktivert} from "./navEnhetStatus";
+import {NavEnhetFrontend} from "../../generated/model";
 
-const aktivNavEnhet: NavEnhet = {
+const aktivNavEnhet: NavEnhetFrontend = {
     orgnr: "12345",
     enhetsnr: "4321",
     isMottakMidlertidigDeaktivert: false,
@@ -12,7 +12,7 @@ const aktivNavEnhet: NavEnhet = {
     valgt: true,
 };
 
-const deaktivertNavEnhet: NavEnhet = {
+const deaktivertNavEnhet: NavEnhetFrontend = {
     orgnr: "12345",
     enhetsnr: "4321",
     isMottakMidlertidigDeaktivert: false,
@@ -23,7 +23,7 @@ const deaktivertNavEnhet: NavEnhet = {
     valgt: true,
 };
 
-const midlertidigDeaktivertNavEnhet: NavEnhet = {
+const midlertidigDeaktivertNavEnhet: NavEnhetFrontend = {
     orgnr: "12345",
     enhetsnr: "4321",
     isMottakMidlertidigDeaktivert: true,

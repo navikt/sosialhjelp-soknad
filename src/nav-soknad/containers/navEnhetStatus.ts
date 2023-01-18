@@ -1,4 +1,3 @@
-import {NavEnhet} from "../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {HttpStatus} from "../utils/rest-utils";
 import {oppdaterSoknadsdataSti, SoknadsSti} from "../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {clearAllValideringsfeil} from "../../digisos/redux/validering/valideringActions";
@@ -10,15 +9,18 @@ import {
 import {logWarning} from "../utils/loggerUtils";
 import {Dispatch} from "redux";
 import {hentValgtNavEnhet} from "../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
+import {NavEnhetFrontend} from "../../generated/model";
 
-export const erAktiv = (e: NavEnhet | null) => !!e && !e.isMottakDeaktivert && !e.isMottakMidlertidigDeaktivert;
-export const erMidlDeaktivert = (e: NavEnhet) => !e.isMottakDeaktivert && e.isMottakMidlertidigDeaktivert;
+export const erAktiv = (e: NavEnhetFrontend | null) => !!e && !e.isMottakDeaktivert && !e.isMottakMidlertidigDeaktivert;
+export const erMidlDeaktivert = (e: NavEnhetFrontend) => !e.isMottakDeaktivert && e.isMottakMidlertidigDeaktivert;
 
 const fetchNavEnhet = async (dispatch: Dispatch, behandlingsId: string) => {
     try {
         const response = await hentValgtNavEnhet(behandlingsId);
 
         if (response === null) return null;
+
+        return response;
     } catch (e: any) {
         if (e.message !== HttpStatus.UNAUTHORIZED) {
             logWarning("Henting/parsing av navEnhet feilet: " + e);

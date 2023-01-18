@@ -1,7 +1,7 @@
 import {createSkjemaEventData, logAmplitudeEvent} from "../../utils/amplitude";
 import {resetSendSoknadServiceUnavailable, sendSoknadPending} from "../../../digisos/redux/soknad/soknadActions";
 import {setVisBekreftMangler} from "../../../digisos/redux/oppsummering/oppsummeringActions";
-import {erAktiv, navEnhetGyldigEllerIkkeSatt} from "../../containers/containerUtils";
+import {erAktiv, navEnhetGyldigEllerIkkeSatt} from "../../containers/navEnhetStatus";
 import {
     clearAllValideringsfeil,
     setValideringsfeil,
@@ -72,7 +72,7 @@ export const useSkjemaNavigation = () => {
         const valgtNavEnhet = finnSoknadsMottaker();
 
         if (aktivtSteg.id === 1 && !erAktiv(valgtNavEnhet)) {
-            handleNavEnhetErUgyldigFeil(valgtNavEnhet);
+            handleNavEnhetErUgyldigFeil(valgtNavEnhet as NavEnhet);
             return;
         }
 
@@ -96,8 +96,8 @@ export const useSkjemaNavigation = () => {
 
         const valgtNavEnhet = finnSoknadsMottaker();
 
-        if (aktivtSteg.id === 1 && !erAktiv(valgtNavEnhet)) {
-            handleNavEnhetErUgyldigFeil(valgtNavEnhet);
+        if (aktivtSteg.id === 1 && (!valgtNavEnhet || !erAktiv(valgtNavEnhet))) {
+            handleNavEnhetErUgyldigFeil(valgtNavEnhet as NavEnhet);
         } else {
             if (!validering.feil.length) {
                 dispatch(clearAllValideringsfeil());
@@ -120,7 +120,7 @@ export const useSkjemaNavigation = () => {
         const valgtNavEnhet = finnSoknadsMottaker();
 
         if (!erAktiv(valgtNavEnhet)) {
-            handleNavEnhetErUgyldigFeil(valgtNavEnhet);
+            handleNavEnhetErUgyldigFeil(valgtNavEnhet as NavEnhet);
             return false;
         }
 

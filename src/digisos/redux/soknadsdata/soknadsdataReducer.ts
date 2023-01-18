@@ -12,12 +12,7 @@ import {initialVerdierState, Verdier} from "../../skjema/inntektFormue/verdier/V
 import {initialFormueState, Formue} from "../../skjema/inntektFormue/formue/FormueTypes";
 import {initialBoutgifterState, Boutgifter} from "../../skjema/utgifterGjeld/boutgifter/BoutgifterTypes";
 import {initialBarneutgifterState, Barneutgifter} from "../../skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
-import {
-    AdresseKategori,
-    Adresser,
-    initialAdresserState,
-    NavEnhet,
-} from "../../skjema/personopplysninger/adresse/AdresseTypes";
+import {AdresseKategori, Adresser, initialAdresserState} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {BasisPersonalia, initialBasisPersonalia} from "../../skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import {Barnebidrag, ForsorgerPlikt} from "../../skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 import {
@@ -101,8 +96,8 @@ export interface Personalia {
     kontonummer: Kontonummer;
     telefonnummer: Telefonnummer;
     adresser: Adresser;
-    navEnheter: NavEnhet[];
-    navEnhet: null | NavEnhet;
+    navEnheter: NavEnhetFrontend[];
+    navEnhet: null | NavEnhetFrontend;
     basisPersonalia: BasisPersonalia;
 }
 
