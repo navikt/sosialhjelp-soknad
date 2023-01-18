@@ -19,9 +19,9 @@ export const BasisPersonaliaData = () => {
         Done: (response) =>
             response.match({
                 Error: errorHandler,
-                Ok: ({fulltNavn, fodselsnummer, statsborgerskap = "Ukjent/statsløs"}) => (
+                Ok: ({navn, fodselsnummer, statsborgerskap = "Ukjent/statsløs"}) => (
                     <Systeminfo>
-                        <SysteminfoItem label={t("navn")}>{fulltNavn}</SysteminfoItem>
+                        <SysteminfoItem label={t("navn")}>{navn?.fulltNavn}</SysteminfoItem>
                         <SysteminfoItem label={t("fnr")}>{fodselsnummer}</SysteminfoItem>
                         <SysteminfoItem label={t("statsborgerskap")}>{statsborgerskap}</SysteminfoItem>
                     </Systeminfo>
