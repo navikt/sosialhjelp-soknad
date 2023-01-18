@@ -96,7 +96,7 @@
     "build": "react-scripts build",
     "start:css": "less-watch-compiler --config less.json",
     "build:css": "less-watch-compiler --run-once --config less.json",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
     "eject": "react-scripts eject",
     "dev": "concurrently --kill-others \"npm run start\" \"npm run start:css\"",
     "prepare": "husky install",
