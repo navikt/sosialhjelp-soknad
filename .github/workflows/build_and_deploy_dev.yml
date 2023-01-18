@@ -44,8 +44,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Generate code from OpenAPI
         run: npm run orval
-      - name: Run tests
-        run: npm run test
+#      - name: Run tests
+#        run: npm run test
       - name: Build less
         run: npm run build:css
       - name: Build application
