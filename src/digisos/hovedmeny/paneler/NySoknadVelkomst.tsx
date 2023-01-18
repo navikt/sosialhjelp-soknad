@@ -9,7 +9,7 @@ export const NySoknadVelkomst = () => {
     const {fornavn} = useSelector((state: State) => state.soknad);
 
     return (
-        <div className={"p-2 lg:py-12 lg:px-24"}>
+        <div className={"p-8 lg:py-12 lg:px-24"}>
             <VelkomstSnakkeboble fornavn={fornavn} />
             <Heading level="2" size="small" spacing>
                 <FormattedMessage id="informasjon.start.undertittel" />
