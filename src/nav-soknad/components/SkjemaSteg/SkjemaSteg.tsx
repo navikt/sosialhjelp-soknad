@@ -112,7 +112,6 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
 
     useEffect(() => {
         if (!behandlingsId && params.behandlingsId) getSoknad(params.behandlingsId, dispatch);
-        else if (behandlingsId !== params.behandlingsId) dispatch(setShowPageNotFound(true));
     }, [behandlingsId, dispatch, params]);
 
     if (showServerFeil) return <ServerFeil />;
