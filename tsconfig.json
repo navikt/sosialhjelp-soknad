@@ -1,30 +1,9 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "downlevelIteration": true,
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": false,
-    "module": "commonjs",
-    "resolveJsonModule": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "isolatedModules": true,
-    "noFallthroughCasesInSwitch": true,
-    "useUnknownInCatchVariables": false
-  },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "extends": "@tsconfig/create-react-app/tsconfig.json",
+    "compilerOptions": {
+        "noFallthroughCasesInSwitch": true,
+        "useUnknownInCatchVariables": false
+    },
+    "include": ["src"],
+    "exclude": ["node_modules"]
 }
