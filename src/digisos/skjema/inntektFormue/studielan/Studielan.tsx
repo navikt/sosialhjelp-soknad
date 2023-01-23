@@ -7,7 +7,7 @@ import {getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../../nav-soknad/u
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {Studielan} from "./StudielanTypes";
-import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel from "../../../../nav-soknad/components/informasjonspanel";
 import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
 import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
@@ -73,7 +73,7 @@ const StudielanView = () => {
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             />
             {studielan && studielan.bekreftelse === false && (
-                <Informasjonspanel ikon={InformasjonspanelIkon.ELLA} farge={DigisosFarge.VIKTIG}>
+                <Informasjonspanel ikon={"ella"} farge={DigisosFarge.VIKTIG}>
                     <UndertekstBold className="skjema-sporsmal__infotekst__tittel">
                         <FormattedMessage id={STUDERER_INFO_TITTEL} />
                     </UndertekstBold>

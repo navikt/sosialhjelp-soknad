@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
-import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel from "../../../../nav-soknad/components/informasjonspanel";
 
 import {State} from "../../../redux/reducers";
 import {
@@ -67,7 +67,7 @@ const EktefelleDetaljer = () => {
                 </div>
             </Sporsmal>
             {harDiskresjonskode !== true && (
-                <Informasjonspanel farge={DigisosFarge.VIKTIG} ikon={InformasjonspanelIkon.ELLA}>
+                <Informasjonspanel farge={DigisosFarge.VIKTIG} ikon={"ella"}>
                     <h4 className="skjema-sporsmal__infotekst__tittel">
                         <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel" />
                     </h4>

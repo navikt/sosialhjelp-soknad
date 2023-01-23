@@ -4,71 +4,33 @@ import Brevkonvolutt from "../svg/Brevkonvolutt";
 import {DigisosFarge} from "../svg/DigisosFarger";
 import Hensyn from "../svg/Hensyn";
 import {erMobilVisning} from "../../utils/domUtils";
-import EllaKompakt from "../svg/EllaKompakt";
+import {ReactNode} from "react";
 
-interface OwnProps {
+interface InformasjonspanelProps {
     farge: DigisosFarge;
     children?: any;
-    ikon: InformasjonspanelIkon;
+    ikon: "ella" | "konvolutt" | "hensyn";
     className?: string;
-    wrapperClassName?: string;
 }
 
-export enum InformasjonspanelIkon {
-    ELLA = "ella",
-    BREVKONVOLUTT = "brevkonvolutt",
-    HENSYN = "hensyn",
-}
+// TODO: Fjern erMobilVisning
+const Informasjonspanel = ({children, className, ikon, farge}: InformasjonspanelProps) => {
+    const iconSize = erMobilVisning() ? 64 : 80;
 
-const Informasjonspanel = (props: OwnProps) => {
-    const renderIkon = () => {
-        const iconSize = erMobilVisning() ? 64 : 80;
-        switch (props.ikon) {
-            case InformasjonspanelIkon.ELLA: {
-                return (
-                    <div>
-                        <div className="ikke_mobilvennlig_ikon">
-                            <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={props.farge} />
-                        </div>
-
-                        <div className="mobilvennlig_ikon">
-                            <EllaKompakt bakgrundsFarge={props.farge} />
-                        </div>
-                    </div>
-                );
-            }
-            case InformasjonspanelIkon.BREVKONVOLUTT: {
-                return (
-                    <div>
-                        <Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={props.farge} />
-                    </div>
-                );
-            }
-            case InformasjonspanelIkon.HENSYN: {
-                return (
-                    <div>
-                        <Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={props.farge} />
-                    </div>
-                );
-            }
-            default: {
-                return (
-                    <div>
-                        <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={props.farge} />
-                    </div>
-                );
-            }
-        }
+    const ikonElement: Record<typeof ikon, ReactNode> = {
+        ella: <Ella size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={farge} />,
+        konvolutt: <Brevkonvolutt size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={farge} />,
+        hensyn: <Hensyn size={iconSize} visBakgrundsSirkel={true} bakgrundsFarge={farge} />,
     };
 
-    const styleClassName = "skjema-informasjonspanel--" + props.farge;
+    const styleClassName = "skjema-informasjonspanel--" + farge;
 
     return (
         <div className={"react-collapse-wrapper"}>
-            <div className={"skjema-informasjonspanel-wrapper " + props.className}>
+            <div className={"skjema-informasjonspanel-wrapper " + className}>
                 <div className={"skjema-informasjonspanel " + styleClassName}>
-                    <div>{renderIkon()}</div>
-                    <span>{props.children}</span>
+                    <div>{ikonElement[ikon]}</div>
+                    <span>{children}</span>
                 </div>
             </div>
         </div>

@@ -1,19 +1,20 @@
 import * as React from "react";
 import {DigisosFarge} from "./DigisosFarger";
 
-const Ella = (props: {size?: number; visBakgrundsSirkel: boolean; bakgrundsFarge?: DigisosFarge}) => {
-    const height = props.size || 80;
-    const width = props.size || 80;
-    const bakgrundsFarge: DigisosFarge | undefined = props.bakgrundsFarge;
-    const showBackgroundCircle: boolean = props.visBakgrundsSirkel;
+export interface DigisosIkonProps {
+    size?: number;
+    visBakgrundsSirkel?: boolean;
+    bakgrundsFarge?: DigisosFarge;
+}
 
+const Ella = ({size = 80, visBakgrundsSirkel, bakgrundsFarge}: DigisosIkonProps) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
             preserveAspectRatio="none"
-            width={width}
-            height={height}
+            width={size}
+            height={size}
             viewBox="0 0 175 175"
             className={"ella--" + bakgrundsFarge}
             aria-hidden="true"
@@ -21,7 +22,7 @@ const Ella = (props: {size?: number; visBakgrundsSirkel: boolean; bakgrundsFarge
         >
             <title>Veileder</title>
             <defs>
-                {showBackgroundCircle && (
+                {visBakgrundsSirkel && (
                     <path
                         className="bakgrunnsSirkel"
                         d="M175 87.5q0-17.8-6.9-34.05-6.6-15.7-18.75-27.8-12.1-12.1-27.8-18.75Q105.3 0 87.5 0 69.7 0 53.45 6.9q-15.7 6.65-27.85 18.75-12.1 12.1-18.75 27.8Q0 69.7 0 87.5q0 17.8 6.85 34.05 6.65 15.7 18.75 27.85 12.15 12.1 27.85 18.75Q69.7 175 87.5 175q17.8 0 34.05-6.85 15.7-6.65 27.8-18.75 12.15-12.15 18.75-27.85Q175 105.3 175 87.5z"

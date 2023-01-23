@@ -1,16 +1,12 @@
 import * as React from "react";
-import {DigisosFarge} from "./DigisosFarger";
+import {DigisosIkonProps} from "./Ella";
 
-const Hensyn = (props: {size?: number; visBakgrundsSirkel: boolean; bakgrundsFarge?: DigisosFarge}) => {
-    const height = props.size || 60;
-    const width = props.size || 60;
-    const bakgrundsFarge = props.bakgrundsFarge || DigisosFarge.SUKSESS;
-
+const Hensyn = ({size = 80, bakgrundsFarge}: DigisosIkonProps) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width={width}
-            height={height}
+            width={size}
+            height={size}
             viewBox="0 0 80 80"
             className={"brevkonvolutt__" + bakgrundsFarge}
             aria-hidden="true"

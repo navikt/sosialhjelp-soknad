@@ -7,7 +7,7 @@ import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/spo
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
-import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel from "../../../../nav-soknad/components/informasjonspanel";
 import PersonSkjema from "./PersonSkjema";
 import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {State} from "../../../redux/reducers";
@@ -117,7 +117,7 @@ const SivilstatusComponent = () => {
                 />
             </Sporsmal>
             {sivilstatus === Status.GIFT && (
-                <Informasjonspanel farge={DigisosFarge.VIKTIG} ikon={InformasjonspanelIkon.ELLA}>
+                <Informasjonspanel farge={DigisosFarge.VIKTIG} ikon={"ella"}>
                     <h4 className="skjema-sporsmal__infotekst__tittel">
                         <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel" />
                     </h4>
