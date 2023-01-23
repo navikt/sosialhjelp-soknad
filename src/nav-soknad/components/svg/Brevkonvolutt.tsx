@@ -1,14 +1,11 @@
 import * as React from "react";
-import {DigisosFarge} from "./DigisosFarger";
-import {DigisosIkonProps} from "./Ella";
 
-export const Brevkonvolutt = ({size, bakgrundsFarge, visBakgrundsSirkel}: DigisosIkonProps) => (
+export const Brevkonvolutt = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
-        width={size}
-        height={size}
+        width={"100%"}
+        height={"100%"}
         viewBox="0 0 100 100"
-        className={"brevkonvolutt--" + bakgrundsFarge}
         aria-hidden="true"
         pointerEvents="none"
     >
@@ -17,13 +14,6 @@ export const Brevkonvolutt = ({size, bakgrundsFarge, visBakgrundsSirkel}: Digiso
             <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1" />
         </g>
         <g>
-            {visBakgrundsSirkel && (
-                <path
-                    stroke="null"
-                    className="bakgrunnsSirkel"
-                    d="m98.16797,51.04702q0,-9.53263 -3.69523,-18.23518q-3.53457,-8.408 -10.0414,-14.88804q-6.48005,-6.48005 -14.88804,-10.0414q-8.70254,-3.69523 -18.23518,-3.69523q-9.53263,0 -18.23518,3.69523q-8.408,3.56135 -14.91482,10.0414q-6.48005,6.48005 -10.0414,14.88804q-3.66846,8.70254 -3.66846,18.23518q0,9.53263 3.66846,18.23518q3.56135,8.408 10.0414,14.91482q6.50683,6.48005 14.91482,10.0414q8.70254,3.66846 18.23518,3.66846q9.53263,0 18.23518,-3.66846q8.408,-3.56135 14.88804,-10.0414q6.50683,-6.50683 10.0414,-14.91482q3.69523,-8.70254 3.69523,-18.23518z"
-                />
-            )}
             <path
                 id="brevkonvolutt_2"
                 d="m28.43327,48.04188c-0.692,-0.693 -3.967,-3.072 -3.274,-3.765l-1.111,-3.514l26.227,-22.471a1.774,1.774 0 0 1 2.509,0l26.225,22.47l-5.94,12.858c0.69,0.692 -21.72,12.164 -22.412,12.858l-22.224,-18.436z"

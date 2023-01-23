@@ -6,8 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
-import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
-import Informasjonspanel from "../../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel from "../../../../nav-soknad/components/Informasjonspanel";
 import PersonSkjema from "./PersonSkjema";
 import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {State} from "../../../redux/reducers";
@@ -117,7 +116,7 @@ const SivilstatusComponent = () => {
                 />
             </Sporsmal>
             {sivilstatus === Status.GIFT && (
-                <Informasjonspanel farge={DigisosFarge.VIKTIG} ikon={"ella"}>
+                <Informasjonspanel farge="viktig" ikon={"ella"}>
                     <h4 className="skjema-sporsmal__infotekst__tittel">
                         <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel" />
                     </h4>

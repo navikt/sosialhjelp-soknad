@@ -16,12 +16,16 @@ const StyledGuidePanel = styled(GuidePanel)`
     margin-bottom: 2rem;
 `;
 
-export const SoknadsmottakerInfoPanel = (props: {valgtSoknadsmottaker: NavEnhet}) => {
+export const SoknadsmottakerInfoPanel = ({
+    valgtSoknadsmottaker: {enhetsnavn, kommunenavn},
+}: {
+    valgtSoknadsmottaker: NavEnhet;
+}) => {
     const dispatch = useDispatch();
 
-    const valgtEnhetsNavn = `${props.valgtSoknadsmottaker.enhetsnavn}, ${props.valgtSoknadsmottaker.kommunenavn} kommune`;
+    const valgtEnhetsNavn = `${enhetsnavn}, ${kommunenavn} kommune`;
     return (
-        <StyledGuidePanel illustration={<Brevkonvolutt visBakgrundsSirkel={false} />} poster>
+        <StyledGuidePanel illustration={<Brevkonvolutt />} poster>
             <Heading level="2" size="medium" spacing>
                 Søknaden din blir sendt til {valgtEnhetsNavn}
             </Heading>

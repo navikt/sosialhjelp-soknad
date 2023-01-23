@@ -4,8 +4,7 @@ import {useSelector} from "react-redux";
 
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
-import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
-import Informasjonspanel from "../../../../nav-soknad/components/informasjonspanel";
+import Informasjonspanel from "../../../../nav-soknad/components/Informasjonspanel";
 
 import {State} from "../../../redux/reducers";
 import {
@@ -16,10 +15,9 @@ import {
 
 const INTL_ID_EKTEFELLE = "system.familie.sivilstatus.gift.ektefelle";
 
-const SivilstatusLabel = (props: {ektefelleHarDiskresjonskode: boolean | undefined}) => {
-    if (props.ektefelleHarDiskresjonskode && props.ektefelleHarDiskresjonskode === true) {
-        return <FormattedMessage id="system.familie.sivilstatus.ikkeTilgang.label" />;
-    }
+const SivilstatusLabel = ({ektefelleHarDiskresjonskode}: {ektefelleHarDiskresjonskode?: boolean}) => {
+    if (ektefelleHarDiskresjonskode) return <FormattedMessage id="system.familie.sivilstatus.ikkeTilgang.label" />;
+
     return <FormattedMessage id="system.familie.sivilstatus.label" />;
 };
 
@@ -67,7 +65,7 @@ const EktefelleDetaljer = () => {
                 </div>
             </Sporsmal>
             {harDiskresjonskode !== true && (
-                <Informasjonspanel farge={DigisosFarge.VIKTIG} ikon={"ella"}>
+                <Informasjonspanel farge="viktig" ikon={"ella"}>
                     <h4 className="skjema-sporsmal__infotekst__tittel">
                         <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel" />
                     </h4>

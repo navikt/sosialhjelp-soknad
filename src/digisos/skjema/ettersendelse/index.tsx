@@ -8,8 +8,7 @@ import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
 import {MargIkoner} from "./margIkoner";
 import {EttersendelseFeilkode} from "../../redux/ettersendelse/ettersendelseTypes";
-import Informasjonspanel from "../../../nav-soknad/components/informasjonspanel";
-import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
+import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel";
 import {useParams} from "react-router";
 import SoknadAlleredeSendtPrompt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPrompt";
 import HotjarTriggerEttersendelse from "../../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
@@ -105,7 +104,7 @@ const Ettersendelse = () => {
 
                 {opprettNyEttersendelseFeilet && !nedetid?.isNedetid && (
                     <AvsnittMedMarger>
-                        <Informasjonspanel ikon={"hensyn"} farge={DigisosFarge.VIKTIG}>
+                        <Informasjonspanel ikon={"hensyn"} farge="viktig">
                             <FormattedMessage id="ettersendelse.ikke.mulig" />
                         </Informasjonspanel>
                     </AvsnittMedMarger>
