@@ -20,9 +20,7 @@ function* hentSamtykker(action: HentSamtykker) {
         const response: Samtykke[] = yield call(fetchToJson, `soknader/${action.behandlingsId}/hentSamtykker`);
         yield put(hentSamtykkerOk(response));
     } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            return;
-        }
+        if (reason.message === HttpStatus.UNAUTHORIZED) return;
         yield call(logWarning, "hent samtykker saga feilet: " + reason);
         yield put(setShowPageNotFound(true));
     }
