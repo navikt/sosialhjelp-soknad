@@ -1,6 +1,5 @@
 import * as React from "react";
 import {useState} from "react";
-import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import {useAlgebraic} from "../../../../lib/hooks/useAlgebraic";
@@ -33,7 +32,7 @@ const HorizontalRadioGroup = styled(RadioGroup)`
     margin-bottom: 1rem !important;
 `;
 
-const AdresseData = () => {
+export const AdresseData = () => {
     const behandlingsId = useBehandlingsId();
     const {request, refetch} = useAlgebraic(
         useHentAdresser(behandlingsId, {
@@ -114,20 +113,3 @@ const AdresseData = () => {
         },
     });
 };
-
-export const AdresseView = () => {
-    const {t} = useTranslation();
-
-    return (
-        <Sporsmal
-            id="soknadsmottaker"
-            noValidateOnBlur={true}
-            sporsmal={t(`soknadsmottaker.sporsmal`)}
-            hjelpetekst={t("soknadsmottaker.hjelpetekst.tekst")}
-        >
-            <AdresseData />
-        </Sporsmal>
-    );
-};
-
-export default AdresseView;

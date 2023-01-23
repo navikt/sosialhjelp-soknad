@@ -1091,7 +1091,7 @@
                 "properties": {
                     "brukerdefinert": {"type": "boolean"},
                     "systemverdi": {"type": "string"},
-                    "brukerutfyltVerdi": {"type": "string"}
+                    "brukerutfyltVerdi": {"type": "string", "nullable": true}
                 }
             },
             "NavEnhetFrontend": {

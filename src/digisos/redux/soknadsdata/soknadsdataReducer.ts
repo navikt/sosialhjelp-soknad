@@ -1,6 +1,5 @@
 import {initialKontonummerState, Kontonummer} from "../../skjema/personopplysninger/bankinfo/KontonummerType";
 import {Begrunnelse, initialBegrunnelseState} from "../../skjema/begrunnelse/begrunnelseTypes";
-import {initialTelefonnummerState, Telefonnummer} from "../../skjema/personopplysninger/telefon/telefonTypes";
 import {BosituasjonData, initialBosituasjonState} from "../../skjema/bosituasjon/bosituasjonTypes";
 import {Familie, initialFamilieStatus, Sivilstatus} from "../../skjema/familie/sivilstatus/FamilieTypes";
 import {initialUtdanningState, Utdanning} from "../../skjema/arbeidUtdanning/utdanning/utdanningTypes";
@@ -45,7 +44,6 @@ export enum SoknadsSti {
     BEGRUNNELSE = "begrunnelse",
     BOSITUASJON = "bosituasjon",
     UTDANNING = "utdanning",
-    TELEFONNUMMER = "personalia/telefonnummer",
     BOSTOTTE = "inntekt/bostotte",
     BOSTOTTE_SAMTYKKE = "inntekt/bostotte/samtykke",
     STUDIELAN = "inntekt/studielan",
@@ -94,7 +92,6 @@ export const initialInntektState: Inntekt = {
 
 export interface Personalia {
     kontonummer: Kontonummer;
-    telefonnummer: Telefonnummer;
     adresser: Adresser;
     navEnheter: NavEnhetFrontend[];
     navEnhet: null | NavEnhetFrontend;
@@ -108,7 +105,6 @@ export interface Utgifter {
 
 export const initialPersonaliaState: Personalia = {
     kontonummer: initialKontonummerState,
-    telefonnummer: initialTelefonnummerState,
     adresser: initialAdresserState,
     navEnheter: [],
     navEnhet: null,
@@ -154,7 +150,6 @@ export type SoknadsdataType =
     | Familie
     | Utdanning
     | Kontonummer
-    | Telefonnummer
     | Personalia
     | Sivilstatus
     | ForsorgerPlikt
