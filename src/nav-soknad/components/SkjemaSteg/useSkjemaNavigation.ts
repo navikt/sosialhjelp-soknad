@@ -7,7 +7,6 @@ import {
     setValideringsfeil,
     visValideringsfeilPanel,
 } from "../../../digisos/redux/validering/valideringActions";
-import {getStegUrl} from "../../utils";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../digisos/redux/reducers";
 import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
@@ -88,7 +87,7 @@ export const useSkjemaNavigation = () => {
             steg: aktivtSteg.id,
         });
 
-        navigate(getStegUrl(behandlingsId, aktivtSteg.id + 1));
+        navigate(`../${aktivtSteg.id + 1}`);
     };
 
     const handleGaTilSkjemaSteg = (steg: number, aktivtSteg?: SkjemaSteg) => {
@@ -101,7 +100,7 @@ export const useSkjemaNavigation = () => {
         } else {
             if (!validering.feil.length) {
                 dispatch(clearAllValideringsfeil());
-                navigate(getStegUrl(behandlingsId, steg));
+                navigate(`../${steg}`);
             } else {
                 dispatch(visValideringsfeilPanel());
             }
@@ -111,7 +110,7 @@ export const useSkjemaNavigation = () => {
         if (!behandlingsId) return;
         dispatch(clearAllValideringsfeil());
         dispatch(resetSendSoknadServiceUnavailable());
-        navigate(getStegUrl(behandlingsId, aktivtSteg - 1));
+        navigate(`../${aktivtSteg - 1}`);
     };
 
     const kanGaTilSkjemasteg = (aktivtSteg?: SkjemaSteg): boolean => {

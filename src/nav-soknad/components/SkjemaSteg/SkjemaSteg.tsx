@@ -5,7 +5,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {Innholdstittel} from "nav-frontend-typografi";
 import Feiloppsummering from "../validering/Feiloppsummering";
 import {getIntlTextOrKey, scrollToTop} from "../../utils";
-import {setShowPageNotFound} from "../../../digisos/redux/soknad/soknadActions";
 import AppBanner from "../appHeader/AppHeader";
 import {State} from "../../../digisos/redux/reducers";
 import {useTitle} from "../../hooks/useTitle";

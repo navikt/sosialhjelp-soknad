@@ -4,7 +4,7 @@ import * as React from "react";
 import {useDispatch} from "react-redux";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
 import Personopplysninger from "./Personopplysninger";
-import {getIntlTextOrKey, getStegUrl} from "../../../nav-soknad/utils";
+import {getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {Notes} from "@navikt/ds-icons";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
@@ -30,7 +30,7 @@ export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
             ...createSkjemaEventData(),
         });
         const behandlingsId = await startSoknad(dispatch);
-        behandlingsId && navigate(getStegUrl(behandlingsId, 1));
+        behandlingsId && navigate(`../skjema/${behandlingsId}/1`);
     };
 
     return (
