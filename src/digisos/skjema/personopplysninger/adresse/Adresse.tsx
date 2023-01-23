@@ -33,7 +33,7 @@ const HorizontalRadioGroup = styled(RadioGroup)`
     margin-bottom: 1rem !important;
 `;
 
-const AdresseView = () => {
+const AdresseData = () => {
     const behandlingsId = useBehandlingsId();
     const {request, refetch} = useAlgebraic(
         useHentAdresser(behandlingsId, {
@@ -82,12 +82,7 @@ const AdresseView = () => {
             return response.match({
                 Error: errorHandler,
                 Ok: (adresser) => (
-                    <Sporsmal
-                        id="soknadsmottaker"
-                        noValidateOnBlur={true}
-                        sporsmal={t(`soknadsmottaker.sporsmal`)}
-                        hjelpetekst={t("soknadsmottaker.hjelpetekst.tekst")}
-                    >
+                    <>
                         <HorizontalRadioGroup
                             legend={t("soknadsmottaker.infotekst.tekst")}
                             value={uncommittedAdressevalg}
@@ -113,13 +108,26 @@ const AdresseView = () => {
                             )}
                         </HorizontalRadioGroup>
                         <SoknadsmottakerInfo navEnhet={adresser.navEnhet} />
-                    </Sporsmal>
+                    </>
                 ),
             });
         },
     });
 };
 
-export {AdresseView};
+export const AdresseView = () => {
+    const {t} = useTranslation();
+
+    return (
+        <Sporsmal
+            id="soknadsmottaker"
+            noValidateOnBlur={true}
+            sporsmal={t(`soknadsmottaker.sporsmal`)}
+            hjelpetekst={t("soknadsmottaker.hjelpetekst.tekst")}
+        >
+            <AdresseData />
+        </Sporsmal>
+    );
+};
 
 export default AdresseView;
