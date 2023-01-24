@@ -1,5 +1,6 @@
-import {konverterFdatoTilDato, mod11Kontroll} from "./valideringFuncUtils";
+import {konverterFdatoTilDato} from "./valideringFuncUtils";
 import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
+import {isValidKontonummer} from "./isValidKontonummer";
 
 export function minLengde(value: string, min: number): boolean {
     return typeof value === "string" && value.length >= min ? true : false;
@@ -17,31 +18,9 @@ export function erTall(value: string, kunHeltall?: boolean): boolean {
     return value && reg.test(value) ? true : false;
 }
 
-export function erTelefonnummer(value: string): boolean {
-    if (
-        typeof value !== "string" ||
-        value.length < 8 ||
-        value.length > 8 ||
-        (value.length === 8 && !/^[0-9]{8}$/i.test(value))
-    ) {
-        return false;
-    }
-    return true;
-}
+export const erTelefonnummer = (value: string) => /^\d{8}$/.test(value);
 
-export function erKontonummer(value: string): boolean {
-    if (!value || typeof value !== "string") {
-        return false;
-    }
-    const kontonummer = value.replace(/\.| /g, "");
-    if (
-        kontonummer.length !== 11 ||
-        !(parseInt(kontonummer.charAt(kontonummer.length - 1), 10) === mod11Kontroll(kontonummer))
-    ) {
-        return false;
-    }
-    return true;
-}
+export const erKontonummer = (value: string) => isValidKontonummer(value.replace(/[. ]/g, ""));
 
 export function erSamvaersgrad(value: number | null): boolean {
     if (!value) {
