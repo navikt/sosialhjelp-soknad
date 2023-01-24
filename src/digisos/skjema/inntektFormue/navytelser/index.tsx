@@ -46,7 +46,7 @@ const NavYtelserView = () => {
         const utbetalingsdato: string = utbetaling.utbetalingsdato;
         let formattedDato = null;
         if (utbetalingsdato && utbetalingsdato.length > 9) {
-            formattedDato = <Dato tidspunkt={utbetaling.utbetalingsdato} />;
+            formattedDato = <Dato>{utbetaling.utbetalingsdato}</Dato>;
         }
         const belop = <FormattedNumber value={utbetaling.belop} minimumFractionDigits={2} />;
         return (
