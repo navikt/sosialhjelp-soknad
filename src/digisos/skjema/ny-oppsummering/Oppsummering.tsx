@@ -33,6 +33,7 @@ import {NavEnhet} from "../personopplysninger/adresse/AdresseTypes";
 import {soknadsdataUrl} from "../../redux/soknadsdata/soknadsdataActions";
 import {SoknadsSti} from "../../redux/soknadsdata/soknadsdataReducer";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
@@ -48,10 +49,9 @@ export const Oppsummering = () => {
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(true);
-
+    const behandlingsId = useBehandlingsId();
     const {bekreftet, visBekreftMangler, nyOppsummering} = useSelector((state: State) => state.oppsummering);
-    const {behandlingsId, valgtSoknadsmottaker, showSendingFeiletPanel, nedetid, visMidlertidigDeaktivertPanel} =
-        useSoknad();
+    const {valgtSoknadsmottaker, showSendingFeiletPanel, nedetid, visMidlertidigDeaktivertPanel} = useSoknad();
 
     const nedetidstart = nedetid?.nedetidStartText ?? "";
     const nedetidslutt = nedetid?.nedetidSluttText ?? "";
