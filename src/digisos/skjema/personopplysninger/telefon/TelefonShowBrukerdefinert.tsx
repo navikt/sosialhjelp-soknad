@@ -21,7 +21,7 @@ export const TelefonShowBrukerdefinert = ({
                 </SysteminfoItem>
             </Systeminfo>
             <div className={"space-x-2"}>
-                <Button onClick={onEdit}>ENDRE</Button>
+                <Button onClick={onEdit}>Endre</Button>
             </div>
         </>
     );

@@ -30,7 +30,7 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
     const update = async ({brukerutfyltVerdi}: FormType) => {
         await updateTelefonnummer(behandlingsId, {
             brukerdefinert: !!brukerutfyltVerdi?.length,
-            brukerutfyltVerdi: brukerutfyltVerdi ? `+47${brukerutfyltVerdi}` : null,
+            brukerutfyltVerdi: brukerutfyltVerdi?.length ? `+47${brukerutfyltVerdi}` : null,
         });
         await refetch();
         onClose();
@@ -47,7 +47,10 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
                 {...registerWithTelefonnummerMask("brukerutfyltVerdi", {
                     validate: {
                         isValidTelefonnummer: (nummer) =>
-                            nummer === null || isValidTelefonnummer(nummer ?? "") || t("kontakt.telefon.feilmelding"),
+                            nummer === null ||
+                            nummer === "" ||
+                            isValidTelefonnummer(nummer ?? "") ||
+                            t("kontakt.telefon.feilmelding"),
                     },
                 })}
                 maxLength={11}
