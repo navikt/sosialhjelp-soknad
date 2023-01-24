@@ -1,10 +1,10 @@
 import * as React from "react";
-import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import {Systeminfo, SysteminfoItem} from "../../../../nav-soknad/components/systeminfo/Systeminfo";
-import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
-import {useAlgebraic} from "../../../../lib/hooks/useAlgebraic";
-import {useHentBasisPersonalia} from "../../../../generated/basis-personalia-ressurs/basis-personalia-ressurs";
-import {useErrorHandler} from "../../../../lib/hooks/useErrorHandler";
+import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
+import {Systeminfo, SysteminfoItem} from "../../../nav-soknad/components/systeminfo/Systeminfo";
+import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
+import {useHentBasisPersonalia} from "../../../generated/basis-personalia-ressurs/basis-personalia-ressurs";
+import {useErrorHandler} from "../../../lib/hooks/useErrorHandler";
 import {useTranslation} from "react-i18next";
 
 // TODO: Figure out error handling

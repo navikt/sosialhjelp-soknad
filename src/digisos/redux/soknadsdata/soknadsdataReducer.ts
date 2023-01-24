@@ -12,7 +12,6 @@ import {initialFormueState, Formue} from "../../skjema/inntektFormue/formue/Form
 import {initialBoutgifterState, Boutgifter} from "../../skjema/utgifterGjeld/boutgifter/BoutgifterTypes";
 import {initialBarneutgifterState, Barneutgifter} from "../../skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
 import {AdresseKategori, Adresser, initialAdresserState} from "../../skjema/personopplysninger/adresse/AdresseTypes";
-import {BasisPersonalia, initialBasisPersonalia} from "../../skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import {Barnebidrag, ForsorgerPlikt} from "../../skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 import {
     initialSkattbarInntektInfoState,
@@ -95,7 +94,6 @@ export interface Personalia {
     adresser: Adresser;
     navEnheter: NavEnhetFrontend[];
     navEnhet: null | NavEnhetFrontend;
-    basisPersonalia: BasisPersonalia;
 }
 
 export interface Utgifter {
@@ -108,7 +106,6 @@ export const initialPersonaliaState: Personalia = {
     adresser: initialAdresserState,
     navEnheter: [],
     navEnhet: null,
-    basisPersonalia: initialBasisPersonalia,
 };
 
 export const initialUtgifterState: Utgifter = {

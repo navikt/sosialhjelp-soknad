@@ -6,7 +6,7 @@ import {AdresseData} from "./adresse/Adresse";
 import {SkjemaSteg} from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import Sporsmal from "../../../nav-soknad/components/sporsmal/Sporsmal";
-import {BasisPersonaliaData} from "./personalia/BasisPersonalia";
+import {BasisPersonaliaData} from "./BasisPersonalia";
 import {useTranslation} from "react-i18next";
 
 const Personopplysninger = () => {
