@@ -4,7 +4,7 @@ import Banner from "../banner/Banner";
 import {isLocalhost} from "../../utils";
 import {DeveloperToolkit} from "./DeveloperToolkit";
 
-const AppHeader: React.FC = () => {
+const AppHeader = () => {
     if (!isLocalhost(window.location.href)) {
         return (
             <Banner>
