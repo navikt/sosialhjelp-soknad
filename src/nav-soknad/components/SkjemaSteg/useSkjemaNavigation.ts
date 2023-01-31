@@ -16,13 +16,17 @@ import {logInfo} from "../../utils/loggerUtils";
 import {SkjemaSteg} from "./digisosSkjema";
 import {useNavigate} from "react-router";
 import {sendSoknad} from "../../../lib/sendSoknad";
+import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";
+import {useBehandlingsId} from "../../hooks/useBehandlingsId";
+import {NavEnhetFrontend} from "../../../generated/model";
 
 export const useSkjemaNavigation = () => {
-    const {soknadsdata, soknad, validering, oppsummering} = useSelector((state: State) => state);
+    const {soknadsdata, validering, oppsummering} = useSelector((state: State) => state);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {behandlingsId} = soknad;
-    const finnSoknadsMottaker = () => soknadsdata.personalia.navEnhet;
+    const behandlingsId = useBehandlingsId();
+    const {data: adresseData} = useHentAdresser(behandlingsId);
+    const valgtNavEnhet = adresseData?.navEnhet;
 
     const getAttributesForSkjemaFullfortEvent = () => {
         const attr: Record<string, any> = {};
@@ -40,7 +44,7 @@ export const useSkjemaNavigation = () => {
 
         return attr;
     };
-    const handleNavEnhetErUgyldigFeil = (valgtNavEnhet: NavEnhet | null) => {
+    const handleNavEnhetErUgyldigFeil = (valgtNavEnhet?: NavEnhetFrontend) => {
         dispatch(setValideringsfeil(ValideringsFeilKode.SOKNADSMOTTAKER_PAKREVD, "soknadsmottaker"));
         if (!valgtNavEnhet || (!valgtNavEnhet.enhetsnavn && !valgtNavEnhet.enhetsnr)) {
             logInfo("Ingen navenhet valgt");
@@ -69,10 +73,8 @@ export const useSkjemaNavigation = () => {
             return;
         }
 
-        const valgtNavEnhet = finnSoknadsMottaker();
-
         if (aktivtSteg.id === 1 && !erAktiv(valgtNavEnhet)) {
-            handleNavEnhetErUgyldigFeil(valgtNavEnhet as NavEnhet);
+            handleNavEnhetErUgyldigFeil(valgtNavEnhet);
             return;
         }
 
@@ -94,10 +96,8 @@ export const useSkjemaNavigation = () => {
     const handleGaTilSkjemaSteg = (steg: number, aktivtSteg?: SkjemaSteg) => {
         if (!aktivtSteg || !behandlingsId) return;
 
-        const valgtNavEnhet = finnSoknadsMottaker();
-
-        if (aktivtSteg.id === 1 && (!valgtNavEnhet || !erAktiv(valgtNavEnhet))) {
-            handleNavEnhetErUgyldigFeil(valgtNavEnhet as NavEnhet);
+        if (aktivtSteg.id === 1 && !erAktiv(valgtNavEnhet)) {
+            handleNavEnhetErUgyldigFeil(valgtNavEnhet);
         } else {
             if (!validering.feil.length) {
                 dispatch(clearAllValideringsfeil());
@@ -117,10 +117,8 @@ export const useSkjemaNavigation = () => {
     const kanGaTilSkjemasteg = (aktivtSteg?: SkjemaSteg): boolean => {
         if (!(aktivtSteg && behandlingsId)) return true;
 
-        const valgtNavEnhet = finnSoknadsMottaker();
-
         if (!erAktiv(valgtNavEnhet)) {
-            handleNavEnhetErUgyldigFeil(valgtNavEnhet as NavEnhet);
+            handleNavEnhetErUgyldigFeil(valgtNavEnhet);
             return false;
         }
 
