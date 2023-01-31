@@ -65,6 +65,7 @@
     "@faker-js/faker": "^7.6.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^13.4.0",
+    "@tsconfig/create-react-app": "^1.0.3",
     "@types/amplitude-js": "^8.16.0",
     "@types/jest": "^29.2.3",
     "@types/node": "^18.11.10",

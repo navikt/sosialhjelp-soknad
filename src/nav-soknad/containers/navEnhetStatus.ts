@@ -11,7 +11,8 @@ import {Dispatch} from "redux";
 import {hentValgtNavEnhet} from "../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
 import {NavEnhetFrontend} from "../../generated/model";
 
-export const erAktiv = (e: NavEnhetFrontend | null) => !!e && !e.isMottakDeaktivert && !e.isMottakMidlertidigDeaktivert;
+export const erAktiv = (e?: NavEnhetFrontend | null) =>
+    !!e && !e.isMottakDeaktivert && !e.isMottakMidlertidigDeaktivert;
 export const erMidlDeaktivert = (e: NavEnhetFrontend) => !e.isMottakDeaktivert && e.isMottakMidlertidigDeaktivert;
 
 const fetchNavEnhet = async (dispatch: Dispatch, behandlingsId: string) => {

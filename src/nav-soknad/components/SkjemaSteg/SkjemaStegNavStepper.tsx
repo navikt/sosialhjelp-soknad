@@ -16,7 +16,7 @@ export const SkjemaStegNavStepper = ({
     const intl = useIntl();
 
     return (
-        <div className={"mt-2 py-4 lg:py-10 max-w-md mx-auto"}>
+        <div className={"max-w-md mx-auto"}>
             <Stepper
                 className={"top-stepper"}
                 aria-label="Søknadssteg"

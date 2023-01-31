@@ -5,15 +5,18 @@ import {FormattedMessage} from "react-intl";
 import Utdanning from "./utdanning/Utdanning";
 import Arbeid from "./arbeid/Arbeid";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
+import {Heading} from "@navikt/ds-react";
 
-const ArbeidOgUtdanning: React.FC<{}> = () => {
+const ArbeidOgUtdanning = () => {
     return (
         <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"arbeidbolk"} ikon={<Koffert />}>
             <Arbeid />
-            <h2 className="overskrift">
-                <FormattedMessage id="arbeid.dinsituasjon.studerer.undertittel" />
-            </h2>
-            <Utdanning />
+            <div>
+                <Heading size="medium">
+                    <FormattedMessage id="arbeid.dinsituasjon.studerer.undertittel" />
+                </Heading>
+                <Utdanning />
+            </div>
         </StegMedNavigasjon>
     );
 };
