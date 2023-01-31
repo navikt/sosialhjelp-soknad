@@ -13,7 +13,7 @@ export const DeveloperToolkit = () => {
     logWarning("Viser utviklermeny. Dette skal ikke skje i prod!");
 
     return (
-        <div className={"p-2 bg-[black] text-[#0f0] font-mono "}>
+        <div className={"!mt-0 p-2 bg-[black] text-[#0f0] font-mono "}>
             <div className="flex justify-center gap-4">
                 <div>Utviklermeny:</div>
                 <button
