@@ -6,8 +6,7 @@ import {useAlgebraic} from "../../../../lib/hooks/useAlgebraic";
 import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 import {AdresseVisning} from "./AdresseVisning";
 import {updateAdresse, useHentAdresser} from "../../../../generated/adresse-ressurs/adresse-ressurs";
-import {Radio, RadioGroup} from "@navikt/ds-react";
-import styled from "styled-components";
+import {Radio} from "@navikt/ds-react";
 import {formaterSoknadsadresse} from "./AdresseUtils";
 import {AdresseSok} from "./AdresseSok";
 import {AdresseFrontend, AdresserFrontend, AdresserFrontendValg} from "../../../../generated/model";
@@ -19,18 +18,7 @@ import {Adresser} from "./AdresseTypes";
 import {clearValideringsfeil} from "../../../redux/validering/valideringActions";
 import {useTranslation} from "react-i18next";
 import {updateNavEnhet} from "../../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
-
-const HorizontalRadioGroup = styled(RadioGroup)`
-    .navds-radio {
-        width: 100%;
-        border: 1px solid black;
-        padding: 0 1rem;
-        margin: 1rem 0 0 0;
-        border-radius: 5px;
-    }
-
-    margin-bottom: 1rem !important;
-`;
+import {HorizontalRadioGroup} from "../../../../nav-soknad/components/form/HorizontalRadioGroup";
 
 export const AdresseData = () => {
     const behandlingsId = useBehandlingsId();
