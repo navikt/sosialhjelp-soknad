@@ -31,7 +31,7 @@ export const SkjemaStegNavKnapper = ({
     const backwardInhibited = loading || !gaTilbake;
 
     return (
-        <div className={"space-y-16 px-6 pt-10"}>
+        <div className={"space-y-8 lg:space-y-16 md:pt-5 lg:pt-10"}>
             <div className="space-x-3">
                 <Button variant="secondary" id="gaa_tilbake_button" onClick={gaTilbake} disabled={backwardInhibited}>
                     {getIntlTextOrKey(intl, "skjema.knapper.tilbake")}
@@ -42,12 +42,14 @@ export const SkjemaStegNavKnapper = ({
                     {loading && <Loader />}
                 </Button>
             </div>
-            <Button variant="tertiary" onClick={() => (window.location.href = minSideUrl)}>
-                <FormattedMessage id={"avbryt.fortsettsenere"} />
-            </Button>
-            <Button variant="tertiary" onClick={() => dispatch(visAvbrytSoknadModal())}>
-                <FormattedMessage id={"avbryt.slett"} />
-            </Button>
+            <div>
+                <Button variant="tertiary" onClick={() => (window.location.href = minSideUrl)}>
+                    <FormattedMessage id={"avbryt.fortsettsenere"} />
+                </Button>
+                <Button variant="tertiary" onClick={() => dispatch(visAvbrytSoknadModal())}>
+                    <FormattedMessage id={"avbryt.slett"} />
+                </Button>
+            </div>
         </div>
     );
 };

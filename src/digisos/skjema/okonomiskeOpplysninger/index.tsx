@@ -10,17 +10,7 @@ import {State} from "../../redux/reducers";
 import {OpplysningerInformasjonspanel} from "./OpplysningerInformasjonspanel";
 import {OpplysningerIkkeBesvartPanel} from "./OpplysningerIkkeBesvartPanel";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
-import styled from "styled-components";
-import {mobile} from "../../../nav-soknad/styles/variables";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
-
-const OkonomiskeOpplysningerContainer = styled.div`
-    padding: 0 2rem;
-
-    @media ${mobile} {
-        padding: 1rem;
-    }
-`;
 
 const OkonomiskeOpplysningerView = () => {
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
@@ -36,7 +26,7 @@ const OkonomiskeOpplysningerView = () => {
 
     return (
         <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"opplysningerbolk"} ikon={<SkjemaIllustrasjon />}>
-            <OkonomiskeOpplysningerContainer>
+            <div>
                 {ikkeBesvartMeldingSkalVises ? <OpplysningerIkkeBesvartPanel /> : <OpplysningerInformasjonspanel />}
                 {gruppeRekkefolge.map((opplysningGruppe) => {
                     const opplysningerIGruppe = opplysningerSortert.filter((o) => o.gruppe === opplysningGruppe);
@@ -46,7 +36,7 @@ const OkonomiskeOpplysningerView = () => {
                         );
                     return null;
                 })}
-            </OkonomiskeOpplysningerContainer>
+            </div>
         </StegMedNavigasjon>
     );
 };
