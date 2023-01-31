@@ -94,77 +94,83 @@ export const Oppsummering = () => {
 
     return (
         <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"oppsummering"}>
-            {nyOppsummering.map((bolk: NyOppsummeringBolk) => {
-                return (
-                    <OppsummeringBolk bolk={bolk} key={bolk.stegNr}>
-                        {bolk.avsnitt.map((avsnitt) => (
-                            <QuestionEl key={avsnitt.tittel} title={intl.formatMessage({id: avsnitt.tittel})}>
-                                {avsnitt.sporsmal?.map((sporsmal) => {
-                                    return (
-                                        <div key={sporsmal.tittel}>
-                                            {sporsmal.tittel && (
-                                                <Label spacing>
-                                                    <FormattedMessage id={sporsmal.tittel} />
-                                                </Label>
-                                            )}
-                                            {!sporsmal.erUtfylt && <Warning />}
-                                            <SystemData
-                                                felter={sporsmal.felt?.filter((felt) => felt.type === "SYSTEMDATA")}
-                                            />
-                                            <SystemDataMap
-                                                felter={sporsmal.felt?.filter((felt) => felt.type === "SYSTEMDATA_MAP")}
-                                            />
-                                            <ListOfValues
-                                                felter={sporsmal.felt?.filter((felt) => felt.type === "CHECKBOX")}
-                                            />
-                                            <Attachment
-                                                behandlingsId={behandlingsId}
-                                                felter={sporsmal.felt?.filter((felt) => felt.type === "VEDLEGG")}
-                                            />
-                                            <FreeText felter={sporsmal.felt?.filter((felt) => felt.type === "TEKST")} />
-                                        </div>
-                                    );
-                                })}
-                            </QuestionEl>
-                        ))}
-                    </OppsummeringBolk>
-                );
-            })}
+            <div>
+                {nyOppsummering.map((bolk: NyOppsummeringBolk) => {
+                    return (
+                        <OppsummeringBolk bolk={bolk} key={bolk.stegNr}>
+                            {bolk.avsnitt.map((avsnitt) => (
+                                <QuestionEl key={avsnitt.tittel} title={intl.formatMessage({id: avsnitt.tittel})}>
+                                    {avsnitt.sporsmal?.map((sporsmal) => {
+                                        return (
+                                            <div key={sporsmal.tittel}>
+                                                {sporsmal.tittel && (
+                                                    <Label spacing>
+                                                        <FormattedMessage id={sporsmal.tittel} />
+                                                    </Label>
+                                                )}
+                                                {!sporsmal.erUtfylt && <Warning />}
+                                                <SystemData
+                                                    felter={sporsmal.felt?.filter((felt) => felt.type === "SYSTEMDATA")}
+                                                />
+                                                <SystemDataMap
+                                                    felter={sporsmal.felt?.filter(
+                                                        (felt) => felt.type === "SYSTEMDATA_MAP"
+                                                    )}
+                                                />
+                                                <ListOfValues
+                                                    felter={sporsmal.felt?.filter((felt) => felt.type === "CHECKBOX")}
+                                                />
+                                                <Attachment
+                                                    behandlingsId={behandlingsId}
+                                                    felter={sporsmal.felt?.filter((felt) => felt.type === "VEDLEGG")}
+                                                />
+                                                <FreeText
+                                                    felter={sporsmal.felt?.filter((felt) => felt.type === "TEKST")}
+                                                />
+                                            </div>
+                                        );
+                                    })}
+                                </QuestionEl>
+                            ))}
+                        </OppsummeringBolk>
+                    );
+                })}
 
-            {valgtSoknadsmottaker && <SoknadsmottakerInfoPanel valgtSoknadsmottaker={valgtSoknadsmottaker} />}
+                {valgtSoknadsmottaker && <SoknadsmottakerInfoPanel valgtSoknadsmottaker={valgtSoknadsmottaker} />}
 
-            <ConfirmationPanel
-                label={bekreftOpplysninger}
-                checked={bekreftet ? bekreftet : false}
-                onChange={() => dispatch(bekreftOppsummering())}
-                error={visBekreftMangler}
-            >
-                <FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger" />
-            </ConfirmationPanel>
+                <ConfirmationPanel
+                    label={bekreftOpplysninger}
+                    checked={bekreftet ? bekreftet : false}
+                    onChange={() => dispatch(bekreftOppsummering())}
+                    error={visBekreftMangler}
+                >
+                    <FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger" />
+                </ConfirmationPanel>
 
-            <BehandlingAvPersonopplysningerModal />
+                <BehandlingAvPersonopplysningerModal />
 
-            {showSendingFeiletPanel && (
-                <div role="alert">
+                {showSendingFeiletPanel && (
+                    <div role="alert">
+                        <Alert variant="error" style={{marginTop: "1rem"}}>
+                            Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg prøve
+                            igjen. Søknaden din er lagret og dersom problemet fortsetter kan du forsøke igjen senere.
+                            Kontakt ditt NAV kontor dersom du er i en nødsituasjon.
+                        </Alert>
+                    </div>
+                )}
+
+                {visMidlertidigDeaktivertPanel && isNedetid && (
                     <Alert variant="error" style={{marginTop: "1rem"}}>
-                        Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg prøve igjen.
-                        Søknaden din er lagret og dersom problemet fortsetter kan du forsøke igjen senere. Kontakt ditt
-                        NAV kontor dersom du er i en nødsituasjon.
+                        <FormattedMessage
+                            id="nedetid.alertstripe.send"
+                            values={{
+                                nedetidstart: nedetidstart,
+                                nedetidslutt: nedetidslutt,
+                            }}
+                        />
                     </Alert>
-                </div>
-            )}
-
-            {visMidlertidigDeaktivertPanel && isNedetid && (
-                <Alert variant="error" style={{marginTop: "1rem"}}>
-                    <FormattedMessage
-                        id="nedetid.alertstripe.send"
-                        values={{
-                            nedetidstart: nedetidstart,
-                            nedetidslutt: nedetidslutt,
-                        }}
-                    />
-                </Alert>
-            )}
+                )}
+            </div>
         </StegMedNavigasjon>
     );
 };
