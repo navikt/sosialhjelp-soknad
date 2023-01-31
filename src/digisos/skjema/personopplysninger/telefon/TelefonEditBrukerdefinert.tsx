@@ -16,7 +16,7 @@ type FormType = Pick<TelefonnummerFrontend, "brukerutfyltVerdi">;
 
 export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
     const behandlingsId = useBehandlingsId();
-    const {data, refetch} = useAlgebraic(useHentTelefonnummer(behandlingsId));
+    const {data, refetch} = useHentTelefonnummer(behandlingsId);
 
     const {t} = useTranslation("skjema");
     const form = useForm<FormType>({
