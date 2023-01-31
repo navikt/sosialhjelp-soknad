@@ -2,13 +2,12 @@ import * as React from "react";
 import {useEffect} from "react";
 import {FormattedMessage, useIntl} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
-import {Innholdstittel} from "nav-frontend-typografi";
 import Feiloppsummering from "../validering/Feiloppsummering";
 import {getIntlTextOrKey, scrollToTop} from "../../utils";
 import AppBanner from "../appHeader/AppHeader";
 import {State} from "../../../digisos/redux/reducers";
 import {useTitle} from "../../hooks/useTitle";
-import {Alert, Link} from "@navikt/ds-react";
+import {Alert, Heading, Link} from "@navikt/ds-react";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 import {useSoknad} from "../../../digisos/redux/soknad/useSoknad";
@@ -118,23 +117,24 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
     if (showSideIkkeFunnet) return <SideIkkeFunnet />;
 
     return (
-        <div className="pb-4 lg:pb-40 bg-green-500/20">
+        <div className="pb-4 lg:pb-40 bg-green-500/20 space-y-8">
             <AppBanner />
             <SkjemaStegNavStepper skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={handleGaTilSkjemaSteg} />
-            <div className={"p-2 md:p-6 lg:p-12 pt-0 mt-0 max-w-3xl mx-auto skjema-steg skjema-content"}>
+            <div className={"max-w-3xl mx-auto skjema-steg skjema-content"}>
                 <NedetidPanel varselType={"infoside"} />
                 <Feiloppsummering
                     skjemanavn={skjemaConfig.skjemanavn}
                     valideringsfeil={feil}
                     visFeilliste={visValideringsfeil}
                 />
-                <div className={"bg-white mx-auto rounded-2xl p-2 md:p-12 lg:p-24 pt-8"}>
-                    <div className="skjema-steg__ikon">{ikon}</div>
-                    <div className="skjema-steg__tittel" tabIndex={-1}>
-                        <Innholdstittel className="sourceSansProBold">{stegTittel}</Innholdstittel>
+                <div className={"bg-white mx-auto rounded-2xl px-10 md:px-12 lg:px-24 space-y-8 pt-4"}>
+                    <div className={"text-center"}>
+                        <div className="text-center mb-2">{ikon}</div>
+                        <div className="skjema-steg__tittel" tabIndex={-1}>
+                            <Heading size={"large"}>{stegTittel}</Heading>
+                        </div>
                     </div>
-
-                    {children}
+                    <div className={"space-y-12 lg:space-y-24"}>{children}</div>
                     <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
                     <AvbrytSoknad />
                     {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && (
