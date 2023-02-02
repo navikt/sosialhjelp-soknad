@@ -5,11 +5,15 @@ import React from "react";
 
 export const EttersendDokuPanel = () => (
     <Accordion>
-        <Accordion.Item className={"bg-white rounded-md border-[1px]"}>
-            <Accordion.Header className={"!items-center !border-0"}>
-                <div className={"flex items-center px-4 py-2"}>
-                    <div className={"rounded-full bg-green-500/40 p-3 mr-5 tw-hidden lg:block"}>
-                        <Attachment className={"w-9 h-9"} aria-hidden="true" />
+        <Accordion.Item className={"bg-white"}>
+            <Accordion.Header className={"!items-center !border-0 !py-6 !px-8"}>
+                <div className={"flex items-center gap-8"}>
+                    <div
+                        className={
+                            "rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"
+                        }
+                    >
+                        <Attachment className={"w-6 h-6 block"} aria-hidden="true" />
                     </div>
                     <Heading level="2" size="small">
                         Send dokumentasjon til en innsendt søknad

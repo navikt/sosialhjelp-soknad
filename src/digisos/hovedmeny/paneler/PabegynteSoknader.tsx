@@ -1,4 +1,4 @@
-import {FileProgress} from "@navikt/ds-icons";
+import {FileContent} from "@navikt/ds-icons";
 import {Accordion, BodyShort, Heading, Label, LinkPanel} from "@navikt/ds-react";
 import React from "react";
 import {DAYS_BEFORE_DELETION} from "./pabegynteSoknaderUtils";
@@ -58,27 +58,27 @@ const PabegynteSoknaderCount = ({num}: {num: number}) => {
     return <span className={className}>{num} påbegynte søknader</span>;
 };
 
-export const PabegynteSoknaderTitle = ({antallPabegynteSoknader}: {antallPabegynteSoknader: number}) => (
-    <div className={"flex flex-row items-center px-4 py-2"}>
-        <div className={"rounded-full bg-green-500/40 p-3 mr-5 tw-hidden lg:block"}>
-            <FileProgress className={"w-9 h-9"} aria-hidden="true" />
-        </div>
-        <Heading level="2" size="small" className={"flex flex-col lg:flex-row"}>
-            Fortsett på en påbegynt søknad
-            <PabegynteSoknaderCount num={antallPabegynteSoknader} />
-        </Heading>
-    </div>
-);
-
 export const PabegynteSoknaderPanel = ({pabegynteSoknader}: {pabegynteSoknader: PabegyntSoknadData[]}) => {
     return (
         <Accordion>
-            <Accordion.Item className={"bg-white rounded-md border-[1px]"}>
-                <Accordion.Header className={"!items-center !border-0"}>
-                    <PabegynteSoknaderTitle antallPabegynteSoknader={pabegynteSoknader.length} />
+            <Accordion.Item className={"bg-white"}>
+                <Accordion.Header className={"!items-center !border-0 !py-6 !px-8"}>
+                    <div className={"flex flex-row items-center gap-8"}>
+                        <div
+                            className={
+                                "rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"
+                            }
+                        >
+                            <FileContent className={"w-6 h-6"} aria-hidden="true" />
+                        </div>
+                        <Heading level="2" size="small" className={"flex flex-col lg:flex-row"}>
+                            Fortsett på en påbegynt søknad
+                            <PabegynteSoknaderCount num={pabegynteSoknader.length} />
+                        </Heading>
+                    </div>
                 </Accordion.Header>
                 <Accordion.Content className={"!px-0 !border-0"}>
-                    <div className={"p-4 lg:pl-24"}>
+                    <div className={"p-8 lg:pl-24"}>
                         <BodyShort className={"pb-4"}>
                             Vær oppmerksom på at påbegynte søknader slettes etter {DAYS_BEFORE_DELETION} dager.
                         </BodyShort>
