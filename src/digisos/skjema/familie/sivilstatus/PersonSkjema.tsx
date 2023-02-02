@@ -149,7 +149,7 @@ const PersonSkjema = () => {
             />
 
             <InputEnhanced
-                className="add-padding-bottom"
+                className="pb-4"
                 getName={() => FAKTUM_KEY + "_etternavn_input"}
                 id={FAKTUM_KEY + "_etternavn_input"}
                 maxLength={100}

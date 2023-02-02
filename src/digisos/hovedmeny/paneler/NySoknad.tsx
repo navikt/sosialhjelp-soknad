@@ -3,22 +3,13 @@ import {FormattedMessage, useIntl} from "react-intl";
 import * as React from "react";
 import {useDispatch} from "react-redux";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
-import {
-    opprettSoknadFeilet,
-    opprettSoknadOk,
-    setShowServerError,
-    startSoknadDone,
-    showDowntimeError,
-} from "../../redux/soknad/soknadActions";
 import Personopplysninger from "./Personopplysninger";
-import {getIntlTextOrKey, getStegUrl} from "../../../nav-soknad/utils";
+import {getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {Notes} from "@navikt/ds-icons";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
 import {useSoknad} from "../../redux/soknad/useSoknad";
-import {fetchPost, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
-import {OpprettSoknadResponse} from "../../redux/soknad/soknadTypes";
-import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {startSoknad} from "../../../lib/StartSoknad";
 import {useNavigate} from "react-router";
 
 export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
@@ -26,17 +17,11 @@ export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
     const antallNyligInnsendteSoknader = harNyligInnsendteSoknader?.antallNyligInnsendte ?? 0;
 
     const dispatch = useDispatch();
-
     const navigate = useNavigate();
-
     const intl = useIntl();
 
-    const onSokSosialhjelpButtonClick = (event: React.SyntheticEvent) => {
+    const onSokSosialhjelpButtonClick = async (event: React.SyntheticEvent) => {
         event.preventDefault();
-        startSoknad();
-    };
-
-    const startSoknad = async () => {
         logAmplitudeEvent("skjema startet", {
             antallNyligInnsendteSoknader,
             antallPabegynteSoknader: props.antallPabegynteSoknader,
@@ -44,24 +29,8 @@ export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
             erProdsatt: true,
             ...createSkjemaEventData(),
         });
-
-        try {
-            const soknad = await fetchPost<OpprettSoknadResponse>("soknader/opprettSoknad", "", true);
-            dispatch(opprettSoknadOk(soknad.brukerBehandlingId));
-            dispatch(startSoknadDone());
-            navigate(getStegUrl(soknad.brukerBehandlingId, 1));
-        } catch (reason: any) {
-            if (reason.message === HttpStatus.UNAUTHORIZED) return;
-            logWarning("opprettSoknad: " + reason);
-
-            if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
-                dispatch(showDowntimeError(true));
-            } else {
-                dispatch(setShowServerError(true));
-                dispatch(opprettSoknadFeilet());
-            }
-            dispatch(startSoknadDone());
-        }
+        const behandlingsId = await startSoknad(dispatch);
+        behandlingsId && navigate(`../skjema/${behandlingsId}/1`);
     };
 
     return (

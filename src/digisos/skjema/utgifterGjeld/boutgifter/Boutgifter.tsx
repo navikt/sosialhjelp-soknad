@@ -6,8 +6,7 @@ import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Boutgifter, BoutgifterKeys} from "./BoutgifterTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
-import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
-import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
+import Informasjonspanel from "../../../../nav-soknad/components/Informasjonspanel";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
@@ -95,7 +94,7 @@ export const BoutgifterView = () => {
                 </Sporsmal>
             </JaNeiSporsmal>
             {boutgifter && boutgifter.skalViseInfoVedBekreftelse && boutgifter.bekreftelse === true && (
-                <Informasjonspanel ikon={InformasjonspanelIkon.ELLA} farge={DigisosFarge.VIKTIG}>
+                <Informasjonspanel ikon={"ella"} farge="viktig">
                     <FormattedMessage
                         id="informasjon.husbanken.bostotte.v2"
                         values={{

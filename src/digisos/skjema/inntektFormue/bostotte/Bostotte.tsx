@@ -87,7 +87,7 @@ const BostotteView = () => {
                         <FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label" />
                         <span className="dato">
                             &nbsp;
-                            <Dato tidspunkt={dato} />
+                            <Dato>{dato}</Dato>
                         </span>
                     </span>
                     <span className="verdi detaljeliste__verdi">

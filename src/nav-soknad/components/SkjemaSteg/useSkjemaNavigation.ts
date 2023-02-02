@@ -4,13 +4,12 @@ import {setVisBekreftMangler} from "../../../digisos/redux/oppsummering/oppsumme
 import {erAktiv, navEnhetGyldigEllerIkkeSatt} from "../../containers/navEnhetStatus";
 import {
     clearAllValideringsfeil,
+    clearValideringsfeil,
     setValideringsfeil,
     visValideringsfeilPanel,
 } from "../../../digisos/redux/validering/valideringActions";
-import {getStegUrl} from "../../utils";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../digisos/redux/reducers";
-import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
 import {logInfo} from "../../utils/loggerUtils";
 import {SkjemaSteg} from "./digisosSkjema";
@@ -19,6 +18,7 @@ import {sendSoknad} from "../../../lib/sendSoknad";
 import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";
 import {useBehandlingsId} from "../../hooks/useBehandlingsId";
 import {NavEnhetFrontend} from "../../../generated/model";
+import {useEffect} from "react";
 
 export const useSkjemaNavigation = () => {
     const {soknadsdata, validering, oppsummering} = useSelector((state: State) => state);
@@ -27,6 +27,11 @@ export const useSkjemaNavigation = () => {
     const behandlingsId = useBehandlingsId();
     const {data: adresseData} = useHentAdresser(behandlingsId);
     const valgtNavEnhet = adresseData?.navEnhet;
+
+    // Midlertidig hack i påvente av mer ordentlig validering
+    useEffect(() => {
+        if (erAktiv(valgtNavEnhet)) dispatch(clearValideringsfeil("soknadsmottaker"));
+    }, [valgtNavEnhet, dispatch]);
 
     const getAttributesForSkjemaFullfortEvent = () => {
         const attr: Record<string, any> = {};
@@ -90,7 +95,7 @@ export const useSkjemaNavigation = () => {
             steg: aktivtSteg.id,
         });
 
-        navigate(getStegUrl(behandlingsId, aktivtSteg.id + 1));
+        navigate(`../${aktivtSteg.id + 1}`);
     };
 
     const handleGaTilSkjemaSteg = (steg: number, aktivtSteg?: SkjemaSteg) => {
@@ -101,7 +106,7 @@ export const useSkjemaNavigation = () => {
         } else {
             if (!validering.feil.length) {
                 dispatch(clearAllValideringsfeil());
-                navigate(getStegUrl(behandlingsId, steg));
+                navigate(`../${steg}`);
             } else {
                 dispatch(visValideringsfeilPanel());
             }
@@ -111,7 +116,7 @@ export const useSkjemaNavigation = () => {
         if (!behandlingsId) return;
         dispatch(clearAllValideringsfeil());
         dispatch(resetSendSoknadServiceUnavailable());
-        navigate(getStegUrl(behandlingsId, aktivtSteg - 1));
+        navigate(`../${aktivtSteg - 1}`);
     };
 
     const kanGaTilSkjemasteg = (aktivtSteg?: SkjemaSteg): boolean => {

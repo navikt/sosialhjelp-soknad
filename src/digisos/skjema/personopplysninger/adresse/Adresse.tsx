@@ -1,39 +1,22 @@
 import * as React from "react";
 import {useState} from "react";
-import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
 import {useAlgebraic} from "../../../../lib/hooks/useAlgebraic";
 import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 import {AdresseVisning} from "./AdresseVisning";
 import {updateAdresse, useHentAdresser} from "../../../../generated/adresse-ressurs/adresse-ressurs";
-import {Radio, RadioGroup} from "@navikt/ds-react";
-import styled from "styled-components";
+import {Radio} from "@navikt/ds-react";
 import {formaterSoknadsadresse} from "./AdresseUtils";
 import {AdresseSok} from "./AdresseSok";
 import {AdresseFrontend, AdresserFrontend, AdresserFrontendValg} from "../../../../generated/model";
 import cx from "classnames";
 import {useErrorHandler} from "../../../../lib/hooks/useErrorHandler";
-import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
-import {useDispatch} from "react-redux";
-import {Adresser} from "./AdresseTypes";
-import {clearValideringsfeil} from "../../../redux/validering/valideringActions";
 import {useTranslation} from "react-i18next";
 import {updateNavEnhet} from "../../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
+import {HorizontalRadioGroup} from "../../../../nav-soknad/components/form/HorizontalRadioGroup";
 
-const HorizontalRadioGroup = styled(RadioGroup)`
-    .navds-radio {
-        width: 100%;
-        border: 1px solid black;
-        padding: 0 1rem;
-        margin: 1rem 0 0 0;
-        border-radius: 5px;
-    }
-
-    margin-bottom: 1rem !important;
-`;
-
-const AdresseView = () => {
+export const AdresseData = () => {
     const behandlingsId = useBehandlingsId();
     const {request, refetch} = useAlgebraic(
         useHentAdresser(behandlingsId, {
@@ -45,7 +28,6 @@ const AdresseView = () => {
         })
     );
     const errorHandler = useErrorHandler();
-    const dispatch = useDispatch();
 
     const [uncommittedAdressevalg, setUncommittedAdressevalg] = useState<AdresserFrontendValg | null>(null);
     const {t} = useTranslation();
@@ -65,13 +47,6 @@ const AdresseView = () => {
         const navEnhet = {...navEnheter[0], valgt: true};
         await updateNavEnhet(behandlingsId, navEnhet);
 
-        // Fortell Redux-verden at alt er OK
-        // TODO: Finn ut hvor denne valideringen sitter i koden
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, navEnhet));
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, [navEnhet]));
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, inputAdresser as unknown as Adresser));
-        dispatch(clearValideringsfeil("soknadsmottaker"));
-
         await refetch();
     };
 
@@ -82,12 +57,7 @@ const AdresseView = () => {
             return response.match({
                 Error: errorHandler,
                 Ok: (adresser) => (
-                    <Sporsmal
-                        id="soknadsmottaker"
-                        noValidateOnBlur={true}
-                        sporsmal={t(`soknadsmottaker.sporsmal`)}
-                        hjelpetekst={t("soknadsmottaker.hjelpetekst.tekst")}
-                    >
+                    <>
                         <HorizontalRadioGroup
                             legend={t("soknadsmottaker.infotekst.tekst")}
                             value={uncommittedAdressevalg}
@@ -113,13 +83,9 @@ const AdresseView = () => {
                             )}
                         </HorizontalRadioGroup>
                         <SoknadsmottakerInfo navEnhet={adresser.navEnhet} />
-                    </Sporsmal>
+                    </>
                 ),
             });
         },
     });
 };
-
-export {AdresseView};
-
-export default AdresseView;

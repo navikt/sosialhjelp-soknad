@@ -1,26 +1,32 @@
 import * as React from "react";
 import William from "../../../nav-soknad/components/svg/illustrasjoner/William";
-import Telefon from "./telefon/Telefon";
-import Bankinformasjon from "./bankinfo/Bankinformasjon";
-import Adresse from "./adresse/Adresse";
+import {TelefonData} from "./telefon/Telefon";
+import {AdresseData} from "./adresse/Adresse";
 import {SkjemaSteg} from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import Sporsmal from "../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
-import {useIntl} from "react-intl";
-import {BasisPersonaliaData} from "./personalia/BasisPersonalia";
+import {BasisPersonaliaData} from "./BasisPersonalia";
+import {useTranslation} from "react-i18next";
+import Kontonr from "./Kontonr";
 
 const Personopplysninger = () => {
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     return (
         <SkjemaSteg skjemaConfig={digisosSkjemaConfig} steg={"kontakt"} ikon={<William />}>
-            <Sporsmal tekster={getFaktumSporsmalTekst(intl, "kontakt.system.personalia")} stil={"system"}>
+            <Sporsmal
+                sporsmal={t("kontakt.system.personalia.sporsmal")}
+                infotekst={t("kontakt.system.personalia.infotekst.tekst")}
+            >
                 <BasisPersonaliaData />
             </Sporsmal>
-            <Adresse />
-            <Telefon />
-            <Bankinformasjon />
+            <Sporsmal sporsmal={t(`soknadsmottaker.sporsmal`)} hjelpetekst={t("soknadsmottaker.hjelpetekst.tekst")}>
+                <AdresseData />
+            </Sporsmal>
+            <Sporsmal sporsmal={t("kontakt.telefon.sporsmal")} infotekst={t("kontakt.telefon.infotekst.tekst")}>
+                <TelefonData />
+            </Sporsmal>
+            <Kontonr />
         </SkjemaSteg>
     );
 };

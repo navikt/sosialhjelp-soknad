@@ -14,6 +14,7 @@ import {
     PabegynteSoknaderResponse,
     TilgangResponse,
 } from "./soknadTypes";
+import {logError} from "../../../nav-soknad/utils/loggerUtils";
 
 export function startSoknadDone() {
     return {
@@ -154,6 +155,7 @@ export const visLasteOppVedleggModal = (skalVises: boolean): SoknadActionType =>
 };
 
 export function setShowServerError(shouldShow: boolean): SoknadActionType {
+    if (shouldShow) logError("setShowServerError(true)");
     return {
         type: SoknadActionTypeKeys.SHOW_SERVER_FEIL,
         shouldShow: shouldShow,
@@ -168,6 +170,8 @@ export function showSendingFeiletPanel(shouldShow: boolean): SoknadActionType {
 }
 
 export function setShowPageNotFound(shouldShow: boolean): SoknadActionType {
+    if (shouldShow) logError("setShowPageNotFound(true)");
+
     return {
         type: SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET,
         shouldShow,

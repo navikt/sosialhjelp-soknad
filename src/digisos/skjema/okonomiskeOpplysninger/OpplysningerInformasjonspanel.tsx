@@ -1,6 +1,5 @@
 import React from "react";
-import Informasjonspanel, {InformasjonspanelIkon} from "../../../nav-soknad/components/informasjonspanel";
-import {DigisosFarge} from "../../../nav-soknad/components/svg/DigisosFarger";
+import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel";
 import {useDispatch} from "react-redux";
 import {visLasteOppVedleggModal} from "../../redux/soknad/soknadActions";
 import {OpplastingAvVedleggModal} from "./OpplastingAvVedleggModal";
@@ -11,7 +10,7 @@ export const OpplysningerInformasjonspanel = () => {
     const dispatch = useDispatch();
 
     return (
-        <Informasjonspanel ikon={InformasjonspanelIkon.HENSYN} farge={DigisosFarge.VIKTIG}>
+        <Informasjonspanel ikon={"hensyn"} farge="viktig">
             <p>
                 <FormattedMessage id="opplysninger.informasjon.avsnitt1" />
             </p>

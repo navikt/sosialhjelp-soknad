@@ -1,6 +1,4 @@
-import {initialKontonummerState, Kontonummer} from "../../skjema/personopplysninger/bankinfo/KontonummerType";
 import {Begrunnelse, initialBegrunnelseState} from "../../skjema/begrunnelse/begrunnelseTypes";
-import {initialTelefonnummerState, Telefonnummer} from "../../skjema/personopplysninger/telefon/telefonTypes";
 import {BosituasjonData, initialBosituasjonState} from "../../skjema/bosituasjon/bosituasjonTypes";
 import {Familie, initialFamilieStatus, Sivilstatus} from "../../skjema/familie/sivilstatus/FamilieTypes";
 import {initialUtdanningState, Utdanning} from "../../skjema/arbeidUtdanning/utdanning/utdanningTypes";
@@ -13,7 +11,6 @@ import {initialFormueState, Formue} from "../../skjema/inntektFormue/formue/Form
 import {initialBoutgifterState, Boutgifter} from "../../skjema/utgifterGjeld/boutgifter/BoutgifterTypes";
 import {initialBarneutgifterState, Barneutgifter} from "../../skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
 import {AdresseKategori, Adresser, initialAdresserState} from "../../skjema/personopplysninger/adresse/AdresseTypes";
-import {BasisPersonalia, initialBasisPersonalia} from "../../skjema/personopplysninger/personalia/BasisPersonaliaTypes";
 import {Barnebidrag, ForsorgerPlikt} from "../../skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 import {
     initialSkattbarInntektInfoState,
@@ -45,7 +42,6 @@ export enum SoknadsSti {
     BEGRUNNELSE = "begrunnelse",
     BOSITUASJON = "bosituasjon",
     UTDANNING = "utdanning",
-    TELEFONNUMMER = "personalia/telefonnummer",
     BOSTOTTE = "inntekt/bostotte",
     BOSTOTTE_SAMTYKKE = "inntekt/bostotte/samtykke",
     STUDIELAN = "inntekt/studielan",
@@ -93,12 +89,9 @@ export const initialInntektState: Inntekt = {
 };
 
 export interface Personalia {
-    kontonummer: Kontonummer;
-    telefonnummer: Telefonnummer;
     adresser: Adresser;
     navEnheter: NavEnhetFrontend[];
     navEnhet: null | NavEnhetFrontend;
-    basisPersonalia: BasisPersonalia;
 }
 
 export interface Utgifter {
@@ -107,12 +100,9 @@ export interface Utgifter {
 }
 
 export const initialPersonaliaState: Personalia = {
-    kontonummer: initialKontonummerState,
-    telefonnummer: initialTelefonnummerState,
     adresser: initialAdresserState,
     navEnheter: [],
     navEnhet: null,
-    basisPersonalia: initialBasisPersonalia,
 };
 
 export const initialUtgifterState: Utgifter = {
@@ -153,8 +143,6 @@ export type SoknadsdataType =
     | BosituasjonData
     | Familie
     | Utdanning
-    | Kontonummer
-    | Telefonnummer
     | Personalia
     | Sivilstatus
     | ForsorgerPlikt

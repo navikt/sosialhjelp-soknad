@@ -15,9 +15,7 @@ const GruppeView = (props: {key: OpplysningGruppe; gruppeKey: OpplysningGruppe; 
 
     const {gruppeKey, gruppe} = props;
     const gruppeTittelKey = getGruppeTittelKey(gruppeKey);
-    if (gruppe && gruppe.length === 0) {
-        return null;
-    }
+    if (gruppe?.length === 0) return null;
 
     return (
         <Skjemapanel>

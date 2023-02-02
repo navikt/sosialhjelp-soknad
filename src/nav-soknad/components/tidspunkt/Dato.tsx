@@ -1,18 +1,9 @@
 import React from "react";
 import {FormattedDate} from "react-intl";
 
-/*
-      Dato("2018-10-12")
-         => "12. oktober 2018"
- */
-const Dato: React.FC<{tidspunkt: string}> = ({tidspunkt}) => {
-    return (
-        <>
-            <span className="dato">
-                <FormattedDate value={new Date(tidspunkt)} month="long" day="numeric" year="numeric" />
-            </span>
-        </>
-    );
-};
+// Dato("2018-10-12") => "12. oktober 2018"
+const Dato = ({children}: {children: string}) => (
+    <FormattedDate value={new Date(children)} month="long" day="numeric" year="numeric" />
+);
 
 export default Dato;

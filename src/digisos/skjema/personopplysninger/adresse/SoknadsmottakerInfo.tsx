@@ -1,6 +1,5 @@
 import * as React from "react";
-import Informasjonspanel, {InformasjonspanelIkon} from "../../../../nav-soknad/components/informasjonspanel";
-import {DigisosFarge} from "../../../../nav-soknad/components/svg/DigisosFarger";
+import Informasjonspanel from "../../../../nav-soknad/components/Informasjonspanel";
 import {FormattedMessage} from "react-intl";
 import {Alert, Link} from "@navikt/ds-react";
 import {NavEnhetFrontend} from "../../../../generated/model";
@@ -48,7 +47,7 @@ const SoknadsmottakerInfo = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
     }
 
     return (
-        <Informasjonspanel ikon={InformasjonspanelIkon.BREVKONVOLUTT} farge={DigisosFarge.SUKSESS}>
+        <Informasjonspanel ikon={"konvolutt"} farge={"suksess"}>
             {`Søknaden vil bli sendt til: ${enhetsnavn}, ${kommunenavn} kommune.`}
         </Informasjonspanel>
     );
