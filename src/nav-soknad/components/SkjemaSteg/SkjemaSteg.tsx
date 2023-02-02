@@ -127,7 +127,7 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
                     valideringsfeil={feil}
                     visFeilliste={visValideringsfeil}
                 />
-                <div className={"bg-white mx-auto rounded-2xl px-10 md:px-12 lg:px-24 space-y-8 pt-4"}>
+                <div className={"bg-white mx-auto rounded-2xl px-10 md:px-12 lg:px-24 space-y-8 pt-8"}>
                     <div className={"text-center"}>
                         <div className="text-center mb-2">{ikon}</div>
                         <div className="skjema-steg__tittel" tabIndex={-1}>

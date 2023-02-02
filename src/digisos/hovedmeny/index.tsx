@@ -26,7 +26,7 @@ const Informasjon = () => {
         <div className={"bg-green-500/20 flex flex-col"}>
             <AppBanner />
             <NedetidPanel varselType={"infoside"} />
-            <div className="max-w-lg lg:max-w-3xl w-full mx-auto space-y-5 pb-48 py-12 lg:py-24">
+            <div className="max-w-lg lg:max-w-3xl w-full mx-auto space-y-5 pt-12 lg:pt-24 pb-48">
                 <NySoknadPanel antallPabegynteSoknader={pabegynteSoknader.length} />
                 <PabegynteSoknaderPanel pabegynteSoknader={pabegynteSoknader} />
                 <EttersendDokuPanel />
