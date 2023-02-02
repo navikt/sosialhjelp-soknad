@@ -12,10 +12,6 @@ import {AdresseSok} from "./AdresseSok";
 import {AdresseFrontend, AdresserFrontend, AdresserFrontendValg} from "../../../../generated/model";
 import cx from "classnames";
 import {useErrorHandler} from "../../../../lib/hooks/useErrorHandler";
-import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
-import {useDispatch} from "react-redux";
-import {Adresser} from "./AdresseTypes";
-import {clearValideringsfeil} from "../../../redux/validering/valideringActions";
 import {useTranslation} from "react-i18next";
 import {updateNavEnhet} from "../../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
 import {HorizontalRadioGroup} from "../../../../nav-soknad/components/form/HorizontalRadioGroup";
@@ -32,7 +28,6 @@ export const AdresseData = () => {
         })
     );
     const errorHandler = useErrorHandler();
-    const dispatch = useDispatch();
 
     const [uncommittedAdressevalg, setUncommittedAdressevalg] = useState<AdresserFrontendValg | null>(null);
     const {t} = useTranslation();
@@ -51,13 +46,6 @@ export const AdresseData = () => {
         // TODO: Fiks PUT /adresser så navEnhet[0].valgt = true
         const navEnhet = {...navEnheter[0], valgt: true};
         await updateNavEnhet(behandlingsId, navEnhet);
-
-        // Fortell Redux-verden at alt er OK
-        // TODO: Finn ut hvor denne valideringen sitter i koden
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, navEnhet));
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.NAV_ENHETER, [navEnhet]));
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.ADRESSER, inputAdresser as unknown as Adresser));
-        dispatch(clearValideringsfeil("soknadsmottaker"));
 
         await refetch();
     };

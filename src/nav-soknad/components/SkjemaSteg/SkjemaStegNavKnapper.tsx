@@ -31,7 +31,7 @@ export const SkjemaStegNavKnapper = ({
     const backwardInhibited = loading || !gaTilbake;
 
     return (
-        <div className={"space-y-8 lg:space-y-16 md:pt-5 lg:pt-10 pb-8 lg:pb-16"}>
+        <div className={"space-y-8 lg:space-y-16 pt-2 md:pt-5 lg:pt-10 pb-8 lg:pb-16"}>
             <div className="space-x-3">
                 <Button variant="secondary" id="gaa_tilbake_button" onClick={gaTilbake} disabled={backwardInhibited}>
                     {getIntlTextOrKey(intl, "skjema.knapper.tilbake")}

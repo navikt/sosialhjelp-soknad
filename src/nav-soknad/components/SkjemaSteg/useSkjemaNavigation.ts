@@ -4,6 +4,7 @@ import {setVisBekreftMangler} from "../../../digisos/redux/oppsummering/oppsumme
 import {erAktiv, navEnhetGyldigEllerIkkeSatt} from "../../containers/navEnhetStatus";
 import {
     clearAllValideringsfeil,
+    clearValideringsfeil,
     setValideringsfeil,
     visValideringsfeilPanel,
 } from "../../../digisos/redux/validering/valideringActions";
@@ -18,6 +19,7 @@ import {sendSoknad} from "../../../lib/sendSoknad";
 import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";
 import {useBehandlingsId} from "../../hooks/useBehandlingsId";
 import {NavEnhetFrontend} from "../../../generated/model";
+import {useEffect} from "react";
 
 export const useSkjemaNavigation = () => {
     const {soknadsdata, validering, oppsummering} = useSelector((state: State) => state);
@@ -26,6 +28,10 @@ export const useSkjemaNavigation = () => {
     const behandlingsId = useBehandlingsId();
     const {data: adresseData} = useHentAdresser(behandlingsId);
     const valgtNavEnhet = adresseData?.navEnhet;
+
+    useEffect(() => {
+        if (erAktiv(valgtNavEnhet)) dispatch(clearValideringsfeil("soknadsmottaker"));
+    }, [valgtNavEnhet]);
 
     const getAttributesForSkjemaFullfortEvent = () => {
         const attr: Record<string, any> = {};
