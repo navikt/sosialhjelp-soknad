@@ -117,7 +117,7 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
     if (showSideIkkeFunnet) return <SideIkkeFunnet />;
 
     return (
-        <div className="pb-4 lg:pb-40 bg-green-500/20 space-y-8">
+        <div className="pb-4 lg:pb-40 bg-green-500/20">
             <AppBanner />
             <SkjemaStegNavStepper skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={handleGaTilSkjemaSteg} />
             <div className={"max-w-3xl mx-auto skjema-steg skjema-content"}>

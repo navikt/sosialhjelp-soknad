@@ -30,7 +30,7 @@ export const KontonrEdit = ({onClose}: {onClose: () => void}) => {
         await updateKontonummer(behandlingsId, {
             harIkkeKonto: !!harIkkeKonto,
             brukerutfyltVerdi: brukerutfyltVerdi?.length ? brukerutfyltVerdi : null,
-            brukerdefinert: !!brukerutfyltVerdi?.length,
+            brukerdefinert: !!brukerutfyltVerdi?.length || !!harIkkeKonto,
         });
         await refetch();
         onClose();
@@ -50,7 +50,6 @@ export const KontonrEdit = ({onClose}: {onClose: () => void}) => {
                     },
                 })}
                 label={t("kontakt.kontonummer.sporsmal")}
-                description={t("kontakt.kontonummer.infotekst.tekst")}
                 inputMode="numeric"
                 htmlSize={13}
                 disabled={watch("harIkkeKonto") === true}

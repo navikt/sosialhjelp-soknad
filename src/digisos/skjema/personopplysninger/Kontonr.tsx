@@ -16,7 +16,7 @@ export const Kontonr = () => {
     const {t} = useTranslation("skjema", {keyPrefix: "kontakt"});
 
     return expectOK(({brukerutfyltVerdi, brukerdefinert, harIkkeKonto}) => (
-        <Sporsmal sporsmal={t("kontonummer.sporsmal")}>
+        <Sporsmal sporsmal={t("kontonummer.sporsmal")} infotekst={t("kontonummer.infotekst.tekst")}>
             {editMode ? (
                 <KontonrEdit onClose={() => setEditMode(false)} />
             ) : (
