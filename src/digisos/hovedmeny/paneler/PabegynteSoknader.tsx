@@ -61,7 +61,7 @@ const PabegynteSoknaderCount = ({num}: {num: number}) => {
 export const PabegynteSoknaderPanel = ({pabegynteSoknader}: {pabegynteSoknader: PabegyntSoknadData[]}) => {
     return (
         <Accordion>
-            <Accordion.Item className={"bg-white"}>
+            <Accordion.Item className={"bg-white rounded-md"}>
                 <Accordion.Header className={"!items-center !border-0 !py-6 !px-8"}>
                     <div className={"flex flex-row items-center gap-8"}>
                         <div
