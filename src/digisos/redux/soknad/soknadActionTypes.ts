@@ -1,4 +1,3 @@
-import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {
     FornavnResponse,
     HarNyligInnsendteSoknaderResponse,
@@ -63,7 +62,6 @@ export type SoknadActionType =
     | SendSoknadOkAction
     | GetErSystemdataEndret
     | SetErSystemdataEndret
-    | OppdaterSoknadsmottakerStatus
     | HentSamtykker
     | HentSamtykkerOk
     | OppdaterSamtykke
@@ -129,11 +127,6 @@ export interface VisSamtykkeInfo {
 export interface VisLasteOppVedleggModal {
     type: SoknadActionTypeKeys.VIS_LASTE_OPP_VEDLEGG_MODAL;
     skalVises: boolean;
-}
-
-export interface OppdaterSoknadsmottakerStatus {
-    type: SoknadActionTypeKeys.OPPDATER_SOKNADSMOTTAKER_STATUS;
-    valgtSoknadsmottaker: NavEnhet;
 }
 
 export interface StartSoknadDoneAction {

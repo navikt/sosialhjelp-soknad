@@ -1,4 +1,4 @@
-import {FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import * as React from "react";
 import {useSelector} from "react-redux";
 
@@ -12,6 +12,7 @@ import {
     OldSingleLineElement,
     OldSysteminfo,
 } from "../../../../nav-soknad/components/systeminfo/Systeminfo";
+import {useTranslation} from "react-i18next";
 
 const INTL_ID_EKTEFELLE = "system.familie.sivilstatus.gift.ektefelle";
 
@@ -51,14 +52,12 @@ const EktefelleInformasjon = () => {
 const EktefelleDetaljer = () => {
     const {harDiskresjonskode} = useSelector((state: State) => state.soknadsdata.familie.sivilstatus);
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     return (
         <div className="sivilstatus skjema-sporsmal">
-            <Sporsmal tekster={getFaktumSporsmalTekst(intl, "system.familie.sivilstatus")} stil="system">
-                <div className="sivilstatus__infotekst">
-                    <FormattedMessage id="system.familie.sivilstatus" />
-                </div>
+            <Sporsmal tekster={getFaktumSporsmalTekst(t, "system.familie.sivilstatus")} stil="system">
+                <div className="sivilstatus__infotekst">{t("system.familie.sivilstatus")}</div>
                 <div className="sivilstatus__giftlabel">
                     <SivilstatusLabel ektefelleHarDiskresjonskode={harDiskresjonskode} />
                     <EktefelleInformasjon />
@@ -67,9 +66,9 @@ const EktefelleDetaljer = () => {
             {harDiskresjonskode !== true && (
                 <Informasjonspanel farge="viktig" ikon={"ella"}>
                     <h4 className="skjema-sporsmal__infotekst__tittel">
-                        <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel" />
+                        {t("system.familie.sivilstatus.informasjonspanel.tittel")}
                     </h4>
-                    <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tekst" />
+                    {t("system.familie.sivilstatus.informasjonspanel.tekst")}
                 </Informasjonspanel>
             )}
         </div>

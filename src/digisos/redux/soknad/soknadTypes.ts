@@ -1,5 +1,4 @@
 import {ErSystemdataEndret, Samtykke} from "./soknadActionTypes";
-import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {SoknadSendtTil} from "../../../lib/sendSoknad";
 
 export interface SoknadState {
@@ -37,7 +36,6 @@ export interface SoknadState {
 
     // Soknad state
     behandlingsId: string | undefined;
-    valgtSoknadsmottaker: NavEnhet | undefined;
 
     // Systemdata state
     erSystemdataEndret: ErSystemdataEndret;

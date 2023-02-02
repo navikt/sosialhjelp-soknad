@@ -1,5 +1,4 @@
 import * as React from "react";
-import {useIntl} from "react-intl";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {Opplysning} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
@@ -11,6 +10,7 @@ import {State} from "../../redux/reducers";
 import {Valideringsfeil} from "../../redux/validering/valideringActionTypes";
 import styled from "styled-components";
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
+import {useTranslation} from "react-i18next";
 
 const OkonomiskeOpplysningerSporsmal = styled.div`
     margin-bottom: 2px;
@@ -29,10 +29,10 @@ const OpplysningView = (props: {opplysning: Opplysning; gruppeIndex: number}) =>
     const {opplysning, gruppeIndex} = props;
     const opplysningSpc = getSpcForOpplysning(opplysning.type);
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
     const feilListe = useSelector((state: State) => state.validering.feil);
     const feil = feilListe.find((feil: Valideringsfeil) => feil.faktumKey === opplysning.type);
-    const sporsmalsFeil = feil ? intl.formatMessage({id: feil.feilkode}) : undefined;
+    const sporsmalsFeil = feil ? t(feil.feilkode) : undefined;
 
     if (opplysning.slettet) {
         return <VedleggSlettet opplysning={opplysning} />;
@@ -41,7 +41,7 @@ const OpplysningView = (props: {opplysning: Opplysning; gruppeIndex: number}) =>
     return (
         <OkonomiskeOpplysningerSporsmal>
             <Sporsmal
-                tekster={getFaktumSporsmalTekst(intl, opplysningSpc?.textKey ?? "")}
+                tekster={getFaktumSporsmalTekst(t, opplysningSpc?.textKey ?? "")}
                 feil={sporsmalsFeil}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >

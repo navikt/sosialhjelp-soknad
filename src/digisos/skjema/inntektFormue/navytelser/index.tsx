@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FormattedMessage, FormattedNumber, useIntl} from "react-intl";
+import {FormattedMessage, FormattedNumber} from "react-intl";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
@@ -14,10 +14,11 @@ import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Link} from "@navikt/ds-react";
+import {useTranslation} from "react-i18next";
 
 const NavYtelserView = () => {
     const dispatch = useDispatch();
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
@@ -36,11 +37,7 @@ const NavYtelserView = () => {
     const harNavytelser: boolean = systeminntekter && systeminntekter.length > 0;
     const navYtelser: Systeminntekt[] = systeminntekter;
 
-    const utbetaltMelding = (
-        <span>
-            <FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label" />
-        </span>
-    );
+    const utbetaltMelding = <span>{t("utbetalinger.utbetaling.erutbetalt.label")}</span>;
     const navYtelserJsx: JSX.Element[] = navYtelser.map((utbetaling: Systeminntekt, index) => {
         const type: string = utbetaling.inntektType;
         const utbetalingsdato: string = utbetaling.utbetalingsdato;
@@ -66,7 +63,7 @@ const NavYtelserView = () => {
 
     return (
         <div className={"skatt-wrapper"}>
-            <h2>{getIntlTextOrKey(intl, "navytelser.sporsmal")}</h2>
+            <h2>{getIntlTextOrKey(t, "navytelser.sporsmal")}</h2>
             {!visAnimerteStreker && !utbetalingerFraNavFeilet && harNavytelser && (
                 <Lesmerpanel
                     apneTekst={"Se detaljer"}
@@ -84,10 +81,7 @@ const NavYtelserView = () => {
                             id={"utbetalinger.infotekst.tekst.v2"}
                             values={{
                                 a: (msg) => (
-                                    <Link
-                                        href={intl.formatMessage({id: "utbetalinger.infotekst.tekst.url"})}
-                                        target="_blank"
-                                    >
+                                    <Link href={t("utbetalinger.infotekst.tekst.url")} target="_blank">
                                         {msg}
                                     </Link>
                                 ),
@@ -98,16 +92,12 @@ const NavYtelserView = () => {
             )}
             {!visAnimerteStreker && !utbetalingerFraNavFeilet && !harNavytelser && (
                 <div className={"ytelser_panel"}>
-                    <div>
-                        <FormattedMessage id="utbetalinger.ingen.true" />
-                    </div>
+                    <div>{t("utbetalinger.ingen.true")}</div>
                 </div>
             )}
             {utbetalingerFraNavFeilet && (
                 <div className={"ytelser_panel"}>
-                    <div>
-                        <FormattedMessage id="utbetalinger.kontaktproblemer" />
-                    </div>
+                    <div>{t("utbetalinger.kontaktproblemer")}</div>
                 </div>
             )}
 

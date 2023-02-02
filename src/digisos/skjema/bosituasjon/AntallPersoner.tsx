@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
 import {clearValideringsfeil, setValideringsfeil} from "../../redux/validering/valideringActions";
@@ -7,6 +7,7 @@ import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes"
 import {getFeil} from "../../../nav-soknad/utils/enhancedComponentUtils";
 import {Input, SkjemaGruppe} from "nav-frontend-skjema";
 import {useBosituasjon} from "./useBosituasjon";
+import {useTranslation} from "react-i18next";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -24,12 +25,12 @@ export const validerAntallPersoner = (formValue: string) => {
 
 const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
     const {bosituasjon, setBosituasjon} = useBosituasjon(behandlingsId);
+    const {t} = useTranslation("skjema");
 
-    const intl = useIntl();
     const dispatch = useDispatch();
 
     const validationErrors = useSelector((state: State) => state.validering.feil);
-    const errorMessage = getFeil(validationErrors, intl, FAKTUM_KEY_ANTALL, undefined);
+    const errorMessage = getFeil(validationErrors, t, FAKTUM_KEY_ANTALL, undefined);
 
     const validateAndStore = async (event: React.ChangeEvent<HTMLInputElement>) => {
         var antallPersoner: string | null = null;

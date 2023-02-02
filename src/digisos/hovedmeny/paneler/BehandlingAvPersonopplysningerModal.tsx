@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import {useSelector, useDispatch} from "react-redux";
 import {finnValgtEnhetsNavn} from "../../../lib/kommuner";
 import {Soknadsdata} from "../../redux/soknadsdata/soknadsdataReducer";
@@ -7,6 +7,7 @@ import {State} from "../../redux/reducers";
 import {visSamtykkeInfo} from "../../redux/soknad/soknadActions";
 import {Button, Modal} from "@navikt/ds-react";
 import styled from "styled-components";
+import {useTranslation} from "react-i18next";
 
 export const replaceNavkontor = (text: string, valgtEnhetsNavn?: string) => {
     // Hvis ikke valgtEnhetsNavn finnes, erstattes søkestrengen med capture-gruppa ([\w\s-]*)
@@ -26,11 +27,12 @@ const BehandlingAvPersonopplysningerModal = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const modalSynlig = useSelector((state: State) => state.soknad.visSamtykkeInfo);
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     const dispatch = useDispatch();
 
-    const text = intl.messages["soknadsosialhjelp.forstesiden.bekreftInfoModal.body"].toString();
+    // FIXME: this is broken!!
+    const text = t("soknadsosialhjelp.forstesiden.bekreftInfoModal.body");
     return (
         <Modal
             open={modalSynlig || false}

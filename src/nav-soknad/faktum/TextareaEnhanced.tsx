@@ -1,10 +1,11 @@
 import * as React from "react";
 import {Textarea} from "nav-frontend-skjema";
-import {IntlShape, useIntl} from "react-intl";
+import {IntlShape} from "react-intl";
 import {getInputFaktumTekst, getIntlTextOrKey} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {useSelector} from "react-redux";
 import {Valideringsfeil} from "../../digisos/redux/validering/valideringActionTypes";
+import {useTranslation} from "react-i18next";
 
 interface Props {
     value: string;
@@ -25,7 +26,7 @@ interface Props {
 }
 
 const TextareaEnhanced = (props: Props) => {
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     const feil = useSelector((state: State) => state.validering.feil);
 
@@ -46,19 +47,9 @@ const TextareaEnhanced = (props: Props) => {
         if (antallTegnIgjen > 25) {
             return "";
         } else if (antallTegn > maxLength) {
-            return intl.formatMessage(
-                {
-                    id: "textarea.overmaks",
-                },
-                {antall: antallTegn - maxLength}
-            );
+            return t("textarea.overmaks", {antall: antallTegn - maxLength});
         }
-        return intl.formatMessage(
-            {
-                id: "textarea.undermaks",
-            },
-            {antall: maxLength - antallTegn}
-        );
+        return t("textarea.undermaks", {antall: maxLength - antallTegn});
     };
 
     const getName = () => {
@@ -67,13 +58,13 @@ const TextareaEnhanced = (props: Props) => {
 
     const getFeil = (): string | null => {
         const feilkode = feil.find((f: Valideringsfeil) => f.faktumKey === props.faktumKey);
-        return !feilkode ? null : intl.formatMessage({id: feilkode.feilkode});
+        return !feilkode ? null : t(feilkode.feilkode);
     };
 
     const {labelId, disabled, textareaClass, faktumKey, value} = props;
-    const tekster = getInputFaktumTekst(intl, faktumKey);
+    const tekster = getInputFaktumTekst(t, faktumKey);
 
-    let label = labelId ? getIntlTextOrKey(intl, labelId) : tekster.label;
+    let label = labelId ? getIntlTextOrKey(t, labelId) : tekster.label;
     label = props.hideLabel ? "" : label;
 
     const feil_ = getFeil();

@@ -1,22 +1,18 @@
 import * as React from "react";
-import {FormattedMessage} from "react-intl";
 import Banner from "../banner/Banner";
 import {isLocalhost} from "../../utils";
 import {DeveloperToolkit} from "./DeveloperToolkit";
+import {useTranslation} from "react-i18next";
 
 const AppHeader = () => {
+    const {t} = useTranslation("skjema");
+
     if (!isLocalhost(window.location.href)) {
-        return (
-            <Banner>
-                <FormattedMessage id="skjema.tittel" />
-            </Banner>
-        );
+        return <Banner>{t("skjema.tittel")}</Banner>;
     } else {
         return (
             <>
-                <Banner>
-                    <FormattedMessage id="skjema.tittel" />
-                </Banner>
+                <Banner>{t("skjema.tittel")}</Banner>
                 <DeveloperToolkit />
             </>
         );

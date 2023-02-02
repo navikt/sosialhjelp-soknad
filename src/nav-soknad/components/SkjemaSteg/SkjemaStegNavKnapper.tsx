@@ -1,10 +1,11 @@
 import * as React from "react";
 import {getIntlTextOrKey} from "../../utils";
-import {FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import {Button, Loader} from "@navikt/ds-react";
 import {visAvbrytSoknadModal} from "../../../digisos/redux/soknad/soknadActions";
 import {useDispatch} from "react-redux";
 import {minSideUrl} from "../avbrytsoknad/AvbrytSoknad";
+import {useTranslation} from "react-i18next";
 
 interface SkjemaStegNavigasjonProps {
     gaViderePending?: boolean;
@@ -24,7 +25,7 @@ export const SkjemaStegNavKnapper = ({
     lastOppVedleggPending,
 }: SkjemaStegNavigasjonProps) => {
     const dispatch = useDispatch();
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     const loading = gaViderePending || lastOppVedleggPending;
     const forwardInhibited = loading || sendSoknadServiceUnavailable;
@@ -34,11 +35,11 @@ export const SkjemaStegNavKnapper = ({
         <div className={"space-y-8 lg:space-y-16 pt-2 md:pt-5 lg:pt-10 pb-8 lg:pb-16"}>
             <div className="space-x-3">
                 <Button variant="secondary" id="gaa_tilbake_button" onClick={gaTilbake} disabled={backwardInhibited}>
-                    {getIntlTextOrKey(intl, "skjema.knapper.tilbake")}
+                    {getIntlTextOrKey(t, "skjema.knapper.tilbake")}
                     {lastOppVedleggPending && <Loader />}
                 </Button>
                 <Button variant="primary" id="gaa_videre_button" onClick={gaVidere} disabled={forwardInhibited}>
-                    {gaVidereLabel ? gaVidereLabel : getIntlTextOrKey(intl, "skjema.knapper.gaavidere")}
+                    {gaVidereLabel ? gaVidereLabel : getIntlTextOrKey(t, "skjema.knapper.gaavidere")}
                     {loading && <Loader />}
                 </Button>
             </div>

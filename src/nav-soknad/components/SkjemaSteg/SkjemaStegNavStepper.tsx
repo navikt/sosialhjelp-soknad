@@ -1,7 +1,7 @@
 import {Stepper} from "@navikt/ds-react";
 import * as React from "react";
-import {useIntl} from "react-intl";
 import {DigisosSkjemaStegKey, SkjemaConfig, SkjemaSteg} from "./digisosSkjema";
+import {useTranslation} from "react-i18next";
 
 export const SkjemaStegNavStepper = ({
     skjemaConfig,
@@ -13,7 +13,7 @@ export const SkjemaStegNavStepper = ({
     onStepChange: (steg: number, aktivtSteg?: SkjemaSteg) => void;
 }) => {
     const steg = skjemaConfig.steg[aktivtSteg];
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     return (
         <div className={"max-w-md mx-auto py-8"}>
@@ -28,7 +28,7 @@ export const SkjemaStegNavStepper = ({
                     .filter(([_, s]) => s.type === "skjema")
                     .map(([key, _]) => (
                         <Stepper.Step key={key} as="button">
-                            {intl.formatMessage({id: `${key}.tittel`})}
+                            {t(`${key}.tittel`)}
                         </Stepper.Step>
                     ))}
             </Stepper>

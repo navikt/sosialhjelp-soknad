@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useEffect} from "react";
-import {FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import Feiloppsummering from "../validering/Feiloppsummering";
 import {getIntlTextOrKey, scrollToTop} from "../../utils";
@@ -21,6 +21,7 @@ import SideIkkeFunnet from "../../feilsider/SideIkkeFunnet";
 import TimeoutBox from "../timeoutbox/TimeoutBox";
 import {AvbrytSoknad} from "../avbrytsoknad/AvbrytSoknad";
 import {getSoknad} from "../../../lib/getSoknad";
+import {useTranslation} from "react-i18next";
 
 export type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
 
@@ -90,7 +91,7 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
 
     const {handleGaVidere, handleGaTilbake, handleGaTilSkjemaSteg} = useSkjemaNavigation();
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     useEffect(() => {
         scrollToTop();
@@ -98,8 +99,8 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
 
     const {feil, visValideringsfeil} = validering;
 
-    const stegTittel = getIntlTextOrKey(intl, `${steg}.tittel`);
-    const documentTitle = intl.formatMessage({id: skjemaConfig.tittelId});
+    const stegTittel = getIntlTextOrKey(t, `${steg}.tittel`);
+    const documentTitle = t(skjemaConfig.tittelId);
     const aktivtSteg = skjemaConfig.steg[steg];
     const nextButtonPending = soknad.sendSoknadPending;
 
@@ -147,9 +148,7 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
                     <SkjemaStegNavKnapper
                         gaViderePending={nextButtonPending}
                         gaVidereLabel={
-                            aktivtSteg.type === "oppsummering"
-                                ? getIntlTextOrKey(intl, "skjema.knapper.send")
-                                : undefined
+                            aktivtSteg.type === "oppsummering" ? getIntlTextOrKey(t, "skjema.knapper.send") : undefined
                         }
                         gaVidere={() => handleGaVidere(aktivtSteg)}
                         gaTilbake={aktivtSteg.id > 1 ? () => handleGaTilbake(aktivtSteg.id) : undefined}

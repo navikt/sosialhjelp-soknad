@@ -1,5 +1,4 @@
 import {Familie, lagBlankPerson, Status} from "./FamilieTypes";
-import {FormattedMessage, useIntl} from "react-intl";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -12,6 +11,7 @@ import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../redux/soknadsdata/sok
 import {State} from "../../../redux/reducers";
 import {lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import {useTranslation} from "react-i18next";
 
 interface RadioProps {
     id?: string;
@@ -39,7 +39,7 @@ const SivilstatusComponent = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
 
     const dispatch = useDispatch();
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     const onClickSivilstatus = (verdi: Status) => {
         if (behandlingsId) {
@@ -69,7 +69,7 @@ const SivilstatusComponent = () => {
 
     return (
         <div className="skjema-sporsmal">
-            <Sporsmal tekster={getFaktumSporsmalTekst(intl, "familie.sivilstatus")}>
+            <Sporsmal tekster={getFaktumSporsmalTekst(t, "familie.sivilstatus")}>
                 <SivilstatusRadioknapp
                     verdi={Status.GIFT}
                     checked={sivilstatus === Status.GIFT}
@@ -79,7 +79,7 @@ const SivilstatusComponent = () => {
                     <div className="skjema-sporsmal--jaNeiSporsmal">
                         <Underskjema visible={sivilstatus === Status.GIFT} arrow={true}>
                             <Sporsmal
-                                tekster={getFaktumSporsmalTekst(intl, "familie.sivilstatus.gift.ektefelle")}
+                                tekster={getFaktumSporsmalTekst(t, "familie.sivilstatus.gift.ektefelle")}
                                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                             >
                                 <div className="blokk-s">
@@ -118,9 +118,9 @@ const SivilstatusComponent = () => {
             {sivilstatus === Status.GIFT && (
                 <Informasjonspanel farge="viktig" ikon={"ella"}>
                     <h4 className="skjema-sporsmal__infotekst__tittel">
-                        <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel" />
+                        {t("system.familie.sivilstatus.informasjonspanel.tittel")}
                     </h4>
-                    <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tekst" />
+                    {t("system.familie.sivilstatus.informasjonspanel.tekst")}
                 </Informasjonspanel>
             )}
         </div>

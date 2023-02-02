@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage} from "react-intl";
 
 import {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../../nav-soknad/utils";
@@ -13,6 +13,7 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Link} from "@navikt/ds-react";
+import {useTranslation} from "react-i18next";
 
 const FAKTUM_STUDIELAN = "inntekt.studielan";
 
@@ -28,7 +29,7 @@ const StudielanView = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     React.useEffect(() => {
         if (behandlingsId) {
@@ -62,10 +63,10 @@ const StudielanView = () => {
 
     const studielanSporsmal = (
         <div className="skjema-sporsmal">
-            <h2>{getIntlTextOrKey(intl, "inntekt.studielan.titel")}</h2>
+            <h2>{getIntlTextOrKey(t, "inntekt.studielan.titel")}</h2>
             <JaNeiSporsmal
                 visPlaceholder={oppstartsModus}
-                tekster={getFaktumSporsmalTekst(intl, FAKTUM_STUDIELAN)}
+                tekster={getFaktumSporsmalTekst(t, FAKTUM_STUDIELAN)}
                 faktumKey={FAKTUM_STUDIELAN}
                 verdi={studielan ? studielan.bekreftelse : null}
                 onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
@@ -82,7 +83,7 @@ const StudielanView = () => {
                             values={{
                                 a: (msg) => (
                                     <Link
-                                        href={intl.formatMessage({id: "informasjon.student.studielan.url"})}
+                                        href={t("informasjon.student.studielan.url")}
                                         target="_blank"
                                         rel="noreferrer noopener"
                                     >

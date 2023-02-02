@@ -1,4 +1,4 @@
-import {FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useState, useEffect} from "react";
@@ -12,12 +12,13 @@ import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
+import {useTranslation} from "react-i18next";
 
 const ForsorgerPliktView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
 
     const dispatch = useDispatch();
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
@@ -43,21 +44,17 @@ const ForsorgerPliktView = () => {
     }
     if (oppstartsModus) {
         return (
-            <Sporsmal tekster={getFaktumSporsmalTekst(intl, "familierelasjon.faktum")}>
+            <Sporsmal tekster={getFaktumSporsmalTekst(t, "familierelasjon.faktum")}>
                 <TextPlaceholder style={{marginTop: "1rem"}} />
             </Sporsmal>
         );
     }
     if (ansvar && antallBarn === 0) {
         return (
-            <Sporsmal tekster={getFaktumSporsmalTekst(intl, "familierelasjon.faktum")}>
+            <Sporsmal tekster={getFaktumSporsmalTekst(t, "familierelasjon.faktum")}>
+                <p>{t("familierelasjon.ingen_registrerte_barn_tittel")}</p>
                 <p>
-                    <FormattedMessage id="familierelasjon.ingen_registrerte_barn_tittel" />
-                </p>
-                <p>
-                    <b>
-                        <FormattedMessage id="familierelasjon.ingen_registrerte_barn_tekst" />
-                    </b>
+                    <b>{t("familierelasjon.ingen_registrerte_barn_tekst")}</b>
                 </p>
             </Sporsmal>
         );
@@ -65,17 +62,13 @@ const ForsorgerPliktView = () => {
     if (ansvar && antallBarn > 0) {
         return (
             <Sporsmal
-                tekster={getFaktumSporsmalTekst(intl, "familierelasjon.faktum")}
+                tekster={getFaktumSporsmalTekst(t, "familierelasjon.faktum")}
                 stil="system"
                 legendTittelStyle={LegendTittleStyle.DEFAULT}
             >
+                <p>{t("familierelasjon.ingress_folkeregisteret")}</p>
                 <p>
-                    <FormattedMessage id="familierelasjon.ingress_folkeregisteret" />
-                </p>
-                <p>
-                    <b>
-                        <FormattedMessage id="familierelasjon.ingress_forsorger" />
-                    </b>
+                    <b>{t("familierelasjon.ingress_forsorger")}</b>
                     <FormattedMessage id="familierelasjon.ingress_antallBarn" values={{antallBarn}} />
                 </p>
 

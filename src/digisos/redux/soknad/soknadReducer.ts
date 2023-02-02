@@ -33,7 +33,6 @@ export const defaultState: SoknadState = {
 
     // Soknad state
     behandlingsId: undefined,
-    valgtSoknadsmottaker: undefined,
 
     // Systemdata
     erSystemdataEndret: ErSystemdataEndret.NOT_ASKED,
@@ -138,12 +137,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 sendSoknadPending: false,
             };
 
-        case SoknadActionTypeKeys.OPPDATER_SOKNADSMOTTAKER_STATUS:
-            const {valgtSoknadsmottaker} = action;
-            return {
-                ...state,
-                valgtSoknadsmottaker,
-            };
         case SoknadActionTypeKeys.SET_ER_SYSTEMDATA_ENDRET: {
             return {
                 ...state,

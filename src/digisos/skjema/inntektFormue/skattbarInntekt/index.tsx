@@ -1,5 +1,4 @@
 import * as React from "react";
-import {FormattedMessage, useIntl} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 
 import {SkattbarInntektInfo, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
@@ -12,10 +11,11 @@ import {hentSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknad
 import {formatTidspunkt, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Alert, BodyShort, Button, Label, Link} from "@navikt/ds-react";
+import {useTranslation} from "react-i18next";
 
 const Skatt = () => {
     const dispatch = useDispatch();
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
@@ -52,16 +52,12 @@ const Skatt = () => {
 
     return (
         <div className={"skatt-wrapper"}>
-            <h2>{getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.tittel")}</h2>
+            <h2>{getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.tittel")}</h2>
             {harSamtykke && inntektFraSkatteetatenFeilet && (
                 <div className={"ytelser_panel"}>
                     <div>
-                        <Label spacing>
-                            <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_sporsmal" />
-                        </Label>
-                        <BodyShort spacing>
-                            <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_info" />
-                        </BodyShort>
+                        <Label spacing>{t("utbetalinger.inntekt.skattbar.samtykke_sporsmal")}</Label>
+                        <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.samtykke_info")}</BodyShort>
                     </div>
                     <Button
                         variant="secondary"
@@ -70,19 +66,17 @@ const Skatt = () => {
                             handleSettSkatteetatenSamtykke(true);
                         }}
                     >
-                        {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.gi_samtykke")}
+                        {getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.gi_samtykke")}
                     </Button>
                     {samtykkeTidspunktStreng === "" && (
-                        <Alert variant="error">
-                            <FormattedMessage id="utbetalinger.skattbar.kontaktproblemer" />
-                        </Alert>
+                        <Alert variant="error">{t("utbetalinger.skattbar.kontaktproblemer")}</Alert>
                     )}
                 </div>
             )}
             {!visAnimerteStreker && inntektFraSkatteetaten && inntektFraSkatteetaten.length > 0 && (
                 <div className={"ytelser_panel"}>
                     <UndertekstBold>{samtykkeTidspunktStreng}</UndertekstBold>
-                    <FormattedMessage id="utbetalinger.inntekt.skattbar.beskrivelse" />
+                    {t("utbetalinger.inntekt.skattbar.beskrivelse")}
                     <div className="utbetalinger">
                         <SkattbarinntektForskuddstrekk skattbarinntektogforskuddstrekk={inntektFraSkatteetaten} />
                     </div>
@@ -94,7 +88,7 @@ const Skatt = () => {
                         }}
                         href="/ta_bort_samtykke"
                     >
-                        {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
+                        {getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
                     </Link>
                 </div>
             )}
@@ -102,9 +96,7 @@ const Skatt = () => {
                 <div className={"ytelser_panel"}>
                     {harSamtykke && (
                         <>
-                            <div>
-                                <FormattedMessage id="utbetalinger.inntekt.skattbar.ingen" />
-                            </div>
+                            <div>{t("utbetalinger.inntekt.skattbar.ingen")}</div>
                             <Link
                                 id="ta_bort_bostotte_samtykke"
                                 onClick={(event: any) => {
@@ -113,19 +105,15 @@ const Skatt = () => {
                                 }}
                                 href="/ta_bort_samtykke"
                             >
-                                {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
+                                {getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
                             </Link>
                         </>
                     )}
                     {!harSamtykke && (
                         <>
                             <div>
-                                <Label spacing>
-                                    <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_sporsmal" />
-                                </Label>
-                                <BodyShort spacing>
-                                    <FormattedMessage id="utbetalinger.inntekt.skattbar.samtykke_info" />
-                                </BodyShort>
+                                <Label spacing>{t("utbetalinger.inntekt.skattbar.samtykke_sporsmal")}</Label>
+                                <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.samtykke_info")}</BodyShort>
                             </div>
                             <Button
                                 variant="secondary"
@@ -134,7 +122,7 @@ const Skatt = () => {
                                     handleSettSkatteetatenSamtykke(true);
                                 }}
                             >
-                                {getIntlTextOrKey(intl, "utbetalinger.inntekt.skattbar.gi_samtykke")}
+                                {getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.gi_samtykke")}
                             </Button>
                         </>
                     )}

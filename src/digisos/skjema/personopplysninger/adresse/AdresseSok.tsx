@@ -1,9 +1,9 @@
 import {AdresseForslag, AdresseFrontend} from "../../../../generated/model";
 import {Heading} from "@navikt/ds-react";
-import {FormattedMessage} from "react-intl";
 import {AdresseTypeahead} from "./AdresseTypeaheadDownshift";
 import * as React from "react";
 import styled from "styled-components";
+import {useTranslation} from "react-i18next";
 
 // TODO: Make this unnecessary by making the input type on the backend to soknad
 //       equal to the output type from adressesok
@@ -43,19 +43,17 @@ export const AdresseSok = ({
     defaultValue?: string;
     onChange: (nyAdresse: AdresseFrontend | null) => Promise<void>;
 }) => {
+    const {t} = useTranslation("skjema");
+
     return (
         <div className={className}>
             <Triangle className={"!border-b-gray-200 ml-5"} />
             <div className={"space-y-4 bg-gray-200 rounded-lg p-4 pt-3"}>
                 <div>
-                    <Heading size={"xsmall"}>
-                        <FormattedMessage id="kontakt.system.oppholdsadresse.hvorOppholder" />
-                    </Heading>
-                    <FormattedMessage id="kontakt.system.kontaktinfo.infotekst.tekst" />
+                    <Heading size={"xsmall"}>{t("kontakt.system.oppholdsadresse.hvorOppholder")}</Heading>
+                    {t("kontakt.system.kontaktinfo.infotekst.tekst")}
                 </div>
-                <div>
-                    <FormattedMessage id="kontakt.system.kontaktinfo.infotekst.ekstratekst" />
-                </div>
+                <div>{t("kontakt.system.kontaktinfo.infotekst.ekstratekst")}</div>
                 <AdresseTypeahead
                     defaultValue={defaultValue}
                     onVelgAnnenAdresse={async (forslag) => onChange(adresseForslagTilAdresse(forslag))}

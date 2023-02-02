@@ -2,15 +2,16 @@ import * as React from "react";
 import {BotypeListe, BotypePrimaerValg, BotypeSekundaerValg} from "./bosituasjonTypes";
 import {useBosituasjon} from "./useBosituasjon";
 import {RadioPanelGruppe, RadioPanelProps, SkjemaGruppe} from "nav-frontend-skjema";
-import {FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import {NyttUnderskjema} from "./NyttUnderskjema";
+import {useTranslation} from "react-i18next";
 
 interface BotypeProps {
     behandlingsId: string;
 }
 
 const Botype = ({behandlingsId}: BotypeProps) => {
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
     const {bosituasjon, setBosituasjon} = useBosituasjon(behandlingsId);
 
     // Hjelpefunksjon: Vis kun undermenyen dersom ikke "eier", "leier", "kommunal" eller "ingen" er valgt
@@ -20,7 +21,7 @@ const Botype = ({behandlingsId}: BotypeProps) => {
     // Hjelpefunksjon: Generer RadioPanelProps fra BotypeListe
     const radiosFromBotyper = (botypeListe: BotypeListe): RadioPanelProps[] =>
         Object.entries(botypeListe).map(([name, descriptor]) => ({
-            label: intl.formatMessage(descriptor.messageDescriptor),
+            label: t(descriptor.messageDescriptor.id!),
             id: name,
             value: name,
             checked: bosituasjon?.botype === name,

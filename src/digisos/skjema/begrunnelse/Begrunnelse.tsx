@@ -2,7 +2,6 @@ import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import {Begrunnelse as BegrunnelseType} from "./begrunnelseTypes";
-import {useIntl} from "react-intl";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../redux/soknadsdata/soknadsdataReducer";
@@ -12,6 +11,7 @@ import {State} from "../../redux/reducers";
 import {clearValideringsfeil} from "../../redux/validering/valideringActions";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../redux/soknadsdata/soknadsdataActions";
 import {validateAndDispatchTextFieldMaxLength} from "../../../nav-soknad/validering/validateAndDispatch";
+import {useTranslation} from "react-i18next";
 
 const MAX_CHARS_BEGRUNNELSE = 600;
 const MAX_CHARS = 500;
@@ -27,7 +27,7 @@ const BegrunnelseSkjema = () => {
 
     const dispatch = useDispatch();
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     useEffect(() => {
         if (behandlingsId) {
@@ -85,14 +85,12 @@ const BegrunnelseSkjema = () => {
     return (
         <div>
             <Sporsmal
-                tekster={getFaktumSporsmalTekst(intl, FAKTUM_KEY_HVA)}
+                tekster={getFaktumSporsmalTekst(t, FAKTUM_KEY_HVA)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <TextareaEnhanced
                     id={faktumKeyHvaId}
-                    placeholder={intl.formatMessage({
-                        id: "begrunnelse.hva.placeholder",
-                    })}
+                    placeholder={t("begrunnelse.hva.placeholder")}
                     onChange={(evt: any) => onChange(evt.target.value, HVA_SOKES_OM)}
                     onBlur={() => lagreHvisGyldig()}
                     faktumKey="begrunnelse.hva"
@@ -103,14 +101,12 @@ const BegrunnelseSkjema = () => {
                 />
             </Sporsmal>
             <Sporsmal
-                tekster={getFaktumSporsmalTekst(intl, FAKTUM_KEY_HVORFOR)}
+                tekster={getFaktumSporsmalTekst(t, FAKTUM_KEY_HVORFOR)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <TextareaEnhanced
                     id={faktumKeyHvorforId}
-                    placeholder={intl.formatMessage({
-                        id: "begrunnelse.hvorfor.placeholder",
-                    })}
+                    placeholder={t("begrunnelse.hvorfor.placeholder")}
                     onChange={(evt: any) => onChange(evt.target.value, HVORFOR_SOKE)}
                     onBlur={() => lagreHvisGyldig()}
                     faktumKey="begrunnelse.hvorfor"

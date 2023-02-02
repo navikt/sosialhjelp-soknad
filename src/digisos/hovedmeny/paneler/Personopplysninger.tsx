@@ -1,11 +1,11 @@
 import * as React from "react";
-import {FormattedMessage} from "react-intl";
 import {useDispatch} from "react-redux";
 import BehandlingAvPersonopplysningerModal from "./BehandlingAvPersonopplysningerModal";
 import {visSamtykkeInfo} from "../../redux/soknad/soknadActions";
 import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {Accordion, BodyLong, Heading} from "@navikt/ds-react";
 import styled from "styled-components";
+import {useTranslation} from "react-i18next";
 
 const LeftAlignedButton = styled(LinkButton)`
     text-align: left;
@@ -13,6 +13,7 @@ const LeftAlignedButton = styled(LinkButton)`
 
 const Personopplysninger = () => {
     const dispatch = useDispatch();
+    const {t} = useTranslation("skjema");
 
     return (
         <Accordion>
@@ -23,47 +24,37 @@ const Personopplysninger = () => {
                         borderTop: "2px solid rgba(0, 0, 0, 0.56)",
                     }}
                 >
-                    <FormattedMessage id="informasjon.tekster.personopplysninger.tittel" />
+                    {t("informasjon.tekster.personopplysninger.tittel")}
                 </Accordion.Header>
                 <Accordion.Content className={"!px-24 !py-12"}>
                     <Heading level="3" size="small" spacing>
-                        <FormattedMessage id="informasjon.tekster.personopplysninger.innhenting.tittel" />
+                        {t("informasjon.tekster.personopplysninger.innhenting.tittel")}
                     </Heading>
-                    <BodyLong spacing>
-                        <FormattedMessage id="informasjon.tekster.personopplysninger.innhenting.tekst" />
-                    </BodyLong>
+                    <BodyLong spacing>{t("informasjon.tekster.personopplysninger.innhenting.tekst")}</BodyLong>
 
                     <Heading level="3" size="small" spacing>
-                        <FormattedMessage id="informasjon.tekster.personopplysninger.fordusender.tittel" />
+                        {t("informasjon.tekster.personopplysninger.fordusender.tittel")}
                     </Heading>
-                    <BodyLong spacing>
-                        <FormattedMessage id="informasjon.tekster.personopplysninger.fordusender.tekst" />
-                    </BodyLong>
+                    <BodyLong spacing>{t("informasjon.tekster.personopplysninger.fordusender.tekst")}</BodyLong>
                     <Heading level="3" size="small" spacing>
-                        <FormattedMessage id="informasjon.tekster.personopplysninger.ettersendt.tittel" />
+                        {t("informasjon.tekster.personopplysninger.ettersendt.tittel")}
                     </Heading>
-                    <BodyLong spacing>
-                        <FormattedMessage id="informasjon.tekster.personopplysninger.ettersendt.tekst" />
-                    </BodyLong>
+                    <BodyLong spacing>{t("informasjon.tekster.personopplysninger.ettersendt.tekst")}</BodyLong>
 
                     <Heading level="3" size="small" spacing>
-                        <FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.tittel" />
+                        {t("informasjon.tekster.personopplysninger.rettigheter.tittel")}
                     </Heading>
-                    <BodyLong spacing>
-                        <FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.tekst" />
-                    </BodyLong>
+                    <BodyLong spacing>{t("informasjon.tekster.personopplysninger.rettigheter.tekst")}</BodyLong>
                     <LeftAlignedButton
                         className="navds-link"
                         onClick={() => {
                             dispatch(visSamtykkeInfo(true));
                         }}
                     >
-                        <FormattedMessage id="informasjon.tekster.personopplysninger.rettigheter.lenke" />
+                        {t("informasjon.tekster.personopplysninger.rettigheter.lenke")}
                     </LeftAlignedButton>
 
-                    <BodyLong>
-                        <FormattedMessage id="informasjon.tekster.personopplysninger.sporsmal" />
-                    </BodyLong>
+                    <BodyLong>{t("informasjon.tekster.personopplysninger.sporsmal")}</BodyLong>
                     <BehandlingAvPersonopplysningerModal />
                 </Accordion.Content>
             </Accordion.Item>

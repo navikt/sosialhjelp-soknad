@@ -12,7 +12,7 @@ import {State} from "../../../redux/reducers";
 import {clearValideringsfeil, setValideringsfeil} from "../../../redux/validering/valideringActions";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
-import {useIntl} from "react-intl";
+import {useTranslation} from "react-i18next";
 
 const FAKTUM_KEY = "familie.sivilstatus.gift.ektefelle";
 const FAKTUM_KEY_FNR = FAKTUM_KEY + ".fnr";
@@ -23,7 +23,7 @@ const PersonSkjema = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
 
     const dispatch = useDispatch();
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     const oppdaterTekstfelt = (sti: string, verdi: string | null) => {
         dispatch(clearValideringsfeil(FAKTUM_KEY_FNR));
@@ -187,7 +187,7 @@ const PersonSkjema = () => {
             />
 
             <Sporsmal
-                tekster={getFaktumSporsmalTekst(intl, "familie.sivilstatus.gift.ektefelle.borsammen")}
+                tekster={getFaktumSporsmalTekst(t, "familie.sivilstatus.gift.ektefelle.borsammen")}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <RadioEnhanced

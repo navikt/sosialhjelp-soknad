@@ -4,22 +4,20 @@ import VelkomstSnakkeboble from "../../../nav-soknad/components/snakkeboble/Snak
 import {BodyLong, Heading} from "@navikt/ds-react";
 import {FormattedMessage} from "react-intl";
 import * as React from "react";
+import {useTranslation} from "react-i18next";
 
 export const NySoknadVelkomst = () => {
     const {fornavn} = useSelector((state: State) => state.soknad);
+    const {t} = useTranslation("skjema");
 
     return (
         <div className={"p-8 lg:py-12 lg:px-24"}>
             <VelkomstSnakkeboble fornavn={fornavn} />
             <Heading level="2" size="small" spacing>
-                <FormattedMessage id="informasjon.start.undertittel" />
+                {t("informasjon.start.undertittel")}
             </Heading>
-            <BodyLong spacing>
-                <FormattedMessage id="informasjon.start.tekst_del1" />
-            </BodyLong>
-            <BodyLong spacing>
-                <FormattedMessage id="informasjon.start.tekst_del2" />
-            </BodyLong>
+            <BodyLong spacing>{t("informasjon.start.tekst_del1")}</BodyLong>
+            <BodyLong spacing>{t("informasjon.start.tekst_del2")}</BodyLong>
             <BodyLong spacing>
                 <FormattedMessage
                     id="informasjon.start.tekst_del3"
@@ -36,13 +34,11 @@ export const NySoknadVelkomst = () => {
                 />
             </BodyLong>
             <Heading level="2" size="small" spacing>
-                <FormattedMessage id="informasjon.svarpasoknad.undertittel" />
+                {t("informasjon.svarpasoknad.undertittel")}
             </Heading>
-            <BodyLong spacing>
-                <FormattedMessage id="informasjon.svarpasoknad.tekst" />
-            </BodyLong>
+            <BodyLong spacing>{t("informasjon.svarpasoknad.tekst")}</BodyLong>
             <Heading level="2" size="small" spacing>
-                <FormattedMessage id="informasjon.nodsituasjon.undertittel" />
+                {t("informasjon.nodsituasjon.undertittel")}
             </Heading>
             <BodyLong spacing>
                 <FormattedMessage

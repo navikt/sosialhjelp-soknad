@@ -1,5 +1,4 @@
 import React from "react";
-import {FormattedMessage, useIntl} from "react-intl";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import ArbeidDetaljer from "./ArbeidDetaljer";
@@ -14,6 +13,7 @@ import {State} from "../../../redux/reducers";
 import {lagreSoknadsdata, hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {clearValideringsfeil} from "../../../redux/validering/valideringActions";
 import {validateAndDispatchTextFieldMaxLength} from "../../../../nav-soknad/validering/validateAndDispatch";
+import {useTranslation} from "react-i18next";
 
 const MAX_CHARS = 500;
 const FAKTUM_KEY_KOMMENTARER = "opplysninger.arbeidsituasjon.kommentarer";
@@ -27,7 +27,7 @@ const Arbeid = () => {
 
     const dispatch = useDispatch();
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     useEffect(() => {
         if (behandlingsId) {
@@ -89,22 +89,16 @@ const Arbeid = () => {
 
         return (
             <div className="skjema-sporsmal">
-                <Sporsmal tekster={getFaktumSporsmalTekst(intl, "arbeidsforhold")} stil={"system"}>
+                <Sporsmal tekster={getFaktumSporsmalTekst(t, "arbeidsforhold")} stil={"system"}>
                     <TextPlaceholder lines={6} />
                 </Sporsmal>
             </div>
         );
     }
     return (
-        <Sporsmal tekster={getFaktumSporsmalTekst(intl, "arbeidsforhold")} stil="system">
-            <div>
-                <FormattedMessage id="arbeidsforhold.infotekst" />
-            </div>
-            {(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && (
-                <p>
-                    <FormattedMessage id="arbeidsforhold.ingen" />
-                </p>
-            )}
+        <Sporsmal tekster={getFaktumSporsmalTekst(t, "arbeidsforhold")} stil="system">
+            <div>{t("arbeidsforhold.infotekst")}</div>
+            {(alleArbeidsforhold == null || alleArbeidsforhold.length === 0) && <p>{t("arbeidsforhold.ingen")}</p>}
             {alleArbeidsforhold && alleArbeidsforhold.length > 0 && (
                 <ul className={"arbeidsgiverliste"}>
                     {alleArbeidsforhold.map((arbeidsforhold: Arbeidsforhold, index: any) => (
@@ -116,9 +110,7 @@ const Arbeid = () => {
             )}
             <TextareaEnhanced
                 id={faktumKommentarerId}
-                placeholder={intl.formatMessage({
-                    id: "begrunnelse.hvorfor.placeholder",
-                })}
+                placeholder={t("begrunnelse.hvorfor.placeholder")}
                 onChange={(evt: any) => onChange(evt.target.value)}
                 onBlur={() => lagreHvisGyldig()}
                 faktumKey={FAKTUM_KEY_KOMMENTARER}

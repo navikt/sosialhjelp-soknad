@@ -1,4 +1,4 @@
-import {FormattedMessage, useIntl} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -14,6 +14,7 @@ import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {State} from "../../../redux/reducers";
 import {validateAndDispatchTextFieldMaxLength} from "../../../../nav-soknad/validering/validateAndDispatch";
+import {useTranslation} from "react-i18next";
 
 const MAX_CHARS = 500;
 const FORMUE = "inntekt.bankinnskudd";
@@ -28,7 +29,7 @@ export const FormueView = () => {
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const feil = useSelector((state: State) => state.validering.feil);
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     useEffect(() => {
         if (behandlingsId) {
@@ -114,7 +115,7 @@ export const FormueView = () => {
     const formue: Formue | undefined = soknadsdata.inntekt.formue;
     return (
         <Sporsmal
-            tekster={getFaktumSporsmalTekst(intl, FORMUE + ".true.type")}
+            tekster={getFaktumSporsmalTekst(t, FORMUE + ".true.type")}
             legendTittelStyle={LegendTittleStyle.FET_NORMAL}
         >
             {renderCheckBox(FormueId.BRUKSKONTO)}

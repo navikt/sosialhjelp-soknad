@@ -6,7 +6,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
-import {useIntl} from "react-intl";
+import {useTranslation} from "react-i18next";
 
 const FAKTUM_KEY = "familie.barn.true.barnebidrag";
 
@@ -14,7 +14,7 @@ const Barnebidrag = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const dispatch = useDispatch();
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     const handleClickRadio = (verdi: string) => {
         if (behandlingsId) {
@@ -42,7 +42,7 @@ const Barnebidrag = () => {
     return (
         <div className="blokk barnebidrag">
             <Sporsmal
-                tekster={getFaktumSporsmalTekst(intl, "familie.barn.true.barnebidrag")}
+                tekster={getFaktumSporsmalTekst(t, "familie.barn.true.barnebidrag")}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 {renderRadio("betaler")}
