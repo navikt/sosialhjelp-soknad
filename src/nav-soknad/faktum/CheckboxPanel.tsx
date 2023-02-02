@@ -1,7 +1,7 @@
 import * as React from "react";
-import {CheckboksPanel} from "nav-frontend-skjema";
+import {Checkbox} from "@navikt/ds-react";
 
-interface Props {
+interface CheckboxPanelProps {
     id: string;
     name: string;
     checked: boolean;
@@ -11,32 +11,16 @@ interface Props {
     onClick: (checked: boolean) => void;
 }
 
-class CheckboxPanel extends React.Component<Props, {checked: boolean}> {
-    onChange(evt: any) {
-        const checked = !this.props.checked;
-        this.props.onClick(checked);
-        evt.preventDefault();
-    }
-
-    onClick(evt: any) {
-        evt.preventDefault();
-    }
-
-    render() {
-        const {id, name, checked, disabled, label} = this.props;
-
-        return (
-            <CheckboksPanel
-                id={id}
-                name={name}
-                checked={checked}
-                disabled={disabled}
-                onChange={(evt: any) => this.onClick(evt)}
-                onClick={(evt: any) => this.onChange(evt)}
-                label={label}
-            />
-        );
-    }
-}
+export const CheckboxPanel = ({id, name, checked, disabled, label, onClick}: CheckboxPanelProps) => (
+    <Checkbox
+        id={id}
+        name={name}
+        checked={checked}
+        disabled={disabled}
+        onChange={({target: {checked}}) => onClick(checked)}
+    >
+        {label}
+    </Checkbox>
+);
 
 export default CheckboxPanel;

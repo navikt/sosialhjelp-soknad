@@ -32,8 +32,9 @@ export const logInfo = (message: string) => {
     logToServer(createLogEntry(message, NavLogLevel.INFO));
 };
 
-export const logWarning = (message: string) => {
-    if (process.env.NODE_ENV === "development") console.warn(message);
+export const logWarning = (message: string, omitStacktrace?: boolean) => {
+    if (process.env.NODE_ENV === "development")
+        omitStacktrace ? console.log("Warning: " + message) : console.warn(message);
     logToServer(createLogEntry(message, NavLogLevel.WARN));
 };
 

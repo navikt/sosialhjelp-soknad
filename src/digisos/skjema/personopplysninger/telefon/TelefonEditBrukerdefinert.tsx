@@ -11,7 +11,6 @@ import {
     useHentTelefonnummer,
 } from "../../../../generated/telefonnummer-ressurs/telefonnummer-ressurs";
 import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
-import {useAlgebraic} from "../../../../lib/hooks/useAlgebraic";
 type FormType = Pick<TelefonnummerFrontend, "brukerutfyltVerdi">;
 
 export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
@@ -54,6 +53,7 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
                     },
                 })}
                 maxLength={11}
+                htmlSize={11}
                 type={"tel"}
                 className={"inline"}
                 autoComplete={"tel-national"}

@@ -10,7 +10,7 @@ export const DeveloperToolkit = () => {
     const behandlingsId = useBehandlingsId();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    logWarning("Viser utviklermeny. Dette skal ikke skje i prod!");
+    logWarning("Viser utviklermeny. Dette skal ikke skje i prod!", true);
 
     return (
         <div className={"!mt-0 p-2 bg-[black] text-[#0f0] font-mono "}>

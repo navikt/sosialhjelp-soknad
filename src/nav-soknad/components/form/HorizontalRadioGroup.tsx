@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {RadioGroup} from "@navikt/ds-react";
 
-// RadioGroup but styled as a horizontal full-width panel.
+// RadioGroup from react-ds but styled as a horizontal full-width panel.
 export const HorizontalRadioGroup = styled(RadioGroup)`
     .navds-radio {
         width: 100%;

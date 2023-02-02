@@ -10,7 +10,6 @@ import {
 } from "../../../digisos/redux/validering/valideringActions";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../digisos/redux/reducers";
-import {NavEnhet} from "../../../digisos/skjema/personopplysninger/adresse/AdresseTypes";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
 import {logInfo} from "../../utils/loggerUtils";
 import {SkjemaSteg} from "./digisosSkjema";
@@ -29,9 +28,10 @@ export const useSkjemaNavigation = () => {
     const {data: adresseData} = useHentAdresser(behandlingsId);
     const valgtNavEnhet = adresseData?.navEnhet;
 
+    // Midlertidig hack i påvente av mer ordentlig validering
     useEffect(() => {
         if (erAktiv(valgtNavEnhet)) dispatch(clearValideringsfeil("soknadsmottaker"));
-    }, [valgtNavEnhet]);
+    }, [valgtNavEnhet, dispatch]);
 
     const getAttributesForSkjemaFullfortEvent = () => {
         const attr: Record<string, any> = {};

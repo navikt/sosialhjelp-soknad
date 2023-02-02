@@ -10,6 +10,7 @@ import NavYtelser from "./navytelser";
 import SkattbarInntekt from "./skattbarInntekt";
 import Studielan from "./studielan/Studielan";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
+import {Heading} from "@navikt/ds-react";
 
 const InntektFormue = () => (
     <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"inntektbolk"} ikon={<Penger />}>
@@ -21,14 +22,18 @@ const InntektFormue = () => (
 
         <Studielan />
         <Utbetalinger />
-        <h2 className="overskrift">
-            <FormattedMessage id="opplysninger.formue.bank.undertittel" />
-        </h2>
-        <Formue />
-        <h2 className="overskrift">
-            <FormattedMessage id="opplysninger.formue.annen.undertittel" />
-        </h2>
-        <Verdier />
+        <div>
+            <Heading size={"medium"}>
+                <FormattedMessage id="opplysninger.formue.bank.undertittel" />
+            </Heading>
+            <Formue />
+        </div>
+        <div>
+            <Heading size={"medium"}>
+                <FormattedMessage id="opplysninger.formue.annen.undertittel" />
+            </Heading>
+            <Verdier />
+        </div>
     </StegMedNavigasjon>
 );
 
