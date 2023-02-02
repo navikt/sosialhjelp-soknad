@@ -13,7 +13,7 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
-import {Link} from "@navikt/ds-react";
+import {Heading, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 
 const NavYtelserView = () => {
@@ -63,7 +63,9 @@ const NavYtelserView = () => {
 
     return (
         <div className={"skatt-wrapper"}>
-            <h2>{getIntlTextOrKey(t, "navytelser.sporsmal")}</h2>
+            <Heading size="medium" level="2">
+                {getIntlTextOrKey(t, "navytelser.sporsmal")}
+            </Heading>
             {!visAnimerteStreker && !utbetalingerFraNavFeilet && harNavytelser && (
                 <Lesmerpanel
                     apneTekst={"Se detaljer"}

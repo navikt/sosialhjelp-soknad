@@ -10,7 +10,7 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknadsdata/soknadsdataActions";
 import {formatTidspunkt, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
-import {Alert, BodyShort, Button, Label, Link} from "@navikt/ds-react";
+import {Alert, BodyShort, Button, Heading, Label, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 
 const Skatt = () => {
@@ -52,7 +52,9 @@ const Skatt = () => {
 
     return (
         <div className={"skatt-wrapper"}>
-            <h2>{getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.tittel")}</h2>
+            <Heading size="medium" level="2">
+                {getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.tittel")}
+            </Heading>
             {harSamtykke && inntektFraSkatteetatenFeilet && (
                 <div className={"ytelser_panel"}>
                     <div>

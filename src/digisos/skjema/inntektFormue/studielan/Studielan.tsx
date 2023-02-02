@@ -12,7 +12,7 @@ import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {UndertekstBold} from "nav-frontend-typografi";
-import {Link} from "@navikt/ds-react";
+import {Heading, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 
 const FAKTUM_STUDIELAN = "inntekt.studielan";
@@ -63,7 +63,9 @@ const StudielanView = () => {
 
     const studielanSporsmal = (
         <div className="skjema-sporsmal">
-            <h2>{getIntlTextOrKey(t, "inntekt.studielan.titel")}</h2>
+            <Heading size="medium" level="2">
+                {getIntlTextOrKey(t, "inntekt.studielan.titel")}
+            </Heading>
             <JaNeiSporsmal
                 visPlaceholder={oppstartsModus}
                 tekster={getFaktumSporsmalTekst(t, FAKTUM_STUDIELAN)}

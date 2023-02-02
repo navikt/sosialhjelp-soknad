@@ -14,6 +14,7 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {validateAndDispatchTextFieldMaxLength} from "../../../../nav-soknad/validering/validateAndDispatch";
 import {useTranslation} from "react-i18next";
+import {Heading} from "@navikt/ds-react";
 
 const MAX_CHARS = 500;
 const UTBETALINGER = "inntekt.inntekter";
@@ -123,7 +124,9 @@ export const UtbetalingerView = () => {
     }
     return (
         <div className="skjema-sporsmal">
-            <h2>{getIntlTextOrKey(t, "inntekt.inntekter.titel")}</h2>
+            <Heading size="medium" level="2">
+                {getIntlTextOrKey(t, "inntekt.inntekter.titel")}
+            </Heading>
             <JaNeiSporsmal
                 visPlaceholder={oppstartsModus}
                 tekster={getFaktumSporsmalTekst(t, UTBETALINGER)}

@@ -17,7 +17,7 @@ import {
     settSamtykkeOgOppdaterData,
 } from "../../../redux/soknadsdata/soknadsdataActions";
 import {UndertekstBold} from "nav-frontend-typografi";
-import {Alert, BodyShort, Button, Link, Loader} from "@navikt/ds-react";
+import {Alert, BodyShort, Button, Heading, Link, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
@@ -147,7 +147,9 @@ const BostotteView = () => {
     const harBostotterSaker: boolean = bostotte.saker && bostotte.saker.length > 0;
     return (
         <div className="blokk-xs">
-            <h2>{getIntlTextOrKey(t, "inntekt.bostotte.overskrift")}</h2>
+            <Heading size="medium" level="2">
+                {getIntlTextOrKey(t, "inntekt.bostotte.overskrift")}
+            </Heading>
             <JaNeiSporsmal
                 visPlaceholder={oppstartsModus}
                 tekster={getFaktumSporsmalTekst(t, FAKTUM_BOSTOTTE)}
