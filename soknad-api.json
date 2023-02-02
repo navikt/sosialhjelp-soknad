@@ -1114,8 +1114,8 @@
                 "type": "object",
                 "properties": {
                     "brukerdefinert": {"type": "boolean"},
-                    "systemverdi": {"type": "string"},
-                    "brukerutfyltVerdi": {"type": "string"},
+                    "systemverdi": {"type": "string", "readOnly": true},
+                    "brukerutfyltVerdi": {"type": "string", "nullable": true},
                     "harIkkeKonto": {"type": "boolean"}
                 }
             },

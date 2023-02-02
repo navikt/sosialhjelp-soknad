@@ -1,4 +1,3 @@
-import {initialKontonummerState, Kontonummer} from "../../skjema/personopplysninger/bankinfo/KontonummerType";
 import {Begrunnelse, initialBegrunnelseState} from "../../skjema/begrunnelse/begrunnelseTypes";
 import {BosituasjonData, initialBosituasjonState} from "../../skjema/bosituasjon/bosituasjonTypes";
 import {Familie, initialFamilieStatus, Sivilstatus} from "../../skjema/familie/sivilstatus/FamilieTypes";
@@ -90,7 +89,6 @@ export const initialInntektState: Inntekt = {
 };
 
 export interface Personalia {
-    kontonummer: Kontonummer;
     adresser: Adresser;
     navEnheter: NavEnhetFrontend[];
     navEnhet: null | NavEnhetFrontend;
@@ -102,7 +100,6 @@ export interface Utgifter {
 }
 
 export const initialPersonaliaState: Personalia = {
-    kontonummer: initialKontonummerState,
     adresser: initialAdresserState,
     navEnheter: [],
     navEnhet: null,
@@ -146,7 +143,6 @@ export type SoknadsdataType =
     | BosituasjonData
     | Familie
     | Utdanning
-    | Kontonummer
     | Personalia
     | Sivilstatus
     | ForsorgerPlikt

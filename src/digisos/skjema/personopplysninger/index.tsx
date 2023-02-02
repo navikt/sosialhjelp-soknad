@@ -1,13 +1,13 @@
 import * as React from "react";
 import William from "../../../nav-soknad/components/svg/illustrasjoner/William";
 import {TelefonData} from "./telefon/Telefon";
-import Bankinformasjon from "./bankinfo/Bankinformasjon";
 import {AdresseData} from "./adresse/Adresse";
 import {SkjemaSteg} from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import Sporsmal from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {BasisPersonaliaData} from "./BasisPersonalia";
 import {useTranslation} from "react-i18next";
+import Kontonr from "./Kontonr";
 
 const Personopplysninger = () => {
     const {t} = useTranslation("skjema");
@@ -26,7 +26,7 @@ const Personopplysninger = () => {
             <Sporsmal sporsmal={t("kontakt.telefon.sporsmal")} infotekst={t("kontakt.telefon.infotekst.tekst")}>
                 <TelefonData />
             </Sporsmal>
-            <Bankinformasjon />
+            <Kontonr />
         </SkjemaSteg>
     );
 };
