@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledEllaBlunk = styled.svg`
-    margin-top: 1rem;
-
     .oyne {
         animation-name: oyne;
         animation-duration: 2400ms;

@@ -4,8 +4,8 @@ import {BodyShort, Label} from "@navikt/ds-react";
 import {FormattedMessage} from "react-intl";
 
 const Snakkeboble = ({fornavn}: {fornavn?: string}) => (
-    <div className="relative max-w-lg mb-4 mx-auto">
-        <div className="p-4 rounded-lg bg-[#cde7d8] leading-6 relative z-30">
+    <div className="mb-4 flex flex-col items-center">
+        <div className="p-8 lg:ml-20 max-w-[360px] rounded-lg bg-[#CCF1D6]">
             {fornavn?.length && (
                 <Label spacing>
                     <FormattedMessage id="informasjon.hilsen.hei" values={{fornavn}} />
@@ -15,20 +15,19 @@ const Snakkeboble = ({fornavn}: {fornavn?: string}) => (
                 <FormattedMessage id="informasjon.hilsen.tittel" />
             </BodyShort>
         </div>
-        <div className={"flex justify-center pl-24"}>
-            <EllaBlunk size={"175"} />
+        <div className={"flex justify-center pl-24 -mb-2"}>
             <div
                 aria-hidden="true"
                 style={{
                     width: "0",
                     height: "0",
-                    marginRight: "10px",
                     borderStyle: "solid",
-                    borderWidth: "35px 50px 0 0",
-                    borderColor: "#cde7d8 transparent transparent transparent",
+                    borderWidth: "16px 18px 0 0",
+                    borderColor: "#CCF1D6 transparent transparent transparent",
                 }}
             />
         </div>
+        <EllaBlunk size={"190"} />
     </div>
 );
 
