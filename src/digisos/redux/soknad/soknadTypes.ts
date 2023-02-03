@@ -88,8 +88,6 @@ export interface TilgangResponse {
     sperrekode: TilgangSperrekode;
 }
 
-export type LedeteksterResponse = {};
-
 export interface FornavnResponse {
     fornavn: string;
 }

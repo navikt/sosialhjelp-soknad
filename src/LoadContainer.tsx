@@ -11,12 +11,10 @@ import {fetchToJson, HttpStatus} from "./nav-soknad/utils/rest-utils";
 import {
     FornavnResponse,
     HarNyligInnsendteSoknaderResponse,
-    LedeteksterResponse,
     NedetidResponse,
     PabegynteSoknaderResponse,
     TilgangResponse,
 } from "./digisos/redux/soknad/soknadTypes";
-import {lagreLedeteksterPaStore} from "./digisos/redux/ledetekster/ledeteksterActions";
 import {ApplicationSpinner} from "./nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
 interface FeatureToggles {}
@@ -38,15 +36,12 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
     useEffect(() => {
         async function fetchData() {
             try {
+                // Hvis tilgangApiRespone ikke thrower unauthorized error, så er bruker autentisert
                 const tilgangResponse = await fetchToJson<TilgangResponse>(
                     "informasjon/utslagskriterier/sosialhjelp",
                     true
                 );
 
-                // Hvis tilgangApiRespone ikke thrower unauthorized error, så er bruker autentisert
-                const ledeteksterResponse = await fetchToJson<LedeteksterResponse>(
-                    "informasjon/tekster?sprak=nb_NO&type=soknadsosialhjelp"
-                );
                 const fornavnResponse = await fetchToJson<FornavnResponse>("informasjon/fornavn");
                 const nedetidResponse = await fetchToJson<NedetidResponse>("nedetid");
 
@@ -59,7 +54,6 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
                 const featureToggleResponse = await fetchToJson<FeatureToggles>("feature-toggle");
                 setFeatureToggles(featureToggleResponse);
 
-                dispatch(lagreLedeteksterPaStore(ledeteksterResponse));
                 dispatch(lagreRessurserPaStore(tilgangResponse, fornavnResponse));
                 dispatch(lagreNedetidPaStore(nedetidResponse));
                 dispatch(lagreHarNyligInnsendteSoknaderPaStore(harNyligInnsendteSoknaderResponse));
