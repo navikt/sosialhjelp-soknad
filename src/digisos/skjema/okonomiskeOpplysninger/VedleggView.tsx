@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Fil, Opplysning, VedleggStatus} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
+import {Fil, Opplysning, OpplysningSpc, VedleggStatus} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {useDispatch, useSelector} from "react-redux";
 import LastOppFil from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
@@ -16,6 +16,7 @@ import {setShowServerError} from "../../redux/soknad/soknadActions";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {REST_FEIL} from "../../redux/soknad/soknadTypes";
 import {useTranslation} from "react-i18next";
+import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 
 const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
@@ -75,6 +76,10 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
     };
 
     const renderOpplastingAvVedleggSeksjon = (opplysning: Opplysning) => {
+        const opplysningSpc: OpplysningSpc | undefined = getSpcForOpplysning(opplysning.type);
+        const tittelKey =
+            opplysningSpc && opplysningSpc.textKey ? opplysningSpc.textKey + ".vedlegg.sporsmal.tittel" : "";
+
         const vedleggListe = opplysning.filer.map((fil) => {
             return (
                 <OpplastetVedlegg
@@ -90,7 +95,7 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
 
         return (
             <div>
-                <p>t(tittelKey)</p>
+                <p>{t(tittelKey)}</p>
                 <div className="vedleggsliste">{vedleggListe}</div>
                 <LastOppFil
                     opplysning={opplysning}

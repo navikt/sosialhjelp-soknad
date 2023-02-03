@@ -96,7 +96,7 @@ export const AvbrytSoknad = () => {
                 <Heading level="1" size="large" spacing>
                     {t("avbryt.overskrift")}
                 </Heading>
-                <BodyShort spacing>t("avbryt.forklaring")</BodyShort>
+                <BodyShort spacing>{t("avbryt.forklaring")}</BodyShort>
                 <NedetidPanel varselType={"infoside"} />
                 <ButtonRow>
                     <Button variant="primary" onClick={() => onAvbryt()}>

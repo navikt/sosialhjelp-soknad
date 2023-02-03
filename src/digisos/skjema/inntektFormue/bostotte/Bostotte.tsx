@@ -80,7 +80,7 @@ const BostotteView = () => {
         let key = "bostotteUtbetaling_" + index;
         return (
             <div className="utbetalinger blokk-xs" key={key}>
-                <div>t(`inntekt.bostotte.husbanken.mottaker.${mottaker.toLowerCase()}`)</div>
+                <div>{t(`inntekt.bostotte.husbanken.mottaker.${mottaker.toLowerCase()}`)}</div>
                 <div className="utbetaling">
                     <span>
                         {t("utbetalinger.utbetaling.erutbetalt.label")}

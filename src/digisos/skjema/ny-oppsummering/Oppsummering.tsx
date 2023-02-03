@@ -170,10 +170,12 @@ const EditAnswer = styled.div`
 
 const OppsummeringBolk = (props: {bolk: NyOppsummeringBolk; children: React.ReactNode}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
+    const {t} = useTranslation();
+
     return (
         <Accordion>
             <Accordion.Item>
-                <Accordion.Header>t(props.bolk.tittel)</Accordion.Header>
+                <Accordion.Header>{t(props.bolk.tittel)}</Accordion.Header>
                 <Accordion.Content>
                     <EditAnswer>
                         <ReactRouterLink className="navds-link" to={`/skjema/${behandlingsId}/${props.bolk.stegNr}`}>
