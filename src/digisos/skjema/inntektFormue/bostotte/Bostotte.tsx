@@ -1,8 +1,6 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {FormattedDate, FormattedNumber} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
-
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {formatTidspunkt, getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
@@ -19,6 +17,7 @@ import {
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Alert, BodyShort, Button, Heading, Link, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
+import {fmtCurrency} from "../../../../lib/fmtCurrency";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -30,7 +29,7 @@ const BostotteView = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
-    const {t} = useTranslation("skjema");
+    const {t, i18n} = useTranslation("skjema");
 
     useEffect(() => {
         if (behandlingsId) {
@@ -89,9 +88,7 @@ const BostotteView = () => {
                             <Dato>{dato}</Dato>
                         </span>
                     </span>
-                    <span className="verdi detaljeliste__verdi">
-                        <FormattedNumber value={netto} minimumFractionDigits={2} maximumFractionDigits={2} /> kr
-                    </span>
+                    <span className="verdi detaljeliste__verdi">{fmtCurrency(i18n.language, netto)}</span>
                 </div>
             </div>
         );
@@ -109,7 +106,9 @@ const BostotteView = () => {
             status === "VEDTATT"
                 ? t(`inntekt.bostotte.husbanken.vedtaksstatus.${vedtaksstatus.toLowerCase()}`)
                 : t(`inntekt.bostotte.husbanken.status.${status.toLowerCase()}`, {status});
-        let formatertDato = <FormattedDate value={dato} month="long" year="numeric" />;
+        const formatertDato = new Intl.DateTimeFormat(i18n.language, {month: "long", year: "numeric"}).format(
+            new Date(dato)
+        );
         return (
             <div key={`${key}-${index}`} className="sak blokk-xs">
                 <span className="bostotte-dato">{formatertDato}</span>

@@ -43,21 +43,25 @@ const EktefelleInformasjon = () => {
 const EktefelleDetaljer = () => {
     const {harDiskresjonskode} = useSelector((state: State) => state.soknadsdata.familie.sivilstatus);
 
-    const {t} = useTranslation("skjema", {keyPrefix: "system.familie"});
+    const {t} = useTranslation();
 
     return (
         <div className="sivilstatus skjema-sporsmal">
-            <Sporsmal tekster={getFaktumSporsmalTekst(t, "sivilstatus")} stil="system">
-                <div className="sivilstatus__infotekst">{t("sivilstatus")}</div>
+            <Sporsmal tekster={getFaktumSporsmalTekst(t, "system.familie.sivilstatus")} stil="system">
+                <div className="sivilstatus__infotekst">{t("system.familie.sivilstatus")}</div>
                 <div className="sivilstatus__giftlabel">
-                    {harDiskresjonskode ? t("sivilstatus.ikkeTilgang.label") : t("sivilstatus.label")}
+                    {harDiskresjonskode
+                        ? t("system.familie.sivilstatus.ikkeTilgang.label")
+                        : t("system.familie.sivilstatus.label")}
                     <EktefelleInformasjon />
                 </div>
             </Sporsmal>
             {harDiskresjonskode !== true && (
                 <Informasjonspanel farge="viktig" ikon={"ella"}>
-                    <h4 className="skjema-sporsmal__infotekst__tittel">{t("sivilstatus.informasjonspanel.tittel")}</h4>
-                    {t("sivilstatus.informasjonspanel.tekst")}
+                    <h4 className="skjema-sporsmal__infotekst__tittel">
+                        {t("system.familie.sivilstatus.informasjonspanel.tittel")}
+                    </h4>
+                    {t("system.familie.sivilstatus.informasjonspanel.tekst")}
                 </Informasjonspanel>
             )}
         </div>

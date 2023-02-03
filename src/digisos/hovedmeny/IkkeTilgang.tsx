@@ -1,10 +1,9 @@
 import * as React from "react";
-import {FormattedMessage} from "react-intl";
 import {Link, Panel} from "@navikt/ds-react";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
 import {Information} from "@navikt/ds-icons";
 import {Innholdstittel} from "nav-frontend-typografi";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 
 const IkkeTilgangInformasjon = () => {
     const {t} = useTranslation();
@@ -18,16 +17,16 @@ const IkkeTilgangInformasjon = () => {
                         <Information />
                         {t("informasjon.ikketilgang.bruker.tittel")}
                     </Innholdstittel>
-
-                    <FormattedMessage
-                        id="informasjon.ikketilgang.bruker.tekst.v2"
-                        values={{
-                            a: (msg) => (
+                    <Trans
+                        t={t}
+                        i18nKey={"informasjon.ikketilgang.bruker.tekst.v2"}
+                        components={{
+                            lenke: (
                                 <Link
                                     href="https://www.nav.no/person/personopplysninger/#ditt-nav-kontor"
                                     target="_blank"
                                 >
-                                    {msg}
+                                    {null}
                                 </Link>
                             ),
                         }}

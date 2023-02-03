@@ -1,7 +1,7 @@
 import {BodyShort, Label} from "@navikt/ds-react";
 import React, {ReactNode} from "react";
-import {FormattedDate} from "react-intl";
 import styled from "styled-components";
+import Dato from "../tidspunkt/Dato";
 
 const SysteminfoList = styled.ul`
     list-style: none;
@@ -34,9 +34,9 @@ const ListItem = styled.li<{multiline?: boolean}>`
  */
 export const OldSingleLineElement = (props: {value?: string}) => <BodyShort size="small">: {props.value}</BodyShort>;
 
-export const SingleLineDateElement = (props: {value?: string}) => (
+export const SingleLineDateElement = ({value}: {value?: string}) => (
     <BodyShort size="small">
-        : <FormattedDate value={new Date(props.value ?? "")} month="long" day="numeric" year="numeric" />
+        : <Dato>{value ?? ""}</Dato>
     </BodyShort>
 );
 

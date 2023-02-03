@@ -1,5 +1,4 @@
 import * as React from "react";
-import {FormattedMessage} from "react-intl";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
@@ -11,7 +10,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {Link} from "@navikt/ds-react";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 
 const BOUTGIFTER = "utgifter.boutgift";
 
@@ -95,16 +94,17 @@ export const BoutgifterView = () => {
             </JaNeiSporsmal>
             {boutgifter && boutgifter.skalViseInfoVedBekreftelse && boutgifter.bekreftelse === true && (
                 <Informasjonspanel ikon={"ella"} farge="viktig">
-                    <FormattedMessage
-                        id="informasjon.husbanken.bostotte.v2"
-                        values={{
-                            a: (msg) => (
+                    <Trans
+                        t={t}
+                        i18nKey={"informasjon.husbanken.bostotte.v2"}
+                        components={{
+                            lenke: (
                                 <Link
                                     href={t("informasjon.husbanken.bostotte.url")}
                                     target="_blank"
                                     rel="noreferrer noopener"
                                 >
-                                    {msg}
+                                    {null}
                                 </Link>
                             ),
                         }}

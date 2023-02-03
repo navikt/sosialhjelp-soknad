@@ -1,4 +1,9 @@
-import {MessageDescriptor} from "react-intl";
+// Copied from react-intl during transition to i18-next
+export interface MessageDescriptor {
+    id: string;
+    description?: string | object;
+    defaultMessage?: string;
+}
 
 export type BotypePrimaer = "eier" | "leier" | "kommunal" | "ingen" | "annet";
 export type BotypePrimaerListe = Record<BotypePrimaer, BotypeDescriptor>;

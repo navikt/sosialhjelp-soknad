@@ -1,10 +1,12 @@
 import * as React from "react";
 import Informasjonspanel from "../../../../nav-soknad/components/Informasjonspanel";
-import {FormattedMessage} from "react-intl";
 import {Alert, Link} from "@navikt/ds-react";
 import {NavEnhetFrontend} from "../../../../generated/model";
+import {Trans, useTranslation} from "react-i18next";
 
 const SoknadsmottakerInfo = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
+    const {t} = useTranslation();
+
     if (!navEnhet) return null;
 
     const {enhetsnavn, kommunenavn, isMottakDeaktivert, isMottakMidlertidigDeaktivert} = navEnhet;
@@ -12,13 +14,14 @@ const SoknadsmottakerInfo = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
     if (isMottakMidlertidigDeaktivert) {
         return (
             <Alert variant="error">
-                <FormattedMessage
-                    id="adresse.alertstripe.feil.v2"
-                    values={{
-                        kommuneNavn: kommunenavn,
-                        a: (msg) => (
+                <Trans
+                    t={t}
+                    i18nKey={"adresse.alertstripe.feil.v2"}
+                    values={{kommunenavn}}
+                    components={{
+                        lenke: (
                             <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
-                                {msg}
+                                {null}
                             </Link>
                         ),
                     }}
@@ -31,13 +34,14 @@ const SoknadsmottakerInfo = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
         // ORANSJE
         return (
             <Alert variant="warning">
-                <FormattedMessage
-                    id="adresse.alertstripe.advarsel.v2"
-                    values={{
-                        kommuneNavn: kommunenavn,
-                        a: (msg) => (
+                <Trans
+                    t={t}
+                    i18nKey={"adresse.alertstripe.advarsel.v2"}
+                    values={{kommuneNavn: kommunenavn}}
+                    components={{
+                        lenke: (
                             <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
-                                {msg}
+                                {null}
                             </Link>
                         ),
                     }}

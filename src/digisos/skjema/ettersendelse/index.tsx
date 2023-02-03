@@ -1,5 +1,4 @@
 import {useDispatch, useSelector} from "react-redux";
-import {FormattedMessage} from "react-intl";
 import {State} from "../../redux/reducers";
 import React, {useEffect} from "react";
 import BannerEttersendelse from "./bannerEttersendelse";
@@ -16,7 +15,7 @@ import {useTitle} from "../../../nav-soknad/hooks/useTitle";
 import {BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
 import {BlokkCenter} from "./BlokkCenter";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 
 type EttersendelseParams = Record<"behandlingsId", string>;
 
@@ -130,12 +129,11 @@ const Ettersendelse = () => {
                         {t("ettersendelse.samtale.tittel")}
                     </Heading>
                     <BodyShort>
-                        <FormattedMessage
-                            id="ettersendelse.samtale.info.v2"
-                            values={{
-                                a: (msg) => (
-                                    <Link href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote">{msg}</Link>
-                                ),
+                        <Trans
+                            t={t}
+                            i18nKey={"ettersendelse.samtale.info.v2"}
+                            components={{
+                                lenke: <Link href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote">{null}</Link>,
                             }}
                         />
                     </BodyShort>

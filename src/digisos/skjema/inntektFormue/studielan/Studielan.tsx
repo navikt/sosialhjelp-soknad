@@ -1,6 +1,5 @@
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {FormattedMessage} from "react-intl";
 
 import {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../../nav-soknad/utils";
@@ -13,7 +12,7 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Heading, Link} from "@navikt/ds-react";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 
 const FAKTUM_STUDIELAN = "inntekt.studielan";
 
@@ -80,16 +79,17 @@ const StudielanView = () => {
                         {t(STUDERER_INFO_TITTEL)}
                     </UndertekstBold>
                     <p>
-                        <FormattedMessage
-                            id={STUDERER_INFO_DEL1}
-                            values={{
-                                a: (msg) => (
+                        <Trans
+                            t={t}
+                            i18nKey={STUDERER_INFO_DEL1}
+                            components={{
+                                lenke: (
                                     <Link
                                         href={t("informasjon.student.studielan.url")}
                                         target="_blank"
                                         rel="noreferrer noopener"
                                     >
-                                        {msg}
+                                        {null}
                                     </Link>
                                 ),
                             }}

@@ -1,6 +1,5 @@
 import * as React from "react";
 import {useEffect} from "react";
-import {FormattedMessage} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import Feiloppsummering from "../validering/Feiloppsummering";
 import {getIntlTextOrKey, scrollToTop} from "../../utils";
@@ -21,7 +20,7 @@ import SideIkkeFunnet from "../../feilsider/SideIkkeFunnet";
 import TimeoutBox from "../timeoutbox/TimeoutBox";
 import {AvbrytSoknad} from "../avbrytsoknad/AvbrytSoknad";
 import {getSoknad} from "../../../lib/getSoknad";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 
 export type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
 
@@ -38,18 +37,20 @@ const MidlertidigDeaktivertPanel = () => {
         personalia: {navEnhet},
     } = useSoknadsdata();
     const {visMidlertidigDeaktivertPanel} = useSoknad();
+    const {t} = useTranslation();
 
     if (!visMidlertidigDeaktivertPanel) return null;
 
     return (
         <Alert variant="error">
-            <FormattedMessage
-                id="adresse.alertstripe.feil.v2"
-                values={{
-                    kommuneNavn: navEnhet?.kommunenavn ?? "Din",
-                    a: (msg) => (
+            <Trans
+                t={t}
+                i18nKey={"adresse.alertstripe.feil.v2"}
+                values={{kommuneNavn: navEnhet?.kommunenavn ?? "Din"}}
+                components={{
+                    lenke: (
                         <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
-                            {msg}
+                            {null}
                         </Link>
                     ),
                 }}
@@ -63,17 +64,19 @@ const IkkePakobletPanel = () => {
         personalia: {navEnhet},
     } = useSoknadsdata();
     const {visIkkePakobletPanel} = useSoknad();
+    const {t} = useTranslation();
     if (!visIkkePakobletPanel) return null;
 
     return (
         <Alert variant="warning">
-            <FormattedMessage
-                id="adresse.alertstripe.advarsel.v2"
-                values={{
-                    kommuneNavn: navEnhet?.kommunenavn ?? "Din",
-                    a: (msg) => (
-                        <Link href="https://husbanken.no/bostotte" target="_blank" rel="noreferrer noopener">
-                            {msg}
+            <Trans
+                t={t}
+                i18nKey={"adresse.alertstripe.advarsel.v2"}
+                values={{kommuneNavn: navEnhet?.kommunenavn ?? "Din"}}
+                components={{
+                    lenke: (
+                        <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                            {null}
                         </Link>
                     ),
                 }}

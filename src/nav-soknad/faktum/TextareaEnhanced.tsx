@@ -1,6 +1,5 @@
 import * as React from "react";
 import {Textarea} from "nav-frontend-skjema";
-import {IntlShape} from "react-intl";
 import {getInputFaktumTekst, getIntlTextOrKey} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {useSelector} from "react-redux";
@@ -20,7 +19,6 @@ interface Props {
     faktumKey: string;
     faktumId?: number;
     getName?: () => string;
-    getFeil?: (intl: IntlShape) => string; // Fjern
     onChange?: (event: any) => any;
     onBlur?: () => void;
 }

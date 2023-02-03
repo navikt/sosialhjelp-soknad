@@ -1,8 +1,7 @@
 import * as React from "react";
-import {FormattedMessage, FormattedNumber} from "react-intl";
+import {useEffect} from "react";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
 
 import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {Systeminntekt} from "./navYtelserTypes";
@@ -14,11 +13,12 @@ import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Heading, Link} from "@navikt/ds-react";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
+import {fmtCurrency} from "../../../../lib/fmtCurrency";
 
 const NavYtelserView = () => {
     const dispatch = useDispatch();
-    const {t} = useTranslation("skjema");
+    const {t, i18n} = useTranslation("skjema");
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
@@ -45,7 +45,7 @@ const NavYtelserView = () => {
         if (utbetalingsdato && utbetalingsdato.length > 9) {
             formattedDato = <Dato>{utbetaling.utbetalingsdato}</Dato>;
         }
-        const belop = <FormattedNumber value={utbetaling.belop} minimumFractionDigits={2} />;
+        const belop = fmtCurrency(i18n.language, utbetaling.belop);
         return (
             <div key={index} className="utbetaling blokk-s">
                 <div>
@@ -75,12 +75,13 @@ const NavYtelserView = () => {
                 >
                     <div className="utbetalinger">
                         {navYtelserJsx}
-                        <FormattedMessage
-                            id={"utbetalinger.infotekst.tekst.v2"}
-                            values={{
-                                a: (msg) => (
+                        <Trans
+                            t={t}
+                            i18nKey={"utbetalinger.infotekst.tekst.v2"}
+                            components={{
+                                lenke: (
                                     <Link href={t("utbetalinger.infotekst.tekst.url")} target="_blank">
-                                        {msg}
+                                        {null}
                                     </Link>
                                 ),
                             }}
