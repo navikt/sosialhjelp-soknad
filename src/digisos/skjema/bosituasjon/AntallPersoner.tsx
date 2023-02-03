@@ -1,5 +1,4 @@
 import * as React from "react";
-import {FormattedMessage} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
 import {clearValideringsfeil, setValideringsfeil} from "../../redux/validering/valideringActions";
@@ -47,16 +46,9 @@ const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
     };
 
     return (
-        <SkjemaGruppe
-            legend={
-                <FormattedMessage
-                    id={"bosituasjon.antallpersoner.sporsmal"}
-                    defaultMessage={"Hvor mange personer bor sammen med deg?"}
-                />
-            }
-        >
+        <SkjemaGruppe legend={t("bosituasjon.antallpersoner.sporsmal")}>
             <Input
-                description={<FormattedMessage id={"bosituasjon.antallpersoner.label"} defaultMessage={"Antall"} />}
+                description={t("bosituasjon.antallpersoner.label")}
                 id={FAKTUM_KEY_ANTALL}
                 inputMode="numeric"
                 pattern="[0-9]*"

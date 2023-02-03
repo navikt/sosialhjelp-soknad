@@ -77,7 +77,7 @@ const StudielanView = () => {
             {studielan && studielan.bekreftelse === false && (
                 <Informasjonspanel ikon={"ella"} farge="viktig">
                     <UndertekstBold className="skjema-sporsmal__infotekst__tittel">
-                        <FormattedMessage id={STUDERER_INFO_TITTEL} />
+                        {t(STUDERER_INFO_TITTEL)}
                     </UndertekstBold>
                     <p>
                         <FormattedMessage
@@ -95,9 +95,7 @@ const StudielanView = () => {
                             }}
                         />
                     </p>
-                    <p>
-                        <FormattedMessage id={STUDERER_INFO_DEL2} />
-                    </p>
+                    <p>{t(STUDERER_INFO_DEL2)}</p>
                 </Informasjonspanel>
             )}
         </div>

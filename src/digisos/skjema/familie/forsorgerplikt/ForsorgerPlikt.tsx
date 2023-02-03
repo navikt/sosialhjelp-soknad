@@ -1,4 +1,3 @@
-import {FormattedMessage} from "react-intl";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useState, useEffect} from "react";
@@ -69,7 +68,7 @@ const ForsorgerPliktView = () => {
                 <p>{t("familierelasjon.ingress_folkeregisteret")}</p>
                 <p>
                     <b>{t("familierelasjon.ingress_forsorger")}</b>
-                    <FormattedMessage id="familierelasjon.ingress_antallBarn" values={{antallBarn}} />
+                    {t("familierelasjon.ingress_antallBarn", {antallBarn})}
                 </p>
 
                 <RegistrerteBarn />

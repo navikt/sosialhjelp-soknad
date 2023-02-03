@@ -1,6 +1,5 @@
 import * as React from "react";
 import {Barn} from "./ForsorgerPliktTypes";
-import {FormattedMessage} from "react-intl";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {getFaktumSporsmalTekst, getInputFaktumTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
 import {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -81,15 +80,15 @@ const RegistrerteBarn = () => {
                         <OldSysteminfo
                             systeminfoMap={[
                                 {
-                                    key: <FormattedMessage id={"kontakt.system.personalia.navn"} />,
+                                    key: t("kontakt.system.personalia.navn"),
                                     value: <OldSingleLineElement value={barnet.barn.navn.fulltNavn} />,
                                 },
                                 {
-                                    key: <FormattedMessage id={"familierelasjon.fodselsdato"} />,
+                                    key: t("familierelasjon.fodselsdato"),
                                     value: <SingleLineDateElement value={barnet.barn.fodselsdato ?? ""} />,
                                 },
                                 {
-                                    key: <FormattedMessage id={"familierelasjon.samme_folkeregistrerte_adresse"} />,
+                                    key: t("familierelasjon.samme_folkeregistrerte_adresse"),
                                     value: (
                                         <OldSingleLineElement value={barnet.erFolkeregistrertSammen ? "Ja" : "Nei"} />
                                     ),

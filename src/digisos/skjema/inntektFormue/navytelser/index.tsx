@@ -70,11 +70,7 @@ const NavYtelserView = () => {
                 <Lesmerpanel
                     apneTekst={"Se detaljer"}
                     lukkTekst={"Lukk"}
-                    intro={
-                        <div>
-                            <FormattedMessage id={"navytelser.infotekst.tekst"} />
-                        </div>
-                    }
+                    intro={<div>t("navytelser.infotekst.tekst")</div>}
                     border={true}
                 >
                     <div className="utbetalinger">

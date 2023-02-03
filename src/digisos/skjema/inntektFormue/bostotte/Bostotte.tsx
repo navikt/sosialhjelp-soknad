@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {FormattedDate, FormattedMessage, FormattedNumber} from "react-intl";
+import {FormattedDate, FormattedNumber} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -80,9 +80,7 @@ const BostotteView = () => {
         let key = "bostotteUtbetaling_" + index;
         return (
             <div className="utbetalinger blokk-xs" key={key}>
-                <div>
-                    <FormattedMessage id={`inntekt.bostotte.husbanken.mottaker.${mottaker.toLowerCase()}`} />
-                </div>
+                <div>t(`inntekt.bostotte.husbanken.mottaker.${mottaker.toLowerCase()}`)</div>
                 <div className="utbetaling">
                     <span>
                         {t("utbetalinger.utbetaling.erutbetalt.label")}
@@ -108,14 +106,9 @@ const BostotteView = () => {
         index: number
     ) => {
         const visningstatus =
-            status === "VEDTATT" ? (
-                <FormattedMessage id={`inntekt.bostotte.husbanken.vedtaksstatus.${vedtaksstatus.toLowerCase()}`} />
-            ) : (
-                <FormattedMessage
-                    id={`inntekt.bostotte.husbanken.status.${status.toLowerCase()}`}
-                    values={{status: status}}
-                />
-            );
+            status === "VEDTATT"
+                ? t(`inntekt.bostotte.husbanken.vedtaksstatus.${vedtaksstatus.toLowerCase()}`)
+                : t(`inntekt.bostotte.husbanken.status.${status.toLowerCase()}`, {status});
         let formatertDato = <FormattedDate value={dato} month="long" year="numeric" />;
         return (
             <div key={`${key}-${index}`} className="sak blokk-xs">
@@ -236,7 +229,7 @@ const BostotteView = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <FormattedMessage id={"inntekt.bostotte.husbanken.lenkeText"} />
+                                    {t("inntekt.bostotte.husbanken.lenkeText")}
                                 </Link>
                             )}
                             <div className="bostotte-luft-over-ta-bort-knapp-lenke">

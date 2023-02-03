@@ -84,13 +84,10 @@ const Ettersendelse = () => {
                             {t("ettersendelse.vedlegg_sendt")}
                         </Heading>
                         <BodyShort>
-                            <FormattedMessage
-                                id="ettersendelse.dato_tid"
-                                values={{
-                                    dato: innsendtDato,
-                                    tid: innsendtTidspunkt,
-                                }}
-                            />
+                            {t("ettersendelse.dato_tid", {
+                                dato: innsendtDato,
+                                tid: innsendtTidspunkt,
+                            })}
                         </BodyShort>
                     </AvsnittMedMarger>
                 ))}

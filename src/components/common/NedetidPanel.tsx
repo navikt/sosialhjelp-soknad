@@ -1,8 +1,8 @@
 import {Alert} from "@navikt/ds-react";
-import {FormattedMessage} from "react-intl";
 import * as React from "react";
 import {useSelector} from "react-redux";
 import {State} from "../../digisos/redux/reducers";
+import {useTranslation} from "react-i18next";
 
 type NetetidPanelType = "infoside" | "ettersendelse" | "avbryt";
 
@@ -19,29 +19,25 @@ export const NedetidPanel = ({varselType}: {varselType: NetetidPanelType}) => {
 
     const messageId = NedetidPanelMessageID[varselType];
 
+    const {t} = useTranslation();
+
     if (isNedetid)
         return (
             <Alert variant="error" style={{justifyContent: "center"}}>
-                <FormattedMessage
-                    id={messageId}
-                    values={{
-                        nedetidstart: nedetidStartText,
-                        nedetidslutt: nedetidSluttText,
-                    }}
-                />
+                {t(messageId, {
+                    nedetidstart: nedetidStartText,
+                    nedetidslutt: nedetidSluttText,
+                })}
             </Alert>
         );
 
     if (isPlanlagtNedetid)
         return (
             <Alert variant="info" style={{justifyContent: "center"}}>
-                <FormattedMessage
-                    id={messageId}
-                    values={{
-                        nedetidstart: nedetidStartText,
-                        nedetidslutt: nedetidSluttText,
-                    }}
-                />
+                {t(messageId, {
+                    nedetidstart: nedetidStartText,
+                    nedetidslutt: nedetidSluttText,
+                })}
             </Alert>
         );
 

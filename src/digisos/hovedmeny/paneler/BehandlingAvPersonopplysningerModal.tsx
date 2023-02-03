@@ -1,5 +1,4 @@
 import * as React from "react";
-import {FormattedMessage} from "react-intl";
 import {useSelector, useDispatch} from "react-redux";
 import {finnValgtEnhetsNavn} from "../../../lib/kommuner";
 import {Soknadsdata} from "../../redux/soknadsdata/soknadsdataReducer";
@@ -56,7 +55,7 @@ const BehandlingAvPersonopplysningerModal = () => {
                             dispatch(visSamtykkeInfo(false));
                         }}
                     >
-                        <FormattedMessage id={"soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk"} />
+                        {t("soknadsosialhjelp.forstesiden.bekreftInfoModal.lukk")}
                     </Button>
                 </CenteredContent>
             </Modal.Content>

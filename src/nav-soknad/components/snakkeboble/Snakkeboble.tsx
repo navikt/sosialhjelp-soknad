@@ -1,7 +1,6 @@
 import EllaBlunk from "../animasjoner/ellaBlunk";
 import * as React from "react";
 import {BodyShort, Label} from "@navikt/ds-react";
-import {FormattedMessage} from "react-intl";
 import {useTranslation} from "react-i18next";
 
 const Snakkeboble = ({fornavn}: {fornavn?: string}) => {
@@ -10,11 +9,7 @@ const Snakkeboble = ({fornavn}: {fornavn?: string}) => {
     return (
         <div className="mb-4 flex flex-col items-center">
             <div className="p-8 lg:ml-20 max-w-[360px] rounded-lg bg-[#CCF1D6]">
-                {fornavn?.length && (
-                    <Label spacing>
-                        <FormattedMessage id="informasjon.hilsen.hei" values={{fornavn}} />
-                    </Label>
-                )}
+                {fornavn?.length && <Label spacing>{t("informasjon.hilsen.hei", {fornavn})}</Label>}
                 <BodyShort>{t("informasjon.hilsen.tittel")}</BodyShort>
             </div>
             <div className={"flex justify-center pl-24 -mb-2"}>

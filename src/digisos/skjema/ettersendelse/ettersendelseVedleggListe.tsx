@@ -1,7 +1,6 @@
 import React from "react";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
-import {FormattedMessage} from "react-intl";
 import {useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
 import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
@@ -48,7 +47,7 @@ const EttersendelseVedleggListe = (props: {
                             >
                                 {tittelKey && (
                                     <Heading level="3" size="xsmall" spacing>
-                                        <FormattedMessage id={tittelKey} />
+                                        {t(tittelKey)}
                                     </Heading>
                                 )}
                                 {info && <BodyShort spacing>{info}</BodyShort>}

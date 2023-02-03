@@ -1,9 +1,10 @@
 import Detaljeliste, {DetaljelisteElement} from "../../../../nav-soknad/components/detaljeliste";
-import {FormattedMessage} from "react-intl";
 import * as React from "react";
 import {AdresseFrontend} from "../../../../generated/model";
+import {useTranslation} from "react-i18next";
 
 export const AdresseVisning = ({adresse}: {adresse?: AdresseFrontend}) => {
+    const {t} = useTranslation();
     if (!adresse) return null;
 
     switch (adresse.type) {
@@ -25,8 +26,8 @@ export const AdresseVisning = ({adresse}: {adresse?: AdresseFrontend}) => {
             const gnrBnr = `${gaardsnummer ?? ""}${bruksnummer ? ` / ${bruksnummer}` : ""}`;
             return (
                 <Detaljeliste>
-                    <DetaljelisteElement tittel={<FormattedMessage id="matrikkel.gnrbnr" />} verdi={gnrBnr} />
-                    <DetaljelisteElement tittel={<FormattedMessage id="matrikkel.kommunenr" />} verdi={kommunenummer} />
+                    <DetaljelisteElement tittel={t("matrikkel.gnrbnr")} verdi={gnrBnr} />
+                    <DetaljelisteElement tittel={t("matrikkel.kommunenr")} verdi={kommunenummer} />
                 </Detaljeliste>
             );
         default:

@@ -1,6 +1,5 @@
 import * as React from "react";
 import {getIntlTextOrKey} from "../../utils";
-import {FormattedMessage} from "react-intl";
 import {Button, Loader} from "@navikt/ds-react";
 import {visAvbrytSoknadModal} from "../../../digisos/redux/soknad/soknadActions";
 import {useDispatch} from "react-redux";
@@ -45,10 +44,10 @@ export const SkjemaStegNavKnapper = ({
             </div>
             <div>
                 <Button variant="tertiary" onClick={() => (window.location.href = minSideUrl)}>
-                    <FormattedMessage id={"avbryt.fortsettsenere"} />
+                    {t("avbryt.fortsettsenere")}
                 </Button>
                 <Button variant="tertiary" onClick={() => dispatch(visAvbrytSoknadModal())}>
-                    <FormattedMessage id={"avbryt.slett"} />
+                    {t("avbryt.slett")}
                 </Button>
             </div>
         </div>

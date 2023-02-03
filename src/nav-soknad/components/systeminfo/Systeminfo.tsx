@@ -29,6 +29,9 @@ const ListItem = styled.li<{multiline?: boolean}>`
     }
 `;
 
+/**
+ * @deprecated Erstattes av Systeminfo
+ */
 export const OldSingleLineElement = (props: {value?: string}) => <BodyShort size="small">: {props.value}</BodyShort>;
 
 export const SingleLineDateElement = (props: {value?: string}) => (
@@ -37,6 +40,9 @@ export const SingleLineDateElement = (props: {value?: string}) => (
     </BodyShort>
 );
 
+/**
+ * @deprecated Erstattes av Systeminfo
+ */
 interface OldSysteminfoProps {
     systeminfoMap: {key: ReactNode; value: ReactNode}[];
     multiline?: boolean;

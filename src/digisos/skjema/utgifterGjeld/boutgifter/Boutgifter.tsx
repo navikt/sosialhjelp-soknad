@@ -65,7 +65,7 @@ export const BoutgifterView = () => {
                 id={"boutgifter_" + navn + "_checkbox"}
                 name={navn}
                 checked={isChecked}
-                label={<FormattedMessage id={BOUTGIFTER + ".true.type." + textKey} />}
+                label={t(BOUTGIFTER + ".true.type." + textKey)}
                 onClick={() => handleClickRadio(navn)}
             />
         );

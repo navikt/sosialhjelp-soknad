@@ -1,8 +1,8 @@
 import * as React from "react";
-import {FormattedMessage} from "react-intl";
 
 import {Innholdstittel, Normaltekst} from "nav-frontend-typografi";
 import {Button} from "@navikt/ds-react";
+import {useTranslation} from "react-i18next";
 
 interface NedtellingProps {
     onContinueClick: () => void;
@@ -10,20 +10,18 @@ interface NedtellingProps {
 }
 
 const Nedtelling = ({onContinueClick, utloggingsUrl}: NedtellingProps) => {
+    const {t} = useTranslation();
+
     return (
         <div>
-            <Innholdstittel className="blokk-s timeoutbox__overskrift">
-                <FormattedMessage id={"timeout.overskrift"} />
-            </Innholdstittel>
-            <Normaltekst className="blokk-xxs">
-                <FormattedMessage id={"timeout.nedtelling"} />
-            </Normaltekst>
+            <Innholdstittel className="blokk-s timeoutbox__overskrift">{t("timeout.overskrift")}</Innholdstittel>
+            <Normaltekst className="blokk-xxs">{t("timeout.nedtelling")}</Normaltekst>
             <div className="timeoutbox__knapperad">
                 <Button variant="primary" onClick={onContinueClick}>
-                    <FormattedMessage id={"timeout.fortsett"} />
+                    {t("timeout.fortsett")}
                 </Button>
                 <Button variant="tertiary" as="a" href={utloggingsUrl} className="timeoutbox__loggutknapp">
-                    <FormattedMessage id={"timeout.loggut"} />
+                    {t("timeout.loggut")}
                 </Button>
             </div>
         </div>

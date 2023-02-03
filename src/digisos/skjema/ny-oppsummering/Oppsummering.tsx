@@ -8,7 +8,6 @@ import {
     hentOppsumeringFeilet,
     setNyOppsummering,
 } from "../../redux/oppsummering/oppsummeringActions";
-import {FormattedMessage} from "react-intl";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import BehandlingAvPersonopplysningerModal from "../../hovedmeny/paneler/BehandlingAvPersonopplysningerModal";
 import {NyOppsummeringBolk, NyOppsummeringResponse} from "../../redux/oppsummering/oppsummeringTypes";
@@ -99,11 +98,7 @@ export const Oppsummering = () => {
                                     {avsnitt.sporsmal?.map((sporsmal) => {
                                         return (
                                             <div key={sporsmal.tittel}>
-                                                {sporsmal.tittel && (
-                                                    <Label spacing>
-                                                        <FormattedMessage id={sporsmal.tittel} />
-                                                    </Label>
-                                                )}
+                                                {sporsmal.tittel && <Label spacing>{t(sporsmal.tittel)} </Label>}
                                                 {!sporsmal.erUtfylt && <Warning />}
                                                 <SystemData
                                                     felter={sporsmal.felt?.filter((felt) => felt.type === "SYSTEMDATA")}
@@ -157,13 +152,10 @@ export const Oppsummering = () => {
 
                 {visMidlertidigDeaktivertPanel && isNedetid && (
                     <Alert variant="error" style={{marginTop: "1rem"}}>
-                        <FormattedMessage
-                            id="nedetid.alertstripe.send"
-                            values={{
-                                nedetidstart: nedetidstart,
-                                nedetidslutt: nedetidslutt,
-                            }}
-                        />
+                        {t("nedetid.alertstripe.send", {
+                            nedetidstart,
+                            nedetidslutt,
+                        })}
                     </Alert>
                 )}
             </div>
@@ -181,9 +173,7 @@ const OppsummeringBolk = (props: {bolk: NyOppsummeringBolk; children: React.Reac
     return (
         <Accordion>
             <Accordion.Item>
-                <Accordion.Header>
-                    <FormattedMessage id={props.bolk.tittel} />
-                </Accordion.Header>
+                <Accordion.Header>t(props.bolk.tittel)</Accordion.Header>
                 <Accordion.Content>
                     <EditAnswer>
                         <ReactRouterLink className="navds-link" to={`/skjema/${behandlingsId}/${props.bolk.stegNr}`}>

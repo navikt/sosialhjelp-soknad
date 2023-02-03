@@ -2,7 +2,6 @@ import * as React from "react";
 import {BotypeListe, BotypePrimaerValg, BotypeSekundaerValg} from "./bosituasjonTypes";
 import {useBosituasjon} from "./useBosituasjon";
 import {RadioPanelGruppe, RadioPanelProps, SkjemaGruppe} from "nav-frontend-skjema";
-import {FormattedMessage} from "react-intl";
 import {NyttUnderskjema} from "./NyttUnderskjema";
 import {useTranslation} from "react-i18next";
 
@@ -28,7 +27,7 @@ const Botype = ({behandlingsId}: BotypeProps) => {
         }));
 
     return (
-        <SkjemaGruppe legend={<FormattedMessage id={"bosituasjon.sporsmal"} defaultMessage={"Hvordan bor du?"} />}>
+        <SkjemaGruppe legend={t("bosituasjon.sporsmal")}>
             <RadioPanelGruppe
                 radios={radiosFromBotyper(BotypePrimaerValg)}
                 name={"bosituasjon"}
@@ -37,9 +36,7 @@ const Botype = ({behandlingsId}: BotypeProps) => {
 
             <NyttUnderskjema hidden={!showBosituasjonSubmenu()}>
                 <RadioPanelGruppe
-                    legend={
-                        <FormattedMessage id={"bosituasjon.annet.botype.sporsmal"} defaultMessage={"Vil du utdype?"} />
-                    }
+                    legend={t("bosituasjon.annet.botype.sporsmal")}
                     radios={radiosFromBotyper(BotypeSekundaerValg)}
                     name={"bosituasjon.annet.botype"}
                     onChange={async (_e, botype) => setBosituasjon({botype})}

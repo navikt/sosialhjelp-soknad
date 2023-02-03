@@ -1,5 +1,4 @@
 import * as React from "react";
-import {FormattedMessage} from "react-intl";
 import {Fil, Opplysning, VedleggStatus} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
@@ -20,6 +19,7 @@ import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes"
 import {Dispatch} from "redux";
 import {logInfo} from "../../../nav-soknad/utils/loggerUtils";
 import {Button, Loader} from "@navikt/ds-react";
+import {useTranslation} from "react-i18next";
 
 const lastOppFil = (
     opplysning: Opplysning,
@@ -89,7 +89,7 @@ const LastOppFil = (props: {
             .map((opplysning: Opplysning) => opplysning.filer.length)
             .reduce((a: number, b: number) => a + b)
     );
-
+    const {t} = useTranslation();
     const dispatch = useDispatch();
 
     const vedleggElement = React.useRef<HTMLInputElement>(null);
@@ -131,7 +131,7 @@ const LastOppFil = (props: {
                 }}
                 className="last-opp-vedlegg-knapp"
             >
-                + <FormattedMessage id="opplysninger.vedlegg.knapp.tekst" />
+                + {t("opplysninger.vedlegg.knapp.tekst")}
                 {props.visSpinner && <Loader />}
             </Button>
             <input
@@ -155,12 +155,10 @@ const LastOppFil = (props: {
 
             <div role="alert" aria-live="assertive">
                 <div className="skjemaelement__feilmelding">
-                    {props.feilkode && props.feilkode !== REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR && (
-                        <FormattedMessage id={props.feilkode} />
-                    )}
-                    {props.feilkode && props.feilkode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR && (
-                        <FormattedMessage id={props.feilkode} values={{antall: antallFiler}} />
-                    )}
+                    {props.feilkode &&
+                        (props.feilkode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR
+                            ? t(props.feilkode, {antall: antallFiler})
+                            : t(props.feilkode))}
                 </div>
             </div>
         </div>

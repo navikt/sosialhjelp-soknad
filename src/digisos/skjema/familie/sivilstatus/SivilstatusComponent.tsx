@@ -117,10 +117,8 @@ const SivilstatusComponent = () => {
             </Sporsmal>
             {sivilstatus === Status.GIFT && (
                 <Informasjonspanel farge="viktig" ikon={"ella"}>
-                    <h4 className="skjema-sporsmal__infotekst__tittel">
-                        {t("system.familie.sivilstatus.informasjonspanel.tittel")}
-                    </h4>
-                    {t("system.familie.sivilstatus.informasjonspanel.tekst")}
+                    <h4 className="skjema-sporsmal__infotekst__tittel">{t("sivilstatus.informasjonspanel.tittel")}</h4>
+                    {t("sivilstatus.informasjonspanel.tekst")}
                 </Informasjonspanel>
             )}
         </div>

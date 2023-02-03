@@ -2,7 +2,6 @@ import React, {useState, useRef} from "react";
 import {lastOppEttersendelseVedlegg, slettEttersendtVedlegg} from "../../redux/ettersendelse/ettersendelseActions";
 import {useDispatch, useSelector} from "react-redux";
 import {downloadAttachedFile} from "../../../nav-soknad/utils/rest-utils";
-import {FormattedMessage} from "react-intl";
 import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
 import {Fil, OpplysningType} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {State} from "../../redux/reducers";
@@ -11,6 +10,7 @@ import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {BodyShort, Button, Loader} from "@navikt/ds-react";
 import styled from "styled-components";
 import {Attachment, Delete} from "@navikt/ds-icons";
+import {useTranslation} from "react-i18next";
 
 const VedleggsListe = styled.div`
     border-radius: 4px;
@@ -61,6 +61,7 @@ const EttersendelseVedlegg = (props: Props) => {
         (state: State) => state.ettersendelse
     );
 
+    const {t} = useTranslation();
     const dispatch = useDispatch();
 
     const leggTilVedleggKnapp = useRef<HTMLInputElement>(null);
@@ -131,16 +132,15 @@ const EttersendelseVedlegg = (props: Props) => {
             {opplastingsFeil && props.feilKode !== REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE && (
                 <BodyShort spacing className="skjema__feilmelding">
                     "{filnavn}" &nbsp;
-                    {!visFeilFiltypeFeilmelding && (
-                        <FormattedMessage id={props.feilKode ? props.feilKode : "opplysninger.vedlegg.ugyldig"} />
-                    )}
-                    {visFeilFiltypeFeilmelding && <FormattedMessage id="fil.feil.format" />}
+                    {visFeilFiltypeFeilmelding
+                        ? t("fil.feil.format")
+                        : t(props.feilKode ? props.feilKode : "opplysninger.vedlegg.ugyldig")}
                 </BodyShort>
             )}
 
             {opplastingsFeil && props.feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE && (
                 <BodyShort spacing className="skjema__feilmelding">
-                    {<FormattedMessage id={props.feilKode} />}
+                    {t(props.feilKode)}
                 </BodyShort>
             )}
 

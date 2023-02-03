@@ -1,9 +1,8 @@
 import {useState} from "react";
-import {Fil, Opplysning, OpplysningSpc, VedleggStatus} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
+import {Fil, Opplysning, VedleggStatus} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {useDispatch, useSelector} from "react-redux";
 import LastOppFil from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
-import {FormattedMessage} from "react-intl";
 import {
     lagreOpplysningHvisGyldigAction,
     settFilOpplastingFerdig,
@@ -11,17 +10,18 @@ import {
     updateOpplysning,
 } from "../../redux/okonomiskeOpplysninger/opplysningerActions";
 import OpplastetVedlegg from "./OpplastetVedlegg";
-import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {State} from "../../redux/reducers";
 import {fetchDelete, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {setShowServerError} from "../../redux/soknad/soknadActions";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {REST_FEIL} from "../../redux/soknad/soknadTypes";
+import {useTranslation} from "react-i18next";
 
 const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
     const feil = useSelector((state: State) => state.validering.feil);
     const enFilLastesOpp = useSelector((state: State) => state.okonomiskeOpplysninger.enFilLastesOpp);
+    const {t} = useTranslation();
 
     const [feilkode, setFeilkode] = useState<string | null>(null);
 
@@ -75,10 +75,6 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
     };
 
     const renderOpplastingAvVedleggSeksjon = (opplysning: Opplysning) => {
-        const opplysningSpc: OpplysningSpc | undefined = getSpcForOpplysning(opplysning.type);
-        const tittelKey =
-            opplysningSpc && opplysningSpc.textKey ? opplysningSpc.textKey + ".vedlegg.sporsmal.tittel" : "";
-
         const vedleggListe = opplysning.filer.map((fil) => {
             return (
                 <OpplastetVedlegg
@@ -94,9 +90,7 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
 
         return (
             <div>
-                <p>
-                    <FormattedMessage id={tittelKey} />
-                </p>
+                <p>t(tittelKey)</p>
                 <div className="vedleggsliste">{vedleggListe}</div>
                 <LastOppFil
                     opplysning={opplysning}
@@ -106,7 +100,7 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
                     setFeilkode={setFeilkode}
                 />
                 <Checkbox
-                    label={<FormattedMessage id={"opplysninger.vedlegg.alleredelastetopp"} />}
+                    label={t("opplysninger.vedlegg.alleredelastetopp")}
                     id={opplysning.type + "_allerede_lastet_opp_checkbox"}
                     className={"vedleggLastetOppCheckbox " + textDisabledClassName}
                     onChange={(event: any) => handleAlleredeLastetOpp(event)}

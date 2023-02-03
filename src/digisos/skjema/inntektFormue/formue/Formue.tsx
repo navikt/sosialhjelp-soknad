@@ -1,4 +1,3 @@
-import {FormattedMessage} from "react-intl";
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -98,7 +97,7 @@ export const FormueView = () => {
         if (oppstartsModus) {
             label = <TextPlaceholder lines={1} style={{marginTop: "0.2rem"}} />;
         } else {
-            label = <FormattedMessage id={FORMUE + ".true.type." + navn} />;
+            label = t(FORMUE + ".true.type." + navn);
         }
 
         return (
