@@ -8,7 +8,7 @@
     "@fremtind/jkl-formatters-util": "^3.0.22",
     "@fremtind/jkl-validators-util": "^2.5.3",
     "@navikt/ds-css": "^2.0.5",
-    "@navikt/ds-icons": "^2.0.5",
+    "@navikt/ds-icons": "^2.0.14",
     "@navikt/ds-react": "^2.0.5",
     "@navikt/ds-tailwind": "^2.0.5",
     "@navikt/fnrvalidator": "^1.2.0",
