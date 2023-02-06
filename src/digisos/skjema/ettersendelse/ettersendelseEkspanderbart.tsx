@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {FormattedMessage} from "react-intl";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import {MargIkoner} from "./margIkoner";
 import EttersendelseVedleggListe from "./ettersendelseVedleggListe";
@@ -9,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
 import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
 import {sendEttersendelse} from "../../redux/ettersendelse/ettersendelseActions";
+import {useTranslation} from "react-i18next";
 
 const StyledAccordionHeader = styled(Accordion.Header)`
     padding: 0 1rem 0 0;
@@ -32,6 +32,7 @@ interface Props {
 const EttersendelseEkspanderbart = (props: Props) => {
     const [ekspandert, setEkspandert] = useState(false);
     const [advarselManglerVedlegg, setAdvarselManglerVedlegg] = useState(false);
+    const {t} = useTranslation("skjema");
 
     const dispatch = useDispatch();
 
@@ -73,14 +74,10 @@ const EttersendelseEkspanderbart = (props: Props) => {
                 <StyledAccordionContent>
                     <AvsnittMedMarger>
                         {!props.kunGenerellDokumentasjon && props.ettersendelseAktivert && (
-                            <BodyShort spacing>
-                                <FormattedMessage id="ettersendelse.mangler_info" />
-                            </BodyShort>
+                            <BodyShort spacing>{t("ettersendelse.mangler_info")}</BodyShort>
                         )}
                         {!props.ettersendelseAktivert && (
-                            <BodyShort spacing>
-                                <FormattedMessage id="ettersendelse.mangler_info_manuell" />
-                            </BodyShort>
+                            <BodyShort spacing>{t("ettersendelse.mangler_info_manuell")}</BodyShort>
                         )}
                     </AvsnittMedMarger>
 

@@ -1,6 +1,5 @@
 import * as React from "react";
 import {skjulAvbrytSoknadModal, setShowServerError} from "../../../digisos/redux/soknad/soknadActions";
-import {FormattedMessage} from "react-intl";
 import {useDispatch} from "react-redux";
 import {basePath} from "../../../configuration";
 import {BodyShort, Button, Modal, Heading} from "@navikt/ds-react";
@@ -11,6 +10,7 @@ import {mobile} from "../../styles/variables";
 import {slettSoknad} from "../../../lib/slettSoknad";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
 import {useSoknad} from "../../../digisos/redux/soknad/useSoknad";
+import {useTranslation} from "react-i18next";
 
 const StyledModal = styled(Modal)`
     max-width: 40rem;
@@ -66,6 +66,7 @@ export const minSideUrl = `${process.env.REACT_APP_MIN_SIDE_URL}`;
 
 export const AvbrytSoknad = () => {
     const {behandlingsId, visAvbrytOgSlettModal} = useSoknad();
+    const {t} = useTranslation();
 
     const dispatch = useDispatch();
 
@@ -93,18 +94,16 @@ export const AvbrytSoknad = () => {
                     <img src={`${basePath}/statisk/bilder/ikon_ark.svg`} alt={""} />
                 </InfoIkon>
                 <Heading level="1" size="large" spacing>
-                    <FormattedMessage id={"avbryt.overskrift"} />
+                    {t("avbryt.overskrift")}
                 </Heading>
-                <BodyShort spacing>
-                    <FormattedMessage id={"avbryt.forklaring"} />
-                </BodyShort>
+                <BodyShort spacing>{t("avbryt.forklaring")}</BodyShort>
                 <NedetidPanel varselType={"infoside"} />
                 <ButtonRow>
                     <Button variant="primary" onClick={() => onAvbryt()}>
-                        <FormattedMessage id={"avbryt.fortsettsenere"} />
+                        {t("avbryt.fortsettsenere")}
                     </Button>
                     <Button variant="primary" onClick={() => onAvbryt()}>
-                        <FormattedMessage id={"avbryt.slett"} />
+                        {t("avbryt.slett")}
                     </Button>
                 </ButtonRow>
             </ModalContent>

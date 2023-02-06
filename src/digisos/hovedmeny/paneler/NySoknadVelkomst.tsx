@@ -2,59 +2,50 @@ import {useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
 import VelkomstSnakkeboble from "../../../nav-soknad/components/snakkeboble/Snakkeboble";
 import {BodyLong, Heading} from "@navikt/ds-react";
-import {FormattedMessage} from "react-intl";
 import * as React from "react";
+import {Trans, useTranslation} from "react-i18next";
 
 export const NySoknadVelkomst = () => {
     const {fornavn} = useSelector((state: State) => state.soknad);
+    const {t} = useTranslation("skjema");
 
     return (
         <div className={"p-8 lg:py-12 lg:px-24"}>
             <VelkomstSnakkeboble fornavn={fornavn} />
             <Heading level="2" size="small" spacing>
-                <FormattedMessage id="informasjon.start.undertittel" />
+                {t("informasjon.start.undertittel")}
             </Heading>
+            <BodyLong spacing>{t("informasjon.start.tekst_del1")}</BodyLong>
+            <BodyLong spacing>{t("informasjon.start.tekst_del2")}</BodyLong>
             <BodyLong spacing>
-                <FormattedMessage id="informasjon.start.tekst_del1" />
-            </BodyLong>
-            <BodyLong spacing>
-                <FormattedMessage id="informasjon.start.tekst_del2" />
-            </BodyLong>
-            <BodyLong spacing>
-                <FormattedMessage
-                    id="informasjon.start.tekst_del3"
-                    values={{
-                        a: (msg) => (
-                            // Disable target-blank-rule on internal urls
-                            /* eslint-disable react/jsx-no-target-blank */
-                            <a href="https://www.nav.no/okonomisk-sosialhjelp#soknad" target="_blank">
-                                {msg}
+                <Trans
+                    t={t}
+                    i18nKey={"informasjon.start.tekst_del3"}
+                    components={{
+                        lenke: (
+                            <a href="https://www.nav.no/okonomisk-sosialhjelp#soknad" target="_blank" rel="noreferrer">
+                                {null}
                             </a>
-                            /* eslint-enable react/jsx-no-target-blank */
                         ),
                     }}
                 />
             </BodyLong>
             <Heading level="2" size="small" spacing>
-                <FormattedMessage id="informasjon.svarpasoknad.undertittel" />
+                {t("informasjon.svarpasoknad.undertittel")}
             </Heading>
-            <BodyLong spacing>
-                <FormattedMessage id="informasjon.svarpasoknad.tekst" />
-            </BodyLong>
+            <BodyLong spacing>{t("informasjon.svarpasoknad.tekst")}</BodyLong>
             <Heading level="2" size="small" spacing>
-                <FormattedMessage id="informasjon.nodsituasjon.undertittel" />
+                {t("informasjon.nodsituasjon.undertittel")}
             </Heading>
             <BodyLong spacing>
-                <FormattedMessage
-                    id="informasjon.nodsituasjon.tekst"
-                    values={{
-                        a: (msg) => (
-                            // Disable target-blank-rule on internal urls
-                            /* eslint-disable react/jsx-no-target-blank */
-                            <a href="https://www.nav.no/sok-nav-kontor" target="_blank">
-                                {msg}
+                <Trans
+                    t={t}
+                    i18nKey={"informasjon.nodsituasjon.tekst"}
+                    components={{
+                        lenke: (
+                            <a href="https://www.nav.no/sok-nav-kontor" target="_blank" rel="noreferrer">
+                                {null}
                             </a>
-                            /* eslint-enable react/jsx-no-target-blank */
                         ),
                     }}
                 />

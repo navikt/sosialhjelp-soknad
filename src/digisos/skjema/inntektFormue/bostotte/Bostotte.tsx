@@ -1,8 +1,6 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {FormattedDate, FormattedMessage, FormattedNumber, useIntl} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
-
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {formatTidspunkt, getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
@@ -17,7 +15,9 @@ import {
     settSamtykkeOgOppdaterData,
 } from "../../../redux/soknadsdata/soknadsdataActions";
 import {UndertekstBold} from "nav-frontend-typografi";
-import {Alert, BodyShort, Button, Link, Loader} from "@navikt/ds-react";
+import {Alert, BodyShort, Button, Heading, Link, Loader} from "@navikt/ds-react";
+import {useTranslation} from "react-i18next";
+import {fmtCurrency} from "../../../../lib/fmtCurrency";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -29,7 +29,7 @@ const BostotteView = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
 
-    const intl = useIntl();
+    const {t, i18n} = useTranslation("skjema");
 
     useEffect(() => {
         if (behandlingsId) {
@@ -79,20 +79,16 @@ const BostotteView = () => {
         let key = "bostotteUtbetaling_" + index;
         return (
             <div className="utbetalinger blokk-xs" key={key}>
-                <div>
-                    <FormattedMessage id={`inntekt.bostotte.husbanken.mottaker.${mottaker.toLowerCase()}`} />
-                </div>
+                <div>{t(`inntekt.bostotte.husbanken.mottaker.${mottaker.toLowerCase()}`)}</div>
                 <div className="utbetaling">
                     <span>
-                        <FormattedMessage id="utbetalinger.utbetaling.erutbetalt.label" />
+                        {t("utbetalinger.utbetaling.erutbetalt.label")}
                         <span className="dato">
                             &nbsp;
                             <Dato>{dato}</Dato>
                         </span>
                     </span>
-                    <span className="verdi detaljeliste__verdi">
-                        <FormattedNumber value={netto} minimumFractionDigits={2} maximumFractionDigits={2} /> kr
-                    </span>
+                    <span className="verdi detaljeliste__verdi">{fmtCurrency(i18n.language, netto)}</span>
                 </div>
             </div>
         );
@@ -107,15 +103,12 @@ const BostotteView = () => {
         index: number
     ) => {
         const visningstatus =
-            status === "VEDTATT" ? (
-                <FormattedMessage id={`inntekt.bostotte.husbanken.vedtaksstatus.${vedtaksstatus.toLowerCase()}`} />
-            ) : (
-                <FormattedMessage
-                    id={`inntekt.bostotte.husbanken.status.${status.toLowerCase()}`}
-                    values={{status: status}}
-                />
-            );
-        let formatertDato = <FormattedDate value={dato} month="long" year="numeric" />;
+            status === "VEDTATT"
+                ? t(`inntekt.bostotte.husbanken.vedtaksstatus.${vedtaksstatus.toLowerCase()}`)
+                : t(`inntekt.bostotte.husbanken.status.${status.toLowerCase()}`, {status});
+        const formatertDato = new Intl.DateTimeFormat(i18n.language, {month: "long", year: "numeric"}).format(
+            new Date(dato)
+        );
         return (
             <div key={`${key}-${index}`} className="sak blokk-xs">
                 <span className="bostotte-dato">{formatertDato}</span>
@@ -146,10 +139,12 @@ const BostotteView = () => {
     const harBostotterSaker: boolean = bostotte.saker && bostotte.saker.length > 0;
     return (
         <div className="blokk-xs">
-            <h2>{getIntlTextOrKey(intl, "inntekt.bostotte.overskrift")}</h2>
+            <Heading size="medium" level="2">
+                {getIntlTextOrKey(t, "inntekt.bostotte.overskrift")}
+            </Heading>
             <JaNeiSporsmal
                 visPlaceholder={oppstartsModus}
-                tekster={getFaktumSporsmalTekst(intl, FAKTUM_BOSTOTTE)}
+                tekster={getFaktumSporsmalTekst(t, FAKTUM_BOSTOTTE)}
                 faktumKey={FAKTUM_BOSTOTTE}
                 verdi={bostotte ? bostotte.bekreftelse : null}
                 onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
@@ -159,7 +154,7 @@ const BostotteView = () => {
                     tekster={{
                         sporsmal:
                             requestToHusbankenFeilet || !harSamtykke
-                                ? getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke.overskrift")
+                                ? getIntlTextOrKey(t, "inntekt.bostotte.gi_samtykke.overskrift")
                                 : "",
                     }}
                 >
@@ -168,7 +163,7 @@ const BostotteView = () => {
                             {bostotte && bostotte.bekreftelse && (
                                 <>
                                     <BodyShort spacing>
-                                        {getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke.tekst")}
+                                        {getIntlTextOrKey(t, "inntekt.bostotte.gi_samtykke.tekst")}
                                     </BodyShort>
                                     <Button
                                         variant="secondary"
@@ -177,12 +172,12 @@ const BostotteView = () => {
                                             handleSettBostotteSamtykke(true);
                                         }}
                                     >
-                                        {getIntlTextOrKey(intl, "inntekt.bostotte.gi_samtykke")}
+                                        {getIntlTextOrKey(t, "inntekt.bostotte.gi_samtykke")}
                                         {oppstartsModus && <Loader />}
                                     </Button>
                                     {samtykkeTidspunktStreng === "" && requestToHusbankenFeilet && (
                                         <Alert variant="error">
-                                            {getIntlTextOrKey(intl, "inntekt.bostotte.nedlasting_feilet")}
+                                            {getIntlTextOrKey(t, "inntekt.bostotte.nedlasting_feilet")}
                                         </Alert>
                                     )}
                                 </>
@@ -193,16 +188,14 @@ const BostotteView = () => {
                         <>
                             <div>
                                 <UndertekstBold>{samtykkeTidspunktStreng}</UndertekstBold>
-                                <p>
-                                    <FormattedMessage id="inntekt.bostotte.husbanken.info" />
-                                </p>
+                                <p>{t("inntekt.bostotte.husbanken.info")}</p>
                             </div>
                             <UndertekstBold className="blokk-null">
-                                <FormattedMessage id="inntekt.bostotte.husbanken.utbetalinger" />
+                                {t("inntekt.bostotte.husbanken.utbetalinger")}
                             </UndertekstBold>
                             {!harBostotterUtbetalinger && (
                                 <div className="utbetalinger">
-                                    <FormattedMessage id="inntekt.bostotte.husbanken.ingenutbetalingerfunnet" />
+                                    {t("inntekt.bostotte.husbanken.ingenutbetalingerfunnet")}
                                 </div>
                             )}
                             {bostotte.utbetalinger.map((utbetaling, index) => {
@@ -214,12 +207,10 @@ const BostotteView = () => {
                                 );
                             })}
                             <UndertekstBold className="blokk-null saksoverskrift">
-                                <FormattedMessage id="inntekt.bostotte.husbanken.saker" />
+                                {t("inntekt.bostotte.husbanken.saker")}
                             </UndertekstBold>
                             {!harBostotterSaker && (
-                                <div className="sak blokk-xs">
-                                    <FormattedMessage id="inntekt.bostotte.husbanken.ingensakerfunnet" />
-                                </div>
+                                <div className="sak blokk-xs">{t("inntekt.bostotte.husbanken.ingensakerfunnet")}</div>
                             )}
                             {bostotte.saker.map((sak, index) => {
                                 return renderSak(
@@ -233,11 +224,11 @@ const BostotteView = () => {
                             })}
                             {(harBostotterUtbetalinger || harBostotterSaker) && (
                                 <Link
-                                    href={intl.formatMessage({id: "inntekt.bostotte.husbanken.url"})}
+                                    href={t("inntekt.bostotte.husbanken.url")}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <FormattedMessage id={"inntekt.bostotte.husbanken.lenkeText"} />
+                                    {t("inntekt.bostotte.husbanken.lenkeText")}
                                 </Link>
                             )}
                             <div className="bostotte-luft-over-ta-bort-knapp-lenke">
@@ -249,7 +240,7 @@ const BostotteView = () => {
                                     }}
                                     href="/ta_bort_samtykke"
                                 >
-                                    {getIntlTextOrKey(intl, "inntekt.bostotte.ta_bort_samtykke")}
+                                    {getIntlTextOrKey(t, "inntekt.bostotte.ta_bort_samtykke")}
                                 </Link>
                             </div>
                         </>

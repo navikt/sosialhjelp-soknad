@@ -1,5 +1,4 @@
 import * as React from "react";
-import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
@@ -9,6 +8,7 @@ import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
+import {useTranslation} from "react-i18next";
 
 const BarneutgifterKey = "utgifter.barn";
 
@@ -18,7 +18,7 @@ export const BarneutgifterView = () => {
 
     const dispatch = useDispatch();
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     React.useEffect(() => {
         if (behandlingsId) {
@@ -62,7 +62,7 @@ export const BarneutgifterView = () => {
                 id={"barneutgifter_" + navn + "_checkbox"}
                 name={navn}
                 checked={isChecked}
-                label={<FormattedMessage id={BarneutgifterKey + ".true.utgifter." + textKey} />}
+                label={t(BarneutgifterKey + ".true.utgifter." + textKey)}
                 onClick={() => handleClickRadio(navn)}
             />
         );
@@ -71,7 +71,7 @@ export const BarneutgifterView = () => {
     const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
     return (
         <JaNeiSporsmal
-            tekster={getFaktumSporsmalTekst(intl, BarneutgifterKey)}
+            tekster={getFaktumSporsmalTekst(t, BarneutgifterKey)}
             visible={barneutgifter.harForsorgerplikt}
             faktumKey={BarneutgifterKey}
             verdi={barneutgifter.bekreftelse}
@@ -79,7 +79,7 @@ export const BarneutgifterView = () => {
             legendTittelStyle={LegendTittleStyle.FET_NORMAL}
         >
             <Sporsmal
-                tekster={getFaktumSporsmalTekst(intl, BarneutgifterKey + ".true.utgifter")}
+                tekster={getFaktumSporsmalTekst(t, BarneutgifterKey + ".true.utgifter")}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 {renderCheckBox(BarneutgifterKeys.FRITIDSAKTIVITETER, BarneutgifterKeys.FRITIDSAKTIVITETER)}

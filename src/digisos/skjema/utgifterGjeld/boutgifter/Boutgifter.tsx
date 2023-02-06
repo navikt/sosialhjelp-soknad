@@ -1,5 +1,4 @@
 import * as React from "react";
-import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
@@ -11,6 +10,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {Link} from "@navikt/ds-react";
+import {Trans, useTranslation} from "react-i18next";
 
 const BOUTGIFTER = "utgifter.boutgift";
 
@@ -19,8 +19,7 @@ export const BoutgifterView = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
 
     const dispatch = useDispatch();
-
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     React.useEffect(() => {
         if (behandlingsId) {
@@ -65,7 +64,7 @@ export const BoutgifterView = () => {
                 id={"boutgifter_" + navn + "_checkbox"}
                 name={navn}
                 checked={isChecked}
-                label={<FormattedMessage id={BOUTGIFTER + ".true.type." + textKey} />}
+                label={t(BOUTGIFTER + ".true.type." + textKey)}
                 onClick={() => handleClickRadio(navn)}
             />
         );
@@ -75,14 +74,14 @@ export const BoutgifterView = () => {
     return (
         <div className="skjema-sporsmal">
             <JaNeiSporsmal
-                tekster={getFaktumSporsmalTekst(intl, BOUTGIFTER)}
+                tekster={getFaktumSporsmalTekst(t, BOUTGIFTER)}
                 faktumKey={BOUTGIFTER}
                 verdi={boutgifter.bekreftelse}
                 onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <Sporsmal
-                    tekster={getFaktumSporsmalTekst(intl, BOUTGIFTER + ".true.type")}
+                    tekster={getFaktumSporsmalTekst(t, BOUTGIFTER + ".true.type")}
                     legendTittelStyle={LegendTittleStyle.FET_NORMAL}
                 >
                     {renderCheckBox(BoutgifterKeys.HUSLEIE, BoutgifterKeys.HUSLEIE)}
@@ -95,16 +94,17 @@ export const BoutgifterView = () => {
             </JaNeiSporsmal>
             {boutgifter && boutgifter.skalViseInfoVedBekreftelse && boutgifter.bekreftelse === true && (
                 <Informasjonspanel ikon={"ella"} farge="viktig">
-                    <FormattedMessage
-                        id="informasjon.husbanken.bostotte.v2"
-                        values={{
-                            a: (msg) => (
+                    <Trans
+                        t={t}
+                        i18nKey={"informasjon.husbanken.bostotte.v2"}
+                        components={{
+                            lenke: (
                                 <Link
-                                    href={intl.formatMessage({id: "informasjon.husbanken.bostotte.url"})}
+                                    href={t("informasjon.husbanken.bostotte.url")}
                                     target="_blank"
                                     rel="noreferrer noopener"
                                 >
-                                    {msg}
+                                    {null}
                                 </Link>
                             ),
                         }}

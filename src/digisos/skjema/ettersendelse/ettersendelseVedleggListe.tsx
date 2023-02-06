@@ -1,13 +1,13 @@
 import React from "react";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
-import {FormattedMessage, useIntl} from "react-intl";
 import {useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
 import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {BodyShort, Button, Heading, Loader} from "@navikt/ds-react";
+import {useTranslation} from "react-i18next";
 
 const EttersendelseVedleggListe = (props: {
     ettersendelseAktivert: boolean;
@@ -20,7 +20,7 @@ const EttersendelseVedleggListe = (props: {
         (state: State) => state.ettersendelse
     );
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     return (
         <div>
@@ -31,8 +31,9 @@ const EttersendelseVedleggListe = (props: {
                         const tittelKey = spc ? spc.textKey + ".vedlegg.sporsmal.tittel" : "";
                         const infoKey = spc ? spc.textKey + ".vedlegg.sporsmal.info" : "";
                         let info;
-                        if (infoKey && !!intl.messages[infoKey]) {
-                            info = intl.formatMessage({id: infoKey});
+                        // FIXME: I think this is broken
+                        if (infoKey && !!t(infoKey)) {
+                            info = t(infoKey);
                         }
                         if (!props.ettersendelseAktivert && vedlegg.type === "annet|annet") {
                             return null;
@@ -46,7 +47,7 @@ const EttersendelseVedleggListe = (props: {
                             >
                                 {tittelKey && (
                                     <Heading level="3" size="xsmall" spacing>
-                                        <FormattedMessage id={tittelKey} />
+                                        {t(tittelKey)}
                                     </Heading>
                                 )}
                                 {info && <BodyShort spacing>{info}</BodyShort>}
@@ -57,7 +58,7 @@ const EttersendelseVedleggListe = (props: {
             <AvsnittMedMarger>
                 {advarselManglerVedlegg && (
                     <BodyShort spacing className="skjema__feilmelding">
-                        <FormattedMessage id="ettersendelse.feilmelding.ingen_vedlegg" />
+                        {t("ettersendelse.feilmelding.ingen_vedlegg")}
                     </BodyShort>
                 )}
                 {props.ettersendelseAktivert && (

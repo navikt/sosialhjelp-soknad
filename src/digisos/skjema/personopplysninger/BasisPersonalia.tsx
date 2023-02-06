@@ -6,13 +6,13 @@ import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
 import {useHentBasisPersonalia} from "../../../generated/basis-personalia-ressurs/basis-personalia-ressurs";
 import {useErrorHandler} from "../../../lib/hooks/useErrorHandler";
 import {useTranslation} from "react-i18next";
+import {formatFodselsnummer} from "@fremtind/jkl-formatters-util";
 
 // TODO: Figure out error handling
 export const BasisPersonaliaData = () => {
     const {request} = useAlgebraic(useHentBasisPersonalia(useBehandlingsId()));
     const {t} = useTranslation("skjema", {keyPrefix: "kontakt.system.personalia"});
     const errorHandler = useErrorHandler();
-
     return request.match({
         NotAsked: () => null,
         Loading: () => <TextPlaceholder lines={3} />,
@@ -22,7 +22,7 @@ export const BasisPersonaliaData = () => {
                 Ok: ({navn, fodselsnummer, statsborgerskap = "Ukjent/statsløs"}) => (
                     <Systeminfo>
                         <SysteminfoItem label={t("navn")}>{navn?.fulltNavn}</SysteminfoItem>
-                        <SysteminfoItem label={t("fnr")}>{fodselsnummer}</SysteminfoItem>
+                        <SysteminfoItem label={t("fnr")}>{formatFodselsnummer(fodselsnummer ?? "")}</SysteminfoItem>
                         <SysteminfoItem label={t("statsborgerskap")}>{statsborgerskap}</SysteminfoItem>
                     </Systeminfo>
                 ),

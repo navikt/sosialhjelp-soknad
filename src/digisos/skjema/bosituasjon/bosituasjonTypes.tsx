@@ -1,4 +1,9 @@
-import {MessageDescriptor} from "react-intl";
+// Copied from react-intl during transition to i18-next
+export interface MessageDescriptor {
+    id: string;
+    description?: string | object;
+    defaultMessage?: string;
+}
 
 export type BotypePrimaer = "eier" | "leier" | "kommunal" | "ingen" | "annet";
 export type BotypePrimaerListe = Record<BotypePrimaer, BotypeDescriptor>;
@@ -12,11 +17,11 @@ export type BotypeListe = BotypePrimaerListe | BotypeSekundaerListe;
 export type BotypeDescriptor = {messageDescriptor: MessageDescriptor};
 
 export const BotypePrimaerValg: Record<BotypePrimaer, BotypeDescriptor> = {
-    eier: {messageDescriptor: {id: "botype.eier", defaultMessage: "Jeg bor i bolig jeg eier selv"}},
-    leier: {messageDescriptor: {id: "botype.leier", defaultMessage: "Jeg leier privat bolig"}},
-    kommunal: {messageDescriptor: {id: "botype.kommunal", defaultMessage: "Jeg leier kommunal bolig"}},
-    ingen: {messageDescriptor: {id: "botype.ingen", defaultMessage: "Jeg har ikke noe sted å bo"}},
-    annet: {messageDescriptor: {id: "botype.annet", defaultMessage: "Annen bosituasjon"}},
+    eier: {messageDescriptor: {id: "bosituasjon.eier", defaultMessage: "Jeg bor i bolig jeg eier selv"}},
+    leier: {messageDescriptor: {id: "bosituasjon.leier", defaultMessage: "Jeg leier privat bolig"}},
+    kommunal: {messageDescriptor: {id: "bosituasjon.kommunal", defaultMessage: "Jeg leier kommunal bolig"}},
+    ingen: {messageDescriptor: {id: "bosituasjon.ingen", defaultMessage: "Jeg har ikke noe sted å bo"}},
+    annet: {messageDescriptor: {id: "bosituasjon.annet", defaultMessage: "Annen bosituasjon"}},
 };
 
 export const BotypeSekundaerValg: Record<BotypeSekundaer, BotypeDescriptor> = {

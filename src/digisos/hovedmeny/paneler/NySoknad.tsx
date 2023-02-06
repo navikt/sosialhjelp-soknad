@@ -1,5 +1,4 @@
 import {Accordion, Alert, Button, Heading, Loader} from "@navikt/ds-react";
-import {FormattedMessage, useIntl} from "react-intl";
 import * as React from "react";
 import {useDispatch} from "react-redux";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
@@ -11,6 +10,7 @@ import {NySoknadVelkomst} from "./NySoknadVelkomst";
 import {useSoknad} from "../../redux/soknad/useSoknad";
 import {startSoknad} from "../../../lib/StartSoknad";
 import {useNavigate} from "react-router";
+import {useTranslation} from "react-i18next";
 
 export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
     const {startSoknadPending, startSoknadFeilet, visNedetidPanel, harNyligInnsendteSoknader} = useSoknad();
@@ -18,7 +18,7 @@ export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     const onSokSosialhjelpButtonClick = async (event: React.SyntheticEvent) => {
         event.preventDefault();
@@ -38,11 +38,7 @@ export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
             <NySoknadVelkomst />
             <Personopplysninger />
             <NedetidPanel varselType={"infoside"} />
-            {startSoknadFeilet && (
-                <Alert variant="error">
-                    <FormattedMessage id="applikasjon.opprettsoknadfeilet" />
-                </Alert>
-            )}
+            {startSoknadFeilet && <Alert variant="error">{t("applikasjon.opprettsoknadfeilet")}</Alert>}
             <div className={"pt-16 text-center"}>
                 <Button
                     variant="primary"
@@ -50,7 +46,7 @@ export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
                     disabled={startSoknadPending || visNedetidPanel}
                     onClick={onSokSosialhjelpButtonClick}
                 >
-                    {getIntlTextOrKey(intl, "skjema.knapper.start")}
+                    {getIntlTextOrKey(t, "skjema.knapper.start")}
                     {startSoknadPending && <Loader />}
                 </Button>
             </div>

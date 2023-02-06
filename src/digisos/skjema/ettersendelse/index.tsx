@@ -1,5 +1,4 @@
 import {useDispatch, useSelector} from "react-redux";
-import {FormattedMessage} from "react-intl";
 import {State} from "../../redux/reducers";
 import React, {useEffect} from "react";
 import BannerEttersendelse from "./bannerEttersendelse";
@@ -16,11 +15,13 @@ import {useTitle} from "../../../nav-soknad/hooks/useTitle";
 import {BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
 import {BlokkCenter} from "./BlokkCenter";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
+import {Trans, useTranslation} from "react-i18next";
 
 type EttersendelseParams = Record<"behandlingsId", string>;
 
 const Ettersendelse = () => {
     const dispatch = useDispatch();
+    const {t} = useTranslation("skjema");
 
     const params = useParams<EttersendelseParams>();
     const {behandlingsId, nedetid} = useSelector((state: State) => state.soknad);
@@ -56,14 +57,10 @@ const Ettersendelse = () => {
 
     return (
         <div className="ettersendelse">
-            <BannerEttersendelse>
-                <FormattedMessage id="applikasjon.sidetittel" />
-            </BannerEttersendelse>
+            <BannerEttersendelse>{t("applikasjon.sidetittel")}</BannerEttersendelse>
             <NedetidPanel varselType={"ettersendelse"} />
             <BlokkCenter>
-                <Ingress spacing>
-                    <FormattedMessage id="ettersendelse.ingress" />
-                </Ingress>
+                <Ingress spacing>{t("ettersendelse.ingress")}</Ingress>
 
                 {originalSoknad && (
                     <AvsnittMedMarger
@@ -72,7 +69,7 @@ const Ettersendelse = () => {
                         onClickHoyreIkon={() => skrivUt()}
                     >
                         <Heading level="2" size="small">
-                            <FormattedMessage id="ettersendelse.soknad_sendt" /> {originalSoknad.navenhet} kommune
+                            {t("ettersendelse.soknad_sendt")} {originalSoknad.navenhet} kommune
                         </Heading>
                         <BodyShort>
                             Innsendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}
@@ -83,16 +80,13 @@ const Ettersendelse = () => {
                 {ettersendelser?.map(({behandlingsId, innsendtTidspunkt, innsendtDato}) => (
                     <AvsnittMedMarger venstreIkon={MargIkoner.OK} key={behandlingsId}>
                         <Heading level="2" size="small">
-                            <FormattedMessage id="ettersendelse.vedlegg_sendt" />
+                            {t("ettersendelse.vedlegg_sendt")}
                         </Heading>
                         <BodyShort>
-                            <FormattedMessage
-                                id="ettersendelse.dato_tid"
-                                values={{
-                                    dato: innsendtDato,
-                                    tid: innsendtTidspunkt,
-                                }}
-                            />
+                            {t("ettersendelse.dato_tid", {
+                                dato: innsendtDato,
+                                tid: innsendtTidspunkt,
+                            })}
                         </BodyShort>
                     </AvsnittMedMarger>
                 ))}
@@ -105,7 +99,7 @@ const Ettersendelse = () => {
                 {opprettNyEttersendelseFeilet && !nedetid?.isNedetid && (
                     <AvsnittMedMarger>
                         <Informasjonspanel ikon={"hensyn"} farge="viktig">
-                            <FormattedMessage id="ettersendelse.ikke.mulig" />
+                            {t("ettersendelse.ikke.mulig")}
                         </Informasjonspanel>
                     </AvsnittMedMarger>
                 )}
@@ -124,7 +118,7 @@ const Ettersendelse = () => {
                         )}
                         {antallManglendeVedlegg() === 0 && (
                             <Heading level="2" size="small">
-                                <FormattedMessage id="ettersendelse.generell.dokumentasjon" />
+                                {t("ettersendelse.generell.dokumentasjon")}
                             </Heading>
                         )}
                     </EttersendelseEkspanderbart>
@@ -132,15 +126,14 @@ const Ettersendelse = () => {
 
                 <AvsnittMedMarger venstreIkon={MargIkoner.SNAKKEBOBLER}>
                     <Heading level="2" size="small" spacing>
-                        <FormattedMessage id="ettersendelse.samtale.tittel" />
+                        {t("ettersendelse.samtale.tittel")}
                     </Heading>
                     <BodyShort>
-                        <FormattedMessage
-                            id="ettersendelse.samtale.info.v2"
-                            values={{
-                                a: (msg) => (
-                                    <Link href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote">{msg}</Link>
-                                ),
+                        <Trans
+                            t={t}
+                            i18nKey={"ettersendelse.samtale.info.v2"}
+                            components={{
+                                lenke: <Link href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote">{null}</Link>,
                             }}
                         />
                     </BodyShort>
@@ -148,11 +141,9 @@ const Ettersendelse = () => {
 
                 <AvsnittMedMarger venstreIkon={MargIkoner.KONVOLUTT}>
                     <Heading level="2" size="small" spacing>
-                        <FormattedMessage id="ettersendelse.vedtak.tittel" />
+                        {t("ettersendelse.vedtak.tittel")}
                     </Heading>
-                    <BodyShort>
-                        <FormattedMessage id="ettersendelse.vedtak.info" />
-                    </BodyShort>
+                    <BodyShort>{t("ettersendelse.vedtak.info")}</BodyShort>
                 </AvsnittMedMarger>
             </BlokkCenter>
             <span>

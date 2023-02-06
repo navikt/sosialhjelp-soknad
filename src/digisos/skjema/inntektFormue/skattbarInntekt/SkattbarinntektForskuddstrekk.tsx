@@ -1,9 +1,10 @@
 import {Organisasjon, SkattbarInntekt} from "./inntektTypes";
 import * as React from "react";
-import {FormattedMessage, FormattedNumber} from "react-intl";
 import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Link} from "@navikt/ds-react";
+import {useTranslation} from "react-i18next";
+import {fmtCurrency} from "../../../../lib/fmtCurrency";
 
 function getLenkeSti(organisasjon: Organisasjon): string {
     let orgnr = organisasjon.orgnr ? "/" + organisasjon.orgnr : "";
@@ -12,18 +13,16 @@ function getLenkeSti(organisasjon: Organisasjon): string {
     return `https://skatt.skatteetaten.no/web/innsynamelding/inntekt${orgnr}?year=${year}&month=${month}`;
 }
 
-function getUtbetalingVerdi(key: string, value: number, index: number) {
+const UtbetalingVerdi = ({description, value}: {description: string; value: number}) => {
+    const {t, i18n} = useTranslation();
+
     return (
-        <div key={`${key}-${index}`} className="utbetaling">
-            <span>
-                <FormattedMessage id={key} defaultMessage={key} />:
-            </span>
-            <span className="verdi detaljeliste__verdi">
-                <FormattedNumber value={value} minimumFractionDigits={2} maximumFractionDigits={2} /> kr
-            </span>
+        <div className="flex justify-between">
+            <div>{t(description)}:</div>
+            <div>{fmtCurrency(i18n.language, value)}</div>
         </div>
     );
-}
+};
 
 type SkattbartForskuddProps = {skattbarinntektogforskuddstrekk: SkattbarInntekt[]};
 
@@ -48,12 +47,20 @@ const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({skattb
                                     let utbetalingVerdier = [];
                                     if (utbetaling.brutto) {
                                         utbetalingVerdier.push(
-                                            getUtbetalingVerdi("Bruttoinntekt", utbetaling.brutto, index)
+                                            <UtbetalingVerdi
+                                                description={"Bruttoinntekt"}
+                                                value={utbetaling.brutto}
+                                                key={`Bruttoinntekt-${index}`}
+                                            />
                                         );
                                     }
                                     if (utbetaling.forskuddstrekk) {
                                         utbetalingVerdier.push(
-                                            getUtbetalingVerdi("Forskuddstrekk", utbetaling.forskuddstrekk, index)
+                                            <UtbetalingVerdi
+                                                description={"Forskuddstrekk"}
+                                                value={utbetaling.forskuddstrekk}
+                                                key={`Forskuddstrekk-${index}`}
+                                            />
                                         );
                                     }
                                     return utbetalingVerdier;

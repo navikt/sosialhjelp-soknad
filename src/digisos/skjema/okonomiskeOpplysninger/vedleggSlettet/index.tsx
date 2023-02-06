@@ -3,7 +3,7 @@ import {Opplysning} from "../../../redux/okonomiskeOpplysninger/opplysningerType
 import {getSpcForOpplysning} from "../../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import {basePath} from "../../../../configuration";
-import {useIntl} from "react-intl";
+import {useTranslation} from "react-i18next";
 
 interface OwnProps {
     opplysning: Opplysning;
@@ -15,8 +15,8 @@ const VedleggSlettet: React.FC<Props> = (props: Props) => {
     const opplysningSpc = getSpcForOpplysning(props.opplysning.type);
     const textKeyBase = opplysningSpc ? opplysningSpc.textKey : "";
     const textKey = textKeyBase + ".slettet";
-    const intl = useIntl();
-    const intlTextOrKey = getIntlTextOrKey(intl, textKey);
+    const {t} = useTranslation("skjema");
+    const intlTextOrKey = getIntlTextOrKey(t, textKey);
 
     return (
         <div className="vedlegg_slettet_wrapper">

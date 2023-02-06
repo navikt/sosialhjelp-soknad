@@ -1,11 +1,11 @@
 import * as React from "react";
-import {useIntl} from "react-intl";
 import {Input} from "nav-frontend-skjema";
 import {getInputFaktumTekst, replaceDotWithUnderscore} from "../utils";
 import {State} from "../../digisos/redux/reducers";
 import {useSelector} from "react-redux";
 import {getFeil} from "../utils/enhancedComponentUtils";
 import {ChangeEvent} from "react";
+import {useTranslation} from "react-i18next";
 
 export type InputTypes = "text" | "number" | "email" | "tel";
 
@@ -57,10 +57,10 @@ const InputEnhanced = ({
     onChange,
     inputMode,
 }: InputEnhancedProps) => {
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
     const feil = useSelector((state: State) => state.validering.feil);
-    const tekster = getInputFaktumTekst(intl, textKey || faktumKey);
-    const feil_ = getFeil(feil, intl, faktumKey, faktumIndex);
+    const tekster = getInputFaktumTekst(t, textKey || faktumKey);
+    const feil_ = getFeil(feil, t, faktumKey, faktumIndex);
 
     return (
         <Input

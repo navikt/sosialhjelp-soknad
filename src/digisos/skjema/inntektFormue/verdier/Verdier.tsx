@@ -1,6 +1,5 @@
 import * as React from "react";
 import {onEndretValideringsfeil} from "../../../redux/validering/valideringUtils";
-import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
@@ -16,6 +15,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {setValideringsfeil, clearValideringsfeil} from "../../../redux/validering/valideringActions";
+import {useTranslation} from "react-i18next";
 
 const MAX_CHARS = 500;
 const VERDIER = "inntekt.eierandeler";
@@ -31,7 +31,7 @@ export const VerdierView = () => {
 
     const feil = useSelector((state: State) => state.validering.feil);
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     React.useEffect(() => {
         if (behandlingsId) {
@@ -116,7 +116,7 @@ export const VerdierView = () => {
                 id={"verdier_" + navn + "_checkbox"}
                 name={navn}
                 checked={!!verdier[navn]}
-                label={<FormattedMessage id={VERDIER + ".true.type." + navn} />}
+                label={t(VERDIER + ".true.type." + navn)}
                 onClick={() => handleClickRadio(navn)}
             />
         );
@@ -127,14 +127,14 @@ export const VerdierView = () => {
     return (
         <JaNeiSporsmal
             visPlaceholder={oppstartsModus && restStatus !== REST_STATUS.OK}
-            tekster={getFaktumSporsmalTekst(intl, VERDIER)}
+            tekster={getFaktumSporsmalTekst(t, VERDIER)}
             faktumKey={VERDIER}
             verdi={verdier.bekreftelse}
             onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
             legendTittelStyle={LegendTittleStyle.FET_NORMAL}
         >
             <Sporsmal
-                tekster={getFaktumSporsmalTekst(intl, VERDIER + ".true.type")}
+                tekster={getFaktumSporsmalTekst(t, VERDIER + ".true.type")}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 {renderCheckBox(VerdierKeys.BOLIG)}

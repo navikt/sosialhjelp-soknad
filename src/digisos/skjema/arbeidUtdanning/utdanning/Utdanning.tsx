@@ -1,7 +1,6 @@
 import * as React from "react";
 import {useDispatch} from "react-redux";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
-import {useIntl} from "react-intl";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
@@ -9,6 +8,7 @@ import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/sok
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {useSoknadsdata} from "../../../redux/soknadsdata/useSoknadsdata";
 import {useSoknad} from "../../../redux/soknad/useSoknad";
+import {useTranslation} from "react-i18next";
 
 const FAKTUM_STUDIER = "dinsituasjon.studerer";
 const FAKTUM_STUDERER = "dinsituasjon.studerer.true.grad";
@@ -20,7 +20,7 @@ const UtdanningView = () => {
 
     const dispatch = useDispatch();
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     React.useEffect(() => {
         behandlingsId && hentSoknadsdata(behandlingsId, SoknadsSti.UTDANNING, dispatch);
@@ -46,14 +46,14 @@ const UtdanningView = () => {
 
     return (
         <JaNeiSporsmal
-            tekster={getFaktumSporsmalTekst(intl, FAKTUM_STUDIER)}
+            tekster={getFaktumSporsmalTekst(t, FAKTUM_STUDIER)}
             faktumKey={FAKTUM_STUDIER}
             verdi={erStudent}
             onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
             legendTittelStyle={LegendTittleStyle.FET_NORMAL}
         >
             <Sporsmal
-                tekster={getFaktumSporsmalTekst(intl, FAKTUM_STUDERER)}
+                tekster={getFaktumSporsmalTekst(t, FAKTUM_STUDERER)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <RadioEnhanced

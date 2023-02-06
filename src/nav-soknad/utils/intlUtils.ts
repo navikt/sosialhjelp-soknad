@@ -1,25 +1,13 @@
-import {IntlShape} from "react-intl";
+import {TFunction} from "i18next";
 
-export function intlHasKey(intl: IntlShape, key: string) {
-    if (!intl.messages) {
-        return false;
-    }
-    return intl.messages[key] !== undefined;
-}
+export const getIntlText = (t: TFunction<"skjema", undefined, "skjema">, key: string) =>
+    key !== t(key) ? t(key) : undefined;
 
-export function getIntlText(intl?: IntlShape, key?: string) {
-    if (!intl) return key;
-
-    if (!key) return undefined;
-
-    return intlHasKey(intl, key) ? intl.formatMessage({id: key}) : undefined;
-}
-
-export function getIntlTextOrKey(intl: IntlShape, key: string): string {
-    if (typeof intl === "undefined") {
+export function getIntlTextOrKey(t: TFunction<"skjema", undefined, "skjema">, key: string): string {
+    if (typeof t === "undefined") {
         return key;
     }
-    const tekst = getIntlText(intl, key);
+    const tekst = t(key);
     return tekst || key;
 }
 

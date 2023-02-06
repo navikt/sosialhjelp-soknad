@@ -2,14 +2,12 @@ import React, {useEffect, useState} from "react";
 import {Accordion, ConfirmationPanel, Link, Label, Alert} from "@navikt/ds-react";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../redux/reducers";
-import {oppdaterSoknadsmottakerStatus} from "../../redux/soknad/soknadActions";
 import {
     bekreftOppsummering,
     hentNyOppsummering,
     hentOppsumeringFeilet,
     setNyOppsummering,
 } from "../../redux/oppsummering/oppsummeringActions";
-import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import BehandlingAvPersonopplysningerModal from "../../hovedmeny/paneler/BehandlingAvPersonopplysningerModal";
 import {NyOppsummeringBolk, NyOppsummeringResponse} from "../../redux/oppsummering/oppsummeringTypes";
@@ -29,11 +27,10 @@ import styled from "styled-components";
 import {useSoknad} from "../../redux/soknad/useSoknad";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
-import {NavEnhet} from "../personopplysninger/adresse/AdresseTypes";
-import {soknadsdataUrl} from "../../redux/soknadsdata/soknadsdataActions";
-import {SoknadsSti} from "../../redux/soknadsdata/soknadsdataReducer";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {useTranslation} from "react-i18next";
+import {hentNavEnheter} from "../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
@@ -51,7 +48,7 @@ export const Oppsummering = () => {
     const [loading, setLoading] = useState(true);
     const behandlingsId = useBehandlingsId();
     const {bekreftet, visBekreftMangler, nyOppsummering} = useSelector((state: State) => state.oppsummering);
-    const {valgtSoknadsmottaker, showSendingFeiletPanel, nedetid, visMidlertidigDeaktivertPanel} = useSoknad();
+    const {showSendingFeiletPanel, nedetid, visMidlertidigDeaktivertPanel} = useSoknad();
 
     const nedetidstart = nedetid?.nedetidStartText ?? "";
     const nedetidslutt = nedetid?.nedetidSluttText ?? "";
@@ -59,19 +56,19 @@ export const Oppsummering = () => {
 
     const navigate = useNavigate();
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     useEffect(() => {
         if (!behandlingsId) return;
 
-        fetchToJson<NavEnhet[]>(soknadsdataUrl(behandlingsId, SoknadsSti.NAV_ENHETER)).then((enheter) => {
+        hentNavEnheter(behandlingsId).then((enheter) => {
             const valgtSoknadsmottaker = enheter.find((n) => n.valgt);
             if (!valgtSoknadsmottaker || valgtSoknadsmottaker.isMottakMidlertidigDeaktivert) {
+                // TODO: Mer brukervennlig melding her
                 logWarning(`Ugyldig søknadsmottaker ${valgtSoknadsmottaker} på side 9, sender bruker til side 1`);
-                navigate("1");
+                navigate("../1");
                 return;
             }
-            dispatch(oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker));
         });
 
         dispatch(hentNyOppsummering());
@@ -86,9 +83,7 @@ export const Oppsummering = () => {
         setLoading(false);
     }, [behandlingsId, dispatch, navigate]);
 
-    const bekreftOpplysninger: string = intl.formatMessage({
-        id: "soknadsosialhjelp.oppsummering.harLestSamtykker",
-    });
+    const bekreftOpplysninger: string = t("soknadsosialhjelp.oppsummering.harLestSamtykker");
 
     if (loading) return <ApplicationSpinner />;
 
@@ -99,15 +94,11 @@ export const Oppsummering = () => {
                     return (
                         <OppsummeringBolk bolk={bolk} key={bolk.stegNr}>
                             {bolk.avsnitt.map((avsnitt) => (
-                                <QuestionEl key={avsnitt.tittel} title={intl.formatMessage({id: avsnitt.tittel})}>
+                                <QuestionEl key={avsnitt.tittel} title={t(avsnitt.tittel)}>
                                     {avsnitt.sporsmal?.map((sporsmal) => {
                                         return (
                                             <div key={sporsmal.tittel}>
-                                                {sporsmal.tittel && (
-                                                    <Label spacing>
-                                                        <FormattedMessage id={sporsmal.tittel} />
-                                                    </Label>
-                                                )}
+                                                {sporsmal.tittel && <Label spacing>{t(sporsmal.tittel)} </Label>}
                                                 {!sporsmal.erUtfylt && <Warning />}
                                                 <SystemData
                                                     felter={sporsmal.felt?.filter((felt) => felt.type === "SYSTEMDATA")}
@@ -136,7 +127,7 @@ export const Oppsummering = () => {
                     );
                 })}
 
-                {valgtSoknadsmottaker && <SoknadsmottakerInfoPanel valgtSoknadsmottaker={valgtSoknadsmottaker} />}
+                <SoknadsmottakerInfoPanel />
 
                 <ConfirmationPanel
                     label={bekreftOpplysninger}
@@ -144,7 +135,7 @@ export const Oppsummering = () => {
                     onChange={() => dispatch(bekreftOppsummering())}
                     error={visBekreftMangler}
                 >
-                    <FormattedMessage id="soknadsosialhjelp.oppsummering.bekreftOpplysninger" />
+                    {t("soknadsosialhjelp.oppsummering.bekreftOpplysninger")}
                 </ConfirmationPanel>
 
                 <BehandlingAvPersonopplysningerModal />
@@ -161,13 +152,10 @@ export const Oppsummering = () => {
 
                 {visMidlertidigDeaktivertPanel && isNedetid && (
                     <Alert variant="error" style={{marginTop: "1rem"}}>
-                        <FormattedMessage
-                            id="nedetid.alertstripe.send"
-                            values={{
-                                nedetidstart: nedetidstart,
-                                nedetidslutt: nedetidslutt,
-                            }}
-                        />
+                        {t("nedetid.alertstripe.send", {
+                            nedetidstart,
+                            nedetidslutt,
+                        })}
                     </Alert>
                 )}
             </div>
@@ -182,12 +170,12 @@ const EditAnswer = styled.div`
 
 const OppsummeringBolk = (props: {bolk: NyOppsummeringBolk; children: React.ReactNode}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
+    const {t} = useTranslation();
+
     return (
         <Accordion>
             <Accordion.Item>
-                <Accordion.Header>
-                    <FormattedMessage id={props.bolk.tittel} />
-                </Accordion.Header>
+                <Accordion.Header>{t(props.bolk.tittel)}</Accordion.Header>
                 <Accordion.Content>
                     <EditAnswer>
                         <ReactRouterLink className="navds-link" to={`/skjema/${behandlingsId}/${props.bolk.stegNr}`}>

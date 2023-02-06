@@ -6,7 +6,6 @@ import {
     VisMidlertidigDeaktivertPanel,
     VisNedetidPanel,
 } from "./soknadActionTypes";
-import {NavEnhet} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {
     FornavnResponse,
     HarNyligInnsendteSoknaderResponse,
@@ -84,13 +83,6 @@ export const visAvbrytSoknadModal = (): SoknadActionType => ({
 export const skjulAvbrytSoknadModal = (): SoknadActionType => ({
     type: SoknadActionTypeKeys.SKJUL_AVBRYT_SOKNAD_MODAL,
 });
-
-export function oppdaterSoknadsmottakerStatus(valgtSoknadsmottaker: NavEnhet): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.OPPDATER_SOKNADSMOTTAKER_STATUS,
-        valgtSoknadsmottaker,
-    };
-}
 
 export const setErSystemdataEndret = (erSystemdataEndret: boolean): SoknadActionType => {
     return {

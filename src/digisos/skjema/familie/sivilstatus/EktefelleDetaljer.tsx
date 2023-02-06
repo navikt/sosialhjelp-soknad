@@ -1,9 +1,7 @@
-import {FormattedMessage, useIntl} from "react-intl";
 import * as React from "react";
 import {useSelector} from "react-redux";
 
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import Informasjonspanel from "../../../../nav-soknad/components/Informasjonspanel";
 
 import {State} from "../../../redux/reducers";
@@ -12,32 +10,26 @@ import {
     OldSingleLineElement,
     OldSysteminfo,
 } from "../../../../nav-soknad/components/systeminfo/Systeminfo";
-
-const INTL_ID_EKTEFELLE = "system.familie.sivilstatus.gift.ektefelle";
-
-const SivilstatusLabel = ({ektefelleHarDiskresjonskode}: {ektefelleHarDiskresjonskode?: boolean}) => {
-    if (ektefelleHarDiskresjonskode) return <FormattedMessage id="system.familie.sivilstatus.ikkeTilgang.label" />;
-
-    return <FormattedMessage id="system.familie.sivilstatus.label" />;
-};
+import {useTranslation} from "react-i18next";
+import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 
 const EktefelleInformasjon = () => {
     const {ektefelle, erFolkeregistrertSammen} = useSelector((state: State) => state.soknadsdata.familie.sivilstatus);
     const systeminfo = [];
-
+    const {t} = useTranslation("skjema", {keyPrefix: "system.familie.sivilstatus.gift.ektefelle"});
     if (ektefelle?.navn?.fulltNavn) {
         systeminfo.push({
-            key: <FormattedMessage id={`${INTL_ID_EKTEFELLE}.navn`} />,
+            key: t(`navn`),
             value: <OldSingleLineElement value={ektefelle.navn.fulltNavn} />,
         });
         if (ektefelle?.fodselsdato) {
             systeminfo.push({
-                key: <FormattedMessage id={`${INTL_ID_EKTEFELLE}.fodselsdato`} />,
+                key: t(`fodselsdato`),
                 value: <SingleLineDateElement value={ektefelle.fodselsdato} />,
             });
         }
         systeminfo.push({
-            key: <FormattedMessage id={`${INTL_ID_EKTEFELLE}.folkereg`} />,
+            key: t(`folkereg`),
             value: <OldSingleLineElement value={erFolkeregistrertSammen ? "Ja" : "Nei"} />,
         });
     }
@@ -51,25 +43,25 @@ const EktefelleInformasjon = () => {
 const EktefelleDetaljer = () => {
     const {harDiskresjonskode} = useSelector((state: State) => state.soknadsdata.familie.sivilstatus);
 
-    const intl = useIntl();
+    const {t} = useTranslation();
 
     return (
         <div className="sivilstatus skjema-sporsmal">
-            <Sporsmal tekster={getFaktumSporsmalTekst(intl, "system.familie.sivilstatus")} stil="system">
-                <div className="sivilstatus__infotekst">
-                    <FormattedMessage id="system.familie.sivilstatus" />
-                </div>
+            <Sporsmal tekster={getFaktumSporsmalTekst(t, "system.familie.sivilstatus")} stil="system">
+                <div className="sivilstatus__infotekst">{t("system.familie.sivilstatus")}</div>
                 <div className="sivilstatus__giftlabel">
-                    <SivilstatusLabel ektefelleHarDiskresjonskode={harDiskresjonskode} />
+                    {harDiskresjonskode
+                        ? t("system.familie.sivilstatus.ikkeTilgang.label")
+                        : t("system.familie.sivilstatus.label")}
                     <EktefelleInformasjon />
                 </div>
             </Sporsmal>
             {harDiskresjonskode !== true && (
                 <Informasjonspanel farge="viktig" ikon={"ella"}>
                     <h4 className="skjema-sporsmal__infotekst__tittel">
-                        <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tittel" />
+                        {t("system.familie.sivilstatus.informasjonspanel.tittel")}
                     </h4>
-                    <FormattedMessage id="system.familie.sivilstatus.informasjonspanel.tekst" />
+                    {t("system.familie.sivilstatus.informasjonspanel.tekst")}
                 </Informasjonspanel>
             )}
         </div>

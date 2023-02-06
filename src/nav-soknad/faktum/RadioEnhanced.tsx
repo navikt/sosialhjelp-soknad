@@ -2,7 +2,7 @@ import React from "react";
 import {RadioPanel} from "nav-frontend-skjema";
 import {getIntlTextOrKey} from "../utils";
 import TextPlaceholder from "../components/animasjoner/placeholder/TextPlaceholder";
-import {useIntl} from "react-intl";
+import {useTranslation} from "react-i18next";
 
 interface Props {
     value: string;
@@ -19,7 +19,7 @@ interface Props {
 }
 
 const RadioEnhanced = (props: Props) => {
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     const determineLabel = (faktumKey: string, label: string, value: string) => {
         if (props.visPlaceholder) {
@@ -35,7 +35,7 @@ const RadioEnhanced = (props: Props) => {
         return !!props.checked;
     };
 
-    const label = getIntlTextOrKey(intl, props.faktumKey ? `${props.faktumKey}.${props.value}` : "");
+    const label = getIntlTextOrKey(t, props.faktumKey ? `${props.faktumKey}.${props.value}` : "");
     const faktumKey = props.faktumKey ? props.faktumKey.replace(/\./g, "_") : "";
     const id = props.id ? props.id : faktumKey;
 

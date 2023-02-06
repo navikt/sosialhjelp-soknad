@@ -5,28 +5,29 @@ import {
     OldSingleLineElement,
     OldSysteminfo,
 } from "../../../../nav-soknad/components/systeminfo/Systeminfo";
-import {FormattedMessage} from "react-intl";
+import {useTranslation} from "react-i18next";
 
 const ArbeidDetaljer: React.FunctionComponent<{arbeidsforhold: Arbeidsforhold}> = ({arbeidsforhold}) => {
     const {arbeidsgivernavn, stillingsprosent, fom, tom} = arbeidsforhold;
     const stillingsprosentVisning = stillingsprosent + "%";
+    const {t} = useTranslation("skjema", {keyPrefix: "arbeidsforhold"});
 
     const systeminfoMap = [
         {
-            key: <FormattedMessage id={"arbeidsforhold.arbeidsgivernavn.label"} />,
+            key: t("arbeidsgivernavn.label"),
             value: <OldSingleLineElement value={arbeidsgivernavn} />,
         },
-        {key: <FormattedMessage id={"arbeidsforhold.fom.label"} />, value: <SingleLineDateElement value={fom} />},
+        {key: t("fom.label"), value: <SingleLineDateElement value={fom} />},
     ];
 
     if (tom !== "" && tom !== null) {
         systeminfoMap.push({
-            key: <FormattedMessage id={"arbeidsforhold.tom.label"} />,
+            key: t("tom.label"),
             value: <SingleLineDateElement value={tom} />,
         });
     }
     systeminfoMap.push({
-        key: <FormattedMessage id={"arbeidsforhold.stillingsprosent.label"} />,
+        key: t("stillingsprosent.label"),
         value: <OldSingleLineElement value={stillingsprosentVisning} />,
     });
 

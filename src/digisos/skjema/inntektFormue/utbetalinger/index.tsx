@@ -1,5 +1,4 @@
 import * as React from "react";
-import {FormattedMessage, useIntl} from "react-intl";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, getIntlTextOrKey, replaceDotWithUnderscore} from "../../../../nav-soknad/utils";
@@ -13,6 +12,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {validateAndDispatchTextFieldMaxLength} from "../../../../nav-soknad/validering/validateAndDispatch";
+import {useTranslation} from "react-i18next";
+import {Heading} from "@navikt/ds-react";
 
 const MAX_CHARS = 500;
 const UTBETALINGER = "inntekt.inntekter";
@@ -28,7 +29,7 @@ export const UtbetalingerView = () => {
 
     const feil = useSelector((state: State) => state.validering.feil);
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     React.useEffect(() => {
         if (behandlingsId) {
@@ -108,7 +109,7 @@ export const UtbetalingerView = () => {
                     id={"boutgifter_" + navn + "_checkbox"}
                     name={navn}
                     checked={isChecked}
-                    label={<FormattedMessage id={UTBETALINGER + ".true.type." + textKey} />}
+                    label={t(`${UTBETALINGER}.true.type.${textKey}`)}
                     onClick={() => handleClickRadio(navn)}
                 />
             );
@@ -122,16 +123,18 @@ export const UtbetalingerView = () => {
     }
     return (
         <div className="skjema-sporsmal">
-            <h2>{getIntlTextOrKey(intl, "inntekt.inntekter.titel")}</h2>
+            <Heading size="medium" level="2">
+                {getIntlTextOrKey(t, "inntekt.inntekter.titel")}
+            </Heading>
             <JaNeiSporsmal
                 visPlaceholder={oppstartsModus}
-                tekster={getFaktumSporsmalTekst(intl, UTBETALINGER)}
+                tekster={getFaktumSporsmalTekst(t, UTBETALINGER)}
                 faktumKey={UTBETALINGER}
                 verdi={utbetalinger.bekreftelse}
                 onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
-                <Sporsmal tekster={getFaktumSporsmalTekst(intl, UTBETALINGER + ".true.type")}>
+                <Sporsmal tekster={getFaktumSporsmalTekst(t, UTBETALINGER + ".true.type")}>
                     {renderCheckBox(UtbetalingerKeys.UTBYTTE, UtbetalingerKeys.UTBYTTE)}
                     {renderCheckBox(UtbetalingerKeys.SALG, UtbetalingerKeys.SALG)}
                     {renderCheckBox(UtbetalingerKeys.FORSIKRING, UtbetalingerKeys.FORSIKRING)}

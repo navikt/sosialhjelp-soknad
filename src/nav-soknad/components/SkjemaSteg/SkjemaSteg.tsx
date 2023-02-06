@@ -1,6 +1,5 @@
 import * as React from "react";
 import {useEffect} from "react";
-import {FormattedMessage, useIntl} from "react-intl";
 import {useDispatch, useSelector} from "react-redux";
 import Feiloppsummering from "../validering/Feiloppsummering";
 import {getIntlTextOrKey, scrollToTop} from "../../utils";
@@ -21,6 +20,7 @@ import SideIkkeFunnet from "../../feilsider/SideIkkeFunnet";
 import TimeoutBox from "../timeoutbox/TimeoutBox";
 import {AvbrytSoknad} from "../avbrytsoknad/AvbrytSoknad";
 import {getSoknad} from "../../../lib/getSoknad";
+import {Trans, useTranslation} from "react-i18next";
 
 export type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
 
@@ -37,18 +37,20 @@ const MidlertidigDeaktivertPanel = () => {
         personalia: {navEnhet},
     } = useSoknadsdata();
     const {visMidlertidigDeaktivertPanel} = useSoknad();
+    const {t} = useTranslation();
 
     if (!visMidlertidigDeaktivertPanel) return null;
 
     return (
         <Alert variant="error">
-            <FormattedMessage
-                id="adresse.alertstripe.feil.v2"
-                values={{
-                    kommuneNavn: navEnhet?.kommunenavn ?? "Din",
-                    a: (msg) => (
+            <Trans
+                t={t}
+                i18nKey={"adresse.alertstripe.feil.v2"}
+                values={{kommuneNavn: navEnhet?.kommunenavn ?? "Din"}}
+                components={{
+                    lenke: (
                         <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
-                            {msg}
+                            {null}
                         </Link>
                     ),
                 }}
@@ -62,17 +64,19 @@ const IkkePakobletPanel = () => {
         personalia: {navEnhet},
     } = useSoknadsdata();
     const {visIkkePakobletPanel} = useSoknad();
+    const {t} = useTranslation();
     if (!visIkkePakobletPanel) return null;
 
     return (
         <Alert variant="warning">
-            <FormattedMessage
-                id="adresse.alertstripe.advarsel.v2"
-                values={{
-                    kommuneNavn: navEnhet?.kommunenavn ?? "Din",
-                    a: (msg) => (
-                        <Link href="https://husbanken.no/bostotte" target="_blank" rel="noreferrer noopener">
-                            {msg}
+            <Trans
+                t={t}
+                i18nKey={"adresse.alertstripe.advarsel.v2"}
+                values={{kommuneNavn: navEnhet?.kommunenavn ?? "Din"}}
+                components={{
+                    lenke: (
+                        <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                            {null}
                         </Link>
                     ),
                 }}
@@ -90,7 +94,7 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
 
     const {handleGaVidere, handleGaTilbake, handleGaTilSkjemaSteg} = useSkjemaNavigation();
 
-    const intl = useIntl();
+    const {t} = useTranslation("skjema");
 
     useEffect(() => {
         scrollToTop();
@@ -98,8 +102,8 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
 
     const {feil, visValideringsfeil} = validering;
 
-    const stegTittel = getIntlTextOrKey(intl, `${steg}.tittel`);
-    const documentTitle = intl.formatMessage({id: skjemaConfig.tittelId});
+    const stegTittel = getIntlTextOrKey(t, `${steg}.tittel`);
+    const documentTitle = t(skjemaConfig.tittelId);
     const aktivtSteg = skjemaConfig.steg[steg];
     const nextButtonPending = soknad.sendSoknadPending;
 
@@ -147,9 +151,7 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
                     <SkjemaStegNavKnapper
                         gaViderePending={nextButtonPending}
                         gaVidereLabel={
-                            aktivtSteg.type === "oppsummering"
-                                ? getIntlTextOrKey(intl, "skjema.knapper.send")
-                                : undefined
+                            aktivtSteg.type === "oppsummering" ? getIntlTextOrKey(t, "skjema.knapper.send") : undefined
                         }
                         gaVidere={() => handleGaVidere(aktivtSteg)}
                         gaTilbake={aktivtSteg.id > 1 ? () => handleGaTilbake(aktivtSteg.id) : undefined}

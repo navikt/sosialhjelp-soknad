@@ -1,9 +1,9 @@
 import React from "react";
-import {FormattedDate} from "react-intl";
+import {useTranslation} from "react-i18next";
 
 // Dato("2018-10-12") => "12. oktober 2018"
 const Dato = ({children}: {children: string}) => (
-    <FormattedDate value={new Date(children)} month="long" day="numeric" year="numeric" />
+    <>{new Intl.DateTimeFormat(useTranslation().i18n.language, {dateStyle: "long"}).format(new Date(children))}</>
 );
 
 export default Dato;

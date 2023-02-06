@@ -1,9 +1,9 @@
 import * as React from "react";
-import {FormattedMessage} from "react-intl";
 import {Undertittel} from "nav-frontend-typografi";
 import {scrollToElement} from "../../utils";
 import {Valideringsfeil} from "../../../digisos/redux/validering/valideringActionTypes";
 import {LinkButtonValidation} from "../linkButton/LinkButton";
+import {useTranslation} from "react-i18next";
 
 const scrollToFaktum = (evt: React.MouseEvent<any>, faktumKey: string) => {
     evt.stopPropagation();
@@ -17,11 +17,10 @@ const scrollToFaktum = (evt: React.MouseEvent<any>, faktumKey: string) => {
 };
 
 const FeillisteMelding = ({faktumKey, feilkode}: Valideringsfeil) => {
+    const {t} = useTranslation();
     return (
         <li className="feiloppsummering__feil">
-            <LinkButtonValidation onClick={(evt) => scrollToFaktum(evt, faktumKey)}>
-                <FormattedMessage id={feilkode} />
-            </LinkButtonValidation>
+            <LinkButtonValidation onClick={(evt) => scrollToFaktum(evt, faktumKey)}>{t(feilkode)}</LinkButtonValidation>
         </li>
     );
 };

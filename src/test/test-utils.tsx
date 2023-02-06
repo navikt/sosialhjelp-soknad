@@ -1,11 +1,13 @@
 import {render, RenderOptions} from "@testing-library/react";
-import {ReactElement} from "react";
-import {IntlProvider} from "react-intl";
+import {ReactElement, Suspense} from "react";
 import {Provider} from "react-redux";
 import {applyMiddleware, compose, createStore} from "redux";
 import createSagaMiddleware from "redux-saga";
 import reducers from "../digisos/redux/reducers";
 import sagas from "../rootSaga";
+import * as React from "react";
+import i18n from "../i18n";
+import {I18nextProvider} from "react-i18next";
 
 function configureStore() {
     const saga = createSagaMiddleware();
@@ -20,9 +22,9 @@ const store = configureStore();
 
 const Wrapper = ({children}: {children: React.ReactNode}) => (
     <Provider store={store}>
-        <IntlProvider defaultLocale="nb" locale="nb">
-            {children}
-        </IntlProvider>
+        <Suspense fallback={null}>
+            <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
+        </Suspense>
     </Provider>
 );
 
