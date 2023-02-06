@@ -16,7 +16,7 @@ import sagas from "./rootSaga";
 import LoadContainer from "./LoadContainer";
 import Modal from "react-modal";
 import {initAmplitude} from "./nav-soknad/utils/amplitude";
-import {logException, NavLogEntry, NavLogLevel} from "./nav-soknad/utils/loggerUtils";
+import {logWindowError} from "./nav-soknad/utils/loggerUtils";
 import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
 import {RouterProvider} from "react-router-dom";
 import {router} from "./digisos";
@@ -39,23 +39,7 @@ function configureStore() {
 
 const store = configureStore();
 
-window.onerror = (errorMessage, url, line, column, error) => {
-    const stacktrace = error?.hasOwnProperty("stack") ? "\nStacktrace" + error.stack : "";
-    const logEntry: NavLogEntry = {
-        level: NavLogLevel.ERROR,
-        userAgent: window.navigator.userAgent,
-        url: document.location.href,
-        message: errorMessage.toString(),
-        jsFileUrl: url,
-        lineNumber: line,
-        error: stacktrace,
-    };
-    if (column) {
-        logEntry.columnNumber = column;
-    }
-    logException(logEntry);
-};
-
+window.onerror = logWindowError;
 initAmplitude();
 const queryClient = new QueryClient();
 

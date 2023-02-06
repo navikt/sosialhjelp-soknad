@@ -17,6 +17,19 @@ export interface NavLogEntry {
     error?: any;
 }
 
+export const logWindowError: typeof window.onerror = (message, jsFileUrl, lineNumber, columnNumber, error) => {
+    logException({
+        level: NavLogLevel.WARN,
+        userAgent: window.navigator.userAgent,
+        url: document.location.href,
+        message: message.toString(),
+        jsFileUrl,
+        lineNumber,
+        error: error?.hasOwnProperty("stack") ? "\nStacktrace" + error.stack : "",
+        columnNumber,
+    });
+};
+
 const createLogEntry = (message: string, level: NavLogLevel, jsFileUrl?: string): NavLogEntry => {
     return {
         url: window.location.href,
