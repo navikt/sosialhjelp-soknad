@@ -122,7 +122,8 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
     if (showServerFeil) return <ServerFeil />;
 
     // Hotfix for issue where users pressing "back" from innsyn results in 404 message
-    // In the future we will handle
+    // In the future we will handle this by redirecting on HTTP 410 Gone but this
+    // solves the primary UX issue.
     if (showSideIkkeFunnet) {
         if (sessionStorage.getItem("sistLagretSoknad") === behandlingsId) {
             logInfo("Videresender bruker på bakgrunn av sistLagretSoknad");
