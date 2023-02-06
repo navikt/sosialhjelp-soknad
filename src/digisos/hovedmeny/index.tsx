@@ -20,6 +20,8 @@ const Informasjon = () => {
         new Date()
     );
 
+    sessionStorage.removeItem("sistLagretSoknad");
+
     if (!harTilgang) return <IkkeTilgang />;
 
     return (

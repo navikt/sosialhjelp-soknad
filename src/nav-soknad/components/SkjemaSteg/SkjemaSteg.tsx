@@ -14,13 +14,15 @@ import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepper} from "./SkjemaStegNavStepper";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapper from "./SkjemaStegNavKnapper";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import ServerFeil from "../../feilsider/ServerFeil";
 import SideIkkeFunnet from "../../feilsider/SideIkkeFunnet";
 import TimeoutBox from "../timeoutbox/TimeoutBox";
 import {AvbrytSoknad} from "../avbrytsoknad/AvbrytSoknad";
 import {getSoknad} from "../../../lib/getSoknad";
 import {Trans, useTranslation} from "react-i18next";
+import {setShowPageNotFound} from "../../../digisos/redux/soknad/soknadActions";
+import {logInfo} from "../../utils/loggerUtils";
 
 export type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
 
@@ -101,6 +103,7 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
     }, []);
 
     const {feil, visValideringsfeil} = validering;
+    const navigate = useNavigate();
 
     const stegTittel = getIntlTextOrKey(t, `${steg}.tittel`);
     const documentTitle = t(skjemaConfig.tittelId);
@@ -118,8 +121,17 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
 
     if (showServerFeil) return <ServerFeil />;
 
-    if (showSideIkkeFunnet) return <SideIkkeFunnet />;
-
+    // Hotfix for issue where users pressing "back" from innsyn results in 404 message
+    // In the future we will handle this by redirecting on HTTP 410 Gone but this
+    // solves the primary UX issue.
+    if (showSideIkkeFunnet) {
+        if (sessionStorage.getItem("sistLagretSoknad") === behandlingsId) {
+            logInfo("Videresender bruker på bakgrunn av sistLagretSoknad");
+            sessionStorage.removeItem("sistLagretSoknad");
+            dispatch(setShowPageNotFound(false));
+            navigate("/informasjon");
+        } else return <SideIkkeFunnet />;
+    }
     return (
         <div className="pb-4 lg:pb-40 bg-green-500/20">
             <AppBanner />

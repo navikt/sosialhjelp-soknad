@@ -28,9 +28,11 @@ export const sendSoknad = async (behandlingsId: string, dispatch: Dispatch<AnyAc
         dispatch(sendSoknadOk(id));
 
         const redirectUrl: Record<SendTilUrlFrontendSendtTil, string> = {
-            FIKS_DIGISOS_API: `${getInnsynUrl()}${response.id}/status`,
-            SVARUT: `${basePath}/skjema/${response.id}/ettersendelse`,
+            FIKS_DIGISOS_API: `${getInnsynUrl()}${id}/status`,
+            SVARUT: `${basePath}/skjema/${id}/ettersendelse`,
         };
+
+        sessionStorage.setItem("sistLagretSoknad", behandlingsId);
 
         return redirectUrl[sendtTil];
     } catch (reason) {
