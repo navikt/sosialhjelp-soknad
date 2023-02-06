@@ -61,19 +61,6 @@ interface Props {
     className?: string;
 }
 
-function ikonButtonAriaLabel(ikon: string) {
-    switch (ikon) {
-        case MargIkoner.ADVARSEL:
-            return "Advarsel";
-        case MargIkoner.OK:
-            return "Ok";
-        case MargIkoner.PRINTER:
-            return "Skriv ut";
-        default:
-            return "";
-    }
-}
-
 /**
  * Vis et avsnitt med marger. Vis eventuelt ikoner i margene.
  * Hvis callback onClickHoyreIkon er satt, vis peker og hovereffekt på mouseover på ikonet.
@@ -88,11 +75,7 @@ const AvsnittMedMarger: React.FC<Props> = ({children, venstreIkon, hoyreIkon, on
                 {hoyreIkon && (
                     <>
                         {onClickHoyreIkon ? (
-                            <Button
-                                variant="tertiary"
-                                onClick={() => onClickHoyreIkon()}
-                                aria-label={ikonButtonAriaLabel(hoyreIkon)}
-                            >
+                            <Button variant="tertiary" onClick={() => onClickHoyreIkon()}>
                                 <MargIkon ikon={hoyreIkon} />
                             </Button>
                         ) : (

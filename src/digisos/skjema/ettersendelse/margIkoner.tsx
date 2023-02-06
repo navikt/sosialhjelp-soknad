@@ -22,17 +22,17 @@ const OrangeWarning = styled(WarningFilled)`
 const MargIkon: React.FC<{ikon: MargIkoner}> = ({ikon}) => {
     switch (ikon) {
         case MargIkoner.ADVARSEL:
-            return <OrangeWarning aria-label="advarsel ikon" />;
+            return <OrangeWarning aria-label="Advarsel" />;
         case MargIkoner.OK:
-            return <GreenSuccess aria-label="suksess ikon" />;
+            return <GreenSuccess aria-label="Ok" />;
         case MargIkoner.PRINTER:
-            return <Print />;
+            return <Print aria-label="Skriv ut" />;
         case MargIkoner.SNAKKEBOBLER:
-            return <Dialog />;
+            return <Dialog aria-hidden="true" />;
         case MargIkoner.KONVOLUTT:
-            return <Email />;
+            return <Email aria-hidden="true" />;
         case MargIkoner.DOKUMENTER:
-            return <FileContent />;
+            return <FileContent aria-hidden="true" />;
         default:
             return null;
     }
