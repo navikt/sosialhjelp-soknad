@@ -112,26 +112,29 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
 
     useTitle(`${stegTittel} - ${documentTitle}`);
 
-    const {behandlingsId, showSideIkkeFunnet, showServerFeil} = useSoknad();
-    const params = useParams<UrlParams>();
+    const {behandlingsId: behandlingsIdFraRedux, showSideIkkeFunnet, showServerFeil} = useSoknad();
+    const {behandlingsId: behandlingsIdFraUrl} = useParams<UrlParams>();
 
+    // Synchronize Redux
     useEffect(() => {
-        if (!behandlingsId && params.behandlingsId) getSoknad(params.behandlingsId, dispatch);
-    }, [behandlingsId, dispatch, params]);
+        if (!behandlingsIdFraRedux && behandlingsIdFraUrl) getSoknad(behandlingsIdFraUrl, dispatch);
+    }, [behandlingsIdFraRedux, behandlingsIdFraUrl, dispatch]);
 
     if (showServerFeil) return <ServerFeil />;
 
-    // Hotfix for issue where users pressing "back" from innsyn results in 404 message
-    // In the future we will handle this by redirecting on HTTP 410 Gone but this
-    // solves the primary UX issue.
     if (showSideIkkeFunnet) {
-        if (sessionStorage.getItem("sistLagretSoknad") === behandlingsId) {
+        // Hotfix for issue where users pressing "back" from innsyn results in 404 message
+        // In the future we will handle this by redirecting on HTTP 410 Gone but this
+        // solves the primary UX issue.
+        if (`${sessionStorage.getItem("sistLagretSoknad")}` === behandlingsIdFraUrl) {
             logInfo("Videresender bruker på bakgrunn av sistLagretSoknad");
             sessionStorage.removeItem("sistLagretSoknad");
             dispatch(setShowPageNotFound(false));
             navigate("/informasjon");
+            return null;
         } else return <SideIkkeFunnet />;
     }
+
     return (
         <div className="pb-4 lg:pb-40 bg-green-500/20">
             <AppBanner />
