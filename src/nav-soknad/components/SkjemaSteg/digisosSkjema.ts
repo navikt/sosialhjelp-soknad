@@ -1,4 +1,4 @@
-export type SkjemaStegType = "skjema" | "ekstrainfo" | "oppsummering";
+export type SkjemaStegType = "skjema" | "oppsummering";
 
 export interface SkjemaSteg {
     id: number;

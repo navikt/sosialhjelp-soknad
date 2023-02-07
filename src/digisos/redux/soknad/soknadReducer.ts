@@ -4,7 +4,6 @@ import {REST_STATUS, SoknadState} from "./soknadTypes";
 export const defaultState: SoknadState = {
     // Visningsstate
     showServerFeil: false,
-    sendSoknadServiceUnavailable: false,
     showSendingFeiletPanel: false,
     showSideIkkeFunnet: false,
     visSamtykkeInfo: false,
@@ -24,7 +23,6 @@ export const defaultState: SoknadState = {
 
     // Tilgang og fornavn
     tilgang: undefined,
-    fornavn: undefined,
 
     // Opprettelse, innsending og ettersendelse
     startSoknadPending: false,
@@ -70,7 +68,7 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 skalSjekkeOmSystemdataErEndret: false,
                 behandlingsId: action.behandlingsId,
             };
-        case SoknadActionTypeKeys.HENT_SOKNAD:
+        case SoknadActionTypeKeys.SET_SOKNAD_PENDING:
             return {
                 ...state,
                 restStatus: REST_STATUS.PENDING,
@@ -83,6 +81,7 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 behandlingsId: behandlingsId,
                 showLargeSpinner: false,
                 showSideIkkeFunnet: false,
+                showServerFeil: false,
             };
         case SoknadActionTypeKeys.UPDATE_BEHANDLINGSID_PA_STORE: {
             return {
@@ -105,7 +104,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 showLargeSpinner: false,
             };
         }
-
         case SoknadActionTypeKeys.START_SOKNAD_DONE:
             return {
                 ...state,
@@ -145,7 +143,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 skalSjekkeOmSystemdataErEndret: false,
             };
         }
-
         case SoknadActionTypeKeys.HENT_SAMTYKKE:
             return {
                 ...state,
@@ -174,12 +171,11 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             };
         }
 
-        case SoknadActionTypeKeys.LAGRE_TILGANG_OG_FORNAVN_PA_STORE: {
-            const {tilgangResponse, fornavnResponse} = action;
+        case SoknadActionTypeKeys.LAGRE_TILGANG_PA_STORE: {
+            const {tilgangResponse} = action;
             return {
                 ...state,
                 tilgang: tilgangResponse,
-                fornavn: fornavnResponse.fornavn,
             };
         }
 
@@ -213,20 +209,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             return {
                 ...state,
                 visNedetidPanel: action.shouldShow,
-            };
-        }
-        case SoknadActionTypeKeys.SET_SEND_SOKNAD_SERVICE_UNAVAILABLE: {
-            return {
-                ...state,
-                sendSoknadServiceUnavailable: true,
-                sendSoknadPending: false,
-            };
-        }
-        case SoknadActionTypeKeys.RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE: {
-            return {
-                ...state,
-                sendSoknadServiceUnavailable: false,
-                visMidlertidigDeaktivertPanel: false,
             };
         }
         case SoknadActionTypeKeys.SHOW_SENDING_FEILET_PANEL: {

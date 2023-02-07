@@ -10,7 +10,7 @@ import {initialVerdierState, Verdier} from "../../skjema/inntektFormue/verdier/V
 import {initialFormueState, Formue} from "../../skjema/inntektFormue/formue/FormueTypes";
 import {initialBoutgifterState, Boutgifter} from "../../skjema/utgifterGjeld/boutgifter/BoutgifterTypes";
 import {initialBarneutgifterState, Barneutgifter} from "../../skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
-import {AdresseKategori, Adresser, initialAdresserState} from "../../skjema/personopplysninger/adresse/AdresseTypes";
+import {Adresser, initialAdresserState} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {Barnebidrag, ForsorgerPlikt} from "../../skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 import {
     initialSkattbarInntektInfoState,
@@ -22,11 +22,8 @@ import {REST_STATUS} from "../soknad/soknadTypes";
 import {NavEnhetFrontend} from "../../../generated/model";
 
 export enum SoknadsdataActionTypeKeys {
-    OPPDATER_SOKNADSDATA = "soknadsdata/OPPDATER",
     OPPDATER_SOKNADSDATA_STI = "soknadsdata/OPPDATER_STI",
     SETT_REST_STATUS = "soknadsdata/SETT_REST_STATUS",
-    START_REST_KALL = "soknadsdata/START_REST_KALL",
-    STOPP_REST_KALL = "soknadsdata/STOPP_REST_KALL",
 }
 
 /*
@@ -36,9 +33,7 @@ export enum SoknadsdataActionTypeKeys {
  */
 export enum SoknadsSti {
     OPPDATER_SAMTYKKE = "oppdaterSamtykker",
-    HENT_SAMTYKKER = "hentSamtykker",
     ARBEID = "arbeid",
-    BANKINFORMASJON = "personalia/kontonummer",
     BEGRUNNELSE = "begrunnelse",
     BOSITUASJON = "bosituasjon",
     UTDANNING = "utdanning",
@@ -50,11 +45,8 @@ export enum SoknadsSti {
     FORMUE = "inntekt/formue",
     BOUTGIFTER = "utgifter/boutgifter",
     BARNEUTGIFTER = "utgifter/barneutgifter",
-    ADRESSER = "personalia/adresser",
-    NAV_ENHETER = "personalia/navEnheter",
     VALGT_NAV_ENHET = "personalia/navEnhet",
     SIVILSTATUS = "familie/sivilstatus",
-    BASIS_PERSONALIA = "personalia/basisPersonalia",
     FORSORGERPLIKT = "familie/forsorgerplikt",
     INNTEKT_SYSTEMDATA = "inntekt/systemdata",
     SKATTBARINNTEKT = "inntekt/skattbarinntektogforskuddstrekk",
@@ -133,14 +125,9 @@ export interface SoknadsdataActionVerdi {
     utgifter: Utgifter;
 }
 
-export interface AdresseValg {
-    valg: AdresseKategori;
-}
-
 export type SoknadsdataType =
     | Arbeid
     | Begrunnelse
-    | BosituasjonData
     | Familie
     | Utdanning
     | Personalia
@@ -152,9 +139,6 @@ export type SoknadsdataType =
     | Formue
     | Verdier
     | Utgifter
-    | Adresser
-    | AdresseValg
-    | NavEnhetFrontend[]
     | NavEnhetFrontend
     | Utbetalinger
     | Barneutgifter

@@ -2,7 +2,6 @@ import {AnyAction, Dispatch} from "redux";
 import {getInnsynUrl, HttpStatus} from "../nav-soknad/utils/rest-utils";
 import {
     sendSoknadOk,
-    setSendSoknadServiceUnavailable,
     showSendingFeiletPanel,
     visMidlertidigDeaktivertPanel,
 } from "../digisos/redux/soknad/soknadActions";
@@ -42,7 +41,6 @@ export const sendSoknad = async (behandlingsId: string, dispatch: Dispatch<AnyAc
 
         if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
             dispatch(visMidlertidigDeaktivertPanel(true));
-            dispatch(setSendSoknadServiceUnavailable());
         } else {
             dispatch(showSendingFeiletPanel(true));
         }

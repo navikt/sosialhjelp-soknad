@@ -4,14 +4,16 @@ import VelkomstSnakkeboble from "../../../nav-soknad/components/snakkeboble/Snak
 import {BodyLong, Heading} from "@navikt/ds-react";
 import * as React from "react";
 import {Trans, useTranslation} from "react-i18next";
+import {useHentFornavn} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
+import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 
 export const NySoknadVelkomst = () => {
-    const {fornavn} = useSelector((state: State) => state.soknad);
+    const {data: fornavnData} = useHentFornavn();
     const {t} = useTranslation("skjema");
 
     return (
         <div className={"p-8 lg:py-12 lg:px-24"}>
-            <VelkomstSnakkeboble fornavn={fornavn} />
+            <VelkomstSnakkeboble fornavn={fornavnData?.fornavn} />
             <Heading level="2" size="small" spacing>
                 {t("informasjon.start.undertittel")}
             </Heading>

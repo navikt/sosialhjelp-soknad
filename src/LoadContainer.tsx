@@ -3,13 +3,12 @@ import {
     lagreHarNyligInnsendteSoknaderPaStore,
     lagreNedetidPaStore,
     lagrePabegynteSoknaderPaStore,
-    lagreRessurserPaStore,
+    lagreTilgangPaStore,
 } from "./digisos/redux/soknad/soknadActions";
 import {useDispatch} from "react-redux";
 import Feilside from "./nav-soknad/components/feilside/Feilside";
 import {fetchToJson, HttpStatus} from "./nav-soknad/utils/rest-utils";
 import {
-    FornavnResponse,
     HarNyligInnsendteSoknaderResponse,
     NedetidResponse,
     PabegynteSoknaderResponse,
@@ -42,7 +41,6 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
                     true
                 );
 
-                const fornavnResponse = await fetchToJson<FornavnResponse>("informasjon/fornavn");
                 const nedetidResponse = await fetchToJson<NedetidResponse>("nedetid");
 
                 const harNyligInnsendteSoknaderResponse = await fetchToJson<HarNyligInnsendteSoknaderResponse>(
@@ -54,7 +52,7 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
                 const featureToggleResponse = await fetchToJson<FeatureToggles>("feature-toggle");
                 setFeatureToggles(featureToggleResponse);
 
-                dispatch(lagreRessurserPaStore(tilgangResponse, fornavnResponse));
+                dispatch(lagreTilgangPaStore(tilgangResponse));
                 dispatch(lagreNedetidPaStore(nedetidResponse));
                 dispatch(lagreHarNyligInnsendteSoknaderPaStore(harNyligInnsendteSoknaderResponse));
                 dispatch(lagrePabegynteSoknaderPaStore(pabegynteSoknader));

@@ -1,30 +1,26 @@
 import * as React from "react";
-import {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {ReactNode, useEffect} from "react";
+import {useSelector} from "react-redux";
 import Feiloppsummering from "../validering/Feiloppsummering";
 import {getIntlTextOrKey, scrollToTop} from "../../utils";
 import AppBanner from "../appHeader/AppHeader";
 import {State} from "../../../digisos/redux/reducers";
 import {useTitle} from "../../hooks/useTitle";
-import {Alert, Heading, Link} from "@navikt/ds-react";
+import {Heading} from "@navikt/ds-react";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
-import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 import {useSoknad} from "../../../digisos/redux/soknad/useSoknad";
 import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepper} from "./SkjemaStegNavStepper";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapper from "./SkjemaStegNavKnapper";
-import {useNavigate, useParams} from "react-router";
 import ServerFeil from "../../feilsider/ServerFeil";
 import SideIkkeFunnet from "../../feilsider/SideIkkeFunnet";
 import TimeoutBox from "../timeoutbox/TimeoutBox";
 import {AvbrytSoknad} from "../avbrytsoknad/AvbrytSoknad";
-import {getSoknad} from "../../../lib/getSoknad";
-import {Trans, useTranslation} from "react-i18next";
-import {setShowPageNotFound} from "../../../digisos/redux/soknad/soknadActions";
-import {logInfo} from "../../utils/loggerUtils";
-
-export type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
+import {useTranslation} from "react-i18next";
+import {useReduxSynchronizer} from "./UseReduxSynchronizer";
+import {MidlertidigDeaktivertPanel} from "./MidlertidigDeaktivertPanel";
+import {IkkePakobletPanel} from "./IkkePakobletPanel";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
@@ -34,112 +30,52 @@ interface StegMedNavigasjonProps {
     children?: any;
 }
 
-const MidlertidigDeaktivertPanel = () => {
-    const {
-        personalia: {navEnhet},
-    } = useSoknadsdata();
-    const {visMidlertidigDeaktivertPanel} = useSoknad();
-    const {t} = useTranslation();
+const useSkjemaConfig = (skjemaConfig: SkjemaConfig, steg: DigisosSkjemaStegKey) => {
+    const {t} = useTranslation("skjema");
 
-    if (!visMidlertidigDeaktivertPanel) return null;
-
-    return (
-        <Alert variant="error">
-            <Trans
-                t={t}
-                i18nKey={"adresse.alertstripe.feil.v2"}
-                values={{kommuneNavn: navEnhet?.kommunenavn ?? "Din"}}
-                components={{
-                    lenke: (
-                        <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
-                            {null}
-                        </Link>
-                    ),
-                }}
-            />
-        </Alert>
-    );
+    return {
+        stegTittel: getIntlTextOrKey(t, `${steg}.tittel`),
+        documentTitle: t(skjemaConfig.tittelId),
+        aktivtSteg: skjemaConfig.steg[steg],
+    };
 };
 
-const IkkePakobletPanel = () => {
-    const {
-        personalia: {navEnhet},
-    } = useSoknadsdata();
-    const {visIkkePakobletPanel} = useSoknad();
-    const {t} = useTranslation();
-    if (!visIkkePakobletPanel) return null;
-
+function SkjemaStegHeading(props: {ikon: ReactNode; stegTittel: string}) {
     return (
-        <Alert variant="warning">
-            <Trans
-                t={t}
-                i18nKey={"adresse.alertstripe.advarsel.v2"}
-                values={{kommuneNavn: navEnhet?.kommunenavn ?? "Din"}}
-                components={{
-                    lenke: (
-                        <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
-                            {null}
-                        </Link>
-                    ),
-                }}
-            />
-        </Alert>
+        <div className={"text-center"}>
+            <div className="text-center mb-2">{props.ikon}</div>
+            <div className="skjema-steg__tittel" tabIndex={-1}>
+                <Heading size={"large"}>{props.stegTittel}</Heading>
+            </div>
+        </div>
     );
-};
+}
 
 export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps) => {
-    const {soknad, validering, okonomiskeOpplysninger} = useSelector((state: State) => state);
-    const {enFilLastesOpp} = okonomiskeOpplysninger;
-    const {nedetid} = soknad;
+    const {sendSoknadPending, nedetid, showSideIkkeFunnet, showServerFeil} = useSoknad();
+    const {
+        validering: {feil, visValideringsfeil},
+        okonomiskeOpplysninger: {enFilLastesOpp},
+    } = useSelector((state: State) => state);
+    useReduxSynchronizer();
 
-    const dispatch = useDispatch();
-
-    const {handleGaVidere, handleGaTilbake, handleGaTilSkjemaSteg} = useSkjemaNavigation();
-
-    const {t} = useTranslation("skjema");
+    const {stegTittel, documentTitle, aktivtSteg} = useSkjemaConfig(skjemaConfig, steg);
+    const {goToStep} = useSkjemaNavigation(aktivtSteg.id);
 
     useEffect(() => {
         scrollToTop();
     }, []);
 
-    const {feil, visValideringsfeil} = validering;
-    const navigate = useNavigate();
-
-    const stegTittel = getIntlTextOrKey(t, `${steg}.tittel`);
-    const documentTitle = t(skjemaConfig.tittelId);
-    const aktivtSteg = skjemaConfig.steg[steg];
-    const nextButtonPending = soknad.sendSoknadPending;
-
     useTitle(`${stegTittel} - ${documentTitle}`);
-
-    const {behandlingsId: behandlingsIdFraRedux, showSideIkkeFunnet, showServerFeil} = useSoknad();
-    const {behandlingsId: behandlingsIdFraUrl} = useParams<UrlParams>();
-
-    // Synchronize Redux
-    useEffect(() => {
-        if (!behandlingsIdFraRedux && behandlingsIdFraUrl) getSoknad(behandlingsIdFraUrl, dispatch);
-    }, [behandlingsIdFraRedux, behandlingsIdFraUrl, dispatch]);
 
     if (showServerFeil) return <ServerFeil />;
 
-    if (showSideIkkeFunnet) {
-        // Hotfix for issue where users pressing "back" from innsyn results in 404 message
-        // In the future we will handle this by redirecting on HTTP 410 Gone but this
-        // solves the primary UX issue.
-        if (`${sessionStorage.getItem("sistLagretSoknad")}` === behandlingsIdFraUrl) {
-            logInfo("Videresender bruker på bakgrunn av sistLagretSoknad");
-            sessionStorage.removeItem("sistLagretSoknad");
-            dispatch(setShowPageNotFound(false));
-            navigate("/informasjon");
-            return null;
-        } else return <SideIkkeFunnet />;
-    }
-
+    if (showSideIkkeFunnet) return <SideIkkeFunnet />;
 
     return (
         <div className="pb-4 lg:pb-40 bg-green-500/20">
             <AppBanner />
-            <SkjemaStegNavStepper skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={handleGaTilSkjemaSteg} />
+            <SkjemaStegNavStepper skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={goToStep} />
             <div className={"max-w-3xl mx-auto skjema-steg skjema-content"}>
                 <NedetidPanel varselType={"infoside"} />
                 <Feiloppsummering
@@ -148,12 +84,7 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
                     visFeilliste={visValideringsfeil}
                 />
                 <div className={"bg-white mx-auto rounded-2xl px-10 md:px-12 lg:px-24 space-y-8 pt-8"}>
-                    <div className={"text-center"}>
-                        <div className="text-center mb-2">{ikon}</div>
-                        <div className="skjema-steg__tittel" tabIndex={-1}>
-                            <Heading size={"large"}>{stegTittel}</Heading>
-                        </div>
-                    </div>
+                    <SkjemaStegHeading ikon={ikon} stegTittel={stegTittel} />
                     <div className={"space-y-12 lg:space-y-24"}>{children}</div>
                     <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
                     <AvbrytSoknad />
@@ -165,14 +96,10 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
                     )}
 
                     <SkjemaStegNavKnapper
-                        gaViderePending={nextButtonPending}
-                        gaVidereLabel={
-                            aktivtSteg.type === "oppsummering" ? getIntlTextOrKey(t, "skjema.knapper.send") : undefined
-                        }
-                        gaVidere={() => handleGaVidere(aktivtSteg)}
-                        gaTilbake={aktivtSteg.id > 1 ? () => handleGaTilbake(aktivtSteg.id) : undefined}
-                        sendSoknadServiceUnavailable={soknad.sendSoknadServiceUnavailable}
-                        lastOppVedleggPending={enFilLastesOpp}
+                        skjemaConfig={skjemaConfig}
+                        aktivtSteg={skjemaConfig.steg[steg]}
+                        goToStep={goToStep}
+                        loading={sendSoknadPending || enFilLastesOpp}
                     />
                 </div>
             </div>

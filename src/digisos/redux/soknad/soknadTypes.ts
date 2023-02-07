@@ -1,5 +1,4 @@
 import {ErSystemdataEndret, Samtykke} from "./soknadActionTypes";
-import {SoknadSendtTil} from "../../../lib/sendSoknad";
 
 export interface SoknadState {
     // Visning state
@@ -13,7 +12,6 @@ export interface SoknadState {
     // Visning state skjema nivå
     showSendingFeiletPanel: boolean;
     showServerFeil: boolean;
-    sendSoknadServiceUnavailable: boolean;
 
     // Authentication / tilgang state
     harTilgang: boolean;
@@ -24,7 +22,6 @@ export interface SoknadState {
 
     // Tilgang og fornavn
     tilgang: undefined | TilgangResponse;
-    fornavn: undefined | string;
 
     // Opprettelse, innsending og ettersendelse
     startSoknadPending: boolean;
@@ -57,11 +54,8 @@ export enum REST_STATUS {
     INITIALISERT = "INITIALISERT",
     PENDING = "PENDING",
     OK = "OK",
-    REDIRECT = "REDIRECT",
-    CLIENT_ERROR = "CLIENT_ERROR",
     SERVER_ERROR = "SERVER_ERROR",
     XSRF = "XSRF",
-    LAST_OPP_FIL_FEILET = "LAST_OPP_FIL_FEILET",
     FEILET = "FEILET",
 }
 
@@ -74,22 +68,9 @@ export enum REST_FEIL {
     SIGNERT_FIL = "opplasting.feilmelding.pdf.signert",
 }
 
-export interface OpprettSoknadResponse {
-    brukerBehandlingId: string;
-}
-
-export interface SendSoknadResponse {
-    sendtTil: SoknadSendtTil;
-    id: string;
-}
-
 export interface TilgangResponse {
     harTilgang: boolean;
     sperrekode: TilgangSperrekode;
-}
-
-export interface FornavnResponse {
-    fornavn: string;
 }
 
 export type TilgangSperrekode = "pilot" | "bruker";
