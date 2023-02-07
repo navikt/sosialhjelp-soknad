@@ -1,11 +1,8 @@
-import {useSelector} from "react-redux";
-import {State} from "../../redux/reducers";
 import VelkomstSnakkeboble from "../../../nav-soknad/components/snakkeboble/Snakkeboble";
 import {BodyLong, Heading} from "@navikt/ds-react";
 import * as React from "react";
 import {Trans, useTranslation} from "react-i18next";
 import {useHentFornavn} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
-import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 
 export const NySoknadVelkomst = () => {
     const {data: fornavnData} = useHentFornavn();

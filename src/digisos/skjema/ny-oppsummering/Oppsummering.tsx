@@ -31,6 +31,7 @@ import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 import {useTranslation} from "react-i18next";
 import {hentNavEnheter} from "../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
+import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
@@ -48,8 +49,9 @@ export const Oppsummering = () => {
     const [loading, setLoading] = useState(true);
     const behandlingsId = useBehandlingsId();
     const {bekreftet, visBekreftMangler, nyOppsummering} = useSelector((state: State) => state.oppsummering);
-    const {showSendingFeiletPanel, nedetid, visMidlertidigDeaktivertPanel} = useSoknad();
+    const {showSendingFeiletPanel, visMidlertidigDeaktivertPanel} = useSoknad();
 
+    const {data: nedetid} = useHentNedetidInformasjon();
     const nedetidstart = nedetid?.nedetidStartText ?? "";
     const nedetidslutt = nedetid?.nedetidSluttText ?? "";
     const isNedetid = nedetid?.isNedetid;

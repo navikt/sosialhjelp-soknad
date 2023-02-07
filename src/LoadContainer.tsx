@@ -1,9 +1,9 @@
 import React, {createContext, useEffect, useState} from "react";
-import {lagreHarNyligInnsendteSoknaderPaStore, lagreNedetidPaStore} from "./digisos/redux/soknad/soknadActions";
+import {lagreHarNyligInnsendteSoknaderPaStore} from "./digisos/redux/soknad/soknadActions";
 import {useDispatch} from "react-redux";
 import Feilside from "./nav-soknad/components/feilside/Feilside";
 import {fetchToJson, HttpStatus} from "./nav-soknad/utils/rest-utils";
-import {HarNyligInnsendteSoknaderResponse, NedetidResponse} from "./digisos/redux/soknad/soknadTypes";
+import {HarNyligInnsendteSoknaderResponse} from "./digisos/redux/soknad/soknadTypes";
 import {ApplicationSpinner} from "./nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
 interface FeatureToggles {}
@@ -25,8 +25,6 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const nedetidResponse = await fetchToJson<NedetidResponse>("nedetid");
-
                 const harNyligInnsendteSoknaderResponse = await fetchToJson<HarNyligInnsendteSoknaderResponse>(
                     "informasjon/harNyligInnsendteSoknader"
                 );
@@ -34,7 +32,6 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
                 const featureToggleResponse = await fetchToJson<FeatureToggles>("feature-toggle");
                 setFeatureToggles(featureToggleResponse);
 
-                dispatch(lagreNedetidPaStore(nedetidResponse));
                 dispatch(lagreHarNyligInnsendteSoknaderPaStore(harNyligInnsendteSoknaderResponse));
 
                 setShowSpinner(false);

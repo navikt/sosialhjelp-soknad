@@ -21,6 +21,7 @@ import {useTranslation} from "react-i18next";
 import {useReduxSynchronizer} from "./UseReduxSynchronizer";
 import {MidlertidigDeaktivertPanel} from "./MidlertidigDeaktivertPanel";
 import {IkkePakobletPanel} from "./IkkePakobletPanel";
+import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
@@ -52,7 +53,8 @@ function SkjemaStegHeading(props: {ikon: ReactNode; stegTittel: string}) {
 }
 
 export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps) => {
-    const {sendSoknadPending, nedetid, showSideIkkeFunnet, showServerFeil} = useSoknad();
+    const {sendSoknadPending, showSideIkkeFunnet, showServerFeil} = useSoknad();
+    const {data: nedetid} = useHentNedetidInformasjon();
     const {
         validering: {feil, visValideringsfeil},
         okonomiskeOpplysninger: {enFilLastesOpp},

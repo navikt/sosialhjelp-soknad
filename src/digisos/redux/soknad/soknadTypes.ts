@@ -1,4 +1,5 @@
 import {ErSystemdataEndret, Samtykke} from "./soknadActionTypes";
+import {NedetidFrontend} from "../../../generated/model";
 
 export interface SoknadState {
     // Visning state
@@ -33,9 +34,6 @@ export interface SoknadState {
     // Samtykke
     samtykker: Samtykke[] | undefined;
     samtykkeRestStatus: REST_STATUS;
-
-    // Nedetid state
-    nedetid: undefined | NedetidResponse;
 
     // HarNyligInnsendteSoknader state
     harNyligInnsendteSoknader: undefined | HarNyligInnsendteSoknaderResponse;

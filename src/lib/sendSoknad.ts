@@ -10,8 +10,6 @@ import {basePath} from "../configuration";
 import {sendSoknad as sendSoknadAction} from "../generated/soknad-actions/soknad-actions";
 import {SendTilUrlFrontendSendtTil} from "../generated/model";
 
-export type SoknadSendtTil = "SVARUT" | "FIKS_DIGISOS_API";
-
 /**
  * Sender inn søknad og returnerer relevant status-side
  * @param behandlingsId

@@ -1,4 +1,4 @@
-import {HarNyligInnsendteSoknaderResponse, NedetidResponse} from "./soknadTypes";
+import {HarNyligInnsendteSoknaderResponse} from "./soknadTypes";
 
 export const enum SoknadActionTypeKeys {
     START_SOKNAD_DONE = "soknad/START_SOKNAD_DONE",
@@ -21,7 +21,6 @@ export const enum SoknadActionTypeKeys {
     HENT_SAMTYKKE_OK = "soknad/HENT_SAMTYKKE_OK",
     OPPDATER_SAMTYKKE = "soknad/OPPDATER_SAMTYKKE",
 
-    LAGRE_NEDETID_PA_STORE = "soknad/LAGRE_NEDETID_PA_STORE",
     LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE = "soknad/LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE",
 
     VIS_SAMTYKKE_INFO = "soknad/VIS_SAMTYKKE_INFO",
@@ -53,7 +52,6 @@ export type SoknadActionType =
     | HentSamtykker
     | HentSamtykkerOk
     | OppdaterSamtykke
-    | LagreNedetidPaStore
     | VisSamtykkeInfo
     | VisLasteOppVedleggModal
     | UpdateBehandlingsIdPaStore
@@ -85,11 +83,6 @@ export interface OppdaterSamtykke {
 export interface Samtykke {
     type: string;
     verdi: boolean;
-}
-
-export interface LagreNedetidPaStore {
-    type: SoknadActionTypeKeys.LAGRE_NEDETID_PA_STORE;
-    nedetidResponse: NedetidResponse;
 }
 
 export interface LagreHarNyligInnsendteSoknaderPaStore {

@@ -12,7 +12,6 @@ export const defaultState: SoknadState = {
     visIkkePakobletPanel: false,
     visNedetidPanel: false,
 
-    nedetid: undefined,
     harNyligInnsendteSoknader: undefined,
 
     // Rest state
@@ -165,13 +164,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             };
         }
 
-        case SoknadActionTypeKeys.LAGRE_NEDETID_PA_STORE: {
-            const {nedetidResponse} = action;
-            return {
-                ...state,
-                nedetid: nedetidResponse,
-            };
-        }
         case SoknadActionTypeKeys.LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE: {
             const {harNyligInnsendteSoknaderResponse} = action;
             return {
