@@ -13,15 +13,8 @@ export interface SoknadState {
     showSendingFeiletPanel: boolean;
     showServerFeil: boolean;
 
-    // Authentication / tilgang state
-    harTilgang: boolean;
-    sperrekode: TilgangSperrekode | undefined;
-
     // Rest state
     restStatus: REST_STATUS;
-
-    // Tilgang og fornavn
-    tilgang: undefined | TilgangResponse;
 
     // Opprettelse, innsending og ettersendelse
     startSoknadPending: boolean;
@@ -67,13 +60,6 @@ export enum REST_FEIL {
     KRYPTERT_FIL = "opplasting.feilmelding.pdf.kryptert",
     SIGNERT_FIL = "opplasting.feilmelding.pdf.signert",
 }
-
-export interface TilgangResponse {
-    harTilgang: boolean;
-    sperrekode: TilgangSperrekode;
-}
-
-export type TilgangSperrekode = "pilot" | "bruker";
 
 export interface NedetidResponse {
     isNedetid: boolean;

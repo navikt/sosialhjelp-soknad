@@ -12,17 +12,11 @@ export const defaultState: SoknadState = {
     visIkkePakobletPanel: false,
     visNedetidPanel: false,
 
-    // Authentication state
-    harTilgang: false,
-    sperrekode: undefined,
     nedetid: undefined,
     harNyligInnsendteSoknader: undefined,
 
     // Rest state
     restStatus: REST_STATUS.INITIALISERT,
-
-    // Tilgang og fornavn
-    tilgang: undefined,
 
     // Opprettelse, innsending og ettersendelse
     startSoknadPending: false,
@@ -168,14 +162,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             return {
                 ...state,
                 visLasteOppVedleggModal: action.skalVises,
-            };
-        }
-
-        case SoknadActionTypeKeys.LAGRE_TILGANG_PA_STORE: {
-            const {tilgangResponse} = action;
-            return {
-                ...state,
-                tilgang: tilgangResponse,
             };
         }
 

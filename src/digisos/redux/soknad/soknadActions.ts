@@ -6,7 +6,7 @@ import {
     VisMidlertidigDeaktivertPanel,
     VisNedetidPanel,
 } from "./soknadActionTypes";
-import {HarNyligInnsendteSoknaderResponse, NedetidResponse, TilgangResponse} from "./soknadTypes";
+import {HarNyligInnsendteSoknaderResponse, NedetidResponse} from "./soknadTypes";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 
 export function startSoknadDone() {
@@ -79,13 +79,6 @@ export function hentSamtykkerOk(samtykker: Samtykke[]): SoknadActionType {
         samtykker,
     };
 }
-
-export const lagreTilgangPaStore = (tilgangResponse: TilgangResponse): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.LAGRE_TILGANG_PA_STORE,
-        tilgangResponse,
-    };
-};
 
 export const lagreNedetidPaStore = (nedetidResponse: NedetidResponse): SoknadActionType => {
     return {

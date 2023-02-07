@@ -1,9 +1,4 @@
-import {
-    HarNyligInnsendteSoknaderResponse,
-    NedetidResponse,
-    PabegynteSoknaderResponse,
-    TilgangResponse,
-} from "./soknadTypes";
+import {HarNyligInnsendteSoknaderResponse, NedetidResponse} from "./soknadTypes";
 
 export const enum SoknadActionTypeKeys {
     START_SOKNAD_DONE = "soknad/START_SOKNAD_DONE",
@@ -26,7 +21,6 @@ export const enum SoknadActionTypeKeys {
     HENT_SAMTYKKE_OK = "soknad/HENT_SAMTYKKE_OK",
     OPPDATER_SAMTYKKE = "soknad/OPPDATER_SAMTYKKE",
 
-    LAGRE_TILGANG_PA_STORE = "soknad/LAGRE_RESSURSER_PA_STORE",
     LAGRE_NEDETID_PA_STORE = "soknad/LAGRE_NEDETID_PA_STORE",
     LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE = "soknad/LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE",
 
@@ -59,7 +53,6 @@ export type SoknadActionType =
     | HentSamtykker
     | HentSamtykkerOk
     | OppdaterSamtykke
-    | LagreTilgangPaStore
     | LagreNedetidPaStore
     | VisSamtykkeInfo
     | VisLasteOppVedleggModal
@@ -92,11 +85,6 @@ export interface OppdaterSamtykke {
 export interface Samtykke {
     type: string;
     verdi: boolean;
-}
-
-export interface LagreTilgangPaStore {
-    type: SoknadActionTypeKeys.LAGRE_TILGANG_PA_STORE;
-    tilgangResponse: TilgangResponse;
 }
 
 export interface LagreNedetidPaStore {

@@ -835,11 +835,7 @@
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {"type": "object", "additionalProperties": {"type": "object"}}
-                            }
-                        }
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Utslagskriterier"}}}
                     }
                 }
             }
@@ -2210,6 +2206,11 @@
                 "properties": {
                     "vedleggListe": {"type": "array", "items": {"$ref": "#/components/schemas/VedleggMetadataDto"}}
                 }
+            },
+            "Utslagskriterier": {
+                "required": ["harTilgang"],
+                "type": "object",
+                "properties": {"harTilgang": {"type": "boolean"}, "sperrekode": {"type": "string", "enum": ["bruker"]}}
             },
             "PabegyntSoknad": {
                 "required": ["behandlingsId", "sistOppdatert"],

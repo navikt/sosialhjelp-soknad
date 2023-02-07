@@ -1,18 +1,9 @@
 import React, {createContext, useEffect, useState} from "react";
-import {
-    lagreHarNyligInnsendteSoknaderPaStore,
-    lagreNedetidPaStore,
-    lagreTilgangPaStore,
-} from "./digisos/redux/soknad/soknadActions";
+import {lagreHarNyligInnsendteSoknaderPaStore, lagreNedetidPaStore} from "./digisos/redux/soknad/soknadActions";
 import {useDispatch} from "react-redux";
 import Feilside from "./nav-soknad/components/feilside/Feilside";
 import {fetchToJson, HttpStatus} from "./nav-soknad/utils/rest-utils";
-import {
-    HarNyligInnsendteSoknaderResponse,
-    NedetidResponse,
-    PabegynteSoknaderResponse,
-    TilgangResponse,
-} from "./digisos/redux/soknad/soknadTypes";
+import {HarNyligInnsendteSoknaderResponse, NedetidResponse} from "./digisos/redux/soknad/soknadTypes";
 import {ApplicationSpinner} from "./nav-soknad/components/applicationSpinner/ApplicationSpinner";
 
 interface FeatureToggles {}
@@ -34,12 +25,6 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
     useEffect(() => {
         async function fetchData() {
             try {
-                // Hvis tilgangApiRespone ikke thrower unauthorized error, så er bruker autentisert
-                const tilgangResponse = await fetchToJson<TilgangResponse>(
-                    "informasjon/utslagskriterier/sosialhjelp",
-                    true
-                );
-
                 const nedetidResponse = await fetchToJson<NedetidResponse>("nedetid");
 
                 const harNyligInnsendteSoknaderResponse = await fetchToJson<HarNyligInnsendteSoknaderResponse>(
@@ -49,7 +34,6 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
                 const featureToggleResponse = await fetchToJson<FeatureToggles>("feature-toggle");
                 setFeatureToggles(featureToggleResponse);
 
-                dispatch(lagreTilgangPaStore(tilgangResponse));
                 dispatch(lagreNedetidPaStore(nedetidResponse));
                 dispatch(lagreHarNyligInnsendteSoknaderPaStore(harNyligInnsendteSoknaderResponse));
 
@@ -81,12 +65,10 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
         fetchDataWithoutErrorHandling();
     }, [dispatch]);
 
-    if (showSpinner) {
-        return <ApplicationSpinner />;
-    }
-    if (showErrorPage) {
+    if (showSpinner) return <ApplicationSpinner />;
+
+    if (showErrorPage)
         return <Feilside>Vi klarer ikke vise skjemaet til deg nå, vennligst prøv igjen senere.</Feilside>;
-    }
 
     return <FeatureToggleContext.Provider value={featureToggles}>{props.children}</FeatureToggleContext.Provider>;
 };
