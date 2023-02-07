@@ -6,12 +6,7 @@ import {
     VisMidlertidigDeaktivertPanel,
     VisNedetidPanel,
 } from "./soknadActionTypes";
-import {
-    HarNyligInnsendteSoknaderResponse,
-    NedetidResponse,
-    PabegynteSoknaderResponse,
-    TilgangResponse,
-} from "./soknadTypes";
+import {HarNyligInnsendteSoknaderResponse, NedetidResponse, TilgangResponse} from "./soknadTypes";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 
 export function startSoknadDone() {
@@ -105,13 +100,6 @@ export const lagreHarNyligInnsendteSoknaderPaStore = (
     return {
         type: SoknadActionTypeKeys.LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE,
         harNyligInnsendteSoknaderResponse,
-    };
-};
-
-export const lagrePabegynteSoknaderPaStore = (pabegynteSoknader: PabegynteSoknaderResponse[]): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.LAGRE_PABEGYNTE_SOKNADER_PA_STORE,
-        pabegynteSoknader,
     };
 };
 

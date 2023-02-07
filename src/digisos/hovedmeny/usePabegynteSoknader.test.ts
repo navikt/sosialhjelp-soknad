@@ -1,6 +1,6 @@
 import {addDays, subDays} from "date-fns";
-import {PabegynteSoknaderResponse} from "../../redux/soknad/soknadTypes";
-import {filterAndSortPabegynteSoknader} from "./pabegynteSoknaderUtils";
+import {PabegynteSoknaderResponse} from "../redux/soknad/soknadTypes";
+import {filterAndSortPabegynteSoknader} from "./usePabegynteSoknader";
 
 describe("Util funksjoner for påbegynte søknader", () => {
     it("skal ikke kræsje på tomt array", () => {
@@ -16,8 +16,8 @@ describe("Util funksjoner for påbegynte søknader", () => {
             },
         ];
         const filtrerteSoknader = filterAndSortPabegynteSoknader(pabegynteSoknaderResponse, new Date());
-        expect(filtrerteSoknader.length).toBe(1);
-        expect(filtrerteSoknader[0]).toEqual({
+        expect(filtrerteSoknader?.length).toBe(1);
+        expect(filtrerteSoknader?.[0]).toEqual({
             behandlingsId: "123",
             lastUpdatedDate: sistOppdatert,
             deleteDate: addDays(sistOppdatert, 14),
@@ -33,7 +33,7 @@ describe("Util funksjoner for påbegynte søknader", () => {
             },
         ];
         const filtrerteSoknader = filterAndSortPabegynteSoknader(pabegynteSoknaderResponse, currentDate);
-        expect(filtrerteSoknader.length).toBe(0);
+        expect(filtrerteSoknader?.length).toBe(0);
     });
 
     it("skal sortere påbegynte søknader med nyeste først", () => {
@@ -49,7 +49,7 @@ describe("Util funksjoner for påbegynte søknader", () => {
             },
         ];
         const filtrerteSoknader = filterAndSortPabegynteSoknader(pabegynteSoknaderResponse, currentDate);
-        expect(filtrerteSoknader.length).toBe(2);
-        expect(filtrerteSoknader[0].behandlingsId).toBe("ny");
+        expect(filtrerteSoknader?.length).toBe(2);
+        expect(filtrerteSoknader?.[0].behandlingsId).toBe("ny");
     });
 });

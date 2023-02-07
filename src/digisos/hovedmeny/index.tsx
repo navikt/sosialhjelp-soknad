@@ -9,18 +9,11 @@ import {NedetidPanel} from "../../components/common/NedetidPanel";
 import {NySoknadPanel} from "./paneler/NySoknad";
 import {PabegynteSoknaderPanel} from "./paneler/PabegynteSoknader";
 import {EttersendDokuPanel} from "./paneler/EttersendDokuPanel";
-import {filterAndSortPabegynteSoknader} from "./paneler/pabegynteSoknaderUtils";
 import {useTranslation} from "react-i18next";
 
 const Informasjon = () => {
     const harTilgang: boolean = !!useSelector((state: State) => state.soknad.tilgang?.harTilgang);
     useTitle(getIntlTextOrKey(useTranslation().t, "applikasjon.sidetittel"));
-    const pabegynteSoknader = filterAndSortPabegynteSoknader(
-        useSelector((state: State) => state.soknad.pabegynteSoknader),
-        new Date()
-    );
-
-    sessionStorage.removeItem("sistLagretSoknad");
 
     if (!harTilgang) return <IkkeTilgang />;
 
@@ -29,8 +22,8 @@ const Informasjon = () => {
             <AppBanner />
             <NedetidPanel varselType={"infoside"} />
             <div className="max-w-lg lg:max-w-3xl w-full mx-auto space-y-5 pt-12 lg:pt-24 pb-48">
-                <NySoknadPanel antallPabegynteSoknader={pabegynteSoknader.length} />
-                <PabegynteSoknaderPanel pabegynteSoknader={pabegynteSoknader} />
+                <NySoknadPanel />
+                <PabegynteSoknaderPanel />
                 <EttersendDokuPanel />
             </div>
         </div>

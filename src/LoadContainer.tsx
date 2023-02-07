@@ -2,7 +2,6 @@ import React, {createContext, useEffect, useState} from "react";
 import {
     lagreHarNyligInnsendteSoknaderPaStore,
     lagreNedetidPaStore,
-    lagrePabegynteSoknaderPaStore,
     lagreTilgangPaStore,
 } from "./digisos/redux/soknad/soknadActions";
 import {useDispatch} from "react-redux";
@@ -46,16 +45,13 @@ const LoadContainer: React.FC<Props> = (props: Props) => {
                 const harNyligInnsendteSoknaderResponse = await fetchToJson<HarNyligInnsendteSoknaderResponse>(
                     "informasjon/harNyligInnsendteSoknader"
                 );
-                const pabegynteSoknader = await fetchToJson<PabegynteSoknaderResponse[]>(
-                    "informasjon/pabegynteSoknader"
-                );
+
                 const featureToggleResponse = await fetchToJson<FeatureToggles>("feature-toggle");
                 setFeatureToggles(featureToggleResponse);
 
                 dispatch(lagreTilgangPaStore(tilgangResponse));
                 dispatch(lagreNedetidPaStore(nedetidResponse));
                 dispatch(lagreHarNyligInnsendteSoknaderPaStore(harNyligInnsendteSoknaderResponse));
-                dispatch(lagrePabegynteSoknaderPaStore(pabegynteSoknader));
 
                 setShowSpinner(false);
             } catch (reason) {

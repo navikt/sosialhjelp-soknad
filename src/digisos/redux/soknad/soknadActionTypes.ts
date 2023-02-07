@@ -29,7 +29,6 @@ export const enum SoknadActionTypeKeys {
     LAGRE_TILGANG_PA_STORE = "soknad/LAGRE_RESSURSER_PA_STORE",
     LAGRE_NEDETID_PA_STORE = "soknad/LAGRE_NEDETID_PA_STORE",
     LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE = "soknad/LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE",
-    LAGRE_PABEGYNTE_SOKNADER_PA_STORE = "soknad/LAGRE_PABEGYNTE_SOKNADER_PA_STORE",
 
     VIS_SAMTYKKE_INFO = "soknad/VIS_SAMTYKKE_INFO",
     VIS_LASTE_OPP_VEDLEGG_MODAL = "soknad/VIS_LASTE_OPP_VEDLEGG_MODAL",
@@ -71,8 +70,7 @@ export type SoknadActionType =
     | VisMidlertidigDeaktivertPanel
     | VisIkkePakobletPanel
     | VisNedetidPanel
-    | LagreHarNyligInnsendteSoknaderPaStore
-    | LagrePabegynteSoknaderPaStore;
+    | LagreHarNyligInnsendteSoknaderPaStore;
 
 export interface HentSamtykker {
     type: SoknadActionTypeKeys.HENT_SAMTYKKE;
@@ -220,9 +218,4 @@ export interface VisIkkePakobletPanel {
 export interface VisNedetidPanel {
     type: SoknadActionTypeKeys.VIS_NEDETID_PANEL;
     shouldShow: boolean;
-}
-
-export interface LagrePabegynteSoknaderPaStore {
-    type: SoknadActionTypeKeys.LAGRE_PABEGYNTE_SOKNADER_PA_STORE;
-    pabegynteSoknader: PabegynteSoknaderResponse[];
 }

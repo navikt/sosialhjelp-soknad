@@ -218,12 +218,7 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 sendSoknadPending: false,
             };
         }
-        case SoknadActionTypeKeys.LAGRE_PABEGYNTE_SOKNADER_PA_STORE: {
-            return {
-                ...state,
-                pabegynteSoknader: action.pabegynteSoknader,
-            };
-        }
+
         default:
             return state;
     }

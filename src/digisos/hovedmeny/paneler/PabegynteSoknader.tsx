@@ -1,12 +1,11 @@
 import {FileContent} from "@navikt/ds-icons";
 import {Accordion, BodyShort, Heading, Label, LinkPanel} from "@navikt/ds-react";
 import React from "react";
-import {DAYS_BEFORE_DELETION} from "./pabegynteSoknaderUtils";
-import type {PabegyntSoknadData} from "./pabegynteSoknaderUtils";
 import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
 import {format, formatDistance} from "date-fns";
 import {nb} from "date-fns/locale";
 import {basePath} from "../../../configuration";
+import {DAYS_BEFORE_DELETION, usePabegynteSoknader} from "../usePabegynteSoknader";
 
 const PabegyntSoknad = ({
     behandlingsId,
@@ -48,7 +47,7 @@ const PabegyntSoknad = ({
     );
 };
 
-const PabegynteSoknaderCount = ({num}: {num: number}) => {
+const PabegynteSoknaderCount = ({num}: {num?: number}) => {
     const className = "opacity-70 lg:pl-4 font-normal";
 
     if (!num) return null;
@@ -58,7 +57,9 @@ const PabegynteSoknaderCount = ({num}: {num: number}) => {
     return <span className={className}>{num} påbegynte søknader</span>;
 };
 
-export const PabegynteSoknaderPanel = ({pabegynteSoknader}: {pabegynteSoknader: PabegyntSoknadData[]}) => {
+export const PabegynteSoknaderPanel = () => {
+    const pabegynteSoknader = usePabegynteSoknader();
+
     return (
         <Accordion>
             <Accordion.Item className={"bg-white rounded-md"}>
@@ -73,7 +74,7 @@ export const PabegynteSoknaderPanel = ({pabegynteSoknader}: {pabegynteSoknader: 
                         </div>
                         <Heading level="2" size="small" className={"flex flex-col lg:flex-row"}>
                             Fortsett på en påbegynt søknad
-                            <PabegynteSoknaderCount num={pabegynteSoknader.length} />
+                            <PabegynteSoknaderCount num={pabegynteSoknader?.length} />
                         </Heading>
                     </div>
                 </Accordion.Header>
@@ -83,7 +84,7 @@ export const PabegynteSoknaderPanel = ({pabegynteSoknader}: {pabegynteSoknader: 
                             Vær oppmerksom på at påbegynte søknader slettes etter {DAYS_BEFORE_DELETION} dager.
                         </BodyShort>
                         <ul className={"space-y-4"}>
-                            {pabegynteSoknader.map(({lastUpdatedDate, deleteDate, behandlingsId}) => (
+                            {pabegynteSoknader?.map(({lastUpdatedDate, deleteDate, behandlingsId}) => (
                                 <PabegyntSoknad
                                     key={behandlingsId}
                                     lastUpdatedDate={lastUpdatedDate}

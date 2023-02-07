@@ -11,10 +11,12 @@ import {useSoknad} from "../../redux/soknad/useSoknad";
 import {startSoknad} from "../../../lib/StartSoknad";
 import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
+import {usePabegynteSoknader} from "../usePabegynteSoknader";
 
-export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
+export const NySoknadInfo = () => {
     const {startSoknadPending, startSoknadFeilet, visNedetidPanel, harNyligInnsendteSoknader} = useSoknad();
     const antallNyligInnsendteSoknader = harNyligInnsendteSoknader?.antallNyligInnsendte ?? 0;
+    const antallPabegynteSoknader = usePabegynteSoknader()?.length;
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -24,7 +26,7 @@ export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
         event.preventDefault();
         logAmplitudeEvent("skjema startet", {
             antallNyligInnsendteSoknader,
-            antallPabegynteSoknader: props.antallPabegynteSoknader,
+            antallPabegynteSoknader: antallPabegynteSoknader,
             enableModalV2: true,
             erProdsatt: true,
             ...createSkjemaEventData(),
@@ -54,26 +56,28 @@ export const NySoknadInfo = (props: {antallPabegynteSoknader: number}) => {
     );
 };
 
-export const NySoknadPanel = ({antallPabegynteSoknader}: {antallPabegynteSoknader: number}) => (
-    <Accordion>
-        <Accordion.Item className={"bg-white rounded-md"}>
-            <Accordion.Header className={"!items-center !border-0 !py-6 !px-8 rounded-t-md"}>
-                <div className={"flex items-center gap-8"}>
-                    <div
-                        className={
-                            "rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"
-                        }
-                    >
-                        <FillForms className={"w-6 h-6 block"} aria-hidden="true" />
+export const NySoknadPanel = () => {
+    return (
+        <Accordion>
+            <Accordion.Item className={"bg-white rounded-md"}>
+                <Accordion.Header className={"!items-center !border-0 !py-6 !px-8 rounded-t-md"}>
+                    <div className={"flex items-center gap-8"}>
+                        <div
+                            className={
+                                "rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"
+                            }
+                        >
+                            <FillForms className={"w-6 h-6 block"} aria-hidden="true" />
+                        </div>
+                        <Heading level="2" size="small">
+                            Start en ny søknad
+                        </Heading>
                     </div>
-                    <Heading level="2" size="small">
-                        Start en ny søknad
-                    </Heading>
-                </div>
-            </Accordion.Header>
-            <Accordion.Content className={"!px-0 !border-0"}>
-                <NySoknadInfo antallPabegynteSoknader={antallPabegynteSoknader} />
-            </Accordion.Content>
-        </Accordion.Item>
-    </Accordion>
-);
+                </Accordion.Header>
+                <Accordion.Content className={"!px-0 !border-0"}>
+                    <NySoknadInfo />
+                </Accordion.Content>
+            </Accordion.Item>
+        </Accordion>
+    );
+};
