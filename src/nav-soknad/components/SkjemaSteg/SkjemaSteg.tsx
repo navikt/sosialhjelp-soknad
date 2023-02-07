@@ -13,8 +13,6 @@ import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepper} from "./SkjemaStegNavStepper";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapper from "./SkjemaStegNavKnapper";
-import ServerFeil from "../../feilsider/ServerFeil";
-import SideIkkeFunnet from "../../feilsider/SideIkkeFunnet";
 import TimeoutBox from "../timeoutbox/TimeoutBox";
 import {AvbrytSoknad} from "../avbrytsoknad/AvbrytSoknad";
 import {useTranslation} from "react-i18next";
@@ -53,7 +51,7 @@ function SkjemaStegHeading(props: {ikon: ReactNode; stegTittel: string}) {
 }
 
 export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps) => {
-    const {sendSoknadPending, showSideIkkeFunnet, showServerFeil} = useSoknad();
+    const {sendSoknadPending} = useSoknad();
     const {data: nedetid} = useHentNedetidInformasjon();
     const {
         validering: {feil, visValideringsfeil},
@@ -69,10 +67,6 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
     }, []);
 
     useTitle(`${stegTittel} - ${documentTitle}`);
-
-    if (showServerFeil) return <ServerFeil />;
-
-    if (showSideIkkeFunnet) return <SideIkkeFunnet />;
 
     return (
         <div className="pb-4 lg:pb-40 bg-green-500/20">
