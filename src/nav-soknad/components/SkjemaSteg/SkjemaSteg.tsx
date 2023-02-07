@@ -135,6 +135,7 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
         } else return <SideIkkeFunnet />;
     }
 
+
     return (
         <div className="pb-4 lg:pb-40 bg-green-500/20">
             <AppBanner />
