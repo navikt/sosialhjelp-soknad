@@ -1,6 +1,6 @@
 import {addDays, subDays} from "date-fns";
-import {PabegynteSoknaderResponse} from "../redux/soknad/soknadTypes";
 import {filterAndSortPabegynteSoknader} from "./usePabegynteSoknader";
+import {PabegyntSoknad} from "../../generated/model";
 
 describe("Util funksjoner for påbegynte søknader", () => {
     it("skal ikke kræsje på tomt array", () => {
@@ -9,7 +9,7 @@ describe("Util funksjoner for påbegynte søknader", () => {
 
     it("skal mappe søknader riktig", () => {
         const sistOppdatert = subDays(new Date(), 1);
-        const pabegynteSoknaderResponse: PabegynteSoknaderResponse[] = [
+        const pabegynteSoknaderResponse: PabegyntSoknad[] = [
             {
                 behandlingsId: "123",
                 sistOppdatert: sistOppdatert.toISOString(),
@@ -26,7 +26,7 @@ describe("Util funksjoner for påbegynte søknader", () => {
 
     it("skal ikke returnere søknader eldre enn 14 dager", () => {
         const currentDate = new Date();
-        const pabegynteSoknaderResponse: PabegynteSoknaderResponse[] = [
+        const pabegynteSoknaderResponse: PabegyntSoknad[] = [
             {
                 behandlingsId: "123",
                 sistOppdatert: subDays(currentDate, 14).toISOString(),
@@ -38,7 +38,7 @@ describe("Util funksjoner for påbegynte søknader", () => {
 
     it("skal sortere påbegynte søknader med nyeste først", () => {
         const currentDate = new Date();
-        const pabegynteSoknaderResponse: PabegynteSoknaderResponse[] = [
+        const pabegynteSoknaderResponse: PabegyntSoknad[] = [
             {
                 behandlingsId: "eldre",
                 sistOppdatert: subDays(currentDate, 2).toISOString(),

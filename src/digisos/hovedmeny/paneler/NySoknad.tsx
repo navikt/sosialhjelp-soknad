@@ -12,10 +12,11 @@ import {startSoknad} from "../../../lib/StartSoknad";
 import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
 import {usePabegynteSoknader} from "../usePabegynteSoknader";
+import {useHarNyligInnsendteSoknader} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 
 export const NySoknadInfo = () => {
-    const {startSoknadPending, startSoknadFeilet, visNedetidPanel, harNyligInnsendteSoknader} = useSoknad();
-    const antallNyligInnsendteSoknader = harNyligInnsendteSoknader?.antallNyligInnsendte ?? 0;
+    const {startSoknadPending, startSoknadFeilet, visNedetidPanel} = useSoknad();
+    const {data: nyligInnsendteSoknader} = useHarNyligInnsendteSoknader();
     const antallPabegynteSoknader = usePabegynteSoknader()?.length;
 
     const dispatch = useDispatch();
@@ -25,7 +26,7 @@ export const NySoknadInfo = () => {
     const onSokSosialhjelpButtonClick = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         logAmplitudeEvent("skjema startet", {
-            antallNyligInnsendteSoknader,
+            antallNyligInnsendteSoknader: nyligInnsendteSoknader?.antallNyligInnsendte ?? 0,
             antallPabegynteSoknader: antallPabegynteSoknader,
             enableModalV2: true,
             erProdsatt: true,

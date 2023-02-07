@@ -6,7 +6,6 @@ import {
     VisMidlertidigDeaktivertPanel,
     VisNedetidPanel,
 } from "./soknadActionTypes";
-import {HarNyligInnsendteSoknaderResponse} from "./soknadTypes";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 
 export function startSoknadDone() {
@@ -79,15 +78,6 @@ export function hentSamtykkerOk(samtykker: Samtykke[]): SoknadActionType {
         samtykker,
     };
 }
-
-export const lagreHarNyligInnsendteSoknaderPaStore = (
-    harNyligInnsendteSoknaderResponse: HarNyligInnsendteSoknaderResponse
-): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE,
-        harNyligInnsendteSoknaderResponse,
-    };
-};
 
 export const visSamtykkeInfo = (skalVises: boolean): SoknadActionType => {
     return {

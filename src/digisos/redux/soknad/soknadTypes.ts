@@ -1,6 +1,3 @@
-import {ErSystemdataEndret, Samtykke} from "./soknadActionTypes";
-import {NedetidFrontend} from "../../../generated/model";
-
 export interface SoknadState {
     // Visning state
     showSideIkkeFunnet: boolean;
@@ -14,9 +11,6 @@ export interface SoknadState {
     showSendingFeiletPanel: boolean;
     showServerFeil: boolean;
 
-    // Rest state
-    restStatus: REST_STATUS;
-
     // Opprettelse, innsending og ettersendelse
     startSoknadPending: boolean;
     startSoknadFeilet: boolean;
@@ -27,18 +21,6 @@ export interface SoknadState {
 
     // Soknad state
     behandlingsId: string | undefined;
-
-    // Systemdata state
-    erSystemdataEndret: ErSystemdataEndret;
-
-    // Samtykke
-    samtykker: Samtykke[] | undefined;
-    samtykkeRestStatus: REST_STATUS;
-
-    // HarNyligInnsendteSoknader state
-    harNyligInnsendteSoknader: undefined | HarNyligInnsendteSoknaderResponse;
-
-    pabegynteSoknader: PabegynteSoknaderResponse[];
 }
 
 export enum REST_STATUS {
@@ -66,13 +48,4 @@ export interface NedetidResponse {
     nedetidSlutt: string;
     nedetidStartText: string;
     nedetidSluttText: string;
-}
-
-export interface HarNyligInnsendteSoknaderResponse {
-    antallNyligInnsendte: number;
-}
-
-export interface PabegynteSoknaderResponse {
-    behandlingsId: string;
-    sistOppdatert: string;
 }

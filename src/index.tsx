@@ -13,7 +13,6 @@ import createSagaMiddleware from "redux-saga";
 
 import reducers from "./digisos/redux/reducers";
 import sagas from "./rootSaga";
-import LoadContainer from "./LoadContainer";
 import Modal from "react-modal";
 import {initAmplitude} from "./nav-soknad/utils/amplitude";
 import {logWindowError} from "./nav-soknad/utils/loggerUtils";
@@ -57,11 +56,9 @@ if (process.env.NODE_ENV !== "production") {
 ReactDOM.render(
     <Provider store={store}>
         <Suspense fallback={<Loader />}>
-            <LoadContainer>
-                <QueryClientProvider client={queryClient}>
-                    <RouterProvider router={router} />
-                </QueryClientProvider>
-            </LoadContainer>
+            <QueryClientProvider client={queryClient}>
+                <RouterProvider router={router} />
+            </QueryClientProvider>
         </Suspense>
     </Provider>,
     document.getElementById("root") as HTMLElement

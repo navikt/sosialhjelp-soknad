@@ -12,11 +12,6 @@ export const defaultState: SoknadState = {
     visIkkePakobletPanel: false,
     visNedetidPanel: false,
 
-    harNyligInnsendteSoknader: undefined,
-
-    // Rest state
-    restStatus: REST_STATUS.INITIALISERT,
-
     // Opprettelse, innsending og ettersendelse
     startSoknadPending: false,
     startSoknadFeilet: false,
@@ -25,17 +20,8 @@ export const defaultState: SoknadState = {
     // Soknad state
     behandlingsId: undefined,
 
-    // Systemdata
-    erSystemdataEndret: ErSystemdataEndret.NOT_ASKED,
-
-    // Samtykker
-    samtykker: [],
-    samtykkeRestStatus: REST_STATUS.INITIALISERT,
-
     // Avbryt
     visAvbrytOgSlettModal: false,
-
-    pabegynteSoknader: [],
 };
 
 const reducer = (state: SoknadState = defaultState, action: SoknadActionType) => {
@@ -164,13 +150,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             };
         }
 
-        case SoknadActionTypeKeys.LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE: {
-            const {harNyligInnsendteSoknaderResponse} = action;
-            return {
-                ...state,
-                harNyligInnsendteSoknader: harNyligInnsendteSoknaderResponse,
-            };
-        }
         case SoknadActionTypeKeys.VIS_MIDLERTIDIG_DEAKTIVERT_PANEL: {
             return {
                 ...state,

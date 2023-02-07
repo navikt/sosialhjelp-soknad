@@ -1,5 +1,3 @@
-import {HarNyligInnsendteSoknaderResponse} from "./soknadTypes";
-
 export const enum SoknadActionTypeKeys {
     START_SOKNAD_DONE = "soknad/START_SOKNAD_DONE",
     OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
@@ -20,8 +18,6 @@ export const enum SoknadActionTypeKeys {
     HENT_SAMTYKKE = "soknad/HENT_SAMTYKKE",
     HENT_SAMTYKKE_OK = "soknad/HENT_SAMTYKKE_OK",
     OPPDATER_SAMTYKKE = "soknad/OPPDATER_SAMTYKKE",
-
-    LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE = "soknad/LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE",
 
     VIS_SAMTYKKE_INFO = "soknad/VIS_SAMTYKKE_INFO",
     VIS_LASTE_OPP_VEDLEGG_MODAL = "soknad/VIS_LASTE_OPP_VEDLEGG_MODAL",
@@ -60,8 +56,7 @@ export type SoknadActionType =
     | ShowSideIkkeFunnet
     | VisMidlertidigDeaktivertPanel
     | VisIkkePakobletPanel
-    | VisNedetidPanel
-    | LagreHarNyligInnsendteSoknaderPaStore;
+    | VisNedetidPanel;
 
 export interface HentSamtykker {
     type: SoknadActionTypeKeys.HENT_SAMTYKKE;
@@ -83,11 +78,6 @@ export interface OppdaterSamtykke {
 export interface Samtykke {
     type: string;
     verdi: boolean;
-}
-
-export interface LagreHarNyligInnsendteSoknaderPaStore {
-    type: SoknadActionTypeKeys.LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE;
-    harNyligInnsendteSoknaderResponse: HarNyligInnsendteSoknaderResponse;
 }
 
 export interface VisSamtykkeInfo {
