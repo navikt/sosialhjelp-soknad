@@ -117,7 +117,9 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
 
     // Synchronize Redux
     useEffect(() => {
-        if (!behandlingsIdFraRedux && behandlingsIdFraUrl) getSoknad(behandlingsIdFraUrl, dispatch);
+        if (!behandlingsIdFraRedux && behandlingsIdFraUrl) {
+            getSoknad(behandlingsIdFraUrl, dispatch);
+        }
     }, [behandlingsIdFraRedux, behandlingsIdFraUrl, dispatch]);
 
     if (showServerFeil) return <ServerFeil />;
@@ -134,7 +136,6 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
             return null;
         } else return <SideIkkeFunnet />;
     }
-
 
     return (
         <div className="pb-4 lg:pb-40 bg-green-500/20">
