@@ -82,6 +82,7 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 restStatus: xsrfCookieReceived ? REST_STATUS.OK : REST_STATUS.XSRF,
                 behandlingsId: behandlingsId,
                 showLargeSpinner: false,
+                showSideIkkeFunnet: false,
             };
         case SoknadActionTypeKeys.UPDATE_BEHANDLINGSID_PA_STORE: {
             return {

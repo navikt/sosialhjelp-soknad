@@ -9,11 +9,12 @@ import {logWarning} from "../nav-soknad/utils/loggerUtils";
  * @param {string} behandlingsId
  * @param {Dispatch} dispatch
  */
-export const getSoknad = async (behandlingsId: string, dispatch: Dispatch) => {
+export const getSoknad = (behandlingsId: string, dispatch: Dispatch) => {
     try {
         dispatch(hentSoknad(behandlingsId));
-        const xsrfCookieIsOk = await fetchToJson<boolean>(`soknader/${behandlingsId}/xsrfCookie`);
-        dispatch(hentSoknadOk(xsrfCookieIsOk, behandlingsId ?? ""));
+        fetchToJson<boolean>(`soknader/${behandlingsId}/xsrfCookie`).then((xsrfCookieIsOk) =>
+            dispatch(hentSoknadOk(xsrfCookieIsOk, behandlingsId ?? ""))
+        );
     } catch (reason) {
         if (reason.message !== HttpStatus.UNAUTHORIZED) logWarning("hent soknad feilet: " + reason);
         dispatch(setShowPageNotFound(true));
