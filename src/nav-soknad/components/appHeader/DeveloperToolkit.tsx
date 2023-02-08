@@ -5,12 +5,13 @@ import {useNavigate, useParams} from "react-router";
 import {setSoknadPending, hentSoknadOk} from "../../../digisos/redux/soknad/soknadActions";
 import {logWarning} from "../../utils/loggerUtils";
 import {UrlParams} from "../SkjemaSteg/UseReduxSynchronizer";
+import {useEffect} from "react";
 
 export const DeveloperToolkit = () => {
     const {behandlingsId} = useParams<UrlParams>();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    logWarning("Viser utviklermeny. Dette skal ikke skje i prod!", true);
+    useEffect(() => logWarning("Viser utviklermeny. Dette skal ikke skje i prod!", true), []);
 
     return (
         <div className={"!mt-0 p-2 bg-[black] text-[#0f0] font-mono "}>
