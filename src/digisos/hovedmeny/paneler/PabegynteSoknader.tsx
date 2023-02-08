@@ -6,6 +6,7 @@ import {format, formatDistance} from "date-fns";
 import {nb} from "date-fns/locale";
 import {basePath} from "../../../configuration";
 import {DAYS_BEFORE_DELETION, usePabegynteSoknader} from "../usePabegynteSoknader";
+import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 
 const PabegyntSoknad = ({
     behandlingsId,
@@ -47,14 +48,18 @@ const PabegyntSoknad = ({
     );
 };
 
-const PabegynteSoknaderCount = ({num}: {num?: number}) => {
-    const className = "opacity-70 lg:pl-4 font-normal";
+const PabegynteSoknaderCount = () => {
+    const num = usePabegynteSoknader()?.length;
 
-    if (!num) return null;
+    if (num === undefined) return <TextPlaceholder lines={1} />;
 
-    if (num === 1) return <span className={className}>1 påbegynt søknad</span>;
+    if (num === 0) return null;
 
-    return <span className={className}>{num} påbegynte søknader</span>;
+    return (
+        <span className={"opacity-70 lg:pl-4 font-normal"}>
+            {num === 1 ? `1 påbegynt søknad` : `${num} påbegynte søknader`}
+        </span>
+    );
 };
 
 export const PabegynteSoknaderPanel = () => {
@@ -74,7 +79,7 @@ export const PabegynteSoknaderPanel = () => {
                         </div>
                         <Heading level="2" size="small" className={"flex flex-col lg:flex-row"}>
                             Fortsett på en påbegynt søknad
-                            <PabegynteSoknaderCount num={pabegynteSoknader?.length} />
+                            <PabegynteSoknaderCount />
                         </Heading>
                     </div>
                 </Accordion.Header>
