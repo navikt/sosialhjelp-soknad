@@ -3,11 +3,11 @@ import BoligIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import AntallPersoner from "./AntallPersoner";
 import Botype from "./Botype";
-import StegMedNavigasjon, {UrlParams} from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
-import {useParams} from "react-router";
+import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
+import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 
 export const Bosituasjon = () => {
-    const {behandlingsId} = useParams<UrlParams>();
+    const behandlingsId = useBehandlingsId();
 
     if (!behandlingsId) return null;
 

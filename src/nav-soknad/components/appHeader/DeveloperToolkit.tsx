@@ -1,13 +1,13 @@
 import * as React from "react";
 import {startSoknad} from "../../../lib/StartSoknad";
 import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router";
-import {hentSoknad, hentSoknadOk} from "../../../digisos/redux/soknad/soknadActions";
+import {useNavigate, useParams} from "react-router";
+import {setSoknadPending, hentSoknadOk} from "../../../digisos/redux/soknad/soknadActions";
 import {logWarning} from "../../utils/loggerUtils";
-import {useBehandlingsId} from "../../hooks/useBehandlingsId";
+import {UrlParams} from "../SkjemaSteg/UseReduxSynchronizer";
 
 export const DeveloperToolkit = () => {
-    const behandlingsId = useBehandlingsId();
+    const {behandlingsId} = useParams<UrlParams>();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     logWarning("Viser utviklermeny. Dette skal ikke skje i prod!", true);
@@ -29,7 +29,7 @@ export const DeveloperToolkit = () => {
                     onClick={async () => {
                         const behandlingsId = await startSoknad(dispatch);
                         if (behandlingsId) {
-                            dispatch(hentSoknad(behandlingsId));
+                            dispatch(setSoknadPending(behandlingsId));
                             dispatch(hentSoknadOk(true, behandlingsId));
                             navigate(`/skjema/${behandlingsId}/1`);
                         }

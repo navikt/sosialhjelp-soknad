@@ -5,15 +5,15 @@ import "./index.css";
 import "@navikt/ds-css";
 
 import * as React from "react";
+import {Suspense} from "react";
 import * as ReactDOM from "react-dom";
 
-import {createStore, applyMiddleware, compose} from "redux";
+import {applyMiddleware, compose, createStore} from "redux";
 import {Provider} from "react-redux";
 import createSagaMiddleware from "redux-saga";
 
 import reducers from "./digisos/redux/reducers";
 import sagas from "./rootSaga";
-import LoadContainer from "./LoadContainer";
 import Modal from "react-modal";
 import {initAmplitude} from "./nav-soknad/utils/amplitude";
 import {logWindowError} from "./nav-soknad/utils/loggerUtils";
@@ -23,8 +23,9 @@ import {router} from "./digisos";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 import "./i18n";
-import {Suspense} from "react";
 import {Loader} from "@navikt/ds-react";
+import {RedirectHack} from "./RedirectHack";
+import {ErrorPanels} from "./ErrorPanels";
 
 Modal.setAppElement("#root");
 
@@ -56,13 +57,15 @@ if (process.env.NODE_ENV !== "production") {
 
 ReactDOM.render(
     <Provider store={store}>
-        <Suspense fallback={<Loader />}>
-            <LoadContainer>
+        <RedirectHack>
+            <Suspense fallback={<Loader />}>
                 <QueryClientProvider client={queryClient}>
-                    <RouterProvider router={router} />
+                    <ErrorPanels>
+                        <RouterProvider router={router} />
+                    </ErrorPanels>
                 </QueryClientProvider>
-            </LoadContainer>
-        </Suspense>
+            </Suspense>
+        </RedirectHack>
     </Provider>,
     document.getElementById("root") as HTMLElement
 );

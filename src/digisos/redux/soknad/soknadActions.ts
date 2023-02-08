@@ -6,13 +6,6 @@ import {
     VisMidlertidigDeaktivertPanel,
     VisNedetidPanel,
 } from "./soknadActionTypes";
-import {
-    FornavnResponse,
-    HarNyligInnsendteSoknaderResponse,
-    NedetidResponse,
-    PabegynteSoknaderResponse,
-    TilgangResponse,
-} from "./soknadTypes";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 
 export function startSoknadDone() {
@@ -35,9 +28,9 @@ export function opprettSoknadOk(behandlingsId: string): SoknadActionType {
 }
 
 // This function only sets the soknad REST status to Pending
-export function hentSoknad(behandlingsId: string): SoknadActionType {
+export function setSoknadPending(behandlingsId: string): SoknadActionType {
     return {
-        type: SoknadActionTypeKeys.HENT_SOKNAD,
+        type: SoknadActionTypeKeys.SET_SOKNAD_PENDING,
         behandlingsId,
     };
 }
@@ -54,18 +47,6 @@ export function hentSoknadOk(xsrfCookieReceived: boolean, behandlingsId: string)
 export function sendSoknadPending(): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.SEND_SOKNAD_KNAPP_PENDING,
-    };
-}
-
-export function setSendSoknadServiceUnavailable(): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.SET_SEND_SOKNAD_SERVICE_UNAVAILABLE,
-    };
-}
-
-export function resetSendSoknadServiceUnavailable(): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE,
     };
 }
 
@@ -97,40 +78,6 @@ export function hentSamtykkerOk(samtykker: Samtykke[]): SoknadActionType {
         samtykker,
     };
 }
-
-export const lagreRessurserPaStore = (
-    tilgangResponse: TilgangResponse,
-    fornavnResponse: FornavnResponse
-): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.LAGRE_TILGANG_OG_FORNAVN_PA_STORE,
-        tilgangResponse,
-        fornavnResponse,
-    };
-};
-
-export const lagreNedetidPaStore = (nedetidResponse: NedetidResponse): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.LAGRE_NEDETID_PA_STORE,
-        nedetidResponse,
-    };
-};
-
-export const lagreHarNyligInnsendteSoknaderPaStore = (
-    harNyligInnsendteSoknaderResponse: HarNyligInnsendteSoknaderResponse
-): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE,
-        harNyligInnsendteSoknaderResponse,
-    };
-};
-
-export const lagrePabegynteSoknaderPaStore = (pabegynteSoknader: PabegynteSoknaderResponse[]): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.LAGRE_PABEGYNTE_SOKNADER_PA_STORE,
-        pabegynteSoknader,
-    };
-};
 
 export const visSamtykkeInfo = (skalVises: boolean): SoknadActionType => {
     return {

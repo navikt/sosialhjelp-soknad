@@ -1,40 +1,36 @@
 import * as React from "react";
-import {useSelector} from "react-redux";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
 import IkkeTilgang from "./IkkeTilgang";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
-import {State} from "../redux/reducers";
 import {useTitle} from "../../nav-soknad/hooks/useTitle";
 import {NedetidPanel} from "../../components/common/NedetidPanel";
 import {NySoknadPanel} from "./paneler/NySoknad";
 import {PabegynteSoknaderPanel} from "./paneler/PabegynteSoknader";
 import {EttersendDokuPanel} from "./paneler/EttersendDokuPanel";
-import {filterAndSortPabegynteSoknader} from "./paneler/pabegynteSoknaderUtils";
 import {useTranslation} from "react-i18next";
+import {useGetUtslagskriterier} from "../../generated/informasjon-ressurs/informasjon-ressurs";
+import {useAlgebraic} from "../../lib/hooks/useAlgebraic";
 
 const Informasjon = () => {
-    const harTilgang: boolean = !!useSelector((state: State) => state.soknad.tilgang?.harTilgang);
-    useTitle(getIntlTextOrKey(useTranslation().t, "applikasjon.sidetittel"));
-    const pabegynteSoknader = filterAndSortPabegynteSoknader(
-        useSelector((state: State) => state.soknad.pabegynteSoknader),
-        new Date()
-    );
+    const {expectOK} = useAlgebraic(useGetUtslagskriterier());
+    const {t} = useTranslation();
+    useTitle(getIntlTextOrKey(t, "applikasjon.sidetittel"));
 
-    sessionStorage.removeItem("sistLagretSoknad");
+    return expectOK(({harTilgang}) => {
+        if (!harTilgang) return <IkkeTilgang />;
 
-    if (!harTilgang) return <IkkeTilgang />;
-
-    return (
-        <div className={"bg-green-500/20 flex flex-col"}>
-            <AppBanner />
-            <NedetidPanel varselType={"infoside"} />
-            <div className="max-w-lg lg:max-w-3xl w-full mx-auto space-y-5 pt-12 lg:pt-24 pb-48">
-                <NySoknadPanel antallPabegynteSoknader={pabegynteSoknader.length} />
-                <PabegynteSoknaderPanel pabegynteSoknader={pabegynteSoknader} />
-                <EttersendDokuPanel />
+        return (
+            <div className={"bg-green-500/20 flex flex-col"}>
+                <AppBanner />
+                <NedetidPanel varselType={"infoside"} />
+                <div className="max-w-lg lg:max-w-3xl w-full mx-auto space-y-5 pt-12 lg:pt-24 pb-48">
+                    <NySoknadPanel />
+                    <PabegynteSoknaderPanel />
+                    <EttersendDokuPanel />
+                </div>
             </div>
-        </div>
-    );
+        );
+    });
 };
 
 export default Informasjon;

@@ -1,6 +1,3 @@
-import {ErSystemdataEndret, Samtykke} from "./soknadActionTypes";
-import {SoknadSendtTil} from "../../../lib/sendSoknad";
-
 export interface SoknadState {
     // Visning state
     showSideIkkeFunnet: boolean;
@@ -13,18 +10,6 @@ export interface SoknadState {
     // Visning state skjema nivå
     showSendingFeiletPanel: boolean;
     showServerFeil: boolean;
-    sendSoknadServiceUnavailable: boolean;
-
-    // Authentication / tilgang state
-    harTilgang: boolean;
-    sperrekode: TilgangSperrekode | undefined;
-
-    // Rest state
-    restStatus: REST_STATUS;
-
-    // Tilgang og fornavn
-    tilgang: undefined | TilgangResponse;
-    fornavn: undefined | string;
 
     // Opprettelse, innsending og ettersendelse
     startSoknadPending: boolean;
@@ -36,32 +21,14 @@ export interface SoknadState {
 
     // Soknad state
     behandlingsId: string | undefined;
-
-    // Systemdata state
-    erSystemdataEndret: ErSystemdataEndret;
-
-    // Samtykke
-    samtykker: Samtykke[] | undefined;
-    samtykkeRestStatus: REST_STATUS;
-
-    // Nedetid state
-    nedetid: undefined | NedetidResponse;
-
-    // HarNyligInnsendteSoknader state
-    harNyligInnsendteSoknader: undefined | HarNyligInnsendteSoknaderResponse;
-
-    pabegynteSoknader: PabegynteSoknaderResponse[];
 }
 
 export enum REST_STATUS {
     INITIALISERT = "INITIALISERT",
     PENDING = "PENDING",
     OK = "OK",
-    REDIRECT = "REDIRECT",
-    CLIENT_ERROR = "CLIENT_ERROR",
     SERVER_ERROR = "SERVER_ERROR",
     XSRF = "XSRF",
-    LAST_OPP_FIL_FEILET = "LAST_OPP_FIL_FEILET",
     FEILET = "FEILET",
 }
 
@@ -74,26 +41,6 @@ export enum REST_FEIL {
     SIGNERT_FIL = "opplasting.feilmelding.pdf.signert",
 }
 
-export interface OpprettSoknadResponse {
-    brukerBehandlingId: string;
-}
-
-export interface SendSoknadResponse {
-    sendtTil: SoknadSendtTil;
-    id: string;
-}
-
-export interface TilgangResponse {
-    harTilgang: boolean;
-    sperrekode: TilgangSperrekode;
-}
-
-export interface FornavnResponse {
-    fornavn: string;
-}
-
-export type TilgangSperrekode = "pilot" | "bruker";
-
 export interface NedetidResponse {
     isNedetid: boolean;
     isPlanlagtNedetid: boolean;
@@ -101,13 +48,4 @@ export interface NedetidResponse {
     nedetidSlutt: string;
     nedetidStartText: string;
     nedetidSluttText: string;
-}
-
-export interface HarNyligInnsendteSoknaderResponse {
-    antallNyligInnsendte: number;
-}
-
-export interface PabegynteSoknaderResponse {
-    behandlingsId: string;
-    sistOppdatert: string;
 }

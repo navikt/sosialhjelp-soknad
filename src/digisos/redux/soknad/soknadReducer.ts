@@ -4,7 +4,6 @@ import {REST_STATUS, SoknadState} from "./soknadTypes";
 export const defaultState: SoknadState = {
     // Visningsstate
     showServerFeil: false,
-    sendSoknadServiceUnavailable: false,
     showSendingFeiletPanel: false,
     showSideIkkeFunnet: false,
     visSamtykkeInfo: false,
@@ -12,19 +11,6 @@ export const defaultState: SoknadState = {
     visMidlertidigDeaktivertPanel: false,
     visIkkePakobletPanel: false,
     visNedetidPanel: false,
-
-    // Authentication state
-    harTilgang: false,
-    sperrekode: undefined,
-    nedetid: undefined,
-    harNyligInnsendteSoknader: undefined,
-
-    // Rest state
-    restStatus: REST_STATUS.INITIALISERT,
-
-    // Tilgang og fornavn
-    tilgang: undefined,
-    fornavn: undefined,
 
     // Opprettelse, innsending og ettersendelse
     startSoknadPending: false,
@@ -34,17 +20,8 @@ export const defaultState: SoknadState = {
     // Soknad state
     behandlingsId: undefined,
 
-    // Systemdata
-    erSystemdataEndret: ErSystemdataEndret.NOT_ASKED,
-
-    // Samtykker
-    samtykker: [],
-    samtykkeRestStatus: REST_STATUS.INITIALISERT,
-
     // Avbryt
     visAvbrytOgSlettModal: false,
-
-    pabegynteSoknader: [],
 };
 
 const reducer = (state: SoknadState = defaultState, action: SoknadActionType) => {
@@ -70,7 +47,7 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 skalSjekkeOmSystemdataErEndret: false,
                 behandlingsId: action.behandlingsId,
             };
-        case SoknadActionTypeKeys.HENT_SOKNAD:
+        case SoknadActionTypeKeys.SET_SOKNAD_PENDING:
             return {
                 ...state,
                 restStatus: REST_STATUS.PENDING,
@@ -83,6 +60,7 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 behandlingsId: behandlingsId,
                 showLargeSpinner: false,
                 showSideIkkeFunnet: false,
+                showServerFeil: false,
             };
         case SoknadActionTypeKeys.UPDATE_BEHANDLINGSID_PA_STORE: {
             return {
@@ -105,7 +83,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 showLargeSpinner: false,
             };
         }
-
         case SoknadActionTypeKeys.START_SOKNAD_DONE:
             return {
                 ...state,
@@ -145,7 +122,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 skalSjekkeOmSystemdataErEndret: false,
             };
         }
-
         case SoknadActionTypeKeys.HENT_SAMTYKKE:
             return {
                 ...state,
@@ -174,29 +150,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             };
         }
 
-        case SoknadActionTypeKeys.LAGRE_TILGANG_OG_FORNAVN_PA_STORE: {
-            const {tilgangResponse, fornavnResponse} = action;
-            return {
-                ...state,
-                tilgang: tilgangResponse,
-                fornavn: fornavnResponse.fornavn,
-            };
-        }
-
-        case SoknadActionTypeKeys.LAGRE_NEDETID_PA_STORE: {
-            const {nedetidResponse} = action;
-            return {
-                ...state,
-                nedetid: nedetidResponse,
-            };
-        }
-        case SoknadActionTypeKeys.LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE: {
-            const {harNyligInnsendteSoknaderResponse} = action;
-            return {
-                ...state,
-                harNyligInnsendteSoknader: harNyligInnsendteSoknaderResponse,
-            };
-        }
         case SoknadActionTypeKeys.VIS_MIDLERTIDIG_DEAKTIVERT_PANEL: {
             return {
                 ...state,
@@ -215,20 +168,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 visNedetidPanel: action.shouldShow,
             };
         }
-        case SoknadActionTypeKeys.SET_SEND_SOKNAD_SERVICE_UNAVAILABLE: {
-            return {
-                ...state,
-                sendSoknadServiceUnavailable: true,
-                sendSoknadPending: false,
-            };
-        }
-        case SoknadActionTypeKeys.RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE: {
-            return {
-                ...state,
-                sendSoknadServiceUnavailable: false,
-                visMidlertidigDeaktivertPanel: false,
-            };
-        }
         case SoknadActionTypeKeys.SHOW_SENDING_FEILET_PANEL: {
             return {
                 ...state,
@@ -236,12 +175,7 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 sendSoknadPending: false,
             };
         }
-        case SoknadActionTypeKeys.LAGRE_PABEGYNTE_SOKNADER_PA_STORE: {
-            return {
-                ...state,
-                pabegynteSoknader: action.pabegynteSoknader,
-            };
-        }
+
         default:
             return state;
     }

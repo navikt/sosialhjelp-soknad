@@ -2,7 +2,6 @@ import {AnyAction, Dispatch} from "redux";
 import {getInnsynUrl, HttpStatus} from "../nav-soknad/utils/rest-utils";
 import {
     sendSoknadOk,
-    setSendSoknadServiceUnavailable,
     showSendingFeiletPanel,
     visMidlertidigDeaktivertPanel,
 } from "../digisos/redux/soknad/soknadActions";
@@ -10,8 +9,6 @@ import {logWarning} from "../nav-soknad/utils/loggerUtils";
 import {basePath} from "../configuration";
 import {sendSoknad as sendSoknadAction} from "../generated/soknad-actions/soknad-actions";
 import {SendTilUrlFrontendSendtTil} from "../generated/model";
-
-export type SoknadSendtTil = "SVARUT" | "FIKS_DIGISOS_API";
 
 /**
  * Sender inn søknad og returnerer relevant status-side
@@ -42,7 +39,6 @@ export const sendSoknad = async (behandlingsId: string, dispatch: Dispatch<AnyAc
 
         if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
             dispatch(visMidlertidigDeaktivertPanel(true));
-            dispatch(setSendSoknadServiceUnavailable());
         } else {
             dispatch(showSendingFeiletPanel(true));
         }

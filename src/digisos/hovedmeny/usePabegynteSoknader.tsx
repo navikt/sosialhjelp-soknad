@@ -1,5 +1,6 @@
+import {useHentPabegynteSoknader} from "../../generated/informasjon-ressurs/informasjon-ressurs";
 import {add, isAfter} from "date-fns";
-import {PabegynteSoknaderResponse} from "../../redux/soknad/soknadTypes";
+import {PabegyntSoknad} from "../../generated/model";
 
 export const DAYS_BEFORE_DELETION = 14;
 
@@ -10,11 +11,11 @@ export interface PabegyntSoknadData {
 }
 
 export const filterAndSortPabegynteSoknader = (
-    pabegynteSoknader: PabegynteSoknaderResponse[],
+    pabegynteSoknader: PabegyntSoknad[] | undefined,
     currentDate: Date
-): PabegyntSoknadData[] => {
-    return pabegynteSoknader
-        .map((soknad) => ({
+): PabegyntSoknadData[] | undefined =>
+    pabegynteSoknader
+        ?.map((soknad) => ({
             behandlingsId: soknad.behandlingsId,
             lastUpdatedDate: new Date(soknad.sistOppdatert),
             deleteDate: add(new Date(soknad.sistOppdatert), {days: DAYS_BEFORE_DELETION}),
@@ -26,4 +27,8 @@ export const filterAndSortPabegynteSoknader = (
             }
             return 1;
         });
+
+export const usePabegynteSoknader = () => {
+    const {data: pabegynteSoknaderResponse} = useHentPabegynteSoknader();
+    return filterAndSortPabegynteSoknader(pabegynteSoknaderResponse, new Date());
 };

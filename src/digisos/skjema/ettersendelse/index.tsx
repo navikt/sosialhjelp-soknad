@@ -16,6 +16,7 @@ import {BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
 import {BlokkCenter} from "./BlokkCenter";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
 import {Trans, useTranslation} from "react-i18next";
+import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
 
 type EttersendelseParams = Record<"behandlingsId", string>;
 
@@ -24,7 +25,9 @@ const Ettersendelse = () => {
     const {t} = useTranslation("skjema");
 
     const params = useParams<EttersendelseParams>();
-    const {behandlingsId, nedetid} = useSelector((state: State) => state.soknad);
+    const {behandlingsId} = useSelector((state: State) => state.soknad);
+
+    const {data: nedetid} = useHentNedetidInformasjon();
     const {data, feilKode} = useSelector((state: State) => state.ettersendelse);
     const {originalSoknad, ettersendelser} = useSelector((state: State) => state.ettersendelse.innsendte);
 

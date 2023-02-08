@@ -1,17 +1,9 @@
-import {
-    FornavnResponse,
-    HarNyligInnsendteSoknaderResponse,
-    NedetidResponse,
-    PabegynteSoknaderResponse,
-    TilgangResponse,
-} from "./soknadTypes";
-
 export const enum SoknadActionTypeKeys {
     START_SOKNAD_DONE = "soknad/START_SOKNAD_DONE",
     OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
     OPPRETT_SOKNAD_FEILET = "soknad/OPPRETT_SOKNAD_FEILET",
     OPPRETT_SOKNAD_OK = "soknad/OPPRETT_SOKNAD_OK",
-    HENT_SOKNAD = "soknad/HENT_SOKNAD",
+    SET_SOKNAD_PENDING = "soknad/SET_SOKNAD_PENDING",
     HENT_SOKNAD_OK = "soknad/HENT_SOKNAD_OK",
 
     VIS_AVBRYT_SOKNAD_MODAL = "soknad/AVBRYT_SOKNAD",
@@ -22,18 +14,11 @@ export const enum SoknadActionTypeKeys {
 
     GET_ER_SYSTEMDATA_ENDRET = "soknad/GET_ER_SYSTEMDATA_ENDRET",
     SET_ER_SYSTEMDATA_ENDRET = "soknad/SET_ER_SYSTEMDATA_ENDRET",
-    OPPDATER_SOKNADSMOTTAKER_STATUS = "soknad/OPPDATER_SOKNADSMOTTAKER_STATUS",
 
     HENT_SAMTYKKE = "soknad/HENT_SAMTYKKE",
     HENT_SAMTYKKE_OK = "soknad/HENT_SAMTYKKE_OK",
     OPPDATER_SAMTYKKE = "soknad/OPPDATER_SAMTYKKE",
 
-    LAGRE_TILGANG_OG_FORNAVN_PA_STORE = "soknad/LAGRE_RESSURSER_PA_STORE",
-    LAGRE_NEDETID_PA_STORE = "soknad/LAGRE_NEDETID_PA_STORE",
-    LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE = "soknad/LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE",
-    LAGRE_PABEGYNTE_SOKNADER_PA_STORE = "soknad/LAGRE_PABEGYNTE_SOKNADER_PA_STORE",
-
-    SET_LINK_VISITED = "soknad/SET_LINK_VISITED",
     VIS_SAMTYKKE_INFO = "soknad/VIS_SAMTYKKE_INFO",
     VIS_LASTE_OPP_VEDLEGG_MODAL = "soknad/VIS_LASTE_OPP_VEDLEGG_MODAL",
     UPDATE_BEHANDLINGSID_PA_STORE = "soknad/UPDATE_BEHANDLINGSID_PA_STORE",
@@ -43,8 +28,6 @@ export const enum SoknadActionTypeKeys {
     VIS_MIDLERTIDIG_DEAKTIVERT_PANEL = "soknad/VIS_MIDLERTIDIG_DEAKTIVERT_PANEL",
     VIS_IKKE_PAKOBLET_PANEL = "soknad/VIS_IKKE_PAKOBLET_PANEL",
     VIS_NEDETID_PANEL = "soknad/VIS_NEDETID_PANEL",
-    SET_SEND_SOKNAD_SERVICE_UNAVAILABLE = "soknad/SET_SEND_SOKNAD_SERVICE_UNAVAILABLE",
-    RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE = "soknad/RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE",
 }
 
 // 24
@@ -53,7 +36,7 @@ export type SoknadActionType =
     | OpprettSoknadAction
     | OpprettSoknadFeiletAction
     | OpprettSoknadOkAction
-    | HentSoknadAction
+    | SetSoknadPendingAction
     | HentSoknaOkAction
     | AvbrytSoknadAction
     | FortsettSoknadAction
@@ -65,8 +48,6 @@ export type SoknadActionType =
     | HentSamtykker
     | HentSamtykkerOk
     | OppdaterSamtykke
-    | LagreTilgangOgFornavnPaStore
-    | LagreNedetidPaStore
     | VisSamtykkeInfo
     | VisLasteOppVedleggModal
     | UpdateBehandlingsIdPaStore
@@ -75,11 +56,7 @@ export type SoknadActionType =
     | ShowSideIkkeFunnet
     | VisMidlertidigDeaktivertPanel
     | VisIkkePakobletPanel
-    | VisNedetidPanel
-    | SetSendSoknadServiveUnavailable
-    | ResetSendSoknadServiceUnavailable
-    | LagreHarNyligInnsendteSoknaderPaStore
-    | LagrePabegynteSoknaderPaStore;
+    | VisNedetidPanel;
 
 export interface HentSamtykker {
     type: SoknadActionTypeKeys.HENT_SAMTYKKE;
@@ -101,22 +78,6 @@ export interface OppdaterSamtykke {
 export interface Samtykke {
     type: string;
     verdi: boolean;
-}
-
-export interface LagreTilgangOgFornavnPaStore {
-    type: SoknadActionTypeKeys.LAGRE_TILGANG_OG_FORNAVN_PA_STORE;
-    tilgangResponse: TilgangResponse;
-    fornavnResponse: FornavnResponse;
-}
-
-export interface LagreNedetidPaStore {
-    type: SoknadActionTypeKeys.LAGRE_NEDETID_PA_STORE;
-    nedetidResponse: NedetidResponse;
-}
-
-export interface LagreHarNyligInnsendteSoknaderPaStore {
-    type: SoknadActionTypeKeys.LAGRE_HAR_NYLIG_INNSENDTE_SOKNADER_PA_STORE;
-    harNyligInnsendteSoknaderResponse: HarNyligInnsendteSoknaderResponse;
 }
 
 export interface VisSamtykkeInfo {
@@ -146,8 +107,8 @@ export interface OpprettSoknadOkAction {
     behandlingsId: string;
 }
 
-export interface HentSoknadAction {
-    type: SoknadActionTypeKeys.HENT_SOKNAD;
+export interface SetSoknadPendingAction {
+    type: SoknadActionTypeKeys.SET_SOKNAD_PENDING;
     behandlingsId: string;
 }
 
@@ -228,17 +189,4 @@ export interface VisIkkePakobletPanel {
 export interface VisNedetidPanel {
     type: SoknadActionTypeKeys.VIS_NEDETID_PANEL;
     shouldShow: boolean;
-}
-
-export interface SetSendSoknadServiveUnavailable {
-    type: SoknadActionTypeKeys.SET_SEND_SOKNAD_SERVICE_UNAVAILABLE;
-}
-
-export interface ResetSendSoknadServiceUnavailable {
-    type: SoknadActionTypeKeys.RESET_SEND_SOKNAD_SERVICE_UNAVAILABLE;
-}
-
-export interface LagrePabegynteSoknaderPaStore {
-    type: SoknadActionTypeKeys.LAGRE_PABEGYNTE_SOKNADER_PA_STORE;
-    pabegynteSoknader: PabegynteSoknaderResponse[];
 }
