@@ -25,7 +25,6 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import "./i18n";
 import {Loader} from "@navikt/ds-react";
 import {RedirectHack} from "./RedirectHack";
-import {ErrorPanels} from "./ErrorPanels";
 
 Modal.setAppElement("#root");
 
@@ -60,9 +59,7 @@ ReactDOM.render(
         <RedirectHack>
             <Suspense fallback={<Loader />}>
                 <QueryClientProvider client={queryClient}>
-                    <ErrorPanels>
-                        <RouterProvider router={router} />
-                    </ErrorPanels>
+                    <RouterProvider router={router} />
                 </QueryClientProvider>
             </Suspense>
         </RedirectHack>
