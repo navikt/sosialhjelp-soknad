@@ -2,7 +2,6 @@ import * as React from "react";
 import ValgMedUnderskjema from "../components/valgMedUnderskjema";
 import Underskjema from "../components/underskjema";
 import Sporsmal, {LegendTittleStyle} from "../components/sporsmal/Sporsmal";
-import {erMobilVisning} from "../utils/domUtils";
 import RadioEnhanced from "./RadioEnhanced";
 
 interface JaNeiSporsmalProps {
@@ -17,6 +16,15 @@ interface JaNeiSporsmalProps {
     visPlaceholder?: boolean;
     children?: React.ReactNode;
 }
+
+const erMobilVisning = () =>
+    Math.max(
+        document.body.scrollWidth,
+        document.documentElement.scrollWidth,
+        document.body.offsetWidth,
+        document.documentElement.offsetWidth,
+        document.documentElement.clientWidth
+    ) < 480;
 
 class JaNeiSporsmal extends React.Component<JaNeiSporsmalProps, {}> {
     handleOnChange(verdi: any) {
@@ -56,24 +64,24 @@ class JaNeiSporsmal extends React.Component<JaNeiSporsmalProps, {}> {
                     underskjema={children ? <Underskjema visible={visUnderSkjema}>{children}</Underskjema> : <span />}
                 >
                     <RadioEnhanced
-                        name={radioName}
-                        faktumKey={this.props.faktumKey}
-                        id={idRadioJa}
-                        value={"true"}
                         checked={verdi === true}
                         className="jaNeiSpormal"
+                        faktumKey={this.props.faktumKey}
+                        id={idRadioJa}
+                        name={radioName}
                         onChange={() => this.handleOnChange(true)}
+                        value={"true"}
                         visPlaceholder={this.props.visPlaceholder}
                     />
                     {!mobilVisning && (
                         <RadioEnhanced
+                            checked={verdi === false}
+                            className="jaNeiSpormal"
                             faktumKey={this.props.faktumKey}
                             id={idRadioNei}
-                            value={"false"}
-                            checked={verdi === false}
                             name={radioName}
                             onChange={() => this.handleOnChange(false)}
-                            className="jaNeiSpormal"
+                            value={"false"}
                             visPlaceholder={this.props.visPlaceholder}
                         />
                     )}
