@@ -6,7 +6,6 @@ import BannerEttersendelse from "./bannerEttersendelse";
 import {lesEttersendelser, opprettEttersendelse} from "../../redux/ettersendelse/ettersendelseActions";
 import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
-import {MargIkoner} from "./margIkoner";
 import {EttersendelseFeilkode} from "../../redux/ettersendelse/ettersendelseTypes";
 import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel";
 import {useParams} from "react-router";
@@ -66,11 +65,7 @@ const Ettersendelse = () => {
                 </Ingress>
 
                 {originalSoknad && (
-                    <AvsnittMedMarger
-                        venstreIkon={MargIkoner.OK}
-                        hoyreIkon={MargIkoner.PRINTER}
-                        onClickHoyreIkon={() => skrivUt()}
-                    >
+                    <AvsnittMedMarger venstreIkon={"ok"} hoyreIkon={"printer"} onClickHoyreIkon={() => skrivUt()}>
                         <Heading level="2" size="small">
                             <FormattedMessage id="ettersendelse.soknad_sendt" /> {originalSoknad.navenhet} kommune
                         </Heading>
@@ -81,7 +76,7 @@ const Ettersendelse = () => {
                 )}
 
                 {ettersendelser?.map(({behandlingsId, innsendtTidspunkt, innsendtDato}) => (
-                    <AvsnittMedMarger venstreIkon={MargIkoner.OK} key={behandlingsId}>
+                    <AvsnittMedMarger venstreIkon={"ok"} key={behandlingsId}>
                         <Heading level="2" size="small">
                             <FormattedMessage id="ettersendelse.vedlegg_sendt" />
                         </Heading>
@@ -130,7 +125,7 @@ const Ettersendelse = () => {
                     </EttersendelseEkspanderbart>
                 )}
 
-                <AvsnittMedMarger venstreIkon={MargIkoner.SNAKKEBOBLER}>
+                <AvsnittMedMarger venstreIkon={"snakkebobler"}>
                     <Heading level="2" size="small" spacing>
                         <FormattedMessage id="ettersendelse.samtale.tittel" />
                     </Heading>
@@ -146,7 +141,7 @@ const Ettersendelse = () => {
                     </BodyShort>
                 </AvsnittMedMarger>
 
-                <AvsnittMedMarger venstreIkon={MargIkoner.KONVOLUTT}>
+                <AvsnittMedMarger venstreIkon={"konvolutt"}>
                     <Heading level="2" size="small" spacing>
                         <FormattedMessage id="ettersendelse.vedtak.tittel" />
                     </Heading>

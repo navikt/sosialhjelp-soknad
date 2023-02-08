@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {FormattedMessage} from "react-intl";
 import AvsnittMedMarger from "./avsnittMedMarger";
-import {MargIkoner} from "./margIkoner";
 import EttersendelseVedleggListe from "./ettersendelseVedleggListe";
 import {Accordion, BodyShort} from "@navikt/ds-react";
 import styled from "styled-components";
@@ -63,11 +62,11 @@ const EttersendelseEkspanderbart = (props: Props) => {
             <Accordion.Item open={ekspandert}>
                 <StyledAccordionHeader onClick={toggleEkspandering}>
                     {props.kunGenerellDokumentasjon && (
-                        <AvsnittMedMarger venstreIkon={MargIkoner.DOKUMENTER}>{props.children}</AvsnittMedMarger>
+                        <AvsnittMedMarger venstreIkon={"dokumenter"}>{props.children}</AvsnittMedMarger>
                     )}
 
                     {!props.kunGenerellDokumentasjon && (
-                        <AvsnittMedMarger venstreIkon={MargIkoner.ADVARSEL}>{props.children}</AvsnittMedMarger>
+                        <AvsnittMedMarger venstreIkon={"advarsel"}>{props.children}</AvsnittMedMarger>
                     )}
                 </StyledAccordionHeader>
                 <StyledAccordionContent>
