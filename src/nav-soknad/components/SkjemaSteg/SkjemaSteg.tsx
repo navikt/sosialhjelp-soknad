@@ -20,7 +20,8 @@ import {useReduxSynchronizer} from "./UseReduxSynchronizer";
 import {MidlertidigDeaktivertPanel} from "./MidlertidigDeaktivertPanel";
 import {IkkePakobletPanel} from "./IkkePakobletPanel";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
-import {ErrorPanels} from "../../../ErrorPanels";
+import ServerFeil from "../../feilsider/ServerFeil";
+import SideIkkeFunnet from "../../feilsider/SideIkkeFunnet";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
@@ -69,38 +70,42 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
 
     useTitle(`${stegTittel} - ${documentTitle}`);
 
+    const {showSideIkkeFunnet, showServerFeil} = useSoknad();
+
+    if (showServerFeil) return <ServerFeil />;
+
+    if (showSideIkkeFunnet) return <SideIkkeFunnet />;
+
     return (
         <div className="pb-4 lg:pb-40 bg-green-500/20">
             <AppBanner />
             <SkjemaStegNavStepper skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={goToStep} />
             <div className={"max-w-3xl mx-auto skjema-steg skjema-content"}>
-                <ErrorPanels>
-                    <NedetidPanel varselType={"infoside"} />
-                    <Feiloppsummering
-                        skjemanavn={skjemaConfig.skjemanavn}
-                        valideringsfeil={feil}
-                        visFeilliste={visValideringsfeil}
-                    />
-                    <div className={"bg-white mx-auto rounded-2xl px-10 md:px-12 lg:px-24 space-y-8 pt-8"}>
-                        <SkjemaStegHeading ikon={ikon} stegTittel={stegTittel} />
-                        <div className={"space-y-12 lg:space-y-24"}>{children}</div>
-                        <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
-                        <AvbrytSoknad />
-                        {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && (
-                            <>
-                                <MidlertidigDeaktivertPanel />
-                                <IkkePakobletPanel />
-                            </>
-                        )}
+                <NedetidPanel varselType={"infoside"} />
+                <Feiloppsummering
+                    skjemanavn={skjemaConfig.skjemanavn}
+                    valideringsfeil={feil}
+                    visFeilliste={visValideringsfeil}
+                />
+                <div className={"bg-white mx-auto rounded-2xl px-10 md:px-12 lg:px-24 space-y-8 pt-8"}>
+                    <SkjemaStegHeading ikon={ikon} stegTittel={stegTittel} />
+                    <div className={"space-y-12 lg:space-y-24"}>{children}</div>
+                    <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
+                    <AvbrytSoknad />
+                    {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && (
+                        <>
+                            <MidlertidigDeaktivertPanel />
+                            <IkkePakobletPanel />
+                        </>
+                    )}
 
-                        <SkjemaStegNavKnapper
-                            skjemaConfig={skjemaConfig}
-                            aktivtSteg={skjemaConfig.steg[steg]}
-                            goToStep={goToStep}
-                            loading={sendSoknadPending || enFilLastesOpp}
-                        />
-                    </div>
-                </ErrorPanels>
+                    <SkjemaStegNavKnapper
+                        skjemaConfig={skjemaConfig}
+                        aktivtSteg={skjemaConfig.steg[steg]}
+                        goToStep={goToStep}
+                        loading={sendSoknadPending || enFilLastesOpp}
+                    />
+                </div>
             </div>
         </div>
     );
