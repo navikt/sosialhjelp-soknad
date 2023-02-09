@@ -13,16 +13,18 @@ export const RedirectHack = ({children}: {children: ReactElement}) => {
 
     // I use feature-toggle because it's more or less a place-holder
     // on the backend and so not computationally expensive
-    fetchToJson<any>("informasjon/fornavn", true)
+    fetchToJson<any>("feature-toggle")
         .then(() => setKosher(true))
         .catch((e: AxiosError) => {
-            logError(
-                `${e.response && `HTTP ${e.response.status} `}${
-                    e.message
-                } i RedirectHack, viser feilmelding og gir opp!`
-            );
-            setKosher(true);
-            dispatch(setShowServerError(true));
+            setTimeout(() => {
+                logError(
+                    `${e.response && `HTTP ${e.response.status} `}${
+                        e.message
+                    } i RedirectHack, viser feilmelding og gir opp!`
+                );
+                setKosher(true);
+                dispatch(setShowServerError(true));
+            }, 2000);
         });
 
     return kosher ? children : null;
