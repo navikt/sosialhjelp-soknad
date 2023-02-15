@@ -102,7 +102,7 @@
         "/soknader/{behandlingsId}/personalia/navEnheter": {
             "get": {
                 "tags": ["nav-enhet-ressurs"],
-                "operationId": "hentNavEnheter",
+                "operationId": "getNavEnheter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
                     "200": {
@@ -117,7 +117,7 @@
             },
             "put": {
                 "tags": ["nav-enhet-ressurs"],
-                "operationId": "updateNavEnhet",
+                "operationId": "putNavEnhet",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "requestBody": {
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/NavEnhetFrontend"}}},
@@ -612,7 +612,7 @@
         "/soknader/{behandlingsId}/personalia/navEnhet": {
             "get": {
                 "tags": ["nav-enhet-ressurs"],
-                "operationId": "hentValgtNavEnhet",
+                "operationId": "getValgtNavEnhet",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
                     "200": {

@@ -13,7 +13,7 @@ import {AdresseFrontend, AdresserFrontend, AdresserFrontendValg} from "../../../
 import cx from "classnames";
 import {useErrorHandler} from "../../../../lib/hooks/useErrorHandler";
 import {useTranslation} from "react-i18next";
-import {updateNavEnhet} from "../../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
+import {putNavEnhet} from "../../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
 import {HorizontalRadioGroup} from "../../../../nav-soknad/components/form/HorizontalRadioGroup";
 
 export const AdresseData = () => {
@@ -45,7 +45,7 @@ export const AdresseData = () => {
         // Velg den første NAV-enheten
         // TODO: Fiks PUT /adresser så navEnhet[0].valgt = true
         const navEnhet = {...navEnheter[0], valgt: true};
-        await updateNavEnhet(behandlingsId, navEnhet);
+        await putNavEnhet(behandlingsId, navEnhet);
 
         await refetch();
     };

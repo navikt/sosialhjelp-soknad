@@ -7,7 +7,7 @@ import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {BodyShort, GuidePanel, Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
-import {useHentValgtNavEnhet} from "../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
+import {useGetValgtNavEnhet} from "../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
 import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
 
 const StyledGuidePanel = styled(GuidePanel)`
@@ -19,7 +19,7 @@ const StyledGuidePanel = styled(GuidePanel)`
 `;
 
 export const SoknadsmottakerInfoPanel = () => {
-    const {expectOK} = useAlgebraic(useHentValgtNavEnhet(useBehandlingsId()));
+    const {expectOK} = useAlgebraic(useGetValgtNavEnhet(useBehandlingsId()));
     const dispatch = useDispatch();
     const {t} = useTranslation("skjema");
 

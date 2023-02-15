@@ -30,7 +30,7 @@ import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/dig
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 import {useTranslation} from "react-i18next";
-import {hentNavEnheter} from "../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
+import {getNavEnheter} from "../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
@@ -63,7 +63,7 @@ export const Oppsummering = () => {
     useEffect(() => {
         if (!behandlingsId) return;
 
-        hentNavEnheter(behandlingsId).then((enheter) => {
+        getNavEnheter(behandlingsId).then((enheter) => {
             const valgtSoknadsmottaker = enheter.find((n) => n.valgt);
             if (!valgtSoknadsmottaker || valgtSoknadsmottaker.isMottakMidlertidigDeaktivert) {
                 // TODO: Mer brukervennlig melding her
