@@ -48,7 +48,7 @@ const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
     return (
         <SkjemaGruppe legend={t("bosituasjon.antallpersoner.sporsmal")}>
             <Input
-                description={t("bosituasjon.antallpersoner.label")}
+                label={t("bosituasjon.antallpersoner.label")}
                 id={FAKTUM_KEY_ANTALL}
                 inputMode="numeric"
                 pattern="[0-9]*"
