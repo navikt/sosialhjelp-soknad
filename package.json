@@ -7,6 +7,8 @@
     "@amplitude/analytics-browser": "^1.8.0",
     "@fremtind/jkl-formatters-util": "^3.0.22",
     "@fremtind/jkl-validators-util": "^2.5.3",
+    "@hookform/error-message": "^2.0.1",
+    "@hookform/resolvers": "^2.9.11",
     "@navikt/ds-css": "^2.1.7",
     "@navikt/ds-icons": "^2.1.7",
     "@navikt/ds-react": "^2.0.5",

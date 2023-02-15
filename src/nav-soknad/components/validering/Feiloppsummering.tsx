@@ -26,7 +26,6 @@ const FeillisteMelding = ({faktumKey, feilkode}: Valideringsfeil) => {
 };
 
 interface Props {
-    skjemanavn: string;
     visFeilliste?: boolean;
     valideringsfeil?: Valideringsfeil[];
 }

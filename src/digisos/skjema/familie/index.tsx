@@ -3,7 +3,7 @@ import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/dig
 import FamilieIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/FamilieIllustrasjon";
 import ForsorgerPlikt from "./forsorgerplikt/ForsorgerPlikt";
 import DinSivilstatus from "./sivilstatus/DinSivilstatus";
-import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
+import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/LegacySkjemaSteg";
 
 const Familie = () => (
     <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"familiebolk"} ikon={<FamilieIllustrasjon />}>

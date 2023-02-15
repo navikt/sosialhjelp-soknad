@@ -835,7 +835,11 @@
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Utslagskriterier"}}}
+                        "content": {
+                            "application/json": {
+                                "schema": {"type": "object", "additionalProperties": {"type": "object"}}
+                            }
+                        }
                     }
                 }
             }
@@ -889,16 +893,6 @@
                         }
                     }
                 }
-            }
-        },
-        "/informasjon/kommunelogg": {
-            "get": {
-                "tags": ["informasjon-ressurs"],
-                "operationId": "triggeKommunelogg",
-                "parameters": [
-                    {"name": "kommunenummer", "in": "query", "required": true, "schema": {"type": "string"}}
-                ],
-                "responses": {"200": {"description": "OK", "content": {"*/*": {"schema": {"type": "string"}}}}}
             }
         },
         "/informasjon/harNyligInnsendteSoknader": {
@@ -2206,11 +2200,6 @@
                 "properties": {
                     "vedleggListe": {"type": "array", "items": {"$ref": "#/components/schemas/VedleggMetadataDto"}}
                 }
-            },
-            "Utslagskriterier": {
-                "required": ["harTilgang"],
-                "type": "object",
-                "properties": {"harTilgang": {"type": "boolean"}, "sperrekode": {"type": "string", "enum": ["bruker"]}}
             },
             "PabegyntSoknad": {
                 "required": ["behandlingsId", "sistOppdatert"],

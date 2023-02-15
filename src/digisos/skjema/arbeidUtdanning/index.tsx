@@ -3,7 +3,7 @@ import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/dig
 import Koffert from "../../../nav-soknad/components/svg/illustrasjoner/Koffert";
 import Utdanning from "./utdanning/Utdanning";
 import Arbeid from "./arbeid/Arbeid";
-import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
+import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/LegacySkjemaSteg";
 import {Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 

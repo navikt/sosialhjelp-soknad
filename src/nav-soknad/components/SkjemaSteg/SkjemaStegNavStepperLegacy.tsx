@@ -3,7 +3,7 @@ import * as React from "react";
 import {DigisosSkjemaStegKey, SkjemaConfig, SkjemaSteg} from "./digisosSkjema";
 import {useTranslation} from "react-i18next";
 
-export const SkjemaStegNavStepper = ({
+export const SkjemaStegNavStepperLegacy = ({
     skjemaConfig,
     aktivtSteg,
     onStepChange,

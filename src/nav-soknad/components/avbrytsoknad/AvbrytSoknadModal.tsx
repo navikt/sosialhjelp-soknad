@@ -64,7 +64,7 @@ const ButtonRow = styled.div`
 
 export const minSideUrl = `${process.env.REACT_APP_MIN_SIDE_URL}`;
 
-export const AvbrytSoknad = () => {
+export const AvbrytSoknadModal = () => {
     const {behandlingsId, visAvbrytOgSlettModal} = useSoknad();
     const {t} = useTranslation();
 

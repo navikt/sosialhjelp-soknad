@@ -25,7 +25,7 @@ import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpin
 import {Link as ReactRouterLink} from "react-router-dom";
 import styled from "styled-components";
 import {useSoknad} from "../../redux/soknad/useSoknad";
-import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaSteg";
+import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/LegacySkjemaSteg";
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";

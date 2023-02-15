@@ -3,7 +3,7 @@ import {getIntlTextOrKey} from "../../utils";
 import {Button, Loader} from "@navikt/ds-react";
 import {sendSoknadPending, visAvbrytSoknadModal} from "../../../digisos/redux/soknad/soknadActions";
 import {useDispatch, useSelector} from "react-redux";
-import {minSideUrl} from "../avbrytsoknad/AvbrytSoknad";
+import {minSideUrl} from "../avbrytsoknad/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {SkjemaConfig, SkjemaSteg} from "./digisosSkjema";
 import {setVisBekreftMangler} from "../../../digisos/redux/oppsummering/oppsummeringActions";
@@ -16,13 +16,13 @@ import {useBehandlingsId} from "../../hooks/useBehandlingsId";
 
 interface SkjemaStegNavigasjonProps {
     skjemaConfig: SkjemaConfig;
-    aktivtSteg: SkjemaSteg;
+    steg: SkjemaSteg;
     loading?: boolean;
     gaVidereLabel?: string;
     goToStep: (newStep: number) => void;
 }
 
-export const SkjemaStegNavKnapper = ({skjemaConfig, aktivtSteg, loading, goToStep}: SkjemaStegNavigasjonProps) => {
+export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep}: SkjemaStegNavigasjonProps) => {
     const {oppsummering} = useSelector((state: State) => state);
     const behandlingsId = useBehandlingsId();
     const adresseValg = useSoknadsdata().personalia.adresser.valg;
@@ -30,7 +30,7 @@ export const SkjemaStegNavKnapper = ({skjemaConfig, aktivtSteg, loading, goToSte
     const {t} = useTranslation("skjema");
 
     const forwardInhibited = loading;
-    const backwardInhibited = loading || aktivtSteg.id <= 1;
+    const backwardInhibited = loading || steg.id <= 1;
 
     const getAttributesForSkjemaFullfortEvent = () => {
         const attr: Record<string, any> = {};
@@ -68,17 +68,17 @@ export const SkjemaStegNavKnapper = ({skjemaConfig, aktivtSteg, loading, goToSte
                 <Button
                     variant="secondary"
                     id="gaa_tilbake_button"
-                    onClick={() => goToStep(aktivtSteg.id - 1)}
+                    onClick={() => goToStep(steg.id - 1)}
                     disabled={backwardInhibited}
                 >
                     {getIntlTextOrKey(t, "skjema.knapper.forrige")}
                     {loading && <Loader />}
                 </Button>
-                {aktivtSteg.type === "skjema" ? (
+                {steg.type === "skjema" ? (
                     <Button
                         variant="primary"
                         id="gaa_videre_button"
-                        onClick={() => goToStep(aktivtSteg.id + 1)}
+                        onClick={() => goToStep(steg.id + 1)}
                         disabled={forwardInhibited}
                     >
                         {t("skjema.knapper.neste")}
@@ -103,4 +103,4 @@ export const SkjemaStegNavKnapper = ({skjemaConfig, aktivtSteg, loading, goToSte
     );
 };
 
-export default SkjemaStegNavKnapper;
+export default SkjemaStegNavKnapperLegacy;

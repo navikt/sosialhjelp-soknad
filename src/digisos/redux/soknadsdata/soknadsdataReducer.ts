@@ -1,4 +1,3 @@
-import {Begrunnelse, initialBegrunnelseState} from "../../skjema/begrunnelse/begrunnelseTypes";
 import {BosituasjonData, initialBosituasjonState} from "../../skjema/bosituasjon/bosituasjonTypes";
 import {Familie, initialFamilieStatus, Sivilstatus} from "../../skjema/familie/sivilstatus/FamilieTypes";
 import {initialUtdanningState, Utdanning} from "../../skjema/arbeidUtdanning/utdanning/utdanningTypes";
@@ -34,7 +33,6 @@ export enum SoknadsdataActionTypeKeys {
 export enum SoknadsSti {
     OPPDATER_SAMTYKKE = "oppdaterSamtykker",
     ARBEID = "arbeid",
-    BEGRUNNELSE = "begrunnelse",
     BOSITUASJON = "bosituasjon",
     UTDANNING = "utdanning",
     BOSTOTTE = "inntekt/bostotte",
@@ -104,7 +102,6 @@ export const initialUtgifterState: Utgifter = {
 
 export interface Soknadsdata {
     arbeid: Arbeid;
-    begrunnelse: Begrunnelse;
     bosituasjon: BosituasjonData;
     familie: Familie;
     utdanning: Utdanning;
@@ -117,7 +114,6 @@ export interface Soknadsdata {
 export interface SoknadsdataActionVerdi {
     arbeid: Arbeid;
     bosituasjon: BosituasjonData;
-    begrunnelse: Begrunnelse;
     familie: Familie;
     utdanning: Utdanning;
     personalia: Personalia;
@@ -127,7 +123,6 @@ export interface SoknadsdataActionVerdi {
 
 export type SoknadsdataType =
     | Arbeid
-    | Begrunnelse
     | Familie
     | Utdanning
     | Personalia
@@ -176,7 +171,6 @@ const initialSoknadsdataRestStatus = {
 
 export const initialSoknadsdataState: Soknadsdata = {
     arbeid: initialArbeidState,
-    begrunnelse: initialBegrunnelseState,
     bosituasjon: initialBosituasjonState,
     familie: initialFamilieStatus,
     utdanning: initialUtdanningState,

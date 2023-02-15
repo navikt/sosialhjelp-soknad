@@ -27,9 +27,3 @@ Feilmeldinger legges på redux' state med:
 const feilkode: ValideringActionKey = maksLengde(inputVerdi, MAX_CHARS);
 dispatch(setValideringsfeil(feilkode, faktumKey));
 ```
-
-## Endring av server API
-
-Hvis server API'et endrer seg, så må typescript definisjonene oppdateres. For eksempel er navnet på feltene
-og datatypene som returneres fra serverkallet `GET {id}/begrunnelse`, spesifisert i filen `begrunnelseTypes.ts`.
-I filen `SoknadsdataReducer.ts` er det definert hvilke REST kall som er lovlige.
