@@ -63,7 +63,7 @@ const Skatt = () => {
                     </div>
                     <Button
                         variant="secondary"
-                        id="gi_bostotte_samtykke"
+                        id="gi_skatteetaten_samtykke"
                         onClick={() => {
                             handleSettSkatteetatenSamtykke(true);
                         }}
@@ -119,7 +119,7 @@ const Skatt = () => {
                             </div>
                             <Button
                                 variant="secondary"
-                                id="gi_bostotte_samtykke"
+                                id="gi_skatteetaten_samtykke"
                                 onClick={() => {
                                     handleSettSkatteetatenSamtykke(true);
                                 }}
