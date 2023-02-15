@@ -110,7 +110,7 @@ const Arbeid = () => {
             )}
             <TextareaEnhanced
                 id={faktumKommentarerId}
-                placeholder={t("begrunnelse.hvorfor.placeholder")}
+                placeholder={t("arbeidsforhold.kommentar.placeholder")}
                 onChange={(evt: any) => onChange(evt.target.value)}
                 onBlur={() => lagreHvisGyldig()}
                 faktumKey={FAKTUM_KEY_KOMMENTARER}
