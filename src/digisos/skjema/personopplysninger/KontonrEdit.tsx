@@ -52,6 +52,7 @@ export const KontonrEdit = ({onClose}: {onClose: () => void}) => {
                 label={t("kontakt.kontonummer.sporsmal")}
                 inputMode="numeric"
                 htmlSize={13}
+                autoComplete="off"
                 disabled={watch("harIkkeKonto") === true}
                 required={false}
                 maxLength={13}
