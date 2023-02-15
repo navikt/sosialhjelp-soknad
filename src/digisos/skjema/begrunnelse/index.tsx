@@ -14,6 +14,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import SkjemaSteg from "../../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 import {useState} from "react";
+import {useFeatureFlags} from "../../../lib/features";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;
@@ -51,6 +52,7 @@ const Begrunnelse: React.FunctionComponent<{}> = () => {
     const {data: begrunnelse} = useHentBegrunnelse(behandlingsId);
     const {mutate} = useUpdateBegrunnelse();
     const [backendError, setBackendError] = useState<boolean>(false);
+    const {begrunnelseNyTekst} = useFeatureFlags();
 
     const {
         register,
@@ -93,13 +95,14 @@ const Begrunnelse: React.FunctionComponent<{}> = () => {
                     {...register("hvaSokesOm")}
                     id={"hvaSokesOm"}
                     error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
-                    label={t("hva.sporsmal")}
-                    description={t("hva.infotekst.tekst")}
+                    label={begrunnelseNyTekst ? t("hva.label") : t("hva.label.old")}
+                    description={begrunnelseNyTekst ? t("hva.description") : t("hva.description.old")}
                 />
                 <Textarea
                     {...register("hvorforSoke")}
                     id={"hvorforSoke"}
-                    label={t("hvorfor.sporsmal")}
+                    label={begrunnelseNyTekst ? t("hvorfor.label") : t("hvorfor.label.old")}
+                    description={begrunnelseNyTekst ? t("hvorfor.description") : undefined}
                     error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
                 />
             </form>
