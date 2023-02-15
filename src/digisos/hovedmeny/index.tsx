@@ -20,7 +20,7 @@ const Informasjon = () => {
         if (!harTilgang) return <IkkeTilgang />;
 
         return (
-            <div className={"bg-green-500/20 flex flex-col"}>
+            <div className={"bg-digisosGronnBakgrunn flex flex-col"}>
                 <AppBanner />
                 <NedetidPanel varselType={"infoside"} />
                 <div className="max-w-lg lg:max-w-3xl w-full mx-auto space-y-5 pt-12 lg:pt-24 pb-48">

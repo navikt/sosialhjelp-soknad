@@ -83,7 +83,7 @@ export const Container = ({steg, children, onBeforeNavigate}: StegMedNavigasjonP
     if (showSideIkkeFunnet) return <SideIkkeFunnet />;
 
     return (
-        <div className="pb-4 lg:pb-40 bg-green-500/20">
+        <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn">
             <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
             <AvbrytSoknadModal />
             <AppBanner />

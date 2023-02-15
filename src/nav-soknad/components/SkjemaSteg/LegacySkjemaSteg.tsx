@@ -77,7 +77,7 @@ export const LegacySkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNa
     if (showSideIkkeFunnet) return <SideIkkeFunnet />;
 
     return (
-        <div className="pb-4 lg:pb-40 bg-green-500/20">
+        <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn">
             <AppBanner />
             <SkjemaStegNavStepperLegacy skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={goToStep} />
             <div className={"max-w-3xl mx-auto skjema-steg skjema-content"}>
