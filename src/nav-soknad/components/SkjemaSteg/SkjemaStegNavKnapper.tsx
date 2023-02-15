@@ -71,7 +71,7 @@ export const SkjemaStegNavKnapper = ({skjemaConfig, aktivtSteg, loading, goToSte
                     onClick={() => goToStep(aktivtSteg.id - 1)}
                     disabled={backwardInhibited}
                 >
-                    {getIntlTextOrKey(t, "skjema.knapper.tilbake")}
+                    {getIntlTextOrKey(t, "skjema.knapper.forrige")}
                     {loading && <Loader />}
                 </Button>
                 {aktivtSteg.type === "skjema" ? (
@@ -81,7 +81,7 @@ export const SkjemaStegNavKnapper = ({skjemaConfig, aktivtSteg, loading, goToSte
                         onClick={() => goToStep(aktivtSteg.id + 1)}
                         disabled={forwardInhibited}
                     >
-                        {t("skjema.knapper.gaavidere")}
+                        {t("skjema.knapper.neste")}
                         {loading && <Loader />}
                     </Button>
                 ) : (
