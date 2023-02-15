@@ -65,6 +65,8 @@ const PabegynteSoknaderCount = () => {
 export const PabegynteSoknaderPanel = () => {
     const pabegynteSoknader = usePabegynteSoknader();
 
+    if (!pabegynteSoknader?.length) return null;
+
     return (
         <Accordion>
             <Accordion.Item className={"bg-white rounded-md"}>
