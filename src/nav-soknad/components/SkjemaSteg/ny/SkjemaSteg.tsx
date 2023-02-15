@@ -30,9 +30,9 @@ export type SkjemaTrinn = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 export const SkjemaHeadings: Record<SkjemaTrinn, {tittel: string; ikon: ReactNode}> = {
     1: {tittel: "kontakt.tittel", ikon: <SnakkebobleIllustrasjon />},
-    2: {tittel: "arbeidbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
-    3: {tittel: "familiebolk.tittel", ikon: <SnakkebobleIllustrasjon />},
-    4: {tittel: "begrunnelsebolk.tittel", ikon: <SnakkebobleIllustrasjon />},
+    2: {tittel: "begrunnelsebolk.tittel", ikon: <SnakkebobleIllustrasjon />},
+    3: {tittel: "arbeidbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
+    4: {tittel: "familiebolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     5: {tittel: "bosituasjonbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     6: {tittel: "inntektbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     7: {tittel: "utgifterbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
