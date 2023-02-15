@@ -6,7 +6,7 @@ import React from "react";
 export const EttersendDokuPanel = () => (
     <Accordion>
         <Accordion.Item className={"bg-white rounded-md"}>
-            <Accordion.Header className={"!items-center !border-0 !py-6 !px-8"}>
+            <Accordion.Header className={"!items-center !border-0 !py-6 !px-8 rounded-t-md"}>
                 <div className={"flex items-center gap-8"}>
                     <div
                         className={

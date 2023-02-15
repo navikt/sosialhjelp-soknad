@@ -68,7 +68,7 @@ export const PabegynteSoknaderPanel = () => {
     return (
         <Accordion>
             <Accordion.Item className={"bg-white rounded-md"}>
-                <Accordion.Header className={"!items-center !border-0 !py-6 !px-8"}>
+                <Accordion.Header className={"!items-center !border-0 !py-6 !px-8 rounded-t-md"}>
                     <div className={"flex flex-row items-center gap-8"}>
                         <div
                             className={
