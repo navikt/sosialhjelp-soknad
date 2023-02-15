@@ -93,13 +93,14 @@ const Begrunnelse: React.FunctionComponent<{}> = () => {
                     {...register("hvaSokesOm")}
                     id={"hvaSokesOm"}
                     error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
-                    label={t("hva.sporsmal")}
-                    description={t("hva.infotekst.tekst")}
+                    label={t("hva.label")}
+                    description={t("hva.description")}
                 />
                 <Textarea
                     {...register("hvorforSoke")}
                     id={"hvorforSoke"}
-                    label={t("hvorfor.sporsmal")}
+                    label={t("hvorfor.label")}
+                    description={t("hvorfor.description")}
                     error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
                 />
             </form>
