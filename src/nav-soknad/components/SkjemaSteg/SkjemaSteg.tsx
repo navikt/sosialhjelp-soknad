@@ -43,7 +43,7 @@ const useSkjemaConfig = (skjemaConfig: SkjemaConfig, steg: DigisosSkjemaStegKey)
 
 function SkjemaStegHeading(props: {ikon: ReactNode; stegTittel: string}) {
     return (
-        <div className={"text-center"}>
+        <div className={"text-center mb-12 lg:mb-24"}>
             <div className="text-center mb-2">{props.ikon}</div>
             <div className="skjema-steg__tittel" tabIndex={-1}>
                 <Heading size={"large"}>{props.stegTittel}</Heading>
@@ -87,7 +87,7 @@ export const SkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasj
                     valideringsfeil={feil}
                     visFeilliste={visValideringsfeil}
                 />
-                <div className={"bg-white mx-auto rounded-2xl px-10 md:px-12 lg:px-24 space-y-8 pt-8"}>
+                <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8"}>
                     <SkjemaStegHeading ikon={ikon} stegTittel={stegTittel} />
                     <div className={"space-y-12 lg:space-y-24"}>{children}</div>
                     <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
