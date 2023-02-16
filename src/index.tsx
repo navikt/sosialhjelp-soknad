@@ -1,17 +1,11 @@
-import "react-app-polyfill/ie11";
-import "react-app-polyfill/stable";
-
 import "./index.css";
 import "@navikt/ds-css";
-
 import * as React from "react";
 import {Suspense} from "react";
-import * as ReactDOM from "react-dom";
-
+import {createRoot} from "react-dom/client";
 import {applyMiddleware, compose, createStore} from "redux";
 import {Provider} from "react-redux";
 import createSagaMiddleware from "redux-saga";
-
 import reducers from "./digisos/redux/reducers";
 import sagas from "./rootSaga";
 import Modal from "react-modal";
@@ -21,7 +15,6 @@ import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
 import {RouterProvider} from "react-router-dom";
 import {router} from "./digisos";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-
 import "./i18n";
 import {Loader} from "@navikt/ds-react";
 import {RedirectHack} from "./RedirectHack";
@@ -54,7 +47,9 @@ if (process.env.NODE_ENV !== "production") {
     });
 }
 
-ReactDOM.render(
+const container = document.getElementById("root");
+const root = createRoot(container!);
+root.render(
     <Provider store={store}>
         <RedirectHack>
             <Suspense fallback={<Loader />}>
@@ -63,6 +58,5 @@ ReactDOM.render(
                 </QueryClientProvider>
             </Suspense>
         </RedirectHack>
-    </Provider>,
-    document.getElementById("root") as HTMLElement
+    </Provider>
 );
