@@ -18,7 +18,7 @@
     "@sentry/react": "^7.37.2",
     "@sentry/tracing": "^7.37.2",
     "@swan-io/boxed": "^0.12.0",
-    "@tanstack/react-query": "^4.22.0",
+    "@tanstack/react-query": "^4.23.0",
     "amplitude-js": "^8.18.1",
     "axios": "^1.2.2",
     "classnames": "^2.3.1",
