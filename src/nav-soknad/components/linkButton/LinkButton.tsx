@@ -9,14 +9,15 @@ const StyledLinkButton = styled.button`
     background-color: inherit;
 `;
 
-export const LinkButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
-    const className = classNames("navds-link", props.className);
-    return (
-        <StyledLinkButton type="button" className={className} {...props}>
-            {props.children}
-        </StyledLinkButton>
-    );
-};
+export const LinkButton = ({
+    children,
+    className,
+    ...rest
+}: {className?: string} & React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+    <StyledLinkButton type="button" className={classNames("navds-link", className)} {...rest}>
+        {children}
+    </StyledLinkButton>
+);
 
 export const LinkButtonValidation = styled(LinkButton)`
     color: #ffffff;

@@ -1,4 +1,4 @@
-import Axios, {AxiosRequestConfig} from "axios";
+import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
 import {getApiBaseUrl} from "../../nav-soknad/utils/rest-utils";
 import {isLocalhost, isMockAlt} from "../../nav-soknad/utils";
 
@@ -12,18 +12,23 @@ export const AXIOS_INSTANCE = Axios.create({
     },
 });
 
+interface CancellablePromise<T> extends Promise<T> {
+    cancel?: () => void;
+}
+
 export const axiosInstance = <T>(config: AxiosRequestConfig, options?: AxiosRequestConfig): Promise<T> => {
     const source = Axios.CancelToken.source();
-    const promise = AXIOS_INSTANCE({
+    const promise: CancellablePromise<AxiosResponse> = AXIOS_INSTANCE({
         ...config,
         ...options,
         cancelToken: source.token,
     }).then(({data}) => data);
 
-    // @ts-ignore
     promise.cancel = () => {
         source.cancel("Query was cancelled");
     };
 
-    return promise;
+    return promise as Promise<T>;
 };
+
+export type ErrorType<Error> = AxiosError<Error>;

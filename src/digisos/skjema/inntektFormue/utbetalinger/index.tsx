@@ -102,7 +102,7 @@ export const UtbetalingerView = () => {
         const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
 
         if (typeof utbetalinger[navn] === "boolean") {
-            const isChecked: boolean = !!(utbetalinger[navn] && utbetalinger[navn] === true);
+            const isChecked = !!(utbetalinger[navn] && utbetalinger[navn] === true);
 
             return (
                 <CheckboxPanel

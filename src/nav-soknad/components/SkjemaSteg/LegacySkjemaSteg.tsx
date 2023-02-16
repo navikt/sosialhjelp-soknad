@@ -62,7 +62,7 @@ export const LegacySkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNa
     useReduxSynchronizer();
 
     const {stegTittel, documentTitle, aktivtSteg} = useSkjemaConfig(skjemaConfig, steg);
-    const {goToStep} = useSkjemaNavigation(aktivtSteg.id);
+    const {gotoPage} = useSkjemaNavigation(aktivtSteg.id);
 
     useEffect(() => {
         scrollToTop();
@@ -70,6 +70,7 @@ export const LegacySkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNa
 
     useTitle(`${stegTittel} - ${documentTitle}`);
 
+    const {t} = useTranslation("skjema");
     const {showSideIkkeFunnet, showServerFeil} = useSoknad();
 
     if (showServerFeil) return <ServerFeil />;
@@ -79,7 +80,7 @@ export const LegacySkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNa
     return (
         <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn">
             <AppBanner />
-            <SkjemaStegNavStepperLegacy skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={goToStep} />
+            <SkjemaStegNavStepperLegacy skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={gotoPage} />
             <div className={"max-w-3xl mx-auto skjema-steg skjema-content"}>
                 <NedetidPanel varselType={"infoside"} />
                 <Feiloppsummering valideringsfeil={feil} visFeilliste={visValideringsfeil} />
@@ -98,7 +99,7 @@ export const LegacySkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNa
                     <SkjemaStegNavKnapperLegacy
                         skjemaConfig={skjemaConfig}
                         steg={skjemaConfig.steg[steg]}
-                        goToStep={goToStep}
+                        goToStep={gotoPage}
                         loading={sendSoknadPending || enFilLastesOpp}
                     />
                 </div>
