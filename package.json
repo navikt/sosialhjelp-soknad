@@ -78,7 +78,7 @@
     "ajv": "^8.12.0",
     "autoprefixer": "^10.4.13",
     "concurrently": "^7.0.0",
-    "husky": "^8.0.2",
+    "husky": "^8.0.0",
     "less-plugin-npm-import": "^2.1.0",
     "less-watch-compiler": "^1.16.3",
     "lint-staged": "^13.0.4",
@@ -102,8 +102,7 @@
     "dev": "concurrently --kill-others \"npm run start\" \"npm run start:css\"",
     "prepare": "husky install",
     "fetch-api": "curl -o ./soknad-api.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs && prettier --write soknad-api.json",
-    "orval": "rm -rf ./src/generated & orval --prettier",
-    "fetch-locale": "curl  'http://localhost:8181/sosialhjelp/soknad-api/informasjon/tekster?sprak=nb_NO&type=soknad' | sed -e 's/\\<\\/a\\>/\\<\\/lenke\\>/g' | sed -e 's/\\<a\\>/\\<lenke\\>/g' | sed -e 's/{\\([^\\[ }\\]*\\)}/{{\\1}}/g' | jq --indent 4 -S > public/locales/nb/skjema.json"
+    "orval": "rm -rf ./src/generated & orval --prettier"
   },
   "eslintConfig": {
     "extends": "react-app"
