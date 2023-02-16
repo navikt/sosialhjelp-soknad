@@ -32,7 +32,7 @@ const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
     const errorMessage = getFeil(validationErrors, t, FAKTUM_KEY_ANTALL, undefined);
 
     const validateAndStore = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        var antallPersoner: string | null = null;
+        let antallPersoner: string | null = null;
 
         try {
             antallPersoner = validerAntallPersoner(event.target.value);

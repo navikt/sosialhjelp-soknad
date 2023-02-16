@@ -131,7 +131,7 @@ const EttersendelseVedlegg = (props: Props) => {
 
             {opplastingsFeil && props.feilKode !== REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE && (
                 <BodyShort spacing className="skjema__feilmelding">
-                    "{filnavn}" &nbsp;
+                    &quot;{filnavn}&quot; &nbsp;
                     {visFeilFiltypeFeilmelding
                         ? t("fil.feil.format")
                         : t(props.feilKode ? props.feilKode : "opplysninger.vedlegg.ugyldig")}

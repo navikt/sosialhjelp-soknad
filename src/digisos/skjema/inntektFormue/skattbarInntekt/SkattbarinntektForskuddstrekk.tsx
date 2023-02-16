@@ -7,9 +7,9 @@ import {useTranslation} from "react-i18next";
 import {fmtCurrency} from "../../../../lib/fmtCurrency";
 
 function getLenkeSti(organisasjon: Organisasjon): string {
-    let orgnr = organisasjon.orgnr ? "/" + organisasjon.orgnr : "";
-    let year = organisasjon.tom!.slice(0, 4);
-    let month = organisasjon.tom!.slice(5, 7);
+    const orgnr = organisasjon.orgnr ? "/" + organisasjon.orgnr : "";
+    const year = organisasjon.tom!.slice(0, 4);
+    const month = organisasjon.tom!.slice(5, 7);
     return `https://skatt.skatteetaten.no/web/innsynamelding/inntekt${orgnr}?year=${year}&month=${month}`;
 }
 
@@ -44,7 +44,7 @@ const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({skattb
                             </div>
                             <div className="blokk-xs">
                                 {organisasjon.utbetalinger.map((utbetaling, index) => {
-                                    let utbetalingVerdier = [];
+                                    const utbetalingVerdier = [];
                                     if (utbetaling.brutto) {
                                         utbetalingVerdier.push(
                                             <UtbetalingVerdi

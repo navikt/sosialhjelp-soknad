@@ -33,11 +33,11 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
                     return;
                 }
-                let feilKode = detekterInternFeilKode(reason.toString());
+                const feilKode = detekterInternFeilKode(reason.toString());
                 if (feilKode.toString() === "Error: Not Found") {
                     for (let i = 0; i < opplysning.radInnhold.length; i++) {
                         // Setter alle felt til feilet!
-                        const validationKey: string = `${opplysningerSpc.textKey}.${opplysning.radInnhold[i]}.${i}`;
+                        const validationKey = `${opplysningerSpc.textKey}.${opplysning.radInnhold[i]}.${i}`;
                         yield put(setValideringsfeil(ValideringsFeilKode.FELT_EKSISTERER_IKKE, validationKey));
                     }
                     yield put(setValideringsfeil(ValideringsFeilKode.FELT_EKSISTERER_IKKE, opplysning.type));

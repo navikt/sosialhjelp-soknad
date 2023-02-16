@@ -76,7 +76,7 @@ const BostotteView = () => {
     };
 
     const renderUtbetaling = (netto: number, dato: string, mottaker: string, index: number) => {
-        let key = "bostotteUtbetaling_" + index;
+        const key = "bostotteUtbetaling_" + index;
         return (
             <div className="utbetalinger blokk-xs" key={key}>
                 <div>{t(`inntekt.bostotte.husbanken.mottaker.${mottaker.toLowerCase()}`)}</div>

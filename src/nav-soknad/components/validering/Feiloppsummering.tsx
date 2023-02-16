@@ -32,7 +32,7 @@ interface Props {
 
 const COMP_ID = "skjema-feiloppsummering";
 
-class Feiloppsummering extends React.Component<Props, {}> {
+class Feiloppsummering extends React.Component<Props> {
     oppsummering!: HTMLDivElement;
 
     componentDidUpdate(prevProps: Props) {

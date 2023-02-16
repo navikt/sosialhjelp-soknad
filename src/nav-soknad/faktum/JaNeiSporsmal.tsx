@@ -26,7 +26,7 @@ const erMobilVisning = () =>
         document.documentElement.clientWidth
     ) < 480;
 
-class JaNeiSporsmal extends React.Component<JaNeiSporsmalProps, {}> {
+class JaNeiSporsmal extends React.Component<JaNeiSporsmalProps> {
     handleOnChange(verdi: any) {
         this.props.onChange && this.props.onChange(verdi);
     }
