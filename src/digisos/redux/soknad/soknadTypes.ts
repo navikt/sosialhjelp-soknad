@@ -2,8 +2,6 @@ export interface SoknadState {
     // Visning state
     showSideIkkeFunnet: boolean;
     visLasteOppVedleggModal: boolean;
-    visMidlertidigDeaktivertPanel: boolean;
-    visIkkePakobletPanel: boolean;
     visNedetidPanel: boolean;
 
     // Visning state skjema nivå

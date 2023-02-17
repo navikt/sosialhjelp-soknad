@@ -30,7 +30,7 @@ import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 import {useTranslation} from "react-i18next";
 import {getNavEnheter} from "../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
-import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
+import {MidlertidigDeaktivertPanel} from "../../../nav-soknad/components/SkjemaSteg/MidlertidigDeaktivertPanel";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const {behandlingsId} = useSelector((state: State) => state.soknad);
@@ -48,12 +48,7 @@ export const Oppsummering = () => {
     const [loading, setLoading] = useState(true);
     const behandlingsId = useBehandlingsId();
     const {bekreftet, visBekreftMangler, nyOppsummering} = useSelector((state: State) => state.oppsummering);
-    const {showSendingFeiletPanel, visMidlertidigDeaktivertPanel} = useSoknad();
-
-    const {data: nedetid} = useHentNedetidInformasjon();
-    const nedetidstart = nedetid?.nedetidStartText ?? "";
-    const nedetidslutt = nedetid?.nedetidSluttText ?? "";
-    const isNedetid = nedetid?.isNedetid;
+    const {showSendingFeiletPanel} = useSoknad();
 
     const navigate = useNavigate();
 
@@ -149,14 +144,7 @@ export const Oppsummering = () => {
                     </div>
                 )}
 
-                {visMidlertidigDeaktivertPanel && isNedetid && (
-                    <Alert variant="error" style={{marginTop: "1rem"}}>
-                        {t("nedetid.alertstripe.send", {
-                            nedetidstart,
-                            nedetidslutt,
-                        })}
-                    </Alert>
-                )}
+                <MidlertidigDeaktivertPanel />
             </div>
         </StegMedNavigasjon>
     );

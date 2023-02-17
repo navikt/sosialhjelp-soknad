@@ -1,11 +1,4 @@
-import {
-    Samtykke,
-    SoknadActionType,
-    SoknadActionTypeKeys,
-    VisIkkePakobletPanel,
-    VisMidlertidigDeaktivertPanel,
-    VisNedetidPanel,
-} from "./soknadActionTypes";
+import {Samtykke, SoknadActionType, SoknadActionTypeKeys, VisNedetidPanel} from "./soknadActionTypes";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 
 export function startSoknadDone() {
@@ -110,23 +103,9 @@ export function setShowPageNotFound(shouldShow: boolean): SoknadActionType {
     };
 }
 
-export const visMidlertidigDeaktivertPanel = (shouldShow: boolean): VisMidlertidigDeaktivertPanel => {
-    return {
-        type: SoknadActionTypeKeys.VIS_MIDLERTIDIG_DEAKTIVERT_PANEL,
-        shouldShow,
-    };
-};
-
 export const showDowntimeError = (shouldShow: boolean): VisNedetidPanel => {
     return {
         type: SoknadActionTypeKeys.VIS_NEDETID_PANEL,
-        shouldShow,
-    };
-};
-
-export const visIkkePakobletPanel = (shouldShow: boolean): VisIkkePakobletPanel => {
-    return {
-        type: SoknadActionTypeKeys.VIS_IKKE_PAKOBLET_PANEL,
         shouldShow,
     };
 };

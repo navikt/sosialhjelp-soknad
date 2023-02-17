@@ -1,6 +1,5 @@
 import {createSkjemaEventData, logAmplitudeEvent} from "../../utils/amplitude";
-import {visIkkePakobletPanel, visMidlertidigDeaktivertPanel} from "../../../digisos/redux/soknad/soknadActions";
-import {erAktiv, erMidlDeaktivert} from "../../containers/navEnhetStatus";
+import {erAktiv} from "../../containers/navEnhetStatus";
 import {
     clearAllValideringsfeil,
     clearValideringsfeil,
@@ -11,7 +10,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../digisos/redux/reducers";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
 import {logInfo} from "../../utils/loggerUtils";
-import {SkjemaSteg} from "./digisosSkjema";
 import {useNavigate} from "react-router";
 import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";
 import {useBehandlingsId} from "../../hooks/useBehandlingsId";
@@ -47,16 +45,10 @@ export const useSkjemaNavigation = (currentStepId: number) => {
                 logInfo(`Ugyldig navenhet valgt: ${valgtNavEnhet.enhetsnr} ${valgtNavEnhet.enhetsnavn}`);
             }
 
-            if (erMidlDeaktivert(valgtNavEnhet)) {
-                dispatch(visMidlertidigDeaktivertPanel(true));
-            } else {
-                dispatch(visIkkePakobletPanel(true));
-            }
             return false;
         } else {
             dispatch(clearAllValideringsfeil());
-            dispatch(visMidlertidigDeaktivertPanel(false));
-            dispatch(visIkkePakobletPanel(false));
+
             return true;
         }
     };

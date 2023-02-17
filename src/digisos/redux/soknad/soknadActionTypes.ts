@@ -52,8 +52,6 @@ export type SoknadActionType =
     | ShowServerFeil
     | ShowSendingFeiletPanel
     | ShowSideIkkeFunnet
-    | VisMidlertidigDeaktivertPanel
-    | VisIkkePakobletPanel
     | VisNedetidPanel;
 
 export interface HentSamtykker {
@@ -166,16 +164,6 @@ export interface UpdateBehandlingsIdPaStore {
 
 export interface ShowSideIkkeFunnet {
     type: SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET;
-    shouldShow: boolean;
-}
-
-export interface VisMidlertidigDeaktivertPanel {
-    type: SoknadActionTypeKeys.VIS_MIDLERTIDIG_DEAKTIVERT_PANEL;
-    shouldShow: boolean;
-}
-
-export interface VisIkkePakobletPanel {
-    type: SoknadActionTypeKeys.VIS_IKKE_PAKOBLET_PANEL;
     shouldShow: boolean;
 }
 

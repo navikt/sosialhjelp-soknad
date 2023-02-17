@@ -7,8 +7,6 @@ export const defaultState: SoknadState = {
     showSendingFeiletPanel: false,
     showSideIkkeFunnet: false,
     visLasteOppVedleggModal: false,
-    visMidlertidigDeaktivertPanel: false,
-    visIkkePakobletPanel: false,
     visNedetidPanel: false,
 
     // Opprettelse, innsending og ettersendelse
@@ -141,18 +139,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             };
         }
 
-        case SoknadActionTypeKeys.VIS_MIDLERTIDIG_DEAKTIVERT_PANEL: {
-            return {
-                ...state,
-                visMidlertidigDeaktivertPanel: action.shouldShow,
-            };
-        }
-        case SoknadActionTypeKeys.VIS_IKKE_PAKOBLET_PANEL: {
-            return {
-                ...state,
-                visIkkePakobletPanel: action.shouldShow,
-            };
-        }
         case SoknadActionTypeKeys.VIS_NEDETID_PANEL: {
             return {
                 ...state,

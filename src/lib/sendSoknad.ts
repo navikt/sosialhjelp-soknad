@@ -1,10 +1,6 @@
 import {AnyAction, Dispatch} from "redux";
-import {getInnsynUrl, HttpStatus} from "../nav-soknad/utils/rest-utils";
-import {
-    sendSoknadOk,
-    showSendingFeiletPanel,
-    visMidlertidigDeaktivertPanel,
-} from "../digisos/redux/soknad/soknadActions";
+import {getInnsynUrl} from "../nav-soknad/utils/rest-utils";
+import {sendSoknadOk, showSendingFeiletPanel} from "../digisos/redux/soknad/soknadActions";
 import {logWarning} from "../nav-soknad/utils/loggerUtils";
 import {basePath} from "../configuration";
 import {sendSoknad as sendSoknadAction} from "../generated/soknad-actions/soknad-actions";
@@ -29,18 +25,10 @@ export const sendSoknad = async (behandlingsId: string, dispatch: Dispatch<AnyAc
             SVARUT: `${basePath}/skjema/${id}/ettersendelse`,
         };
 
-        sessionStorage.setItem("sistLagretSoknad", behandlingsId);
-
         return redirectUrl[sendtTil];
     } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) return;
-
         logWarning("Send søknad feilet: " + reason);
 
-        if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
-            dispatch(visMidlertidigDeaktivertPanel(true));
-        } else {
-            dispatch(showSendingFeiletPanel(true));
-        }
+        dispatch(showSendingFeiletPanel(true));
     }
 };
