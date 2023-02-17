@@ -79,13 +79,6 @@ export function hentSamtykkerOk(samtykker: Samtykke[]): SoknadActionType {
     };
 }
 
-export const visSamtykkeInfo = (skalVises: boolean): SoknadActionType => {
-    return {
-        type: SoknadActionTypeKeys.VIS_SAMTYKKE_INFO,
-        skalVises,
-    };
-};
-
 export const visLasteOppVedleggModal = (skalVises: boolean): SoknadActionType => {
     return {
         type: SoknadActionTypeKeys.VIS_LASTE_OPP_VEDLEGG_MODAL,

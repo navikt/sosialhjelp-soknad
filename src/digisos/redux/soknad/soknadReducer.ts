@@ -6,7 +6,6 @@ export const defaultState: SoknadState = {
     showServerFeil: false,
     showSendingFeiletPanel: false,
     showSideIkkeFunnet: false,
-    visSamtykkeInfo: false,
     visLasteOppVedleggModal: false,
     visMidlertidigDeaktivertPanel: false,
     visIkkePakobletPanel: false,
@@ -53,11 +52,10 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 restStatus: REST_STATUS.PENDING,
             };
         case SoknadActionTypeKeys.HENT_SOKNAD_OK:
-            const {xsrfCookieReceived, behandlingsId} = action;
             return {
                 ...state,
-                restStatus: xsrfCookieReceived ? REST_STATUS.OK : REST_STATUS.XSRF,
-                behandlingsId: behandlingsId,
+                restStatus: action.xsrfCookieReceived ? REST_STATUS.OK : REST_STATUS.XSRF,
+                behandlingsId: action.behandlingsId,
                 showLargeSpinner: false,
                 showSideIkkeFunnet: false,
                 showServerFeil: false,
@@ -133,13 +131,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 ...state,
                 samtykker: samtykker,
                 samtykkeRestStatus: REST_STATUS.OK,
-            };
-        }
-
-        case SoknadActionTypeKeys.VIS_SAMTYKKE_INFO: {
-            return {
-                ...state,
-                visSamtykkeInfo: action.skalVises,
             };
         }
 

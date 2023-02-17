@@ -9,7 +9,6 @@ import {initialVerdierState, Verdier} from "../../skjema/inntektFormue/verdier/V
 import {initialFormueState, Formue} from "../../skjema/inntektFormue/formue/FormueTypes";
 import {initialBoutgifterState, Boutgifter} from "../../skjema/utgifterGjeld/boutgifter/BoutgifterTypes";
 import {initialBarneutgifterState, Barneutgifter} from "../../skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
-import {Adresser, initialAdresserState} from "../../skjema/personopplysninger/adresse/AdresseTypes";
 import {Barnebidrag, ForsorgerPlikt} from "../../skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
 import {
     initialSkattbarInntektInfoState,
@@ -78,22 +77,10 @@ export const initialInntektState: Inntekt = {
     systemdata: initialSysteminntekter,
 };
 
-export interface Personalia {
-    adresser: Adresser;
-    navEnheter: NavEnhetFrontend[];
-    navEnhet: null | NavEnhetFrontend;
-}
-
 export interface Utgifter {
     boutgifter: Boutgifter;
     barneutgifter: Barneutgifter;
 }
-
-export const initialPersonaliaState: Personalia = {
-    adresser: initialAdresserState,
-    navEnheter: [],
-    navEnhet: null,
-};
 
 export const initialUtgifterState: Utgifter = {
     boutgifter: initialBoutgifterState,
@@ -105,7 +92,6 @@ export interface Soknadsdata {
     bosituasjon: BosituasjonData;
     familie: Familie;
     utdanning: Utdanning;
-    personalia: Personalia;
     inntekt: Inntekt;
     utgifter: Utgifter;
     restStatus: any;
@@ -116,7 +102,6 @@ export interface SoknadsdataActionVerdi {
     bosituasjon: BosituasjonData;
     familie: Familie;
     utdanning: Utdanning;
-    personalia: Personalia;
     inntekt: Inntekt;
     utgifter: Utgifter;
 }
@@ -125,7 +110,6 @@ export type SoknadsdataType =
     | Arbeid
     | Familie
     | Utdanning
-    | Personalia
     | Sivilstatus
     | ForsorgerPlikt
     | Barnebidrag
@@ -174,7 +158,6 @@ export const initialSoknadsdataState: Soknadsdata = {
     bosituasjon: initialBosituasjonState,
     familie: initialFamilieStatus,
     utdanning: initialUtdanningState,
-    personalia: initialPersonaliaState,
     inntekt: initialInntektState,
     utgifter: initialUtgifterState,
     restStatus: initialSoknadsdataRestStatus,

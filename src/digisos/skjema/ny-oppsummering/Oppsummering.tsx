@@ -9,7 +9,6 @@ import {
     setNyOppsummering,
 } from "../../redux/oppsummering/oppsummeringActions";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
-import BehandlingAvPersonopplysningerModal from "../../hovedmeny/paneler/BehandlingAvPersonopplysningerModal";
 import {NyOppsummeringBolk, NyOppsummeringResponse} from "../../redux/oppsummering/oppsummeringTypes";
 import {fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {ListOfValues} from "./question/ListOfValues";
@@ -25,7 +24,7 @@ import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpin
 import {Link as ReactRouterLink} from "react-router-dom";
 import styled from "styled-components";
 import {useSoknad} from "../../redux/soknad/useSoknad";
-import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/LegacySkjemaSteg";
+import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
@@ -139,8 +138,6 @@ export const Oppsummering = () => {
                 >
                     {t("soknadsosialhjelp.oppsummering.bekreftOpplysninger")}
                 </ConfirmationPanel>
-
-                <BehandlingAvPersonopplysningerModal />
 
                 {showSendingFeiletPanel && (
                     <div role="alert">

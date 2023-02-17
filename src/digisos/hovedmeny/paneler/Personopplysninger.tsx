@@ -1,19 +1,18 @@
 import * as React from "react";
-import {useDispatch} from "react-redux";
 import BehandlingAvPersonopplysningerModal from "./BehandlingAvPersonopplysningerModal";
-import {visSamtykkeInfo} from "../../redux/soknad/soknadActions";
 import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {Accordion, BodyLong, Heading} from "@navikt/ds-react";
 import styled from "styled-components";
 import {useTranslation} from "react-i18next";
+import {useState} from "react";
 
 const LeftAlignedButton = styled(LinkButton)`
     text-align: left;
 `;
 
 const Personopplysninger = () => {
-    const dispatch = useDispatch();
     const {t} = useTranslation("skjema");
+    const [visPersonopplysningerModal, setVisPersonopplysningerModal] = useState<boolean>(false);
 
     return (
         <Accordion>
@@ -31,7 +30,6 @@ const Personopplysninger = () => {
                         {t("informasjon.tekster.personopplysninger.innhenting.tittel")}
                     </Heading>
                     <BodyLong spacing>{t("informasjon.tekster.personopplysninger.innhenting.tekst")}</BodyLong>
-
                     <Heading level="3" size="small" spacing>
                         {t("informasjon.tekster.personopplysninger.fordusender.tittel")}
                     </Heading>
@@ -40,22 +38,18 @@ const Personopplysninger = () => {
                         {t("informasjon.tekster.personopplysninger.ettersendt.tittel")}
                     </Heading>
                     <BodyLong spacing>{t("informasjon.tekster.personopplysninger.ettersendt.tekst")}</BodyLong>
-
                     <Heading level="3" size="small" spacing>
                         {t("informasjon.tekster.personopplysninger.rettigheter.tittel")}
                     </Heading>
                     <BodyLong spacing>{t("informasjon.tekster.personopplysninger.rettigheter.tekst")}</BodyLong>
-                    <LeftAlignedButton
-                        className="navds-link"
-                        onClick={() => {
-                            dispatch(visSamtykkeInfo(true));
-                        }}
-                    >
+                    <LeftAlignedButton className="navds-link" onClick={() => setVisPersonopplysningerModal(true)}>
                         {t("informasjon.tekster.personopplysninger.rettigheter.lenke")}
                     </LeftAlignedButton>
-
                     <BodyLong>{t("informasjon.tekster.personopplysninger.sporsmal")}</BodyLong>
-                    <BehandlingAvPersonopplysningerModal />
+                    <BehandlingAvPersonopplysningerModal
+                        open={visPersonopplysningerModal}
+                        onClose={() => setVisPersonopplysningerModal(false)}
+                    />
                 </Accordion.Content>
             </Accordion.Item>
         </Accordion>

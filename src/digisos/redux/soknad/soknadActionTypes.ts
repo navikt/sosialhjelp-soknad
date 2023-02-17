@@ -19,7 +19,6 @@ export const enum SoknadActionTypeKeys {
     HENT_SAMTYKKE_OK = "soknad/HENT_SAMTYKKE_OK",
     OPPDATER_SAMTYKKE = "soknad/OPPDATER_SAMTYKKE",
 
-    VIS_SAMTYKKE_INFO = "soknad/VIS_SAMTYKKE_INFO",
     VIS_LASTE_OPP_VEDLEGG_MODAL = "soknad/VIS_LASTE_OPP_VEDLEGG_MODAL",
     UPDATE_BEHANDLINGSID_PA_STORE = "soknad/UPDATE_BEHANDLINGSID_PA_STORE",
     SHOW_SERVER_FEIL = "soknad/SHOW_SERVER_FEIL",
@@ -48,7 +47,6 @@ export type SoknadActionType =
     | HentSamtykker
     | HentSamtykkerOk
     | OppdaterSamtykke
-    | VisSamtykkeInfo
     | VisLasteOppVedleggModal
     | UpdateBehandlingsIdPaStore
     | ShowServerFeil
@@ -78,11 +76,6 @@ export interface OppdaterSamtykke {
 export interface Samtykke {
     type: string;
     verdi: boolean;
-}
-
-export interface VisSamtykkeInfo {
-    type: SoknadActionTypeKeys.VIS_SAMTYKKE_INFO;
-    skalVises: boolean;
 }
 
 export interface VisLasteOppVedleggModal {
