@@ -1,7 +1,8 @@
-import {AdressesokTreff} from "./AdresseTypes";
-import {GateadresseFrontend} from "../../../../generated/model";
+import {AdresseForslag, GateadresseFrontend} from "../../../../generated/model";
 
-const formaterAdresseString = ({adresse, husnummer, postnummer, poststed, husbokstav}: AdressesokTreff) => {
+const formaterAdresseString = (sokTreff: AdresseForslag | undefined) => {
+    if (!sokTreff) return "";
+    const {adresse, husnummer, postnummer, poststed, husbokstav} = sokTreff;
     return `${adresse} ${husnummer}${husbokstav || ""}, ${postnummer} ${poststed}`;
 };
 

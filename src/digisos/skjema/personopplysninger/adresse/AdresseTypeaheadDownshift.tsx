@@ -5,13 +5,12 @@ import {useState} from "react";
 import {useDebounce} from "react-use";
 import styled from "styled-components";
 import {fetchToJson} from "../../../../nav-soknad/utils/rest-utils";
-import {AdressesokTreff} from "./AdresseTypes";
 import {formaterAdresseString, removeDuplicatesAfterTransform} from "./AdresseUtils";
 import {AdresseForslag} from "../../../../generated/model";
 
-const searchForAddress = async (value: string): Promise<AdressesokTreff[]> => {
+const searchForAddress = async (value: string): Promise<AdresseForslag[]> => {
     try {
-        const adresser = await fetchToJson<AdressesokTreff[]>("informasjon/adressesok?sokestreng=" + encodeURI(value));
+        const adresser = await fetchToJson<AdresseForslag[]>("informasjon/adressesok?sokestreng=" + encodeURI(value));
         return Promise.resolve(removeDuplicatesAfterTransform(adresser, formaterAdresseString).slice(0, 8));
     } catch (err) {
         return Promise.resolve([]);
@@ -20,7 +19,7 @@ const searchForAddress = async (value: string): Promise<AdressesokTreff[]> => {
 
 interface FetchAddressProps {
     searchvalue: string | null;
-    children(state: {isLoading: boolean; isError: boolean; result: AdressesokTreff[]}): JSX.Element;
+    children(state: {isLoading: boolean; isError: boolean; result: AdresseForslag[]}): JSX.Element;
 }
 
 const DEBOUNCE_TIMEOUT_MS = 400;
@@ -28,7 +27,7 @@ const DEBOUNCE_TIMEOUT_MS = 400;
 const FetchAddress = (props: FetchAddressProps) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
-    const [result, setResult] = useState<AdressesokTreff[]>([]);
+    const [result, setResult] = useState<AdresseForslag[]>([]);
 
     useDebounce(
         () => {
@@ -92,7 +91,7 @@ export const AdresseTypeahead = (props: {
     onVelgAnnenAdresse: (adresse: AdresseForslag) => void;
 }) => {
     const onSelect = (adresse?: AdresseForslag) => {
-        if (adresse === undefined) {
+        if (!adresse) {
             props.onNullstill();
         } else {
             props.onVelgAnnenAdresse(adresse);
@@ -100,10 +99,12 @@ export const AdresseTypeahead = (props: {
     };
     return (
         <Downshift
-            onSelect={(adresse) => {
-                onSelect(adresse);
+            onSelect={(adresse) => onSelect(adresse)}
+            itemToString={(adresse) => {
+                console.log(adresse, formaterAdresseString(adresse));
+
+                return adresse ? formaterAdresseString(adresse) : "";
             }}
-            itemToString={(adresse) => formaterAdresseString(adresse ?? "") ?? ""}
             initialInputValue={props.defaultValue}
         >
             {({getLabelProps, getInputProps, getItemProps, getMenuProps, highlightedIndex, inputValue, isOpen}) => (
@@ -124,7 +125,7 @@ export const AdresseTypeahead = (props: {
                                     {isError && <p>Det har oppstått en feil :(</p>}
                                     {result.length > 0 && (
                                         <SelectMenu {...getMenuProps()}>
-                                            {result.map((adresse: AdressesokTreff, index: number) => {
+                                            {result.map((adresse: AdresseForslag, index: number) => {
                                                 return (
                                                     <Item
                                                         isHighlighted={index === highlightedIndex}

@@ -4,7 +4,11 @@ import NavEnhet from "./NavEnhet";
 import {useAlgebraic} from "../../../../lib/hooks/useAlgebraic";
 import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 import {AdresseVisning} from "./AdresseVisning";
-import {updateAdresse, useHentAdresser} from "../../../../generated/adresse-ressurs/adresse-ressurs";
+import {
+    getHentAdresserQueryKey,
+    updateAdresse,
+    useHentAdresser,
+} from "../../../../generated/adresse-ressurs/adresse-ressurs";
 import {Radio} from "@navikt/ds-react";
 import {formaterSoknadsadresse} from "./AdresseUtils";
 import {AdresseSok} from "./AdresseSok";
@@ -13,10 +17,12 @@ import cx from "classnames";
 import {useTranslation} from "react-i18next";
 import {putNavEnhet} from "../../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
 import {HorizontalRadioGroup} from "../../../../nav-soknad/components/form/HorizontalRadioGroup";
+import {useQueryClient} from "@tanstack/react-query";
 
 export const AdresseData = () => {
+    const queryClient = useQueryClient();
     const behandlingsId = useBehandlingsId();
-    const {expectOK, refetch} = useAlgebraic(
+    const {expectOK} = useAlgebraic(
         useHentAdresser(behandlingsId, {
             query: {
                 onSuccess: ({valg}) => {
@@ -31,20 +37,23 @@ export const AdresseData = () => {
 
     const setAdresser = async (adresser: AdresserFrontend, valg: AdresserFrontendValg, soknad?: AdresseFrontend) => {
         const inputAdresser = {
-            ...{...adresser, navEnhet: undefined},
+            ...adresser,
             valg: soknad ? "soknad" : valg,
             soknad,
         };
 
+        queryClient.setQueryData(getHentAdresserQueryKey(behandlingsId), {...inputAdresser, navEnhet: null});
         // TODO: Fiks PUT /adresser så den returnerer Adresser
-        const navEnheter = await updateAdresse(behandlingsId, inputAdresser);
+        const navEnheter = await updateAdresse(behandlingsId, {...inputAdresser, navEnhet: undefined});
+        queryClient.setQueryData(getHentAdresserQueryKey(behandlingsId), {
+            ...inputAdresser,
+            navEnhet: navEnheter[0] ?? null,
+        });
 
         // Velg den første NAV-enheten
         // TODO: Fiks PUT /adresser så navEnhet[0].valgt = true
         const navEnhet = {...navEnheter[0], valgt: true};
         await putNavEnhet(behandlingsId, navEnhet);
-
-        await refetch();
     };
 
     return expectOK((adresser) => (
