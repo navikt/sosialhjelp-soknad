@@ -1,6 +1,27 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
-import {getApiBaseUrl} from "../../nav-soknad/utils/rest-utils";
+import {getApiBaseUrl, getRedirectPath} from "../../nav-soknad/utils/rest-utils";
 import {isLocalhost, isMockAlt} from "../../nav-soknad/utils";
+import {UnauthorizedMelding} from "../../generated/model";
+import {logError} from "../../nav-soknad/utils/loggerUtils";
+
+const navigateToLoginOn401 = (data: UnauthorizedMelding | undefined) => {
+    if (!data) {
+        logError(`401-feil uten data`);
+        throw new Error(`401-feil uten data`);
+    }
+
+    const {id, loginUrl} = data;
+
+    if (new URLSearchParams(window.location.search).get("login_id") === id) {
+        logError("login_id == id fra 401, kan indikere en redirect loop?");
+        return;
+    }
+
+    const loginURLObj = new URL(loginUrl);
+    loginURLObj.searchParams.set("login_id", id);
+    loginURLObj.searchParams.set("redirect", getRedirectPath());
+    window.location.href = loginURLObj.toString();
+};
 
 export const AXIOS_INSTANCE = Axios.create({
     baseURL: getApiBaseUrl(true),
@@ -22,7 +43,13 @@ export const axiosInstance = <T>(config: AxiosRequestConfig, options?: AxiosRequ
         ...config,
         ...options,
         cancelToken: source.token,
-    }).then(({data}) => data);
+    })
+        .then(({data}) => data)
+        .catch((e) => {
+            if (e instanceof AxiosError<T> && e.response?.status === 401)
+                navigateToLoginOn401(e.response.data as UnauthorizedMelding);
+            else throw e;
+        });
 
     promise.cancel = () => {
         source.cancel("Query was cancelled");

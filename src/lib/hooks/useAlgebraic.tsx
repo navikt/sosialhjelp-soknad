@@ -1,10 +1,11 @@
 import {AsyncData, Result} from "@swan-io/boxed";
+import * as React from "react";
 import {ReactElement, useEffect, useState} from "react";
 import {QueryStatus} from "@tanstack/query-core/src/types";
 import {UseQueryResult} from "@tanstack/react-query";
 import TextPlaceholder from "../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import * as React from "react";
-import {useErrorHandler} from "./useErrorHandler";
+import {useGETErrorHandler} from "./useGETErrorHandler";
+import {AxiosError} from "axios";
 
 type Maybe<T> = T | null;
 type RequestHandler<TData> = (okHandler: (response: TData) => Maybe<ReactElement>) => Maybe<ReactElement>;
@@ -17,18 +18,18 @@ type UseAlgebraicResult<TData, TError> = {
     expectOK: RequestHandler<Exclude<TData, undefined>>;
 } & UseQueryResult<TData, TError>;
 
-export const useAlgebraic = <TData, TError>({
+export const useAlgebraic = <TData, TError extends AxiosError | null>({
     data,
     status,
     error,
     ...rest
 }: {
     data: TData;
-    status: QueryStatus;
     error: TError;
+    status: QueryStatus;
 }): UseAlgebraicResult<TData, TError> => {
-    const errorHandler = useErrorHandler();
     const [request, setRequest] = useState(AsyncData.NotAsked<Result<TData, TError>>);
+    const {GETErrorHandler} = useGETErrorHandler();
 
     useEffect(() => {
         const queryStates: Record<QueryStatus, () => AsyncData<Result<TData, TError>>> = {
@@ -45,7 +46,11 @@ export const useAlgebraic = <TData, TError>({
             Loading: () => <TextPlaceholder lines={1} />,
             Done: (response) =>
                 response.match({
-                    Error: errorHandler,
+                    Error: (error) => {
+                        console.log("hi");
+                        GETErrorHandler(error);
+                        return null;
+                    },
                     Ok: okHandler,
                 }),
         });
