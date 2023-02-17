@@ -5,8 +5,7 @@ import {SkjemaStegContext} from "./SkjemaSteg";
 import {AvbrytSoknadModal, minSideUrl} from "../../avbrytsoknad/AvbrytSoknadModal";
 import {useContext, useState} from "react";
 import {logError} from "../../../utils/loggerUtils";
-import {MidlertidigDeaktivertPanel} from "../MidlertidigDeaktivertPanel";
-import {IkkePakobletPanel} from "../IkkePakobletPanel";
+import {NavEnhetInaktiv} from "../../../../digisos/skjema/personopplysninger/adresse/NavEnhet";
 
 interface SkjemaStegNavigasjonProps {
     loading?: boolean;
@@ -27,12 +26,7 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
 
     return (
         <div className={"space-y-8 lg:space-y-16 pt-2 md:pt-5 lg:pt-10 pb-8 lg:pb-16"}>
-            {page !== 9 && (
-                <>
-                    <MidlertidigDeaktivertPanel />
-                    <IkkePakobletPanel />
-                </>
-            )}
+            {page !== 9 && <NavEnhetInaktiv />}
             <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
             <div className="space-x-3">
                 <Button

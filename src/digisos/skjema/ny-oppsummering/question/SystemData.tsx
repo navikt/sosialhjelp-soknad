@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import {Felt} from "../../../redux/oppsummering/oppsummeringTypes";
 import {FormattedText} from "./FormattedText";
+import {Felt} from "../../../../generated/model";
 
 const StyledSystemList = styled.ul`
     list-style: none;
@@ -17,9 +17,11 @@ export const SystemData = (props: {felter?: Felt[]}) => {
         <StyledSystemList>
             {props.felter.map((felt) => {
                 return (
-                    <li key={felt.label}>
-                        <FormattedText value={felt.svar.value} type={felt.svar.type} label={felt.label} />
-                    </li>
+                    felt.svar && (
+                        <li key={felt.label}>
+                            <FormattedText value={felt.svar.value ?? ""} type={felt.svar.type} label={felt.label} />
+                        </li>
+                    )
                 );
             })}
         </StyledSystemList>

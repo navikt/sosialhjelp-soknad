@@ -5,9 +5,11 @@ import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {BodyShort, GuidePanel, Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
-import {useGetValgtNavEnhet} from "../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
 import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
 import BehandlingAvPersonopplysningerModal from "../../hovedmeny/paneler/BehandlingAvPersonopplysningerModal";
+import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";
+import {erAktiv} from "../../../nav-soknad/containers/navEnhetStatus";
+import {NavEnhetInaktiv} from "../personopplysninger/adresse/NavEnhet";
 
 const StyledGuidePanel = styled(GuidePanel)`
     /* TODO: Bytte ut --a-orange-200 med eks --a-surface-warning-subtle ? */
@@ -17,13 +19,19 @@ const StyledGuidePanel = styled(GuidePanel)`
     margin-bottom: 2rem;
 `;
 
+// FIXME: Translation
 export const SoknadsmottakerInfoPanel = () => {
-    const {expectOK} = useAlgebraic(useGetValgtNavEnhet(useBehandlingsId()));
+    const {expectOK} = useAlgebraic(useHentAdresser(useBehandlingsId()));
     const {t} = useTranslation("skjema");
     const [visPersonopplysningerModal, setVisPersonopplysningerModal] = useState<boolean>(false);
 
-    return expectOK(({enhetsnavn, kommunenavn}) => {
+    return expectOK(({navEnhet}) => {
+        if (!navEnhet) return null;
+        if (!erAktiv(navEnhet)) return <NavEnhetInaktiv />;
+
+        const {enhetsnavn, kommunenavn} = navEnhet;
         const valgtEnhetsNavn = `${enhetsnavn}, ${kommunenavn} kommune`;
+
         return (
             <>
                 <BehandlingAvPersonopplysningerModal

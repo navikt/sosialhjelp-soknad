@@ -1,8 +1,7 @@
-import {OppsummeringActionTypeKeys, OppsummeringActionTypes, NyOppsummeringBolk} from "./oppsummeringTypes";
+import {OppsummeringActionTypeKeys, OppsummeringActionTypes} from "./oppsummeringTypes";
 import {REST_STATUS} from "../soknad/soknadTypes";
 
 export interface OppsummeringState {
-    nyOppsummering: NyOppsummeringBolk[];
     bekreftet?: boolean;
     visBekreftMangler?: boolean;
     restStatus: REST_STATUS;
@@ -10,7 +9,6 @@ export interface OppsummeringState {
 }
 
 const defaultState: OppsummeringState = {
-    nyOppsummering: [],
     bekreftet: false,
     visBekreftMangler: false,
     restStatus: REST_STATUS.INITIALISERT,
@@ -21,7 +19,6 @@ const reducer = (state: OppsummeringState = defaultState, action: OppsummeringAc
         case OppsummeringActionTypeKeys.FEILET:
             return {
                 ...state,
-                nyOppsummering: [],
                 restStatus: REST_STATUS.SERVER_ERROR,
             };
         case OppsummeringActionTypeKeys.BEKREFT_OPPSUMMERING:
@@ -35,15 +32,9 @@ const reducer = (state: OppsummeringState = defaultState, action: OppsummeringAc
                 ...state,
                 visBekreftMangler: action.visBekreftMangler,
             };
-        case OppsummeringActionTypeKeys.HENT_NY_OPPSUMMERING:
-            return {
-                ...state,
-                restStatus: REST_STATUS.PENDING,
-            };
         case OppsummeringActionTypeKeys.SET_NY_OPPSUMMERING:
             return {
                 ...state,
-                nyOppsummering: action.response.steg,
                 restStatus: REST_STATUS.OK,
             };
         default:

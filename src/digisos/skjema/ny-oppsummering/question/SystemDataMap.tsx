@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import {Felt} from "../../../redux/oppsummering/oppsummeringTypes";
 import {FormattedText} from "./FormattedText";
+import {Felt} from "../../../../generated/model";
 
 const StyledSystemList = styled.ul`
     list-style: none;

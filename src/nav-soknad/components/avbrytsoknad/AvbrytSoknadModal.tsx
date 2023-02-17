@@ -3,11 +3,11 @@ import {basePath} from "../../../configuration";
 import {BodyShort, Button, Modal, Heading} from "@navikt/ds-react";
 import styled from "styled-components";
 import {mobile} from "../../styles/variables";
-import {slettSoknad} from "../../../lib/slettSoknad";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../hooks/useBehandlingsId";
 import {logError} from "../../utils/loggerUtils";
+import {useSlettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 
 const StyledModal = styled(Modal)`
     max-width: 40rem;
@@ -64,14 +64,14 @@ export const minSideUrl = `${process.env.REACT_APP_MIN_SIDE_URL}`;
 export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () => void}) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
+    const {mutate, isLoading, isError} = useSlettSoknad();
 
     const onAvbryt = async () => {
         try {
-            await slettSoknad(behandlingsId);
+            await mutate({behandlingsId});
             window.location.href = minSideUrl;
         } catch (e) {
             logError("Feil ved sletting:", e);
-            window.location.href = "/sosialhjelp/soknad/feil";
         }
     };
 
@@ -90,9 +90,10 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
                     <Button variant="primary" onClick={onClose}>
                         {t("avbryt.fortsettsenere")}
                     </Button>
-                    <Button variant="primary" onClick={() => onAvbryt()}>
+                    <Button variant="primary" disabled={isLoading} onClick={() => onAvbryt()}>
                         {t("avbryt.slett")}
                     </Button>
+                    {isError && "Beklager, en feil oppstod ved sletting."}
                 </ButtonRow>
             </ModalContent>
         </StyledModal>

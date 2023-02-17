@@ -1,16 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Accordion, ConfirmationPanel, Link, Label, Alert} from "@navikt/ds-react";
-import {useSelector, useDispatch} from "react-redux";
-import {State} from "../../redux/reducers";
-import {
-    bekreftOppsummering,
-    hentNyOppsummering,
-    hentOppsumeringFeilet,
-    setNyOppsummering,
-} from "../../redux/oppsummering/oppsummeringActions";
+import {useDispatch} from "react-redux";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
-import {NyOppsummeringBolk, NyOppsummeringResponse} from "../../redux/oppsummering/oppsummeringTypes";
-import {fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {ListOfValues} from "./question/ListOfValues";
 import {Edit} from "@navikt/ds-icons";
 import {Question as QuestionEl} from "./question/Question";
@@ -26,11 +17,16 @@ import styled from "styled-components";
 import {useSoknad} from "../../redux/soknad/useSoknad";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
-import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 import {useTranslation} from "react-i18next";
-import {getNavEnheter} from "../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
-import {MidlertidigDeaktivertPanel} from "../../../nav-soknad/components/SkjemaSteg/MidlertidigDeaktivertPanel";
+import {NavEnhetInaktiv} from "../personopplysninger/adresse/NavEnhet";
+import {useGetOppsummering} from "../../../generated/oppsummering-ressurs/oppsummering-ressurs";
+import {Steg} from "../../../generated/model";
+import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";
+import {erAktiv} from "../../../nav-soknad/containers/navEnhetStatus";
+import {createSkjemaEventData, logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
+import {sendSoknad} from "../../../lib/sendSoknad";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const behandlingsId = useBehandlingsId();
@@ -45,48 +41,68 @@ export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
 export const Oppsummering = () => {
     const dispatch = useDispatch();
 
-    const [loading, setLoading] = useState(true);
+    const [bekreftet, setBekreftet] = useState<boolean>(false);
+    const [bekreftetFeil, setBekreftetFeil] = useState<string | null>(null);
+
     const behandlingsId = useBehandlingsId();
-    const {bekreftet, visBekreftMangler, nyOppsummering} = useSelector((state: State) => state.oppsummering);
     const {showSendingFeiletPanel} = useSoknad();
 
     const navigate = useNavigate();
 
     const {t} = useTranslation("skjema");
 
+    const {isLoading, data} = useGetOppsummering(behandlingsId);
+
+    const {data: adresser} = useHentAdresser(behandlingsId);
+
     useEffect(() => {
-        if (!behandlingsId) return;
+        if (erAktiv(adresser?.navEnhet)) return;
 
-        getNavEnheter(behandlingsId).then((enheter) => {
-            const valgtSoknadsmottaker = enheter.find((n) => n.valgt);
-            if (!valgtSoknadsmottaker || valgtSoknadsmottaker.isMottakMidlertidigDeaktivert) {
-                // TODO: Mer brukervennlig melding her
-                logWarning(`Ugyldig søknadsmottaker ${valgtSoknadsmottaker} på side 9, sender bruker til side 1`);
-                navigate("../1");
-                return;
-            }
-        });
+        // TODO: Mer brukervennlig melding her
+        logWarning(`Ugyldig søknadsmottaker ${adresser?.navEnhet} på side 9, sender bruker til side 1`);
 
-        dispatch(hentNyOppsummering());
-        fetchToJson<NyOppsummeringResponse>(`soknader/${behandlingsId}/oppsummering`)
-            .then((response) => {
-                dispatch(setNyOppsummering(response));
-            })
-            .catch((reason) => {
-                if (reason.message === HttpStatus.UNAUTHORIZED) return;
-                dispatch(hentOppsumeringFeilet(reason));
-            });
-        setLoading(false);
-    }, [behandlingsId, dispatch, navigate]);
+        navigate("../1");
+    }, [adresser, navigate]);
+
+    const getAttributesForSkjemaFullfortEvent = () => {
+        const attr: Record<string, any> = {};
+        if (!data) return attr;
+
+        data.steg.forEach((steg) =>
+            steg.avsnitt.forEach((avsnitt) =>
+                avsnitt.sporsmal.forEach(({tittel, felt}) => {
+                    if (tittel === "bosituasjon.sporsmal") attr["valgtBosted"] = !!felt?.length;
+                    if (tittel === "arbeidsforhold.infotekst") attr["harArbeidsforhold"] = !!felt?.length;
+                    if (tittel === "utbetalinger.inntekt.skattbar.har_gitt_samtykke") attr["skattSamtykke"] = true;
+                    if (tittel === "utbetalinger.inntekt.skattbar.mangler_samtykke") attr["skattSamtykke"] = false;
+                })
+            )
+        );
+
+        return attr;
+    };
+    const adresseValg = useHentAdresser(behandlingsId).data?.valg;
+
+    const sendInnSoknad = async () => {
+        if (!bekreftet) {
+            setBekreftetFeil("Du må bekrefte før du kan fortsette");
+            return;
+        }
+
+        logAmplitudeEvent("skjema fullført", createSkjemaEventData(getAttributesForSkjemaFullfortEvent()));
+        if (adresseValg) logInfo("klikk--" + adresseValg);
+        const nextPage = await sendSoknad(behandlingsId, dispatch);
+        if (nextPage) window.location.href = nextPage;
+    };
 
     const bekreftOpplysninger: string = t("soknadsosialhjelp.oppsummering.harLestSamtykker");
 
-    if (loading) return <ApplicationSpinner />;
+    if (isLoading) return <ApplicationSpinner />;
 
     return (
-        <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"oppsummering"}>
+        <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"oppsummering"} onSend={sendInnSoknad}>
             <div>
-                {nyOppsummering.map((bolk: NyOppsummeringBolk) => {
+                {data?.steg.map((bolk) => {
                     return (
                         <OppsummeringBolk bolk={bolk} key={bolk.stegNr}>
                             {bolk.avsnitt.map((avsnitt) => (
@@ -127,9 +143,9 @@ export const Oppsummering = () => {
 
                 <ConfirmationPanel
                     label={bekreftOpplysninger}
-                    checked={bekreftet ? bekreftet : false}
-                    onChange={() => dispatch(bekreftOppsummering())}
-                    error={visBekreftMangler}
+                    checked={bekreftet}
+                    onChange={(e) => setBekreftet(e.target.checked)}
+                    error={bekreftetFeil}
                 >
                     {t("soknadsosialhjelp.oppsummering.bekreftOpplysninger")}
                 </ConfirmationPanel>
@@ -144,7 +160,7 @@ export const Oppsummering = () => {
                     </div>
                 )}
 
-                <MidlertidigDeaktivertPanel />
+                <NavEnhetInaktiv navEnhet={adresser?.navEnhet} />
             </div>
         </StegMedNavigasjon>
     );
@@ -155,7 +171,7 @@ const EditAnswer = styled.div`
     justify-content: flex-end;
 `;
 
-const OppsummeringBolk = (props: {bolk: NyOppsummeringBolk; children: React.ReactNode}) => {
+const OppsummeringBolk = (props: {bolk: Steg; children: React.ReactNode}) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
 

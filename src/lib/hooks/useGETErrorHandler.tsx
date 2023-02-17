@@ -8,8 +8,6 @@ export const handleAxiosError = (error: AxiosError) => {
 
     if (status === 404) {
         window.location.href = "/sosialhjelp/soknad/informasjon";
-    } else if (status === 410) {
-        window.location.href = "/sosialhjelp/soknad/informasjon";
     } else {
         logError(`GET-feil ${error.request.path}: ${error.code} ${error.message}`);
         // FIXME: Husk å lage denne!!
@@ -19,8 +17,6 @@ export const handleAxiosError = (error: AxiosError) => {
 
 export const useGETErrorHandler = () => ({
     GETErrorHandler: (error: AxiosError | Error | null) => {
-        console.log("isaxioserror");
-
         if (!error) {
             logError(`useGETErrorHandler invokert med error == null, skal ikke skje?`);
             return;

@@ -1,7 +1,7 @@
 import {Link} from "@navikt/ds-react";
 import styled from "styled-components";
 import {getApiBaseUrl} from "../../../../nav-soknad/utils/rest-utils";
-import {Felt} from "../../../redux/oppsummering/oppsummeringTypes";
+import {Felt} from "../../../../generated/model";
 
 const StyledList = styled.ul`
     padding-left: 1rem;

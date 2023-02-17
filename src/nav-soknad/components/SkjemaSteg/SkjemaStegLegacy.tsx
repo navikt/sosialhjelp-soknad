@@ -16,11 +16,10 @@ import SkjemaStegNavKnapperLegacy from "./SkjemaStegNavKnapperLegacy";
 import TimeoutBox from "../timeoutbox/TimeoutBox";
 import {AvbrytSoknadModal} from "../avbrytsoknad/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
-import {MidlertidigDeaktivertPanel} from "./MidlertidigDeaktivertPanel";
-import {IkkePakobletPanel} from "./IkkePakobletPanel";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
 import ServerFeil from "../../feilsider/ServerFeil";
 import SideIkkeFunnet from "../../feilsider/SideIkkeFunnet";
+import {NavEnhetInaktiv} from "../../../digisos/skjema/personopplysninger/adresse/NavEnhet";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
@@ -28,6 +27,7 @@ interface StegMedNavigasjonProps {
     pending?: boolean;
     ikon?: React.ReactNode;
     children?: any;
+    onSend?: () => Promise<void>;
 }
 
 export const useSkjemaConfig = (skjemaConfig: SkjemaConfig, steg: DigisosSkjemaStegKey) => {
@@ -51,7 +51,7 @@ function SkjemaStegHeading(props: {ikon: ReactNode; stegTittel: string}) {
     );
 }
 
-export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps) => {
+export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: StegMedNavigasjonProps) => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
     const {data: nedetid} = useHentNedetidInformasjon();
     const {
@@ -86,17 +86,13 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children}: StegMedNa
                     <div className={"space-y-12 lg:space-y-24"}>{children}</div>
                     <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
                     <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
-                    {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && (
-                        <>
-                            <MidlertidigDeaktivertPanel />
-                            <IkkePakobletPanel />
-                        </>
-                    )}
+                    {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && <NavEnhetInaktiv />}
                     <SkjemaStegNavKnapperLegacy
                         skjemaConfig={skjemaConfig}
                         steg={skjemaConfig.steg[steg]}
                         goToStep={gotoPage}
                         loading={enFilLastesOpp}
+                        onSend={onSend}
                     />
                 </div>
             </div>
