@@ -11,9 +11,10 @@ import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 import {FieldError, FieldErrors, useForm} from "react-hook-form";
 import {useTranslation} from "react-i18next";
 import {zodResolver} from "@hookform/resolvers/zod";
-import SkjemaSteg from "../../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 import {useState} from "react";
+import {useFeatureFlags} from "../../../lib/features";
+import {SkjemaSteg} from "../../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;
@@ -64,7 +65,7 @@ const Begrunnelse: React.FunctionComponent<{}> = () => {
     });
 
     if (!begrunnelse) return null;
-    const onBeforeNavigate = () =>
+    const onRequestNavigation = () =>
         new Promise<void>((resolve, reject) => {
             handleSubmit(
                 (data) =>
@@ -86,26 +87,29 @@ const Begrunnelse: React.FunctionComponent<{}> = () => {
         });
 
     return (
-        <SkjemaSteg.Container steg={2} onBeforeNavigate={onBeforeNavigate}>
-            <SkjemaSteg.Title steg={2} />
-            <SkjemaErrorSummary errors={errors} />
-            <form className={"space-y-12 lg:space-y-24"}>
-                <Textarea
-                    {...register("hvaSokesOm")}
-                    id={"hvaSokesOm"}
-                    error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
-                    label={begrunnelseNyTekst ? t("hva.label") : t("hva.label.old")}
-                    description={begrunnelseNyTekst ? t("hva.description") : t("hva.description.old")}
-                />
-                <Textarea
-                    {...register("hvorforSoke")}
-                    id={"hvorforSoke"}
-                    label={begrunnelseNyTekst ? t("hvorfor.label") : t("hvorfor.label.old")}
-                    description={begrunnelseNyTekst ? t("hvorfor.description") : undefined}
-                    error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
-                />
-            </form>
-            {backendError && <div>Beklager, et teknisk problem oppstod ved innsending. Prøv gjerne igjen.</div>}
+        <SkjemaSteg.Container page={2} onRequestNavigation={onRequestNavigation}>
+            <SkjemaSteg.Content>
+                <SkjemaSteg.Title />
+                <SkjemaErrorSummary errors={errors} />
+                <form className={"space-y-12 lg:space-y-24"}>
+                    <Textarea
+                        {...register("hvaSokesOm")}
+                        id={"hvaSokesOm"}
+                        error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
+                        label={begrunnelseNyTekst ? t("hva.label") : t("hva.label.old")}
+                        description={begrunnelseNyTekst ? t("hva.description") : t("hva.description.old")}
+                    />
+                    <Textarea
+                        {...register("hvorforSoke")}
+                        id={"hvorforSoke"}
+                        label={begrunnelseNyTekst ? t("hvorfor.label") : t("hvorfor.label.old")}
+                        description={begrunnelseNyTekst ? t("hvorfor.description") : undefined}
+                        error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
+                    />
+                </form>
+                {backendError && <div>Beklager, et teknisk problem oppstod ved innsending. Prøv gjerne igjen.</div>}
+                <SkjemaSteg.Buttons />
+            </SkjemaSteg.Content>
         </SkjemaSteg.Container>
     );
 };
