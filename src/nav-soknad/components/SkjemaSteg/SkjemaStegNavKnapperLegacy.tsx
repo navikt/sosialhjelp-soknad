@@ -1,7 +1,6 @@
 import * as React from "react";
 import {getIntlTextOrKey} from "../../utils";
 import {Button, Loader} from "@navikt/ds-react";
-import {sendSoknadPending} from "../../../digisos/redux/soknad/soknadActions";
 import {useDispatch, useSelector} from "react-redux";
 import {AvbrytSoknadModal, minSideUrl} from "../avbrytsoknad/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
@@ -25,6 +24,7 @@ interface SkjemaStegNavigasjonProps {
 
 export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep}: SkjemaStegNavigasjonProps) => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
+    const [sendSoknadPending, setSendSoknadPending] = useState<boolean>(false);
 
     const {oppsummering} = useSelector((state: State) => state);
     const behandlingsId = useBehandlingsId();
@@ -58,7 +58,7 @@ export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep}: SkjemaSteg
         } else {
             logAmplitudeEvent("skjema fullført", createSkjemaEventData(getAttributesForSkjemaFullfortEvent()));
             if (adresseValg) logInfo("klikk--" + adresseValg);
-            dispatch(sendSoknadPending());
+            setSendSoknadPending(true);
             sendSoknad(behandlingsId, dispatch).then((nextPage) => {
                 if (nextPage) window.location.href = nextPage;
             });
@@ -90,9 +90,14 @@ export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep}: SkjemaSteg
                             {loading && <Loader />}
                         </Button>
                     ) : (
-                        <Button variant="primary" id="send_button" onClick={sendInnSoknad} disabled={forwardInhibited}>
+                        <Button
+                            variant="primary"
+                            id="send_button"
+                            onClick={sendInnSoknad}
+                            disabled={sendSoknadPending || forwardInhibited}
+                        >
                             {t("skjema.knapper.send")}
-                            {loading && <Loader />}
+                            {sendSoknadPending && <Loader />}
                         </Button>
                     )}
                 </div>

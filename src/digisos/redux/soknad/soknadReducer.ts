@@ -10,9 +10,7 @@ export const defaultState: SoknadState = {
     visNedetidPanel: false,
 
     // Opprettelse, innsending og ettersendelse
-    startSoknadPending: false,
     startSoknadFeilet: false,
-    sendSoknadPending: false,
 
     // Soknad state
     behandlingsId: undefined,
@@ -24,13 +22,11 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             return {
                 ...state,
                 restStatus: REST_STATUS.PENDING,
-                startSoknadPending: true,
             };
         case SoknadActionTypeKeys.OPPRETT_SOKNAD_FEILET:
             return {
                 ...state,
                 restStatus: REST_STATUS.FEILET,
-                startSoknadPending: false,
                 startSoknadFeilet: true,
             };
         case SoknadActionTypeKeys.OPPRETT_SOKNAD_OK:

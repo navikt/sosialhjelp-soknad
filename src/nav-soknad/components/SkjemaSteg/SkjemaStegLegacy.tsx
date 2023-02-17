@@ -54,8 +54,6 @@ function SkjemaStegHeading(props: {ikon: ReactNode; stegTittel: string}) {
 
 export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps) => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
-
-    const {sendSoknadPending} = useSoknad();
     const {data: nedetid} = useHentNedetidInformasjon();
     const {
         validering: {feil, visValideringsfeil},
@@ -100,7 +98,7 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children}: StegMedNa
                         skjemaConfig={skjemaConfig}
                         steg={skjemaConfig.steg[steg]}
                         goToStep={gotoPage}
-                        loading={sendSoknadPending || enFilLastesOpp}
+                        loading={enFilLastesOpp}
                     />
                 </div>
             </div>

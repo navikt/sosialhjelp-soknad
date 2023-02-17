@@ -9,9 +9,7 @@ export interface SoknadState {
     showServerFeil: boolean;
 
     // Opprettelse, innsending og ettersendelse
-    startSoknadPending: boolean;
     startSoknadFeilet: boolean;
-    sendSoknadPending: boolean;
 
     // Soknad state
     behandlingsId: string | undefined;
