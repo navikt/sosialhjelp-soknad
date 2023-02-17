@@ -1,7 +1,4 @@
 export const enum SoknadActionTypeKeys {
-    START_SOKNAD_DONE = "soknad/START_SOKNAD_DONE",
-    OPPRETT_SOKNAD = "soknad/OPPRETT_SOKNAD",
-    OPPRETT_SOKNAD_FEILET = "soknad/OPPRETT_SOKNAD_FEILET",
     OPPRETT_SOKNAD_OK = "soknad/OPPRETT_SOKNAD_OK",
     SET_SOKNAD_PENDING = "soknad/SET_SOKNAD_PENDING",
     HENT_SOKNAD_OK = "soknad/HENT_SOKNAD_OK",
@@ -22,16 +19,11 @@ export const enum SoknadActionTypeKeys {
     SHOW_SERVER_FEIL = "soknad/SHOW_SERVER_FEIL",
     SHOW_SENDING_FEILET_PANEL = "soknad/SHOW_SENDING_FEILET_PANEL",
     SHOW_SIDE_IKKE_FUNNET = "soknad/SHOW_SIDE_IKKE_FUNNET",
-    VIS_MIDLERTIDIG_DEAKTIVERT_PANEL = "soknad/VIS_MIDLERTIDIG_DEAKTIVERT_PANEL",
-    VIS_IKKE_PAKOBLET_PANEL = "soknad/VIS_IKKE_PAKOBLET_PANEL",
     VIS_NEDETID_PANEL = "soknad/VIS_NEDETID_PANEL",
 }
 
 // 24
 export type SoknadActionType =
-    | StartSoknadDoneAction
-    | OpprettSoknadAction
-    | OpprettSoknadFeiletAction
     | OpprettSoknadOkAction
     | SetSoknadPendingAction
     | HentSoknaOkAction
@@ -77,18 +69,6 @@ export interface VisLasteOppVedleggModal {
     skalVises: boolean;
 }
 
-export interface StartSoknadDoneAction {
-    type: SoknadActionTypeKeys.START_SOKNAD_DONE;
-}
-
-export interface OpprettSoknadAction {
-    type: SoknadActionTypeKeys.OPPRETT_SOKNAD;
-}
-
-export interface OpprettSoknadFeiletAction {
-    type: SoknadActionTypeKeys.OPPRETT_SOKNAD_FEILET;
-}
-
 export interface OpprettSoknadOkAction {
     type: SoknadActionTypeKeys.OPPRETT_SOKNAD_OK;
     behandlingsId: string;
@@ -132,7 +112,6 @@ export interface SetErSystemdataEndret {
 export enum ErSystemdataEndret {
     YES = "YES",
     NO = "NO",
-    NOT_ASKED = "NOT_ASKED",
 }
 
 export interface ShowServerFeil {

@@ -20,6 +20,7 @@ import {Dispatch} from "redux";
 import {logInfo} from "../../../nav-soknad/utils/loggerUtils";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
+import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 
 const lastOppFil = (
     opplysning: Opplysning,
@@ -82,8 +83,7 @@ const LastOppFil = (props: {
     feilkode: string | null;
     setFeilkode: (value: string | null) => void;
 }) => {
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
-
+    const behandlingsId = useBehandlingsId();
     const antallFiler = useSelector((state: State) =>
         state.okonomiskeOpplysninger.opplysningerSortert
             .map((opplysning: Opplysning) => opplysning.filer.length)

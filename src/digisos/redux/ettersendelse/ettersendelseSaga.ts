@@ -1,5 +1,5 @@
 import {SagaIterator} from "redux-saga";
-import {call, put, select, takeEvery} from "redux-saga/effects";
+import {call, put, takeEvery} from "redux-saga/effects";
 
 import {
     fetchDelete,
@@ -31,15 +31,12 @@ import {
     opprettEttersendelseFeilet,
     filLastetOpp,
     slettEttersendtVedleggOk,
-    lesEttersendelser,
-    opprettEttersendelse,
 } from "./ettersendelseActions";
 import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {setShowServerError} from "../soknad/soknadActions";
 import {REST_FEIL} from "../soknad/soknadTypes";
 import {settFilOpplastingFerdig} from "../okonomiskeOpplysninger/opplysningerActions";
 import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
-import {State} from "../reducers";
 
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
     try {
@@ -159,12 +156,14 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
         );
         yield put({type: EttersendelseActionTypeKeys.ETTERSEND_OK});
         yield put(lastOppEttersendtVedleggOk());
-
+        /* FIXME: Jeg har kommentert ut denne koden fordi jeg _tror_ det er en no-op.
+             Jeg tror state.soknad.behandlingsId alltid er null når man ikke har en søknad oppe.
         const behandlingsId = yield select((state: State) => state.soknad.behandlingsId);
         if (behandlingsId) {
             yield put(opprettEttersendelse(behandlingsId));
             yield put(lesEttersendelser(behandlingsId));
         }
+        */
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) {
             return;
@@ -180,7 +179,6 @@ function* ettersendelseSaga(): SagaIterator {
     yield takeEvery(EttersendelseActionTypeKeys.LES_ETTERSENDELSES_VEDLEGG, lesEttersendelsesVedleggSaga);
     yield takeEvery(EttersendelseActionTypeKeys.SLETT_VEDLEGG, slettEttersendelsesVedleggSaga);
     yield takeEvery(EttersendelseActionTypeKeys.SEND, sendEttersendelseSaga);
-
     yield takeEvery(EttersendelseActionTypeKeys.LES_ETTERSENDELSER, lesEttersendelserSaga);
 }
 

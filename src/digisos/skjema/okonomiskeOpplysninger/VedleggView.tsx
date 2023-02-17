@@ -17,9 +17,10 @@ import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {REST_FEIL} from "../../redux/soknad/soknadTypes";
 import {useTranslation} from "react-i18next";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
+import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 
 const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
+    const behandlingsId = useBehandlingsId();
     const feil = useSelector((state: State) => state.validering.feil);
     const enFilLastesOpp = useSelector((state: State) => state.okonomiskeOpplysninger.enFilLastesOpp);
     const {t} = useTranslation();

@@ -11,9 +11,10 @@ import {OpplysningerInformasjonspanel} from "./OpplysningerInformasjonspanel";
 import {OpplysningerIkkeBesvartPanel} from "./OpplysningerIkkeBesvartPanel";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
+import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 
 const OkonomiskeOpplysningerView = () => {
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
+    const behandlingsId = useBehandlingsId();
     const {opplysningerSortert, restStatus, backendData} = useSelector((state: State) => state.okonomiskeOpplysninger);
     const dispatch = useDispatch();
 

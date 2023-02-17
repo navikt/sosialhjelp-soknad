@@ -8,7 +8,6 @@ import {
     setErSystemdataEndret,
     setShowServerError,
     setShowPageNotFound,
-    startSoknadDone,
     showDowntimeError,
 } from "./soknadActions";
 import {SoknadsSti} from "../soknadsdata/soknadsdataReducer";
@@ -47,7 +46,6 @@ function* oppdaterSamtykke(action: {
         } else if (reason.message === HttpStatus.SERVICE_UNAVAILABLE) {
             yield call(logWarning, "oppdater samtykke saga ServiceUnavailable: " + reason);
             yield put(showDowntimeError(true));
-            yield put(startSoknadDone());
         } else {
             yield call(logWarning, "oppdater samtykke saga feilet: " + reason);
             yield put(setShowServerError(true));

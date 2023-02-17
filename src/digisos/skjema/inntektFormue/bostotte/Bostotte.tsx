@@ -18,6 +18,7 @@ import {UndertekstBold} from "nav-frontend-typografi";
 import {Alert, BodyShort, Button, Heading, Link, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {fmtCurrency} from "../../../../lib/fmtCurrency";
+import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -27,8 +28,7 @@ const BostotteView = () => {
     const dispatch = useDispatch();
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
-
+    const behandlingsId = useBehandlingsId();
     const {t, i18n} = useTranslation("skjema");
 
     useEffect(() => {

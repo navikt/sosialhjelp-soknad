@@ -13,13 +13,13 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
+import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 
 const DinSivilstatusView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
-
+    const behandlingsId = useBehandlingsId();
     const dispatch = useDispatch();
     const {t} = useTranslation("skjema");
 

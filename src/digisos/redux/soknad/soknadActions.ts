@@ -1,18 +1,6 @@
 import {Samtykke, SoknadActionType, SoknadActionTypeKeys, VisNedetidPanel} from "./soknadActionTypes";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 
-export function startSoknadDone() {
-    return {
-        type: SoknadActionTypeKeys.START_SOKNAD_DONE,
-    };
-}
-
-export function opprettSoknadFeilet() {
-    return {
-        type: SoknadActionTypeKeys.OPPRETT_SOKNAD_FEILET,
-    };
-}
-
 export function opprettSoknadOk(behandlingsId: string): SoknadActionType {
     return {
         type: SoknadActionTypeKeys.OPPRETT_SOKNAD_OK,
@@ -34,12 +22,6 @@ export function hentSoknadOk(xsrfCookieReceived: boolean, behandlingsId: string)
         type: SoknadActionTypeKeys.HENT_SOKNAD_OK,
         xsrfCookieReceived,
         behandlingsId,
-    };
-}
-
-export function sendSoknadPending(): SoknadActionType {
-    return {
-        type: SoknadActionTypeKeys.SEND_SOKNAD_KNAPP_PENDING,
     };
 }
 

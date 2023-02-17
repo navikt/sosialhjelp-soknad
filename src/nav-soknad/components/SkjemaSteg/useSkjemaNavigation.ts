@@ -15,7 +15,6 @@ import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressur
 import {useBehandlingsId} from "../../hooks/useBehandlingsId";
 import {NavEnhetFrontend} from "../../../generated/model";
 import {useEffect} from "react";
-import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 
 export const useSkjemaNavigation = (currentStepId: number) => {
     const {validering} = useSelector((state: State) => state);
@@ -28,8 +27,6 @@ export const useSkjemaNavigation = (currentStepId: number) => {
 
     // Midlertidig hack i påvente av mer ordentlig validering
     useEffect(() => {
-        if (valgtNavEnhet) dispatch(oppdaterSoknadsdataSti(SoknadsSti.VALGT_NAV_ENHET, valgtNavEnhet));
-
         if (erAktiv(valgtNavEnhet)) dispatch(clearValideringsfeil("soknadsmottaker"));
     }, [valgtNavEnhet, dispatch]);
 

@@ -8,7 +8,6 @@ import {NedetidPanel} from "../../../../components/common/NedetidPanel";
 import {useSoknad} from "../../../../digisos/redux/soknad/useSoknad";
 import TimeoutBox from "../../timeoutbox/TimeoutBox";
 import {useTranslation} from "react-i18next";
-import {useReduxSynchronizer} from "../UseReduxSynchronizer";
 import ServerFeil from "../../../feilsider/ServerFeil";
 import SideIkkeFunnet from "../../../feilsider/SideIkkeFunnet";
 import {useSkjemaNavigation} from "../useSkjemaNavigation";
@@ -74,8 +73,6 @@ const SkjemaContent = ({children}: {children: ReactNode}) => (
 );
 
 const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
-    useReduxSynchronizer();
-
     useEffect(() => {
         scrollToTop();
     }, []);

@@ -14,6 +14,7 @@ import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/sokn
 import {validateAndDispatchTextFieldMaxLength} from "../../../../nav-soknad/validering/validateAndDispatch";
 import {useTranslation} from "react-i18next";
 import {Heading} from "@navikt/ds-react";
+import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 
 const MAX_CHARS = 500;
 const UTBETALINGER = "inntekt.inntekter";
@@ -25,8 +26,7 @@ export const UtbetalingerView = () => {
     const dispatch = useDispatch();
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
-
+    const behandlingsId = useBehandlingsId();
     const feil = useSelector((state: State) => state.validering.feil);
 
     const {t} = useTranslation("skjema");

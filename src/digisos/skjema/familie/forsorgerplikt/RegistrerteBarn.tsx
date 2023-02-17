@@ -18,12 +18,13 @@ import {
     OldSysteminfo,
 } from "../../../../nav-soknad/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
+import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
 
 const RegistrerteBarn = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
+    const behandlingsId = useBehandlingsId();
     const feil = useSelector((state: State) => state.validering.feil);
 
     const dispatch = useDispatch();

@@ -17,7 +17,9 @@ import {useState} from "react";
 
 export const NySoknadInfo = () => {
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
-    const {startSoknadFeilet, visNedetidPanel} = useSoknad();
+    const [startSoknadError, setStartSoknadError] = useState<Error | null>(null);
+
+    const {visNedetidPanel} = useSoknad();
     const {data: nyligInnsendteSoknader} = useHarNyligInnsendteSoknader();
     const antallPabegynteSoknader = usePabegynteSoknader()?.length;
 
@@ -35,8 +37,12 @@ export const NySoknadInfo = () => {
             erProdsatt: true,
             ...createSkjemaEventData(),
         });
-        const behandlingsId = await startSoknad(dispatch);
-        behandlingsId && navigate(`../skjema/${behandlingsId}/1`);
+        try {
+            navigate(`../skjema/${await startSoknad(dispatch)}/1`);
+        } catch (e) {
+            setStartSoknadError(e);
+            setStartSoknadPending(false);
+        }
     };
 
     return (
@@ -44,7 +50,7 @@ export const NySoknadInfo = () => {
             <NySoknadVelkomst />
             <Personopplysninger />
             <NedetidPanel varselType={"infoside"} />
-            {startSoknadFeilet && <Alert variant="error">{t("applikasjon.opprettsoknadfeilet")}</Alert>}
+            {startSoknadError && <Alert variant="error">{t("applikasjon.opprettsoknadfeilet")}</Alert>}
             <div className={"pt-16 text-center"}>
                 <Button
                     variant="primary"

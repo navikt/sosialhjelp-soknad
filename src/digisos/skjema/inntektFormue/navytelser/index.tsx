@@ -15,14 +15,14 @@ import {UndertekstBold} from "nav-frontend-typografi";
 import {Heading, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {fmtCurrency} from "../../../../lib/fmtCurrency";
+import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 
 const NavYtelserView = () => {
     const dispatch = useDispatch();
     const {t, i18n} = useTranslation("skjema");
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
-
+    const behandlingsId = useBehandlingsId();
     useEffect(() => {
         if (behandlingsId) {
             hentSoknadsdata(behandlingsId, SoknadsSti.INNTEKT_SYSTEMDATA, dispatch);

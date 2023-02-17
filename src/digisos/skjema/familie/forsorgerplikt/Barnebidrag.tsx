@@ -7,13 +7,14 @@ import {State} from "../../../redux/reducers";
 import {lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
+import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 
 const FAKTUM_KEY = "familie.barn.true.barnebidrag";
 
 const Barnebidrag = () => {
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const dispatch = useDispatch();
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
+    const behandlingsId = useBehandlingsId();
     const {t} = useTranslation("skjema");
 
     const handleClickRadio = (verdi: string) => {

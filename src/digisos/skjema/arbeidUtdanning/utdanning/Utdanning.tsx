@@ -7,14 +7,14 @@ import RadioEnhanced from "../../../../nav-soknad/faktum/RadioEnhanced";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {useSoknadsdata} from "../../../redux/soknadsdata/useSoknadsdata";
-import {useSoknad} from "../../../redux/soknad/useSoknad";
 import {useTranslation} from "react-i18next";
+import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 
 const FAKTUM_STUDIER = "dinsituasjon.studerer";
 const FAKTUM_STUDERER = "dinsituasjon.studerer.true.grad";
 
 const UtdanningView = () => {
-    const {behandlingsId} = useSoknad();
+    const behandlingsId = useBehandlingsId();
     const {utdanning} = useSoknadsdata();
     const {erStudent, studengradErHeltid} = utdanning;
 

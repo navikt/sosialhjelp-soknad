@@ -14,6 +14,7 @@ import {lagreSoknadsdata, hentSoknadsdata} from "../../../redux/soknadsdata/sokn
 import {clearValideringsfeil} from "../../../redux/validering/valideringActions";
 import {validateAndDispatchTextFieldMaxLength} from "../../../../nav-soknad/validering/validateAndDispatch";
 import {useTranslation} from "react-i18next";
+import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 
 const MAX_CHARS = 500;
 const FAKTUM_KEY_KOMMENTARER = "opplysninger.arbeidsituasjon.kommentarer";
@@ -21,7 +22,7 @@ const FAKTUM_KEY_KOMMENTARER = "opplysninger.arbeidsituasjon.kommentarer";
 const Arbeid = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
 
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
+    const behandlingsId = useBehandlingsId();
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
     const feil = useSelector((state: State) => state.validering.feil);
 

@@ -16,7 +16,6 @@ import SkjemaStegNavKnapperLegacy from "./SkjemaStegNavKnapperLegacy";
 import TimeoutBox from "../timeoutbox/TimeoutBox";
 import {AvbrytSoknadModal} from "../avbrytsoknad/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
-import {useReduxSynchronizer} from "./UseReduxSynchronizer";
 import {MidlertidigDeaktivertPanel} from "./MidlertidigDeaktivertPanel";
 import {IkkePakobletPanel} from "./IkkePakobletPanel";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
@@ -59,7 +58,6 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children}: StegMedNa
         validering: {feil, visValideringsfeil},
         okonomiskeOpplysninger: {enFilLastesOpp},
     } = useSelector((state: State) => state);
-    useReduxSynchronizer();
 
     const {stegTittel, documentTitle, aktivtSteg} = useSkjemaConfig(skjemaConfig, steg);
     const {gotoPage} = useSkjemaNavigation(aktivtSteg.id);

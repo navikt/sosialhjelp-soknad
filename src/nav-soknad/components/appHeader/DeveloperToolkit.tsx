@@ -4,8 +4,9 @@ import {useDispatch} from "react-redux";
 import {useNavigate, useParams} from "react-router";
 import {setSoknadPending, hentSoknadOk} from "../../../digisos/redux/soknad/soknadActions";
 import {logWarning} from "../../utils/loggerUtils";
-import {UrlParams} from "../SkjemaSteg/UseReduxSynchronizer";
 import {useEffect} from "react";
+
+type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
 
 export const DeveloperToolkit = () => {
     const {behandlingsId} = useParams<UrlParams>();

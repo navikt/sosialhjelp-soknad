@@ -13,6 +13,7 @@ import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/sokn
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Heading, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
+import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 
 const FAKTUM_STUDIELAN = "inntekt.studielan";
 
@@ -26,8 +27,7 @@ const StudielanView = () => {
     const dispatch = useDispatch();
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
-
+    const behandlingsId = useBehandlingsId();
     const {t} = useTranslation("skjema");
 
     React.useEffect(() => {

@@ -19,13 +19,14 @@ import {clearValideringsfeil, setValideringsfeil} from "../../redux/validering/v
 import {erTall} from "../../../nav-soknad/validering/valideringer";
 import {getFeilForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerSaga";
 import {State} from "../../redux/reducers";
+import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 
 export const erGyldigTall = (input: string): boolean => {
     return erTall(input, true) && parseInt(input, 10) < 2147483648;
 };
 
 const TabellView = (props: {opplysning: Opplysning; gruppeIndex: number}) => {
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
+    const behandlingsId = useBehandlingsId();
     const feil = useSelector((state: State) => state.validering.feil);
 
     const dispatch = useDispatch();

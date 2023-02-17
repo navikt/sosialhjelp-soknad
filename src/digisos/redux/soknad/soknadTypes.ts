@@ -7,12 +7,6 @@ export interface SoknadState {
     // Visning state skjema nivå
     showSendingFeiletPanel: boolean;
     showServerFeil: boolean;
-
-    // Opprettelse, innsending og ettersendelse
-    startSoknadFeilet: boolean;
-
-    // Soknad state
-    behandlingsId: string | undefined;
 }
 
 export enum REST_STATUS {
@@ -31,13 +25,4 @@ export enum REST_FEIL {
     FEIL_FILTPYE = "vedlegg.opplasting.feil.filType",
     KRYPTERT_FIL = "opplasting.feilmelding.pdf.kryptert",
     SIGNERT_FIL = "opplasting.feilmelding.pdf.signert",
-}
-
-export interface NedetidResponse {
-    isNedetid: boolean;
-    isPlanlagtNedetid: boolean;
-    nedetidStart: string;
-    nedetidSlutt: string;
-    nedetidStartText: string;
-    nedetidSluttText: string;
 }

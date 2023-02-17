@@ -17,7 +17,6 @@ import {
 import {Systeminntekter, initialSysteminntekter} from "../../skjema/inntektFormue/navytelser/navYtelserTypes";
 import {Studielan, initialStudielanState} from "../../skjema/inntektFormue/studielan/StudielanTypes";
 import {REST_STATUS} from "../soknad/soknadTypes";
-import {NavEnhetFrontend} from "../../../generated/model";
 
 export enum SoknadsdataActionTypeKeys {
     OPPDATER_SOKNADSDATA_STI = "soknadsdata/OPPDATER_STI",
@@ -42,7 +41,6 @@ export enum SoknadsSti {
     FORMUE = "inntekt/formue",
     BOUTGIFTER = "utgifter/boutgifter",
     BARNEUTGIFTER = "utgifter/barneutgifter",
-    VALGT_NAV_ENHET = "personalia/navEnhet",
     SIVILSTATUS = "familie/sivilstatus",
     FORSORGERPLIKT = "familie/forsorgerplikt",
     INNTEKT_SYSTEMDATA = "inntekt/systemdata",
@@ -118,7 +116,6 @@ export type SoknadsdataType =
     | Formue
     | Verdier
     | Utgifter
-    | NavEnhetFrontend
     | Utbetalinger
     | Barneutgifter
     | Boutgifter
@@ -132,14 +129,6 @@ interface SoknadsdataActionType {
 }
 
 const initialSoknadsdataRestStatus = {
-    personalia: {
-        telefonnummer: REST_STATUS.INITIALISERT,
-        kontonummer: REST_STATUS.INITIALISERT,
-        basisPersonalia: REST_STATUS.INITIALISERT,
-        adresser: REST_STATUS.INITIALISERT,
-        navEnheter: REST_STATUS.INITIALISERT,
-        valgtNavEnhet: REST_STATUS.INITIALISERT,
-    },
     familie: {
         sivilstatus: REST_STATUS.INITIALISERT,
         forsorgerplikt: REST_STATUS.INITIALISERT,

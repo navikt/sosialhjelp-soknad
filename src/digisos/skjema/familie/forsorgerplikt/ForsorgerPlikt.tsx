@@ -12,6 +12,7 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
+import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 
 const ForsorgerPliktView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
@@ -20,8 +21,7 @@ const ForsorgerPliktView = () => {
     const {t} = useTranslation("skjema");
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
-
+    const behandlingsId = useBehandlingsId();
     useEffect(() => {
         if (behandlingsId) {
             hentSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, dispatch);

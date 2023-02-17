@@ -12,14 +12,14 @@ import {formatTidspunkt, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Alert, BodyShort, Button, Heading, Label, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
+import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 
 const Skatt = () => {
     const dispatch = useDispatch();
     const {t} = useTranslation("skjema");
 
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
-
+    const behandlingsId = useBehandlingsId();
     React.useEffect(() => {
         if (behandlingsId) {
             hentSoknadsdata(behandlingsId, SoknadsSti.SKATTBARINNTEKT, dispatch);

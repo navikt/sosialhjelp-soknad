@@ -13,13 +13,14 @@ import {clearValideringsfeil, setValideringsfeil} from "../../../redux/validerin
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
+import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 
 const FAKTUM_KEY = "familie.sivilstatus.gift.ektefelle";
 const FAKTUM_KEY_FNR = FAKTUM_KEY + ".fnr";
 const FAKTUM_KEY_PERSONNUMMER = FAKTUM_KEY + ".pnr";
 
 const PersonSkjema = () => {
-    const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);
+    const behandlingsId = useBehandlingsId();
     const soknadsdata = useSelector((state: State) => state.soknadsdata);
 
     const dispatch = useDispatch();

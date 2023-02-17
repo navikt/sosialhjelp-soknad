@@ -8,27 +8,10 @@ export const defaultState: SoknadState = {
     showSideIkkeFunnet: false,
     visLasteOppVedleggModal: false,
     visNedetidPanel: false,
-
-    // Opprettelse, innsending og ettersendelse
-    startSoknadFeilet: false,
-
-    // Soknad state
-    behandlingsId: undefined,
 };
 
 const reducer = (state: SoknadState = defaultState, action: SoknadActionType) => {
     switch (action.type) {
-        case SoknadActionTypeKeys.OPPRETT_SOKNAD:
-            return {
-                ...state,
-                restStatus: REST_STATUS.PENDING,
-            };
-        case SoknadActionTypeKeys.OPPRETT_SOKNAD_FEILET:
-            return {
-                ...state,
-                restStatus: REST_STATUS.FEILET,
-                startSoknadFeilet: true,
-            };
         case SoknadActionTypeKeys.OPPRETT_SOKNAD_OK:
             return {
                 ...state,
@@ -57,7 +40,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 behandlingsId: action.behandlingsIdFraUrl,
             };
         }
-
         case SoknadActionTypeKeys.SHOW_SIDE_IKKE_FUNNET: {
             return {
                 ...state,
@@ -72,11 +54,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
                 showLargeSpinner: false,
             };
         }
-        case SoknadActionTypeKeys.START_SOKNAD_DONE:
-            return {
-                ...state,
-                startSoknadPending: false,
-            };
         case SoknadActionTypeKeys.SEND_SOKNAD:
             return {
                 ...state,

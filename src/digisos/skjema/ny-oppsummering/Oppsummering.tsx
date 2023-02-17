@@ -33,7 +33,7 @@ import {getNavEnheter} from "../../../generated/nav-enhet-ressurs/nav-enhet-ress
 import {MidlertidigDeaktivertPanel} from "../../../nav-soknad/components/SkjemaSteg/MidlertidigDeaktivertPanel";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
-    const {behandlingsId} = useSelector((state: State) => state.soknad);
+    const behandlingsId = useBehandlingsId();
     return (
         <Link href={`/sosialhjelp/soknad/skjema/${behandlingsId}/${props.steg}#${props.questionId}`}>
             <Edit />
@@ -156,7 +156,7 @@ const EditAnswer = styled.div`
 `;
 
 const OppsummeringBolk = (props: {bolk: NyOppsummeringBolk; children: React.ReactNode}) => {
-    const {behandlingsId} = useSelector((state: State) => state.soknad);
+    const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
 
     return (
