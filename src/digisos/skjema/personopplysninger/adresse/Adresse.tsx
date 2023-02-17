@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useState} from "react";
-import SoknadsmottakerInfo from "./SoknadsmottakerInfo";
+import NavEnhet from "./NavEnhet";
 import {useAlgebraic} from "../../../../lib/hooks/useAlgebraic";
 import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
 import {AdresseVisning} from "./AdresseVisning";
@@ -73,7 +73,7 @@ export const AdresseData = () => {
                     />
                 )}
             </HorizontalRadioGroup>
-            <SoknadsmottakerInfo navEnhet={adresser.navEnhet} />
+            <NavEnhet navEnhet={adresser.navEnhet} />
         </>
     ));
 };

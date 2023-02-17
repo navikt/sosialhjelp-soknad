@@ -7,22 +7,11 @@ import {useTranslation} from "react-i18next";
 
 // TODO: Make this unnecessary by making the input type on the backend to soknad
 //       equal to the output type from adressesok
-export const adresseForslagTilAdresse = ({
-    adresse,
-    husbokstav,
-    husnummer,
-    kommunenummer,
-    postnummer,
-    poststed,
-}: AdresseForslag): AdresseFrontend => ({
+export const adresseForslagTilAdresse = ({adresse, ...rest}: AdresseForslag): AdresseFrontend => ({
     type: "gateadresse",
     gateadresse: {
+        ...rest,
         gatenavn: adresse,
-        husbokstav,
-        husnummer,
-        kommunenummer,
-        postnummer,
-        poststed,
     },
 });
 
