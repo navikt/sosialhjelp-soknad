@@ -61,8 +61,8 @@ export const useSkjemaNavigation = (currentStepId: number) => {
         }
     };
 
-    const goToStep = (newStep: number) => {
-        if (newStep < currentStepId) {
+    const gotoPage = (newPage: number) => {
+        if (newPage < currentStepId) {
             dispatch(clearAllValideringsfeil());
         } else {
             if (!checkNavEnhet(valgtNavEnhet)) return;
@@ -79,20 +79,18 @@ export const useSkjemaNavigation = (currentStepId: number) => {
                 steg: currentStepId,
             });
 
-            navigate(`../${newStep}`);
+            navigate(`../${newPage}`);
         }
 
         if (!checkNavEnhet(valgtNavEnhet)) return;
 
-        navigate(`../${newStep}`);
+        navigate(`../${newPage}`);
     };
 
-    const kanGaTilSkjemasteg = (aktivtSteg: SkjemaSteg): boolean => {
-        return checkNavEnhet(valgtNavEnhet);
-    };
+    const kanGaTilSkjemasteg = (): boolean => checkNavEnhet(valgtNavEnhet);
 
     return {
-        goToStep,
+        gotoPage,
         kanGaTilSkjemasteg,
     };
 };

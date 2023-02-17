@@ -1,5 +1,5 @@
 import * as React from "react";
-import Feilside from "../components/feilside/Feilside";
+import Feilside from "./Feilside";
 import {Undertittel} from "nav-frontend-typografi";
 import {getIntlTextOrKey} from "../utils";
 import {Sider} from "../../digisos/redux/navigasjon/navigasjonTypes";

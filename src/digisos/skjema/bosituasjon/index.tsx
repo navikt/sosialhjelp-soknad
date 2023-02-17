@@ -3,7 +3,7 @@ import BoligIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import AntallPersoner from "./AntallPersoner";
 import Botype from "./Botype";
-import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/LegacySkjemaSteg";
+import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
 import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 
 export const Bosituasjon = () => {

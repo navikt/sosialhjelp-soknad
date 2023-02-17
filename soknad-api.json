@@ -9,6 +9,10 @@
                 "operationId": "hentBoutgifter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BoutgifterFrontend"}}}
@@ -23,7 +27,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BoutgifterFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/utgifter/barneutgifter": {
@@ -32,6 +42,10 @@
                 "operationId": "hentBarneutgifter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -48,7 +62,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BarneutgifterFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/utdanning": {
@@ -57,6 +77,10 @@
                 "operationId": "hentUtdanning",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UtdanningFrontend"}}}
@@ -71,7 +95,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UtdanningFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/personalia/telefonnummer": {
@@ -80,6 +110,10 @@
                 "operationId": "hentTelefonnummer",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -96,7 +130,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/TelefonnummerFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/personalia/navEnheter": {
@@ -105,6 +145,10 @@
                 "operationId": "getNavEnheter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -123,7 +167,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/NavEnhetFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/personalia/kontonummer": {
@@ -132,6 +182,10 @@
                 "operationId": "hentKontonummer",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -148,7 +202,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/KontonummerFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/personalia/adresser": {
@@ -157,6 +217,10 @@
                 "operationId": "hentAdresser",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AdresserFrontend"}}}
@@ -168,10 +232,14 @@
                 "operationId": "updateAdresse",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AdresserFrontendInput"}}},
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AdresserFrontend"}}},
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -189,6 +257,10 @@
                 "operationId": "hentOkonomiskeOpplysninger",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/VedleggFrontends"}}}
@@ -203,7 +275,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/VedleggFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/inntekt/verdier": {
@@ -212,6 +290,10 @@
                 "operationId": "hentVerdier",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/VerdierFrontend"}}}
@@ -226,7 +308,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/VerdierFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/inntekt/utbetalinger": {
@@ -235,6 +323,10 @@
                 "operationId": "hentUtbetalinger",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -251,7 +343,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UtbetalingerFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/inntekt/studielan": {
@@ -260,6 +358,10 @@
                 "operationId": "hentStudielanBekreftelse",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudielanFrontend"}}}
@@ -274,7 +376,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudielanFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/inntekt/formue": {
@@ -283,6 +391,10 @@
                 "operationId": "hentFormue",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FormueFrontend"}}}
@@ -297,7 +409,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FormueFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/inntekt/bostotte": {
@@ -306,6 +424,10 @@
                 "operationId": "hentBostotte",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BostotteFrontend"}}}
@@ -323,7 +445,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BostotteFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/familie/sivilstatus": {
@@ -332,6 +460,10 @@
                 "operationId": "hentSivilstatus",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -348,7 +480,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SivilstatusFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/familie/forsorgerplikt": {
@@ -357,6 +495,10 @@
                 "operationId": "hentForsorgerplikt",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -375,7 +517,13 @@
                     },
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/bosituasjon": {
@@ -384,6 +532,10 @@
                 "operationId": "hentBosituasjon",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -400,7 +552,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BosituasjonFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/begrunnelse": {
@@ -409,6 +567,10 @@
                 "operationId": "hentBegrunnelse",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -425,7 +587,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BegrunnelseFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/arbeid": {
@@ -434,6 +602,10 @@
                 "operationId": "hentArbeid",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ArbeidFrontend"}}}
@@ -448,7 +620,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ArbeidFrontend"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/oppdaterSamtykker": {
@@ -467,7 +645,13 @@
                     },
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/inntekt/skattbarinntektogforskuddstrekk/samtykke": {
@@ -479,7 +663,13 @@
                     {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "requestBody": {"content": {"application/json": {"schema": {"type": "boolean"}}}, "required": true},
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/inntekt/bostotte/samtykke": {
@@ -491,7 +681,13 @@
                     {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "requestBody": {"content": {"application/json": {"schema": {"type": "boolean"}}}, "required": true},
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/soknader/{behandlingsId}/actions/send": {
@@ -503,6 +699,10 @@
                     {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SendTilUrlFrontend"}}}
@@ -519,6 +719,10 @@
                     {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -550,6 +754,10 @@
                     }
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FilFrontend"}}}
@@ -565,7 +773,13 @@
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Logg"}}},
                     "required": true
                 },
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/dittnav/pabegynte/lest": {
@@ -579,6 +793,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
             }
@@ -588,6 +806,10 @@
                 "tags": ["soknad-oversikt-ressurs"],
                 "operationId": "hentInnsendteSoknaderForBruker",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -605,6 +827,10 @@
                 "operationId": "hentXsrfCookie",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
             }
@@ -615,6 +841,10 @@
                 "operationId": "getValgtNavEnhet",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/NavEnhetFrontend"}}}
@@ -628,6 +858,10 @@
                 "operationId": "hentBasisPersonalia",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -643,6 +877,10 @@
                 "operationId": "getOppsummering",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Oppsummering"}}}
@@ -656,6 +894,10 @@
                 "operationId": "hentSystemregistrerteInntekter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -671,6 +913,10 @@
                 "operationId": "hentSkattbareInntekter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -689,6 +935,10 @@
                     {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -712,6 +962,10 @@
                     {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
             }
@@ -722,6 +976,10 @@
                 "operationId": "getVedleggFil",
                 "parameters": [{"name": "vedleggId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"type": "string", "format": "byte"}}}
@@ -738,6 +996,10 @@
                     {"name": "vedleggId", "in": "path", "required": true, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"type": "string", "format": "byte"}}}
@@ -750,6 +1012,10 @@
                 "tags": ["nedetid-ressurs"],
                 "operationId": "hentNedetidInformasjon",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/NedetidFrontend"}}}
@@ -762,6 +1028,10 @@
                 "tags": ["mine-saker-metadata-ressurs"],
                 "operationId": "ping",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "string"}}}}
                 }
             }
@@ -771,6 +1041,10 @@
                 "tags": ["mine-saker-metadata-ressurs"],
                 "operationId": "hentInnsendteSoknaderForBruker_1",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -787,6 +1061,10 @@
                 "tags": ["internal-ressurs"],
                 "operationId": "getSelftest",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SelftestResult"}}}
@@ -799,6 +1077,10 @@
                 "tags": ["migration-feed-ressurs"],
                 "operationId": "getSjekksum",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SjekksumDto"}}}
@@ -814,6 +1096,10 @@
                     {"name": "sistEndretDato", "in": "query", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ReplicationDto"}}}
@@ -825,7 +1111,13 @@
             "get": {
                 "tags": ["internal-ressurs"],
                 "operationId": "isAlive",
-                "responses": {"200": {"description": "OK", "content": {"text/plain": {"schema": {"type": "string"}}}}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK", "content": {"text/plain": {"schema": {"type": "string"}}}}
+                }
             }
         },
         "/informasjon/utslagskriterier/sosialhjelp": {
@@ -833,6 +1125,10 @@
                 "tags": ["informasjon-ressurs"],
                 "operationId": "getUtslagskriterier",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -853,6 +1149,10 @@
                     {"name": "sprak", "in": "query", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"*/*": {"schema": {"type": "object", "additionalProperties": {"type": "string"}}}}
@@ -865,6 +1165,10 @@
                 "tags": ["informasjon-ressurs"],
                 "operationId": "hentPabegynteSoknader",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -881,6 +1185,10 @@
                 "tags": ["informasjon-ressurs"],
                 "operationId": "hentKommunestatus",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -900,6 +1208,10 @@
                 "tags": ["informasjon-ressurs"],
                 "operationId": "harNyligInnsendteSoknader",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/NyligInnsendteSoknaderResponse"}}}
@@ -912,6 +1224,10 @@
                 "tags": ["informasjon-ressurs"],
                 "operationId": "hentFornavn",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"*/*": {"schema": {"type": "object", "additionalProperties": {"type": "string"}}}}
@@ -925,6 +1241,10 @@
                 "operationId": "adresseSok",
                 "parameters": [{"name": "sokestreng", "in": "query", "required": false, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -941,6 +1261,10 @@
                 "tags": ["feature-toggle-ressurs"],
                 "operationId": "featureToggles",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -958,6 +1282,10 @@
                 "operationId": "hentBehandlingskjede",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BehandlingsKjede"}}}
@@ -971,6 +1299,10 @@
                 "operationId": "hentVedlegg",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -987,6 +1319,10 @@
                 "tags": ["ditt-nav-metadata-ressurs"],
                 "operationId": "hentPabegynteSoknaderForBrukerSomErLest",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -1003,6 +1339,10 @@
                 "tags": ["ditt-nav-metadata-ressurs"],
                 "operationId": "hentPabegynteSoknaderForBruker",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -1019,7 +1359,13 @@
                 "tags": ["soknad-ressurs"],
                 "operationId": "slettSoknad",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         },
         "/opplastetVedlegg/{behandlingsId}/{vedleggId}": {
@@ -1030,12 +1376,23 @@
                     {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
                     {"name": "vedleggId", "in": "path", "required": true, "schema": {"type": "string"}}
                 ],
-                "responses": {"200": {"description": "OK"}}
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK"}
+                }
             }
         }
     },
     "components": {
         "schemas": {
+            "UnauthorizedMelding": {
+                "required": ["id", "loginUrl", "message"],
+                "type": "object",
+                "properties": {"id": {"type": "string"}, "message": {"type": "string"}, "loginUrl": {"type": "string"}}
+            },
             "BoutgifterFrontend": {
                 "required": [
                     "annet",
@@ -1119,13 +1476,15 @@
                 },
                 "nullable": true
             },
-            "AdresserFrontendInput": {
+            "AdresserFrontend": {
+                "required": ["valg"],
                 "type": "object",
                 "properties": {
-                    "valg": {"type": "string", "enum": ["folkeregistrert", "midlertidig", "soknad"]},
+                    "valg": {"type": "string", "nullable": true, "enum": ["folkeregistrert", "midlertidig", "soknad"]},
                     "folkeregistrert": {"$ref": "#/components/schemas/AdresseFrontend"},
                     "midlertidig": {"$ref": "#/components/schemas/AdresseFrontend"},
-                    "soknad": {"$ref": "#/components/schemas/AdresseFrontend"}
+                    "soknad": {"$ref": "#/components/schemas/AdresseFrontend"},
+                    "navEnhet": {"$ref": "#/components/schemas/NavEnhetFrontend"}
                 }
             },
             "GateadresseFrontend": {
@@ -1439,16 +1798,6 @@
                     "fodselsnummer": {"type": "string"},
                     "statsborgerskap": {"type": "string"},
                     "nordiskBorger": {"type": "boolean"}
-                }
-            },
-            "AdresserFrontend": {
-                "type": "object",
-                "properties": {
-                    "valg": {"type": "string", "enum": ["folkeregistrert", "midlertidig", "soknad"]},
-                    "folkeregistrert": {"$ref": "#/components/schemas/AdresseFrontend"},
-                    "midlertidig": {"$ref": "#/components/schemas/AdresseFrontend"},
-                    "soknad": {"$ref": "#/components/schemas/AdresseFrontend"},
-                    "navEnhet": {"$ref": "#/components/schemas/NavEnhetFrontend"}
                 }
             },
             "Avsnitt": {

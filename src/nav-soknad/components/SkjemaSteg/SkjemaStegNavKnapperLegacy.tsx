@@ -11,8 +11,8 @@ import {createSkjemaEventData, logAmplitudeEvent} from "../../utils/amplitude";
 import {sendSoknad} from "../../../lib/sendSoknad";
 import {State} from "../../../digisos/redux/reducers";
 import {logInfo} from "../../utils/loggerUtils";
-import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 import {useBehandlingsId} from "../../hooks/useBehandlingsId";
+import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";
 
 interface SkjemaStegNavigasjonProps {
     skjemaConfig: SkjemaConfig;
@@ -25,7 +25,7 @@ interface SkjemaStegNavigasjonProps {
 export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep}: SkjemaStegNavigasjonProps) => {
     const {oppsummering} = useSelector((state: State) => state);
     const behandlingsId = useBehandlingsId();
-    const adresseValg = useSoknadsdata().personalia.adresser.valg;
+    const adresseValg = useHentAdresser(behandlingsId).data?.valg;
     const dispatch = useDispatch();
     const {t} = useTranslation("skjema");
 

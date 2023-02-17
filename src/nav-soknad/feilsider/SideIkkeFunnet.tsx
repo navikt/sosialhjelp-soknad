@@ -1,5 +1,5 @@
 import * as React from "react";
-import Feilside from "../components/feilside/Feilside";
+import Feilside from "./Feilside";
 import {Sider} from "../../digisos/redux/navigasjon/navigasjonTypes";
 import {useNavigate} from "react-router";
 import {Trans, useTranslation} from "react-i18next";

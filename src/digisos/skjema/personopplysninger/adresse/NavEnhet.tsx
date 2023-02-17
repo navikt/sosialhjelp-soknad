@@ -4,7 +4,7 @@ import {Alert, Link} from "@navikt/ds-react";
 import {NavEnhetFrontend} from "../../../../generated/model";
 import {Trans, useTranslation} from "react-i18next";
 
-const SoknadsmottakerInfo = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
+const NavEnhet = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
     const {t} = useTranslation();
 
     if (!navEnhet) return null;
@@ -57,4 +57,4 @@ const SoknadsmottakerInfo = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
     );
 };
 
-export default SoknadsmottakerInfo;
+export default NavEnhet;

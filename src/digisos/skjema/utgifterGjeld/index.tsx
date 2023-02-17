@@ -3,7 +3,7 @@ import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/dig
 import KredittkortIllustrasjon from "../../../nav-soknad/components/svg/illustrasjoner/KredittkortIllustrasjon";
 import Boutgifter from "./boutgifter/Boutgifter";
 import Barneutgifter from "./barneutgifter/Barneutgifter";
-import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/LegacySkjemaSteg";
+import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
 
 const UtgifterGjeld: React.FC = () => {
     return (

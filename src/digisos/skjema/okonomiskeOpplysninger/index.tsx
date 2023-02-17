@@ -10,7 +10,7 @@ import {State} from "../../redux/reducers";
 import {OpplysningerInformasjonspanel} from "./OpplysningerInformasjonspanel";
 import {OpplysningerIkkeBesvartPanel} from "./OpplysningerIkkeBesvartPanel";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
-import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/LegacySkjemaSteg";
+import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
 
 const OkonomiskeOpplysningerView = () => {
     const behandlingsId = useSelector((state: State) => state.soknad.behandlingsId);

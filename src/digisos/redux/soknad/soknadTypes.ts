@@ -1,7 +1,6 @@
 export interface SoknadState {
     // Visning state
     showSideIkkeFunnet: boolean;
-    visSamtykkeInfo: boolean;
     visLasteOppVedleggModal: boolean;
     visMidlertidigDeaktivertPanel: boolean;
     visIkkePakobletPanel: boolean;

@@ -52,7 +52,7 @@ function SkjemaStegHeading(props: {ikon: ReactNode; stegTittel: string}) {
     );
 }
 
-export const LegacySkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps) => {
+export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps) => {
     const {sendSoknadPending} = useSoknad();
     const {data: nedetid} = useHentNedetidInformasjon();
     const {
@@ -70,7 +70,6 @@ export const LegacySkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNa
 
     useTitle(`${stegTittel} - ${documentTitle}`);
 
-    const {t} = useTranslation("skjema");
     const {showSideIkkeFunnet, showServerFeil} = useSoknad();
 
     if (showServerFeil) return <ServerFeil />;
@@ -95,7 +94,6 @@ export const LegacySkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNa
                             <IkkePakobletPanel />
                         </>
                     )}
-
                     <SkjemaStegNavKnapperLegacy
                         skjemaConfig={skjemaConfig}
                         steg={skjemaConfig.steg[steg]}
@@ -108,4 +106,4 @@ export const LegacySkjemaSteg = ({skjemaConfig, steg, ikon, children}: StegMedNa
     );
 };
 
-export default LegacySkjemaSteg;
+export default SkjemaStegLegacy;

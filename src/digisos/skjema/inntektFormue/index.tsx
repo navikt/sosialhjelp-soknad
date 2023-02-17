@@ -8,7 +8,7 @@ import Formue from "./formue/Formue";
 import NavYtelser from "./navytelser";
 import SkattbarInntekt from "./skattbarInntekt";
 import Studielan from "./studielan/Studielan";
-import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/LegacySkjemaSteg";
+import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
 import {Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 

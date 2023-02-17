@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ReactNode, useEffect} from "react";
+import {createContext, ReactNode, useContext, useEffect} from "react";
 import {scrollToTop} from "../../../utils";
 import AppBanner from "../../appHeader/AppHeader";
 import {useTitle} from "../../../hooks/useTitle";
@@ -10,25 +10,34 @@ import TimeoutBox from "../../timeoutbox/TimeoutBox";
 import {AvbrytSoknadModal} from "../../avbrytsoknad/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {useReduxSynchronizer} from "../UseReduxSynchronizer";
-import {MidlertidigDeaktivertPanel} from "../MidlertidigDeaktivertPanel";
-import {IkkePakobletPanel} from "../IkkePakobletPanel";
-import {useHentNedetidInformasjon} from "../../../../generated/nedetid-ressurs/nedetid-ressurs";
 import ServerFeil from "../../../feilsider/ServerFeil";
 import SideIkkeFunnet from "../../../feilsider/SideIkkeFunnet";
 import {useSkjemaNavigation} from "../useSkjemaNavigation";
 import SnakkebobleIllustrasjon from "../../svg/illustrasjoner/SnakkebobleIllustrasjon";
-import {SkjemaButtons} from "./SkjemaButtons";
-import {SkjemaStepper} from "./SkjemaStepper";
+import {SkjemaStegButtons} from "./SkjemaStegButtons";
+import {SkjemaStegStepper} from "./SkjemaStegStepper";
+import {logError, logWarning} from "../../../utils/loggerUtils";
 
-interface StegMedNavigasjonProps {
-    steg: SkjemaTrinn;
+type TSkjemaStegContext = {
+    page: SkjemaPage;
+    requestNavigation: (toPage: number) => Promise<void>;
+};
+
+export const SkjemaStegContext = createContext<TSkjemaStegContext | null>(null);
+
+interface SkjemaStegProps {
+    page: SkjemaPage;
     children?: ReactNode | ReactNode[];
-    onBeforeNavigate?: () => Promise<void>;
+    /**
+     * Callback before navigation.
+     * To prevent navigation, throw an exception (it will be passed along as a warning to backend in the testing phase)
+     */
+    onRequestNavigation?: () => Promise<void>;
 }
 
-export type SkjemaTrinn = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+export type SkjemaPage = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
-export const SkjemaHeadings: Record<SkjemaTrinn, {tittel: string; ikon: ReactNode}> = {
+export const SkjemaHeadings: Record<SkjemaPage, {tittel: string; ikon: ReactNode}> = {
     1: {tittel: "kontakt.tittel", ikon: <SnakkebobleIllustrasjon />},
     2: {tittel: "begrunnelsebolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     3: {tittel: "arbeidbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
@@ -40,19 +49,32 @@ export const SkjemaHeadings: Record<SkjemaTrinn, {tittel: string; ikon: ReactNod
     9: {tittel: "oppsummering.tittel", ikon: <SnakkebobleIllustrasjon />},
 };
 
-const Title = ({steg}: {steg: SkjemaTrinn}) => {
+const SkjemaTitle = () => {
     const {t} = useTranslation("skjema");
+    const context = useContext(SkjemaStegContext);
+
+    if (context === null) {
+        logError("<SkjemaSteg.Buttons/> must be used inside <SkjemaSteg.Container />");
+        return null;
+    }
+
+    const {page} = context;
+
     return (
         <div tabIndex={-1} className={"text-center mb-12 lg:mb-24"}>
-            <div className="text-center mb-2">{SkjemaHeadings[steg].ikon}</div>
-            <Heading size={"large"}>{t(SkjemaHeadings[steg].tittel)}</Heading>
+            <div className="text-center mb-2">{SkjemaHeadings[page].ikon}</div>
+            <Heading size={"large"}>{t(SkjemaHeadings[page].tittel)}</Heading>
         </div>
     );
 };
 
-export const Container = ({steg, children, onBeforeNavigate}: StegMedNavigasjonProps) => {
-    const {data: nedetid} = useHentNedetidInformasjon();
+const SkjemaContent = ({children}: {children: ReactNode}) => (
+    <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8"}>
+        <div className={"space-y-12 lg:space-y-24"}>{children}</div>
+    </div>
+);
 
+const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
     useReduxSynchronizer();
 
     useEffect(() => {
@@ -61,18 +83,17 @@ export const Container = ({steg, children, onBeforeNavigate}: StegMedNavigasjonP
 
     const {t} = useTranslation("skjema");
 
-    useTitle(`${t(SkjemaHeadings[steg].tittel)} - ${t("applikasjon.sidetittel")}`);
+    useTitle(`${t(SkjemaHeadings[page].tittel)} - ${t("applikasjon.sidetittel")}`);
 
-    const {goToStep} = useSkjemaNavigation(steg);
+    const {gotoPage} = useSkjemaNavigation(page);
 
-    const tryNavigate = async (step: number) => {
-        if (onBeforeNavigate === undefined) {
-            goToStep(step);
-        } else {
-            try {
-                await onBeforeNavigate();
-                goToStep(step);
-            } catch (e: any) {}
+    const requestNavigation = async (page: number) => {
+        try {
+            if (onRequestNavigation !== undefined) await onRequestNavigation();
+            gotoPage(page);
+        } catch (e) {
+            logWarning(`Nektet navigering: ${e}`);
+            scrollToTop();
         }
     };
 
@@ -83,32 +104,24 @@ export const Container = ({steg, children, onBeforeNavigate}: StegMedNavigasjonP
     if (showSideIkkeFunnet) return <SideIkkeFunnet />;
 
     return (
-        <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn">
-            <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
-            <AvbrytSoknadModal />
-            <AppBanner />
-            <SkjemaStepper steg={steg} onStepChange={tryNavigate} />
-            <div className={"max-w-3xl mx-auto "}>
-                <NedetidPanel varselType={"infoside"} />
-                <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8"}>
-                    <div className={"space-y-12 lg:space-y-24"}>{children}</div>
-                    <SkjemaButtons steg={2} goToStep={tryNavigate} />
-
-                    {steg !== 1 && !(steg === 9 && nedetid?.isNedetid) && (
-                        <>
-                            <MidlertidigDeaktivertPanel />
-                            <IkkePakobletPanel />
-                        </>
-                    )}
+        <SkjemaStegContext.Provider value={{page, requestNavigation}}>
+            <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn">
+                <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
+                <AvbrytSoknadModal />
+                <AppBanner />
+                <SkjemaStegStepper />
+                <div className={"max-w-3xl mx-auto"}>
+                    <NedetidPanel varselType={"infoside"} />
+                    {children}
                 </div>
             </div>
-        </div>
+        </SkjemaStegContext.Provider>
     );
 };
 
-const exports = {
-    Container,
-    Title,
-};
+SkjemaSteg.Buttons = SkjemaStegButtons;
+SkjemaSteg.Title = SkjemaTitle;
+SkjemaSteg.Container = SkjemaSteg;
+SkjemaSteg.Content = SkjemaContent;
 
-export default exports;
+export {SkjemaSteg};

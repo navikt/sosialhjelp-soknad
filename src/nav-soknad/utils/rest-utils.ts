@@ -23,7 +23,7 @@ export function getRedirectPath(): string {
     const redirectOrigin = window.location.origin;
     const gotoParameter = "?goto=" + getGotoPathname();
     const redirectPath = redirectOrigin + getRedirectPathname() + gotoParameter;
-    return "redirect=" + redirectPath;
+    return redirectPath;
 }
 
 export function getGotoPathname(): string {
@@ -90,7 +90,7 @@ export const serverRequest = <T>(
         body: body ? body : undefined,
     };
 
-    return new Promise((resolve, reject) => {
+    return new Promise<T>((resolve, reject) => {
         fetch(getApiBaseUrl(withAccessToken) + urlPath, OPTIONS)
             .then((response: Response) => {
                 if (response.status === 409) {
@@ -99,8 +99,8 @@ export const serverRequest = <T>(
                     }
                     setTimeout(() => {
                         serverRequest(method, urlPath, body, withAccessToken, retries - 1)
-                            .then((data: any) => {
-                                resolve(data);
+                            .then((data: unknown) => {
+                                resolve(data as T);
                             })
                             .catch((reason: any) => reject(reason));
                     }, 100 * (7 - retries));
@@ -162,7 +162,7 @@ export function fetchKvittering(urlPath: string) {
 //     return response.json();
 // };
 
-let generateUploadOptions = function (formData: FormData, method: string) {
+const generateUploadOptions = function (formData: FormData, method: string) {
     //let path = window.location.href.split("/");
     //let behandlingsId = path[path.length-2];
     const UPLOAD_OPTIONS: RequestInit = {
@@ -199,7 +199,8 @@ function verifyStatusSuccessOrRedirect(response: Response): number {
         response.json().then((r) => {
             if (window.location.search.split("login_id=")[1] !== r.id) {
                 const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
-                window.location.href = r.loginUrl + queryDivider + getRedirectPath() + "%26login_id=" + r.id;
+                window.location.href =
+                    r.loginUrl + queryDivider + "redirect=" + getRedirectPath() + "%26login_id=" + r.id;
             } else {
                 logError(
                     "Fetch ga 401-error-id selv om kallet ble sendt fra URL med samme login_id (" +
@@ -220,7 +221,7 @@ export function getCookie(name: string) {
     const value = "; " + document.cookie;
     const parts = value.split("; " + name + "=");
     if (parts.length === 2) {
-        let partsPopped: string | undefined = parts.pop();
+        const partsPopped: string | undefined = parts.pop();
         if (partsPopped) {
             const partsPoppedSplitAndShift = partsPopped.split(";").shift();
             return partsPoppedSplitAndShift ? partsPoppedSplitAndShift : "null";

@@ -14,7 +14,6 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import SkjemaSteg from "../../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 import {useState} from "react";
-import {useFeatureFlags} from "../../../lib/features";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;

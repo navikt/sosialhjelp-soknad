@@ -1,19 +1,19 @@
-import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 import {useSoknad} from "../../../digisos/redux/soknad/useSoknad";
 import {Trans, useTranslation} from "react-i18next";
 import {Alert, Link} from "@navikt/ds-react";
 import * as React from "react";
+import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";
+import {useBehandlingsId} from "../../hooks/useBehandlingsId";
+import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
 
 export const MidlertidigDeaktivertPanel = () => {
-    const {
-        personalia: {navEnhet},
-    } = useSoknadsdata();
+    const {expectOK} = useAlgebraic(useHentAdresser(useBehandlingsId()));
     const {visMidlertidigDeaktivertPanel} = useSoknad();
     const {t} = useTranslation();
 
     if (!visMidlertidigDeaktivertPanel) return null;
 
-    return (
+    return expectOK(({navEnhet}) => (
         <Alert variant="error">
             <Trans
                 t={t}
@@ -28,5 +28,5 @@ export const MidlertidigDeaktivertPanel = () => {
                 }}
             />
         </Alert>
-    );
+    ));
 };

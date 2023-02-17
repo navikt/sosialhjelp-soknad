@@ -75,9 +75,13 @@
     "@types/react-redux": "^7.1.23",
     "@types/react-scroll": "^1.8.3",
     "@types/styled-components": "^5.1.24",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
     "ajv": "^8.12.0",
     "autoprefixer": "^10.4.13",
     "concurrently": "^7.0.0",
+    "eslint": "^8.34.0",
+    "eslint-plugin-react": "^7.32.2",
     "husky": "^8.0.0",
     "less-plugin-npm-import": "^2.1.0",
     "less-watch-compiler": "^1.16.3",
@@ -125,6 +129,10 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx,less,css,md}": "prettier --write"
+    "*.{less,css,md}": "prettier --write",
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix --max-warnings 1"
+    ]
   }
 }

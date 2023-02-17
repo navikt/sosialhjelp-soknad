@@ -1,7 +1,7 @@
 import * as React from "react";
 import UtropstegnSirkelGraIkon from "./UtropstegnSirkelGraIkon";
-import Banner from "../banner/Banner";
-import {useTitle} from "../../hooks/useTitle";
+import Banner from "../components/banner/Banner";
+import {useTitle} from "../hooks/useTitle";
 import {BodyShort, Button, Heading, Link} from "@navikt/ds-react";
 
 export interface FeilsideProps {
