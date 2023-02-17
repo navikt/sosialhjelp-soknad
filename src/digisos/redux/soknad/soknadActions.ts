@@ -50,14 +50,6 @@ export function sendSoknadOk(behandlingsId: string): SoknadActionType {
     };
 }
 
-export const visAvbrytSoknadModal = (): SoknadActionType => ({
-    type: SoknadActionTypeKeys.VIS_AVBRYT_SOKNAD_MODAL,
-});
-
-export const skjulAvbrytSoknadModal = (): SoknadActionType => ({
-    type: SoknadActionTypeKeys.SKJUL_AVBRYT_SOKNAD_MODAL,
-});
-
 export const setErSystemdataEndret = (erSystemdataEndret: boolean): SoknadActionType => {
     return {
         type: SoknadActionTypeKeys.SET_ER_SYSTEMDATA_ENDRET,

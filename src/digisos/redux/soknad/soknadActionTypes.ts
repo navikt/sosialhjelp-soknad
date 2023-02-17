@@ -6,8 +6,6 @@ export const enum SoknadActionTypeKeys {
     SET_SOKNAD_PENDING = "soknad/SET_SOKNAD_PENDING",
     HENT_SOKNAD_OK = "soknad/HENT_SOKNAD_OK",
 
-    VIS_AVBRYT_SOKNAD_MODAL = "soknad/AVBRYT_SOKNAD",
-    SKJUL_AVBRYT_SOKNAD_MODAL = "soknad/FORTSETT_SOKNAD",
     SEND_SOKNAD_KNAPP_PENDING = "soknad/SEND_SOKNAD_KNAPP_PENDING",
     SEND_SOKNAD = "soknad/SEND_SOKNAD",
     SEND_SOKNAD_OK = "soknad/SEND_SOKNAD_OK",
@@ -37,8 +35,6 @@ export type SoknadActionType =
     | OpprettSoknadOkAction
     | SetSoknadPendingAction
     | HentSoknaOkAction
-    | AvbrytSoknadAction
-    | FortsettSoknadAction
     | SendSoknadPendingAction
     | SendSoknadAction
     | SendSoknadOkAction
@@ -121,14 +117,6 @@ export interface SendSoknadAction {
 export interface SendSoknadOkAction {
     type: SoknadActionTypeKeys.SEND_SOKNAD_OK;
     behandlingsId: string;
-}
-
-export interface AvbrytSoknadAction {
-    type: SoknadActionTypeKeys.VIS_AVBRYT_SOKNAD_MODAL;
-}
-
-export interface FortsettSoknadAction {
-    type: SoknadActionTypeKeys.SKJUL_AVBRYT_SOKNAD_MODAL;
 }
 
 export interface GetErSystemdataEndret {

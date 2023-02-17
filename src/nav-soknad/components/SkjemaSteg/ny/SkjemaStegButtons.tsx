@@ -1,11 +1,9 @@
 import * as React from "react";
 import {Button, Loader} from "@navikt/ds-react";
-import {useDispatch} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {SkjemaStegContext} from "./SkjemaSteg";
-import {minSideUrl} from "../../avbrytsoknad/AvbrytSoknadModal";
-import {visAvbrytSoknadModal} from "../../../../digisos/redux/soknad/soknadActions";
-import {useContext} from "react";
+import {AvbrytSoknadModal, minSideUrl} from "../../avbrytsoknad/AvbrytSoknadModal";
+import {useContext, useState} from "react";
 import {logError} from "../../../utils/loggerUtils";
 import {MidlertidigDeaktivertPanel} from "../MidlertidigDeaktivertPanel";
 import {IkkePakobletPanel} from "../IkkePakobletPanel";
@@ -15,7 +13,8 @@ interface SkjemaStegNavigasjonProps {
 }
 
 export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
-    const dispatch = useDispatch();
+    const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
+
     const {t} = useTranslation("skjema");
     const context = useContext(SkjemaStegContext);
 
@@ -34,6 +33,7 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
                     <IkkePakobletPanel />
                 </>
             )}
+            <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
             <div className="space-x-3">
                 <Button
                     variant="secondary"
@@ -58,7 +58,7 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
                 <Button variant="tertiary" onClick={() => (window.location.href = minSideUrl)}>
                     {t("avbryt.fortsettsenere")}
                 </Button>
-                <Button variant="tertiary" onClick={() => dispatch(visAvbrytSoknadModal())}>
+                <Button variant="tertiary" onClick={() => setAvbrytModalOpen(true)}>
                     {t("avbryt.slett")}
                 </Button>
             </div>

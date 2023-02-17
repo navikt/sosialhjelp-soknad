@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ReactNode, useEffect} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import Feiloppsummering from "../validering/Feiloppsummering";
 import {getIntlTextOrKey, scrollToTop} from "../../utils";
@@ -53,6 +53,8 @@ function SkjemaStegHeading(props: {ikon: ReactNode; stegTittel: string}) {
 }
 
 export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps) => {
+    const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
+
     const {sendSoknadPending} = useSoknad();
     const {data: nedetid} = useHentNedetidInformasjon();
     const {
@@ -87,7 +89,7 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children}: StegMedNa
                     <SkjemaStegHeading ikon={ikon} stegTittel={stegTittel} />
                     <div className={"space-y-12 lg:space-y-24"}>{children}</div>
                     <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
-                    <AvbrytSoknadModal />
+                    <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
                     {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && (
                         <>
                             <MidlertidigDeaktivertPanel />

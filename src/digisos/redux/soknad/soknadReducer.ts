@@ -16,9 +16,6 @@ export const defaultState: SoknadState = {
 
     // Soknad state
     behandlingsId: undefined,
-
-    // Avbryt
-    visAvbrytOgSlettModal: false,
 };
 
 const reducer = (state: SoknadState = defaultState, action: SoknadActionType) => {
@@ -83,16 +80,6 @@ const reducer = (state: SoknadState = defaultState, action: SoknadActionType) =>
             return {
                 ...state,
                 startSoknadPending: false,
-            };
-        case SoknadActionTypeKeys.VIS_AVBRYT_SOKNAD_MODAL:
-            return {
-                ...state,
-                visAvbrytOgSlettModal: true,
-            };
-        case SoknadActionTypeKeys.SKJUL_AVBRYT_SOKNAD_MODAL:
-            return {
-                ...state,
-                visAvbrytOgSlettModal: false,
             };
         case SoknadActionTypeKeys.SEND_SOKNAD:
             return {

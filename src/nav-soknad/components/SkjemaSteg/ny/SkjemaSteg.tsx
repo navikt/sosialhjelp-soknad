@@ -7,7 +7,6 @@ import {Heading} from "@navikt/ds-react";
 import {NedetidPanel} from "../../../../components/common/NedetidPanel";
 import {useSoknad} from "../../../../digisos/redux/soknad/useSoknad";
 import TimeoutBox from "../../timeoutbox/TimeoutBox";
-import {AvbrytSoknadModal} from "../../avbrytsoknad/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {useReduxSynchronizer} from "../UseReduxSynchronizer";
 import ServerFeil from "../../../feilsider/ServerFeil";
@@ -107,7 +106,6 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
         <SkjemaStegContext.Provider value={{page, requestNavigation}}>
             <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn">
                 <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
-                <AvbrytSoknadModal />
                 <AppBanner />
                 <SkjemaStegStepper />
                 <div className={"max-w-3xl mx-auto"}>
@@ -123,5 +121,6 @@ SkjemaSteg.Buttons = SkjemaStegButtons;
 SkjemaSteg.Title = SkjemaTitle;
 SkjemaSteg.Container = SkjemaSteg;
 SkjemaSteg.Content = SkjemaContent;
+SkjemaSteg.Stepper = SkjemaStegStepper;
 
 export {SkjemaSteg};

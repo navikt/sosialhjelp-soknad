@@ -1,16 +1,13 @@
 import * as React from "react";
-import {skjulAvbrytSoknadModal, setShowServerError} from "../../../digisos/redux/soknad/soknadActions";
-import {useDispatch} from "react-redux";
 import {basePath} from "../../../configuration";
 import {BodyShort, Button, Modal, Heading} from "@navikt/ds-react";
-import {useEffect} from "react";
-import ReactModal from "react-modal";
 import styled from "styled-components";
 import {mobile} from "../../styles/variables";
 import {slettSoknad} from "../../../lib/slettSoknad";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
-import {useSoknad} from "../../../digisos/redux/soknad/useSoknad";
 import {useTranslation} from "react-i18next";
+import {useBehandlingsId} from "../../hooks/useBehandlingsId";
+import {logError} from "../../utils/loggerUtils";
 
 const StyledModal = styled(Modal)`
     max-width: 40rem;
@@ -64,31 +61,22 @@ const ButtonRow = styled.div`
 
 export const minSideUrl = `${process.env.REACT_APP_MIN_SIDE_URL}`;
 
-export const AvbrytSoknadModal = () => {
-    const {behandlingsId, visAvbrytOgSlettModal} = useSoknad();
+export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () => void}) => {
+    const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
 
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        ReactModal.setAppElement("#root");
-    }, []);
-
     const onAvbryt = async () => {
-        if (!behandlingsId) return;
-        if (!(await slettSoknad(behandlingsId))) {
-            dispatch(setShowServerError(true));
-        } else {
+        try {
+            await slettSoknad(behandlingsId);
             window.location.href = minSideUrl;
+        } catch (e) {
+            logError("Feil ved sletting:", e);
+            window.location.href = "/sosialhjelp/soknad/feil";
         }
     };
 
-    const onFortsett = () => {
-        dispatch(skjulAvbrytSoknadModal());
-    };
-
     return (
-        <StyledModal open={visAvbrytOgSlettModal} onClose={() => onFortsett()}>
+        <StyledModal open={open} onClose={onClose}>
             <ModalContent>
                 <InfoIkon>
                     <img src={`${basePath}/statisk/bilder/ikon_ark.svg`} alt={""} />
@@ -99,7 +87,7 @@ export const AvbrytSoknadModal = () => {
                 <BodyShort spacing>{t("avbryt.forklaring")}</BodyShort>
                 <NedetidPanel varselType={"infoside"} />
                 <ButtonRow>
-                    <Button variant="primary" onClick={() => onFortsett()}>
+                    <Button variant="primary" onClick={onClose}>
                         {t("avbryt.fortsettsenere")}
                     </Button>
                     <Button variant="primary" onClick={() => onAvbryt()}>

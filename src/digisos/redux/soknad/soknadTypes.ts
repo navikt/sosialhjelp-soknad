@@ -13,9 +13,6 @@ export interface SoknadState {
     startSoknadFeilet: boolean;
     sendSoknadPending: boolean;
 
-    // Avbryt state
-    visAvbrytOgSlettModal: boolean;
-
     // Soknad state
     behandlingsId: string | undefined;
 }
