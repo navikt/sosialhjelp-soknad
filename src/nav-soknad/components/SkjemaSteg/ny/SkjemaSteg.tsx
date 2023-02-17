@@ -15,6 +15,8 @@ import SnakkebobleIllustrasjon from "../../svg/illustrasjoner/SnakkebobleIllustr
 import {SkjemaStegButtons} from "./SkjemaStegButtons";
 import {SkjemaStegStepper} from "./SkjemaStegStepper";
 import {logError, logWarning} from "../../../utils/loggerUtils";
+import William from "../../svg/illustrasjoner/William";
+import {SkjemaStegErrorSummary} from "./SkjemaStegErrorSummary";
 
 type TSkjemaStegContext = {
     page: SkjemaPage;
@@ -36,7 +38,7 @@ interface SkjemaStegProps {
 export type SkjemaPage = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 export const SkjemaHeadings: Record<SkjemaPage, {tittel: string; ikon: ReactNode}> = {
-    1: {tittel: "kontakt.tittel", ikon: <SnakkebobleIllustrasjon />},
+    1: {tittel: "kontakt.tittel", ikon: <William />},
     2: {tittel: "begrunnelsebolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     3: {tittel: "arbeidbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     4: {tittel: "familiebolk.tittel", ikon: <SnakkebobleIllustrasjon />},
@@ -119,5 +121,6 @@ SkjemaSteg.Title = SkjemaTitle;
 SkjemaSteg.Container = SkjemaSteg;
 SkjemaSteg.Content = SkjemaContent;
 SkjemaSteg.Stepper = SkjemaStegStepper;
+SkjemaSteg.ErrorSummary = SkjemaStegErrorSummary;
 
 export {SkjemaSteg};

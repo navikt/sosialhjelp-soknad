@@ -1,15 +1,8 @@
-import {FieldError, FieldErrors} from "react-hook-form";
+import {FieldErrors} from "react-hook-form";
 import {ErrorSummary} from "@navikt/ds-react";
 import * as React from "react";
 import {useTranslation} from "react-i18next";
 
-export const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) => {
-    const {t} = useTranslation("skjema", {keyPrefix: "validering"});
-
-    if (!error?.message) return null;
-
-    return <>{t(error.message)}</>;
-};
 export const SkjemaStegErrorSummary = ({errors}: {errors?: FieldErrors}) => {
     const {t} = useTranslation("skjema", {keyPrefix: "validering"});
     if (!errors || !Object.keys(errors).length) return null;
