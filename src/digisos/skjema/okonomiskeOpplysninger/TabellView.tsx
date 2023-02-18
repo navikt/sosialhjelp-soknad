@@ -85,8 +85,8 @@ const TabellView = (props: {opplysning: Opplysning; gruppeIndex: number}) => {
         }
     };
 
-    const getOppdatertListeAvFeil = (feil: Valideringsfeil[], valideringsKey: string, radIndex: number) => {
-        const feilUpdated = feil.filter(
+    const getOppdatertListeAvFeil = (feil: Valideringsfeil[], valideringsKey: string, radIndex: number) =>
+        feil.filter(
             (f) =>
                 f.faktumKey !== valideringsKey + ".beskrivelse." + radIndex &&
                 f.faktumKey !== valideringsKey + ".belop." + radIndex &&
@@ -95,8 +95,6 @@ const TabellView = (props: {opplysning: Opplysning; gruppeIndex: number}) => {
                 f.faktumKey !== valideringsKey + ".avdrag." + radIndex &&
                 f.faktumKey !== valideringsKey + ".renter." + radIndex
         );
-        return feilUpdated;
-    };
 
     const validerAlleInputfelterPaOpplysning = (opplysningUpdated: Opplysning, opplysning: Opplysning) => {
         opplysningUpdated.rader.forEach((rad: OpplysningRad, index: number) => {

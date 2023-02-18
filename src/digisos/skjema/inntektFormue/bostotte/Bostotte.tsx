@@ -129,7 +129,7 @@ const BostotteView = () => {
         setOppstartsModus(false);
     }
     const requestToHusbankenFeilet: boolean = bostotte.stotteFraHusbankenFeilet === true;
-    const harSamtykke: boolean = bostotte.samtykke === true;
+    const harSamtykke = bostotte.samtykke;
     const samtykkeTidspunkt: Date | null = bostotte.samtykkeTidspunkt;
     let samtykkeTidspunktStreng = "";
     if (samtykkeTidspunkt) {

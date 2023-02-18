@@ -118,7 +118,7 @@ export const UtbetalingerView = () => {
 
     const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
     const restStatus = soknadsdata.restStatus.inntekt.utbetalinger;
-    if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+    if (oppstartsModus && restStatus === REST_STATUS.OK) {
         setOppstartsModus(false);
     }
     return (

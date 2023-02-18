@@ -38,7 +38,7 @@ const DinSivilstatusView = () => {
 
     const sivilstatus: Sivilstatus = soknadsdata.familie.sivilstatus;
     const restStatus = soknadsdata.restStatus.familie.sivilstatus;
-    if (oppstartsModus === true && restStatus === REST_STATUS.OK) {
+    if (oppstartsModus && restStatus === REST_STATUS.OK) {
         setOppstartsModus(false);
     }
     if (oppstartsModus) {
@@ -50,7 +50,7 @@ const DinSivilstatusView = () => {
             </div>
         );
     }
-    if (sivilstatus && sivilstatus.sivilstatus === Status.GIFT && sivilstatus.kildeErSystem === true) {
+    if (sivilstatus && sivilstatus.sivilstatus === Status.GIFT && sivilstatus.kildeErSystem) {
         return <EktefelleDetaljer />;
     } else {
         return <SivilstatusComponent />;

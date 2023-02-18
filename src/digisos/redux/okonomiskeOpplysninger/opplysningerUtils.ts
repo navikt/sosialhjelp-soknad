@@ -96,8 +96,7 @@ export const getSortertListeAvOpplysninger = (backendData: OpplysningerBackend):
     });
     const alleOpplysninger: Opplysning[] = opplysningerAktive.concat(opplysningerSlettede);
     const opplysningerSortert: MaybeOpplysning[] = sorterOpplysninger(alleOpplysninger, opplysningsRekkefolgeOgSpc);
-    const opplysningerSortertOgNullsFiltrertBort: Opplysning[] = filterOutNullValuesFromList(opplysningerSortert);
-    return opplysningerSortertOgNullsFiltrertBort;
+    return filterOutNullValuesFromList(opplysningerSortert);
 };
 
 const filterOutNullValuesFromList = (list: MaybeOpplysning[]): Opplysning[] => {
@@ -153,7 +152,7 @@ function sorterOpplysninger(usortertListe: Opplysning[], rekkefolge: OpplysningS
     for (const opplysning of usortertListe) {
         let erPlassertISortertListe = false;
         let n = 0;
-        while (erPlassertISortertListe === false) {
+        while (!erPlassertISortertListe) {
             if (n > rekkefolge.length - 1) {
                 erPlassertISortertListe = true;
                 logError(

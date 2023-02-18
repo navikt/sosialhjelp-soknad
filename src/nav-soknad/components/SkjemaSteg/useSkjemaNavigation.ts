@@ -23,7 +23,7 @@ export const useSkjemaNavigation = (currentStepId: number) => {
             logAmplitudeEvent("skjemasteg fullført", {
                 ...createSkjemaEventData(),
                 steg: currentStepId,
-            });
+            }); /**/
         }
 
         navigate(`../${newPage}`);

@@ -1,4 +1,4 @@
-import {AnyAction, Dispatch} from "redux";
+import {Dispatch} from "redux";
 import {getInnsynUrl} from "../nav-soknad/utils/rest-utils";
 import {sendSoknadOk, showSendingFeiletPanel} from "../digisos/redux/soknad/soknadActions";
 import {logWarning} from "../nav-soknad/utils/loggerUtils";
@@ -12,7 +12,7 @@ import {SendTilUrlFrontendSendtTil} from "../generated/model";
  * @param dispatch
  * @return URL til neste steg
  */
-export const sendSoknad = async (behandlingsId: string, dispatch: Dispatch<AnyAction>) => {
+export const sendSoknad = async (behandlingsId: string, dispatch: Dispatch) => {
     try {
         const response = await sendSoknadAction(behandlingsId);
 

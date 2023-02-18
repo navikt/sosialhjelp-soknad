@@ -46,7 +46,7 @@ const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) => {
     return <>{t(error.message)}</>;
 };
 
-const Begrunnelse: React.FunctionComponent<{}> = () => {
+const Begrunnelse = () => {
     const {t} = useTranslation("skjema", {keyPrefix: "begrunnelse"});
     const behandlingsId = useBehandlingsId();
     const {data: begrunnelse} = useHentBegrunnelse(behandlingsId);

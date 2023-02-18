@@ -85,15 +85,10 @@ const reducer = (state: EttersendelseState = initialState, action: Ettersendelse
             const {filUuid, opplysningType} = action;
 
             const dataUpdated = state.data.map((vedlegg: EttersendelseVedleggBackend) => {
-                if (vedlegg.type === opplysningType) {
-                    const filListeUpdated: Fil[] = vedlegg.filer.filter((fil: Fil) => {
-                        return fil.uuid !== filUuid;
-                    });
-                    vedlegg.filer = filListeUpdated;
-                    return vedlegg;
-                } else {
-                    return vedlegg;
-                }
+                if (vedlegg.type === opplysningType)
+                    vedlegg.filer = vedlegg.filer.filter((fil: Fil) => fil.uuid !== filUuid);
+
+                return vedlegg;
             });
 
             const samletVedleggStorrelseForStor: boolean =
