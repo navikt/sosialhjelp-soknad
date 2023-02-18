@@ -8,7 +8,6 @@ import {State} from "../../../digisos/redux/reducers";
 import {useTitle} from "../../hooks/useTitle";
 import {Heading} from "@navikt/ds-react";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
-import {useSoknad} from "../../../digisos/redux/soknad/useSoknad";
 import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepperLegacy} from "./SkjemaStegNavStepperLegacy";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
@@ -17,7 +16,6 @@ import TimeoutBox from "../timeoutbox/TimeoutBox";
 import {AvbrytSoknadModal} from "../avbrytsoknad/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
-import ServerFeil from "../../feilsider/ServerFeil";
 import {NavEnhetInaktiv} from "../../../digisos/skjema/personopplysninger/adresse/NavEnhet";
 
 interface StegMedNavigasjonProps {
@@ -66,10 +64,6 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: S
     }, []);
 
     useTitle(`${stegTittel} - ${documentTitle}`);
-
-    const {showServerFeil} = useSoknad();
-
-    if (showServerFeil) return <ServerFeil />;
 
     return (
         <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn">

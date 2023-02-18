@@ -1,9 +1,8 @@
 import {fetchPost, fetchPut, fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {oppdaterSoknadsdataSti, settRestStatus, SoknadsdataType} from "./soknadsdataReducer";
-import {REST_STATUS} from "../soknad/soknadTypes";
-import {setShowServerError} from "../soknad/soknadActions";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
+import {REST_STATUS} from "./soknadsdataTypes";
 
 export const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string =>
     `soknader/${brukerBehandlingId}/${sti}`;
@@ -23,7 +22,7 @@ export function hentSoknadsdata(brukerBehandlingId: string | undefined | null, s
             }
             logWarning("Henting av soknadsdata feilet: " + reason);
             dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-            dispatch(setShowServerError(true));
+            window.location.href = "/sosialhjelp/soknad/feil";
         });
 }
 
@@ -48,7 +47,7 @@ export function lagreSoknadsdata(
             }
             logWarning("Lagring av soknadsdata feilet: " + reason);
             dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-            dispatch(setShowServerError(true));
+            window.location.href = "/sosialhjelp/soknad/feil";
         });
 }
 
@@ -74,7 +73,7 @@ export function settSamtykkeOgOppdaterData(
             if (reason.message === HttpStatus.UNAUTHORIZED) return;
             logWarning("Oppdatering av bostotte samtykke feilet: " + reason);
             dispatch(settRestStatus(restStatusSti, REST_STATUS.FEILET));
-            dispatch(setShowServerError(true));
+            window.location.href = "/sosialhjelp/soknad/feil";
         });
 }
 

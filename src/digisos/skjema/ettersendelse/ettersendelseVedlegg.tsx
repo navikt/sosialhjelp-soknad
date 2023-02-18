@@ -5,12 +5,12 @@ import {downloadAttachedFile} from "../../../nav-soknad/utils/rest-utils";
 import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
 import {Fil, OpplysningType} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {State} from "../../redux/reducers";
-import {REST_FEIL, REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {BodyShort, Button, Loader} from "@navikt/ds-react";
 import styled from "styled-components";
 import {Attachment, Delete} from "@navikt/ds-icons";
 import {useTranslation} from "react-i18next";
+import {REST_FEIL, REST_STATUS} from "../../redux/soknadsdata/soknadsdataTypes";
 
 const VedleggsListe = styled.div`
     border-radius: 4px;

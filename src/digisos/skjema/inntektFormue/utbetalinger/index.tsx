@@ -7,7 +7,6 @@ import {Utbetalinger, UtbetalingerKeys} from "./utbetalingerTypes";
 import CheckboxPanel from "../../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
-import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
@@ -15,6 +14,7 @@ import {validateAndDispatchTextFieldMaxLength} from "../../../../nav-soknad/vali
 import {useTranslation} from "react-i18next";
 import {Heading} from "@navikt/ds-react";
 import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {REST_STATUS} from "../../../redux/soknadsdata/soknadsdataTypes";
 
 const MAX_CHARS = 500;
 const UTBETALINGER = "inntekt.inntekter";

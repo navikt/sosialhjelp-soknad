@@ -10,7 +10,7 @@ import {
     getSortertListeAvOpplysninger,
     updateSortertOpplysning,
 } from "./opplysningerUtils";
-import {REST_STATUS} from "../soknad/soknadTypes";
+import {REST_STATUS} from "../soknadsdata/soknadsdataTypes";
 
 export const initialOpplysningerModel: OpplysningerModel = {
     restStatus: REST_STATUS.INITIALISERT,

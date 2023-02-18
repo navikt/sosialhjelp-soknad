@@ -6,7 +6,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {Systeminntekt} from "./navYtelserTypes";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import Dato from "../../../../nav-soknad/components/tidspunkt/Dato";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
@@ -16,6 +15,7 @@ import {Heading, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {fmtCurrency} from "../../../../lib/fmtCurrency";
 import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {REST_STATUS} from "../../../redux/soknadsdata/soknadsdataTypes";
 
 const NavYtelserView = () => {
     const dispatch = useDispatch();

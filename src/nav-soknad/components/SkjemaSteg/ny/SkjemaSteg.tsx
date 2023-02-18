@@ -5,10 +5,8 @@ import AppBanner from "../../appHeader/AppHeader";
 import {useTitle} from "../../../hooks/useTitle";
 import {Heading} from "@navikt/ds-react";
 import {NedetidPanel} from "../../../../components/common/NedetidPanel";
-import {useSoknad} from "../../../../digisos/redux/soknad/useSoknad";
 import TimeoutBox from "../../timeoutbox/TimeoutBox";
 import {useTranslation} from "react-i18next";
-import ServerFeil from "../../../feilsider/ServerFeil";
 import {useSkjemaNavigation} from "../useSkjemaNavigation";
 import SnakkebobleIllustrasjon from "../../svg/illustrasjoner/SnakkebobleIllustrasjon";
 import {SkjemaStegButtons} from "./SkjemaStegButtons";
@@ -93,10 +91,6 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
             scrollToTop();
         }
     };
-
-    const {showServerFeil} = useSoknad();
-
-    if (showServerFeil) return <ServerFeil />;
 
     return (
         <SkjemaStegContext.Provider value={{page, requestNavigation}}>

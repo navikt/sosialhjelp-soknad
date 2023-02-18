@@ -5,7 +5,6 @@ import {getOpplysningerUrl, getSpcForOpplysning, transformToBackendOpplysning} f
 import {detekterInternFeilKode, fetchPut, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {updateOpplysning} from "./opplysningerActions";
 import {Valideringsfeil, ValideringsFeilKode} from "../validering/valideringActionTypes";
-import {setShowServerError} from "../soknad/soknadActions";
 import {setValideringsfeil} from "../validering/valideringActions";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 
@@ -43,7 +42,7 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
                     yield put(setValideringsfeil(ValideringsFeilKode.FELT_EKSISTERER_IKKE, opplysning.type));
                 } else {
                     yield call(logWarning, "Lagring av økonomisk opplysning feilet. Reason: " + reason);
-                    yield put(setShowServerError(true));
+                    window.location.href = "/sosialhjelp/soknad/feil";
                 }
             }
         }

@@ -33,10 +33,9 @@ import {
     slettEttersendtVedleggOk,
 } from "./ettersendelseActions";
 import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
-import {setShowServerError} from "../soknad/soknadActions";
-import {REST_FEIL} from "../soknad/soknadTypes";
 import {settFilOpplastingFerdig} from "../okonomiskeOpplysninger/opplysningerActions";
 import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {REST_FEIL} from "../soknadsdata/soknadsdataTypes";
 
 function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
     try {
@@ -67,7 +66,7 @@ function* lesEttersendelserSaga(action: LesEttersendelserAction) {
             return;
         }
         yield call(logWarning, "Les ettersendelser feilet: " + reason.toString());
-        yield put(setShowServerError(true));
+        window.location.href = "/sosialhjelp/soknad/feil";
     }
 }
 
@@ -83,7 +82,7 @@ function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction) {
             return;
         }
         yield call(logWarning, "Lese ettersendte vedlegg feilet: " + reason.toString());
-        yield put(setShowServerError(true));
+        window.location.href = "/sosialhjelp/soknad/feil";
     }
 }
 
@@ -100,7 +99,7 @@ function* slettEttersendelsesVedleggSaga(action: SlettEttersendtVedleggAction): 
             return;
         }
         yield call(logWarning, "Slett ettersendt vedlegg feilet: " + reason);
-        yield put(setShowServerError(true));
+        window.location.href = "/sosialhjelp/soknad/feil";
     }
 }
 
@@ -169,7 +168,7 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
             return;
         }
         yield call(logWarning, "Send ettersendelse feilet: " + reason.toString());
-        yield put(setShowServerError(true));
+        window.location.href = "/sosialhjelp/soknad/feil";
     }
 }
 

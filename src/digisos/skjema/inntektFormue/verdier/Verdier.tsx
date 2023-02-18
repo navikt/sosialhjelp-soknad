@@ -10,13 +10,13 @@ import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../../nav-soknad/components/nivaTreSkjema";
 import {maksLengde} from "../../../../nav-soknad/validering/valideringer";
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
-import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {setValideringsfeil, clearValideringsfeil} from "../../../redux/validering/valideringActions";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {REST_STATUS} from "../../../redux/soknadsdata/soknadsdataTypes";
 
 const MAX_CHARS = 500;
 const VERDIER = "inntekt.eierandeler";

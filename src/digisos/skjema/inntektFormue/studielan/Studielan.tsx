@@ -7,13 +7,13 @@ import JaNeiSporsmal from "../../../../nav-soknad/faktum/JaNeiSporsmal";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {Studielan} from "./StudielanTypes";
 import Informasjonspanel from "../../../../nav-soknad/components/Informasjonspanel";
-import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Heading, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {REST_STATUS} from "../../../redux/soknadsdata/soknadsdataTypes";
 
 const FAKTUM_STUDIELAN = "inntekt.studielan";
 

@@ -1,5 +1,5 @@
 import {Fil, OpplysningType, VedleggStatus} from "../okonomiskeOpplysninger/opplysningerTypes";
-import {REST_STATUS} from "../soknad/soknadTypes";
+import {REST_STATUS} from "../soknadsdata/soknadsdataTypes";
 
 export enum EttersendelseActionTypeKeys {
     NY = "ettersendelse/NY",

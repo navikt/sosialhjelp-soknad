@@ -1,7 +1,4 @@
 import React from "react";
-import {useSelector, useDispatch} from "react-redux";
-import {State} from "../../redux/reducers";
-import {visLasteOppVedleggModal} from "../../redux/soknad/soknadActions";
 import {BodyLong, Modal, Heading} from "@navikt/ds-react";
 import styled from "styled-components";
 import {mobile} from "../../../nav-soknad/styles/variables";
@@ -16,19 +13,11 @@ const StyledModal = styled(Modal)`
     }
 `;
 
-export const OpplastingAvVedleggModal = () => {
-    const modalSynlig = useSelector((state: State) => state.soknad.visLasteOppVedleggModal);
+export const OpplastingAvVedleggModal = ({open, onClose}: {open: boolean; onClose: () => void}) => {
     const {t} = useTranslation("skjema");
 
-    const dispatch = useDispatch();
-
     return (
-        <StyledModal
-            open={modalSynlig}
-            onClose={() => {
-                dispatch(visLasteOppVedleggModal(false));
-            }}
-        >
+        <StyledModal open={open} onClose={onClose}>
             <Modal.Content>
                 <Heading level="1" size="medium" spacing>
                     {t("opplysninger.informasjon.modal.overskrift")}

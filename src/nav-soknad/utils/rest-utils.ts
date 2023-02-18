@@ -1,6 +1,6 @@
 import {getRedirectPathname} from "../../configuration";
-import {REST_FEIL} from "../../digisos/redux/soknad/soknadTypes";
 import {logError} from "./loggerUtils";
+import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
 
 export function getApiBaseUrl(withAccessToken?: boolean): string {
     return withAccessToken

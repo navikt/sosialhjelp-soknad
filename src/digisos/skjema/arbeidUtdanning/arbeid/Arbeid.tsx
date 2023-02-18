@@ -6,7 +6,6 @@ import TextareaEnhanced from "../../../../nav-soknad/faktum/TextareaEnhanced";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import {Arbeidsforhold} from "./arbeidTypes";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {State} from "../../../redux/reducers";
@@ -15,6 +14,7 @@ import {clearValideringsfeil} from "../../../redux/validering/valideringActions"
 import {validateAndDispatchTextFieldMaxLength} from "../../../../nav-soknad/validering/validateAndDispatch";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {REST_STATUS} from "../../../redux/soknadsdata/soknadsdataTypes";
 
 const MAX_CHARS = 500;
 const FAKTUM_KEY_KOMMENTARER = "opplysninger.arbeidsituasjon.kommentarer";

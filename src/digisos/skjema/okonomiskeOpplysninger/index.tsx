@@ -5,13 +5,13 @@ import SkjemaIllustrasjon from "../../../nav-soknad/components/svg/illustrasjone
 import Gruppe from "./Gruppe";
 import {hentOpplysninger} from "../../redux/okonomiskeOpplysninger/opplysningerActions";
 import {gruppeRekkefolge} from "../../redux/okonomiskeOpplysninger/opplysningerConfig";
-import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {State} from "../../redux/reducers";
 import {OpplysningerInformasjonspanel} from "./OpplysningerInformasjonspanel";
 import {OpplysningerIkkeBesvartPanel} from "./OpplysningerIkkeBesvartPanel";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
 import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {REST_STATUS} from "../../redux/soknadsdata/soknadsdataTypes";
 
 const OkonomiskeOpplysningerView = () => {
     const behandlingsId = useBehandlingsId();

@@ -12,12 +12,11 @@ import {
 import OpplastetVedlegg from "./OpplastetVedlegg";
 import {State} from "../../redux/reducers";
 import {fetchDelete, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
-import {setShowServerError} from "../../redux/soknad/soknadActions";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
-import {REST_FEIL} from "../../redux/soknad/soknadTypes";
 import {useTranslation} from "react-i18next";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
 import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {REST_FEIL} from "../../redux/soknadsdata/soknadsdataTypes";
 
 const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
     const behandlingsId = useBehandlingsId();
@@ -71,7 +70,7 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
                         return;
                     }
                     logWarning("Slett vedlegg feilet: " + reason);
-                    dispatch(setShowServerError(true));
+                    window.location.href = "/sosialhjelp/soknad/feil";
                 });
         }
     };

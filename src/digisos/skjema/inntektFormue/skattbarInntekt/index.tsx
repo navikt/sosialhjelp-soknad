@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {SkattbarInntektInfo, SoknadsSti} from "../../../redux/soknadsdata/soknadsdataReducer";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {SkattbarInntekt} from "./inntektTypes";
-import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import SkattbarinntektForskuddstrekk from "./SkattbarinntektForskuddstrekk";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, settSamtykkeOgOppdaterData} from "../../../redux/soknadsdata/soknadsdataActions";
@@ -13,6 +12,7 @@ import {UndertekstBold} from "nav-frontend-typografi";
 import {Alert, BodyShort, Button, Heading, Label, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {REST_STATUS} from "../../../redux/soknadsdata/soknadsdataTypes";
 
 const Skatt = () => {
     const dispatch = useDispatch();

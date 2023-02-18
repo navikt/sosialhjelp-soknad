@@ -16,7 +16,7 @@ import {
 } from "../../skjema/inntektFormue/skattbarInntekt/inntektTypes";
 import {Systeminntekter, initialSysteminntekter} from "../../skjema/inntektFormue/navytelser/navYtelserTypes";
 import {Studielan, initialStudielanState} from "../../skjema/inntektFormue/studielan/StudielanTypes";
-import {REST_STATUS} from "../soknad/soknadTypes";
+import {REST_STATUS} from "./soknadsdataTypes";
 
 export enum SoknadsdataActionTypeKeys {
     OPPDATER_SOKNADSDATA_STI = "soknadsdata/OPPDATER_STI",

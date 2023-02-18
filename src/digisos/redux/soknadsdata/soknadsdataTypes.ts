@@ -1,8 +1,3 @@
-export interface SoknadState {
-    visLasteOppVedleggModal: boolean;
-    showServerFeil: boolean;
-}
-
 export enum REST_STATUS {
     INITIALISERT = "INITIALISERT",
     PENDING = "PENDING",

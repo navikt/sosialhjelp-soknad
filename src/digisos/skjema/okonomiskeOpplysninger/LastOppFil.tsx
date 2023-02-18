@@ -2,7 +2,6 @@ import * as React from "react";
 import {Fil, Opplysning, VedleggStatus} from "../../redux/okonomiskeOpplysninger/opplysningerTypes";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
-import {REST_FEIL} from "../../redux/soknad/soknadTypes";
 import {
     settFilOpplastingFerdig,
     settFilOpplastingPending,
@@ -21,6 +20,7 @@ import {logInfo} from "../../../nav-soknad/utils/loggerUtils";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {REST_FEIL} from "../../redux/soknadsdata/soknadsdataTypes";
 
 const lastOppFil = (
     opplysning: Opplysning,

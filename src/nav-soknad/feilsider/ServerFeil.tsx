@@ -2,14 +2,13 @@ import * as React from "react";
 import Feilside from "./Feilside";
 import {Undertittel} from "nav-frontend-typografi";
 import {getIntlTextOrKey} from "../utils";
-import {Sider} from "../../digisos/redux/navigasjon/navigasjonTypes";
 import {useTranslation} from "react-i18next";
 
 const ServerFeil: React.FC = () => {
     const {t} = useTranslation("skjema");
 
     const onClick = () => {
-        window.location.href = Sider.FINN_DITT_NAV_KONTOR;
+        window.location.href = "https://www.nav.no/finnkontor";
     };
 
     return (

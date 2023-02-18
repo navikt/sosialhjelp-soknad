@@ -5,9 +5,9 @@ import {useSelector} from "react-redux";
 import {State} from "../../redux/reducers";
 import {EttersendelseVedleggBackend} from "../../redux/ettersendelse/ettersendelseTypes";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
-import {REST_STATUS} from "../../redux/soknad/soknadTypes";
 import {BodyShort, Button, Heading, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
+import {REST_STATUS} from "../../redux/soknadsdata/soknadsdataTypes";
 
 const EttersendelseVedleggListe = (props: {
     ettersendelseAktivert: boolean;

@@ -8,12 +8,12 @@ import SivilstatusComponent from "./SivilstatusComponent";
 import EktefelleDetaljer from "./EktefelleDetaljer";
 import Sporsmal from "../../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextPlaceholder from "../../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import {REST_STATUS} from "../../../redux/soknad/soknadTypes";
 import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {REST_STATUS} from "../../../redux/soknadsdata/soknadsdataTypes";
 
 const DinSivilstatusView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);

@@ -1,5 +1,5 @@
 import {Valideringsfeil} from "../validering/valideringActionTypes";
-import {REST_STATUS} from "../soknad/soknadTypes";
+import {REST_STATUS} from "../soknadsdata/soknadsdataTypes";
 
 export interface OpplysningerModel {
     restStatus: REST_STATUS;

@@ -6,7 +6,7 @@ import {
     EttersendelseVedleggBackend,
 } from "./ettersendelseTypes";
 import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
-import {REST_FEIL, REST_STATUS} from "../soknad/soknadTypes";
+import {REST_FEIL, REST_STATUS} from "../soknadsdata/soknadsdataTypes";
 
 const initialState: EttersendelseState = {
     restStatus: REST_STATUS.INITIALISERT,
