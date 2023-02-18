@@ -8,7 +8,7 @@ import Kontonr from "./Kontonr";
 import {SkjemaSteg} from "../../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
 import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";
 import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {FieldErrorsImpl} from "react-hook-form";
 import {NavEnhetFrontend} from "../../../generated/model";
 import {erAktiv} from "../../../nav-soknad/containers/navEnhetStatus";
@@ -27,9 +27,15 @@ const Personopplysninger = () => {
                 setError("soknadsmottaker.feilmelding");
                 reject();
             } else {
+                setError(null);
                 resolve();
             }
         });
+
+    // Midlertidig hack til komponentene under kan behandles som react-hook-form-inputs
+    useEffect(() => {
+        if (erAktiv(adresser?.navEnhet)) setError(null);
+    }, [adresser]);
 
     return (
         <SkjemaSteg.Container page={1} onRequestNavigation={onRequestNavigation}>

@@ -18,7 +18,6 @@ import {AvbrytSoknadModal} from "../avbrytsoknad/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
 import ServerFeil from "../../feilsider/ServerFeil";
-import SideIkkeFunnet from "../../feilsider/SideIkkeFunnet";
 import {NavEnhetInaktiv} from "../../../digisos/skjema/personopplysninger/adresse/NavEnhet";
 
 interface StegMedNavigasjonProps {
@@ -68,11 +67,9 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: S
 
     useTitle(`${stegTittel} - ${documentTitle}`);
 
-    const {showSideIkkeFunnet, showServerFeil} = useSoknad();
+    const {showServerFeil} = useSoknad();
 
     if (showServerFeil) return <ServerFeil />;
-
-    if (showSideIkkeFunnet) return <SideIkkeFunnet />;
 
     return (
         <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn">

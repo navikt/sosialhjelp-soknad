@@ -9,7 +9,6 @@ import {useSoknad} from "../../../../digisos/redux/soknad/useSoknad";
 import TimeoutBox from "../../timeoutbox/TimeoutBox";
 import {useTranslation} from "react-i18next";
 import ServerFeil from "../../../feilsider/ServerFeil";
-import SideIkkeFunnet from "../../../feilsider/SideIkkeFunnet";
 import {useSkjemaNavigation} from "../useSkjemaNavigation";
 import SnakkebobleIllustrasjon from "../../svg/illustrasjoner/SnakkebobleIllustrasjon";
 import {SkjemaStegButtons} from "./SkjemaStegButtons";
@@ -95,11 +94,9 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
         }
     };
 
-    const {showSideIkkeFunnet, showServerFeil} = useSoknad();
+    const {showServerFeil} = useSoknad();
 
     if (showServerFeil) return <ServerFeil />;
-
-    if (showSideIkkeFunnet) return <SideIkkeFunnet />;
 
     return (
         <SkjemaStegContext.Provider value={{page, requestNavigation}}>

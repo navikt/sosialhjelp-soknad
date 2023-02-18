@@ -1,16 +1,13 @@
 import * as React from "react";
-import {startSoknad} from "../../../lib/StartSoknad";
-import {useDispatch} from "react-redux";
 import {useNavigate, useParams} from "react-router";
-import {setSoknadPending, hentSoknadOk} from "../../../digisos/redux/soknad/soknadActions";
 import {logWarning} from "../../utils/loggerUtils";
 import {useEffect} from "react";
+import {opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 
 type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
 
 export const DeveloperToolkit = () => {
     const {behandlingsId} = useParams<UrlParams>();
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(() => logWarning("Viser utviklermeny. Dette skal ikke skje i prod!", true), []);
 
@@ -29,12 +26,8 @@ export const DeveloperToolkit = () => {
                 <button
                     className={"text-[#0c0] hover:text-[#0f0]"}
                     onClick={async () => {
-                        const behandlingsId = await startSoknad(dispatch);
-                        if (behandlingsId) {
-                            dispatch(setSoknadPending(behandlingsId));
-                            dispatch(hentSoknadOk(true, behandlingsId));
-                            navigate(`/skjema/${behandlingsId}/1`);
-                        }
+                        const {brukerBehandlingId} = await opprettSoknad();
+                        if (brukerBehandlingId) navigate(`/skjema/${brukerBehandlingId}/1`);
                     }}
                 >
                     [ ny søknad ]

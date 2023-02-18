@@ -1,29 +1,25 @@
 import {Accordion, Alert, Button, Heading, Loader} from "@navikt/ds-react";
 import * as React from "react";
-import {useDispatch} from "react-redux";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
 import Personopplysninger from "./Personopplysninger";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {FillForms} from "@navikt/ds-icons";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
-import {useSoknad} from "../../redux/soknad/useSoknad";
-import {startSoknad} from "../../../lib/StartSoknad";
 import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
 import {usePabegynteSoknader} from "../usePabegynteSoknader";
 import {useHarNyligInnsendteSoknader} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {useState} from "react";
+import {opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 
 export const NySoknadInfo = () => {
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
     const [startSoknadError, setStartSoknadError] = useState<Error | null>(null);
 
-    const {visNedetidPanel} = useSoknad();
     const {data: nyligInnsendteSoknader} = useHarNyligInnsendteSoknader();
     const antallPabegynteSoknader = usePabegynteSoknader()?.length;
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const {t} = useTranslation("skjema");
 
@@ -38,7 +34,8 @@ export const NySoknadInfo = () => {
             ...createSkjemaEventData(),
         });
         try {
-            navigate(`../skjema/${await startSoknad(dispatch)}/1`);
+            const {brukerBehandlingId} = await opprettSoknad();
+            navigate(`../skjema/${brukerBehandlingId}/1`);
         } catch (e) {
             setStartSoknadError(e);
             setStartSoknadPending(false);
@@ -55,7 +52,7 @@ export const NySoknadInfo = () => {
                 <Button
                     variant="primary"
                     id="start_soknad_button"
-                    disabled={startSoknadPending || visNedetidPanel}
+                    disabled={startSoknadPending}
                     onClick={onSokSosialhjelpButtonClick}
                 >
                     {getIntlTextOrKey(t, "skjema.knapper.start")}

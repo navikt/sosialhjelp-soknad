@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {Accordion, ConfirmationPanel, Link, Label, Alert} from "@navikt/ds-react";
-import {useDispatch} from "react-redux";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import {ListOfValues} from "./question/ListOfValues";
 import {Edit} from "@navikt/ds-icons";
@@ -14,7 +13,6 @@ import {useNavigate} from "react-router";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 import {Link as ReactRouterLink} from "react-router-dom";
 import styled from "styled-components";
-import {useSoknad} from "../../redux/soknad/useSoknad";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
@@ -22,11 +20,13 @@ import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
 import {useTranslation} from "react-i18next";
 import {NavEnhetInaktiv} from "../personopplysninger/adresse/NavEnhet";
 import {useGetOppsummering} from "../../../generated/oppsummering-ressurs/oppsummering-ressurs";
-import {Steg} from "../../../generated/model";
+import {SendTilUrlFrontendSendtTil, Steg} from "../../../generated/model";
 import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";
 import {erAktiv} from "../../../nav-soknad/containers/navEnhetStatus";
 import {createSkjemaEventData, logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
-import {sendSoknad} from "../../../lib/sendSoknad";
+import {getInnsynUrl} from "../../../nav-soknad/utils/rest-utils";
+import {basePath} from "../../../configuration";
+import {useSendSoknad} from "../../../generated/soknad-actions/soknad-actions";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const behandlingsId = useBehandlingsId();
@@ -39,13 +39,9 @@ export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
 };
 
 export const Oppsummering = () => {
-    const dispatch = useDispatch();
-
     const [bekreftet, setBekreftet] = useState<boolean>(false);
     const [bekreftetFeil, setBekreftetFeil] = useState<string | null>(null);
-
     const behandlingsId = useBehandlingsId();
-    const {showSendingFeiletPanel} = useSoknad();
 
     const navigate = useNavigate();
 
@@ -55,6 +51,18 @@ export const Oppsummering = () => {
 
     const {data: adresser} = useHentAdresser(behandlingsId);
 
+    const {mutateAsync, isError} = useSendSoknad({
+        mutation: {
+            onSuccess: ({id, sendtTil}) => {
+                const redirectUrl: Record<SendTilUrlFrontendSendtTil, string> = {
+                    FIKS_DIGISOS_API: `${getInnsynUrl()}${id}/status`,
+                    SVARUT: `${basePath}/skjema/${id}/ettersendelse`,
+                };
+
+                window.location.href = redirectUrl[sendtTil];
+            },
+        },
+    });
     useEffect(() => {
         if (erAktiv(adresser?.navEnhet)) return;
 
@@ -91,8 +99,8 @@ export const Oppsummering = () => {
 
         logAmplitudeEvent("skjema fullført", createSkjemaEventData(getAttributesForSkjemaFullfortEvent()));
         if (adresseValg) logInfo("klikk--" + adresseValg);
-        const nextPage = await sendSoknad(behandlingsId, dispatch);
-        if (nextPage) window.location.href = nextPage;
+
+        mutateAsync({behandlingsId});
     };
 
     const bekreftOpplysninger: string = t("soknadsosialhjelp.oppsummering.harLestSamtykker");
@@ -150,7 +158,7 @@ export const Oppsummering = () => {
                     {t("soknadsosialhjelp.oppsummering.bekreftOpplysninger")}
                 </ConfirmationPanel>
 
-                {showSendingFeiletPanel && (
+                {isError && (
                     <div role="alert">
                         <Alert variant="error" style={{marginTop: "1rem"}}>
                             Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg prøve
