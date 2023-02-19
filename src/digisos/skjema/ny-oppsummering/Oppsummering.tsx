@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Accordion, ConfirmationPanel, Link, Label, Alert} from "@navikt/ds-react";
+import {Accordion, ConfirmationPanel, Link, Label, Alert, Heading} from "@navikt/ds-react";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import {ListOfValues} from "./question/ListOfValues";
 import {Edit} from "@navikt/ds-icons";
@@ -27,6 +27,7 @@ import {createSkjemaEventData, logAmplitudeEvent} from "../../../nav-soknad/util
 import {getInnsynUrl} from "../../../nav-soknad/utils/rest-utils";
 import {basePath} from "../../../configuration";
 import {useSendSoknad} from "../../../generated/soknad-actions/soknad-actions";
+import {useFeatureFlags} from "../../../lib/featureFlags";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const behandlingsId = useBehandlingsId();
@@ -39,6 +40,7 @@ export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
 };
 
 export const Oppsummering = () => {
+    const {viStolerPaaDeg} = useFeatureFlags();
     const [bekreftet, setBekreftet] = useState<boolean>(false);
     const [bekreftetFeil, setBekreftetFeil] = useState<string | null>(null);
     const behandlingsId = useBehandlingsId();
@@ -64,12 +66,12 @@ export const Oppsummering = () => {
         },
     });
     useEffect(() => {
-        if (erAktiv(adresser?.navEnhet)) return;
+        if (adresser?.navEnhet === null || erAktiv(adresser?.navEnhet)) return;
 
         // TODO: Mer brukervennlig melding her
         logWarning(`Ugyldig søknadsmottaker ${adresser?.navEnhet} på side 9, sender bruker til side 1`);
 
-        navigate("../1");
+        //navigate("../1");
     }, [adresser, navigate]);
 
     const getAttributesForSkjemaFullfortEvent = () => {
@@ -102,8 +104,6 @@ export const Oppsummering = () => {
 
         mutateAsync({behandlingsId});
     };
-
-    const bekreftOpplysninger: string = t("soknadsosialhjelp.oppsummering.harLestSamtykker");
 
     if (isLoading) return <ApplicationSpinner />;
 
@@ -150,12 +150,26 @@ export const Oppsummering = () => {
                 <SoknadsmottakerInfoPanel />
 
                 <ConfirmationPanel
-                    label={bekreftOpplysninger}
+                    label={
+                        viStolerPaaDeg ? (
+                            <div className={"!whitespace-pre"}>
+                                {t("soknadsosialhjelp.oppsummering.bekreftelse.ny.checkbox")}
+                            </div>
+                        ) : (
+                            t("soknadsosialhjelp.oppsummering.harLestSamtykker")
+                        )
+                    }
                     checked={bekreftet}
                     onChange={(e) => setBekreftet(e.target.checked)}
                     error={bekreftetFeil}
                 >
-                    {t("soknadsosialhjelp.oppsummering.bekreftOpplysninger")}
+                    {viStolerPaaDeg ? (
+                        <Heading level={"4"} size={"small"}>
+                            {t("soknadsosialhjelp.oppsummering.bekreftelse.ny.label")}
+                        </Heading>
+                    ) : (
+                        t("soknadsosialhjelp.oppsummering.bekreftOpplysninger")
+                    )}
                 </ConfirmationPanel>
 
                 {isError && (
