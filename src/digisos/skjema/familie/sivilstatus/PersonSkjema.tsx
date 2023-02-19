@@ -13,7 +13,7 @@ import {clearValideringsfeil, setValideringsfeil} from "../../../redux/validerin
 import {ValideringsFeilKode} from "../../../redux/validering/valideringActionTypes";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../../lib/hooks/useBehandlingsId";
 
 const FAKTUM_KEY = "familie.sivilstatus.gift.ektefelle";
 const FAKTUM_KEY_FNR = FAKTUM_KEY + ".fnr";

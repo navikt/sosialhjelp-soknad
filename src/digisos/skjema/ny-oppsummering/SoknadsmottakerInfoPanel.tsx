@@ -4,7 +4,7 @@ import Brevkonvolutt from "../../../nav-soknad/components/svg/Brevkonvolutt";
 import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {BodyShort, GuidePanel, Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
 import BehandlingAvPersonopplysningerModal from "../../hovedmeny/paneler/BehandlingAvPersonopplysningerModal";
 import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";

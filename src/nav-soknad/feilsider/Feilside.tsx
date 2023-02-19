@@ -1,8 +1,8 @@
 import * as React from "react";
 import UtropstegnSirkelGraIkon from "./UtropstegnSirkelGraIkon";
-import Banner from "../components/banner/Banner";
-import {useTitle} from "../hooks/useTitle";
+import {useTitle} from "../../lib/hooks/useTitle";
 import {BodyShort, Button, Heading, Link} from "@navikt/ds-react";
+import AppHeader from "../components/appHeader/AppHeader";
 
 export interface FeilsideProps {
     tittel?: string;
@@ -26,7 +26,7 @@ const Feilside: React.FC<FeilsideProps> = ({
     useTitle(`Feilside - ${document.location.hostname}`);
     return (
         <>
-            <Banner>Søknad om økonomisk sosialhjelp</Banner>
+            <AppHeader />
             <div className={"text-center space-y-4 py-10"}>
                 <div className={"flex justify-center"}>
                     <UtropstegnSirkelGraIkon />

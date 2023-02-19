@@ -2,7 +2,7 @@ import * as React from "react";
 import {createContext, ReactNode, useContext, useEffect} from "react";
 import {scrollToTop} from "../../../utils";
 import AppBanner from "../../appHeader/AppHeader";
-import {useTitle} from "../../../hooks/useTitle";
+import {useTitle} from "../../../../lib/hooks/useTitle";
 import {Heading} from "@navikt/ds-react";
 import {NedetidPanel} from "../../../../components/common/NedetidPanel";
 import TimeoutBox from "../../timeoutbox/TimeoutBox";
@@ -14,6 +14,7 @@ import {SkjemaStegStepper} from "./SkjemaStegStepper";
 import {logError, logWarning} from "../../../utils/loggerUtils";
 import William from "../../svg/illustrasjoner/William";
 import {SkjemaStegErrorSummary} from "./SkjemaStegErrorSummary";
+import Koffert from "../../svg/illustrasjoner/Koffert";
 
 type TSkjemaStegContext = {
     page: SkjemaPage;
@@ -37,7 +38,7 @@ export type SkjemaPage = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 export const SkjemaHeadings: Record<SkjemaPage, {tittel: string; ikon: ReactNode}> = {
     1: {tittel: "kontakt.tittel", ikon: <William />},
     2: {tittel: "begrunnelsebolk.tittel", ikon: <SnakkebobleIllustrasjon />},
-    3: {tittel: "arbeidbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
+    3: {tittel: "arbeidbolk.tittel", ikon: <Koffert />},
     4: {tittel: "familiebolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     5: {tittel: "bosituasjonbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     6: {tittel: "inntektbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
@@ -85,8 +86,11 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
     const requestNavigation = async (page: number) => {
         try {
             if (onRequestNavigation !== undefined) await onRequestNavigation();
+            console.log("HIIIIIII");
             gotoPage(page);
         } catch (e) {
+            console.log("EEEEEEK");
+
             logWarning(`Nektet navigering: ${e}`);
             scrollToTop();
         }

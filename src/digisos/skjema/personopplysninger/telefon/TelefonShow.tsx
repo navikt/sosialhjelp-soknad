@@ -1,6 +1,6 @@
 import {useAlgebraic} from "../../../../lib/hooks/useAlgebraic";
 import {useHentTelefonnummer} from "../../../../generated/telefonnummer-ressurs/telefonnummer-ressurs";
-import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../../lib/hooks/useBehandlingsId";
 import {TelefonShowBrukerdefinert} from "./TelefonShowBrukerdefinert";
 import {TelefonShowFraKRR} from "./TelefonShowFraKRR";
 import {LinkButton} from "../../../../nav-soknad/components/linkButton/LinkButton";

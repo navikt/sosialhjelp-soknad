@@ -232,7 +232,7 @@
                 "operationId": "updateAdresse",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AdresserFrontend"}}},
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AdresserFrontendInput"}}},
                     "required": true
                 },
                 "responses": {
@@ -1430,7 +1430,10 @@
             },
             "UtdanningFrontend": {
                 "type": "object",
-                "properties": {"erStudent": {"type": "boolean"}, "studengradErHeltid": {"type": "boolean"}}
+                "properties": {
+                    "erStudent": {"type": "boolean", "nullable": true},
+                    "studengradErHeltid": {"type": "boolean", "nullable": true}
+                }
             },
             "TelefonnummerFrontend": {
                 "required": ["brukerdefinert"],
@@ -1476,15 +1479,13 @@
                 },
                 "nullable": true
             },
-            "AdresserFrontend": {
-                "required": ["valg"],
+            "AdresserFrontendInput": {
                 "type": "object",
                 "properties": {
-                    "valg": {"type": "string", "nullable": true, "enum": ["folkeregistrert", "midlertidig", "soknad"]},
+                    "valg": {"type": "string", "enum": ["folkeregistrert", "midlertidig", "soknad"]},
                     "folkeregistrert": {"$ref": "#/components/schemas/AdresseFrontend"},
                     "midlertidig": {"$ref": "#/components/schemas/AdresseFrontend"},
-                    "soknad": {"$ref": "#/components/schemas/AdresseFrontend"},
-                    "navEnhet": {"$ref": "#/components/schemas/NavEnhetFrontend"}
+                    "soknad": {"$ref": "#/components/schemas/AdresseFrontend"}
                 }
             },
             "GateadresseFrontend": {
@@ -1798,6 +1799,16 @@
                     "fodselsnummer": {"type": "string"},
                     "statsborgerskap": {"type": "string"},
                     "nordiskBorger": {"type": "boolean"}
+                }
+            },
+            "AdresserFrontend": {
+                "type": "object",
+                "properties": {
+                    "valg": {"type": "string", "enum": ["folkeregistrert", "midlertidig", "soknad"]},
+                    "folkeregistrert": {"$ref": "#/components/schemas/AdresseFrontend"},
+                    "midlertidig": {"$ref": "#/components/schemas/AdresseFrontend"},
+                    "soknad": {"$ref": "#/components/schemas/AdresseFrontend"},
+                    "navEnhet": {"$ref": "#/components/schemas/NavEnhetFrontend"}
                 }
             },
             "Avsnitt": {

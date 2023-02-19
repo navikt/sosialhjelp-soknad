@@ -7,7 +7,7 @@ import {State} from "../../../redux/reducers";
 import {lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../../lib/hooks/useBehandlingsId";
 
 const FAKTUM_KEY = "familie.barn.true.barnebidrag";
 

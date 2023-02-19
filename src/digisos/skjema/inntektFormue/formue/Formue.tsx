@@ -13,7 +13,7 @@ import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/sokn
 import {State} from "../../../redux/reducers";
 import {validateAndDispatchTextFieldMaxLength} from "../../../../nav-soknad/validering/validateAndDispatch";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../redux/soknadsdata/soknadsdataTypes";
 
 const MAX_CHARS = 500;

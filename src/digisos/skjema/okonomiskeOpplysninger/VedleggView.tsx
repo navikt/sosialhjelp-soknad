@@ -15,7 +15,7 @@ import {fetchDelete, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {useTranslation} from "react-i18next";
 import {getSpcForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerUtils";
-import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_FEIL} from "../../redux/soknadsdata/soknadsdataTypes";
 
 const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {

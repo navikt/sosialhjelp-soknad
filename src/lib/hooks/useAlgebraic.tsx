@@ -46,11 +46,7 @@ export const useAlgebraic = <TData, TError extends AxiosError | null>({
             Loading: () => <TextPlaceholder lines={1} />,
             Done: (response) =>
                 response.match({
-                    Error: (error) => {
-                        console.log("hi");
-                        GETErrorHandler(error);
-                        return null;
-                    },
+                    Error: GETErrorHandler,
                     Ok: okHandler,
                 }),
         });

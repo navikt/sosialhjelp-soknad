@@ -11,7 +11,7 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../../lib/hooks/useBehandlingsId";
 
 const BOUTGIFTER = "utgifter.boutgift";
 

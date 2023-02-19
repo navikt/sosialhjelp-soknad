@@ -2,7 +2,7 @@ import * as React from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {SkjemaStegContext} from "./SkjemaSteg";
-import {AvbrytSoknadModal, minSideUrl} from "../../avbrytsoknad/AvbrytSoknadModal";
+import {AvbrytSoknadModal, minSideUrl} from "../../../../lib/modals/AvbrytSoknadModal";
 import {useContext, useState} from "react";
 import {logError} from "../../../utils/loggerUtils";
 import {NavEnhetInaktiv} from "../../../../digisos/skjema/personopplysninger/adresse/NavEnhet";

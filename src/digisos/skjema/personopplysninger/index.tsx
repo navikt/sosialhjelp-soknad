@@ -7,7 +7,7 @@ import {useTranslation} from "react-i18next";
 import Kontonr from "./Kontonr";
 import {SkjemaSteg} from "../../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
 import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";
-import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useEffect, useState} from "react";
 import {FieldErrorsImpl} from "react-hook-form";
 import {NavEnhetFrontend} from "../../../generated/model";

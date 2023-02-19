@@ -1,13 +1,13 @@
 import * as React from "react";
-import {basePath} from "../../../configuration";
+import {basePath} from "../../configuration";
 import {BodyShort, Button, Modal, Heading} from "@navikt/ds-react";
 import styled from "styled-components";
-import {mobile} from "../../styles/variables";
-import {NedetidPanel} from "../../../components/common/NedetidPanel";
+import {mobile} from "../../nav-soknad/styles/variables";
+import {NedetidPanel} from "../../components/common/NedetidPanel";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../hooks/useBehandlingsId";
-import {logError} from "../../utils/loggerUtils";
-import {useSlettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
+import {useBehandlingsId} from "../hooks/useBehandlingsId";
+import {logError} from "../../nav-soknad/utils/loggerUtils";
+import {useSlettSoknad} from "../../generated/soknad-ressurs/soknad-ressurs";
 
 const StyledModal = styled(Modal)`
     max-width: 40rem;

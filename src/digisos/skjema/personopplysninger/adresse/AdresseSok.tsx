@@ -19,7 +19,7 @@ const Triangle = styled.div`
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 0 10px 1rem 10px;
+    border-width: 0 12px 1rem 12px;
     border-color: transparent;
 `;
 
@@ -36,7 +36,7 @@ export const AdresseSok = ({
 
     return (
         <div className={className}>
-            <Triangle className={"!border-b-gray-200 ml-5"} />
+            <Triangle className={"!border-b-gray-200 ml-4"} />
             <div className={"space-y-4 bg-gray-200 rounded-lg p-4 pt-3"}>
                 <div>
                     <Heading size={"xsmall"}>{t("kontakt.system.oppholdsadresse.hvorOppholder")}</Heading>

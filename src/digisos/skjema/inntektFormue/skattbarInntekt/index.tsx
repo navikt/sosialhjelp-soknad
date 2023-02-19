@@ -11,7 +11,7 @@ import {formatTidspunkt, getIntlTextOrKey} from "../../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Alert, BodyShort, Button, Heading, Label, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../redux/soknadsdata/soknadsdataTypes";
 
 const Skatt = () => {

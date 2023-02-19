@@ -19,7 +19,7 @@ import {Dispatch} from "redux";
 import {logInfo} from "../../../nav-soknad/utils/loggerUtils";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_FEIL} from "../../redux/soknadsdata/soknadsdataTypes";
 
 const lastOppFil = (

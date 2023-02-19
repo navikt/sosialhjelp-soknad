@@ -10,7 +10,7 @@ import {OpplysningerInformasjonspanel} from "./OpplysningerInformasjonspanel";
 import {OpplysningerIkkeBesvartPanel} from "./OpplysningerIkkeBesvartPanel";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
-import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../redux/soknadsdata/soknadsdataTypes";
 
 const OkonomiskeOpplysningerView = () => {

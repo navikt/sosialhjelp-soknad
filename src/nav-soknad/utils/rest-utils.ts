@@ -48,10 +48,6 @@ export function downloadAttachedFile(urlPath: string): void {
     window.open(filUrl);
 }
 
-export const MED_CREDENTIALS: RequestInit = {
-    credentials: determineCredentialsParameter(),
-};
-
 enum RequestMethod {
     GET = "GET",
     POST = "POST",

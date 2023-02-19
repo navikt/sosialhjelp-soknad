@@ -4,12 +4,10 @@ import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/dig
 import AntallPersoner from "./AntallPersoner";
 import Botype from "./Botype";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
-import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 
 export const Bosituasjon = () => {
     const behandlingsId = useBehandlingsId();
-
-    if (!behandlingsId) return null;
 
     return (
         <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"bosituasjonbolk"} ikon={<BoligIllustrasjon />}>

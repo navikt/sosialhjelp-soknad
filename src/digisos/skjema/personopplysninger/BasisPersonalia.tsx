@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Systeminfo, SysteminfoItem} from "../../../nav-soknad/components/systeminfo/Systeminfo";
-import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
 import {useHentBasisPersonalia} from "../../../generated/basis-personalia-ressurs/basis-personalia-ressurs";
 import {useTranslation} from "react-i18next";

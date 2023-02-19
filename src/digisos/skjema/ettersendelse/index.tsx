@@ -10,13 +10,13 @@ import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel"
 import {useParams} from "react-router";
 import SoknadAlleredeSendtPrompt from "../../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPrompt";
 import HotjarTriggerEttersendelse from "../../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
-import {useTitle} from "../../../nav-soknad/hooks/useTitle";
+import {useTitle} from "../../../lib/hooks/useTitle";
 import {BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
 import {BlokkCenter} from "./BlokkCenter";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
 import {Trans, useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
-import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 
 type EttersendelseParams = Record<"behandlingsId", string>;
 

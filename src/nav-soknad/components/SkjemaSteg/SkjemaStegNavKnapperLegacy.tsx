@@ -1,7 +1,7 @@
 import * as React from "react";
 import {getIntlTextOrKey} from "../../utils";
 import {Button, Loader} from "@navikt/ds-react";
-import {AvbrytSoknadModal, minSideUrl} from "../avbrytsoknad/AvbrytSoknadModal";
+import {AvbrytSoknadModal, minSideUrl} from "../../../lib/modals/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {SkjemaConfig, SkjemaSteg} from "./digisosSkjema";
 import {useState} from "react";

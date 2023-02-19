@@ -18,7 +18,7 @@ import {
     OldSysteminfo,
 } from "../../../../nav-soknad/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../../lib/hooks/useBehandlingsId";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
 

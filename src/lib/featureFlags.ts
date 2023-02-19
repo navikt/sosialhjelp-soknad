@@ -1,5 +1,5 @@
 export type FeatureFlags = {
-    // Ny tekst i Begrunnelse
+    // Bruk ny tekst i Begrunnelse
     begrunnelseNyTekst: boolean;
 };
 

@@ -1,6 +1,6 @@
 import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
 import {useHentKontonummer} from "../../../generated/kontonummer-ressurs/kontonummer-ressurs";
-import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useTranslation} from "react-i18next";
 import * as React from "react";
 import {Systeminfo, SysteminfoItem} from "../../../nav-soknad/components/systeminfo/Systeminfo";

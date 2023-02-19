@@ -10,7 +10,7 @@ import {
     updateTelefonnummer,
     useHentTelefonnummer,
 } from "../../../../generated/telefonnummer-ressurs/telefonnummer-ressurs";
-import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../../lib/hooks/useBehandlingsId";
 type FormType = Pick<TelefonnummerFrontend, "brukerutfyltVerdi">;
 
 export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {

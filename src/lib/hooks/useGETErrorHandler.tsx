@@ -16,17 +16,18 @@ export const handleAxiosError = (error: AxiosError) => {
 };
 
 export const useGETErrorHandler = () => ({
-    GETErrorHandler: (error: AxiosError | Error | null) => {
+    GETErrorHandler: <TError,>(error: TError) => {
         if (!error) {
             logError(`useGETErrorHandler invokert med error == null, skal ikke skje?`);
-            return;
+            return null;
         }
 
         if (isAxiosError(error)) {
             handleAxiosError(error);
         } else {
-            logError(`Feil i expectOK: ${error.message}`);
+            logError(`Feil i expectOK: ${error}`);
             window.location.href = "/sosialhjelp/soknad/feil";
         }
+        return null;
     },
 });

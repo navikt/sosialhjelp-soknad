@@ -19,7 +19,7 @@ import {clearValideringsfeil, setValideringsfeil} from "../../redux/validering/v
 import {erTall} from "../../../nav-soknad/validering/valideringer";
 import {getFeilForOpplysning} from "../../redux/okonomiskeOpplysninger/opplysningerSaga";
 import {State} from "../../redux/reducers";
-import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 
 export const erGyldigTall = (input: string): boolean => {
     return erTall(input, true) && parseInt(input, 10) < 2147483648;

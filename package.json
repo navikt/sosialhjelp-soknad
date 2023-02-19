@@ -106,7 +106,8 @@
     "dev": "concurrently --kill-others \"npm run start\" \"npm run start:css\"",
     "prepare": "husky install",
     "fetch-api": "curl -o ./soknad-api.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs && prettier --write soknad-api.json",
-    "orval": "rm -rf ./src/generated & orval --prettier"
+    "orval": "rm -rf ./src/generated & orval --prettier",
+    "lint": "lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -2,7 +2,7 @@ import * as React from "react";
 import {useState} from "react";
 import NavEnhet from "./NavEnhet";
 import {useAlgebraic} from "../../../../lib/hooks/useAlgebraic";
-import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../../lib/hooks/useBehandlingsId";
 import {AdresseVisning} from "./AdresseVisning";
 import {
     getHentAdresserQueryKey,
@@ -44,7 +44,7 @@ export const AdresseData = () => {
 
         queryClient.setQueryData(getHentAdresserQueryKey(behandlingsId), {...inputAdresser, navEnhet: null});
         // TODO: Fiks PUT /adresser så den returnerer Adresser
-        const navEnheter = await updateAdresse(behandlingsId, {...inputAdresser, navEnhet: undefined});
+        const navEnheter = await updateAdresse(behandlingsId, {...inputAdresser});
         queryClient.setQueryData(getHentAdresserQueryKey(behandlingsId), {
             ...inputAdresser,
             navEnhet: navEnheter[0] ?? null,
@@ -61,6 +61,7 @@ export const AdresseData = () => {
             <HorizontalRadioGroup
                 legend={t("soknadsmottaker.infotekst.tekst")}
                 value={uncommittedAdressevalg}
+                className={"!mb-4"}
                 onChange={async (valg) => {
                     setUncommittedAdressevalg(valg);
                     if (valg !== "soknad") await setAdresser(adresser, valg);
@@ -74,7 +75,9 @@ export const AdresseData = () => {
                     {t("kontakt.system.oppholdsadresse.midlertidigAdresse")}
                     <AdresseVisning adresse={adresser.midlertidig} />
                 </Radio>
-                <Radio value={"soknad"}>{t("kontakt.system.oppholdsadresse.valg.soknad")}</Radio>
+                <Radio value={"soknad"} className={"!mb-0"}>
+                    {t("kontakt.system.oppholdsadresse.valg.soknad")}
+                </Radio>
                 {uncommittedAdressevalg === "soknad" && (
                     <AdresseSok
                         defaultValue={formaterSoknadsadresse(adresser.soknad?.gateadresse)}

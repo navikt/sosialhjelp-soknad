@@ -1,7 +1,6 @@
 import {BosituasjonData, initialBosituasjonState} from "../../skjema/bosituasjon/bosituasjonTypes";
 import {Familie, initialFamilieStatus, Sivilstatus} from "../../skjema/familie/sivilstatus/FamilieTypes";
 import {initialUtdanningState, Utdanning} from "../../skjema/arbeidUtdanning/utdanning/utdanningTypes";
-import {Arbeid, initialArbeidState} from "../../skjema/arbeidUtdanning/arbeid/arbeidTypes";
 import {setPath} from "./soknadsdataActions";
 import {Bostotte, initialBostotteState} from "../../skjema/inntektFormue/bostotte/bostotteTypes";
 import {initialUtbetalingerState, Utbetalinger} from "../../skjema/inntektFormue/utbetalinger/utbetalingerTypes";
@@ -86,7 +85,6 @@ export const initialUtgifterState: Utgifter = {
 };
 
 export interface Soknadsdata {
-    arbeid: Arbeid;
     bosituasjon: BosituasjonData;
     familie: Familie;
     utdanning: Utdanning;
@@ -96,7 +94,6 @@ export interface Soknadsdata {
 }
 
 export interface SoknadsdataActionVerdi {
-    arbeid: Arbeid;
     bosituasjon: BosituasjonData;
     familie: Familie;
     utdanning: Utdanning;
@@ -105,7 +102,6 @@ export interface SoknadsdataActionVerdi {
 }
 
 export type SoknadsdataType =
-    | Arbeid
     | Familie
     | Utdanning
     | Sivilstatus
@@ -143,7 +139,6 @@ const initialSoknadsdataRestStatus = {
 };
 
 export const initialSoknadsdataState: Soknadsdata = {
-    arbeid: initialArbeidState,
     bosituasjon: initialBosituasjonState,
     familie: initialFamilieStatus,
     utdanning: initialUtdanningState,

@@ -12,7 +12,7 @@ import {hentSoknadsdata, lagreSoknadsdata} from "../../../redux/soknadsdata/sokn
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Heading, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../redux/soknadsdata/soknadsdataTypes";
 
 const FAKTUM_STUDIELAN = "inntekt.studielan";

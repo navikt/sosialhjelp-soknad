@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useHentKontonummer} from "../../../generated/kontonummer-ressurs/kontonummer-ressurs";
 import Sporsmal from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {KontonrShow} from "./KontonrShow";

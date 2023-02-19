@@ -2,7 +2,7 @@ import * as React from "react";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
 import IkkeTilgang from "./IkkeTilgang";
 import AppBanner from "../../nav-soknad/components/appHeader/AppHeader";
-import {useTitle} from "../../nav-soknad/hooks/useTitle";
+import {useTitle} from "../../lib/hooks/useTitle";
 import {NedetidPanel} from "../../components/common/NedetidPanel";
 import {NySoknadPanel} from "./paneler/NySoknad";
 import {PabegynteSoknaderPanel} from "./paneler/PabegynteSoknader";

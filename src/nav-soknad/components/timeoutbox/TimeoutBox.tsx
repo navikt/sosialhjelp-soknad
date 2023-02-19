@@ -2,7 +2,7 @@ import * as React from "react";
 import Nedtelling from "./Nedtelling";
 import LoggetUt from "./LoggetUt";
 import {now} from "../../utils";
-import useInterval from "../../hooks/useInterval";
+import useInterval from "../../../lib/hooks/useInterval";
 import {Modal} from "@navikt/ds-react";
 import styled from "styled-components";
 import {getUtloggingsUrl} from "../../utils/rest-utils";

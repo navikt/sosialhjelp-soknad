@@ -10,7 +10,7 @@ export const TelefonShowFraKRR = ({systemverdi, onEdit}: {systemverdi: string; o
     const {t} = useTranslation("skjema", {keyPrefix: "kontakt.system"});
     return (
         <>
-            <Detail spacing>{t("telefoninfo.infotekst.tekst")}</Detail>
+            <Detail>{t("telefoninfo.infotekst.tekst")}</Detail>
             <Systeminfo>
                 <SysteminfoItem label={t("telefon.label")}>
                     {systemverdi && formatTelefonnummer(strip47(systemverdi))}

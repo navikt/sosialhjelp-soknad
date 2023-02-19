@@ -12,7 +12,7 @@ import {State} from "../../../redux/reducers";
 import {hentSoknadsdata} from "../../../redux/soknadsdata/soknadsdataActions";
 import {getFaktumSporsmalTekst} from "../../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../redux/soknadsdata/soknadsdataTypes";
 
 const DinSivilstatusView = () => {

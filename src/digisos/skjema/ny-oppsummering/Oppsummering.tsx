@@ -16,7 +16,7 @@ import styled from "styled-components";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
-import {useBehandlingsId} from "../../../nav-soknad/hooks/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useTranslation} from "react-i18next";
 import {NavEnhetInaktiv} from "../personopplysninger/adresse/NavEnhet";
 import {useGetOppsummering} from "../../../generated/oppsummering-ressurs/oppsummering-ressurs";
