@@ -149,7 +149,7 @@
     "ettersendelse.dato_tid": "Ettersendt {{dato}} kl. {{tid}}",
     "ettersendelse.feilmelding.ingen_vedlegg": "Du må laste opp et vedlegg før du sender inn.",
     "ettersendelse.generell.dokumentasjon": "Last opp generelle opplysninger",
-    "ettersendelse.ikke.mulig": "Det er ikke lenger mulig å ettersende vedlegg på denne søknaden.",
+    "ettersendelse.ikke.mulig": "Du kan ikke sende inn vedlegg til søknader som er eldre enn 90 dager. Hvis du trenger å levere opplysninger må du levere dem til NAV- kontoret ditt.",
     "ettersendelse.ikke_tilgjengelig": "Ettersendelse av vedlegg er ikke tilgjengelig.",
     "ettersendelse.ingress": "Du må gi beskjed hvis den økonomiske situasjonen din endrer seg etter at du har sendt søknaden.",
     "ettersendelse.knapp.tittel": "Ettersend vedlegg",
