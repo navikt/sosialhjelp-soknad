@@ -4,7 +4,7 @@ import {Radio} from "@navikt/ds-react";
 import Underskjema from "../../../../nav-soknad/components/underskjema";
 import {HorizontalRadioGroup, VerticalRadioGroup} from "../../../../nav-soknad/components/form/HorizontalRadioGroup";
 import {TranslatedError} from "../../begrunnelse";
-import {Control, Controller} from "react-hook-form";
+import {Control, Controller, useWatch} from "react-hook-form";
 import {ArbeidOgUtdanningType} from "../index";
 
 type UtdanningViewProps = {
@@ -13,6 +13,7 @@ type UtdanningViewProps = {
 
 const UtdanningInput = React.forwardRef<HTMLDivElement, UtdanningViewProps>(({control}, ref) => {
     const {t} = useTranslation("skjema");
+    const erStudent = useWatch({control, name: "utdanning.erStudent"});
     return (
         <div ref={ref}>
             <Controller
@@ -35,7 +36,7 @@ const UtdanningInput = React.forwardRef<HTMLDivElement, UtdanningViewProps>(({co
                 control={control}
                 name="utdanning.studengradErHeltid"
                 render={({field: {onChange, value: studengradErHeltid, name, ref}, formState: {errors}}) => (
-                    <Underskjema jaNeiSporsmal visible={!!control.getFieldState("utdanning.erStudent")}>
+                    <Underskjema jaNeiSporsmal visible={!!erStudent}>
                         <HorizontalRadioGroup
                             onChange={(value) => onChange({target: {value: value === "true"}})}
                             value={studengradErHeltid?.toString() || null}

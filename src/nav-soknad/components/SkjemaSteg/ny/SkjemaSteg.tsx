@@ -86,7 +86,6 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
     const requestNavigation = async (page: number) => {
         try {
             if (onRequestNavigation !== undefined) await onRequestNavigation();
-            console.log("HIIIIIII");
             gotoPage(page);
         } catch (e) {
             console.log("EEEEEEK");
