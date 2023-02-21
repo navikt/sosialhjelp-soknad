@@ -2,6 +2,7 @@ import * as React from "react";
 import {useState} from "react";
 import {TelefonEditBrukerdefinert} from "./TelefonEditBrukerdefinert";
 import {TelefonShow} from "./TelefonShow";
+import {Systeminfo} from "../../../../nav-soknad/components/systeminfo/Systeminfo";
 
 export const strip47 = (phoneNumber: string) => phoneNumber.replace(/^\+47/, "");
 
@@ -13,7 +14,9 @@ export const TelefonData = () => {
             {editMode ? (
                 <TelefonEditBrukerdefinert onClose={() => setEditMode(false)} />
             ) : (
-                <TelefonShow onEdit={() => setEditMode(true)} />
+                <Systeminfo>
+                    <TelefonShow onEdit={() => setEditMode(true)} />
+                </Systeminfo>
             )}
         </div>
     );

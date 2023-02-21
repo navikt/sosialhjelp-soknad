@@ -3,12 +3,12 @@ export default {
         input: "./soknad-api.json",
         output: {
             mode: "tags-split",
-            target: "src/generated/soknad-api.ts",
+            target: "src/generated/soknad-api-axios.ts",
             schemas: "src/generated/model",
             client: "react-query",
             override: {
                 mutator: {
-                    path: "./src/lib/orval/axios-instance.ts",
+                    path: "./src/lib/orval/soknad-api-axios.ts",
                     name: "axiosInstance",
                 },
                 useDates: true,

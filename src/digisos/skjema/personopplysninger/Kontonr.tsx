@@ -8,6 +8,7 @@ import {KontonrShow} from "./KontonrShow";
 import {KontonrEdit} from "./KontonrEdit";
 import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
+import {Systeminfo} from "../../../nav-soknad/components/systeminfo/Systeminfo";
 
 export const Kontonr = () => {
     const behandlingsId = useBehandlingsId();
@@ -21,10 +22,12 @@ export const Kontonr = () => {
                 <KontonrEdit onClose={() => setEditMode(false)} />
             ) : (
                 <div className={"space-y-2"}>
-                    <KontonrShow />
-                    <LinkButton onClick={() => setEditMode(true)}>
-                        {t("system.kontonummer.endreknapp.label")}
-                    </LinkButton>
+                    <Systeminfo>
+                        <KontonrShow />
+                        <LinkButton onClick={() => setEditMode(true)}>
+                            {t("system.kontonummer.endreknapp.label")}
+                        </LinkButton>
+                    </Systeminfo>
                 </div>
             )}
         </Sporsmal>

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {Heading} from "@navikt/ds-react";
-import {EditAnswerLink} from "../Oppsummering";
+import {EditAnswerLink} from "../OppsummeringSteg";
 
 const StyledQuestion = styled.div`
     margin-bottom: 2rem;
@@ -13,7 +13,7 @@ const HeadingWithEditLink = styled.div`
     gap: 0.75rem;
 `;
 
-export const Question = (props: {title: string; questionId?: string; children: any}) => {
+export const OppsummeringSporsmal = (props: {title: string; questionId?: string; children: any}) => {
     return (
         <StyledQuestion>
             <HeadingWithEditLink>

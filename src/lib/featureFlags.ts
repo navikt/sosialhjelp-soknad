@@ -4,6 +4,12 @@ export type FeatureFlags = {
 
     // Ny tekst i Oppsummering
     viStolerPaaDeg: boolean;
+
+    // Ny versjon av Personalia oppsummering
+    nyOppsummering: boolean;
+
+    // Ny NAV-kontor-visning i oppsummering
+    oppsummeringNavEnhet: boolean;
 };
 
 export const useFeatureFlags = (): FeatureFlags => {
@@ -11,10 +17,14 @@ export const useFeatureFlags = (): FeatureFlags => {
         return {
             begrunnelseNyTekst: true,
             viStolerPaaDeg: true,
+            nyOppsummering: false,
+            oppsummeringNavEnhet: process.env.REACT_APP_ENVIRONMENT === "localhost",
         };
     }
     return {
         begrunnelseNyTekst: false,
         viStolerPaaDeg: false,
+        nyOppsummering: false,
+        oppsummeringNavEnhet: false,
     };
 };

@@ -12,6 +12,7 @@ import {useEffect, useState} from "react";
 import {FieldErrorsImpl} from "react-hook-form";
 import {NavEnhetFrontend} from "../../../generated/model";
 import {erAktiv} from "../../../nav-soknad/containers/navEnhetStatus";
+import {Systeminfo} from "../../../nav-soknad/components/systeminfo/Systeminfo";
 
 const Personopplysninger = () => {
     const {t} = useTranslation("skjema");
@@ -46,12 +47,10 @@ const Personopplysninger = () => {
                         errors={{soknadsmottaker: {message: error}} as FieldErrorsImpl<NavEnhetFrontend>}
                     />
                 )}
-                <Sporsmal
-                    id={"soknadsmottaker"}
-                    sporsmal={t("kontakt.system.personalia.sporsmal")}
-                    infotekst={t("kontakt.system.personalia.infotekst.tekst")}
-                >
-                    <BasisPersonaliaData />
+                <Sporsmal id={"soknadsmottaker"} sporsmal={t("kontakt.system.personalia.sporsmal")}>
+                    <Systeminfo>
+                        <BasisPersonaliaData />
+                    </Systeminfo>
                 </Sporsmal>
                 <Sporsmal sporsmal={t(`soknadsmottaker.sporsmal`)} hjelpetekst={t("soknadsmottaker.hjelpetekst.tekst")}>
                     <AdresseData />

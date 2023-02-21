@@ -1,4 +1,4 @@
-import {BodyShort, Label} from "@navikt/ds-react";
+import {BodyShort, Detail, Label} from "@navikt/ds-react";
 import React, {ReactNode} from "react";
 import styled from "styled-components";
 import Dato from "../tidspunkt/Dato";
@@ -55,24 +55,29 @@ export const SysteminfoItem = ({
     multiline,
     children,
     className,
+    comment,
 }: {
     multiline?: boolean;
     label: ReactNode;
+    comment?: ReactNode;
     children?: ReactNode;
     className?: string;
 }) => (
-    <ListItem className={cx("", className)} multiline={multiline}>
-        <Label className="pr-1 after:content-[':']" size="small">
-            {label}
-        </Label>
-        <BodyShort size="small">{children}</BodyShort>
-    </ListItem>
+    <div>
+        <Detail className={cx("italic py-1")}>{comment}</Detail>
+        <ListItem className={cx("!leading-5 ", className)} multiline={multiline}>
+            <Label className="pr-1 after:content-[':']" size="small">
+                {label}
+            </Label>
+            <BodyShort size="small">{children}</BodyShort>
+        </ListItem>
+    </div>
 );
 
 export const Systeminfo = ({children, className}: {children: React.ReactNode; className?: string}) => (
     <ul
         className={cx(
-            "flex flex-col items-between gap-2 pl-3 py-2 border-l-4 bg-green-50/40 border-l-digisosGronnLys ",
+            "flex flex-col items-between gap-1 pl-3 py-3 border-l-4 bg-[var(--a-surface-success-subtle)] border-l-[var(--a-surface-success)] ",
             className
         )}
     >

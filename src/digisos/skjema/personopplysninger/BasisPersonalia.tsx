@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Systeminfo, SysteminfoItem} from "../../../nav-soknad/components/systeminfo/Systeminfo";
+import {SysteminfoItem} from "../../../nav-soknad/components/systeminfo/Systeminfo";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
 import {useHentBasisPersonalia} from "../../../generated/basis-personalia-ressurs/basis-personalia-ressurs";
@@ -10,10 +10,12 @@ export const BasisPersonaliaData = () => {
     const {expectOK} = useAlgebraic(useHentBasisPersonalia(useBehandlingsId()));
     const {t} = useTranslation("skjema", {keyPrefix: "kontakt.system.personalia"});
     return expectOK(({navn, fodselsnummer, statsborgerskap = "Ukjent/statsløs"}) => (
-        <Systeminfo>
-            <SysteminfoItem label={t("navn")}>{navn?.fulltNavn}</SysteminfoItem>
+        <>
+            <SysteminfoItem comment={t("infotekst.tekst")} label={t("navn")}>
+                {navn?.fulltNavn}
+            </SysteminfoItem>
             <SysteminfoItem label={t("fnr")}>{formatFodselsnummer(fodselsnummer ?? "")}</SysteminfoItem>
             <SysteminfoItem label={t("statsborgerskap")}>{statsborgerskap}</SysteminfoItem>
-        </Systeminfo>
+        </>
     ));
 };

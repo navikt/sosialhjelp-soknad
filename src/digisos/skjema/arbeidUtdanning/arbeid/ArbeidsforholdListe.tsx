@@ -27,7 +27,7 @@ const ArbeidsforholdDetalj = ({arbeidsforhold}: {arbeidsforhold: ArbeidsforholdF
             <SysteminfoItem label={t("arbeidsgivernavn.label")}>{arbeidsgivernavn}</SysteminfoItem>
             <SysteminfoItem label={t("fom.label")}>{fom}</SysteminfoItem>
             {tom?.length && <SysteminfoItem label={t("tom.label")}>{tom}</SysteminfoItem>}
-            <SysteminfoItem label={t("stillingsprosent.label")}>{stillingsprosent}%</SysteminfoItem>
+            <SysteminfoItem label={t("stillingsprosent.label")}>{stillingsprosent} %</SysteminfoItem>
         </Systeminfo>
     );
 };

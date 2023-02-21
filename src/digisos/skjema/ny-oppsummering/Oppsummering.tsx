@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {Accordion, ConfirmationPanel, Link, Label, Alert, Heading} from "@navikt/ds-react";
+import {Alert, ConfirmationPanel, Heading, Label} from "@navikt/ds-react";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import {ListOfValues} from "./question/ListOfValues";
-import {Edit} from "@navikt/ds-icons";
-import {Question as QuestionEl} from "./question/Question";
+import {OppsummeringSporsmal} from "./question/OppsummeringSporsmal";
 import {SystemData} from "./question/SystemData";
 import {FreeText} from "./question/FreeText";
 import {Warning} from "./question/Warning";
@@ -11,14 +10,12 @@ import {SystemDataMap} from "./question/SystemDataMap";
 import {Attachment} from "./question/Attachment";
 import {useNavigate} from "react-router";
 import {ApplicationSpinner} from "../../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
-import {Link as ReactRouterLink} from "react-router-dom";
-import styled from "styled-components";
 import StegMedNavigasjon from "../../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
 import {digisosSkjemaConfig} from "../../../nav-soknad/components/SkjemaSteg/digisosSkjema";
 import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useTranslation} from "react-i18next";
-import {NavEnhetInaktiv} from "../personopplysninger/adresse/NavEnhet";
+import {NavEnhetInaktiv, NyNavEnhet} from "../personopplysninger/adresse/NavEnhet";
 import {useGetOppsummering} from "../../../generated/oppsummering-ressurs/oppsummering-ressurs";
 import {SendTilUrlFrontendSendtTil, Steg} from "../../../generated/model";
 import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";
@@ -28,22 +25,39 @@ import {getInnsynUrl} from "../../../nav-soknad/utils/rest-utils";
 import {basePath} from "../../../configuration";
 import {useSendSoknad} from "../../../generated/soknad-actions/soknad-actions";
 import {useFeatureFlags} from "../../../lib/featureFlags";
+import {OppsummeringSteg} from "./OppsummeringSteg";
+import {OppsummeringHeading, OppsummeringPersonalia} from "./oppsummeringer/personalia";
+import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
+import {useHentBegrunnelse} from "../../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
 
-export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
-    const behandlingsId = useBehandlingsId();
-    return (
-        <Link href={`/sosialhjelp/soknad/skjema/${behandlingsId}/${props.steg}#${props.questionId}`}>
-            <Edit />
-            Endre svar
-        </Link>
-    );
+const OppsummeringBegrunnelse = () => {
+    const {expectOK} = useAlgebraic(useHentBegrunnelse(useBehandlingsId()));
+
+    return expectOK(({hvorforSoke, hvaSokesOm}) => {
+        return (
+            <div>
+                <OppsummeringHeading stepNr={2}>Søknad</OppsummeringHeading>
+                <div className={"space-y-2 py-2 "}>
+                    <Heading level={"4"} size={"xsmall"}>
+                        Du søker om:
+                    </Heading>
+                    <div>{hvaSokesOm}</div>
+                    <Heading level={"4"} size={"xsmall"}>
+                        Begrunnelse:
+                    </Heading>
+                    <div>{hvorforSoke}</div>
+                </div>
+            </div>
+        );
+    });
 };
 
 export const Oppsummering = () => {
-    const {viStolerPaaDeg} = useFeatureFlags();
+    const {viStolerPaaDeg, oppsummeringNavEnhet} = useFeatureFlags();
     const [bekreftet, setBekreftet] = useState<boolean>(false);
     const [bekreftetFeil, setBekreftetFeil] = useState<string | null>(null);
     const behandlingsId = useBehandlingsId();
+    const {nyOppsummering} = useFeatureFlags();
 
     const navigate = useNavigate();
 
@@ -107,47 +121,49 @@ export const Oppsummering = () => {
 
     if (isLoading) return <ApplicationSpinner />;
 
+    const kunLegacySteg = (steg: Steg) => !nyOppsummering || ![1, 2].includes(steg.stegNr);
+
     return (
         <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"oppsummering"} onSend={sendInnSoknad}>
             <div>
-                {data?.steg.map((bolk) => {
-                    return (
-                        <OppsummeringBolk bolk={bolk} key={bolk.stegNr}>
-                            {bolk.avsnitt.map((avsnitt) => (
-                                <QuestionEl key={avsnitt.tittel} title={t(avsnitt.tittel)}>
-                                    {avsnitt.sporsmal?.map((sporsmal) => {
-                                        return (
-                                            <div key={sporsmal.tittel}>
-                                                {sporsmal.tittel && <Label spacing>{t(sporsmal.tittel)} </Label>}
-                                                {!sporsmal.erUtfylt && <Warning />}
-                                                <SystemData
-                                                    felter={sporsmal.felt?.filter((felt) => felt.type === "SYSTEMDATA")}
-                                                />
-                                                <SystemDataMap
-                                                    felter={sporsmal.felt?.filter(
-                                                        (felt) => felt.type === "SYSTEMDATA_MAP"
-                                                    )}
-                                                />
-                                                <ListOfValues
-                                                    felter={sporsmal.felt?.filter((felt) => felt.type === "CHECKBOX")}
-                                                />
-                                                <Attachment
-                                                    behandlingsId={behandlingsId}
-                                                    felter={sporsmal.felt?.filter((felt) => felt.type === "VEDLEGG")}
-                                                />
-                                                <FreeText
-                                                    felter={sporsmal.felt?.filter((felt) => felt.type === "TEKST")}
-                                                />
-                                            </div>
-                                        );
-                                    })}
-                                </QuestionEl>
-                            ))}
-                        </OppsummeringBolk>
-                    );
-                })}
+                {nyOppsummering && (
+                    <>
+                        <OppsummeringPersonalia />
+                        <OppsummeringBegrunnelse />
+                    </>
+                )}
+                {data?.steg.filter(kunLegacySteg).map((steg) => (
+                    <OppsummeringSteg steg={steg} key={steg.stegNr}>
+                        {steg.avsnitt.map((avsnitt) => (
+                            <OppsummeringSporsmal key={avsnitt.tittel} title={t(avsnitt.tittel)}>
+                                {avsnitt.sporsmal?.map((sporsmal) => {
+                                    return (
+                                        <div key={sporsmal.tittel}>
+                                            {sporsmal.tittel && <Label spacing>{t(sporsmal.tittel)} </Label>}
+                                            {!sporsmal.erUtfylt && <Warning />}
+                                            <SystemData
+                                                felter={sporsmal.felt?.filter((felt) => felt.type === "SYSTEMDATA")}
+                                            />
+                                            <SystemDataMap
+                                                felter={sporsmal.felt?.filter((felt) => felt.type === "SYSTEMDATA_MAP")}
+                                            />
+                                            <ListOfValues
+                                                felter={sporsmal.felt?.filter((felt) => felt.type === "CHECKBOX")}
+                                            />
+                                            <Attachment
+                                                behandlingsId={behandlingsId}
+                                                felter={sporsmal.felt?.filter((felt) => felt.type === "VEDLEGG")}
+                                            />
+                                            <FreeText felter={sporsmal.felt?.filter((felt) => felt.type === "TEKST")} />
+                                        </div>
+                                    );
+                                })}
+                            </OppsummeringSporsmal>
+                        ))}
+                    </OppsummeringSteg>
+                ))}
 
-                <SoknadsmottakerInfoPanel />
+                {oppsummeringNavEnhet ? <NyNavEnhet navEnhet={adresser?.navEnhet} /> : <SoknadsmottakerInfoPanel />}
 
                 <ConfirmationPanel
                     label={
@@ -185,32 +201,6 @@ export const Oppsummering = () => {
                 <NavEnhetInaktiv navEnhet={adresser?.navEnhet} />
             </div>
         </StegMedNavigasjon>
-    );
-};
-
-const EditAnswer = styled.div`
-    display: flex;
-    justify-content: flex-end;
-`;
-
-const OppsummeringBolk = (props: {bolk: Steg; children: React.ReactNode}) => {
-    const behandlingsId = useBehandlingsId();
-    const {t} = useTranslation();
-
-    return (
-        <Accordion>
-            <Accordion.Item>
-                <Accordion.Header>{t(props.bolk.tittel)}</Accordion.Header>
-                <Accordion.Content>
-                    <EditAnswer>
-                        <ReactRouterLink className="navds-link" to={`/skjema/${behandlingsId}/${props.bolk.stegNr}`}>
-                            Gå tilbake for å endre
-                        </ReactRouterLink>
-                    </EditAnswer>
-                    {props.children}
-                </Accordion.Content>
-            </Accordion.Item>
-        </Accordion>
     );
 };
 

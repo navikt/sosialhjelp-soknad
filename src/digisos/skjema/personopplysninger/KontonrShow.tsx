@@ -3,21 +3,17 @@ import {useHentKontonummer} from "../../../generated/kontonummer-ressurs/kontonu
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useTranslation} from "react-i18next";
 import * as React from "react";
-import {Systeminfo, SysteminfoItem} from "../../../nav-soknad/components/systeminfo/Systeminfo";
+import {SysteminfoItem} from "../../../nav-soknad/components/systeminfo/Systeminfo";
 import {formatKontonummer} from "@fremtind/jkl-formatters-util";
-import {Detail} from "@navikt/ds-react";
 
 export const KontonrShowBrukerdefinert = () => {
     const {t} = useTranslation("skjema", {keyPrefix: "kontakt.kontonummer"});
     const {expectOK} = useAlgebraic(useHentKontonummer(useBehandlingsId()));
 
     return expectOK(({brukerutfyltVerdi}) => (
-        <>
-            <Detail spacing>{t("infotekst.tekst")}</Detail>
-            <Systeminfo>
-                <SysteminfoItem label={t(`label`)}>{formatKontonummer(brukerutfyltVerdi ?? "")}</SysteminfoItem>
-            </Systeminfo>
-        </>
+        <SysteminfoItem comment={t("bruker")} label={t(`label`)}>
+            {formatKontonummer(brukerutfyltVerdi ?? "")}
+        </SysteminfoItem>
     ));
 };
 
@@ -26,21 +22,23 @@ export const KontonrShowSysteminfo = () => {
     const {expectOK} = useAlgebraic(useHentKontonummer(useBehandlingsId()));
 
     return expectOK(({systemverdi}) => (
-        <>
-            <Detail spacing>{t("kontakt.system.personalia.infotekst.tekst")}</Detail>
-            <Systeminfo>
-                <SysteminfoItem label={t(`kontakt.kontonummer.label`)}>
-                    {formatKontonummer(systemverdi ?? "")}
-                </SysteminfoItem>
-            </Systeminfo>
-        </>
+        <SysteminfoItem comment={t("kontakt.system.personalia.infotekst.tekst")} label={t(`kontakt.kontonummer.label`)}>
+            {formatKontonummer(systemverdi ?? "")}
+        </SysteminfoItem>
     ));
 };
 export const KontonrShow = () => {
+    const {t} = useTranslation("skjema", {keyPrefix: ""});
+
     const {expectOK} = useAlgebraic(useHentKontonummer(useBehandlingsId()));
 
     return expectOK(({brukerdefinert, systemverdi, brukerutfyltVerdi, harIkkeKonto}) => {
-        if (harIkkeKonto) return <div>Intet kontonummer</div>;
+        if (harIkkeKonto)
+            return (
+                <SysteminfoItem comment={t("kontakt.kontonummer.bruker")} label={t(`kontakt.kontonummer.sporsmal`)}>
+                    <span className={"italic"}> {t("kontakt.kontonummer.harikke.true")}</span>
+                </SysteminfoItem>
+            );
 
         if (brukerdefinert && brukerutfyltVerdi) return <KontonrShowBrukerdefinert />;
 

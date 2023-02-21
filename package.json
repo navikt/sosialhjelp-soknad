@@ -106,6 +106,7 @@
     "dev": "concurrently --kill-others \"npm run start\" \"npm run start:css\"",
     "prepare": "husky install",
     "fetch-api": "curl -o ./soknad-api.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs && prettier --write soknad-api.json",
+    "fetch-api-norg": "curl -o ./norg-api.json https://norg2.dev.intern.nav.no/norg2/v3/api-docs/API%20versjon%201  && prettier --write norg-api.json",
     "orval": "rm -rf ./src/generated & orval --prettier",
     "lint": "lint-staged"
   },
