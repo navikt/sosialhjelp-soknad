@@ -5,7 +5,6 @@ import {useDispatch, useSelector} from "react-redux";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../nav-soknad/components/underskjema";
-import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel";
 import PersonSkjema from "./PersonSkjema";
 import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {State} from "../../../digisos/redux/reducers";
