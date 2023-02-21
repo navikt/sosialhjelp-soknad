@@ -1114,6 +1114,7 @@
     "system.familie.barn.true.barn.sporsmal": "Opplysninger om barn",
     "system.familie.barn.true.listetittel": "Opplysninger om barn",
     "system.familie.sivilstatus": "Vi har hentet følgende opplysninger fra Folkeregisteret:",
+    "system.familie.sivilstatus.kilde": "Vi har hentet følgende opplysninger fra Folkeregisteret:",
     "system.familie.sivilstatus.diskresjonskode": "Ektefelle/partner har diskresjonskode",
     "system.familie.sivilstatus.enke": "Enke/enkemann",
     "system.familie.sivilstatus.gift": "Gift/registrert partner",

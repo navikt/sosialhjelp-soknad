@@ -1,71 +1,60 @@
 import * as React from "react";
-import {useSelector} from "react-redux";
-
-import Sporsmal from "../../../nav-soknad/components/sporsmal/Sporsmal";
-import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel";
-
-import {State} from "../../../digisos/redux/reducers";
-import {
-    SingleLineDateElement,
-    OldSingleLineElement,
-    OldSysteminfo,
-} from "../../../nav-soknad/components/systeminfo/Systeminfo";
+import {Systeminfo, SysteminfoItem} from "../../../nav-soknad/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
-import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
+import {Alert, BodyShort, Detail, Heading} from "@navikt/ds-react";
+import {useHentSivilstatus} from "../../../generated/sivilstatus-ressurs/sivilstatus-ressurs";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
+import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
+import Sporsmal from "../../../nav-soknad/components/sporsmal/Sporsmal";
+import cx from "classnames";
 
 const EktefelleInformasjon = () => {
-    const {ektefelle, erFolkeregistrertSammen} = useSelector((state: State) => state.soknadsdata.familie.sivilstatus);
-    const systeminfo = [];
-    const {t} = useTranslation("skjema", {keyPrefix: "system.familie.sivilstatus.gift.ektefelle"});
-    if (ektefelle?.navn?.fulltNavn) {
-        systeminfo.push({
-            key: t(`navn`),
-            value: <OldSingleLineElement value={ektefelle.navn.fulltNavn} />,
-        });
-        if (ektefelle?.fodselsdato) {
-            systeminfo.push({
-                key: t(`fodselsdato`),
-                value: <SingleLineDateElement value={ektefelle.fodselsdato} />,
-            });
-        }
-        systeminfo.push({
-            key: t(`folkereg`),
-            value: <OldSingleLineElement value={erFolkeregistrertSammen ? "Ja" : "Nei"} />,
-        });
-    }
-    return (
+    const {t} = useTranslation("skjema", {keyPrefix: "system.familie.sivilstatus"});
+    const {expectOK} = useAlgebraic(useHentSivilstatus(useBehandlingsId()));
+
+    return expectOK(({ektefelle, erFolkeregistrertSammen, harDiskresjonskode}) => (
         <div className="sivilstatus__ektefelleinfo">
-            <OldSysteminfo systeminfoMap={systeminfo} />
+            {ektefelle?.navn?.fulltNavn && (
+                <Systeminfo>
+                    <Detail className={cx("opacity-90 py-1")}>{t("system.familie.sivilstatus")}</Detail>
+                    <SysteminfoItem
+                        comment={harDiskresjonskode ? t("ikkeTilgang.label") : t("label")}
+                        label={t(`gift.ektefelle.navn`)}
+                    >
+                        {ektefelle.navn.fulltNavn}
+                    </SysteminfoItem>
+                    {ektefelle?.fodselsdato && (
+                        <SysteminfoItem label={t(`gift.ektefelle.fodselsdato`)}>{ektefelle.fodselsdato}</SysteminfoItem>
+                    )}
+                    <SysteminfoItem label={t(`gift.ektefelle.folkereg`)}>
+                        {erFolkeregistrertSammen ? "Ja" : "Nei"}
+                    </SysteminfoItem>
+                </Systeminfo>
+            )}
         </div>
-    );
+    ));
 };
 
 const EktefelleDetaljer = () => {
-    const {harDiskresjonskode} = useSelector((state: State) => state.soknadsdata.familie.sivilstatus);
+    const {expectOK} = useAlgebraic(useHentSivilstatus(useBehandlingsId()));
 
     const {t} = useTranslation();
-
-    return (
-        <div className="sivilstatus skjema-sporsmal">
-            <Sporsmal tekster={getFaktumSporsmalTekst(t, "system.familie.sivilstatus")} stil="system">
+    return expectOK(({harDiskresjonskode}) => (
+        <div className="sivilstatus skjema-sporsmal space-y-4">
+            <Sporsmal sporsmal={t("system.familie.sivilstatus.sporsmal")} stil="system">
                 <div className="sivilstatus__infotekst">{t("system.familie.sivilstatus")}</div>
-                <div className="sivilstatus__giftlabel">
-                    {harDiskresjonskode
-                        ? t("system.familie.sivilstatus.ikkeTilgang.label")
-                        : t("system.familie.sivilstatus.label")}
-                    <EktefelleInformasjon />
-                </div>
+                <EktefelleInformasjon />
             </Sporsmal>
-            {harDiskresjonskode !== true && (
-                <Informasjonspanel farge="viktig" ikon={"ella"}>
-                    <h4 className="skjema-sporsmal__infotekst__tittel">
+            {!harDiskresjonskode && (
+                <Alert variant={"warning"}>
+                    <Heading level={"4"} size={"small"} spacing>
                         {t("system.familie.sivilstatus.informasjonspanel.tittel")}
-                    </h4>
-                    {t("system.familie.sivilstatus.informasjonspanel.tekst")}
-                </Informasjonspanel>
+                    </Heading>
+                    <BodyShort>{t("system.familie.sivilstatus.informasjonspanel.tekst")}</BodyShort>
+                </Alert>
             )}
         </div>
-    );
+    ));
 };
 
 export default EktefelleDetaljer;

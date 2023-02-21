@@ -1,6 +1,5 @@
 import * as React from "react";
-import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel";
-import {Alert, Heading, Link} from "@navikt/ds-react";
+import {Alert, BodyShort, Heading, Link} from "@navikt/ds-react";
 import {NavEnhetFrontend} from "../../../generated/model";
 import {Trans, useTranslation} from "react-i18next";
 import {erAktiv} from "../../../nav-soknad/containers/navEnhetStatus";
@@ -56,9 +55,12 @@ const NavEnhet = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
     if (!erAktiv(navEnhet)) return <NavEnhetInaktiv navEnhet={navEnhet} />;
     else
         return (
-            <Informasjonspanel ikon={"konvolutt"} farge={"suksess"}>
-                {`Søknaden vil bli sendt til: ${enhetsnavn}, ${kommunenavn} kommune.`}
-            </Informasjonspanel>
+            <Alert variant={"success"}>
+                <Heading size={"small"} level={"4"} spacing>
+                    Søknaden vil bli sendt til:
+                </Heading>
+                <BodyShort>{`${enhetsnavn}, ${kommunenavn} kommune`}</BodyShort>
+            </Alert>
         );
 };
 

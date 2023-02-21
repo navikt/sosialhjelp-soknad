@@ -13,6 +13,7 @@ import {lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataAc
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
+import {Alert, BodyShort, Heading} from "@navikt/ds-react";
 
 interface RadioProps {
     id?: string;
@@ -117,12 +118,12 @@ const SivilstatusComponent = () => {
                 />
             </Sporsmal>
             {sivilstatus === Status.GIFT && (
-                <Informasjonspanel farge="viktig" ikon={"ella"}>
-                    <h4 className="skjema-sporsmal__infotekst__tittel">
+                <Alert variant={"warning"}>
+                    <Heading level={"4"} size={"small"} spacing>
                         {t("system.familie.sivilstatus.informasjonspanel.tittel")}
-                    </h4>
-                    {t("system.familie.sivilstatus.informasjonspanel.tekst")}
-                </Informasjonspanel>
+                    </Heading>
+                    <BodyShort>{t("system.familie.sivilstatus.informasjonspanel.tekst")}</BodyShort>
+                </Alert>
             )}
         </div>
     );

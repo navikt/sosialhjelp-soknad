@@ -10,6 +10,7 @@ import {ApplicationSpinner} from "../../nav-soknad/components/applicationSpinner
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
 import {SkjemaSteg} from "../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
+import cx from "classnames";
 
 const OkonomiskeOpplysningerView = () => {
     const behandlingsId = useBehandlingsId();
@@ -29,10 +30,10 @@ const OkonomiskeOpplysningerView = () => {
     return (
         <SkjemaSteg.Container page={8}>
             {grupperMedInnhold.map((opplysningGruppe, i) => (
-                <SkjemaSteg.Content>
+                <SkjemaSteg.Content className={cx("pb-12", {"lg:space-y-8": i === 0})}>
                     {i === 0 && (
                         <>
-                            <SkjemaSteg.Title />
+                            <SkjemaSteg.Title className={"lg:mb-8"} />
                             {ikkeBesvartMeldingSkalVises ? (
                                 <OpplysningerIkkeBesvartPanel />
                             ) : (
