@@ -48,7 +48,7 @@ export const SoknadsmottakerInfoPanel = () => {
                     </BodyShort>
 
                     <LinkButton type="button" onClick={() => setVisPersonopplysningerModal(true)}>
-                        <BodyShort spacing>{t("informasjon.tekster.personalia.rettigheter.lenke")}</BodyShort>
+                        <BodyShort spacing>{t("informasjon.tekster.personopplysninger.rettigheter.lenke")}</BodyShort>
                     </LinkButton>
                 </StyledGuidePanel>
             </>

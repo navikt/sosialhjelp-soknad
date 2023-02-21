@@ -23,29 +23,29 @@ const Personopplysninger = () => {
                         borderTop: "2px solid rgba(0, 0, 0, 0.56)",
                     }}
                 >
-                    {t("informasjon.tekster.personalia.tittel")}
+                    {t("informasjon.tekster.personopplysninger.tittel")}
                 </Accordion.Header>
                 <Accordion.Content className={"!px-24 !py-12"}>
                     <Heading level="3" size="small" spacing>
-                        {t("informasjon.tekster.personalia.innhenting.tittel")}
+                        {t("informasjon.tekster.personopplysninger.innhenting.tittel")}
                     </Heading>
-                    <BodyLong spacing>{t("informasjon.tekster.personalia.innhenting.tekst")}</BodyLong>
+                    <BodyLong spacing>{t("informasjon.tekster.personopplysninger.innhenting.tekst")}</BodyLong>
                     <Heading level="3" size="small" spacing>
-                        {t("informasjon.tekster.personalia.fordusender.tittel")}
+                        {t("informasjon.tekster.personopplysninger.fordusender.tittel")}
                     </Heading>
-                    <BodyLong spacing>{t("informasjon.tekster.personalia.fordusender.tekst")}</BodyLong>
+                    <BodyLong spacing>{t("informasjon.tekster.personopplysninger.fordusender.tekst")}</BodyLong>
                     <Heading level="3" size="small" spacing>
-                        {t("informasjon.tekster.personalia.ettersendt.tittel")}
+                        {t("informasjon.tekster.personopplysninger.ettersendt.tittel")}
                     </Heading>
-                    <BodyLong spacing>{t("informasjon.tekster.personalia.ettersendt.tekst")}</BodyLong>
+                    <BodyLong spacing>{t("informasjon.tekster.personopplysninger.ettersendt.tekst")}</BodyLong>
                     <Heading level="3" size="small" spacing>
-                        {t("informasjon.tekster.personalia.rettigheter.tittel")}
+                        {t("informasjon.tekster.personopplysninger.rettigheter.tittel")}
                     </Heading>
-                    <BodyLong spacing>{t("informasjon.tekster.personalia.rettigheter.tekst")}</BodyLong>
+                    <BodyLong spacing>{t("informasjon.tekster.personopplysninger.rettigheter.tekst")}</BodyLong>
                     <LeftAlignedButton className="navds-link" onClick={() => setVisPersonopplysningerModal(true)}>
-                        {t("informasjon.tekster.personalia.rettigheter.lenke")}
+                        {t("informasjon.tekster.personopplysninger.rettigheter.lenke")}
                     </LeftAlignedButton>
-                    <BodyLong>{t("informasjon.tekster.personalia.sporsmal")}</BodyLong>
+                    <BodyLong>{t("informasjon.tekster.personopplysninger.sporsmal")}</BodyLong>
                     <BehandlingAvPersonopplysningerModal
                         open={visPersonopplysningerModal}
                         onClose={() => setVisPersonopplysningerModal(false)}

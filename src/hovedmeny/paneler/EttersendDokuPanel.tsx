@@ -22,7 +22,7 @@ export const EttersendDokuPanel = () => {
                             <Attachment className={"w-6 h-6 block"} aria-hidden="true" />
                         </div>
                         <Heading level="2" size="small">
-                            Send dokumentasjon til en innsendt søknad
+                            Send dokumentasjon til en søknad du har sendt inn
                         </Heading>
                     </div>
                 </Accordion.Header>

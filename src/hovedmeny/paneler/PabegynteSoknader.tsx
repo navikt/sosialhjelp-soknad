@@ -80,7 +80,7 @@ export const PabegynteSoknaderPanel = () => {
                             <FileContent className={"w-6 h-6"} aria-hidden="true" />
                         </div>
                         <Heading level="2" size="small" className={"flex flex-col lg:flex-row"}>
-                            Fortsett på en påbegynt søknad
+                            Fortsett på en søknad du har begynt på
                             <PabegynteSoknaderCount />
                         </Heading>
                     </div>

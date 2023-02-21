@@ -12,11 +12,7 @@ import {erSamvaersgrad} from "../../../nav-soknad/validering/valideringer";
 import {clearValideringsfeil, setValideringsfeil} from "../../../digisos/redux/validering/valideringActions";
 import {Input} from "nav-frontend-skjema";
 import {getFeil} from "../../../nav-soknad/utils/enhancedComponentUtils";
-import {
-    SingleLineDateElement,
-    OldSingleLineElement,
-    OldSysteminfo,
-} from "../../../nav-soknad/components/systeminfo/Systeminfo";
+import {SysteminfoItem, Systeminfo} from "../../../nav-soknad/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 
@@ -78,25 +74,17 @@ const RegistrerteBarn = () => {
                 const feil_: string | undefined = getFeil(feil, t, samvaersgradBarnKeyMedIndex, undefined);
                 return (
                     <div key={index} className={index + 1 === barn.length ? "barn barn_siste_liste_element" : "barn"}>
-                        <OldSysteminfo
-                            systeminfoMap={[
-                                {
-                                    key: t("kontakt.system.personalia.navn"),
-                                    value: <OldSingleLineElement value={barnet.barn.navn.fulltNavn} />,
-                                },
-                                {
-                                    key: t("familierelasjon.fodselsdato"),
-                                    value: <SingleLineDateElement value={barnet.barn.fodselsdato ?? ""} />,
-                                },
-                                {
-                                    key: t("familierelasjon.samme_folkeregistrerte_adresse"),
-                                    value: (
-                                        <OldSingleLineElement value={barnet.erFolkeregistrertSammen ? "Ja" : "Nei"} />
-                                    ),
-                                },
-                            ]}
-                        />
-
+                        <Systeminfo>
+                            <SysteminfoItem label={t("kontakt.system.personalia.navn")}>
+                                {barnet.barn.navn.fulltNavn}
+                            </SysteminfoItem>
+                            <SysteminfoItem label={t("familierelasjon.fodselsdato")}>
+                                {barnet.barn.fodselsdato ?? ""}
+                            </SysteminfoItem>
+                            <SysteminfoItem label={t("familierelasjon.samme_folkeregistrerte_adresse")}>
+                                {barnet.erFolkeregistrertSammen ? "Ja" : "Nei"}
+                            </SysteminfoItem>
+                        </Systeminfo>
                         {barnet.erFolkeregistrertSammen && (
                             <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
                                 <JaNeiSporsmal

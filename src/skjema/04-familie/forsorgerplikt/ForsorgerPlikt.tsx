@@ -13,6 +13,7 @@ import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
+import {BodyShort} from "@navikt/ds-react";
 
 const ForsorgerPliktView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
@@ -65,11 +66,11 @@ const ForsorgerPliktView = () => {
                 stil="system"
                 legendTittelStyle={LegendTittleStyle.DEFAULT}
             >
-                <p>{t("familierelasjon.ingress_folkeregisteret")}</p>
-                <p>
-                    <b>{t("familierelasjon.ingress_forsorger")}</b>
+                <BodyShort spacing>
+                    <p>{t("familierelasjon.ingress_folkeregisteret")}</p>
+                    <b>{t("familierelasjon.ingress_forsorger")}</b>:{" "}
                     {t("familierelasjon.ingress_antallBarn", {antallBarn})}
-                </p>
+                </BodyShort>
 
                 <RegistrerteBarn />
                 <Barnebidrag />
