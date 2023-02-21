@@ -8,19 +8,15 @@ import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
 import Sporsmal from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import cx from "classnames";
 
-const EktefelleInformasjon = () => {
+const EktefelleNavn = () => {
     const {t} = useTranslation("skjema", {keyPrefix: "system.familie.sivilstatus"});
     const {expectOK} = useAlgebraic(useHentSivilstatus(useBehandlingsId()));
 
     return expectOK(({ektefelle, erFolkeregistrertSammen, harDiskresjonskode}) => (
         <div className="sivilstatus__ektefelleinfo">
             {ektefelle?.navn?.fulltNavn && (
-                <Systeminfo>
-                    <Detail className={cx("opacity-90 py-1")}>{t("system.familie.sivilstatus")}</Detail>
-                    <SysteminfoItem
-                        comment={harDiskresjonskode ? t("ikkeTilgang.label") : t("label")}
-                        label={t(`gift.ektefelle.navn`)}
-                    >
+                <>
+                    <SysteminfoItem comment={t("label")} label={t(`gift.ektefelle.navn`)}>
                         {ektefelle.navn.fulltNavn}
                     </SysteminfoItem>
                     {ektefelle?.fodselsdato && (
@@ -29,7 +25,7 @@ const EktefelleInformasjon = () => {
                     <SysteminfoItem label={t(`gift.ektefelle.folkereg`)}>
                         {erFolkeregistrertSammen ? "Ja" : "Nei"}
                     </SysteminfoItem>
-                </Systeminfo>
+                </>
             )}
         </div>
     ));
@@ -42,8 +38,10 @@ const EktefelleDetaljer = () => {
     return expectOK(({harDiskresjonskode}) => (
         <div className="sivilstatus skjema-sporsmal space-y-4">
             <Sporsmal sporsmal={t("system.familie.sivilstatus.sporsmal")} stil="system">
-                <div className="sivilstatus__infotekst">{t("system.familie.sivilstatus")}</div>
-                <EktefelleInformasjon />
+                <Systeminfo>
+                    <Detail className={cx("opacity-90 py-1")}>{t("system.familie.sivilstatus")}</Detail>
+                    {harDiskresjonskode ? t("system.familie.sivilstatus.ikkeTilgang.label") : <EktefelleNavn />}
+                </Systeminfo>
             </Sporsmal>
             {!harDiskresjonskode && (
                 <Alert variant={"warning"}>
