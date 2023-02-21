@@ -17,7 +17,7 @@ const EktefelleNavn = () => {
         <div className="sivilstatus__ektefelleinfo">
             {ektefelle?.navn?.fulltNavn && (
                 <>
-                    <BodyShort>{t("label")}</BodyShort>
+                    <BodyShort>{t("label")}:</BodyShort>
                     <SysteminfoItem label={t(`gift.ektefelle.navn`)}>{ektefelle.navn.fulltNavn}</SysteminfoItem>
                     {ektefelle?.fodselsdato && (
                         <SysteminfoItem label={t(`gift.ektefelle.fodselsdato`)}>{ektefelle.fodselsdato}</SysteminfoItem>
