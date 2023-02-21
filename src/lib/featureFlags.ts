@@ -18,7 +18,7 @@ export const useFeatureFlags = (): FeatureFlags => {
             begrunnelseNyTekst: true,
             viStolerPaaDeg: true,
             nyOppsummering: false,
-            oppsummeringNavEnhet: process.env.REACT_APP_ENVIRONMENT === "localhost",
+            oppsummeringNavEnhet: false,
         };
     }
     return {

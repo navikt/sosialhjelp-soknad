@@ -3,7 +3,7 @@ import {
     Opplysning,
     OpplysningBackend,
     OpplysningerBackend,
-    OpplysningGruppe,
+    VedleggGruppe,
     OpplysningRad,
     OpplysningSpc,
     OpplysningType,
@@ -24,48 +24,23 @@ export const updateSortertOpplysning = (opplysninger: Opplysning[], opplysningUp
 export const transformToBackendOpplysning = (opplysning: Opplysning): OpplysningBackend => {
     return {
         type: opplysning.type,
-        gruppe: opplysning.gruppe ? opplysning.gruppe : OpplysningGruppe.UKJENT,
+        gruppe: opplysning.gruppe ? opplysning.gruppe : VedleggGruppe.UKJENT,
         rader: opplysning.rader,
         vedleggStatus: opplysning.vedleggStatus,
         filer: opplysning.filer,
     };
 };
 
-export const getGruppeTittelKey: (opplysningGruppe: OpplysningGruppe) => string = (
-    opplysningGruppe: OpplysningGruppe
-) => {
-    switch (opplysningGruppe) {
-        case OpplysningGruppe.STATSBORGERSKAP: {
-            return "opplysninger.statsborgerskap";
-        }
-        case OpplysningGruppe.ARBEID: {
-            return "opplysninger.arbeid";
-        }
-        case OpplysningGruppe.FAMILIE: {
-            return "opplysninger.familiesituasjon";
-        }
-        case OpplysningGruppe.BOSITUASJON: {
-            return "opplysninger.bosituasjon";
-        }
-        case OpplysningGruppe.INNTEKT: {
-            return "opplysninger.inntekt";
-        }
-        case OpplysningGruppe.UTGIFTER: {
-            return "opplysninger.utgifter";
-        }
-        case OpplysningGruppe.GENERELLE_VEDLEGG: {
-            return "opplysninger.generell";
-        }
-        case OpplysningGruppe.ANDRE_UTGIFTER: {
-            return "opplysninger.ekstrainfo";
-        }
-        case OpplysningGruppe.UKJENT: {
-            return "opplysninger.ukjent";
-        }
-        default: {
-            return "unknown group tittle";
-        }
-    }
+export const Gruppetittel: Record<VedleggGruppe, string> = {
+    statsborgerskap: "opplysninger.statsborgerskap",
+    arbeid: "opplysninger.arbeid",
+    familie: "opplysninger.familiesituasjon",
+    bosituasjon: "opplysninger.bosituasjon",
+    inntekt: "opplysninger.inntekt",
+    utgifter: "opplysninger.utgifter",
+    "generelle vedlegg": "opplysninger.generell",
+    "andre utgifter": "opplysninger.ekstrainfo",
+    ukjent: "opplysninger.ukjent",
 };
 
 export const getTomVedleggRad: () => OpplysningRad = () => {

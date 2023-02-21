@@ -18,7 +18,7 @@ export interface OpplysningerBackend {
 
 export interface OpplysningBackend {
     type: OpplysningType;
-    gruppe: OpplysningGruppe;
+    gruppe: VedleggGruppe;
     rader: OpplysningRad[];
     vedleggStatus: VedleggStatus;
     filer: Fil[];
@@ -26,7 +26,7 @@ export interface OpplysningBackend {
 
 export interface Opplysning {
     type: OpplysningType;
-    gruppe: OpplysningGruppe | null;
+    gruppe: VedleggGruppe | null;
     rader: OpplysningRad[];
     vedleggStatus: VedleggStatus;
     filer: Fil[];
@@ -97,7 +97,7 @@ export interface LagreOpplysningHvisGyldig {
     feil: Valideringsfeil[];
 }
 
-export enum OpplysningGruppe {
+export enum VedleggGruppe {
     STATSBORGERSKAP = "statsborgerskap",
     ARBEID = "arbeid",
     FAMILIE = "familie",

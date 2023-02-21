@@ -9,7 +9,7 @@ export const OpplysningerInformasjonspanel = () => {
     const {t} = useTranslation("skjema");
 
     return (
-        <Informasjonspanel ikon={"hensyn"} farge="viktig">
+        <Informasjonspanel ikon={"hensyn"} farge="suksess">
             <p>{t("opplysninger.informasjon.avsnitt1")}</p>
             <p>{t("opplysninger.informasjon.avsnitt2")}</p>
             <LinkButton type="button" onClick={() => setModalOpen(true)}>

@@ -10,7 +10,6 @@ const Hensyn = () => (
             />
         </defs>
         <g fill="none" fillRule="evenodd">
-            <circle cx="40" cy="40" r="40" fill="#FFD399" />
             <use fill="#FFF" transform="translate(18 12)" xlinkHref="#hensyn-a" />
             <path fill="#C9C9C9" d="M27.813 12v6.5a2.826 2.826 0 0 1-2.82 2.832H18L27.813 12z" />
             <g fill="#515658">

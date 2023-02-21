@@ -13,8 +13,9 @@ import {getFaktumSporsmalTekst} from "../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
 
 const OkonomiskeOpplysningerSporsmal = styled.div`
+    border-radius: 5px;
     margin-bottom: 2px;
-    background-color: var(--a-bg-subtle);
+    background-color: var(--a-surface-subtle);
     border: 1px solid var(--a-border-default);
     padding: 2rem;
 

@@ -15,6 +15,7 @@ import {logError, logWarning} from "../../../utils/loggerUtils";
 import William from "../../svg/illustrasjoner/William";
 import {SkjemaStegErrorSummary} from "./SkjemaStegErrorSummary";
 import Koffert from "../../svg/illustrasjoner/Koffert";
+import SkjemaIllustrasjon from "../../svg/illustrasjoner/SkjemaIllustrasjon";
 
 type TSkjemaStegContext = {
     page: SkjemaPage;
@@ -43,7 +44,7 @@ export const SkjemaHeadings: Record<SkjemaPage, {tittel: string; ikon: ReactNode
     5: {tittel: "bosituasjonbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     6: {tittel: "inntektbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     7: {tittel: "utgifterbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
-    8: {tittel: "opplysningerbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
+    8: {tittel: "opplysningerbolk.tittel", ikon: <SkjemaIllustrasjon />},
     9: {tittel: "oppsummering.tittel", ikon: <SnakkebobleIllustrasjon />},
 };
 
@@ -61,13 +62,13 @@ const SkjemaTitle = () => {
     return (
         <div tabIndex={-1} className={"text-center mb-12 lg:mb-24"}>
             <div className="text-center mb-2">{SkjemaHeadings[page].ikon}</div>
-            <Heading size={"large"}>{t(SkjemaHeadings[page].tittel)}</Heading>
+            <Heading size={"xlarge"}>{t(SkjemaHeadings[page].tittel)}</Heading>
         </div>
     );
 };
 
 const SkjemaContent = ({children}: {children: ReactNode}) => (
-    <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8"}>
+    <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8 pb-8 mb-16"}>
         <div className={"space-y-12 lg:space-y-24"}>{children}</div>
     </div>
 );

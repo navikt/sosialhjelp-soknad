@@ -19,26 +19,28 @@ const ikonElement: Record<InformasjonspanelProps["ikon"], ReactNode> = {
 };
 
 const Informasjonspanel = ({children, className, ikon, farge}: InformasjonspanelProps) => (
-    <div className={className}>
-        <div
-            className={cx("relative rounded-md p-4 md:py-8 md:pr-6 md:pl-14 skjema-informasjonspanel border-2", {
+    <div
+        className={cx(
+            "relative rounded-md p-4 md:py-8 md:pr-6 md:pl-14 skjema-informasjonspanel border-2",
+            {
                 "border-green-200": farge === "suksess",
                 "border-orange-300": farge === "viktig",
-            })}
+            },
+            className
+        )}
+    >
+        <div
+            className={cx(
+                "w-[64px] lg:w-[80px] absolute left-0 top-[50%] -translate-y-1/2 -translate-x-1/2 max-md:hidden rounded-full",
+                {
+                    "bg-green-200": farge === "suksess",
+                    "bg-orange-300": farge === "viktig",
+                }
+            )}
         >
-            <div
-                className={cx(
-                    "w-[64px] lg:w-[80px] absolute left-0 top-[50%] -translate-y-1/2 -translate-x-1/2 max-md:hidden rounded-full",
-                    {
-                        "bg-green-200": farge === "suksess",
-                        "bg-orange-300": farge === "viktig",
-                    }
-                )}
-            >
-                {ikonElement[ikon]}
-            </div>
-            <div className={"space-y-2"}>{children}</div>
+            {ikonElement[ikon]}
         </div>
+        <div className={"space-y-2"}>{children}</div>
     </div>
 );
 

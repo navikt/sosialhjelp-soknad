@@ -1,4 +1,4 @@
-import {AntallRader, InputType, OpplysningGruppe, OpplysningSpc, OpplysningType} from "./opplysningerTypes";
+import {AntallRader, InputType, VedleggGruppe, OpplysningSpc, OpplysningType} from "./opplysningerTypes";
 
 export const opplysningsRekkefolgeOgSpc: OpplysningSpc[] = [
     {
@@ -201,13 +201,13 @@ export const opplysningsRekkefolgeOgSpc: OpplysningSpc[] = [
     }, // RADER_MED_BESKRIVELSE_OG_BELOP
 ];
 
-export const gruppeRekkefolge: OpplysningGruppe[] = [
-    OpplysningGruppe.STATSBORGERSKAP,
-    OpplysningGruppe.ARBEID,
-    OpplysningGruppe.FAMILIE,
-    OpplysningGruppe.BOSITUASJON,
-    OpplysningGruppe.INNTEKT,
-    OpplysningGruppe.UTGIFTER,
-    OpplysningGruppe.GENERELLE_VEDLEGG,
-    OpplysningGruppe.ANDRE_UTGIFTER,
+export const vedleggGrupper: VedleggGruppe[] = [
+    VedleggGruppe.STATSBORGERSKAP,
+    VedleggGruppe.ARBEID,
+    VedleggGruppe.FAMILIE,
+    VedleggGruppe.BOSITUASJON,
+    VedleggGruppe.INNTEKT,
+    VedleggGruppe.UTGIFTER,
+    VedleggGruppe.GENERELLE_VEDLEGG,
+    VedleggGruppe.ANDRE_UTGIFTER,
 ];
