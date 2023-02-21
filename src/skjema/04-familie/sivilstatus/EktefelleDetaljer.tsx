@@ -12,13 +12,13 @@ const EktefelleNavn = () => {
     const {t} = useTranslation("skjema", {keyPrefix: "system.familie.sivilstatus"});
     const {expectOK} = useAlgebraic(useHentSivilstatus(useBehandlingsId()));
 
+    // FIXME: Handle the reverse case of this if clause
     return expectOK(({ektefelle, erFolkeregistrertSammen, harDiskresjonskode}) => (
         <div className="sivilstatus__ektefelleinfo">
             {ektefelle?.navn?.fulltNavn && (
                 <>
-                    <SysteminfoItem comment={t("label")} label={t(`gift.ektefelle.navn`)}>
-                        {ektefelle.navn.fulltNavn}
-                    </SysteminfoItem>
+                    <BodyShort>{t("label")}</BodyShort>
+                    <SysteminfoItem label={t(`gift.ektefelle.navn`)}>{ektefelle.navn.fulltNavn}</SysteminfoItem>
                     {ektefelle?.fodselsdato && (
                         <SysteminfoItem label={t(`gift.ektefelle.fodselsdato`)}>{ektefelle.fodselsdato}</SysteminfoItem>
                     )}

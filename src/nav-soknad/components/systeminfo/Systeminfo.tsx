@@ -64,7 +64,7 @@ export const SysteminfoItem = ({
     className?: string;
 }) => (
     <div>
-        <Detail className={cx("opacity-90 py-1")}>{comment}</Detail>
+        {comment && <Detail className={cx("opacity-90 py-1")}>{comment}</Detail>}
         <ListItem className={cx("!leading-5 ", className)} multiline={multiline}>
             <Label className="pr-1 after:content-[':']" size="small">
                 {label}
@@ -77,7 +77,7 @@ export const SysteminfoItem = ({
 export const Systeminfo = ({children, className}: {children: React.ReactNode; className?: string}) => (
     <ul
         className={cx(
-            "flex flex-col items-between gap-1 pl-3 py-3 border-l-4 bg-[var(--a-surface-success-subtle)] border-l-[var(--a-surface-success)] ",
+            "flex flex-col items-between gap-1 pl-3 py-3 border-l-4 bg-[var(--a-surface-info-subtle)] border-l-[var(--a-surface-info)] ",
             className
         )}
     >
