@@ -64,7 +64,7 @@ export const SysteminfoItem = ({
     className?: string;
 }) => (
     <div>
-        {comment && <Detail className={cx("opacity-90 py-1")}>{comment}</Detail>}
+        {comment && <Detail className={cx("opacity-90 pb-1")}>{comment}</Detail>}
         <ListItem className={cx("!leading-5 ", className)} multiline={multiline}>
             <Label className="pr-1 after:content-[':']" size="small">
                 {label}

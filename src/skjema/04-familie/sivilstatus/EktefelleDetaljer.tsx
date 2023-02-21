@@ -17,7 +17,7 @@ const EktefelleNavn = () => {
         <div className="sivilstatus__ektefelleinfo">
             {ektefelle?.navn?.fulltNavn && (
                 <>
-                    <BodyShort>{t("label")}:</BodyShort>
+                    <BodyShort spacing>{t("label")}:</BodyShort>
                     <SysteminfoItem label={t(`gift.ektefelle.navn`)}>{ektefelle.navn.fulltNavn}</SysteminfoItem>
                     {ektefelle?.fodselsdato && (
                         <SysteminfoItem label={t(`gift.ektefelle.fodselsdato`)}>{ektefelle.fodselsdato}</SysteminfoItem>
@@ -39,7 +39,7 @@ const EktefelleDetaljer = () => {
         <div className="sivilstatus skjema-sporsmal space-y-4">
             <Sporsmal sporsmal={t("system.familie.sivilstatus.sporsmal")} stil="system">
                 <Systeminfo>
-                    <Detail className={cx("opacity-90 py-1")}>{t("system.familie.sivilstatus")}</Detail>
+                    <Detail className={cx("opacity-90 pb-1")}>{t("system.familie.sivilstatus")}</Detail>
                     {harDiskresjonskode ? t("system.familie.sivilstatus.ikkeTilgang.label") : <EktefelleNavn />}
                 </Systeminfo>
             </Sporsmal>
