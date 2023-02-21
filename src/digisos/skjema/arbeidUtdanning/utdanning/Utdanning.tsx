@@ -14,6 +14,7 @@ type UtdanningViewProps = {
 const UtdanningInput = React.forwardRef<HTMLDivElement, UtdanningViewProps>(({control}, ref) => {
     const {t} = useTranslation("skjema");
     const erStudent = useWatch({control, name: "utdanning.erStudent"});
+
     return (
         <div ref={ref}>
             <Controller
@@ -39,7 +40,7 @@ const UtdanningInput = React.forwardRef<HTMLDivElement, UtdanningViewProps>(({co
                     <Underskjema jaNeiSporsmal visible={!!erStudent}>
                         <HorizontalRadioGroup
                             onChange={(value) => onChange({target: {value: value === "true"}})}
-                            value={studengradErHeltid?.toString() || null}
+                            value={(erStudent && studengradErHeltid?.toString()) || null}
                             legend={t("dinsituasjon.studerer.grad.sporsmal")}
                         >
                             <Radio value={"true"}>{t("dinsituasjon.studerer.grad.heltid")}</Radio>
