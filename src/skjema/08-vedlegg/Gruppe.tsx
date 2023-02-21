@@ -10,7 +10,7 @@ const GruppeView = ({gruppeKey, gruppe}: {gruppeKey: VedleggGruppe; gruppe: Oppl
     if (!gruppe?.length) return null;
 
     return (
-        <Panel>
+        <Panel className={"!px-0"}>
             <Heading level={"3"} size={"xlarge"} spacing>
                 {t(`${Gruppetittel[gruppeKey]}.sporsmal`)}
             </Heading>

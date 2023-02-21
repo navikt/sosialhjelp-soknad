@@ -40,7 +40,7 @@ const OpplysningView = (props: {opplysning: Opplysning; gruppeIndex: number}) =>
     }
 
     return (
-        <OkonomiskeOpplysningerSporsmal>
+        <OkonomiskeOpplysningerSporsmal className={"!mb-4"}>
             <Sporsmal
                 tekster={getFaktumSporsmalTekst(t, opplysningSpc?.textKey ?? "")}
                 feil={sporsmalsFeil}
