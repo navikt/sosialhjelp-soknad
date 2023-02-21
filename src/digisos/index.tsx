@@ -9,20 +9,20 @@ import {
     redirect,
 } from "react-router-dom";
 import SideIkkeFunnet from "../nav-soknad/feilsider/SideIkkeFunnet";
-import Informasjon from "./hovedmeny";
+import Informasjon from "../hovedmeny";
 import {isLocalhost, isMockAlt} from "../nav-soknad/utils";
 import {basePath} from "../configuration";
 import * as React from "react";
-import Ettersendelse from "./skjema/ettersendelse";
-import Steg1 from "./skjema/personopplysninger";
-import Steg2 from "./skjema/begrunnelse";
-import Steg3 from "./skjema/arbeidUtdanning";
-import Steg4 from "./skjema/familie";
-import Steg5 from "./skjema/bosituasjon";
-import Steg6 from "./skjema/inntektFormue";
-import Steg7 from "./skjema/utgifterGjeld";
-import Steg8 from "./skjema/okonomiskeOpplysninger";
-import NyOppsummering from "./skjema/ny-oppsummering/Oppsummering";
+import Ettersendelse from "../skjema/ettersendelse";
+import Steg1 from "../skjema/01-personalia";
+import Steg2 from "../skjema/02-begrunnelse";
+import Steg3 from "../skjema/03-arbeidUtdanning";
+import Steg4 from "../skjema/04-familie";
+import Steg5 from "../skjema/05-bosituasjon";
+import Steg6 from "../skjema/06-inntektFormue";
+import Steg7 from "../skjema/07-utgifterGjeld";
+import Steg8 from "../skjema/08-vedlegg";
+import NyOppsummering from "../skjema/09-oppsummering/Oppsummering";
 import * as Sentry from "@sentry/react";
 import {BrowserTracing} from "@sentry/tracing";
 

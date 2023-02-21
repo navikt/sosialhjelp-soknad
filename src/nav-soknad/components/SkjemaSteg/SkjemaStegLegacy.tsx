@@ -16,7 +16,7 @@ import TimeoutBox from "../timeoutbox/TimeoutBox";
 import {AvbrytSoknadModal} from "../../../lib/modals/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
-import {NavEnhetInaktiv} from "../../../digisos/skjema/personopplysninger/adresse/NavEnhet";
+import {NavEnhetInaktiv} from "../../../skjema/01-personalia/adresse/NavEnhet";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;

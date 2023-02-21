@@ -1,20 +1,23 @@
-import {BosituasjonData, initialBosituasjonState} from "../../skjema/bosituasjon/bosituasjonTypes";
-import {Familie, initialFamilieStatus, Sivilstatus} from "../../skjema/familie/sivilstatus/FamilieTypes";
-import {initialUtdanningState, Utdanning} from "../../skjema/arbeidUtdanning/utdanning/utdanningTypes";
+import {BosituasjonData, initialBosituasjonState} from "../../../skjema/05-bosituasjon/bosituasjonTypes";
+import {Familie, initialFamilieStatus, Sivilstatus} from "../../../skjema/04-familie/sivilstatus/FamilieTypes";
+import {initialUtdanningState, Utdanning} from "../../../skjema/03-arbeidUtdanning/utdanning/utdanningTypes";
 import {setPath} from "./soknadsdataActions";
-import {Bostotte, initialBostotteState} from "../../skjema/inntektFormue/bostotte/bostotteTypes";
-import {initialUtbetalingerState, Utbetalinger} from "../../skjema/inntektFormue/utbetalinger/utbetalingerTypes";
-import {initialVerdierState, Verdier} from "../../skjema/inntektFormue/verdier/VerdierTypes";
-import {initialFormueState, Formue} from "../../skjema/inntektFormue/formue/FormueTypes";
-import {initialBoutgifterState, Boutgifter} from "../../skjema/utgifterGjeld/boutgifter/BoutgifterTypes";
-import {initialBarneutgifterState, Barneutgifter} from "../../skjema/utgifterGjeld/barneutgifter/BarneutgifterTypes";
-import {Barnebidrag, ForsorgerPlikt} from "../../skjema/familie/forsorgerplikt/ForsorgerPliktTypes";
+import {Bostotte, initialBostotteState} from "../../../skjema/06-inntektFormue/bostotte/bostotteTypes";
+import {initialUtbetalingerState, Utbetalinger} from "../../../skjema/06-inntektFormue/utbetalinger/utbetalingerTypes";
+import {initialVerdierState, Verdier} from "../../../skjema/06-inntektFormue/verdier/VerdierTypes";
+import {initialFormueState, Formue} from "../../../skjema/06-inntektFormue/formue/FormueTypes";
+import {initialBoutgifterState, Boutgifter} from "../../../skjema/07-utgifterGjeld/boutgifter/BoutgifterTypes";
+import {
+    initialBarneutgifterState,
+    Barneutgifter,
+} from "../../../skjema/07-utgifterGjeld/barneutgifter/BarneutgifterTypes";
+import {Barnebidrag, ForsorgerPlikt} from "../../../skjema/04-familie/forsorgerplikt/ForsorgerPliktTypes";
 import {
     initialSkattbarInntektInfoState,
     SkattbarInntekt,
-} from "../../skjema/inntektFormue/skattbarInntekt/inntektTypes";
-import {Systeminntekter, initialSysteminntekter} from "../../skjema/inntektFormue/navytelser/navYtelserTypes";
-import {Studielan, initialStudielanState} from "../../skjema/inntektFormue/studielan/StudielanTypes";
+} from "../../../skjema/06-inntektFormue/skattbarInntekt/inntektTypes";
+import {Systeminntekter, initialSysteminntekter} from "../../../skjema/06-inntektFormue/navytelser/navYtelserTypes";
+import {Studielan, initialStudielanState} from "../../../skjema/06-inntektFormue/studielan/StudielanTypes";
 import {REST_STATUS} from "./soknadsdataTypes";
 
 export enum SoknadsdataActionTypeKeys {
