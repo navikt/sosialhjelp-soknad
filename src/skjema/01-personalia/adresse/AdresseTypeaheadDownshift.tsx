@@ -112,7 +112,7 @@ export const AdresseTypeahead = (props: {
         >
             {({getLabelProps, getInputProps, getItemProps, getMenuProps, highlightedIndex, inputValue, isOpen}) => (
                 <div>
-                    <label {...getLabelProps()}>
+                    <label className={"space-y-4"} {...getLabelProps()}>
                         <div>
                             <Heading size={"xsmall"}>{t("kontakt.system.oppholdsadresse.hvorOppholder")}</Heading>
                             {t("kontakt.system.kontaktinfo.infotekst.tekst")}
