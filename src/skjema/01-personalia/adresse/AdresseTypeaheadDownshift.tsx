@@ -1,4 +1,4 @@
-import {Loader} from "@navikt/ds-react";
+import {Heading, Loader} from "@navikt/ds-react";
 import Downshift from "downshift";
 import {Input} from "nav-frontend-skjema";
 import {useState} from "react";
@@ -7,6 +7,8 @@ import styled from "styled-components";
 import {fetchToJson} from "../../../nav-soknad/utils/rest-utils";
 import {formaterAdresseString, removeDuplicatesAfterTransform} from "./AdresseUtils";
 import {AdresseForslag} from "../../../generated/model";
+import * as React from "react";
+import {useTranslation} from "react-i18next";
 
 const searchForAddress = async (value: string): Promise<AdresseForslag[]> => {
     try {
@@ -90,6 +92,7 @@ export const AdresseTypeahead = (props: {
     onNullstill: () => void;
     onVelgAnnenAdresse: (adresse: AdresseForslag) => void;
 }) => {
+    const {t} = useTranslation("skjema");
     const onSelect = (adresse?: AdresseForslag) => {
         if (!adresse) {
             props.onNullstill();
@@ -109,7 +112,13 @@ export const AdresseTypeahead = (props: {
         >
             {({getLabelProps, getInputProps, getItemProps, getMenuProps, highlightedIndex, inputValue, isOpen}) => (
                 <div>
-                    <label {...getLabelProps()} />
+                    <label className={"space-y-4"} {...getLabelProps()}>
+                        <div>
+                            <Heading size={"xsmall"}>{t("kontakt.system.oppholdsadresse.hvorOppholder")}</Heading>
+                            {t("kontakt.system.kontaktinfo.infotekst.tekst")}
+                        </div>
+                        <div>{t("kontakt.system.kontaktinfo.infotekst.ekstratekst")}</div>
+                    </label>
                     <StyledInput {...getInputProps()} />
                     {isOpen && (
                         <FetchAddress searchvalue={inputValue}>
