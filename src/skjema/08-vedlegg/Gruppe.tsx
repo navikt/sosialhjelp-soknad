@@ -11,7 +11,7 @@ const GruppeView = ({gruppeKey, gruppe}: {gruppeKey: VedleggGruppe; gruppe: Oppl
 
     return (
         <Panel className={"!px-0"}>
-            <Heading level={"3"} size={"xlarge"} spacing>
+            <Heading level={"3"} size={"xlarge"} className={"pb-6"}>
                 {t(`${Gruppetittel[gruppeKey]}.sporsmal`)}
             </Heading>
 

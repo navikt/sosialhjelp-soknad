@@ -35,9 +35,7 @@ const OpplysningView = (props: {opplysning: Opplysning; gruppeIndex: number}) =>
     const feil = feilListe.find((feil: Valideringsfeil) => feil.faktumKey === opplysning.type);
     const sporsmalsFeil = feil ? t(feil.feilkode) : undefined;
 
-    if (opplysning.slettet) {
-        return <VedleggSlettet opplysning={opplysning} />;
-    }
+    if (opplysning.slettet) return <VedleggSlettet opplysning={opplysning} />;
 
     return (
         <OkonomiskeOpplysningerSporsmal className={"!mb-4"}>
