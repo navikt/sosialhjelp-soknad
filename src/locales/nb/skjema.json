@@ -627,7 +627,7 @@
     "kontakt.system.telefoninfo.sporsmal": "Telefonnummer",
     "kontakt.telefon.beskrivelse": "For at vi enkelt skal kunne komme i kontakt med def trenger vi ditt telefonnummer",
     "kontakt.telefon.feilmelding": "Telefonnummer må fylles ut",
-    "kontakt.telefon.infotekst.tekst": "Telefonnummeret du oppgir her kan bli brukt til å ta kontakt med deg i forbindelse med din sosialsak.",
+    "kontakt.telefon.infotekst.tekst": "Telefonnummeret du oppgir her kan bli brukt til å ta kontakt med deg om søknaden.",
     "kontakt.telefon.label": "Norsk telefonnummer (8 siffer)",
     "kontakt.telefon.sporsmal": "Telefonnummer for søknaden",
     "kontakt.tittel": "Personopplysninger",
