@@ -25,6 +25,7 @@ import Steg8 from "../skjema/08-vedlegg";
 import NyOppsummering from "../skjema/09-oppsummering/Oppsummering";
 import * as Sentry from "@sentry/react";
 import {BrowserTracing} from "@sentry/tracing";
+import {ServerFeil} from "../nav-soknad/feilsider/ServerFeil";
 
 const redirectFromLogin = async () => {
     const url = window.location.href;
@@ -37,6 +38,7 @@ const Routes = (
     <Route errorElement={<SideIkkeFunnet />}>
         <Route index path={`/`} loader={() => redirect("/informasjon")} />
         <Route path={`/informasjon`} element={<Informasjon />} />
+        <Route path={`/feil`} element={<ServerFeil />} />
         <Route path={`/link`} loader={redirectFromLogin} />
         {!isMockAlt(window.location.origin) && !isLocalhost(window.location.origin) && (
             <Route path={`/mock-login`} loader={redirectFromLogin} />

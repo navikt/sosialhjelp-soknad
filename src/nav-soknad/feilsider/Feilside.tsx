@@ -1,8 +1,8 @@
 import * as React from "react";
-import UtropstegnSirkelGraIkon from "./UtropstegnSirkelGraIkon";
 import {useTitle} from "../../lib/hooks/useTitle";
 import {BodyShort, Button, Heading, Link} from "@navikt/ds-react";
 import AppHeader from "../components/appHeader/AppHeader";
+import {SystemError} from "@navikt/ds-icons";
 
 export interface FeilsideProps {
     tittel?: string;
@@ -27,13 +27,17 @@ const Feilside: React.FC<FeilsideProps> = ({
     return (
         <>
             <AppHeader />
-            <div className={"text-center space-y-4 py-10"}>
-                <div className={"flex justify-center"}>
-                    <UtropstegnSirkelGraIkon />
+            <div className={"text-center space-y-4 pb-10 bg-[var(--a-surface-danger-subtle)]"}>
+                <div
+                    className={
+                        "flex justify-center gap-4 text-[var(--a-text-on-danger)] bg-[var(--a-surface-danger)] p-4"
+                    }
+                >
+                    <SystemError fontSize={"var(--a-font-size-heading-2xlarge)"} />
+                    <Heading level="1" size="xlarge">
+                        {tittel}
+                    </Heading>
                 </div>
-                <Heading level="1" size="large" spacing>
-                    {tittel}
-                </Heading>
                 <BodyShort spacing>{children}</BodyShort>
                 {visKnapp ? (
                     <Button variant="primary" onClick={onClick}>
