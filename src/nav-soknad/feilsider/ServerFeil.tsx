@@ -16,11 +16,11 @@ export const ServerFeil = () => {
             <AppHeader />
 
             <div className={" text-[var(--a-text-on-danger-subtle)] px-8 py-12 md:py-24"}>
-                <div className={"grid md:grid-cols-3 gap-8"}>
+                <div className={"grid md:grid-cols-4 gap-8"}>
                     <div className={"md:ml-auto mt-3"}>
                         <SystemError fontSize={"96px"} className={"text-[var(--a-surface-danger)]"} />
                     </div>
-                    <div className={""}>
+                    <div className={"col-span-3"}>
                         <Heading level="1" size="xlarge">
                             Vi beklager!
                         </Heading>
@@ -43,8 +43,8 @@ export const ServerFeil = () => {
                     </div>
                 </div>
             </div>
-            <div className={"bg-[var(--a-surface-action-subtle)] grid md:grid-cols-3 gap-8 p-8"}>
-                <div className={"md:col-start-2"}>
+            <div className={"bg-[var(--a-surface-action-subtle)] grid md:grid-cols-4 gap-8 p-8"}>
+                <div className={"md:col-start-2 col-span-2"}>
                     <Heading level={"3"} size={"large"} spacing>
                         {t("feilside.serverfeil.nodsituasjon.tittel")}
                     </Heading>

@@ -16,9 +16,8 @@ const ForsorgerPliktView = () => {
 
     return expectOK(({ansvar}) => {
         if (!ansvar) return null;
-        const antallBarn = ansvar.length;
 
-        if (antallBarn) {
+        if (ansvar.length) {
             return (
                 <Sporsmal
                     tekster={getFaktumSporsmalTekst(t, "familierelasjon.faktum")}
@@ -28,7 +27,7 @@ const ForsorgerPliktView = () => {
                     <BodyShort spacing>
                         <p>{t("familierelasjon.ingress_folkeregisteret")}</p>
                         <b>{t("familierelasjon.ingress_forsorger")}</b>:{" "}
-                        {t("familierelasjon.ingress_antallBarn", {antallBarn})}
+                        {t("familierelasjon.ingress_antallBarn", {antallBarn: ansvar.length})}
                     </BodyShort>
 
                     <RegistrerteBarn />
