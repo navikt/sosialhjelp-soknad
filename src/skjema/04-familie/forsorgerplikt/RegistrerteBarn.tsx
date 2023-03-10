@@ -6,7 +6,7 @@ import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsma
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../digisos/redux/reducers";
-import {lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
+import {hentSoknadsdata, lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
 import {erSamvaersgrad} from "../../../nav-soknad/validering/valideringer";
 import {clearValideringsfeil, setValideringsfeil} from "../../../digisos/redux/validering/valideringActions";
@@ -15,6 +15,7 @@ import {getFeil} from "../../../nav-soknad/utils/enhancedComponentUtils";
 import {SysteminfoItem, Systeminfo} from "../../../nav-soknad/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
+import {useEffect} from "react";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
 
@@ -27,14 +28,16 @@ const RegistrerteBarn = () => {
 
     const {t} = useTranslation("skjema");
 
+    useEffect(() => {
+        hentSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, dispatch);
+    }, [behandlingsId, dispatch]);
+
     const handleClickJaNeiSpsm = (verdi: boolean, barnIndex: number) => {
-        if (behandlingsId) {
-            const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
-            const barnet = forsorgerplikt.ansvar[barnIndex];
-            barnet.harDeltBosted = verdi;
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
-        }
+        const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
+        const barnet = forsorgerplikt.ansvar[barnIndex];
+        barnet.harDeltBosted = verdi;
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+        lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
     };
 
     const onChangeSamvaersgrad = (verdi: string, barnIndex: number) => {
@@ -45,12 +48,10 @@ const RegistrerteBarn = () => {
     };
 
     const onBlur = (barnIndex: number, samvaersgradBarnKeyMedIndex: string) => {
-        if (behandlingsId) {
-            const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
-            const samvaersgrad = forsorgerplikt.ansvar[barnIndex].samvarsgrad;
-            if (validerSamvaersgrad(samvaersgrad, samvaersgradBarnKeyMedIndex)) {
-                lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
-            }
+        const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
+        const samvaersgrad = forsorgerplikt.ansvar[barnIndex].samvarsgrad;
+        if (validerSamvaersgrad(samvaersgrad, samvaersgradBarnKeyMedIndex)) {
+            lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
         }
     };
 
