@@ -89,10 +89,10 @@ export const Oppsummering = () => {
         },
     });
     useEffect(() => {
-        if (adresser?.navEnhet === null || erAktiv(adresser?.navEnhet)) return;
+        if (adresser === undefined) return;
+        if (adresser.navEnhet === null || erAktiv(adresser.navEnhet)) return;
 
-        // TODO: Mer brukervennlig melding her
-        logWarning(`Ugyldig søknadsmottaker ${adresser?.navEnhet} på side 9, sender bruker til side 1`);
+        logWarning(`Ugyldig søknadsmottaker ${adresser.navEnhet} på side 9, ville normalt sendt bruker til side 1`);
 
         //navigate("../1");
     }, [adresser, navigate]);
