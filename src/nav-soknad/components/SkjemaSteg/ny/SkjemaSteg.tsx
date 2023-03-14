@@ -95,8 +95,6 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
             if (onRequestNavigation !== undefined) await onRequestNavigation();
             gotoPage(page);
         } catch (e) {
-            console.log("EEEEEEK");
-
             logWarning(`Nektet navigering: ${e}`);
             scrollToTop();
         }

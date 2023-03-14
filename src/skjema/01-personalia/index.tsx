@@ -22,11 +22,11 @@ const Personopplysninger = () => {
         new Promise<void>((resolve, reject) => {
             if (adresser?.navEnhet === null) {
                 setError("soknadsmottaker.feilmelding");
-                reject();
+                reject("NAV-enhet ikke satt");
             } else if (!erAktiv(adresser?.navEnhet)) {
                 // FIXME: Egen feilmelding for inaktive NAV-kontorer
                 setError("soknadsmottaker.feilmelding");
-                reject();
+                reject("NAV-enhet inaktiv");
             } else {
                 setError(null);
                 resolve();
