@@ -1,31 +1,15 @@
-import amplitude from "amplitude-js";
+import {logAmplitudeEvent as logDekoratoren} from "@navikt/nav-dekoratoren-moduler";
 
-export const initAmplitude = () => {
-    if (amplitude) {
-        amplitude.getInstance().init("default", "", {
-            apiEndpoint: "amplitude.nav.no/collect-auto",
-            saveEvents: false,
-            includeUtm: true,
-            includeReferrer: true,
-            platform: window.location.toString(),
+import {logWarning} from "./loggerUtils";
+
+export const logAmplitudeEvent = (eventName: string, eventData?: Record<string, unknown>) => {
+    try {
+        logDekoratoren({
+            origin: "sosialhjelpsoknad",
+            eventName,
+            eventData: {...eventData, skjemaId: "sosialhjelpsoknad"},
         });
+    } catch (error) {
+        logWarning(`Kunne ikke logge til Amplitude: ${error}`);
     }
 };
-
-export function logAmplitudeEvent(eventName: string, eventData?: Record<string, unknown>): void {
-    setTimeout(() => {
-        try {
-            if (amplitude) {
-                amplitude.getInstance().logEvent(eventName, {...eventData, skjemaId: "sosialhjelpsoknad"});
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    });
-}
-
-export const createSkjemaEventData = (eventData?: Record<string, unknown>) => ({
-    skjemaId: "sosialhjelpsoknad",
-    skjemanavn: "Soknad om økonomisk sosialhjelp",
-    ...eventData,
-});

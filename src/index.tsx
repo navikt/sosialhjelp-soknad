@@ -5,7 +5,6 @@ import {Suspense} from "react";
 import {createRoot} from "react-dom/client";
 import {Provider} from "react-redux";
 import Modal from "react-modal";
-import {initAmplitude} from "./nav-soknad/utils/amplitude";
 import {logWindowError} from "./nav-soknad/utils/loggerUtils";
 import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
 import {RouterProvider} from "react-router-dom";
@@ -20,7 +19,6 @@ Modal.setAppElement("#root");
 const store = configureStore();
 
 window.onerror = logWindowError;
-initAmplitude();
 const queryClient = new QueryClient();
 
 // Dersom appen bygges og deployes med docker-image vil dekoratøren bli lagt på serverside med express i Docker (eks ved deploy til miljø)

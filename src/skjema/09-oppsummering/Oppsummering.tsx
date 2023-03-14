@@ -20,7 +20,7 @@ import {useGetOppsummering} from "../../generated/oppsummering-ressurs/oppsummer
 import {SendTilUrlFrontendSendtTil, Steg} from "../../generated/model";
 import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
 import {erAktiv} from "../../nav-soknad/containers/navEnhetStatus";
-import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
+import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {getInnsynUrl} from "../../nav-soknad/utils/rest-utils";
 import {basePath} from "../../configuration";
 import {useSendSoknad} from "../../generated/soknad-actions/soknad-actions";
@@ -122,7 +122,7 @@ export const Oppsummering = () => {
             return;
         }
 
-        logAmplitudeEvent("skjema fullført", createSkjemaEventData(getAttributesForSkjemaFullfortEvent()));
+        logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent());
         if (adresseValg) logInfo("klikk--" + adresseValg);
 
         mutateAsync({behandlingsId});

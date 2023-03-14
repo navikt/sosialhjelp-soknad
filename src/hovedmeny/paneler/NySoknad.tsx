@@ -1,6 +1,6 @@
 import {Accordion, Alert, Button, Heading, Loader} from "@navikt/ds-react";
 import * as React from "react";
-import {createSkjemaEventData, logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
+import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import Personopplysninger from "./Personopplysninger";
 import {getIntlTextOrKey} from "../../nav-soknad/utils";
 import {FillForms} from "@navikt/ds-icons";
@@ -31,7 +31,6 @@ export const NySoknadInfo = () => {
             antallPabegynteSoknader: antallPabegynteSoknader,
             enableModalV2: true,
             erProdsatt: true,
-            ...createSkjemaEventData(),
         });
         try {
             const {brukerBehandlingId} = await opprettSoknad();
