@@ -10,6 +10,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {useFeatureFlags} from "../../lib/featureFlags";
 import {SkjemaSteg} from "../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
+import {useEffect} from "react";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;
@@ -33,6 +34,10 @@ const Begrunnelse = () => {
     const {mutate, isError} = useUpdateBegrunnelse();
     const {begrunnelseNyTekst} = useFeatureFlags();
 
+    useEffect(() => {
+        logAmplitudeEvent("begrunnelse åpnet", {begrunnelseNyTekst});
+    }, [begrunnelseNyTekst]);
+
     const {
         register,
         handleSubmit,
@@ -47,9 +52,10 @@ const Begrunnelse = () => {
         new Promise<void>((resolve, reject) => {
             handleSubmit(
                 async (data) => {
-                    logAmplitudeEvent("begrunnelse", {
+                    logAmplitudeEvent("begrunnelse fullført", {
                         hvaLengde: (data?.hvaSokesOm?.length ?? 0 % 20) * 20,
                         hvorforLengde: (data?.hvorforSoke?.length ?? 0 % 20) * 20,
+                        begrunnelseNyTekst,
                     });
                     await mutate({behandlingsId, data}, {onSuccess: resolve, onError: reject});
                 },
