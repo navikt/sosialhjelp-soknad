@@ -16,7 +16,7 @@ export function logAmplitudeEvent(eventName: string, eventData?: Record<string, 
     setTimeout(() => {
         try {
             if (amplitude) {
-                amplitude.getInstance().logEvent(eventName, eventData);
+                amplitude.getInstance().logEvent(eventName, {...eventData, skjemaId: "sosialhjelpsoknad"});
             }
         } catch (error) {
             console.error(error);
