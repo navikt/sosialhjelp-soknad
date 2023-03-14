@@ -90,7 +90,7 @@ export const Oppsummering = () => {
     });
     useEffect(() => {
         if (adresser === undefined) return;
-        if (adresser.navEnhet === null || erAktiv(adresser.navEnhet)) return;
+        if (erAktiv(adresser.navEnhet)) return;
 
         logWarning(`Ugyldig søknadsmottaker ${adresser.navEnhet} på side 9, ville normalt sendt bruker til side 1`);
 
