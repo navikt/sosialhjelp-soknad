@@ -5,12 +5,18 @@ import {SystemError} from "@navikt/ds-icons";
 import {BodyShort, Button, Heading, Link} from "@navikt/ds-react";
 import AppHeader from "../components/appHeader/AppHeader";
 import {logError} from "../utils/loggerUtils";
+import {useLocation} from "react-router-dom";
+import {useMemo} from "react";
+
+const useQuery = ({search}: Pick<Location, "search">) => useMemo(() => new URLSearchParams(search), [search]);
 
 export const ServerFeil = () => {
     const {t} = useTranslation("skjema");
+    const reason = useQuery(useLocation()).get("reason");
+
     useTitle(`Feilside - ${document.location.hostname}`);
 
-    logError(`Viser feilside, referrer: ${document.referrer}`);
+    logError(`Viser feilside, error: ${reason}, referrer: ${document.referrer}`);
     return (
         <>
             <AppHeader />
