@@ -22,7 +22,7 @@ export function hentSoknadsdata(brukerBehandlingId: string | undefined | null, s
             }
             logWarning("Henting av soknadsdata feilet: " + reason);
             dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-            window.location.href = "/sosialhjelp/soknad/feil";
+            window.location.href = "/sosialhjelp/soknad/feil?reason=hentSoknadsdata";
         });
 }
 
@@ -37,17 +37,13 @@ export function lagreSoknadsdata(
     fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata))
         .then((response: any) => {
             dispatch(settRestStatus(sti, REST_STATUS.OK));
-            if (responseHandler) {
-                responseHandler(response);
-            }
+            if (responseHandler) responseHandler(response);
         })
         .catch((reason) => {
-            if (reason.message === HttpStatus.UNAUTHORIZED) {
-                return;
-            }
+            if (reason.message === HttpStatus.UNAUTHORIZED) return;
             logWarning("Lagring av soknadsdata feilet: " + reason);
             dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-            window.location.href = "/sosialhjelp/soknad/feil";
+            window.location.href = "/sosialhjelp/soknad/feil?reason=lagreSoknadsdata";
         });
 }
 
@@ -73,7 +69,7 @@ export function settSamtykkeOgOppdaterData(
             if (reason.message === HttpStatus.UNAUTHORIZED) return;
             logWarning("Oppdatering av bostotte samtykke feilet: " + reason);
             dispatch(settRestStatus(restStatusSti, REST_STATUS.FEILET));
-            window.location.href = "/sosialhjelp/soknad/feil";
+            window.location.href = "/sosialhjelp/soknad/feil?reason=settSamtykkeOgOppdaterData";
         });
 }
 

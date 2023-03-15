@@ -64,7 +64,7 @@ function* lesEttersendelserSaga({brukerbehandlingId}: LesEttersendelserAction) {
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) return;
         yield call(logWarning, "Les ettersendelser feilet: " + reason.toString());
-        window.location.href = "/sosialhjelp/soknad/feil";
+        window.location.href = "/sosialhjelp/soknad/feil?reason=lesEttersendelserSaga";
     }
 }
 
@@ -79,7 +79,7 @@ function* lesEttersendelsesVedleggSaga({brukerbehandlingId}: LesEttersendelsesVe
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) return;
         yield call(logWarning, "Lese ettersendte vedlegg feilet: " + reason.toString());
-        window.location.href = "/sosialhjelp/soknad/feil";
+        window.location.href = "/sosialhjelp/soknad/feil?reason=lesEttersendelsesVedleggSaga";
     }
 }
 
@@ -94,7 +94,7 @@ function* slettEttersendelsesVedleggSaga({
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) return;
         yield call(logWarning, "Slett ettersendt vedlegg feilet: " + reason);
-        window.location.href = "/sosialhjelp/soknad/feil";
+        window.location.href = "/sosialhjelp/soknad/feil?reason=slettEttersendelsesVedleggSaga";
     }
 }
 
@@ -153,7 +153,7 @@ function* sendEttersendelseSaga({brukerbehandlingId}: SendEttersendelseAction): 
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) return;
         yield call(logWarning, "Send ettersendelse feilet: " + reason.toString());
-        window.location.href = "/sosialhjelp/soknad/feil";
+        window.location.href = "/sosialhjelp/soknad/feil?reason=sendEttersendelseSaga";
     }
 }
 

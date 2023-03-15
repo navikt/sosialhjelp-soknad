@@ -71,11 +71,9 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
                     dispatch(settFilOpplastingFerdig(props.okonomiskOpplysning.type));
                 })
                 .catch((reason) => {
-                    if (reason.message === HttpStatus.UNAUTHORIZED) {
-                        return;
-                    }
+                    if (reason.message === HttpStatus.UNAUTHORIZED) return;
                     logWarning("Slett vedlegg feilet: " + reason);
-                    window.location.href = "/sosialhjelp/soknad/feil";
+                    window.location.href = "/sosialhjelp/soknad/feil?reason=slettVedlegg";
                 });
         }
     };

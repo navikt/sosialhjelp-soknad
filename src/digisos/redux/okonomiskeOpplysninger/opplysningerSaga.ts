@@ -42,7 +42,7 @@ function* lagreOpplysningHvisGyldigSaga(action: LagreOpplysningHvisGyldig) {
                     yield put(setValideringsfeil(ValideringsFeilKode.FELT_EKSISTERER_IKKE, opplysning.type));
                 } else {
                     yield call(logWarning, "Lagring av økonomisk opplysning feilet. Reason: " + reason);
-                    window.location.href = "/sosialhjelp/soknad/feil";
+                    window.location.href = "/sosialhjelp/soknad/feil?reason=lagreOpplysningHvisGyldigSaga";
                 }
             }
         }

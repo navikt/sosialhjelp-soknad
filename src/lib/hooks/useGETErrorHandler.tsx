@@ -10,8 +10,7 @@ export const handleAxiosError = (error: AxiosError) => {
         window.location.href = "/sosialhjelp/soknad/informasjon";
     } else {
         logError(`GET-feil ${error.request.path}: ${error.code} ${error.message}`);
-        // FIXME: Husk å lage denne!!
-        window.location.href = "/sosialhjelp/soknad/feil";
+        window.location.href = "/sosialhjelp/soknad/feil?reason=handleAxiosError";
     }
 };
 
@@ -26,7 +25,7 @@ export const useGETErrorHandler = () => ({
             handleAxiosError(error);
         } else {
             logError(`Feil i expectOK: ${error}`);
-            window.location.href = "/sosialhjelp/soknad/feil";
+            window.location.href = "/sosialhjelp/soknad/feil?reason=useGETErrorHandler";
         }
         return null;
     },

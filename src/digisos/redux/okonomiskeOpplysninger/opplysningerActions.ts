@@ -49,7 +49,7 @@ export function hentOpplysninger(behandlingsId: string, dispatch: Dispatch) {
                 return;
             }
             logWarning("Henting av økonomiske opplysninger feilet: " + reason);
-            window.location.href = "/sosialhjelp/soknad/feil";
+            window.location.href = "/sosialhjelp/soknad/feil?reason=hentOpplysninger";
         });
 }
 
