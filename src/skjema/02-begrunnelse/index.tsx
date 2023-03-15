@@ -53,8 +53,8 @@ const Begrunnelse = () => {
             handleSubmit(
                 async (data) => {
                     logAmplitudeEvent("begrunnelse fullført", {
-                        hvaLengde: (data?.hvaSokesOm?.length ?? 0 % 20) * 20,
-                        hvorforLengde: (data?.hvorforSoke?.length ?? 0 % 20) * 20,
+                        hvaLengde: (Math.round((data?.hvaSokesOm?.length ?? 0) / 20) - 1) * 20,
+                        hvorforLengde: (Math.round((data?.hvorforSoke?.length ?? 0) / 20) - 1) * 20,
                         begrunnelseNyTekst,
                     });
                     await mutate({behandlingsId, data}, {onSuccess: resolve, onError: reject});
