@@ -5,16 +5,21 @@ import {ArbeidsforholdFrontend} from "../../../generated/model";
 import {useHentArbeid} from "../../../generated/arbeid-ressurs/arbeid-ressurs";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
+import {BodyShort} from "@navikt/ds-react";
 
 export const ArbeidsforholdListe = () => {
     const {t} = useTranslation("skjema");
     const {expectOK} = useAlgebraic(useHentArbeid(useBehandlingsId()));
 
     return expectOK(({arbeidsforhold}) => (
-        <div className={"py-2"}>
-            {arbeidsforhold?.map((arbeidsforhold, i) => (
-                <ArbeidsforholdDetalj key={i} arbeidsforhold={arbeidsforhold} />
-            )) ?? <p>{t("arbeidsforhold.ingen")}</p>}
+        <div>
+            {arbeidsforhold?.length ? (
+                arbeidsforhold.map((arbeidsforhold, i) => (
+                    <ArbeidsforholdDetalj key={i} arbeidsforhold={arbeidsforhold} />
+                ))
+            ) : (
+                <BodyShort spacing>{t("arbeidsforhold.ingen")}</BodyShort>
+            )}
         </div>
     ));
 };

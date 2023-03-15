@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Heading, Textarea} from "@navikt/ds-react";
+import {Detail, Heading, Textarea} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {SkjemaSteg} from "../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
 import {useForm} from "react-hook-form";
@@ -70,10 +70,8 @@ const ArbeidOgUtdanning = () => {
                         <Heading size="medium" spacing>
                             {t("arbeidsforhold.sporsmal")}
                         </Heading>
-                        <div>
-                            {t("arbeidsforhold.infotekst")}
-                            <ArbeidsforholdListe />
-                        </div>
+                        <Detail spacing>{t("arbeidsforhold.infotekst")}</Detail>
+                        <ArbeidsforholdListe />
                         <Textarea
                             {...register("arbeid.kommentarTilArbeidsforhold")}
                             id={"arbeid.kommentarTilArbeidsforhold"}
