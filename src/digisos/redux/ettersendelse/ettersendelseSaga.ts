@@ -37,67 +37,62 @@ import {settFilOpplastingFerdig} from "../okonomiskeOpplysninger/opplysningerAct
 import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {REST_FEIL} from "../soknadsdata/soknadsdataTypes";
 
-function* opprettEttersendelseSaga(action: OpprettEttersendelseAction) {
+function* opprettEttersendelseSaga({brukerbehandlingId}: OpprettEttersendelseAction) {
     try {
-        const url = `soknader/opprettSoknad?ettersendTil=${action.brukerbehandlingId}`;
-        const response: {brukerBehandlingId: string} = yield call(fetchPost, url, "", true);
-        if (response) {
-            yield put(lagEttersendelseOk(response.brukerBehandlingId));
-            yield put(lesEttersendelsesVedlegg(response.brukerBehandlingId));
-        }
+        const response: {brukerBehandlingId: string} = yield call(
+            fetchPost,
+            `soknader/opprettSoknad?ettersendTil=${brukerbehandlingId}`,
+            "",
+            true
+        );
+        if (!response) return;
+        yield put(lagEttersendelseOk(response.brukerBehandlingId));
+        yield put(lesEttersendelsesVedlegg(response.brukerBehandlingId));
     } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            return;
-        }
-        yield call(logInfo, "Opprett ettersendelse feilet: " + reason.toString());
-        yield put(opprettEttersendelseFeilet(action.brukerbehandlingId));
+        if (reason.message === HttpStatus.UNAUTHORIZED) return;
+        yield call(logInfo, `Opprett ettersendelse feilet: ${reason.toString()}`);
+        yield put(opprettEttersendelseFeilet(brukerbehandlingId));
     }
 }
 
-function* lesEttersendelserSaga(action: LesEttersendelserAction) {
+function* lesEttersendelserSaga({brukerbehandlingId}: LesEttersendelserAction) {
     try {
-        const url = `ettersendelse/innsendte/${action.brukerbehandlingId}`;
+        const url = `ettersendelse/innsendte/${brukerbehandlingId}`;
         const response: Behandlingskjede = yield call(fetchToJson, url, true);
-        if (response) {
-            yield put(settEttersendelser(response));
-        }
+        if (!response) return;
+        yield put(settEttersendelser(response));
     } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            return;
-        }
+        if (reason.message === HttpStatus.UNAUTHORIZED) return;
         yield call(logWarning, "Les ettersendelser feilet: " + reason.toString());
         window.location.href = "/sosialhjelp/soknad/feil";
     }
 }
 
-function* lesEttersendelsesVedleggSaga(action: LesEttersendelsesVedleggAction) {
+function* lesEttersendelsesVedleggSaga({brukerbehandlingId}: LesEttersendelsesVedleggAction) {
     try {
-        const url = `ettersendelse/ettersendteVedlegg/${action.brukerbehandlingId}`;
-        const response: EttersendelseVedleggBackend[] = yield call(fetchToJson, url);
-        if (response) {
-            yield put(lesEttersendteVedlegg(response));
-        }
+        const response: EttersendelseVedleggBackend[] = yield call(
+            fetchToJson,
+            `ettersendelse/ettersendteVedlegg/${brukerbehandlingId}`
+        );
+        if (!response) return;
+        yield put(lesEttersendteVedlegg(response));
     } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            return;
-        }
+        if (reason.message === HttpStatus.UNAUTHORIZED) return;
         yield call(logWarning, "Lese ettersendte vedlegg feilet: " + reason.toString());
         window.location.href = "/sosialhjelp/soknad/feil";
     }
 }
 
-function* slettEttersendelsesVedleggSaga(action: SlettEttersendtVedleggAction): SagaIterator {
-    const {behandlingsId, filUuid, opplysningType} = action;
-
+function* slettEttersendelsesVedleggSaga({
+    behandlingsId,
+    filUuid,
+    opplysningType,
+}: SlettEttersendtVedleggAction): SagaIterator {
     try {
-        // const url = `ettersendelse/vedlegg/${action.vedleggId}?filId=${action.filId}`;
-        const url = `opplastetVedlegg/${behandlingsId}/${filUuid}`;
-        yield call(fetchDelete, url);
+        yield call(fetchDelete, `opplastetVedlegg/${behandlingsId}/${filUuid}`);
         yield put(slettEttersendtVedleggOk(filUuid, opplysningType));
     } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            return;
-        }
+        if (reason.message === HttpStatus.UNAUTHORIZED) return;
         yield call(logWarning, "Slett ettersendt vedlegg feilet: " + reason);
         window.location.href = "/sosialhjelp/soknad/feil";
     }
@@ -113,19 +108,15 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
     };
 
     try {
-        const fetchResponse: any = yield call(fetchUpload, url, formData);
-        if (typeof fetchResponse != "undefined") {
-            response = fetchResponse;
-        }
+        const fetchResponse: Fil | undefined = yield call(fetchUpload, url, formData);
+        if (fetchResponse) response = fetchResponse;
+
         yield put(lastOppEttersendtVedleggOk());
         yield call(logInfo, "GlemmeSendKnappStatistikk. Vedlegg lastet opp. BehandingsId: " + behandlingsId);
-        if (response) {
-            yield put(filLastetOpp(opplysningType, response));
-        }
+        if (!response) return;
+        yield put(filLastetOpp(opplysningType, response));
     } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            return;
-        }
+        if (reason.message === HttpStatus.UNAUTHORIZED) return;
         let feilKode = detekterInternFeilKode(reason.toString());
         // Kjør feilet kall på nytt for å få tilgang til feilmelding i JSON data:
         //@ts-ignore
@@ -144,15 +135,11 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
     }
 }
 
-function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
+function* sendEttersendelseSaga({brukerbehandlingId}: SendEttersendelseAction): SagaIterator {
     try {
         yield put({type: EttersendelseActionTypeKeys.ETTERSEND_PENDING});
-        const url = `soknader/${action.brukerbehandlingId}/actions/send`;
-        yield call(fetchPost, url, JSON.stringify({}), true);
-        yield call(
-            logInfo,
-            "GlemmeSendKnappStatistikk. Ettersendelse sendt. BehandingsId: " + action.brukerbehandlingId
-        );
+        yield call(fetchPost, `soknader/${brukerbehandlingId}/actions/send`, JSON.stringify({}), true);
+        yield call(logInfo, `GlemmeSendKnappStatistikk. Ettersendelse sendt. BehandingsId: ${brukerbehandlingId}`);
         yield put({type: EttersendelseActionTypeKeys.ETTERSEND_OK});
         yield put(lastOppEttersendtVedleggOk());
         /* FIXME: Jeg har kommentert ut denne koden fordi jeg _tror_ det er en no-op.
@@ -164,9 +151,7 @@ function* sendEttersendelseSaga(action: SendEttersendelseAction): SagaIterator {
         }
         */
     } catch (reason) {
-        if (reason.message === HttpStatus.UNAUTHORIZED) {
-            return;
-        }
+        if (reason.message === HttpStatus.UNAUTHORIZED) return;
         yield call(logWarning, "Send ettersendelse feilet: " + reason.toString());
         window.location.href = "/sosialhjelp/soknad/feil";
     }
