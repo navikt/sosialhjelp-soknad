@@ -31,7 +31,7 @@ export const ServerFeil = () => {
                             Vi beklager!
                         </Heading>
                         <Heading level={"2"} size={"large"}>
-                            En teknisk feil har oppstått.{" "}
+                            En teknisk feil har oppstått.
                         </Heading>
                         <Heading level={"3"} size={"medium"}>
                             Vi anbefaler at du prøver på nytt.

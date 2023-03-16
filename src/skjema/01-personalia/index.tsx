@@ -36,6 +36,7 @@ const Personopplysninger = () => {
             }
         });
 
+    // Midlertidig hack for å forhindre XSRF-feil
     useEffect(() => {
         hentXsrfCookie(behandlingsId).then(() => logInfo(`dobbelt-hentet xsrf for ${behandlingsId} ¯\\_(ツ)_/¯`));
     }, [behandlingsId]);

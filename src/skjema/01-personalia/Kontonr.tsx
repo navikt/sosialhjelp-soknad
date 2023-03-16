@@ -21,14 +21,12 @@ export const Kontonr = () => {
             {editMode ? (
                 <KontonrEdit onClose={() => setEditMode(false)} />
             ) : (
-                <div className={"space-y-2"}>
-                    <Systeminfo>
-                        <KontonrShow />
-                        <LinkButton onClick={() => setEditMode(true)}>
-                            {t("system.kontonummer.endreknapp.label")}
-                        </LinkButton>
-                    </Systeminfo>
-                </div>
+                <Systeminfo>
+                    <KontonrShow />
+                    <LinkButton onClick={() => setEditMode(true)}>
+                        {t("system.kontonummer.endreknapp.label")}
+                    </LinkButton>
+                </Systeminfo>
             )}
         </Sporsmal>
     ));
