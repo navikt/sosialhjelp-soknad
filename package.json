@@ -79,6 +79,7 @@
     "ajv": "^8.12.0",
     "autoprefixer": "^10.4.13",
     "concurrently": "^7.0.0",
+    "cypress": "^12.8.1",
     "eslint": "^8.34.0",
     "eslint-plugin-react": "^7.32.2",
     "husky": "^8.0.0",
@@ -107,7 +108,8 @@
     "fetch-api": "curl -o ./soknad-api.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs && prettier --write soknad-api.json",
     "fetch-api-norg": "curl -o ./norg-api.json https://norg2.dev.intern.nav.no/norg2/v3/api-docs/API%20versjon%201  && prettier --write norg-api.json",
     "orval": "rm -rf ./src/generated & orval --prettier",
-    "lint": "lint-staged"
+    "lint": "lint-staged",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": "react-app"

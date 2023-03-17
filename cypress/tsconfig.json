@@ -1,0 +1,9 @@
+{
+    "extends": "@tsconfig/create-react-app/tsconfig.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "types": ["cypress", "node"],
+        "isolatedModules": false
+    },
+    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+}
