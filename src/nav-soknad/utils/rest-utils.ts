@@ -2,10 +2,11 @@ import {basePath} from "../../configuration";
 import {logError} from "./loggerUtils";
 import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
 
-export const getApiBaseUrl = (withAccessToken?: boolean) =>
-    withAccessToken
+export function getApiBaseUrl(withAccessToken?: boolean) {
+    return withAccessToken
         ? `${process.env.REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN}`
         : `${process.env.REACT_APP_API_BASE_URL}`;
+}
 
 export const determineCredentialsParameter = () =>
     process.env.REACT_APP_ENVIRONMENT === "localhost" ? "include" : "same-origin";
