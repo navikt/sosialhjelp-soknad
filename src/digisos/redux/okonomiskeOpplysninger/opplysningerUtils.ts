@@ -87,13 +87,9 @@ const filterOutNullValuesFromList = (list: MaybeOpplysning[]): Opplysning[] => {
 };
 
 export const getSpcForOpplysning = (opplysningType: OpplysningType): OpplysningSpc | undefined => {
-    const opplysningSpcs = opplysningsRekkefolgeOgSpc.filter((oSpc: OpplysningSpc) => {
-        return oSpc.type === opplysningType;
-    });
+    const opplysningSpcs = opplysningsRekkefolgeOgSpc.filter(({type}: OpplysningSpc) => type === opplysningType);
 
-    if (opplysningSpcs && opplysningSpcs.length === 0) {
-        logError(`Spc ikke funnet for opplysning med type: "${opplysningType}"`, "opplysningerUtils.ts");
-    }
+    if (opplysningSpcs?.length === 0) logError(`Spc ikke funnet for opplysning med type: "${opplysningType}"`);
 
     return opplysningSpcs[0];
 };
@@ -131,8 +127,7 @@ function sorterOpplysninger(usortertListe: Opplysning[], rekkefolge: OpplysningS
             if (n > rekkefolge.length - 1) {
                 erPlassertISortertListe = true;
                 logError(
-                    `Ukjent okonomisk opplysning oppdaget. Okonomisk opplysning med type "${opplysning.type}" mottatt fra backend`,
-                    "opplysningerUtils.ts"
+                    `Ukjent okonomisk opplysning oppdaget. Okonomisk opplysning med type "${opplysning.type}" mottatt fra backend`
                 );
             } else if (opplysning.type === rekkefolge[n].type) {
                 sortert[n] = opplysning;

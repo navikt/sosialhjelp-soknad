@@ -9,7 +9,9 @@ type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
 export const DeveloperToolkit = () => {
     const {behandlingsId} = useParams<UrlParams>();
     const navigate = useNavigate();
-    useEffect(() => logWarning("Viser utviklermeny. Dette skal ikke skje i prod!", true), []);
+    useEffect(() => {
+        logWarning("Viser utviklermeny. Dette skal ikke skje i prod!").then();
+    }, []);
 
     return (
         <div className={"!mt-0 p-2 bg-[black] text-[#0f0] font-mono "}>
