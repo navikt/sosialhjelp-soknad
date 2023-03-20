@@ -21,7 +21,6 @@ import {SendTilUrlFrontendSendtTil, Steg} from "../../generated/model";
 import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
 import {erAktiv} from "../../nav-soknad/containers/navEnhetStatus";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
-import {getInnsynUrl} from "../../nav-soknad/utils/rest-utils";
 import {basePath} from "../../configuration";
 import {useSendSoknad} from "../../generated/soknad-actions/soknad-actions";
 import {useFeatureFlags} from "../../lib/featureFlags";
@@ -80,7 +79,7 @@ export const Oppsummering = () => {
         mutation: {
             onSuccess: ({id, sendtTil}) => {
                 const redirectUrl: Record<SendTilUrlFrontendSendtTil, string> = {
-                    FIKS_DIGISOS_API: `${getInnsynUrl()}${id}/status`,
+                    FIKS_DIGISOS_API: `${process.env.REACT_APP_INNSYN_URL}${id}/status`,
                     SVARUT: `${basePath}/skjema/${id}/ettersendelse`,
                 };
 
