@@ -52,7 +52,7 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
                 <Button variant="tertiary" onClick={() => (window.location.href = minSideUrl)}>
                     {t("avbryt.fortsettsenere")}
                 </Button>
-                <Button variant="tertiary" onClick={() => setAvbrytModalOpen(true)}>
+                <Button variant="tertiary" onClick={() => setAvbrytModalOpen(true)} test-id="slett-soknad-knapp">
                     {t("avbryt.slett")}
                 </Button>
             </div>

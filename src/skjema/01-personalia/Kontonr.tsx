@@ -24,7 +24,7 @@ export const Kontonr = () => {
                 <div className={"space-y-2"}>
                     <Systeminfo>
                         <KontonrShow />
-                        <LinkButton onClick={() => setEditMode(true)}>
+                        <LinkButton onClick={() => setEditMode(true)} data-testid="kontonummer-endreknapp">
                             {t("system.kontonummer.endreknapp.label")}
                         </LinkButton>
                     </Systeminfo>

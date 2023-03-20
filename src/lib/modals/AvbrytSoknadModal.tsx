@@ -90,7 +90,12 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
                     <Button variant="primary" onClick={onClose}>
                         {t("avbryt.fortsettsenere")}
                     </Button>
-                    <Button variant="primary" disabled={isLoading} onClick={() => onAvbryt()}>
+                    <Button
+                        variant="primary"
+                        disabled={isLoading}
+                        onClick={() => onAvbryt()}
+                        test-id="slett-soknad-modal-knapp"
+                    >
                         {t("avbryt.slett")}
                     </Button>
                     {isError && "Beklager, en feil oppstod ved sletting."}

@@ -1,9 +1,16 @@
 {
-    "extends": "@tsconfig/create-react-app/tsconfig.json",
     "compilerOptions": {
-        "noEmit": true,
-        "types": ["cypress", "node"],
-        "isolatedModules": false
+      "target": "es5",
+      "lib": ["es5", "dom"],
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "module": "commonjs",
+      "baseUrl": "../node_modules",
+      "types": ["cypress", "node"]
     },
-    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-}
+    "include": ["**/*.ts"],
+    "exclude": ["../node_modules"]
+  }
+  

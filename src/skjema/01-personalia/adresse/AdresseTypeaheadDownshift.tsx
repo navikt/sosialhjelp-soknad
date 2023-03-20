@@ -119,7 +119,7 @@ export const AdresseTypeahead = (props: {
                         </div>
                         <div>{t("kontakt.system.kontaktinfo.infotekst.ekstratekst")}</div>
                     </label>
-                    <StyledInput {...getInputProps()} />
+                    <StyledInput {...getInputProps()} data-testid="adresse-sok-input" />
                     {isOpen && (
                         <FetchAddress searchvalue={inputValue}>
                             {({isLoading, isError, result}) => (
