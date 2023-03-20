@@ -69,7 +69,7 @@ export const useAlgebraic = <TData, TError extends AxiosError | null>(
     const [request, setRequest] = useState(AsyncData.NotAsked<Result<TData, TError>>());
     const {GETErrorHandler} = useGETErrorHandler();
 
-    useEffect(() => setRequest(resolveQueryState(queryResult)), [queryResult]);
+    useEffect(() => setRequest(resolveQueryState(queryResult)(queryResult)), [queryResult]);
 
     // Rename this to ideally?
     const expectOK: OKExpecter<TData> = (okHandler) =>
