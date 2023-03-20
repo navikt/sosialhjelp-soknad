@@ -1,11 +1,6 @@
 import {AsyncData, Result} from "@swan-io/boxed";
-import {ReactElement, useEffect, useState} from "react";
-import {
-    QueryObserverLoadingErrorResult,
-    QueryObserverLoadingResult,
-    QueryObserverSuccessResult,
-    UseQueryResult,
-} from "@tanstack/react-query";
+import {ReactElement, useMemo} from "react";
+import {UseQueryResult} from "@tanstack/react-query";
 import TextPlaceholder from "../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {useGETErrorHandler} from "./useGETErrorHandler";
 import {AxiosError} from "axios";
@@ -31,16 +26,6 @@ type UseQueryHookResult<TData, TError> = UseQueryResult<TData, TError> & {data: 
 //
 // Type guards
 //
-const requestIsOK = <TData,>(
-    result: UseQueryHookResult<TData, any>
-): result is QueryObserverSuccessResult<TData, any> => result.status === "success";
-
-const requestIsError = <TError,>(
-    result: UseQueryHookResult<any, TError>
-): result is QueryObserverLoadingErrorResult<any, TError> => result.status === "error";
-
-const requestIsLoading = (result: UseQueryHookResult<any, any>): result is QueryObserverLoadingResult =>
-    result.status === "loading";
 
 /**
  * Resolves a React Query hook result into an AsyncData<Result> which can be used with a match chain.
@@ -51,13 +36,16 @@ const requestIsLoading = (result: UseQueryHookResult<any, any>): result is Query
 const resolveQueryState = <TData, TError>(
     result: UseQueryHookResult<TData, TError>
 ): AsyncData<Result<TData, TError>> => {
-    const {data, error, status} = result;
+    const {error, data, status} = result;
 
-    if (requestIsOK(result)) return AsyncData.Done(Result.Ok(data));
-    if (requestIsError(result)) return AsyncData.Done(Result.Error(error));
-    if (requestIsLoading(result)) return AsyncData.Loading();
-
-    throw new Error(`Unexpected status value ${status} in resolveQueryState`);
+    switch (status) {
+        case "error":
+            return AsyncData.Done(Result.Error(error));
+        case "success":
+            return AsyncData.Done(Result.Ok(data));
+        case "loading":
+            return AsyncData.Loading();
+    }
 };
 
 /**
@@ -90,10 +78,8 @@ export const useAlgebraic = <TData, TError extends AxiosError | null>(
     queryResult: UseQueryHookResult<TData, TError>,
     loadPlaceholder: ReactElement = <TextPlaceholder lines={1} />
 ): UseAlgebraicResult<TData, TError> => {
-    const [request, setRequest] = useState(AsyncData.NotAsked<Result<TData, TError>>());
     const {GETErrorHandler} = useGETErrorHandler();
-
-    useEffect(() => setRequest(resolveQueryState(queryResult)), [queryResult]);
+    const request = useMemo(() => resolveQueryState(queryResult), [queryResult]);
 
     // Rename this to "ideally"?
     const expectOK: OKExpecter<Exclude<TData, undefined>> = (okHandler) =>
