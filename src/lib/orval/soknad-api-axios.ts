@@ -50,7 +50,9 @@ export const axiosInstance = <T>(config: AxiosRequestConfig, options?: AxiosRequ
                 if (e.response) {
                     const {status, data} = e.response;
                     if (status === 401) await navigateToLoginOn401(data as UnauthorizedMelding);
-                    else if ([410, 404].includes(status)) window.location.href = "/sosialhjelp/soknad/informasjon";
+                    // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
+                    else if ([410, 403, 404].includes(status))
+                        window.location.href = `/sosialhjelp/soknad/informasjon?code=${status}`;
                     else {
                         await logError(`Nettverksfeil i axiosInstance: ${status} ${data}`);
                         throw e;
