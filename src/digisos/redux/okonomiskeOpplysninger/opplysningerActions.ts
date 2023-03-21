@@ -10,6 +10,7 @@ import {logError} from "../../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
 import {hentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {AxiosError} from "axios";
+import {handleAxiosError} from "../../../lib/hooks/useGETErrorHandler";
 
 export const gotDataFromBackend = (response: OpplysningerBackend): OpplysningerAction => {
     return {
@@ -45,17 +46,13 @@ export function hentOpplysninger(behandlingsId: string, dispatch: Dispatch) {
             // TODO: gotDataFromBackend bruker fremdeles klientside datatyper.
             dispatch(gotDataFromBackend(response as unknown as OpplysningerBackend));
         })
-        .catch((error: any) => {
+        .catch(async (error: any) => {
             if (error instanceof AxiosError) {
-                logError(`Henting av økonomiske opplysninger feilet: ${error.status}: ${error.message}`);
+                await handleAxiosError(error);
             } else {
-                logError(`Henting av økonomiske opplysninger feilet: ${error.message}`);
-            }
-
-            // Gi logError en sjanse
-            setTimeout(() => {
+                await logError(`Henting av økonomiske opplysninger feilet: ${error.message}`);
                 window.location.href = "/sosialhjelp/soknad/feil?reason=hentOpplysninger";
-            }, 1000);
+            }
         });
 }
 
