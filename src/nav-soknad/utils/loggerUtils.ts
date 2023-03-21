@@ -1,5 +1,5 @@
 import {Logg, LoggLevel} from "../../generated/model";
-import {loggFraKlient} from "../../generated/informasjon-ressurs/informasjon-ressurs";
+import {axiosInstance} from "../../lib/orval/soknad-api-axios";
 
 export const logWindowError: typeof window.onerror = (message, jsFileUrl, lineNumber, columnNumber) => {
     logToServer({
@@ -13,9 +13,9 @@ export const logWindowError: typeof window.onerror = (message, jsFileUrl, lineNu
     }).then();
 };
 
-export const logInfo = async (message: string) => log(message, LoggLevel.INFO);
-export const logWarning = async (message: string) => log(message, LoggLevel.WARN);
-export const logError = async (message: string) => log(message, LoggLevel.ERROR);
+export const logInfo = (message: string): Promise<void> => log(message, LoggLevel.INFO);
+export const logWarning = (message: string): Promise<void> => log(message, LoggLevel.WARN);
+export const logError = (message: string): Promise<void> => log(message, LoggLevel.ERROR);
 
 const logLocally = ({message, level}: Logg) => {
     switch (level) {
@@ -45,8 +45,16 @@ const log = async (message: string, level: LoggLevel) => {
 
 const logToServer = async (navLogEntry: Logg) => {
     try {
-        await loggFraKlient(navLogEntry);
+        await axiosInstance(
+            {
+                url: `/informasjon/actions/logg`,
+                method: "post",
+                headers: {"Content-Type": "application/json"},
+                data: navLogEntry,
+            },
+            {digisosIgnoreErrors: true}
+        );
     } catch (e) {
-        console.warn("Logg til server failed.");
+        console.warn(`Logg til server failed (${e}).`);
     }
 };

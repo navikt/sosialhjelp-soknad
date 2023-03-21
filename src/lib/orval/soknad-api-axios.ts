@@ -2,18 +2,18 @@ import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "ax
 import {getApiBaseUrl, getRedirectPath} from "../../nav-soknad/utils/rest-utils";
 import {isLocalhost, isMockAlt} from "../../nav-soknad/utils";
 import {UnauthorizedMelding} from "../../generated/model";
-import {logError, logWarning} from "../../nav-soknad/utils/loggerUtils";
+import {logError, logInfo, logWarning} from "../../nav-soknad/utils/loggerUtils";
 
-const navigateToLoginOn401 = async (data: UnauthorizedMelding | undefined) => {
+export const redirectToLogin = async (data?: UnauthorizedMelding) => {
     if (!data) {
-        await logError(`401-feil uten data`);
+        logError(`401-feil uten data`);
         throw new Error(`401-feil uten data`);
     }
 
     const {id, loginUrl} = data;
 
     if (new URLSearchParams(window.location.search).get("login_id") === id) {
-        await logError("login_id == id fra 401, kan indikere en redirect loop?");
+        logError("login_id == id fra 401, kan indikere en redirect loop?");
         return;
     }
 
@@ -39,9 +39,28 @@ interface CancellablePromise<T> extends Promise<T> {
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+export type DigisosAxiosConfig = {
+    // Ingen feilhåndtering skal utføres (mest nyttig for logging)
+    digisosIgnoreErrors?: boolean;
+};
+
+const isLoginRedirect401 = (response: any): response is AxiosResponse<UnauthorizedMelding | undefined, any> =>
+    response?.status === 401;
+
+/**
+ * Digisos Axios client
+ *
+ * In case of 403, 404, 410 errors, returns an unresolving promise because
+ * the rug is about to be pulled out under the code anyway with a redirect.
+ *
+ * All others will generate exceptions (409 causes up to ten retries).
+ *
+ * @returns data from the request, *or* a promise that never resolves,
+ * in case of an error that is about to be handled by a page redirection.
+ */
 export const axiosInstance = <T>(
     config: AxiosRequestConfig,
-    options?: AxiosRequestConfig,
+    options?: AxiosRequestConfig & DigisosAxiosConfig,
     retry: number = 0
 ): Promise<T> => {
     const source = Axios.CancelToken.source();
@@ -52,37 +71,43 @@ export const axiosInstance = <T>(
     })
         .then(({data}) => data)
         .catch(async (e) => {
-            if (e instanceof AxiosError<T>)
-                if (e.response) {
-                    const {status, data} = e.response;
-                    if (status === 401) await navigateToLoginOn401(data as UnauthorizedMelding);
-                    // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
-                    else if ([410, 403, 404].includes(status))
-                        window.location.href = `/sosialhjelp/soknad/informasjon?code=${status}`;
-                    else if (status === 409) {
-                        if (retry >= 10) {
-                            logError("Max retries encountered!");
-                            throw e;
-                        }
-                        logWarning(`Conflict resolution hack, retry #${retry}`);
-                        await delay(250);
-                        return axiosInstance<T>(config, options, retry + 1);
-                    } else {
-                        await logError(`Nettverksfeil i axiosInstance: ${status} ${data}`);
-                        throw e;
-                    }
-                    return new Promise<T>(() => {});
-                } else {
-                    if (isCancel(e)) return new Promise<T>(() => {});
-                    await logError(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
+            if (!(e instanceof AxiosError<T>)) {
+                logWarning(`non-axioserror error ${e} in axiosinstance`);
+            }
+
+            if (isCancel(e) || options?.digisosIgnoreErrors) return new Promise<T>(() => {});
+
+            if (!e.response) {
+                logError(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
+                throw e;
+            }
+
+            const {status, data} = e.response;
+
+            if (isLoginRedirect401(e.response)) await redirectToLogin(e.response.data);
+
+            // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
+            if ([410, 403, 404].includes(status)) {
+                window.location.href = `/sosialhjelp/soknad/informasjon?code=${status}`;
+                return new Promise<T>(() => {});
+            }
+
+            // Conflict -- try again
+            if (status === 409) {
+                if (retry >= 10) {
+                    logError("Max retries encountered!");
                     throw e;
-                    // window.location.href = "/sosialhjelp/soknad/feil";
                 }
+                logInfo(`Conflict resolution hack, retry #${retry}`);
+                await delay(500);
+                return axiosInstance<T>(config, options, retry + 1);
+            }
+
+            logError(`Nettverksfeil i axiosInstance: ${status} ${data}`);
+            throw e;
         });
 
-    promise.cancel = () => {
-        source.cancel("Query was cancelled");
-    };
+    promise.cancel = () => source.cancel("Query was cancelled");
 
     return promise as Promise<T>;
 };

@@ -1,6 +1,6 @@
 import {basePath} from "../../configuration";
-import {logError} from "./loggerUtils";
 import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
+import {redirectToLogin} from "../../lib/orval/soknad-api-axios";
 
 export function getApiBaseUrl(withAccessToken?: boolean) {
     return withAccessToken
@@ -60,18 +60,28 @@ export const serverRequest = <T>(
     return new Promise<T>((resolve, reject) => {
         fetch(getApiBaseUrl(withAccessToken) + urlPath, OPTIONS)
             .then((response: Response) => {
-                if (response.status === 409) {
-                    if (!retries) throw new RESTError(response.status, response.statusText);
+                const {status, statusText} = response;
+
+                if (status === 401) {
+                    response.json().then((data) => redirectToLogin(data));
+                    return;
+                }
+
+                if (status === 409) {
+                    if (!retries) throw new DigisosLegacyRESTError(status, `Ran out of 409 retries: ${statusText}`);
 
                     setTimeout(() => {
                         serverRequest(method, urlPath, body, withAccessToken, retries - 1)
                             .then((data: unknown) => resolve(data as T))
                             .catch(reject);
                     }, 100 * (7 - retries));
-                } else {
-                    verifyStatusSuccessOrRedirect(response);
-                    resolve(toJson<T>(response));
+
+                    return;
                 }
+
+                if (!response.ok) throw new DigisosLegacyRESTError(response.status, response.statusText);
+
+                resolve(toJson<T>(response));
             })
             .catch((reason: any) => reject(reason));
     });
@@ -93,7 +103,8 @@ export function fetchDelete(urlPath: string) {
         credentials: determineCredentialsParameter(),
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS).then((response: Response) => {
-        verifyStatusSuccessOrRedirect(response);
+        if (response.status === 401) response.json().then((data) => redirectToLogin(data));
+        if (!response.ok) throw new DigisosLegacyRESTError(response.status, response.statusText);
         return response.text();
     });
 }
@@ -110,7 +121,8 @@ const generateUploadOptions = (formData: FormData, method: string): RequestInit 
 
 export function fetchUpload<T>(urlPath: string, formData: FormData) {
     return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData, "POST")).then((response) => {
-        verifyStatusSuccessOrRedirect(response);
+        if (response.status === 401) response.json().then((data) => redirectToLogin(data));
+        if (!response.ok) throw new DigisosLegacyRESTError(response.status, response.statusText);
         return toJson<T>(response);
     });
 }
@@ -125,36 +137,14 @@ export function toJson<T>(response: Response): Promise<T> {
     return response.json();
 }
 
-export class RESTError extends Error {
+// REST error encountered using the old (rest-utils.ts) network code
+export class DigisosLegacyRESTError extends Error {
     public readonly status: number;
 
     constructor(statusCode: number, message: string) {
         super(message);
         this.status = statusCode;
     }
-}
-
-function verifyStatusSuccessOrRedirect(response: Response): number {
-    if (response.status === 401) {
-        response.json().then((r) => {
-            if (window.location.search.split("login_id=")[1] !== r.id) {
-                const queryDivider = r.loginUrl.includes("?") ? "&" : "?";
-                window.location.href =
-                    r.loginUrl + queryDivider + "redirect=" + getRedirectPath() + "%26login_id=" + r.id;
-            } else {
-                logError(
-                    "Fetch ga 401-error-id selv om kallet ble sendt fra URL med samme login_id (" +
-                        r.id +
-                        "). Dette kan komme av en påloggingsloop (UNAUTHORIZED_LOOP_ERROR)."
-                );
-            }
-        });
-        throw new Error(HttpStatus.UNAUTHORIZED);
-    }
-
-    if (response.ok) return response.status;
-
-    throw new RESTError(response.status, response.statusText);
 }
 
 export function getCookie(name: string) {

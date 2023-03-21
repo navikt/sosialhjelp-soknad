@@ -71,7 +71,7 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
             await mutate({behandlingsId});
             window.location.href = minSideUrl;
         } catch (e) {
-            await logError(`Feil ved sletting: ${e}`);
+            logError(`Feil ved sletting: ${e}`);
         }
     };
 
