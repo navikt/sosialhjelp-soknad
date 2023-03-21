@@ -58,8 +58,7 @@ export const axiosInstance = <T>(config: AxiosRequestConfig, options?: AxiosRequ
                     return new Promise<T>(() => {});
                 } else {
                     if (isCancel(e)) return new Promise<T>(() => {});
-
-                    await logError(`Nettverksfeil i axiosInstance: ${e}`);
+                    await logError(`Nettverksfeil i axiosInstance: ${options?.method} ${options?.url} ${e}`);
                     throw e;
                     // window.location.href = "/sosialhjelp/soknad/feil";
                 }
