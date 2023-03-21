@@ -63,7 +63,9 @@ export const KontonrEdit = ({onClose}: {onClose: () => void}) => {
                 <Button variant="secondary" onClick={onClose}>
                     {t("avbryt")}
                 </Button>
-                <Button type={"submit"}>{t("lagreEndring")}</Button>
+                <Button type={"submit"} data-testid="lagre-kontonummer">
+                    {t("lagreEndring")}
+                </Button>
             </div>
         </form>
     );

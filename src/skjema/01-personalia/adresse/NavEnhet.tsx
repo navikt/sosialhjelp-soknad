@@ -55,7 +55,7 @@ const NavEnhet = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
     if (!erAktiv(navEnhet)) return <NavEnhetInaktiv navEnhet={navEnhet} />;
     else
         return (
-            <Alert variant={"success"} data-testid="alert-success">
+            <Alert variant={"success"} data-testid="alert-success-nav-enhet">
                 <Heading size={"small"} level={"4"} spacing>
                     Søknaden vil bli sendt til:
                 </Heading>
