@@ -13,8 +13,6 @@ import {FieldErrorsImpl} from "react-hook-form";
 import {NavEnhetFrontend} from "../../generated/model";
 import {erAktiv} from "../../nav-soknad/containers/navEnhetStatus";
 import {Systeminfo} from "../../nav-soknad/components/systeminfo/Systeminfo";
-import {hentXsrfCookie} from "../../generated/soknad-ressurs/soknad-ressurs";
-import {logInfo} from "../../nav-soknad/utils/loggerUtils";
 
 const Personopplysninger = () => {
     const {t} = useTranslation("skjema");
@@ -35,11 +33,6 @@ const Personopplysninger = () => {
                 resolve();
             }
         });
-
-    // Midlertidig hack for å forhindre XSRF-feil
-    useEffect(() => {
-        hentXsrfCookie(behandlingsId).then(() => logInfo(`dobbelt-hentet xsrf for ${behandlingsId} ¯\\_(ツ)_/¯`));
-    }, [behandlingsId]);
 
     // Midlertidig hack til komponentene under kan behandles som react-hook-form-inputs
     useEffect(() => {

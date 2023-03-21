@@ -17,6 +17,8 @@ import {SkjemaStegErrorSummary} from "./SkjemaStegErrorSummary";
 import Koffert from "../../svg/illustrasjoner/Koffert";
 import SkjemaIllustrasjon from "../../svg/illustrasjoner/SkjemaIllustrasjon";
 import cx from "classnames";
+import {hentXsrfCookie} from "../../../../generated/soknad-ressurs/soknad-ressurs";
+import {useBehandlingsId} from "../../../../lib/hooks/useBehandlingsId";
 
 type TSkjemaStegContext = {
     page: SkjemaPage;
@@ -83,6 +85,12 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
     useEffect(() => {
         scrollToTop();
     }, []);
+
+    const behandlingsId = useBehandlingsId();
+    // Midlertidig hack for å forhindre XSRF-feil
+    useEffect(() => {
+        hentXsrfCookie(behandlingsId).then();
+    }, [behandlingsId]);
 
     const {t} = useTranslation("skjema");
 
