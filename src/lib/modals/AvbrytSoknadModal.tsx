@@ -87,7 +87,12 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
                 <BodyShort spacing>{t("avbryt.forklaring")}</BodyShort>
                 <NedetidPanel varselType={"infoside"} />
                 <ButtonRow>
-                    <Button variant="primary" onClick={onClose}>
+                    <Button
+                        variant="primary"
+                        onClick={() => {
+                            window.location.href = "/sosialhjelp/soknad/informasjon?reason=soknadDeleteModal";
+                        }}
+                    >
                         {t("avbryt.fortsettsenere")}
                     </Button>
                     <Button variant="primary" disabled={isLoading} onClick={() => onAvbryt()}>

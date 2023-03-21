@@ -88,7 +88,7 @@ export const axiosInstance = <T>(
 
             // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
             if ([410, 403, 404].includes(status)) {
-                window.location.href = `/sosialhjelp/soknad/informasjon?code=${status}`;
+                window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
                 return new Promise<T>(() => {});
             }
 
