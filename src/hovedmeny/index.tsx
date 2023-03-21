@@ -25,7 +25,7 @@ const Informasjon = () => {
         if (!reason) return;
         logInfo(`Reached main page with reason, ${reason}`);
         setSearchParams({});
-    }, [searchParams]);
+    }, [searchParams, setSearchParams]);
 
     return expectOK(({harTilgang}) => {
         if (!harTilgang) return <IkkeTilgang />;
