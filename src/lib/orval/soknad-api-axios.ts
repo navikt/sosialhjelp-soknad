@@ -50,7 +50,9 @@ export const axiosInstance = <T>(config: AxiosRequestConfig, options?: AxiosRequ
                 if (e.response) {
                     const {status, data} = e.response;
                     if (status === 401) navigateToLoginOn401(data as UnauthorizedMelding);
-                    if (status === 410) window.location.href = "/sosialhjelp/soknad/informasjon";
+                    else if (status === 410) window.location.href = "/sosialhjelp/soknad/informasjon";
+                    else logError(`Nettverksfeil i axiosInstance: ${status} ${data}`);
+                    return;
                 } else {
                     if (isCancel(e)) return;
                     logError(`Nettverksfeil i axiosInstance: ${e}`);
