@@ -2,7 +2,7 @@ import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "ax
 import {getApiBaseUrl, getRedirectPath} from "../../nav-soknad/utils/rest-utils";
 import {isLocalhost, isMockAlt} from "../../nav-soknad/utils";
 import {UnauthorizedMelding} from "../../generated/model";
-import {logError} from "../../nav-soknad/utils/loggerUtils";
+import {logError, logWarning} from "../../nav-soknad/utils/loggerUtils";
 
 const navigateToLoginOn401 = async (data: UnauthorizedMelding | undefined) => {
     if (!data) {
@@ -37,7 +37,13 @@ interface CancellablePromise<T> extends Promise<T> {
     cancel?: () => void;
 }
 
-export const axiosInstance = <T>(config: AxiosRequestConfig, options?: AxiosRequestConfig): Promise<T> => {
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const axiosInstance = <T>(
+    config: AxiosRequestConfig,
+    options?: AxiosRequestConfig,
+    retry: number = 0
+): Promise<T> => {
     const source = Axios.CancelToken.source();
     const promise: CancellablePromise<AxiosResponse> = AXIOS_INSTANCE({
         ...config,
@@ -53,7 +59,15 @@ export const axiosInstance = <T>(config: AxiosRequestConfig, options?: AxiosRequ
                     // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
                     else if ([410, 403, 404].includes(status))
                         window.location.href = `/sosialhjelp/soknad/informasjon?code=${status}`;
-                    else {
+                    else if (status === 409) {
+                        if (retry >= 10) {
+                            logError("Max retries encountered!");
+                            throw e;
+                        }
+                        logWarning(`Conflict resolution hack, retry #${retry}`);
+                        await delay(250);
+                        return axiosInstance<T>(config, options, retry + 1);
+                    } else {
                         await logError(`Nettverksfeil i axiosInstance: ${status} ${data}`);
                         throw e;
                     }
