@@ -1,6 +1,5 @@
 import {Attachment} from "@navikt/ds-icons";
 import {Accordion, Heading, Link} from "@navikt/ds-react";
-import {getInnsynUrl} from "../../nav-soknad/utils/rest-utils";
 import React from "react";
 import {useHarNyligInnsendteSoknader} from "../../generated/informasjon-ressurs/informasjon-ressurs";
 
@@ -31,7 +30,8 @@ export const EttersendDokuPanel = () => {
                         Dokumentasjon kan sendes til søknader du har sendt inn tidligere.
                         <ul className={"list-disc list-inside py-5"}>
                             <li>
-                                Gå til listen over <Link href={getInnsynUrl()}>dine sosialhjelpssøknader</Link>
+                                Gå til listen over{" "}
+                                <Link href={`${process.env.REACT_APP_INNSYN_URL}`}>dine sosialhjelpssøknader</Link>
                             </li>
                             <li>Åpne søknaden du ønsker å ettersende dokumenter til</li>
                             <li>Last opp dokumentene du skal ettersende under “dine vedlegg”</li>

@@ -1,52 +1,29 @@
-import {getRedirectPathname} from "../../configuration";
+import {basePath} from "../../configuration";
 import {logError} from "./loggerUtils";
 import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
 
-export function getApiBaseUrl(withAccessToken?: boolean): string {
+export function getApiBaseUrl(withAccessToken?: boolean) {
     return withAccessToken
         ? `${process.env.REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN}`
         : `${process.env.REACT_APP_API_BASE_URL}`;
 }
 
-export function getInnsynUrl(): string {
-    return `${process.env.REACT_APP_INNSYN_URL}`;
-}
-
-export function getUtloggingsUrl(): string {
-    return `${process.env.REACT_APP_UTLOGGINGS_URL}`;
-}
-
 export const determineCredentialsParameter = () =>
     process.env.REACT_APP_ENVIRONMENT === "localhost" ? "include" : "same-origin";
 
-export function getRedirectPath(): string {
-    const redirectOrigin = window.location.origin;
-    const gotoParameter = "?goto=" + getGotoPathname();
-    const redirectPath = redirectOrigin + getRedirectPathname() + gotoParameter;
-    return redirectPath;
-}
+export const getRedirectPath = () => `${window.location.origin}${basePath}/link?goto=${getGotoPathname()}`;
 
-export function getGotoPathname(): string {
-    const gotoFromLink = getGotoParameterIfPathAlreadyIsLink();
-    return gotoFromLink ? gotoFromLink : window.location.pathname;
-}
-
-function getGotoParameterIfPathAlreadyIsLink(): string | undefined {
-    if (window.location.pathname === getRedirectPathname()) {
-        return parseGotoValueFromSearchParameters(window.location.search);
-    }
-    return undefined;
-}
+export const getGotoPathname = () =>
+    window.location.pathname === `${basePath}/link`
+        ? parseGotoValueFromSearchParameters(window.location.search)
+        : window.location.pathname;
 
 export function parseGotoValueFromSearchParameters(searchParameters: string): string {
     const afterGoto = searchParameters.split("goto=")[1];
     return afterGoto ? afterGoto.split("&login_id")[0] : afterGoto; // Fjerne login_id dersom strengen bak goto= er definert.
 }
 
-export function downloadAttachedFile(urlPath: string): void {
-    const filUrl = `${getApiBaseUrl()}${urlPath}`;
-    window.open(filUrl);
-}
+export const downloadAttachedFile = (urlPath: string) => window.open(`${getApiBaseUrl()}${urlPath}`);
 
 enum RequestMethod {
     GET = "GET",
@@ -55,21 +32,15 @@ enum RequestMethod {
     DELETE = "DELETE",
 }
 
-const getHeaders = (): Headers => {
-    //let path = window.location.href.split("/");
-    //let behandlingsId = path[path.length-2];
-    const headersRecord: Record<string, string> = {
+const getHeaders = () =>
+    new Headers({
         "Content-Type": "application/json",
         "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
         accept: "application/json, text/plain, */*",
-    };
-    return new Headers(headersRecord);
-};
+    });
 
 export enum HttpStatus {
     UNAUTHORIZED = "unauthorized",
-    UNAUTHORIZED_LOOP_ERROR = "unauthorized_loop_error",
-    SERVICE_UNAVAILABLE = "Service Unavailable",
 }
 
 export const serverRequest = <T>(
@@ -90,37 +61,30 @@ export const serverRequest = <T>(
         fetch(getApiBaseUrl(withAccessToken) + urlPath, OPTIONS)
             .then((response: Response) => {
                 if (response.status === 409) {
-                    if (retries === 0) {
-                        throw new Error(response.statusText);
-                    }
+                    if (!retries) throw new RESTError(response.status, response.statusText);
+
                     setTimeout(() => {
                         serverRequest(method, urlPath, body, withAccessToken, retries - 1)
-                            .then((data: unknown) => {
-                                resolve(data as T);
-                            })
-                            .catch((reason: any) => reject(reason));
+                            .then((data: unknown) => resolve(data as T))
+                            .catch(reject);
                     }, 100 * (7 - retries));
                 } else {
                     verifyStatusSuccessOrRedirect(response);
-                    const jsonResponse = toJson<T>(response);
-                    resolve(jsonResponse);
+                    resolve(toJson<T>(response));
                 }
             })
             .catch((reason: any) => reject(reason));
     });
 };
 
-export function fetchToJson<T>(urlPath: string, withAccessToken?: boolean) {
-    return serverRequest<T>(RequestMethod.GET, urlPath, "", withAccessToken);
-}
+export const fetchToJson = <T>(urlPath: string, withAccessToken?: boolean) =>
+    serverRequest<T>(RequestMethod.GET, urlPath, "", withAccessToken);
 
-export function fetchPut(urlPath: string, body: string, withAccessToken?: boolean) {
-    return serverRequest(RequestMethod.PUT, urlPath, body, withAccessToken);
-}
+export const fetchPut = (urlPath: string, body: string, withAccessToken?: boolean) =>
+    serverRequest(RequestMethod.PUT, urlPath, body, withAccessToken);
 
-export function fetchPost<T>(urlPath: string, body: string, withAccessToken?: boolean) {
-    return serverRequest<T>(RequestMethod.POST, urlPath, body, withAccessToken);
-}
+export const fetchPost = <T>(urlPath: string, body: string, withAccessToken?: boolean) =>
+    serverRequest<T>(RequestMethod.POST, urlPath, body, withAccessToken);
 
 export function fetchDelete(urlPath: string) {
     const OPTIONS: RequestInit = {
@@ -134,44 +98,15 @@ export function fetchDelete(urlPath: string) {
     });
 }
 
-export function fetchKvittering(urlPath: string) {
-    //let path = window.location.href.split("/");
-    //let behandlingsId = path[path.length-2];
-    const OPTIONS: RequestInit = {
-        headers: new Headers({
-            accept: "application/vnd.kvitteringforinnsendtsoknad+json",
-            "Content-Type": "application/json",
-            "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
-        }),
-        method: "GET",
-        credentials: determineCredentialsParameter(),
-    };
-    return fetch(getApiBaseUrl() + urlPath, OPTIONS).then((response: Response) => {
-        verifyStatusSuccessOrRedirect(response);
-        return response.json();
-    });
-}
-
-// FIXME: KANSKJE JEG KAN BRUKE DENNE SENRE.
-// export const getJsonOrRedirectIfUnauthorizedAndThrowError = (response: Response) => {
-//     verifyStatusSuccessOrRedirect(response);
-//     return response.json();
-// };
-
-const generateUploadOptions = function (formData: FormData, method: string) {
-    //let path = window.location.href.split("/");
-    //let behandlingsId = path[path.length-2];
-    const UPLOAD_OPTIONS: RequestInit = {
-        headers: new Headers({
-            "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
-            accept: "application/json, text/plain, */*",
-        }),
-        method: method,
-        credentials: determineCredentialsParameter(),
-        body: formData,
-    };
-    return UPLOAD_OPTIONS;
-};
+const generateUploadOptions = (formData: FormData, method: string): RequestInit => ({
+    headers: new Headers({
+        "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
+        accept: "application/json, text/plain, */*",
+    }),
+    method: method,
+    credentials: determineCredentialsParameter(),
+    body: formData,
+});
 
 export function fetchUpload<T>(urlPath: string, formData: FormData) {
     return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData, "POST")).then((response) => {
@@ -188,6 +123,15 @@ export function toJson<T>(response: Response): Promise<T> {
     if (response.status === 204) return response.text() as Promise<any>;
 
     return response.json();
+}
+
+export class RESTError extends Error {
+    public readonly status: number;
+
+    constructor(statusCode: number, message: string) {
+        super(message);
+        this.status = statusCode;
+    }
 }
 
 function verifyStatusSuccessOrRedirect(response: Response): number {
@@ -207,10 +151,10 @@ function verifyStatusSuccessOrRedirect(response: Response): number {
         });
         throw new Error(HttpStatus.UNAUTHORIZED);
     }
-    if (response.status >= 200 && response.status < 300) {
-        return response.status;
-    }
-    throw new Error(response.statusText);
+
+    if (response.ok) return response.status;
+
+    throw new RESTError(response.status, response.statusText);
 }
 
 export function getCookie(name: string) {
@@ -240,8 +184,8 @@ export function detekterInternFeilKode(feilKode: string): string {
             internFeilKode = REST_FEIL.FOR_STOR_FIL;
         }
     }
-    if (feilKode.match(/Unsupp?orted Media Type/i)) {
-        internFeilKode = REST_FEIL.FEIL_FILTPYE;
-    }
+
+    if (feilKode.match(/Unsupp?orted Media Type/i)) internFeilKode = REST_FEIL.FEIL_FILTPYE;
+
     return internFeilKode;
 }

@@ -1,68 +1,52 @@
-import {fetchPost} from "./rest-utils";
+import {Logg, LoggLevel} from "../../generated/model";
+import {loggFraKlient} from "../../generated/informasjon-ressurs/informasjon-ressurs";
 
-export enum NavLogLevel {
-    ERROR = "ERROR",
-    WARN = "WARN",
-    INFO = "INFO",
-}
-
-export interface NavLogEntry {
-    level: NavLogLevel;
-    message: string;
-    url?: string;
-    jsFileUrl?: string;
-    lineNumber?: any;
-    columnNumber?: any;
-    userAgent?: string;
-    error?: any;
-}
-
-export const logWindowError: typeof window.onerror = (message, jsFileUrl, lineNumber, columnNumber, error) => {
-    logException({
-        level: NavLogLevel.WARN,
-        userAgent: window.navigator.userAgent,
-        url: document.location.href,
-        message: message.toString(),
-        jsFileUrl,
-        lineNumber,
-        error: error?.hasOwnProperty("stack") ? "\nStacktrace" + error.stack : "",
-        columnNumber,
-    });
-};
-
-const createLogEntry = (message: string, level: NavLogLevel, jsFileUrl?: string): NavLogEntry => {
-    return {
+export const logWindowError: typeof window.onerror = (message, jsFileUrl, lineNumber, columnNumber) => {
+    logToServer({
         url: window.location.href,
         userAgent: window.navigator.userAgent,
-        message: message.toString(),
+        message: `window.onerror: ${message.toString()}`,
+        level: LoggLevel.WARN,
         jsFileUrl,
+        lineNumber: lineNumber?.toString(),
+        columnNumber: columnNumber?.toString(),
+    }).then();
+};
+
+export const logInfo = async (message: string) => log(message, LoggLevel.INFO);
+export const logWarning = async (message: string) => log(message, LoggLevel.WARN);
+export const logError = async (message: string) => log(message, LoggLevel.ERROR);
+
+const logLocally = ({message, level}: Logg) => {
+    switch (level) {
+        case "ERROR":
+            console.error(message);
+            break;
+        case "INFO":
+            console.log(message);
+            break;
+        case "WARN":
+            console.warn(message);
+            break;
+    }
+};
+
+const log = async (message: string, level: LoggLevel) => {
+    const navLogEntry: Logg = {
+        url: window.location.href,
+        userAgent: window.navigator.userAgent,
+        message: message,
         level,
     };
+
+    if (process.env.NODE_ENV === "development") logLocally(navLogEntry);
+    logToServer(navLogEntry);
 };
 
-export const logInfo = (message: string) => {
-    if (process.env.NODE_ENV === "development") console.info(message);
-    logToServer(createLogEntry(message, NavLogLevel.INFO));
-};
-
-export const logWarning = (message: string, omitStacktrace?: boolean) => {
-    if (process.env.NODE_ENV === "development")
-        omitStacktrace ? console.log("Warning: " + message) : console.warn(message);
-    logToServer(createLogEntry(message, NavLogLevel.WARN));
-};
-
-export const logError = (message: string, jsFileUrl?: string) => {
-    if (process.env.NODE_ENV === "development") console.error(message);
-    logToServer(createLogEntry(message, NavLogLevel.ERROR, jsFileUrl));
-};
-
-export const logException = (logEntry: NavLogEntry) => {
-    if (process.env.NODE_ENV === "development") console.warn(logEntry.message);
-    logToServer(logEntry);
-};
-
-function logToServer(navLogEntry: NavLogEntry) {
-    fetchPost("informasjon/actions/logg", JSON.stringify(navLogEntry)).catch((e) => {
+const logToServer = async (navLogEntry: Logg) => {
+    try {
+        await loggFraKlient(navLogEntry);
+    } catch (e) {
         console.warn("Logg til server failed.");
-    });
-}
+    }
+};

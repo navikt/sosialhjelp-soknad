@@ -11,8 +11,6 @@ import {useFeatureFlags} from "../../lib/featureFlags";
 import {SkjemaSteg} from "../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {useEffect} from "react";
-import {hentXsrfCookie} from "../../generated/soknad-ressurs/soknad-ressurs";
-import {logInfo} from "../../nav-soknad/utils/loggerUtils";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;
@@ -39,10 +37,6 @@ const Begrunnelse = () => {
     useEffect(() => {
         logAmplitudeEvent("begrunnelse åpnet", {begrunnelseNyTekst});
     }, [begrunnelseNyTekst]);
-
-    useEffect(() => {
-        hentXsrfCookie(behandlingsId).then(() => logInfo(`dobbelt-hentet xsrf for ${behandlingsId} ¯\\_(ツ)_/¯`));
-    }, [behandlingsId]);
 
     const {
         register,

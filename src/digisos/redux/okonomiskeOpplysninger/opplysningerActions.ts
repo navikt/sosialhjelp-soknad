@@ -7,8 +7,8 @@ import {
     OpplysningType,
 } from "./opplysningerTypes";
 import {getOpplysningerUrl} from "./opplysningerUtils";
-import {fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
-import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {fetchToJson, HttpStatus, RESTError} from "../../../nav-soknad/utils/rest-utils";
+import {logError} from "../../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
 
 export const gotDataFromBackend = (response: OpplysningerBackend): OpplysningerAction => {
@@ -44,12 +44,19 @@ export function hentOpplysninger(behandlingsId: string, dispatch: Dispatch) {
         .then((response: any) => {
             dispatch(gotDataFromBackend(response));
         })
-        .catch((reason: any) => {
-            if (reason.message === HttpStatus.UNAUTHORIZED) {
-                return;
+        .catch((error: any) => {
+            if (error.message === HttpStatus.UNAUTHORIZED) return;
+
+            if (error instanceof RESTError) {
+                logError(`Henting av økonomiske opplysninger feilet: ${error.status}: ${error.message}`);
+            } else {
+                logError(`Henting av økonomiske opplysninger feilet: ${error.message}`);
             }
-            logWarning("Henting av økonomiske opplysninger feilet: " + reason);
-            window.location.href = "/sosialhjelp/soknad/feil?reason=hentOpplysninger";
+
+            // Gi logWarning en sjanse
+            setTimeout(() => {
+                window.location.href = "/sosialhjelp/soknad/feil?reason=hentOpplysninger";
+            }, 1000);
         });
 }
 
