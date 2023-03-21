@@ -4,16 +4,16 @@ import {isLocalhost, isMockAlt} from "../../nav-soknad/utils";
 import {UnauthorizedMelding} from "../../generated/model";
 import {logError} from "../../nav-soknad/utils/loggerUtils";
 
-const navigateToLoginOn401 = (data: UnauthorizedMelding | undefined) => {
+const navigateToLoginOn401 = async (data: UnauthorizedMelding | undefined) => {
     if (!data) {
-        logError(`401-feil uten data`);
+        await logError(`401-feil uten data`);
         throw new Error(`401-feil uten data`);
     }
 
     const {id, loginUrl} = data;
 
     if (new URLSearchParams(window.location.search).get("login_id") === id) {
-        logError("login_id == id fra 401, kan indikere en redirect loop?");
+        await logError("login_id == id fra 401, kan indikere en redirect loop?");
         return;
     }
 
@@ -45,20 +45,21 @@ export const axiosInstance = <T>(config: AxiosRequestConfig, options?: AxiosRequ
         cancelToken: source.token,
     })
         .then(({data}) => data)
-        .catch((e) => {
+        .catch(async (e) => {
             if (e instanceof AxiosError<T>)
                 if (e.response) {
                     const {status, data} = e.response;
-                    if (status === 401) navigateToLoginOn401(data as UnauthorizedMelding);
+                    if (status === 401) await navigateToLoginOn401(data as UnauthorizedMelding);
                     else if (status === 410) window.location.href = "/sosialhjelp/soknad/informasjon";
                     else {
-                        logError(`Nettverksfeil i axiosInstance: ${status} ${data}`);
+                        await logError(`Nettverksfeil i axiosInstance: ${status} ${data}`);
                         throw e;
                     }
-                    return;
+                    return new Promise<T>(() => {});
                 } else {
-                    if (isCancel(e)) return;
-                    logError(`Nettverksfeil i axiosInstance: ${e}`);
+                    if (isCancel(e)) return new Promise<T>(() => {});
+
+                    await logError(`Nettverksfeil i axiosInstance: ${e}`);
                     throw e;
                     // window.location.href = "/sosialhjelp/soknad/feil";
                 }

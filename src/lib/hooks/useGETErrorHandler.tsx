@@ -1,12 +1,16 @@
 import {AxiosError, isAxiosError} from "axios";
-import {logError} from "../../nav-soknad/utils/loggerUtils";
+import {logError, logWarning} from "../../nav-soknad/utils/loggerUtils";
 
 export const handleAxiosError = (error: AxiosError) => {
-    if (!error.response) return logError(`GET feilet: ${error.request.path} ${error.message}`);
+    if (!error.response) {
+        logError(`GET feilet: ${error.request.path} ${error.message}`);
+        return;
+    }
 
     const {status} = error.response;
 
-    if (status === 404) {
+    if ([404, 410].includes(status)) {
+        if (status === 410) logWarning("Dobbelthåndterer 410-feil i GETErrorHandler");
         window.location.href = "/sosialhjelp/soknad/informasjon";
     } else {
         logError(`GET-feil ${error.request.path}: ${error.code} ${error.message}`);
@@ -24,8 +28,9 @@ export const useGETErrorHandler = () => ({
         if (isAxiosError(error)) {
             handleAxiosError(error);
         } else {
-            logError(`Feil i expectOK: ${error}`);
-            window.location.href = "/sosialhjelp/soknad/feil?reason=useGETErrorHandler";
+            logError(`Feil i expectOK: ${error}`).then(() => {
+                window.location.href = "/sosialhjelp/soknad/feil?reason=useGETErrorHandler";
+            });
         }
         return null;
     },
