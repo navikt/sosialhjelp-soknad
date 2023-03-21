@@ -1,4 +1,4 @@
-import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
+import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
 import {getApiBaseUrl, getRedirectPath} from "../../nav-soknad/utils/rest-utils";
 import {isLocalhost, isMockAlt} from "../../nav-soknad/utils";
 import {UnauthorizedMelding} from "../../generated/model";
@@ -52,6 +52,7 @@ export const axiosInstance = <T>(config: AxiosRequestConfig, options?: AxiosRequ
                     if (status === 401) navigateToLoginOn401(data as UnauthorizedMelding);
                     if (status === 410) window.location.href = "/sosialhjelp/soknad/informasjon";
                 } else {
+                    if (isCancel(e)) return;
                     logError(`Nettverksfeil i axiosInstance: ${e}`);
                     // window.location.href = "/sosialhjelp/soknad/feil";
                 }
