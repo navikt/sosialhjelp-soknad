@@ -109,7 +109,8 @@
     "fetch-api-norg": "curl -o ./norg-api.json https://norg2.dev.intern.nav.no/norg2/v3/api-docs/API%20versjon%201  && prettier --write norg-api.json",
     "orval": "rm -rf ./src/generated & orval --prettier",
     "lint": "lint-staged",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "eslintConfig": {
     "extends": "react-app"
