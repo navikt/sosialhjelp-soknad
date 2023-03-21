@@ -11,9 +11,7 @@ import {
 import {opplysningsRekkefolgeOgSpc} from "./opplysningerConfig";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 
-export function getOpplysningerUrl(behandlingsId: string) {
-    return `soknader/${behandlingsId}/okonomiskeOpplysninger`;
-}
+export const getOpplysningerUrl = (behandlingsId: string) => `soknader/${behandlingsId}/okonomiskeOpplysninger`;
 
 export const updateSortertOpplysning = (opplysninger: Opplysning[], opplysningUpdated: Opplysning) => {
     const index = opplysninger.findIndex((o) => o.type === opplysningUpdated.type);

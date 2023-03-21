@@ -7,7 +7,7 @@ import {
     OpplysningType,
 } from "./opplysningerTypes";
 import {getOpplysningerUrl} from "./opplysningerUtils";
-import {fetchToJson, HttpStatus, RESTError} from "../../../nav-soknad/utils/rest-utils";
+import {fetchToJson, RESTError} from "../../../nav-soknad/utils/rest-utils";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
 
@@ -45,9 +45,9 @@ export function hentOpplysninger(behandlingsId: string, dispatch: Dispatch) {
             dispatch(gotDataFromBackend(response));
         })
         .catch((error: any) => {
-            if (error.message === HttpStatus.UNAUTHORIZED) return;
-
             if (error instanceof RESTError) {
+                if (error.status === 401) return;
+
                 logError(`Henting av økonomiske opplysninger feilet: ${error.status}: ${error.message}`);
             } else {
                 logError(`Henting av økonomiske opplysninger feilet: ${error.message}`);
