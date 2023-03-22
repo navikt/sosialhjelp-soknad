@@ -84,7 +84,6 @@ export const AdresseData = () => {
                 </Radio>
                 {uncommittedAdressevalg === "soknad" && (
                     <AdresseSok
-                        data-testid="adresse-sok-input"
                         defaultValue={formaterSoknadsadresse(adresser.soknad?.gateadresse)}
                         onChange={async (soknad) => setAdresser(adresser, "soknad", soknad)}
                     />
