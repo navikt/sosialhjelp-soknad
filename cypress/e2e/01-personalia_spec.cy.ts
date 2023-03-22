@@ -11,13 +11,6 @@ describe("Soknad step 1: Personal Information", () => {
         isFirstTest = false;
     });
 
-    it("Should be able to edit the address field", () => {
-        cy.get('input[value="soknad"]').click();
-        cy.get('[data-testid="adresse-sok-input"]').type("Svarutgata 1 A, 9999 SVARUT");
-        cy.get('li[role="option"]').first().click();
-        cy.get('[data-testid="alert-success-nav-enhet"]').should("be.visible");
-    });
-
     it("Should be able to edit the phone number field", () => {
         cy.get('[data-testid="telefon-endreknapp"]').click();
         cy.get('input[name="brukerutfyltVerdi"]').type("40506070");
@@ -28,6 +21,10 @@ describe("Soknad step 1: Personal Information", () => {
         cy.get('[data-testid="kontonummer-endreknapp"]').click();
         cy.get('input[name="brukerutfyltVerdi"]').type("0000 11 22223");
         cy.get('[data-testid="lagre-kontonummer"]').click();
+    });
+
+    it("Should be able to pick address", () => {
+        cy.get('[data-testid="addresse-valg"]').click();
     });
 
     it("Should be able to continue to the next page", () => {

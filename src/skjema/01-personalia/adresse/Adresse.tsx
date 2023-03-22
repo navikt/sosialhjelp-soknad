@@ -67,7 +67,11 @@ export const AdresseData = () => {
                     if (valg !== "soknad") await setAdresser(adresser, valg);
                 }}
             >
-                <Radio value={"folkeregistrert"} className={cx({hidden: !adresser.folkeregistrert})}>
+                <Radio
+                    value={"folkeregistrert"}
+                    className={cx({hidden: !adresser.folkeregistrert})}
+                    data-testid="addresse-valg"
+                >
                     {t("kontakt.system.oppholdsadresse.folkeregistrertAdresse")}
                     <AdresseVisning adresse={adresser.folkeregistrert} />
                 </Radio>
