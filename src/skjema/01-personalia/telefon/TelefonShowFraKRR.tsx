@@ -12,7 +12,11 @@ export const TelefonShowFraKRR = ({systemverdi, onEdit}: {systemverdi: string; o
             <SysteminfoItem comment={t("telefoninfo.infotekst.tekst")} label={t("telefon.label")}>
                 {systemverdi && formatTelefonnummer(strip47(systemverdi))}
             </SysteminfoItem>
-            {onEdit && <LinkButton onClick={onEdit}>{t("telefon.endreknapp.label")}</LinkButton>}
+            {onEdit && (
+                <LinkButton onClick={onEdit} data-testid="telefon-endreknapp">
+                    {t("telefon.endreknapp.label")}
+                </LinkButton>
+            )}
         </>
     );
 };
