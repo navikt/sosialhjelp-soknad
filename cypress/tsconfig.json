@@ -3,14 +3,11 @@
       "target": "es5",
       "lib": ["es5", "dom"],
       "strict": true,
-      "esModuleInterop": true,
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
       "module": "commonjs",
-      "baseUrl": "../node_modules",
-      "types": ["cypress", "node"]
+      "types": ["cypress", "node"],
     },
     "include": ["**/*.ts"],
-    "exclude": ["../node_modules"]
   }
   
