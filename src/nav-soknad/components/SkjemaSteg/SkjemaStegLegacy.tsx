@@ -17,6 +17,8 @@ import {AvbrytSoknadModal} from "../../../lib/modals/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
 import {NavEnhetInaktiv} from "../../../skjema/01-personalia/adresse/NavEnhet";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
+import {hentXsrfCookie} from "../../../generated/soknad-ressurs/soknad-ressurs";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
@@ -58,6 +60,12 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: S
 
     const {stegTittel, documentTitle, aktivtSteg} = useSkjemaConfig(skjemaConfig, steg);
     const {gotoPage} = useSkjemaNavigation(aktivtSteg.id);
+
+    const behandlingsId = useBehandlingsId();
+    // Midlertidig hack for å forhindre XSRF-feil
+    useEffect(() => {
+        hentXsrfCookie(behandlingsId).then();
+    }, [behandlingsId]);
 
     useEffect(() => {
         scrollToTop();

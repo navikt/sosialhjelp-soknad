@@ -1,55 +1,68 @@
-import {fetchPost, fetchPut, fetchToJson, HttpStatus} from "../../../nav-soknad/utils/rest-utils";
+import {
+    fetchPost,
+    fetchPut,
+    fetchToJson,
+    HttpStatus,
+    DigisosLegacyRESTError,
+} from "../../../nav-soknad/utils/rest-utils";
 import {oppdaterSoknadsdataSti, settRestStatus, SoknadsdataType} from "./soknadsdataReducer";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
 import {REST_STATUS} from "./soknadsdataTypes";
 
-export const soknadsdataUrl = (brukerBehandlingId: string, sti: string): string =>
-    `soknader/${brukerBehandlingId}/${sti}`;
+export const soknadsdataUrl = (behandlingsId: string, sti: string) => `soknader/${behandlingsId}/${sti}`;
 
-export function hentSoknadsdata(brukerBehandlingId: string | undefined | null, sti: string, dispatch: Dispatch) {
-    if (!brukerBehandlingId) return undefined;
-
-    dispatch(settRestStatus(sti, REST_STATUS.PENDING));
-    fetchToJson(soknadsdataUrl(brukerBehandlingId, sti))
+export function hentSoknadsdata(behandlingsId: string, path: string, dispatch: Dispatch) {
+    dispatch(settRestStatus(path, REST_STATUS.PENDING));
+    fetchToJson(soknadsdataUrl(behandlingsId, path))
         .then((response: any) => {
-            dispatch(oppdaterSoknadsdataSti(sti, response));
-            dispatch(settRestStatus(sti, REST_STATUS.OK));
+            dispatch(oppdaterSoknadsdataSti(path, response));
+            dispatch(settRestStatus(path, REST_STATUS.OK));
         })
         .catch((reason: any) => {
-            if (reason.message === HttpStatus.UNAUTHORIZED) {
+            if (!(reason instanceof DigisosLegacyRESTError)) {
+                logWarning(`Uventet exception i hentSoknadsdata: ${reason}`);
                 return;
             }
-            logWarning("Henting av soknadsdata feilet: " + reason);
-            dispatch(settRestStatus(sti, REST_STATUS.FEILET));
-            window.location.href = "/sosialhjelp/soknad/feil?reason=hentSoknadsdata";
+
+            // If we're getting these from the backend, the react-query
+            // axios code is also getting the same around the same time
+            // because this code is never used without the new code too.
+            // Thus, that will all trigger a page reload anyway -- so we just
+            // leave it alone.
+            if ([401, 403, 404, 410].includes(reason.status)) return;
+
+            logWarning(`Henting av soknadsdata ${path} feilet: ${reason}`).then(() => {
+                dispatch(settRestStatus(path, REST_STATUS.FEILET));
+                window.location.href = "/sosialhjelp/soknad/feil?reason=hentSoknadsdata";
+            });
         });
 }
 
 export function lagreSoknadsdata(
-    brukerBehandlingId: string,
-    sti: string,
-    soknadsdata: SoknadsdataType,
+    behandlingsId: string,
+    path: string,
+    data: SoknadsdataType,
     dispatch: Dispatch,
     responseHandler?: (response: any) => void
 ) {
-    dispatch(settRestStatus(sti, REST_STATUS.PENDING));
-    fetchPut(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(soknadsdata))
+    dispatch(settRestStatus(path, REST_STATUS.PENDING));
+    fetchPut(soknadsdataUrl(behandlingsId, path), JSON.stringify(data))
         .then((response: any) => {
-            dispatch(settRestStatus(sti, REST_STATUS.OK));
+            dispatch(settRestStatus(path, REST_STATUS.OK));
             if (responseHandler) responseHandler(response);
         })
         .catch((reason) => {
             if (reason.message === HttpStatus.UNAUTHORIZED) return;
             logWarning("Lagring av soknadsdata feilet: " + reason);
-            dispatch(settRestStatus(sti, REST_STATUS.FEILET));
+            dispatch(settRestStatus(path, REST_STATUS.FEILET));
             window.location.href = "/sosialhjelp/soknad/feil?reason=lagreSoknadsdata";
         });
 }
 
 export function settSamtykkeOgOppdaterData(
-    brukerBehandlingId: string,
-    sti: string,
+    behandlingsId: string,
+    path: string,
     harSamtykke: boolean,
     dataSti: null | string,
     withAccessToken: boolean,
@@ -57,12 +70,12 @@ export function settSamtykkeOgOppdaterData(
 ) {
     const restStatusSti = "inntekt/samtykke";
     dispatch(settRestStatus(restStatusSti, REST_STATUS.PENDING));
-    fetchPost(soknadsdataUrl(brukerBehandlingId, sti), JSON.stringify(harSamtykke), withAccessToken)
+    fetchPost(soknadsdataUrl(behandlingsId, path), JSON.stringify(harSamtykke), withAccessToken)
         .then((_: any) => {
             dispatch(settRestStatus(restStatusSti, REST_STATUS.OK));
             if (dataSti && dataSti.length > 1) {
                 dispatch(settRestStatus(dataSti, REST_STATUS.PENDING));
-                hentSoknadsdata(brukerBehandlingId, dataSti, dispatch);
+                hentSoknadsdata(behandlingsId, dataSti, dispatch);
             }
         })
         .catch((reason) => {

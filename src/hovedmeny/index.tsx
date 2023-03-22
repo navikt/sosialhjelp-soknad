@@ -10,11 +10,22 @@ import {EttersendDokuPanel} from "./paneler/EttersendDokuPanel";
 import {useTranslation} from "react-i18next";
 import {useGetUtslagskriterier} from "../generated/informasjon-ressurs/informasjon-ressurs";
 import {useAlgebraic} from "../lib/hooks/useAlgebraic";
+import {useSearchParams} from "react-router-dom";
+import {useEffect} from "react";
+import {logInfo} from "../nav-soknad/utils/loggerUtils";
 
 const Informasjon = () => {
     const {expectOK} = useAlgebraic(useGetUtslagskriterier());
     const {t} = useTranslation();
     useTitle(getIntlTextOrKey(t, "applikasjon.sidetittel"));
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    useEffect(() => {
+        const reason = searchParams.get("reason");
+        if (!reason) return;
+        logInfo(`Reached main page with reason, ${reason}`);
+        setSearchParams({});
+    }, [searchParams, setSearchParams]);
 
     return expectOK(({harTilgang}) => {
         if (!harTilgang) return <IkkeTilgang />;

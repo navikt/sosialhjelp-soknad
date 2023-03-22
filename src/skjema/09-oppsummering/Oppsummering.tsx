@@ -124,7 +124,7 @@ export const Oppsummering = () => {
         logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent());
         if (adresseValg) logInfo("klikk--" + adresseValg);
 
-        mutateAsync({behandlingsId});
+        await mutateAsync({behandlingsId});
     };
 
     if (isLoading) return <ApplicationSpinner />;

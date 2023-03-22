@@ -6,10 +6,10 @@ import {
     Opplysning,
     OpplysningType,
 } from "./opplysningerTypes";
-import {getOpplysningerUrl} from "./opplysningerUtils";
-import {fetchToJson, HttpStatus, RESTError} from "../../../nav-soknad/utils/rest-utils";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
+import {hentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {AxiosError} from "axios";
 
 export const gotDataFromBackend = (response: OpplysningerBackend): OpplysningerAction => {
     return {
@@ -40,20 +40,19 @@ export const settFilOpplastingFerdig = (opplysningType: OpplysningType): Opplysn
 };
 
 export function hentOpplysninger(behandlingsId: string, dispatch: Dispatch) {
-    fetchToJson(getOpplysningerUrl(behandlingsId))
-        .then((response: any) => {
-            dispatch(gotDataFromBackend(response));
+    hentOkonomiskeOpplysninger(behandlingsId)
+        .then((response) => {
+            // TODO: gotDataFromBackend bruker fremdeles klientside datatyper.
+            dispatch(gotDataFromBackend(response as unknown as OpplysningerBackend));
         })
         .catch((error: any) => {
-            if (error.message === HttpStatus.UNAUTHORIZED) return;
-
-            if (error instanceof RESTError) {
+            if (error instanceof AxiosError) {
                 logError(`Henting av økonomiske opplysninger feilet: ${error.status}: ${error.message}`);
             } else {
                 logError(`Henting av økonomiske opplysninger feilet: ${error.message}`);
             }
 
-            // Gi logWarning en sjanse
+            // Gi logError en sjanse
             setTimeout(() => {
                 window.location.href = "/sosialhjelp/soknad/feil?reason=hentOpplysninger";
             }, 1000);

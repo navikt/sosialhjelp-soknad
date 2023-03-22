@@ -10,7 +10,7 @@ export const DeveloperToolkit = () => {
     const {behandlingsId} = useParams<UrlParams>();
     const navigate = useNavigate();
     useEffect(() => {
-        logWarning("Viser utviklermeny. Dette skal ikke skje i prod!").then();
+        logWarning("Viser utviklermeny. Dette skal ikke skje i prod!");
     }, []);
 
     return (
