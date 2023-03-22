@@ -29,6 +29,6 @@ describe("Soknad step 1: Personal Information", () => {
 
     it("Should be able to continue to the next page", () => {
         cy.contains("Neste steg").click();
-        cy.get('[data-testid="skjemasteg-2-heading"]').should("be.visible");
+        cy.get('[data-testid="skjemasteg-heading"]').should("be.visible");
     });
 });
