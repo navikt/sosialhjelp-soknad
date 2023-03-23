@@ -1,4 +1,4 @@
-import {Familie, lagBlankPerson, Status} from "./FamilieTypes";
+import {lagBlankPerson, Status} from "./FamilieTypes";
 import * as React from "react";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
@@ -32,32 +32,28 @@ const SivilstatusRadioknapp: React.FunctionComponent<RadioProps> = ({verdi, id, 
 };
 
 const SivilstatusComponent = () => {
-    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.SIVILSTATUS);
+    const {
+        soknadsdata: {familie},
+        lagre,
+        oppdater,
+    } = useSoknadsdata(SoknadsSti.SIVILSTATUS);
     const {t} = useTranslation("skjema");
 
-    const onClickSivilstatus = (verdi: Status) => {
-        let sivilstatus = soknadsdata.familie.sivilstatus;
-        const oldStatus = sivilstatus.sivilstatus;
-        if (oldStatus !== verdi) {
-            if (verdi === Status.GIFT) {
-                sivilstatus = {
-                    kildeErSystem: false,
-                    sivilstatus: Status.GIFT,
-                    ektefelle: lagBlankPerson(),
-                };
-            } else {
-                sivilstatus = {
-                    kildeErSystem: false,
-                    sivilstatus: verdi,
-                };
-            }
-            oppdater(sivilstatus);
-            lagre(sivilstatus);
-        }
-    };
+    const sivilstatus = familie?.sivilstatus?.sivilstatus ?? null;
 
-    const familie: Familie = soknadsdata.familie;
-    const sivilstatus = familie && familie.sivilstatus ? familie.sivilstatus.sivilstatus : null;
+    const onClickSivilstatus = (nySivilstatus: Status) => {
+        let sivilstatus = familie.sivilstatus;
+        if (sivilstatus.sivilstatus === nySivilstatus) return;
+
+        sivilstatus = {
+            kildeErSystem: false,
+            sivilstatus: nySivilstatus,
+            ektefelle: nySivilstatus === Status.GIFT ? lagBlankPerson() : undefined,
+        };
+
+        oppdater(sivilstatus);
+        lagre(sivilstatus);
+    };
 
     return (
         <div className="skjema-sporsmal">
@@ -65,7 +61,7 @@ const SivilstatusComponent = () => {
                 <SivilstatusRadioknapp
                     verdi={Status.GIFT}
                     checked={sivilstatus === Status.GIFT}
-                    onClick={(verdi) => onClickSivilstatus(verdi)}
+                    onClick={onClickSivilstatus}
                 />
                 {sivilstatus === Status.GIFT && (
                     <div className="skjema-sporsmal--jaNeiSporsmal">
