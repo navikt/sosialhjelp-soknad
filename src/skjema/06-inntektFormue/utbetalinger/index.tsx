@@ -1,5 +1,5 @@
 import * as React from "react";
-import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, getIntlTextOrKey, replaceDotWithUnderscore} from "../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
@@ -9,11 +9,9 @@ import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../digisos/redux/reducers";
-import {lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {validateAndDispatchTextFieldMaxLength} from "../../../nav-soknad/validering/validateAndDispatch";
 import {useTranslation} from "react-i18next";
 import {Heading} from "@navikt/ds-react";
-import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
@@ -27,32 +25,31 @@ export const UtbetalingerView = () => {
     const dispatch = useDispatch();
 
     const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.UTBETALINGER);
-    const behandlingsId = useBehandlingsId();
     const feil = useSelector((state: State) => state.validering.feil);
+    const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
+    const restStatus = soknadsdata.restStatus.inntekt.utbetalinger;
 
     const {t} = useTranslation("skjema");
 
     React.useEffect(() => {
-        if (oppstartsModus && soknadsdata.restStatus.inntekt.utbetalinger === REST_STATUS.OK) {
-            setOppstartsModus(false);
-        }
-    }, [oppstartsModus, soknadsdata.restStatus.inntekt.utbetalinger]);
+        if (oppstartsModus && restStatus === REST_STATUS.OK) setOppstartsModus(false);
+    }, [oppstartsModus, restStatus]);
 
     const handleClickJaNeiSpsm = (verdi: boolean) => {
-        const restStatus = soknadsdata.restStatus.inntekt.utbetalinger;
-        if (restStatus === REST_STATUS.OK && behandlingsId) {
-            const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-            utbetalinger.bekreftelse = verdi;
-            if (!verdi) {
-                utbetalinger.salg = false;
-                utbetalinger.utbytte = false;
-                utbetalinger.forsikring = false;
-                utbetalinger.annet = false;
-                utbetalinger.beskrivelseAvAnnet = "";
-            }
-            oppdater(utbetalinger);
-            lagre(utbetalinger);
+        if (restStatus !== REST_STATUS.OK) return;
+
+        utbetalinger.bekreftelse = verdi;
+
+        if (!verdi) {
+            utbetalinger.salg = false;
+            utbetalinger.utbytte = false;
+            utbetalinger.forsikring = false;
+            utbetalinger.annet = false;
+            utbetalinger.beskrivelseAvAnnet = "";
         }
+
+        oppdater(utbetalinger);
+        lagre(utbetalinger);
     };
 
     const handleClickRadio = (idToToggle: UtbetalingerKeys) => {
@@ -62,14 +59,13 @@ export const UtbetalingerView = () => {
         if (!utbetalinger.bekreftelse || !utbetalinger.annet) {
             utbetalinger.beskrivelseAvAnnet = "";
         }
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger));
-        lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger, dispatch);
+        oppdater(utbetalinger);
+        lagre(utbetalinger);
     };
 
     const onChangeAnnet = (value: string) => {
-        const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
         utbetalinger.beskrivelseAvAnnet = value;
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger));
+        oppdater(utbetalinger);
         validateAndDispatchTextFieldMaxLength(value, TEXT_AREA_ANNET_FAKTUM_KEY, MAX_CHARS, feil, dispatch);
     };
 
@@ -84,9 +80,7 @@ export const UtbetalingerView = () => {
             dispatch
         );
 
-        if (erInnenforMaksLengde) {
-            lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger, dispatch);
-        }
+        if (erInnenforMaksLengde) lagre(utbetalinger);
     };
 
     const renderCheckBox = (navn: UtbetalingerKeys, textKey: string) => {
@@ -107,11 +101,8 @@ export const UtbetalingerView = () => {
         }
     };
 
-    const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-    const restStatus = soknadsdata.restStatus.inntekt.utbetalinger;
-    if (oppstartsModus && restStatus === REST_STATUS.OK) {
-        setOppstartsModus(false);
-    }
+    if (oppstartsModus && restStatus === REST_STATUS.OK) setOppstartsModus(false);
+
     return (
         <div className="skjema-sporsmal">
             <Heading size="medium" level="2">

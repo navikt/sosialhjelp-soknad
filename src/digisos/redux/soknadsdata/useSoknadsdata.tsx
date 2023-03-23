@@ -29,13 +29,12 @@ export const useSoknadsdata = (sti: SoknadsSti) => {
         hentSoknadsdata(behandlingsId, sti, dispatch);
     }, [behandlingsId, dispatch, sti]);
 
-    const lagre = (data: any, callback?: (response: any) => void) => {
+    // Lagrer gitt søknadsdata i gitt sti mot backend
+    const lagre = (data: any, callback?: (response: any) => void) =>
         lagreSoknadsdata(behandlingsId, sti, data, dispatch, callback);
-    };
 
-    const oppdater = (data: any) => {
-        dispatch(oppdaterSoknadsdataSti(sti, data));
-    };
+    // Oppdaterer Redux-store lokalt
+    const oppdater = (data: any) => dispatch(oppdaterSoknadsdataSti(sti, data));
 
     return {
         soknadsdata,

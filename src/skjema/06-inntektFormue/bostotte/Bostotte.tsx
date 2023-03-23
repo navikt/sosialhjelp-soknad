@@ -7,7 +7,7 @@ import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {Bostotte} from "./bostotteTypes";
 import Dato from "../../../nav-soknad/components/tidspunkt/Dato";
-import {lagreSoknadsdata, settSamtykkeOgOppdaterData} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
+import {settSamtykkeOgOppdaterData} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Alert, BodyShort, Button, Heading, Link, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
@@ -41,7 +41,6 @@ const BostotteView = () => {
             // Fjern samtykke når bruker svarer nei.
             const callback = !verdi ? () => handleSettBostotteSamtykke(false) : undefined;
             lagre(bostotte, callback);
-            lagreSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, bostotte, dispatch, callback);
         }
     };
 
