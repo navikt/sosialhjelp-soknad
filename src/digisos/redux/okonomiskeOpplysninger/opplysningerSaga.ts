@@ -57,7 +57,10 @@ function* lagreOpplysningHvisGyldigSaga({behandlingsId, opplysning, feil}: Lagre
         }
 
         yield call(logWarning, "Lagring av økonomisk opplysning feilet. Reason: " + reason);
-        window.location.href = "/sosialhjelp/soknad/feil?reason=lagreOpplysningHvisGyldigSaga";
+
+        setTimeout(() => {
+            window.location.href = "/sosialhjelp/soknad/feil?reason=lagreOpplysningHvisGyldigSaga";
+        }, 1000);
     }
 }
 

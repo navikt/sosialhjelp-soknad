@@ -1,6 +1,7 @@
 import {basePath} from "../../configuration";
 import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
 import {redirectToLogin} from "../../lib/orval/soknad-api-axios";
+import {logWarning} from "./loggerUtils";
 
 export function getApiBaseUrl(withAccessToken?: boolean) {
     return withAccessToken
@@ -72,6 +73,13 @@ export const serverRequest = <T>(
                             .then((data: unknown) => resolve(data as T))
                             .catch(reject);
                     }, 100 * (7 - retries));
+
+                    return;
+                }
+
+                if ([403, 410].includes(status)) {
+                    logWarning(`Redirecter til /informasjon i rest-utils fordi HTTP ${status}`);
+                    window.location.href = `/sosialhjelp/soknad/informasjon?reason=legacy${status}`;
 
                     return;
                 }
