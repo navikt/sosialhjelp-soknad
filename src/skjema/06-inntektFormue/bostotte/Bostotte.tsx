@@ -32,9 +32,7 @@ const BostotteView = () => {
     const {t, i18n} = useTranslation("skjema");
 
     useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, dispatch);
-        }
+        hentSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, dispatch);
     }, [behandlingsId, dispatch]);
 
     useEffect(() => {

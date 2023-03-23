@@ -21,9 +21,7 @@ const Skatt = () => {
     const soknadsdata = useSoknadsdata();
     const behandlingsId = useBehandlingsId();
     React.useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.SKATTBARINNTEKT, dispatch);
-        }
+        hentSoknadsdata(behandlingsId, SoknadsSti.SKATTBARINNTEKT, dispatch);
     }, [behandlingsId, dispatch]);
 
     const restStatus = soknadsdata.restStatus.inntekt.skattbarinntektogforskuddstrekk;

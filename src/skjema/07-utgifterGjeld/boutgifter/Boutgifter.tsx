@@ -23,35 +23,29 @@ export const BoutgifterView = () => {
     const {t} = useTranslation("skjema");
 
     React.useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, dispatch);
-        }
+        hentSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, dispatch);
     }, [behandlingsId, dispatch]);
 
     const handleClickJaNeiSpsm = (verdi: boolean) => {
-        if (behandlingsId) {
-            const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
-            boutgifter.bekreftelse = verdi;
-            if (!verdi) {
-                boutgifter.husleie = false;
-                boutgifter.strom = false;
-                boutgifter.kommunalAvgift = false;
-                boutgifter.oppvarming = false;
-                boutgifter.boliglan = false;
-                boutgifter.annet = false;
-            }
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter, dispatch);
+        const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
+        boutgifter.bekreftelse = verdi;
+        if (!verdi) {
+            boutgifter.husleie = false;
+            boutgifter.strom = false;
+            boutgifter.kommunalAvgift = false;
+            boutgifter.oppvarming = false;
+            boutgifter.boliglan = false;
+            boutgifter.annet = false;
         }
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
+        lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter, dispatch);
     };
 
     const handleClickRadio = (idToToggle: BoutgifterKeys) => {
-        if (behandlingsId) {
-            const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
-            boutgifter[idToToggle] = !boutgifter[idToToggle];
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter, dispatch);
-        }
+        const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
+        boutgifter[idToToggle] = !boutgifter[idToToggle];
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
+        lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter, dispatch);
     };
 
     const renderCheckBox = (navn: BoutgifterKeys, textKey: string) => {

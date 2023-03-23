@@ -22,34 +22,28 @@ export const BarneutgifterView = () => {
     const {t} = useTranslation("skjema");
 
     React.useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, dispatch);
-        }
+        hentSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, dispatch);
     }, [behandlingsId, dispatch]);
 
     const handleClickJaNeiSpsm = (verdi: boolean) => {
-        if (behandlingsId) {
-            const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
-            barneutgifter.bekreftelse = verdi;
-            if (!verdi) {
-                barneutgifter.fritidsaktiviteter = false;
-                barneutgifter.barnehage = false;
-                barneutgifter.sfo = false;
-                barneutgifter.tannregulering = false;
-                barneutgifter.annet = false;
-            }
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.BARNEUTGIFTER, barneutgifter));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, barneutgifter, dispatch);
+        const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
+        barneutgifter.bekreftelse = verdi;
+        if (!verdi) {
+            barneutgifter.fritidsaktiviteter = false;
+            barneutgifter.barnehage = false;
+            barneutgifter.sfo = false;
+            barneutgifter.tannregulering = false;
+            barneutgifter.annet = false;
         }
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.BARNEUTGIFTER, barneutgifter));
+        lagreSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, barneutgifter, dispatch);
     };
 
     const handleClickRadio = (idToToggle: BarneutgifterKeys) => {
-        if (behandlingsId) {
-            const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
-            barneutgifter[idToToggle] = !barneutgifter[idToToggle];
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.BARNEUTGIFTER, barneutgifter));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, barneutgifter, dispatch);
-        }
+        const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
+        barneutgifter[idToToggle] = !barneutgifter[idToToggle];
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.BARNEUTGIFTER, barneutgifter));
+        lagreSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, barneutgifter, dispatch);
     };
 
     const renderCheckBox = (navn: BarneutgifterKeys, textKey: string) => {

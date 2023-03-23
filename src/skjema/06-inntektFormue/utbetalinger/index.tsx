@@ -33,9 +33,7 @@ export const UtbetalingerView = () => {
     const {t} = useTranslation("skjema");
 
     React.useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, dispatch);
-        }
+        hentSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, dispatch);
     }, [behandlingsId, dispatch]);
 
     React.useEffect(() => {
@@ -62,16 +60,14 @@ export const UtbetalingerView = () => {
     };
 
     const handleClickRadio = (idToToggle: UtbetalingerKeys) => {
-        if (behandlingsId) {
-            const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-            //@ts-ignore
-            utbetalinger[idToToggle] = !utbetalinger[idToToggle];
-            if (!utbetalinger.bekreftelse || !utbetalinger.annet) {
-                utbetalinger.beskrivelseAvAnnet = "";
-            }
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger, dispatch);
+        const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
+        //@ts-ignore
+        utbetalinger[idToToggle] = !utbetalinger[idToToggle];
+        if (!utbetalinger.bekreftelse || !utbetalinger.annet) {
+            utbetalinger.beskrivelseAvAnnet = "";
         }
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.UTBETALINGER, utbetalinger));
+        lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger, dispatch);
     };
 
     const onChangeAnnet = (value: string) => {
@@ -82,20 +78,18 @@ export const UtbetalingerView = () => {
     };
 
     const onBlurTekstfeltAnnet = () => {
-        if (behandlingsId) {
-            const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
-            const beskrivelseAvAnnet = utbetalinger.beskrivelseAvAnnet;
-            const erInnenforMaksLengde = validateAndDispatchTextFieldMaxLength(
-                beskrivelseAvAnnet,
-                TEXT_AREA_ANNET_FAKTUM_KEY,
-                MAX_CHARS,
-                feil,
-                dispatch
-            );
+        const utbetalinger: Utbetalinger = soknadsdata.inntekt.utbetalinger;
+        const beskrivelseAvAnnet = utbetalinger.beskrivelseAvAnnet;
+        const erInnenforMaksLengde = validateAndDispatchTextFieldMaxLength(
+            beskrivelseAvAnnet,
+            TEXT_AREA_ANNET_FAKTUM_KEY,
+            MAX_CHARS,
+            feil,
+            dispatch
+        );
 
-            if (erInnenforMaksLengde) {
-                lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger, dispatch);
-            }
+        if (erInnenforMaksLengde) {
+            lagreSoknadsdata(behandlingsId, SoknadsSti.UTBETALINGER, utbetalinger, dispatch);
         }
     };
 

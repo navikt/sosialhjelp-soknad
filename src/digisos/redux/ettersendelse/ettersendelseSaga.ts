@@ -145,10 +145,8 @@ function* sendEttersendelseSaga({brukerbehandlingId}: SendEttersendelseAction): 
         /* FIXME: Jeg har kommentert ut denne koden fordi jeg _tror_ det er en no-op.
              Jeg tror state.soknad.behandlingsId alltid er null når man ikke har en søknad oppe.
         const behandlingsId = yield select((state: State) => state.soknad.behandlingsId);
-        if (behandlingsId) {
             yield put(opprettEttersendelse(behandlingsId));
             yield put(lesEttersendelser(behandlingsId));
-        }
         */
     } catch (reason) {
         if (reason.message === HttpStatus.UNAUTHORIZED) return;

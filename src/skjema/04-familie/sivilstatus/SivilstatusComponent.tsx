@@ -43,25 +43,23 @@ const SivilstatusComponent = () => {
     const {t} = useTranslation("skjema");
 
     const onClickSivilstatus = (verdi: Status) => {
-        if (behandlingsId) {
-            let sivilstatus = soknadsdata.familie.sivilstatus;
-            const oldStatus = sivilstatus.sivilstatus;
-            if (oldStatus !== verdi) {
-                if (verdi === Status.GIFT) {
-                    sivilstatus = {
-                        kildeErSystem: false,
-                        sivilstatus: Status.GIFT,
-                        ektefelle: lagBlankPerson(),
-                    };
-                } else {
-                    sivilstatus = {
-                        kildeErSystem: false,
-                        sivilstatus: verdi,
-                    };
-                }
-                dispatch(oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus));
-                lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus, dispatch);
+        let sivilstatus = soknadsdata.familie.sivilstatus;
+        const oldStatus = sivilstatus.sivilstatus;
+        if (oldStatus !== verdi) {
+            if (verdi === Status.GIFT) {
+                sivilstatus = {
+                    kildeErSystem: false,
+                    sivilstatus: Status.GIFT,
+                    ektefelle: lagBlankPerson(),
+                };
+            } else {
+                sivilstatus = {
+                    kildeErSystem: false,
+                    sivilstatus: verdi,
+                };
             }
+            dispatch(oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus));
+            lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus, dispatch);
         }
     };
 

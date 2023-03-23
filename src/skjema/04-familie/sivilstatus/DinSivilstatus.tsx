@@ -24,9 +24,7 @@ const DinSivilstatusView = () => {
     const {t} = useTranslation("skjema");
 
     useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, dispatch);
-        }
+        hentSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, dispatch);
     }, [behandlingsId, dispatch]);
 
     useEffect(() => {

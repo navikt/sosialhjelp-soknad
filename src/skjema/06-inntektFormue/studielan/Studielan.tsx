@@ -31,9 +31,7 @@ const StudielanView = () => {
     const {t} = useTranslation("skjema");
 
     React.useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN, dispatch);
-        }
+        hentSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN, dispatch);
     }, [behandlingsId, dispatch]);
 
     React.useEffect(() => {

@@ -18,12 +18,10 @@ const Barnebidrag = () => {
     const {t} = useTranslation("skjema");
 
     const handleClickRadio = (verdi: string) => {
-        if (behandlingsId) {
-            const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
-            forsorgerplikt.barnebidrag = verdi;
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
-        }
+        const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
+        forsorgerplikt.barnebidrag = verdi;
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+        lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
     };
 
     const renderRadio = (verdi: string) => {

@@ -24,9 +24,7 @@ const NavYtelserView = () => {
     const soknadsdata = useSoknadsdata();
     const behandlingsId = useBehandlingsId();
     useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.INNTEKT_SYSTEMDATA, dispatch);
-        }
+        hentSoknadsdata(behandlingsId, SoknadsSti.INNTEKT_SYSTEMDATA, dispatch);
     }, [behandlingsId, dispatch]);
 
     const {systeminntekter} = soknadsdata.inntekt.systemdata;

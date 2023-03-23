@@ -35,9 +35,7 @@ export const VerdierView = () => {
     const {t} = useTranslation("skjema");
 
     React.useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.VERDIER, dispatch);
-        }
+        hentSoknadsdata(behandlingsId, SoknadsSti.VERDIER, dispatch);
     }, [behandlingsId, dispatch]);
 
     React.useEffect(() => {
@@ -66,16 +64,14 @@ export const VerdierView = () => {
     };
 
     const handleClickRadio = (idToToggle: VerdierKeys) => {
-        if (behandlingsId) {
-            const verdier: Verdier = soknadsdata.inntekt.verdier;
-            //@ts-ignore
-            verdier[idToToggle] = !verdier[idToToggle];
-            if (!verdier.bekreftelse || !verdier.annet) {
-                verdier.beskrivelseAvAnnet = "";
-            }
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier, dispatch);
+        const verdier: Verdier = soknadsdata.inntekt.verdier;
+        //@ts-ignore
+        verdier[idToToggle] = !verdier[idToToggle];
+        if (!verdier.bekreftelse || !verdier.annet) {
+            verdier.beskrivelseAvAnnet = "";
         }
+        dispatch(oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier));
+        lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier, dispatch);
     };
 
     const onChangeAnnet = (value: string) => {

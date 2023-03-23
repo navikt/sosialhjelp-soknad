@@ -34,8 +34,6 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
     const dispatch = useDispatch();
 
     const handleAlleredeLastetOpp = (_: any) => {
-        if (!behandlingsId) return;
-
         const opplysningUpdated = {...props.okonomiskOpplysning};
 
         if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND) {
@@ -48,34 +46,32 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
     };
 
     const slettVedlegg = (fil: Fil) => {
-        if (behandlingsId) {
-            dispatch(settFilOpplastingPending(props.okonomiskOpplysning.type));
+        dispatch(settFilOpplastingPending(props.okonomiskOpplysning.type));
 
-            setFeilkode(feilkode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR ? null : feilkode);
+        setFeilkode(feilkode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR ? null : feilkode);
 
-            const url = `opplastetVedlegg/${behandlingsId}/${fil.uuid}`;
-            fetchDelete(url)
-                .then(() => {
-                    const filerUpdated = props.okonomiskOpplysning.filer.filter((f: Fil) => {
-                        return f.uuid !== fil.uuid;
-                    });
-
-                    const opplysningUpdated: Opplysning = {...props.okonomiskOpplysning};
-                    opplysningUpdated.filer = filerUpdated;
-
-                    if (opplysningUpdated.filer.length === 0) {
-                        opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
-                    }
-
-                    dispatch(updateOpplysning(opplysningUpdated));
-                    dispatch(settFilOpplastingFerdig(props.okonomiskOpplysning.type));
-                })
-                .catch((reason) => {
-                    if (reason.message === HttpStatus.UNAUTHORIZED) return;
-                    logWarning("Slett vedlegg feilet: " + reason);
-                    window.location.href = "/sosialhjelp/soknad/feil?reason=slettVedlegg";
+        const url = `opplastetVedlegg/${behandlingsId}/${fil.uuid}`;
+        fetchDelete(url)
+            .then(() => {
+                const filerUpdated = props.okonomiskOpplysning.filer.filter((f: Fil) => {
+                    return f.uuid !== fil.uuid;
                 });
-        }
+
+                const opplysningUpdated: Opplysning = {...props.okonomiskOpplysning};
+                opplysningUpdated.filer = filerUpdated;
+
+                if (opplysningUpdated.filer.length === 0) {
+                    opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
+                }
+
+                dispatch(updateOpplysning(opplysningUpdated));
+                dispatch(settFilOpplastingFerdig(props.okonomiskOpplysning.type));
+            })
+            .catch((reason) => {
+                if (reason.message === HttpStatus.UNAUTHORIZED) return;
+                logWarning("Slett vedlegg feilet: " + reason);
+                window.location.href = "/sosialhjelp/soknad/feil?reason=slettVedlegg";
+            });
     };
 
     const renderOpplastingAvVedleggSeksjon = (opplysning: Opplysning) => {

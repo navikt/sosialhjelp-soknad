@@ -33,9 +33,7 @@ export const FormueView = () => {
     const {t} = useTranslation("skjema");
 
     useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.FORMUE, dispatch);
-        }
+        hentSoknadsdata(behandlingsId, SoknadsSti.FORMUE, dispatch);
     }, [behandlingsId, dispatch]);
 
     useEffect(() => {
