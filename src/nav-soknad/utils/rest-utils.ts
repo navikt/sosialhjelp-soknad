@@ -25,12 +25,7 @@ export function parseGotoValueFromSearchParameters(searchParameters: string): st
 
 export const downloadAttachedFile = (urlPath: string) => window.open(`${getApiBaseUrl()}${urlPath}`);
 
-enum RequestMethod {
-    GET = "GET",
-    POST = "POST",
-    PUT = "PUT",
-    DELETE = "DELETE",
-}
+type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
 
 const getHeaders = () =>
     new Headers({
@@ -44,7 +39,7 @@ export enum HttpStatus {
 }
 
 export const serverRequest = <T>(
-    method: string,
+    method: HTTPMethod,
     urlPath: string,
     body: string,
     withAccessToken?: boolean,
@@ -60,6 +55,8 @@ export const serverRequest = <T>(
     return new Promise<T>((resolve, reject) => {
         fetch(getApiBaseUrl(withAccessToken) + urlPath, OPTIONS)
             .then((response: Response) => {
+                if (response.ok) resolve(toJson<T>(response));
+
                 const {status, statusText} = response;
 
                 if (status === 401) {
@@ -79,27 +76,25 @@ export const serverRequest = <T>(
                     return;
                 }
 
-                if (!response.ok) throw new DigisosLegacyRESTError(response.status, response.statusText);
-
-                resolve(toJson<T>(response));
+                throw new DigisosLegacyRESTError(response.status, response.statusText);
             })
-            .catch((reason: any) => reject(reason));
+            .catch(reject);
     });
 };
 
 export const fetchToJson = <T>(urlPath: string, withAccessToken?: boolean) =>
-    serverRequest<T>(RequestMethod.GET, urlPath, "", withAccessToken);
+    serverRequest<T>("GET", urlPath, "", withAccessToken);
 
 export const fetchPut = (urlPath: string, body: string, withAccessToken?: boolean) =>
-    serverRequest(RequestMethod.PUT, urlPath, body, withAccessToken);
+    serverRequest("PUT", urlPath, body, withAccessToken);
 
 export const fetchPost = <T>(urlPath: string, body: string, withAccessToken?: boolean) =>
-    serverRequest<T>(RequestMethod.POST, urlPath, body, withAccessToken);
+    serverRequest<T>("POST", urlPath, body, withAccessToken);
 
 export function fetchDelete(urlPath: string) {
     const OPTIONS: RequestInit = {
         headers: getHeaders(),
-        method: RequestMethod.DELETE,
+        method: "DELETE",
         credentials: determineCredentialsParameter(),
     };
     return fetch(getApiBaseUrl() + urlPath, OPTIONS).then((response: Response) => {
