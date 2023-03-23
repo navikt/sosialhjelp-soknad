@@ -78,7 +78,7 @@ export const axiosInstance = <T>(
             if (isCancel(e) || options?.digisosIgnoreErrors) return new Promise<T>(() => {});
 
             if (!e.response) {
-                logError(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
+                logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
                 throw e;
             }
 
@@ -87,7 +87,7 @@ export const axiosInstance = <T>(
             if (isLoginRedirect401(e.response)) await redirectToLogin(e.response.data);
 
             // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
-            if ([410, 403, 404].includes(status)) {
+            if ([403, 404, 410].includes(status)) {
                 window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
                 return new Promise<T>(() => {});
             }
@@ -103,7 +103,7 @@ export const axiosInstance = <T>(
                 return axiosInstance<T>(config, options, retry + 1);
             }
 
-            logError(`Nettverksfeil i axiosInstance: ${status} ${data}`);
+            logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url}: ${status} ${data}`);
             throw e;
         });
 

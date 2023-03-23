@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Detail, Heading, Textarea} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {SkjemaSteg} from "../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
+import {DigisosValidationError, SkjemaSteg} from "../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
 import {useForm} from "react-hook-form";
 import {ArbeidFrontend, UtdanningFrontend} from "../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -45,19 +45,22 @@ const ArbeidOgUtdanning = () => {
 
     const onRequestNavigation = () =>
         new Promise<void>((resolve, reject) => {
-            handleSubmit((data) => {
-                mutateArbeid(
-                    {behandlingsId, data: data.arbeid},
-                    {
-                        onSuccess: () =>
-                            mutateUtdanning(
-                                {behandlingsId, data: data.utdanning},
-                                {onSuccess: resolve, onError: reject}
-                            ),
-                        onError: reject,
-                    }
-                );
-            }, reject)();
+            handleSubmit(
+                (data) => {
+                    mutateArbeid(
+                        {behandlingsId, data: data.arbeid},
+                        {
+                            onSuccess: () =>
+                                mutateUtdanning(
+                                    {behandlingsId, data: data.utdanning},
+                                    {onSuccess: resolve, onError: reject}
+                                ),
+                            onError: reject,
+                        }
+                    );
+                },
+                () => reject(new DigisosValidationError())
+            );
         });
 
     return (

@@ -8,7 +8,7 @@ import {FieldError, useForm} from "react-hook-form";
 import {useTranslation} from "react-i18next";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useFeatureFlags} from "../../lib/featureFlags";
-import {SkjemaSteg} from "../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
+import {DigisosValidationError, SkjemaSteg} from "../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {useEffect} from "react";
 
@@ -60,7 +60,7 @@ const Begrunnelse = () => {
 
                     await mutate({behandlingsId, data}, {onSuccess: resolve, onError: reject});
                 },
-                () => reject()
+                () => reject(new DigisosValidationError())
             )();
         });
 

@@ -20,6 +20,10 @@ const Informasjon = () => {
     useTitle(getIntlTextOrKey(t, "applikasjon.sidetittel"));
     const [searchParams, setSearchParams] = useSearchParams();
 
+    // Tanken her er at reason-parameteret i fremtiden vil kunne brukes for
+    // logging og et panel som forklarer hvorfor brukere har endt opp her. Alt
+    // vi gjør så langt er bare å fjerne parameteret om der Men det kan kanskje
+    // bedre løses ved å logge før brukeren sendes videre...?
     useEffect(() => {
         const reason = searchParams.get("reason");
         if (!reason) return;
@@ -27,10 +31,8 @@ const Informasjon = () => {
         setSearchParams({});
     }, [searchParams, setSearchParams]);
 
-    return expectOK(({harTilgang}) => {
-        if (!harTilgang) return <IkkeTilgang />;
-
-        return (
+    return expectOK(({harTilgang}) =>
+        harTilgang ? (
             <div className={"bg-digisosGronnBakgrunn flex flex-col"}>
                 <AppBanner />
                 <NedetidPanel varselType={"infoside"} />
@@ -40,8 +42,10 @@ const Informasjon = () => {
                     <EttersendDokuPanel />
                 </div>
             </div>
-        );
-    });
+        ) : (
+            <IkkeTilgang />
+        )
+    );
 };
 
 export default Informasjon;

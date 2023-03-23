@@ -27,6 +27,10 @@ type TSkjemaStegContext = {
 
 export const SkjemaStegContext = createContext<TSkjemaStegContext | null>(null);
 
+// Throw this error when rejecting navigation based on form errors;
+// all other rejections will be logged
+export class DigisosValidationError extends Error {}
+
 interface SkjemaStegProps {
     page: SkjemaPage;
     children?: ReactNode | ReactNode[];
@@ -105,7 +109,7 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
             if (onRequestNavigation !== undefined) await onRequestNavigation();
             gotoPage(page);
         } catch (e) {
-            logWarning(`Nektet navigering: ${e}`);
+            if (!(e instanceof DigisosValidationError)) logWarning(`Nektet navigering: ${e}`);
             scrollToTop();
         }
     };
