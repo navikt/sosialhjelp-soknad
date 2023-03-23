@@ -89,15 +89,15 @@ export function settSamtykkeOgOppdaterData(
 /*
  * setPath - Oppdater sti i datastruktur.
  *
- *  F.eks. setPath("04-familie/sivilstatus/barn", {navn: 'Doffen'})
+ *  F.eks. setPath("familie/sivilstatus/barn", {navn: 'Doffen'})
  *
  * Oppretter element i object ut fra sti hvis det ikke finnes.
  *
- * setPath( {}, '04-familie/sivilstatus/status/barn', {navn: "Doffen"});
- *  => { 04-familie: { sivilstatus: { status: {barn: {navn: 'Doffen' } } } }
+ * setPath( {}, 'familie/sivilstatus/status/barn', {navn: "Doffen"});
+ *  => { familie: { sivilstatus: { status: {barn: {navn: 'Doffen' } } } }
  *
- * setPath( {}, '04-familie/barn/0', {navn: "Doffen"})
- *  => {04-familie: {barn : [{navn: "Doffen"}]
+ * setPath( {}, 'familie/barn/0', {navn: "Doffen"})
+ *  => {familie: {barn : [{navn: "Doffen"}]
  */
 export const setPath = (obj: any, path: string, value: any): any => {
     obj = typeof obj === "object" ? obj : {};
