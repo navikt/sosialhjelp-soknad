@@ -6,26 +6,27 @@ import {hentSoknadsdata, lagreSoknadsdata} from "./soknadsdataActions";
 import {State} from "../reducers";
 
 /**
- * Observerte at veldig mange Redux-komponenter gjør følgende:
+ * Hook for henting, oppdatering og lagring av Redux-data
  *
+ * @example
+ * Observerte at veldig mange Redux-komponenter gjør følgende:
  *     const dispatch = useDispatch();
  *     const {soknadsdata, lagre, oppdater} = useSoknadsdata();
  *     const behandlingsId = useBehandlingsId();
  *
- *     React.useEffect(() => {
- *         hentSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN, dispatch);
- *     }, [behandlingsId, dispatch]);
- *
+ *     // Last data
+ *     useEffect(() => {hentSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN, dispatch);}, [behandlingsId, dispatch]);
  *     // Oppdater lokal state
  *     dispatch(oppdaterSoknadsdataSti(SoknadsSti.STUDIELAN, data));
  *     // Lagre til backend
  *     lagreSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN, data, dispatch);
  *
- *     Dette kan nå forenkles:
- * @example
- *  const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.STUDIELAN);
- *  oppdater(data)
- *  lagre(data)
+ *     // Dette kan nå forenkles:
+ *
+ *     const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.STUDIELAN); // Trigger en hentSoknadsdata
+ *     console.log(soknadsdata)
+ *     oppdater(data)
+ *     lagre(data)
  * @param sti SøknadsSti (se typens definisjon)
  */
 export const useSoknadsdata = (sti: SoknadsSti) => {
