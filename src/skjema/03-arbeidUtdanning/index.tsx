@@ -15,7 +15,10 @@ import UtdanningInput from "./utdanning/Utdanning";
 
 const ArbeidOgUtdanningSchema = z.object({
     arbeid: z.object({kommentarTilArbeidsforhold: z.string().max(500, "maksLengde").nullable()}),
-    utdanning: z.object({erStudent: z.boolean().nullable(), studengradErHeltid: z.boolean().nullable()}),
+    utdanning: z.object({
+        erStudent: z.boolean().nullable().optional(),
+        studengradErHeltid: z.boolean().nullable().optional(),
+    }),
 });
 
 export type ArbeidOgUtdanningType = {
@@ -59,8 +62,10 @@ const ArbeidOgUtdanning = () => {
                         }
                     );
                 },
-                () => reject(new DigisosValidationError())
-            );
+                () => {
+                    reject(new DigisosValidationError());
+                }
+            )();
         });
 
     return (
