@@ -1,4 +1,4 @@
-import {oppdaterSoknadsdataSti, SoknadsSti} from "./soknadsdataReducer";
+import {oppdaterSoknadsdataSti, SoknadsdataType, SoknadsSti} from "./soknadsdataReducer";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
@@ -30,11 +30,11 @@ export const useSoknadsdata = (sti: SoknadsSti) => {
     }, [behandlingsId, dispatch, sti]);
 
     // Lagrer gitt søknadsdata i gitt sti mot backend
-    const lagre = (data: any, callback?: (response: any) => void) =>
+    const lagre = (data: SoknadsdataType, callback?: (response: any) => void) =>
         lagreSoknadsdata(behandlingsId, sti, data, dispatch, callback);
 
     // Oppdaterer Redux-store lokalt
-    const oppdater = (data: any) => dispatch(oppdaterSoknadsdataSti(sti, data));
+    const oppdater = (data: SoknadsdataType) => dispatch(oppdaterSoknadsdataSti(sti, data));
 
     return {
         soknadsdata,
