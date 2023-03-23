@@ -16,8 +16,16 @@ import {State} from "../reducers";
  *         hentSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN, dispatch);
  *     }, [behandlingsId, dispatch]);
  *
+ *     // Oppdater lokal state
+ *     dispatch(oppdaterSoknadsdataSti(SoknadsSti.STUDIELAN, data));
+ *     // Lagre til backend
+ *     lagreSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN, data, dispatch);
+ *
  *     Dette kan nå forenkles:
- * @example const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.STUDIELAN);
+ * @example
+ *  const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.STUDIELAN);
+ *  oppdater(data)
+ *  lagre(data)
  * @param sti SøknadsSti (se typens definisjon)
  */
 export const useSoknadsdata = (sti: SoknadsSti) => {
