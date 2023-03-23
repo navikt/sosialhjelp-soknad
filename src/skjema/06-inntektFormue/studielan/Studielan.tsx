@@ -7,13 +7,13 @@ import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {Studielan} from "./StudielanTypes";
 import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel";
-import {hentSoknadsdata, lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
+import {lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Heading, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
-import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
+import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
 
 const FAKTUM_STUDIELAN = "inntekt.studielan";
 
@@ -26,13 +26,9 @@ const StudielanView = () => {
 
     const dispatch = useDispatch();
 
-    const soknadsdata = useSoknadsdata();
+    const soknadsdata = useHentSoknadsdata(SoknadsSti.STUDIELAN);
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation("skjema");
-
-    React.useEffect(() => {
-        hentSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN, dispatch);
-    }, [behandlingsId, dispatch]);
 
     React.useEffect(() => {
         if (oppstartsModus && soknadsdata.restStatus.inntekt.studielan === REST_STATUS.OK) {

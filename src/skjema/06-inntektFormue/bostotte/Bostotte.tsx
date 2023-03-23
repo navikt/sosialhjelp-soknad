@@ -7,18 +7,14 @@ import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {Bostotte} from "./bostotteTypes";
 import Dato from "../../../nav-soknad/components/tidspunkt/Dato";
-import {
-    hentSoknadsdata,
-    lagreSoknadsdata,
-    settSamtykkeOgOppdaterData,
-} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
+import {lagreSoknadsdata, settSamtykkeOgOppdaterData} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Alert, BodyShort, Button, Heading, Link, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {fmtCurrency} from "../../../lib/fmtCurrency";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
-import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
+import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -27,13 +23,9 @@ const BostotteView = () => {
 
     const dispatch = useDispatch();
 
-    const soknadsdata = useSoknadsdata();
+    const soknadsdata = useHentSoknadsdata(SoknadsSti.BOSTOTTE);
     const behandlingsId = useBehandlingsId();
     const {t, i18n} = useTranslation("skjema");
-
-    useEffect(() => {
-        hentSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, dispatch);
-    }, [behandlingsId, dispatch]);
 
     useEffect(() => {
         if (oppstartsModus && soknadsdata.restStatus.inntekt.bostotte === REST_STATUS.OK) {

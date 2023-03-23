@@ -1,31 +1,21 @@
 import * as React from "react";
 import {useState, useEffect} from "react";
-import {useDispatch} from "react-redux";
-
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {Sivilstatus, Status} from "./FamilieTypes";
 import SivilstatusComponent from "./SivilstatusComponent";
 import EktefelleDetaljer from "./EktefelleDetaljer";
 import Sporsmal from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import {hentSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
-import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
+import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
 
 const DinSivilstatusView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
 
-    const soknadsdata = useSoknadsdata();
-    const behandlingsId = useBehandlingsId();
-    const dispatch = useDispatch();
+    const soknadsdata = useHentSoknadsdata(SoknadsSti.SIVILSTATUS);
     const {t} = useTranslation("skjema");
-
-    useEffect(() => {
-        hentSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, dispatch);
-    }, [behandlingsId, dispatch]);
 
     useEffect(() => {
         const restStatus = soknadsdata.restStatus.familie.sivilstatus;

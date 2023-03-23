@@ -1,31 +1,22 @@
 import * as React from "react";
-import {useEffect} from "react";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
-import {useDispatch} from "react-redux";
 
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {Systeminntekt} from "./navYtelserTypes";
 import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import Dato from "../../../nav-soknad/components/tidspunkt/Dato";
-import {hentSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Heading, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {fmtCurrency} from "../../../lib/fmtCurrency";
-import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
-import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
+import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
 
 const NavYtelserView = () => {
-    const dispatch = useDispatch();
     const {t, i18n} = useTranslation("skjema");
 
-    const soknadsdata = useSoknadsdata();
-    const behandlingsId = useBehandlingsId();
-    useEffect(() => {
-        hentSoknadsdata(behandlingsId, SoknadsSti.INNTEKT_SYSTEMDATA, dispatch);
-    }, [behandlingsId, dispatch]);
+    const soknadsdata = useHentSoknadsdata(SoknadsSti.INNTEKT_SYSTEMDATA);
 
     const {systeminntekter} = soknadsdata.inntekt.systemdata;
     const {utbetalingerFraNavFeilet} = soknadsdata.inntekt.systemdata;

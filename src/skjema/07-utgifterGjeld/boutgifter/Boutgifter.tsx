@@ -7,24 +7,20 @@ import {Boutgifter, BoutgifterKeys} from "./BoutgifterTypes";
 import CheckboxPanel from "../../../nav-soknad/faktum/CheckboxPanel";
 import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel";
 import {useDispatch} from "react-redux";
-import {hentSoknadsdata, lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
+import {lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
-import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
+import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
 
 const BOUTGIFTER = "utgifter.boutgift";
 
 export const BoutgifterView = () => {
     const behandlingsId = useBehandlingsId();
-    const soknadsdata = useSoknadsdata();
+    const soknadsdata = useHentSoknadsdata(SoknadsSti.BOUTGIFTER);
 
     const dispatch = useDispatch();
     const {t} = useTranslation("skjema");
-
-    React.useEffect(() => {
-        hentSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, dispatch);
-    }, [behandlingsId, dispatch]);
 
     const handleClickJaNeiSpsm = (verdi: boolean) => {
         const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;

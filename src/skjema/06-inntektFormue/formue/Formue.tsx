@@ -9,13 +9,13 @@ import CheckboxPanel from "../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import {hentSoknadsdata, lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
+import {lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {State} from "../../../digisos/redux/reducers";
 import {validateAndDispatchTextFieldMaxLength} from "../../../nav-soknad/validering/validateAndDispatch";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
-import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
+import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
 
 const MAX_CHARS = 500;
 const FORMUE = "inntekt.bankinnskudd";
@@ -26,15 +26,11 @@ export const FormueView = () => {
 
     const dispatch = useDispatch();
 
-    const soknadsdata = useSoknadsdata();
+    const soknadsdata = useHentSoknadsdata(SoknadsSti.FORMUE);
     const behandlingsId = useBehandlingsId();
     const feil = useSelector((state: State) => state.validering.feil);
 
     const {t} = useTranslation("skjema");
-
-    useEffect(() => {
-        hentSoknadsdata(behandlingsId, SoknadsSti.FORMUE, dispatch);
-    }, [behandlingsId, dispatch]);
 
     useEffect(() => {
         if (oppstartsModus && soknadsdata.restStatus.inntekt.formue === REST_STATUS.OK) {

@@ -6,24 +6,20 @@ import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Barneutgifter, BarneutgifterKeys} from "./BarneutgifterTypes";
 import CheckboxPanel from "../../../nav-soknad/faktum/CheckboxPanel";
 import {useDispatch} from "react-redux";
-import {hentSoknadsdata, lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
+import {lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
-import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
+import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
 
 const BarneutgifterKey = "utgifter.barn";
 
 export const BarneutgifterView = () => {
     const behandlingsId = useBehandlingsId();
-    const soknadsdata = useSoknadsdata();
+    const soknadsdata = useHentSoknadsdata(SoknadsSti.BARNEUTGIFTER);
 
     const dispatch = useDispatch();
 
     const {t} = useTranslation("skjema");
-
-    React.useEffect(() => {
-        hentSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, dispatch);
-    }, [behandlingsId, dispatch]);
 
     const handleClickJaNeiSpsm = (verdi: boolean) => {
         const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
