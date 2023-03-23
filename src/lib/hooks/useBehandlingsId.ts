@@ -21,7 +21,7 @@ export const useBehandlingsId = (): string => {
         // Om vi er her, kan det være et kort blaff med 'undefined' som så blir endret før
         // det noengang rekker bli brukers problem eller engang en GET, så ikke nødvendigvis
         // en fatal feil for brukeren. Jeg tror det kan være like godt å dekke inn med en
-        // hjelpsom verdi :)
+        // hjelpsom verdi :) Etter overgangen til next er det nok trygt å slette denne.
         return "NoeGikkGaltIFrontendSeUseBehandlingsIdTs";
     } else return behandlingsId;
 };
