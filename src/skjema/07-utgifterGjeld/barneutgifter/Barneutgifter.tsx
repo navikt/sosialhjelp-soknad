@@ -9,13 +9,13 @@ import {useDispatch} from "react-redux";
 import {lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
-import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const BarneutgifterKey = "utgifter.barn";
 
 export const BarneutgifterView = () => {
     const behandlingsId = useBehandlingsId();
-    const soknadsdata = useHentSoknadsdata(SoknadsSti.BARNEUTGIFTER);
+    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.BARNEUTGIFTER);
 
     const dispatch = useDispatch();
 
@@ -31,8 +31,8 @@ export const BarneutgifterView = () => {
             barneutgifter.tannregulering = false;
             barneutgifter.annet = false;
         }
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.BARNEUTGIFTER, barneutgifter));
-        lagreSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, barneutgifter, dispatch);
+        oppdater(barneutgifter);
+        lagre(barneutgifter);
     };
 
     const handleClickRadio = (idToToggle: BarneutgifterKeys) => {

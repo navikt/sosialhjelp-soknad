@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useState, useEffect} from "react";
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
-import {Sivilstatus, Status} from "./FamilieTypes";
+import {Status} from "./FamilieTypes";
 import SivilstatusComponent from "./SivilstatusComponent";
 import EktefelleDetaljer from "./EktefelleDetaljer";
 import Sporsmal from "../../../nav-soknad/components/sporsmal/Sporsmal";
@@ -9,26 +9,23 @@ import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placehol
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
-import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const DinSivilstatusView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
-
-    const soknadsdata = useHentSoknadsdata(SoknadsSti.SIVILSTATUS);
+    const {soknadsdata} = useSoknadsdata(SoknadsSti.SIVILSTATUS);
     const {t} = useTranslation("skjema");
 
-    useEffect(() => {
-        const restStatus = soknadsdata.restStatus.familie.sivilstatus;
-        if (oppstartsModus && restStatus === REST_STATUS.OK) {
-            setOppstartsModus(false);
-        }
-    }, [oppstartsModus, soknadsdata.restStatus.familie.sivilstatus]);
-
-    const sivilstatus: Sivilstatus = soknadsdata.familie.sivilstatus;
+    const sivilstatus = soknadsdata.familie.sivilstatus;
     const restStatus = soknadsdata.restStatus.familie.sivilstatus;
-    if (oppstartsModus && restStatus === REST_STATUS.OK) {
-        setOppstartsModus(false);
-    }
+
+    useEffect(() => {
+        if (oppstartsModus && restStatus === REST_STATUS.OK) setOppstartsModus(false);
+    }, [oppstartsModus, restStatus]);
+
+    // Denne er vel unødvendig...
+    if (oppstartsModus && restStatus === REST_STATUS.OK) setOppstartsModus(false);
+
     if (oppstartsModus) {
         return (
             <div className="skjema-sporsmal">
@@ -38,7 +35,7 @@ const DinSivilstatusView = () => {
             </div>
         );
     }
-    if (sivilstatus && sivilstatus.sivilstatus === Status.GIFT && sivilstatus.kildeErSystem) {
+    if (sivilstatus?.sivilstatus === Status.GIFT && sivilstatus.kildeErSystem) {
         return <EktefelleDetaljer />;
     } else {
         return <SivilstatusComponent />;

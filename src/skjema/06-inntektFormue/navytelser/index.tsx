@@ -11,12 +11,12 @@ import {Heading, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {fmtCurrency} from "../../../lib/fmtCurrency";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
-import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const NavYtelserView = () => {
     const {t, i18n} = useTranslation("skjema");
 
-    const soknadsdata = useHentSoknadsdata(SoknadsSti.INNTEKT_SYSTEMDATA);
+    const {soknadsdata} = useSoknadsdata(SoknadsSti.INNTEKT_SYSTEMDATA);
 
     const {systeminntekter} = soknadsdata.inntekt.systemdata;
     const {utbetalingerFraNavFeilet} = soknadsdata.inntekt.systemdata;

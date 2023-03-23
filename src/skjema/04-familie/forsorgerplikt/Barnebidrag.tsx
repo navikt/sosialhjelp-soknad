@@ -1,27 +1,22 @@
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import * as React from "react";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
-import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
-import {useDispatch} from "react-redux";
-import {lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
+import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const FAKTUM_KEY = "familie.barn.true.barnebidrag";
 
 const Barnebidrag = () => {
-    const soknadsdata = useSoknadsdata();
-    const dispatch = useDispatch();
-    const behandlingsId = useBehandlingsId();
+    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.FORSORGERPLIKT);
     const {t} = useTranslation("skjema");
 
     const handleClickRadio = (verdi: string) => {
         const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         forsorgerplikt.barnebidrag = verdi;
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
-        lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
+        oppdater(forsorgerplikt);
+        lagre(forsorgerplikt);
     };
 
     const renderRadio = (verdi: string) => {

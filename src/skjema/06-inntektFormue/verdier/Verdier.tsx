@@ -17,7 +17,7 @@ import {setValideringsfeil, clearValideringsfeil} from "../../../digisos/redux/v
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
-import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const MAX_CHARS = 500;
 const VERDIER = "inntekt.eierandeler";
@@ -28,7 +28,7 @@ export const VerdierView = () => {
 
     const dispatch = useDispatch();
 
-    const soknadsdata = useHentSoknadsdata(SoknadsSti.VERDIER);
+    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.VERDIER);
     const behandlingsId = useBehandlingsId();
     const feil = useSelector((state: State) => state.validering.feil);
 
@@ -54,8 +54,8 @@ export const VerdierView = () => {
                 verdier.annet = false;
                 verdier.beskrivelseAvAnnet = "";
             }
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier, dispatch);
+            oppdater(verdier);
+            lagre(verdier);
         }
     };
 

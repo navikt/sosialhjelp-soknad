@@ -11,13 +11,13 @@ import {lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataAc
 import {Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
-import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const BOUTGIFTER = "utgifter.boutgift";
 
 export const BoutgifterView = () => {
     const behandlingsId = useBehandlingsId();
-    const soknadsdata = useHentSoknadsdata(SoknadsSti.BOUTGIFTER);
+    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.BOUTGIFTER);
 
     const dispatch = useDispatch();
     const {t} = useTranslation("skjema");
@@ -33,8 +33,8 @@ export const BoutgifterView = () => {
             boutgifter.boliglan = false;
             boutgifter.annet = false;
         }
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
-        lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter, dispatch);
+        oppdater(boutgifter);
+        lagre(boutgifter);
     };
 
     const handleClickRadio = (idToToggle: BoutgifterKeys) => {

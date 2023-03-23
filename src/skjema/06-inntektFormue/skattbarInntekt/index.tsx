@@ -12,13 +12,13 @@ import {Alert, BodyShort, Button, Heading, Label, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
-import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const Skatt = () => {
     const dispatch = useDispatch();
     const {t} = useTranslation("skjema");
 
-    const soknadsdata = useHentSoknadsdata(SoknadsSti.SKATTBARINNTEKT);
+    const {soknadsdata} = useSoknadsdata(SoknadsSti.SKATTBARINNTEKT);
     const behandlingsId = useBehandlingsId();
 
     const restStatus = soknadsdata.restStatus.inntekt.skattbarinntektogforskuddstrekk;

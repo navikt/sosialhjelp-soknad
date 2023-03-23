@@ -1,19 +1,15 @@
 import * as React from "react";
-import {useDispatch} from "react-redux";
-
 import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
-import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {Studielan} from "./StudielanTypes";
 import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel";
-import {lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Heading, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
-import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const FAKTUM_STUDIELAN = "inntekt.studielan";
 
@@ -23,12 +19,10 @@ const STUDERER_INFO_DEL2 = "informasjon.student.studielan.2";
 
 const StudielanView = () => {
     const [oppstartsModus, setOppstartsModus] = React.useState(true);
-
-    const dispatch = useDispatch();
-
-    const soknadsdata = useHentSoknadsdata(SoknadsSti.STUDIELAN);
-    const behandlingsId = useBehandlingsId();
+    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.STUDIELAN);
     const {t} = useTranslation("skjema");
+    const studielan: Studielan | undefined = soknadsdata.inntekt.studielan;
+    const restStatus = soknadsdata.restStatus.inntekt.studielan;
 
     React.useEffect(() => {
         if (oppstartsModus && soknadsdata.restStatus.inntekt.studielan === REST_STATUS.OK) {
@@ -37,22 +31,13 @@ const StudielanView = () => {
     }, [oppstartsModus, soknadsdata.restStatus.inntekt.studielan]);
 
     const handleClickJaNeiSpsm = (verdi: boolean) => {
-        const restStatus = soknadsdata.restStatus.inntekt.studielan;
-        if (restStatus === REST_STATUS.OK) {
-            const studielan: Studielan | undefined = soknadsdata.inntekt.studielan;
-            if (studielan && behandlingsId) {
-                studielan.bekreftelse = verdi;
-                dispatch(oppdaterSoknadsdataSti(SoknadsSti.STUDIELAN, studielan));
-                lagreSoknadsdata(behandlingsId, SoknadsSti.STUDIELAN, studielan, dispatch);
-            }
-        }
+        if (!(restStatus === REST_STATUS.OK && studielan)) return;
+        studielan.bekreftelse = verdi;
+        oppdater(studielan);
+        lagre(studielan);
     };
 
-    const studielan: Studielan | undefined = soknadsdata.inntekt.studielan;
-    const restStatus = soknadsdata.restStatus.inntekt.studielan;
-    if (oppstartsModus && restStatus === REST_STATUS.OK) {
-        setOppstartsModus(false);
-    }
+    if (oppstartsModus && restStatus === REST_STATUS.OK) setOppstartsModus(false);
 
     const studielanSporsmal = (
         <div className="skjema-sporsmal">

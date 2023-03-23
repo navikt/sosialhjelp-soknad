@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {formatTidspunkt, getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
-import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {Bostotte} from "./bostotteTypes";
 import Dato from "../../../nav-soknad/components/tidspunkt/Dato";
 import {lagreSoknadsdata, settSamtykkeOgOppdaterData} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
@@ -14,7 +14,7 @@ import {useTranslation} from "react-i18next";
 import {fmtCurrency} from "../../../lib/fmtCurrency";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
-import {useHentSoknadsdata} from "../../../digisos/redux/soknadsdata/useHentSoknadsdata";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -23,7 +23,7 @@ const BostotteView = () => {
 
     const dispatch = useDispatch();
 
-    const soknadsdata = useHentSoknadsdata(SoknadsSti.BOSTOTTE);
+    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.BOSTOTTE);
     const behandlingsId = useBehandlingsId();
     const {t, i18n} = useTranslation("skjema");
 
@@ -34,21 +34,14 @@ const BostotteView = () => {
     }, [oppstartsModus, soknadsdata.restStatus.inntekt.bostotte]);
 
     const handleClickJaNeiSpsm = (verdi: boolean) => {
-        const restStatus = soknadsdata.restStatus.inntekt.bostotte;
-        if (restStatus === REST_STATUS.OK && behandlingsId) {
-            const bostotte: Bostotte | undefined = soknadsdata.inntekt.bostotte;
-            if (bostotte) {
-                bostotte.bekreftelse = verdi;
-                dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOSTOTTE, bostotte));
-                let responseHandler = undefined;
-                if (!verdi) {
-                    // Fjern samtykke når bruker svarer nei.
-                    responseHandler = () => {
-                        handleSettBostotteSamtykke(false);
-                    };
-                }
-                lagreSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, bostotte, dispatch, responseHandler);
-            }
+        if (soknadsdata.restStatus.inntekt.bostotte === REST_STATUS.OK && soknadsdata.inntekt.bostotte) {
+            const bostotte = soknadsdata.inntekt.bostotte;
+            bostotte.bekreftelse = verdi;
+            oppdater(bostotte);
+            // Fjern samtykke når bruker svarer nei.
+            const callback = !verdi ? () => handleSettBostotteSamtykke(false) : undefined;
+            lagre(bostotte, callback);
+            lagreSoknadsdata(behandlingsId, SoknadsSti.BOSTOTTE, bostotte, dispatch, callback);
         }
     };
 
