@@ -20,11 +20,10 @@ function* lagreOpplysningHvisGyldigSaga({behandlingsId, opplysning, feil}: Lagre
     }
 
     const {textKey} = opplysningerSpc;
-    const feilForOpplysning = getFeilForOpplysning(feil, textKey);
 
     yield put(updateOpplysning(opplysning));
 
-    if (feilForOpplysning.length) return;
+    if (getFeilForOpplysning(feil, textKey).length) return;
 
     try {
         yield call(
