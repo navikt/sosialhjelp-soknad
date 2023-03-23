@@ -7,13 +7,13 @@ import {konverterFraISODato, konverterTilISODato} from "./datoUtils";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {Familie, Sivilstatus} from "./FamilieTypes";
-import {useSelector, useDispatch} from "react-redux";
-import {State} from "../../../digisos/redux/reducers";
+import {useDispatch} from "react-redux";
 import {clearValideringsfeil, setValideringsfeil} from "../../../digisos/redux/validering/valideringActions";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const FAKTUM_KEY = "familie.sivilstatus.gift.ektefelle";
 const FAKTUM_KEY_FNR = FAKTUM_KEY + ".fnr";
@@ -21,7 +21,7 @@ const FAKTUM_KEY_PERSONNUMMER = FAKTUM_KEY + ".pnr";
 
 const PersonSkjema = () => {
     const behandlingsId = useBehandlingsId();
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const soknadsdata = useSoknadsdata();
 
     const dispatch = useDispatch();
     const {t} = useTranslation("skjema");

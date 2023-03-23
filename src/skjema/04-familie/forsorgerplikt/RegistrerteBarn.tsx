@@ -16,11 +16,12 @@ import {SysteminfoItem, Systeminfo} from "../../../nav-soknad/components/systemi
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useEffect} from "react";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
 
 const RegistrerteBarn = () => {
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const soknadsdata = useSoknadsdata();
     const behandlingsId = useBehandlingsId();
     const feil = useSelector((state: State) => state.validering.feil);
 

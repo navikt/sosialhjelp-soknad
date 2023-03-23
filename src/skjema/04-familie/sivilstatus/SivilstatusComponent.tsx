@@ -1,18 +1,18 @@
 import {Familie, lagBlankPerson, Status} from "./FamilieTypes";
 import * as React from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import PersonSkjema from "./PersonSkjema";
 import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
-import {State} from "../../../digisos/redux/reducers";
 import {lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {Alert, BodyShort, Heading} from "@navikt/ds-react";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 interface RadioProps {
     id?: string;
@@ -37,7 +37,7 @@ const SivilstatusRadioknapp: React.FunctionComponent<RadioProps> = ({verdi, id, 
 
 const SivilstatusComponent = () => {
     const behandlingsId = useBehandlingsId();
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const soknadsdata = useSoknadsdata();
 
     const dispatch = useDispatch();
     const {t} = useTranslation("skjema");

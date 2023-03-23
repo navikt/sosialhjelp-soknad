@@ -6,18 +6,18 @@ import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Boutgifter, BoutgifterKeys} from "./BoutgifterTypes";
 import CheckboxPanel from "../../../nav-soknad/faktum/CheckboxPanel";
 import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel";
-import {useSelector, useDispatch} from "react-redux";
-import {State} from "../../../digisos/redux/reducers";
+import {useDispatch} from "react-redux";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const BOUTGIFTER = "utgifter.boutgift";
 
 export const BoutgifterView = () => {
     const behandlingsId = useBehandlingsId();
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const soknadsdata = useSoknadsdata();
 
     const dispatch = useDispatch();
     const {t} = useTranslation("skjema");

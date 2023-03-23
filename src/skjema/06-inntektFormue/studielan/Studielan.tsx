@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 
 import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../nav-soknad/utils";
@@ -7,13 +7,13 @@ import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {Studielan} from "./StudielanTypes";
 import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel";
-import {State} from "../../../digisos/redux/reducers";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Heading, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const FAKTUM_STUDIELAN = "inntekt.studielan";
 
@@ -26,7 +26,7 @@ const StudielanView = () => {
 
     const dispatch = useDispatch();
 
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const soknadsdata = useSoknadsdata();
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation("skjema");
 

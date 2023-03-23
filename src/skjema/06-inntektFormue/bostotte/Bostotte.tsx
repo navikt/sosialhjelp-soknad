@@ -1,13 +1,12 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {formatTidspunkt, getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {Bostotte} from "./bostotteTypes";
 import Dato from "../../../nav-soknad/components/tidspunkt/Dato";
-import {State} from "../../../digisos/redux/reducers";
 import {
     hentSoknadsdata,
     lagreSoknadsdata,
@@ -19,6 +18,7 @@ import {useTranslation} from "react-i18next";
 import {fmtCurrency} from "../../../lib/fmtCurrency";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -27,7 +27,7 @@ const BostotteView = () => {
 
     const dispatch = useDispatch();
 
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const soknadsdata = useSoknadsdata();
     const behandlingsId = useBehandlingsId();
     const {t, i18n} = useTranslation("skjema");
 

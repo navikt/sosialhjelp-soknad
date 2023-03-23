@@ -5,17 +5,17 @@ import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Barneutgifter, BarneutgifterKeys} from "./BarneutgifterTypes";
 import CheckboxPanel from "../../../nav-soknad/faktum/CheckboxPanel";
-import {useSelector, useDispatch} from "react-redux";
-import {State} from "../../../digisos/redux/reducers";
+import {useDispatch} from "react-redux";
 import {hentSoknadsdata, lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const BarneutgifterKey = "utgifter.barn";
 
 export const BarneutgifterView = () => {
     const behandlingsId = useBehandlingsId();
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const soknadsdata = useSoknadsdata();
 
     const dispatch = useDispatch();
 

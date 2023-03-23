@@ -2,17 +2,17 @@ import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsm
 import * as React from "react";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
-import {useSelector, useDispatch} from "react-redux";
-import {State} from "../../../digisos/redux/reducers";
+import {useDispatch} from "react-redux";
 import {lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const FAKTUM_KEY = "familie.barn.true.barnebidrag";
 
 const Barnebidrag = () => {
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const soknadsdata = useSoknadsdata();
     const dispatch = useDispatch();
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation("skjema");

@@ -17,6 +17,7 @@ import {setValideringsfeil, clearValideringsfeil} from "../../../digisos/redux/v
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const MAX_CHARS = 500;
 const VERDIER = "inntekt.eierandeler";
@@ -27,7 +28,7 @@ export const VerdierView = () => {
 
     const dispatch = useDispatch();
 
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const soknadsdata = useSoknadsdata();
     const behandlingsId = useBehandlingsId();
     const feil = useSelector((state: State) => state.validering.feil);
 
