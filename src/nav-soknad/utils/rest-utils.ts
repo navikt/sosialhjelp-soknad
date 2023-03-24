@@ -1,16 +1,13 @@
 import {basePath} from "../../configuration";
 import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
-import {redirectToLogin} from "../../lib/orval/soknad-api-axios";
-import {logWarning} from "./loggerUtils";
+import {axiosInstance} from "../../lib/orval/soknad-api-axios";
+import {Method} from "axios";
 
 export function getApiBaseUrl(withAccessToken?: boolean) {
     return withAccessToken
         ? `${process.env.REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN}`
         : `${process.env.REACT_APP_API_BASE_URL}`;
 }
-
-export const determineCredentialsParameter = () =>
-    process.env.REACT_APP_ENVIRONMENT === "localhost" ? "include" : "same-origin";
 
 export const getRedirectPath = () => `${window.location.origin}${basePath}/link?goto=${getGotoPathname()}`;
 
@@ -26,69 +23,19 @@ export function parseGotoValueFromSearchParameters(searchParameters: string): st
 
 export const downloadAttachedFile = (urlPath: string) => window.open(`${getApiBaseUrl()}${urlPath}`);
 
-type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
-
-const getHeaders = () =>
-    new Headers({
-        "Content-Type": "application/json",
-        "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
-        accept: "application/json, text/plain, */*",
-    });
-
 export enum HttpStatus {
     UNAUTHORIZED = "unauthorized",
 }
 
-export const serverRequest = <T>(
-    method: HTTPMethod,
-    urlPath: string,
-    body: string,
-    withAccessToken?: boolean,
-    retries = 6
-): Promise<T> => {
-    const OPTIONS: RequestInit = {
-        headers: getHeaders(),
+export const serverRequest = <T>(method: Method, url: string, body: string, withAccessToken?: boolean): Promise<T> =>
+    axiosInstance<T>({
         method,
-        credentials: determineCredentialsParameter(),
-        body: body ? body : undefined,
-    };
-
-    return new Promise<T>((resolve, reject) => {
-        fetch(getApiBaseUrl(withAccessToken) + urlPath, OPTIONS)
-            .then((response: Response) => {
-                if (response.ok) resolve(toJson<T>(response));
-
-                const {status, statusText} = response;
-
-                if (status === 401) {
-                    response.json().then((data) => redirectToLogin(data));
-                    return;
-                }
-
-                if (status === 409) {
-                    if (!retries) throw new DigisosLegacyRESTError(status, `Ran out of 409 retries: ${statusText}`);
-
-                    setTimeout(() => {
-                        serverRequest(method, urlPath, body, withAccessToken, retries - 1)
-                            .then((data: unknown) => resolve(data as T))
-                            .catch(reject);
-                    }, 100 * (7 - retries));
-
-                    return;
-                }
-
-                if ([403, 410].includes(status)) {
-                    logWarning(`Redirecter til /informasjon i rest-utils fordi HTTP ${status}`);
-                    window.location.href = `/sosialhjelp/soknad/informasjon?reason=legacy${status}`;
-
-                    return;
-                }
-
-                throw new DigisosLegacyRESTError(response.status, response.statusText);
-            })
-            .catch(reject);
+        url,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        data: body,
     });
-};
 
 export const fetchToJson = <T>(urlPath: string, withAccessToken?: boolean) =>
     serverRequest<T>("GET", urlPath, "", withAccessToken);
@@ -99,72 +46,30 @@ export const fetchPut = (urlPath: string, body: string, withAccessToken?: boolea
 export const fetchPost = <T>(urlPath: string, body: string, withAccessToken?: boolean) =>
     serverRequest<T>("POST", urlPath, body, withAccessToken);
 
-export function fetchDelete(urlPath: string) {
-    const OPTIONS: RequestInit = {
-        headers: getHeaders(),
+export const fetchDelete = (url: string) =>
+    axiosInstance({
         method: "DELETE",
-        credentials: determineCredentialsParameter(),
-    };
-    return fetch(getApiBaseUrl() + urlPath, OPTIONS).then((response: Response) => {
-        if (response.status === 401) response.json().then((data) => redirectToLogin(data));
-        if (!response.ok) throw new DigisosLegacyRESTError(response.status, response.statusText);
-        return response.text();
+        url,
     });
-}
 
-const generateUploadOptions = (formData: FormData, method: string): RequestInit => ({
-    headers: new Headers({
-        "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
-        accept: "application/json, text/plain, */*",
-    }),
-    method: method,
-    credentials: determineCredentialsParameter(),
-    body: formData,
-});
-
-export function fetchUpload<T>(urlPath: string, formData: FormData) {
-    return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData, "POST")).then((response) => {
-        if (response.status === 401) response.json().then((data) => redirectToLogin(data));
-        if (!response.ok) throw new DigisosLegacyRESTError(response.status, response.statusText);
-        return toJson<T>(response);
+export const fetchUpload = <T>(url: string, data: FormData) =>
+    axiosInstance<T>({
+        url,
+        method: "POST",
+        data,
     });
-}
 
-export function fetchUploadIgnoreErrors(urlPath: string, formData: FormData, method: string) {
-    return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData, method)).then(toJson);
-}
-
-export function toJson<T>(response: Response): Promise<T> {
-    if (response.status === 204) return response.text() as Promise<any>;
-
-    return response.json();
-}
-
-// REST error encountered using the old (rest-utils.ts) network code
-export class DigisosLegacyRESTError extends Error {
-    public readonly status: number;
-
-    constructor(statusCode: number, message: string) {
-        super(message);
-        this.status = statusCode;
-    }
-}
-
-export function getCookie(name: string) {
-    const value = "; " + document.cookie;
-    const parts = value.split("; " + name + "=");
-    if (parts.length === 2) {
-        const partsPopped: string | undefined = parts.pop();
-        if (partsPopped) {
-            const partsPoppedSplitAndShift = partsPopped.split(";").shift();
-            return partsPoppedSplitAndShift ? partsPoppedSplitAndShift : "null";
-        } else {
-            return "null";
+export const fetchUploadIgnoreErrors = <T>(url: string, data: FormData, method: Method) =>
+    axiosInstance<T>(
+        {
+            url,
+            method,
+            data,
+        },
+        {
+            digisosIgnoreErrors: true,
         }
-    } else {
-        return "null";
-    }
-}
+    );
 
 export function detekterInternFeilKode(feilKode: string): string {
     let internFeilKode = feilKode;

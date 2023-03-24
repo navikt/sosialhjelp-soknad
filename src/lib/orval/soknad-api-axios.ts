@@ -3,8 +3,11 @@ import {getApiBaseUrl, getRedirectPath} from "../../nav-soknad/utils/rest-utils"
 import {isLocalhost, isMockAlt} from "../../nav-soknad/utils";
 import {UnauthorizedMelding} from "../../generated/model";
 import {logError, logInfo, logWarning} from "../../nav-soknad/utils/loggerUtils";
+import axiosRetry from "axios-retry";
 
-export const redirectToLogin = async (data?: UnauthorizedMelding) => {
+axiosRetry(Axios, {retries: 3});
+
+export const redirectToLogin = (data?: UnauthorizedMelding): Promise<void> => {
     if (!data) {
         logError(`401-feil uten data`);
         throw new Error(`401-feil uten data`);
@@ -14,13 +17,15 @@ export const redirectToLogin = async (data?: UnauthorizedMelding) => {
 
     if (new URLSearchParams(window.location.search).get("login_id") === id) {
         logError("login_id == id fra 401, kan indikere en redirect loop?");
-        return;
     }
 
     const loginURLObj = new URL(loginUrl);
     loginURLObj.searchParams.set("login_id", id);
     loginURLObj.searchParams.set("redirect", getRedirectPath());
     window.location.href = loginURLObj.toString();
+
+    // Returner et Promise som aldri vil resolve, så kodeflyten stopper i påvente av navigering
+    return new Promise(() => {});
 };
 
 export const AXIOS_INSTANCE = Axios.create({
@@ -39,9 +44,16 @@ interface CancellablePromise<T> extends Promise<T> {
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+/**
+ * Digisos-spesifikke Axios-valg
+ */
 export type DigisosAxiosConfig = {
     // Ingen feilhåndtering skal utføres (mest nyttig for logging)
     digisosIgnoreErrors?: boolean;
+    /**
+     *  Overstyrer default (pt. [403, 404, 410]) feilkoder som fører til reset (noen APIer bruker feks 404)
+     */
+    digisosFatalErrors?: number[];
 };
 
 const isLoginRedirect401 = (response: any): response is AxiosResponse<UnauthorizedMelding | undefined, any> =>
@@ -60,22 +72,22 @@ const isLoginRedirect401 = (response: any): response is AxiosResponse<Unauthoriz
  */
 export const axiosInstance = <T>(
     config: AxiosRequestConfig,
-    options?: AxiosRequestConfig & DigisosAxiosConfig,
+    options?: DigisosAxiosConfig,
     retry: number = 0
 ): Promise<T> => {
     const source = Axios.CancelToken.source();
     const promise: CancellablePromise<AxiosResponse> = AXIOS_INSTANCE({
         ...config,
-        ...options,
         cancelToken: source.token,
     })
         .then(({data}) => data)
         .catch(async (e) => {
+            if (isCancel(e) || options?.digisosIgnoreErrors) return new Promise<T>(() => {});
+
             if (!(e instanceof AxiosError<T>)) {
                 logWarning(`non-axioserror error ${e} in axiosinstance`);
+                return;
             }
-
-            if (isCancel(e) || options?.digisosIgnoreErrors) return new Promise<T>(() => {});
 
             if (!e.response) {
                 logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
@@ -87,7 +99,7 @@ export const axiosInstance = <T>(
             if (isLoginRedirect401(e.response)) await redirectToLogin(e.response.data);
 
             // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
-            if ([403, 404, 410].includes(status)) {
+            if (options?.digisosFatalErrors ?? [403, 404, 410].includes(status)) {
                 window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
                 return new Promise<T>(() => {});
             }

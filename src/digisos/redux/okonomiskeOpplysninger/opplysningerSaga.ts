@@ -2,11 +2,13 @@ import {LagreOpplysningHvisGyldig, opplysningerActionTypeKeys} from "./opplysnin
 import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {getOpplysningerUrl, getSpcForOpplysning, transformToBackendOpplysning} from "./opplysningerUtils";
-import {DigisosLegacyRESTError, fetchPut} from "../../../nav-soknad/utils/rest-utils";
 import {updateOpplysning} from "./opplysningerActions";
 import {Valideringsfeil, ValideringsFeilKode} from "../validering/valideringActionTypes";
 import {setValideringsfeil} from "../validering/valideringActions";
 import {logError, logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {AxiosError} from "axios";
+import {panic} from "../soknadsdata/soknadsdataActions";
+import {axiosInstance} from "../../../lib/orval/soknad-api-axios";
 
 export const getFeilForOpplysning = (feil: Valideringsfeil[], opplysningTextKey: string) =>
     feil.filter(({faktumKey}) => faktumKey.indexOf(opplysningTextKey) > -1);
@@ -25,42 +27,43 @@ function* lagreOpplysningHvisGyldigSaga({behandlingsId, opplysning, feil}: Lagre
 
     if (getFeilForOpplysning(feil, textKey).length) return;
 
+    const path = getOpplysningerUrl(behandlingsId);
+
     try {
         yield call(
-            fetchPut,
-            getOpplysningerUrl(behandlingsId),
-            JSON.stringify(transformToBackendOpplysning(opplysning))
+            axiosInstance,
+            {
+                method: "put",
+                url: path,
+                data: transformToBackendOpplysning(opplysning),
+            },
+            // We handle 404 ourselves
+            {digisosFatalErrors: [403, 410]}
         );
-    } catch (reason) {
-        if (!(reason instanceof DigisosLegacyRESTError)) {
-            logWarning(`Uventet exception ${reason} i lagreOpplysningHvisGyldigSaga`);
-            return;
-        }
+    } catch (e) {
+        if (e instanceof AxiosError && e.response) {
+            if (e.response.status === 404) {
+                for (let i = 0; i < opplysning.radInnhold.length; i++) {
+                    // Setter alle felt til feilet!
+                    const validationKey = `${textKey}.${opplysning.radInnhold[i]}.${i}`;
+                    yield put(setValideringsfeil(ValideringsFeilKode.FELT_EKSISTERER_IKKE, validationKey));
+                }
 
-        const {status} = reason;
-
-        if ([401, 409].includes(status)) {
-            // can't happen
-            logWarning(`lagreOpplysningHvisGyldigSaga fikk ${status}. Skulle vært håndtert før vi ser det.`);
-            return;
-        }
-
-        if (status === 404) {
-            for (let i = 0; i < opplysning.radInnhold.length; i++) {
-                // Setter alle felt til feilet!
-                const validationKey = `${textKey}.${opplysning.radInnhold[i]}.${i}`;
-                yield put(setValideringsfeil(ValideringsFeilKode.FELT_EKSISTERER_IKKE, validationKey));
+                yield put(setValideringsfeil(ValideringsFeilKode.FELT_EKSISTERER_IKKE, opplysning.type));
+                return;
             }
 
-            yield put(setValideringsfeil(ValideringsFeilKode.FELT_EKSISTERER_IKKE, opplysning.type));
-            return;
+            yield call(
+                logWarning,
+                `lagreOpplysningHvisGyldigSaga ${path} feilet: ${e.response.status} ${e.response.data}`
+            );
+        } else {
+            yield call(logWarning, `lagreOpplysningHvisGyldigSaga ${path} feilet: ${e}`);
+            panic("lagreOpplysningHvisGyldigSaga");
         }
 
-        yield call(logWarning, "Lagring av økonomisk opplysning feilet. Reason: " + reason);
-
-        setTimeout(() => {
-            window.location.href = "/sosialhjelp/soknad/feil?reason=lagreOpplysningHvisGyldigSaga";
-        }, 1000);
+        yield call(logWarning, `Lagring av økonomisk opplysning feilet. Reason: ${e}`);
+        panic("lagreOpplysningHvisGyldigSaga");
     }
 }
 

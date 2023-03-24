@@ -1,90 +1,87 @@
-import {
-    fetchPost,
-    fetchPut,
-    fetchToJson,
-    HttpStatus,
-    DigisosLegacyRESTError,
-} from "../../../nav-soknad/utils/rest-utils";
+import {fetchPost, fetchPut, fetchToJson} from "../../../nav-soknad/utils/rest-utils";
 import {oppdaterSoknadsdataSti, settRestStatus, SoknadsdataType, SoknadsSti} from "./soknadsdataReducer";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
 import {REST_STATUS} from "./soknadsdataTypes";
+import {AxiosError} from "axios";
 
 export const soknadsdataUrl = (behandlingsId: string, sti: SoknadsSti) => `soknader/${behandlingsId}/${sti}`;
+export const panic = (reason: string) => {
+    setTimeout(() => {
+        window.location.href = `/sosialhjelp/soknad/feil?reason=${reason}`;
+    }, 500);
+};
 
-export function hentSoknadsdata(behandlingsId: string, path: SoknadsSti, dispatch: Dispatch) {
-    dispatch(settRestStatus(path, REST_STATUS.PENDING));
-    fetchToJson(soknadsdataUrl(behandlingsId, path))
-        .then((response: any) => {
-            dispatch(oppdaterSoknadsdataSti(path, response));
-            dispatch(settRestStatus(path, REST_STATUS.OK));
-        })
-        .catch((reason: any) => {
-            if (!(reason instanceof DigisosLegacyRESTError)) {
-                logWarning(`Uventet exception i hentSoknadsdata: ${reason}`);
-                return;
-            }
+export const hentSoknadsdata = async (behandlingsId: string, path: SoknadsSti, dispatch: Dispatch) => {
+    try {
+        dispatch(settRestStatus(path, REST_STATUS.PENDING));
+        const response = await fetchToJson<SoknadsdataType>(soknadsdataUrl(behandlingsId, path));
+        dispatch(oppdaterSoknadsdataSti(path, response));
+        dispatch(settRestStatus(path, REST_STATUS.OK));
+    } catch (e) {
+        if (e instanceof AxiosError && e.response) {
+            await logWarning(`hentSoknadsdata GET ${path} feilet: ${e.response.status} ${e.response.data}`);
+        } else {
+            await logWarning(`hentSoknadsdata GET ${path} feilet: ${e}`);
+        }
 
-            // If we're getting these from the backend, the react-query
-            // axios code is also getting the same around the same time
-            // because this code is never used without the new code too.
-            // Thus, that will all trigger a page reload anyway -- so we just
-            // leave it alone.
-            if ([401, 403, 404, 410].includes(reason.status)) return;
+        dispatch(settRestStatus(path, REST_STATUS.FEILET));
+        panic("hentSoknadsdata");
+    }
+};
 
-            logWarning(`Henting av soknadsdata ${path} feilet: ${reason}`).then(() => {
-                dispatch(settRestStatus(path, REST_STATUS.FEILET));
-                window.location.href = "/sosialhjelp/soknad/feil?reason=hentSoknadsdata";
-            });
-        });
-}
-
-export function lagreSoknadsdata(
+export const lagreSoknadsdata = async (
     behandlingsId: string,
     path: SoknadsSti,
     data: SoknadsdataType,
     dispatch: Dispatch,
-    responseHandler?: (response: any) => void
-) {
-    dispatch(settRestStatus(path, REST_STATUS.PENDING));
-    fetchPut(soknadsdataUrl(behandlingsId, path), JSON.stringify(data))
-        .then((response: any) => {
-            dispatch(settRestStatus(path, REST_STATUS.OK));
-            if (responseHandler) responseHandler(response);
-        })
-        .catch((reason) => {
-            if (reason.message === HttpStatus.UNAUTHORIZED) return;
-            logWarning("Lagring av soknadsdata feilet: " + reason);
-            dispatch(settRestStatus(path, REST_STATUS.FEILET));
-            window.location.href = "/sosialhjelp/soknad/feil?reason=lagreSoknadsdata";
-        });
-}
+    callback?: (response: any) => void
+) => {
+    try {
+        dispatch(settRestStatus(path, REST_STATUS.PENDING));
+        const response = fetchPut(soknadsdataUrl(behandlingsId, path), JSON.stringify(data));
+        dispatch(settRestStatus(path, REST_STATUS.OK));
+        if (callback) callback(response);
+    } catch (e) {
+        if (e instanceof AxiosError && e.response) {
+            await logWarning(`lagreSoknadsdata PUT ${path} feilet: ${e.response.status} ${e.response.data}`);
+        } else {
+            await logWarning(`lagreSoknadsdata PUT ${path} feilet: ${e}`);
+        }
 
-export function settSamtykkeOgOppdaterData(
+        dispatch(settRestStatus(path, REST_STATUS.FEILET));
+        panic("lagreSoknadsdata");
+    }
+};
+
+export const settSamtykkeOgOppdaterData = async (
     behandlingsId: string,
     path: SoknadsSti,
     harSamtykke: boolean,
     dataSti: null | SoknadsSti,
     withAccessToken: boolean,
     dispatch: Dispatch
-) {
-    const restStatusSti = "inntekt/samtykke";
-    dispatch(settRestStatus(restStatusSti, REST_STATUS.PENDING));
-    fetchPost(soknadsdataUrl(behandlingsId, path), JSON.stringify(harSamtykke), withAccessToken)
-        .then((_: any) => {
-            dispatch(settRestStatus(restStatusSti, REST_STATUS.OK));
-            if (dataSti && dataSti.length > 1) {
-                dispatch(settRestStatus(dataSti, REST_STATUS.PENDING));
-                hentSoknadsdata(behandlingsId, dataSti, dispatch);
-            }
-        })
-        .catch((reason) => {
-            if (reason.message === HttpStatus.UNAUTHORIZED) return;
-            logWarning("Oppdatering av bostotte samtykke feilet: " + reason);
-            dispatch(settRestStatus(restStatusSti, REST_STATUS.FEILET));
-            window.location.href = "/sosialhjelp/soknad/feil?reason=settSamtykkeOgOppdaterData";
-        });
-}
+) => {
+    try {
+        dispatch(settRestStatus("inntekt/samtykke", REST_STATUS.PENDING));
+        await fetchPost(soknadsdataUrl(behandlingsId, path), JSON.stringify(harSamtykke));
+        dispatch(settRestStatus("inntekt/samtykke", REST_STATUS.OK));
+
+        if (!dataSti?.length) return;
+
+        dispatch(settRestStatus(dataSti, REST_STATUS.PENDING));
+        await hentSoknadsdata(behandlingsId, dataSti, dispatch);
+    } catch (e) {
+        if (e instanceof AxiosError && e.response && e.request) {
+            await logWarning(`settSamtykkeOgOppdaterData ${path} feilet: ${e.response.status} ${e.response.data}`);
+        } else {
+            await logWarning(`settSamtykkeOgOppdaterData ${path} feilet: ${e}`);
+        }
+
+        dispatch(settRestStatus("inntekt/samtykke", REST_STATUS.FEILET));
+        panic("settSamtykkeOgOppdaterData");
+    }
+};
 
 /*
  * setPath - Oppdater sti i datastruktur.
