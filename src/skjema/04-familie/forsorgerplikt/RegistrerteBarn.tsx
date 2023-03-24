@@ -42,7 +42,7 @@ const RegistrerteBarn = () => {
 
         logAmplitudeEvent("barn har delt bosted", {
             barnIndex,
-            harDeltBosted: verdi,
+            harDeltBosted: verdi ? "yes" : "no",
         });
     };
 

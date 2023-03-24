@@ -10,7 +10,7 @@ export const NySoknadVelkomst = () => {
     const {t} = useTranslation("skjema");
 
     const logLinkClicked = () => {
-        logAmplitudeEvent("Klikket på lenke om opplysninger");
+        logAmplitudeEvent("Åpnet lenke");
     };
 
     return (
