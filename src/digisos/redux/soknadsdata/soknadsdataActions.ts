@@ -5,14 +5,14 @@ import {
     HttpStatus,
     DigisosLegacyRESTError,
 } from "../../../nav-soknad/utils/rest-utils";
-import {oppdaterSoknadsdataSti, settRestStatus, SoknadsdataType} from "./soknadsdataReducer";
+import {oppdaterSoknadsdataSti, settRestStatus, SoknadsdataType, SoknadsSti} from "./soknadsdataReducer";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
 import {REST_STATUS} from "./soknadsdataTypes";
 
-export const soknadsdataUrl = (behandlingsId: string, sti: string) => `soknader/${behandlingsId}/${sti}`;
+export const soknadsdataUrl = (behandlingsId: string, sti: SoknadsSti) => `soknader/${behandlingsId}/${sti}`;
 
-export function hentSoknadsdata(behandlingsId: string, path: string, dispatch: Dispatch) {
+export function hentSoknadsdata(behandlingsId: string, path: SoknadsSti, dispatch: Dispatch) {
     dispatch(settRestStatus(path, REST_STATUS.PENDING));
     fetchToJson(soknadsdataUrl(behandlingsId, path))
         .then((response: any) => {
@@ -41,7 +41,7 @@ export function hentSoknadsdata(behandlingsId: string, path: string, dispatch: D
 
 export function lagreSoknadsdata(
     behandlingsId: string,
-    path: string,
+    path: SoknadsSti,
     data: SoknadsdataType,
     dispatch: Dispatch,
     responseHandler?: (response: any) => void
@@ -62,9 +62,9 @@ export function lagreSoknadsdata(
 
 export function settSamtykkeOgOppdaterData(
     behandlingsId: string,
-    path: string,
+    path: SoknadsSti,
     harSamtykke: boolean,
-    dataSti: null | string,
+    dataSti: null | SoknadsSti,
     withAccessToken: boolean,
     dispatch: Dispatch
 ) {
@@ -89,15 +89,15 @@ export function settSamtykkeOgOppdaterData(
 /*
  * setPath - Oppdater sti i datastruktur.
  *
- *  F.eks. setPath("04-familie/sivilstatus/barn", {navn: 'Doffen'})
+ *  F.eks. setPath("familie/sivilstatus/barn", {navn: 'Doffen'})
  *
  * Oppretter element i object ut fra sti hvis det ikke finnes.
  *
- * setPath( {}, '04-familie/sivilstatus/status/barn', {navn: "Doffen"});
- *  => { 04-familie: { sivilstatus: { status: {barn: {navn: 'Doffen' } } } }
+ * setPath( {}, 'familie/sivilstatus/status/barn', {navn: "Doffen"});
+ *  => { familie: { sivilstatus: { status: {barn: {navn: 'Doffen' } } } }
  *
- * setPath( {}, '04-familie/barn/0', {navn: "Doffen"})
- *  => {04-familie: {barn : [{navn: "Doffen"}]
+ * setPath( {}, 'familie/barn/0', {navn: "Doffen"})
+ *  => {familie: {barn : [{navn: "Doffen"}]
  */
 export const setPath = (obj: any, path: string, value: any): any => {
     obj = typeof obj === "object" ? obj : {};

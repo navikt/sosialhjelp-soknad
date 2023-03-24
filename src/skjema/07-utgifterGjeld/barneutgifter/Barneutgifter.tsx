@@ -1,60 +1,41 @@
 import * as React from "react";
-import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Barneutgifter, BarneutgifterKeys} from "./BarneutgifterTypes";
 import CheckboxPanel from "../../../nav-soknad/faktum/CheckboxPanel";
-import {useSelector, useDispatch} from "react-redux";
-import {State} from "../../../digisos/redux/reducers";
-import {hentSoknadsdata, lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const BarneutgifterKey = "utgifter.barn";
 
 export const BarneutgifterView = () => {
-    const behandlingsId = useBehandlingsId();
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
-
-    const dispatch = useDispatch();
+    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.BARNEUTGIFTER);
+    const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
 
     const {t} = useTranslation("skjema");
 
-    React.useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, dispatch);
-        }
-    }, [behandlingsId, dispatch]);
-
     const handleClickJaNeiSpsm = (verdi: boolean) => {
-        if (behandlingsId) {
-            const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
-            barneutgifter.bekreftelse = verdi;
-            if (!verdi) {
-                barneutgifter.fritidsaktiviteter = false;
-                barneutgifter.barnehage = false;
-                barneutgifter.sfo = false;
-                barneutgifter.tannregulering = false;
-                barneutgifter.annet = false;
-            }
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.BARNEUTGIFTER, barneutgifter));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, barneutgifter, dispatch);
+        barneutgifter.bekreftelse = verdi;
+        if (!verdi) {
+            barneutgifter.fritidsaktiviteter = false;
+            barneutgifter.barnehage = false;
+            barneutgifter.sfo = false;
+            barneutgifter.tannregulering = false;
+            barneutgifter.annet = false;
         }
+        oppdater(barneutgifter);
+        lagre(barneutgifter);
     };
 
     const handleClickRadio = (idToToggle: BarneutgifterKeys) => {
-        if (behandlingsId) {
-            const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
-            barneutgifter[idToToggle] = !barneutgifter[idToToggle];
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.BARNEUTGIFTER, barneutgifter));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.BARNEUTGIFTER, barneutgifter, dispatch);
-        }
+        barneutgifter[idToToggle] = !barneutgifter[idToToggle];
+        oppdater(barneutgifter);
+        lagre(barneutgifter);
     };
 
     const renderCheckBox = (navn: BarneutgifterKeys, textKey: string) => {
-        const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
-
         const barneutgifterElement: boolean | null = barneutgifter[navn];
         const isChecked: boolean = barneutgifterElement ? barneutgifterElement : false;
 
@@ -69,7 +50,6 @@ export const BarneutgifterView = () => {
         );
     };
 
-    const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
     return (
         <JaNeiSporsmal
             tekster={getFaktumSporsmalTekst(t, BarneutgifterKey)}

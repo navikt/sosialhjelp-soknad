@@ -3,10 +3,9 @@ import {Barn} from "./ForsorgerPliktTypes";
 import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {getFaktumSporsmalTekst, getInputFaktumTekst, replaceDotWithUnderscore} from "../../../nav-soknad/utils";
 import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
-import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../digisos/redux/reducers";
-import {hentSoknadsdata, lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
 import {erSamvaersgrad} from "../../../nav-soknad/validering/valideringer";
 import {clearValideringsfeil, setValideringsfeil} from "../../../digisos/redux/validering/valideringActions";
@@ -14,31 +13,25 @@ import {Input} from "nav-frontend-skjema";
 import {getFeil} from "../../../nav-soknad/utils/enhancedComponentUtils";
 import {SysteminfoItem, Systeminfo} from "../../../nav-soknad/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
-import {useEffect} from "react";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
 
 const RegistrerteBarn = () => {
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useBehandlingsId();
+    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.FORSORGERPLIKT);
     const feil = useSelector((state: State) => state.validering.feil);
+    const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
 
     const dispatch = useDispatch();
 
     const {t} = useTranslation("skjema");
 
-    useEffect(() => {
-        hentSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, dispatch);
-    }, [behandlingsId, dispatch]);
-
     const handleClickJaNeiSpsm = (verdi: boolean, barnIndex: number) => {
-        const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const barnet = forsorgerplikt.ansvar[barnIndex];
         barnet.harDeltBosted = verdi;
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
-        lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
+        oppdater(forsorgerplikt);
+        lagre(forsorgerplikt);
 
         logAmplitudeEvent("barn har delt bosted", {
             barnIndex,
@@ -47,28 +40,22 @@ const RegistrerteBarn = () => {
     };
 
     const onChangeSamvaersgrad = (verdi: string, barnIndex: number) => {
-        const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
         const barnet = forsorgerplikt.ansvar[barnIndex];
         barnet.samvarsgrad = parseInt(verdi, 10);
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORSORGERPLIKT, forsorgerplikt));
+        oppdater(forsorgerplikt);
     };
 
     const onBlur = (barnIndex: number, samvaersgradBarnKeyMedIndex: string) => {
-        const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
-        const samvaersgrad = forsorgerplikt.ansvar[barnIndex].samvarsgrad;
-        if (validerSamvaersgrad(samvaersgrad, samvaersgradBarnKeyMedIndex)) {
-            lagreSoknadsdata(behandlingsId, SoknadsSti.FORSORGERPLIKT, forsorgerplikt, dispatch);
-        }
+        if (validerSamvaersgrad(forsorgerplikt.ansvar[barnIndex].samvarsgrad, samvaersgradBarnKeyMedIndex))
+            lagre(forsorgerplikt);
     };
 
-    const validerSamvaersgrad = (verdi: number | null, samvaersgradBarnKeyMedIndex: string): boolean => {
-        if (!erSamvaersgrad(verdi)) {
-            dispatch(setValideringsfeil(ValideringsFeilKode.ER_SAMVAERSGRAD, samvaersgradBarnKeyMedIndex));
-            return false;
-        }
-        dispatch(clearValideringsfeil(samvaersgradBarnKeyMedIndex));
-
-        return true;
+    const validerSamvaersgrad = (verdi: number | null, samvaersgradBarnKeyMedIndex: string) => {
+        const gyldig = erSamvaersgrad(verdi);
+        gyldig
+            ? dispatch(clearValideringsfeil(samvaersgradBarnKeyMedIndex))
+            : dispatch(setValideringsfeil(ValideringsFeilKode.ER_SAMVAERSGRAD, samvaersgradBarnKeyMedIndex));
+        return gyldig;
     };
 
     const barn = soknadsdata.familie.forsorgerplikt.ansvar;
