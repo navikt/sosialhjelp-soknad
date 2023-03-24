@@ -1,10 +1,10 @@
 import * as React from "react";
 import {onEndretValideringsfeil} from "../../../digisos/redux/validering/valideringUtils";
-import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
-import {Verdier, VerdierKeys} from "./VerdierTypes";
+import {VerdierKeys} from "./VerdierTypes";
 import CheckboxPanel from "../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
@@ -12,11 +12,10 @@ import {maksLengde} from "../../../nav-soknad/validering/valideringer";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../digisos/redux/reducers";
-import {hentSoknadsdata, lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {setValideringsfeil, clearValideringsfeil} from "../../../digisos/redux/validering/valideringActions";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const MAX_CHARS = 500;
 const VERDIER = "inntekt.eierandeler";
@@ -24,74 +23,53 @@ const VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY = VERDIER + "verdier.annet.textarea";
 
 export const VerdierView = () => {
     const [oppstartsModus, setOppstartsModus] = React.useState(true);
-
     const dispatch = useDispatch();
-
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useBehandlingsId();
+    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.VERDIER);
     const feil = useSelector((state: State) => state.validering.feil);
-
     const {t} = useTranslation("skjema");
+    const verdier = soknadsdata.inntekt.verdier;
+    const restStatus = soknadsdata.restStatus.inntekt.verdier;
 
     React.useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.VERDIER, dispatch);
-        }
-    }, [behandlingsId, dispatch]);
-
-    React.useEffect(() => {
-        if (oppstartsModus && soknadsdata.restStatus.inntekt.verdier === REST_STATUS.OK) {
-            setOppstartsModus(false);
-        }
-    }, [oppstartsModus, soknadsdata.restStatus.inntekt.verdier]);
+        if (oppstartsModus && restStatus === REST_STATUS.OK) setOppstartsModus(false);
+    }, [oppstartsModus, restStatus]);
 
     const handleClickJaNeiSpsm = (verdi: boolean) => {
-        const restStatus = soknadsdata.restStatus.inntekt.verdier;
+        if (!(!oppstartsModus && restStatus === REST_STATUS.OK)) return;
 
-        if (!oppstartsModus && restStatus === REST_STATUS.OK && behandlingsId) {
-            const verdier: Verdier = soknadsdata.inntekt.verdier;
-            verdier.bekreftelse = verdi;
-            if (!verdi) {
-                verdier.bolig = false;
-                verdier.campingvogn = false;
-                verdier.kjoretoy = false;
-                verdier.fritidseiendom = false;
-                verdier.annet = false;
-                verdier.beskrivelseAvAnnet = "";
-            }
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier, dispatch);
+        verdier.bekreftelse = verdi;
+        if (!verdi) {
+            verdier.bolig = false;
+            verdier.campingvogn = false;
+            verdier.kjoretoy = false;
+            verdier.fritidseiendom = false;
+            verdier.annet = false;
+            verdier.beskrivelseAvAnnet = "";
         }
+        oppdater(verdier);
+        lagre(verdier);
     };
 
     const handleClickRadio = (idToToggle: VerdierKeys) => {
-        if (behandlingsId) {
-            const verdier: Verdier = soknadsdata.inntekt.verdier;
-            //@ts-ignore
-            verdier[idToToggle] = !verdier[idToToggle];
-            if (!verdier.bekreftelse || !verdier.annet) {
-                verdier.beskrivelseAvAnnet = "";
-            }
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier, dispatch);
+        //@ts-ignore
+        verdier[idToToggle] = !verdier[idToToggle];
+        if (!verdier.bekreftelse || !verdier.annet) {
+            verdier.beskrivelseAvAnnet = "";
         }
+        oppdater(verdier);
+        lagre(verdier);
     };
 
     const onChangeAnnet = (value: string) => {
-        const verdier: Verdier = soknadsdata.inntekt.verdier;
         verdier.beskrivelseAvAnnet = value;
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.VERDIER, verdier));
-        validerTekstfeltVerdi(value, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
+        oppdater(verdier);
+        lagre(verdier);
     };
 
     const onBlurTekstfeltAnnet = () => {
-        const verdier: Verdier = soknadsdata.inntekt.verdier;
-        const beskrivelseAvAnnet = verdier.beskrivelseAvAnnet;
+        const {beskrivelseAvAnnet} = verdier;
         const erGyldigLengde = validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
-
-        if (erGyldigLengde && behandlingsId) {
-            lagreSoknadsdata(behandlingsId, SoknadsSti.VERDIER, verdier, dispatch);
-        }
+        if (erGyldigLengde) lagre(verdier);
     };
 
     const validerTekstfeltVerdi = (verdi: string, faktumKey: string): boolean => {
@@ -110,7 +88,6 @@ export const VerdierView = () => {
     };
 
     const renderCheckBox = (navn: VerdierKeys) => {
-        const verdier: Verdier = soknadsdata.inntekt.verdier;
         return (
             <CheckboxPanel
                 id={"verdier_" + navn + "_checkbox"}
@@ -122,8 +99,6 @@ export const VerdierView = () => {
         );
     };
 
-    const verdier: Verdier = soknadsdata.inntekt.verdier;
-    const restStatus = soknadsdata.restStatus.inntekt.verdier;
     return (
         <JaNeiSporsmal
             visPlaceholder={oppstartsModus && restStatus !== REST_STATUS.OK}

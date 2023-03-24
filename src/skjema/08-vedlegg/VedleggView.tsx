@@ -22,6 +22,7 @@ import {useTranslation} from "react-i18next";
 import {getSpcForOpplysning} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerUtils";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
+import cx from "classnames";
 
 const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
     const behandlingsId = useBehandlingsId();
@@ -34,8 +35,6 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
     const dispatch = useDispatch();
 
     const handleAlleredeLastetOpp = (_: any) => {
-        if (!behandlingsId) return;
-
         const opplysningUpdated = {...props.okonomiskOpplysning};
 
         if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND) {
@@ -48,53 +47,41 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
     };
 
     const slettVedlegg = (fil: Fil) => {
-        if (behandlingsId) {
-            dispatch(settFilOpplastingPending(props.okonomiskOpplysning.type));
+        dispatch(settFilOpplastingPending(props.okonomiskOpplysning.type));
 
-            setFeilkode(feilkode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR ? null : feilkode);
+        setFeilkode(feilkode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR ? null : feilkode);
 
-            const url = `opplastetVedlegg/${behandlingsId}/${fil.uuid}`;
-            fetchDelete(url)
-                .then(() => {
-                    const filerUpdated = props.okonomiskOpplysning.filer.filter((f: Fil) => {
-                        return f.uuid !== fil.uuid;
-                    });
+        fetchDelete(`opplastetVedlegg/${behandlingsId}/${fil.uuid}`)
+            .then(() => {
+                const filerUpdated = props.okonomiskOpplysning.filer.filter(({uuid}) => uuid !== fil.uuid);
 
-                    const opplysningUpdated: Opplysning = {...props.okonomiskOpplysning};
-                    opplysningUpdated.filer = filerUpdated;
+                const opplysningUpdated: Opplysning = {...props.okonomiskOpplysning};
+                opplysningUpdated.filer = filerUpdated;
 
-                    if (opplysningUpdated.filer.length === 0) {
-                        opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
-                    }
+                if (!opplysningUpdated.filer.length) opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
 
-                    dispatch(updateOpplysning(opplysningUpdated));
-                    dispatch(settFilOpplastingFerdig(props.okonomiskOpplysning.type));
-                })
-                .catch((reason) => {
-                    if (reason.message === HttpStatus.UNAUTHORIZED) return;
-                    logWarning("Slett vedlegg feilet: " + reason);
-                    window.location.href = "/sosialhjelp/soknad/feil?reason=slettVedlegg";
-                });
-        }
+                dispatch(updateOpplysning(opplysningUpdated));
+                dispatch(settFilOpplastingFerdig(props.okonomiskOpplysning.type));
+            })
+            .catch((reason) => {
+                if (reason.message === HttpStatus.UNAUTHORIZED) return;
+                logWarning("Slett vedlegg feilet: " + reason);
+                window.location.href = "/sosialhjelp/soknad/feil?reason=slettVedlegg";
+            });
     };
 
     const renderOpplastingAvVedleggSeksjon = (opplysning: Opplysning) => {
         const opplysningSpc: OpplysningSpc | undefined = getSpcForOpplysning(opplysning.type);
-        const tittelKey =
-            opplysningSpc && opplysningSpc.textKey ? opplysningSpc.textKey + ".vedlegg.sporsmal.tittel" : "";
+        const tittelKey = opplysningSpc?.textKey ? `${opplysningSpc.textKey}.vedlegg.sporsmal.tittel` : "";
 
-        const vedleggListe = opplysning.filer.map((fil) => {
-            return (
-                <OpplastetVedlegg
-                    key={fil.uuid}
-                    behandlingsId={behandlingsId}
-                    fil={fil}
-                    onSlett={() => slettVedlegg(fil)}
-                />
-            );
-        });
-
-        const textDisabledClassName = opplysning.filer.length > 0 ? " checkboks--disabled" : "";
+        const vedleggListe = opplysning.filer.map((fil) => (
+            <OpplastetVedlegg
+                key={fil.uuid}
+                behandlingsId={behandlingsId}
+                fil={fil}
+                onSlett={() => slettVedlegg(fil)}
+            />
+        ));
 
         return (
             <div>
@@ -110,7 +97,7 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
                 <Checkbox
                     label={t("opplysninger.vedlegg.alleredelastetopp")}
                     id={opplysning.type + "_allerede_lastet_opp_checkbox"}
-                    className={"vedleggLastetOppCheckbox " + textDisabledClassName}
+                    className={cx("vedleggLastetOppCheckbox", {"checkboks--disabled": opplysning.filer.length})}
                     onChange={(event: any) => handleAlleredeLastetOpp(event)}
                     checked={opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
                     disabled={opplysning.filer.length > 0 || opplysning.pendingLasterOppFil}

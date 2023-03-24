@@ -48,15 +48,13 @@ const TabellView = (props: {opplysning: Opplysning; gruppeIndex: number}) => {
     };
 
     const handleBlur = (radIndex: number, inputFelt: InputType, key: string) => {
-        if (behandlingsId) {
-            const input = props.opplysning.rader[radIndex][inputFelt];
+        const input = props.opplysning.rader[radIndex][inputFelt];
 
-            if (inputFelt !== "beskrivelse" && input && input !== "" && !erGyldigTall(input)) {
-                dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, key));
-                dispatch(updateOpplysning(props.opplysning));
-            } else {
-                dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, props.opplysning, feil));
-            }
+        if (inputFelt !== "beskrivelse" && input && input !== "" && !erGyldigTall(input)) {
+            dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, key));
+            dispatch(updateOpplysning(props.opplysning));
+        } else {
+            dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, props.opplysning, feil));
         }
     };
 
@@ -71,18 +69,16 @@ const TabellView = (props: {opplysning: Opplysning; gruppeIndex: number}) => {
     };
 
     const handleFjernRad = (radIndex: number, valideringsKey: string) => {
-        if (behandlingsId) {
-            const opplysningUpdated: Opplysning = {...props.opplysning};
-            const raderUpdated: OpplysningRad[] = props.opplysning.rader.map((e) => ({
-                ...e,
-            }));
-            raderUpdated.splice(radIndex, 1);
-            opplysningUpdated.rader = raderUpdated;
-            fjernAlleFeilForOpplysning(feil, valideringsKey);
-            validerAlleInputfelterPaOpplysning(opplysningUpdated, props.opplysning);
-            const feilUpdated = getOppdatertListeAvFeil(feil, valideringsKey, radIndex);
-            dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feilUpdated));
-        }
+        const opplysningUpdated: Opplysning = {...props.opplysning};
+        const raderUpdated: OpplysningRad[] = props.opplysning.rader.map((e) => ({
+            ...e,
+        }));
+        raderUpdated.splice(radIndex, 1);
+        opplysningUpdated.rader = raderUpdated;
+        fjernAlleFeilForOpplysning(feil, valideringsKey);
+        validerAlleInputfelterPaOpplysning(opplysningUpdated, props.opplysning);
+        const feilUpdated = getOppdatertListeAvFeil(feil, valideringsKey, radIndex);
+        dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feilUpdated));
     };
 
     const getOppdatertListeAvFeil = (feil: Valideringsfeil[], valideringsKey: string, radIndex: number) =>

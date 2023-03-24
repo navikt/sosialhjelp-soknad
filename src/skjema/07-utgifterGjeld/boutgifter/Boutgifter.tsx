@@ -1,64 +1,44 @@
 import * as React from "react";
-import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {Boutgifter, BoutgifterKeys} from "./BoutgifterTypes";
 import CheckboxPanel from "../../../nav-soknad/faktum/CheckboxPanel";
 import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel";
-import {useSelector, useDispatch} from "react-redux";
-import {State} from "../../../digisos/redux/reducers";
-import {hentSoknadsdata, lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const BOUTGIFTER = "utgifter.boutgift";
 
 export const BoutgifterView = () => {
-    const behandlingsId = useBehandlingsId();
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
-
-    const dispatch = useDispatch();
+    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.BOUTGIFTER);
+    const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
     const {t} = useTranslation("skjema");
 
-    React.useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, dispatch);
-        }
-    }, [behandlingsId, dispatch]);
-
     const handleClickJaNeiSpsm = (verdi: boolean) => {
-        if (behandlingsId) {
-            const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
-            boutgifter.bekreftelse = verdi;
-            if (!verdi) {
-                boutgifter.husleie = false;
-                boutgifter.strom = false;
-                boutgifter.kommunalAvgift = false;
-                boutgifter.oppvarming = false;
-                boutgifter.boliglan = false;
-                boutgifter.annet = false;
-            }
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter, dispatch);
+        boutgifter.bekreftelse = verdi;
+        if (!verdi) {
+            boutgifter.husleie = false;
+            boutgifter.strom = false;
+            boutgifter.kommunalAvgift = false;
+            boutgifter.oppvarming = false;
+            boutgifter.boliglan = false;
+            boutgifter.annet = false;
         }
+        oppdater(boutgifter);
+        lagre(boutgifter);
     };
 
     const handleClickRadio = (idToToggle: BoutgifterKeys) => {
-        if (behandlingsId) {
-            const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
-            boutgifter[idToToggle] = !boutgifter[idToToggle];
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.BOUTGIFTER, boutgifter));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.BOUTGIFTER, boutgifter, dispatch);
-        }
+        boutgifter[idToToggle] = !boutgifter[idToToggle];
+        oppdater(boutgifter);
+        lagre(boutgifter);
     };
 
     const renderCheckBox = (navn: BoutgifterKeys, textKey: string) => {
-        const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
-
-        const boutgifterElement: boolean | null = boutgifter[navn];
-        const isChecked: boolean = boutgifterElement ? boutgifterElement : false;
+        const isChecked = !!boutgifter[navn];
 
         return (
             <CheckboxPanel
@@ -71,7 +51,6 @@ export const BoutgifterView = () => {
         );
     };
 
-    const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
     return (
         <div className="skjema-sporsmal">
             <JaNeiSporsmal

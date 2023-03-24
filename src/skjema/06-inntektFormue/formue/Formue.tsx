@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
-import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../nav-soknad/utils";
 import {Formue, FormueId} from "./FormueTypes";
@@ -9,12 +9,11 @@ import CheckboxPanel from "../../../nav-soknad/faktum/CheckboxPanel";
 import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import {hentSoknadsdata, lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {State} from "../../../digisos/redux/reducers";
 import {validateAndDispatchTextFieldMaxLength} from "../../../nav-soknad/validering/validateAndDispatch";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const MAX_CHARS = 500;
 const FORMUE = "inntekt.bankinnskudd";
@@ -25,77 +24,58 @@ export const FormueView = () => {
 
     const dispatch = useDispatch();
 
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
-    const behandlingsId = useBehandlingsId();
+    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.FORMUE);
+    const formue: Formue = soknadsdata.inntekt.formue;
+
     const feil = useSelector((state: State) => state.validering.feil);
+    const restStatus = soknadsdata.restStatus.inntekt.formue;
 
     const {t} = useTranslation("skjema");
 
     useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.FORMUE, dispatch);
-        }
-    }, [behandlingsId, dispatch]);
-
-    useEffect(() => {
-        if (oppstartsModus && soknadsdata.restStatus.inntekt.formue === REST_STATUS.OK) {
-            setOppstartsModus(false);
-        }
-    }, [oppstartsModus, soknadsdata.restStatus.inntekt.formue]);
+        if (oppstartsModus && restStatus === REST_STATUS.OK) setOppstartsModus(false);
+    }, [oppstartsModus, restStatus]);
 
     const handleClickCheckbox = (idToToggle: FormueId) => {
-        const restStatus = soknadsdata.restStatus.inntekt.formue;
-        if (!oppstartsModus && restStatus === REST_STATUS.OK && behandlingsId) {
-            const formue: Formue = soknadsdata.inntekt.formue;
+        if (!(!oppstartsModus && restStatus === REST_STATUS.OK)) return;
 
-            let formueElement: boolean | string = formue[idToToggle];
-            if (typeof formueElement === "boolean" && typeof formue[idToToggle] === "boolean") {
-                // @ts-ignore
-                formue[idToToggle] = !formueElement;
-            }
-
-            if (formue && !formue.annet) {
-                formue.beskrivelseAvAnnet = "";
-            }
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue));
-            lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue, dispatch);
+        let formueElement: boolean | string = formue[idToToggle];
+        if (typeof formueElement === "boolean" && typeof formue[idToToggle] === "boolean") {
+            // @ts-ignore
+            formue[idToToggle] = !formueElement;
         }
+        if (formue && !formue.annet) formue.beskrivelseAvAnnet = "";
+        oppdater(formue);
+        lagre(formue);
     };
 
     const onChangeAnnet = (value: string) => {
-        const formue: Formue | undefined = soknadsdata.inntekt.formue;
         if (formue) {
             formue.beskrivelseAvAnnet = value;
-            dispatch(oppdaterSoknadsdataSti(SoknadsSti.FORMUE, formue));
+            oppdater(formue);
         }
         validateAndDispatchTextFieldMaxLength(value, FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY, MAX_CHARS, feil, dispatch);
     };
 
     const onBlurTekstfeltAnnet = () => {
-        const formue: Formue | undefined = soknadsdata.inntekt.formue;
-        if (formue && behandlingsId) {
-            const beskrivelseAvAnnet = formue.beskrivelseAvAnnet;
-            const erInnenforMaksLengde = validateAndDispatchTextFieldMaxLength(
-                beskrivelseAvAnnet,
-                FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY,
-                MAX_CHARS,
-                feil,
-                dispatch
-            );
-            if (erInnenforMaksLengde) {
-                lagreSoknadsdata(behandlingsId, SoknadsSti.FORMUE, formue, dispatch);
-            }
-        }
+        if (!formue) return;
+        const {beskrivelseAvAnnet} = formue;
+        const erInnenforMaksLengde = validateAndDispatchTextFieldMaxLength(
+            beskrivelseAvAnnet,
+            FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY,
+            MAX_CHARS,
+            feil,
+            dispatch
+        );
+        if (erInnenforMaksLengde) lagre(formue);
     };
 
     const renderCheckBox = (navn: FormueId) => {
-        const formue: Formue = soknadsdata.inntekt.formue;
         let label: React.ReactNode;
-        const restStatus = soknadsdata.restStatus.inntekt.formue;
-        if (oppstartsModus && restStatus === REST_STATUS.OK) {
-            setOppstartsModus(false);
-        }
+
         if (oppstartsModus) {
+            if (restStatus === REST_STATUS.OK) setOppstartsModus(false);
+
             label = <TextPlaceholder lines={1} style={{marginTop: "0.2rem"}} />;
         } else {
             label = t(FORMUE + ".true.type." + navn);
@@ -112,7 +92,6 @@ export const FormueView = () => {
         );
     };
 
-    const formue: Formue | undefined = soknadsdata.inntekt.formue;
     return (
         <Sporsmal
             tekster={getFaktumSporsmalTekst(t, FORMUE + ".true.type")}

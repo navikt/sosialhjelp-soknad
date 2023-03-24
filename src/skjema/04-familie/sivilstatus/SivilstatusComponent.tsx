@@ -1,18 +1,14 @@
-import {Familie, lagBlankPerson, Status} from "./FamilieTypes";
+import {lagBlankPerson, Status} from "./FamilieTypes";
 import * as React from "react";
-import {useDispatch, useSelector} from "react-redux";
-
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import PersonSkjema from "./PersonSkjema";
-import {oppdaterSoknadsdataSti, SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
-import {State} from "../../../digisos/redux/reducers";
-import {lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
+import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {Alert, BodyShort, Heading} from "@navikt/ds-react";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 interface RadioProps {
     id?: string;
@@ -36,37 +32,28 @@ const SivilstatusRadioknapp: React.FunctionComponent<RadioProps> = ({verdi, id, 
 };
 
 const SivilstatusComponent = () => {
-    const behandlingsId = useBehandlingsId();
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
-
-    const dispatch = useDispatch();
+    const {
+        soknadsdata: {familie},
+        lagre,
+        oppdater,
+    } = useSoknadsdata(SoknadsSti.SIVILSTATUS);
     const {t} = useTranslation("skjema");
 
-    const onClickSivilstatus = (verdi: Status) => {
-        if (behandlingsId) {
-            let sivilstatus = soknadsdata.familie.sivilstatus;
-            const oldStatus = sivilstatus.sivilstatus;
-            if (oldStatus !== verdi) {
-                if (verdi === Status.GIFT) {
-                    sivilstatus = {
-                        kildeErSystem: false,
-                        sivilstatus: Status.GIFT,
-                        ektefelle: lagBlankPerson(),
-                    };
-                } else {
-                    sivilstatus = {
-                        kildeErSystem: false,
-                        sivilstatus: verdi,
-                    };
-                }
-                dispatch(oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus));
-                lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus, dispatch);
-            }
-        }
-    };
+    const sivilstatus = familie?.sivilstatus?.sivilstatus ?? null;
 
-    const familie: Familie = soknadsdata.familie;
-    const sivilstatus = familie && familie.sivilstatus ? familie.sivilstatus.sivilstatus : null;
+    const onClickSivilstatus = (nySivilstatus: Status) => {
+        let sivilstatus = familie.sivilstatus;
+        if (sivilstatus.sivilstatus === nySivilstatus) return;
+
+        sivilstatus = {
+            kildeErSystem: false,
+            sivilstatus: nySivilstatus,
+            ektefelle: nySivilstatus === Status.GIFT ? lagBlankPerson() : undefined,
+        };
+
+        oppdater(sivilstatus);
+        lagre(sivilstatus);
+    };
 
     return (
         <div className="skjema-sporsmal">
@@ -74,7 +61,7 @@ const SivilstatusComponent = () => {
                 <SivilstatusRadioknapp
                     verdi={Status.GIFT}
                     checked={sivilstatus === Status.GIFT}
-                    onClick={(verdi) => onClickSivilstatus(verdi)}
+                    onClick={onClickSivilstatus}
                 />
                 {sivilstatus === Status.GIFT && (
                     <div className="skjema-sporsmal--jaNeiSporsmal">

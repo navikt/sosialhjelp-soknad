@@ -1,30 +1,25 @@
 import * as React from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 
 import {SkattbarInntektInfo, SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {SkattbarInntekt} from "./inntektTypes";
 import SkattbarinntektForskuddstrekk from "./SkattbarinntektForskuddstrekk";
-import {State} from "../../../digisos/redux/reducers";
-import {hentSoknadsdata, settSamtykkeOgOppdaterData} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
+import {settSamtykkeOgOppdaterData} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {formatTidspunkt, getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
 import {Alert, BodyShort, Button, Heading, Label, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const Skatt = () => {
     const dispatch = useDispatch();
     const {t} = useTranslation("skjema");
 
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
+    const {soknadsdata} = useSoknadsdata(SoknadsSti.SKATTBARINNTEKT);
     const behandlingsId = useBehandlingsId();
-    React.useEffect(() => {
-        if (behandlingsId) {
-            hentSoknadsdata(behandlingsId, SoknadsSti.SKATTBARINNTEKT, dispatch);
-        }
-    }, [behandlingsId, dispatch]);
 
     const restStatus = soknadsdata.restStatus.inntekt.skattbarinntektogforskuddstrekk;
     const skattbarinntektogforskuddstrekk: SkattbarInntektInfo = soknadsdata.inntekt.skattbarinntektogforskuddstrekk;

@@ -95,22 +95,20 @@ const LastOppFil = (props: {
     const vedleggElement = React.useRef<HTMLInputElement>(null);
 
     const handleFileUpload = (files: FileList) => {
-        if (behandlingsId) {
-            let formDataList: FormData[] = [];
+        let formDataList: FormData[] = [];
 
-            for (let i = 0; i < files.length; i++) {
-                const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+            const formData = new FormData();
 
-                const fileName = files[i].name;
-                const encoded = encodeURI(fileName);
-                formData.append("file", files[i], encoded);
-                formDataList[i] = formData;
-            }
-            lastOppFil(props.opplysning, formDataList, behandlingsId, dispatch, props.setFeilkode);
+            const fileName = files[i].name;
+            const encoded = encodeURI(fileName);
+            formData.append("file", files[i], encoded);
+            formDataList[i] = formData;
+        }
+        lastOppFil(props.opplysning, formDataList, behandlingsId, dispatch, props.setFeilkode);
 
-            if (vedleggElement && vedleggElement.current) {
-                vedleggElement.current.value = "";
-            }
+        if (vedleggElement && vedleggElement.current) {
+            vedleggElement.current.value = "";
         }
     };
 

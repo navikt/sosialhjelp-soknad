@@ -1,69 +1,60 @@
 import * as React from "react";
 import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
-import {setPath, lagreSoknadsdata} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
-import {SoknadsSti, oppdaterSoknadsdataSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {setPath} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
+import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {erTall, fdato, maksLengde, minLengde} from "../../../nav-soknad/validering/valideringer";
 import {konverterFraISODato, konverterTilISODato} from "./datoUtils";
 import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
 import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {Familie, Sivilstatus} from "./FamilieTypes";
-import {useSelector, useDispatch} from "react-redux";
-import {State} from "../../../digisos/redux/reducers";
+import {useDispatch} from "react-redux";
 import {clearValideringsfeil, setValideringsfeil} from "../../../digisos/redux/validering/valideringActions";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
+import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
 const FAKTUM_KEY = "familie.sivilstatus.gift.ektefelle";
 const FAKTUM_KEY_FNR = FAKTUM_KEY + ".fnr";
 const FAKTUM_KEY_PERSONNUMMER = FAKTUM_KEY + ".pnr";
 
 const PersonSkjema = () => {
-    const behandlingsId = useBehandlingsId();
-    const soknadsdata = useSelector((state: State) => state.soknadsdata);
-
+    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.SIVILSTATUS);
+    const sivilstatus = soknadsdata.familie.sivilstatus;
     const dispatch = useDispatch();
     const {t} = useTranslation("skjema");
 
     const oppdaterTekstfelt = (sti: string, verdi: string | null) => {
         dispatch(clearValideringsfeil(FAKTUM_KEY_FNR));
         dispatch(clearValideringsfeil(FAKTUM_KEY_PERSONNUMMER));
-        if (verdi && verdi.length === 0) {
-            verdi = null;
-        }
+        if (verdi?.length === 0) verdi = null;
         const sivilstatus = soknadsdata.familie.sivilstatus;
         const ektefelle = sivilstatus.ektefelle;
 
         setPath(ektefelle, sti, verdi);
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus));
+        oppdater(sivilstatus);
     };
 
     const onBlur = () => {
-        const sivilstatus = soknadsdata.familie.sivilstatus;
-        const harFeil = valider(sivilstatus);
-        if (!harFeil && behandlingsId) {
-            lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus, dispatch);
-        }
+        if (valid(sivilstatus)) lagre(sivilstatus);
     };
 
-    function valider(sivilstatus: Sivilstatus) {
+    function valid(sivilstatus: Sivilstatus) {
         const feilkodeFodselsdato = validerOgOppdaterFodselsdato(sivilstatus);
         const feilkodePersonnummer = validerOgOppdaterPersonnummer(sivilstatus);
-        return feilkodeFodselsdato || feilkodePersonnummer;
+        return !(feilkodeFodselsdato || feilkodePersonnummer);
     }
 
     function validerOgOppdaterPersonnummer(sivilstatus: Sivilstatus) {
-        const personnummer: string | null = sivilstatus.ektefelle ? sivilstatus.ektefelle.personnummer : null;
+        const personnummer = sivilstatus.ektefelle?.personnummer ?? null;
         let feilkodePersonnummer = null;
-        if (personnummer && personnummer !== "") {
+
+        if (personnummer?.length) {
             if (!minLengde(personnummer, 5)) {
                 feilkodePersonnummer = ValideringsFeilKode.MIN_LENGDE;
-            }
-            if (!feilkodePersonnummer && !maksLengde(personnummer, 5)) {
+            } else if (!maksLengde(personnummer, 5)) {
                 feilkodePersonnummer = ValideringsFeilKode.MAX_LENGDE;
-            }
-            if (!feilkodePersonnummer && !erTall(personnummer, true)) {
+            } else if (!erTall(personnummer, true)) {
                 feilkodePersonnummer = ValideringsFeilKode.ER_TALL;
             }
 
@@ -80,13 +71,13 @@ const PersonSkjema = () => {
         let feilkodeFodselsdato = null;
         let fodselsdato: string | null = sivilstatus.ektefelle ? sivilstatus.ektefelle.fodselsdato : null;
 
-        if (sivilstatus.ektefelle && sivilstatus.ektefelle.fodselsdato === "") {
-            sivilstatus.ektefelle.fodselsdato = null;
+        const {ektefelle} = sivilstatus;
+        if (ektefelle) {
+            if (ektefelle.fodselsdato === "") ektefelle.fodselsdato = null;
+            if (ektefelle.personnummer === "") ektefelle.personnummer = null;
         }
-        if (sivilstatus.ektefelle && sivilstatus.ektefelle.personnummer === "") {
-            sivilstatus.ektefelle.personnummer = null;
-        }
-        if (fodselsdato && fodselsdato !== "") {
+
+        if (fodselsdato?.length) {
             fodselsdato = konverterFraISODato(fodselsdato);
             feilkodeFodselsdato = fdato(fodselsdato);
             feilkodeFodselsdato
@@ -105,11 +96,8 @@ const PersonSkjema = () => {
     const onClickBorSammen = (verdi: boolean) => {
         const sivilstatus = soknadsdata.familie.sivilstatus;
         sivilstatus.borSammenMed = verdi;
-        dispatch(oppdaterSoknadsdataSti(SoknadsSti.SIVILSTATUS, sivilstatus));
-        const harFeil = valider(sivilstatus);
-        if (!harFeil && behandlingsId) {
-            lagreSoknadsdata(behandlingsId, SoknadsSti.SIVILSTATUS, sivilstatus, dispatch);
-        }
+        oppdater(sivilstatus);
+        if (valid(sivilstatus)) lagre(sivilstatus);
     };
 
     const ektefelle = soknadsdata.familie.sivilstatus.ektefelle;
@@ -117,10 +105,8 @@ const PersonSkjema = () => {
         return <div className="personskjema" />;
     }
     const fodselsdato = ektefelle.fodselsdato ? konverterFraISODato(ektefelle.fodselsdato) : "";
-    if (!ektefelle.personnummer) {
-        ektefelle.personnummer = "";
-    }
-    const personnummer = ektefelle.personnummer || "";
+    if (!ektefelle.personnummer) ektefelle.personnummer = "";
+    const personnummer = ektefelle.personnummer;
 
     const familie: Familie = soknadsdata.familie;
     const borSammenMed = familie && familie.sivilstatus ? familie.sivilstatus.borSammenMed : null;
