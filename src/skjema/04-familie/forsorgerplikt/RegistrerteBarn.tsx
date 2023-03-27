@@ -14,6 +14,7 @@ import {getFeil} from "../../../nav-soknad/utils/enhancedComponentUtils";
 import {SysteminfoItem, Systeminfo} from "../../../nav-soknad/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
+import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
 
@@ -31,6 +32,11 @@ const RegistrerteBarn = () => {
         barnet.harDeltBosted = verdi;
         oppdater(forsorgerplikt);
         lagre(forsorgerplikt);
+
+        logAmplitudeEvent("barn har delt bosted", {
+            barnIndex,
+            harDeltBosted: verdi ? "yes" : "no",
+        });
     };
 
     const onChangeSamvaersgrad = (verdi: string, barnIndex: number) => {
