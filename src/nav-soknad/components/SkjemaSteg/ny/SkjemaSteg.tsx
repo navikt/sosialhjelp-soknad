@@ -77,14 +77,16 @@ const SkjemaTitle = ({className}: {className?: string}) => {
 };
 
 const SkjemaContent = ({children, className}: {children: ReactNode; className?: string}) => (
-    <div
-        className={cx(
-            "bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 pt-8 pb-8 mb-16 space-y-12 lg:space-y-24",
-            className
-        )}
-    >
-        {children}
-    </div>
+    <main>
+        <div
+            className={cx(
+                "bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 pt-8 pb-8 mb-16 space-y-12 lg:space-y-24",
+                className
+            )}
+        >
+            {children}
+        </div>
+    </main>
 );
 
 const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
