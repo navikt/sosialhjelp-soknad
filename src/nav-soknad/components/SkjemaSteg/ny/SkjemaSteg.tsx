@@ -81,7 +81,6 @@ const SkjemaContent = React.forwardRef<HTMLDivElement, {children: ReactNode; cla
         <main
             ref={ref}
             id="main-content"
-            tabIndex={0}
             className={cx(
                 "bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 pt-8 pb-8 mb-16 space-y-12 lg:space-y-24",
                 className
