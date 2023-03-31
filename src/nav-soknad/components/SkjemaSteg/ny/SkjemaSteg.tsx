@@ -3,7 +3,7 @@ import {createContext, ReactNode, useContext, useEffect} from "react";
 import {scrollToTop} from "../../../utils";
 import AppBanner from "../../appHeader/AppHeader";
 import {useTitle} from "../../../../lib/hooks/useTitle";
-import {Heading} from "@navikt/ds-react";
+import {Heading, Link} from "@navikt/ds-react";
 import {NedetidPanel} from "../../../../components/common/NedetidPanel";
 import TimeoutBox from "../../timeoutbox/TimeoutBox";
 import {useTranslation} from "react-i18next";
@@ -76,15 +76,19 @@ const SkjemaTitle = ({className}: {className?: string}) => {
     );
 };
 
-const SkjemaContent = ({children, className}: {children: ReactNode; className?: string}) => (
-    <div
-        className={cx(
-            "bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 pt-8 pb-8 mb-16 space-y-12 lg:space-y-24",
-            className
-        )}
-    >
-        {children}
-    </div>
+const SkjemaContent = React.forwardRef<HTMLDivElement, {children: ReactNode; className?: string}>(
+    ({children, className}, ref) => (
+        <main
+            ref={ref}
+            id="main-content"
+            className={cx(
+                "bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 pt-8 pb-8 mb-16 space-y-12 lg:space-y-24",
+                className
+            )}
+        >
+            {children}
+        </main>
+    )
 );
 
 const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
@@ -117,6 +121,9 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
     return (
         <SkjemaStegContext.Provider value={{page, requestNavigation}}>
             <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn">
+                <Link href="#main-content" className="sr-only sr-only-focusable">
+                    {t("hoppTilHovedinnhold")}
+                </Link>
                 <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
                 <AppBanner />
                 <SkjemaStegStepper />

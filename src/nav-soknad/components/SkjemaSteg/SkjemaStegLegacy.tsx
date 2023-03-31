@@ -6,7 +6,7 @@ import {getIntlTextOrKey, scrollToTop} from "../../utils";
 import AppBanner from "../appHeader/AppHeader";
 import {State} from "../../../digisos/redux/reducers";
 import {useTitle} from "../../../lib/hooks/useTitle";
-import {Heading} from "@navikt/ds-react";
+import {Heading, Link} from "@navikt/ds-react";
 import {NedetidPanel} from "../../../components/common/NedetidPanel";
 import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepperLegacy} from "./SkjemaStegNavStepperLegacy";
@@ -19,6 +19,7 @@ import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nede
 import {NavEnhetInaktiv} from "../../../skjema/01-personalia/adresse/NavEnhet";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {hentXsrfCookie} from "../../../generated/soknad-ressurs/soknad-ressurs";
+import {t} from "i18next";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
@@ -75,26 +76,31 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: S
 
     return (
         <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn">
+            <Link href="#main-content" className="sr-only sr-only-focusable">
+                {t("hoppTilHovedinnhold")}
+            </Link>
             <AppBanner />
             <SkjemaStegNavStepperLegacy skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={gotoPage} />
-            <div className={"max-w-3xl mx-auto skjema-steg skjema-content"}>
-                <NedetidPanel varselType={"infoside"} />
-                <Feiloppsummering valideringsfeil={feil} visFeilliste={visValideringsfeil} />
-                <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8"}>
-                    <SkjemaStegHeading ikon={ikon} stegTittel={stegTittel} />
-                    <div className={"space-y-12 lg:space-y-24"}>{children}</div>
-                    <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
-                    <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
-                    {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && <NavEnhetInaktiv />}
-                    <SkjemaStegNavKnapperLegacy
-                        skjemaConfig={skjemaConfig}
-                        steg={skjemaConfig.steg[steg]}
-                        goToStep={gotoPage}
-                        loading={enFilLastesOpp}
-                        onSend={onSend}
-                    />
+            <main id="main-content">
+                <div className={"max-w-3xl mx-auto skjema-steg skjema-content"}>
+                    <NedetidPanel varselType={"infoside"} />
+                    <Feiloppsummering valideringsfeil={feil} visFeilliste={visValideringsfeil} />
+                    <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8"}>
+                        <SkjemaStegHeading ikon={ikon} stegTittel={stegTittel} />
+                        <div className={"space-y-12 lg:space-y-24"}>{children}</div>
+                        <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
+                        <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
+                        {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && <NavEnhetInaktiv />}
+                        <SkjemaStegNavKnapperLegacy
+                            skjemaConfig={skjemaConfig}
+                            steg={skjemaConfig.steg[steg]}
+                            goToStep={gotoPage}
+                            loading={enFilLastesOpp}
+                            onSend={onSend}
+                        />
+                    </div>
                 </div>
-            </div>
+            </main>
         </div>
     );
 };

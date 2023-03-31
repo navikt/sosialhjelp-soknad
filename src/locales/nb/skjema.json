@@ -1355,5 +1355,6 @@
     "vedleggtekst.U2": "Legeerklæring",
     "vedleggtekst.Z3": "Bekreftelse av funksjonsnedsettelse",
     "visSoknadAlleredeSendtPrompt.overskrift": "Søknaden er sendt",
-    "visSoknadAlleredeSendtPrompt.tekst": "Det er foreløpig ikke mulig å se på den innsendte søknaden."
+    "visSoknadAlleredeSendtPrompt.tekst": "Det er foreløpig ikke mulig å se på den innsendte søknaden.",
+    "hoppTilHovedinnhold": "Hopp til hovedinnhold"
 }
