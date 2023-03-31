@@ -45,7 +45,7 @@ const EktefelleDetaljer = () => {
             </Sporsmal>
             {!harDiskresjonskode && (
                 <Alert variant={"warning"}>
-                    <Heading level={"4"} size={"small"} spacing>
+                    <Heading level={"2"} size={"small"} spacing>
                         {t("system.familie.sivilstatus.informasjonspanel.tittel")}
                     </Heading>
                     <BodyShort>{t("system.familie.sivilstatus.informasjonspanel.tekst")}</BodyShort>
