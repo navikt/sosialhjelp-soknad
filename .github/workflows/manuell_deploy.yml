@@ -1,0 +1,36 @@
+name: Manuell deploy til dev
+on:
+  workflow_dispatch:
+    inputs:
+      config-file-name:
+        description: 'Config-fil som skal deployes'
+        required: true
+        default: 'mock'
+        type: choice
+        options:
+          - 'dev'
+          - 'mock'
+
+jobs:
+  deploy:
+    name: Deploy to dev - ${{ github.event.inputs.config-file-name }}
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create artifact version
+        id: artifact-version
+        uses: navikt/sosialhjelp-ci/actions/create-artifact-version@master
+      - name: Sett env variabler
+        run: |
+          echo "DOCKER_TAG=${{ env.DOCKER_IMAGE }}:${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
+      - name: Deploy til dev
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          RESOURCE: nais/dev/${{ github.event.inputs.config-file-name }}.yaml
+          CLUSTER: dev-gcp
+          REF: ${{ github.sha }}
+          PRINT_PAYLOAD: true
+          IMAGE: ${{ env.DOCKER_TAG }}
