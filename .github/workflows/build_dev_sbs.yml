@@ -1,7 +1,8 @@
 name: Build dev-sbs image
 on:
   push:
-    branches: [master]
+    branches:
+      - '**'      # Build all branches
 
 env:
   CONFIG_FILE: dev-sbs
