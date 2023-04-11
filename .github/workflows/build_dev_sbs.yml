@@ -10,7 +10,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     env:
-      DOCKER_IMAGE: ghcr.io/${{ github.repository }}/sosialhjelp-soknad
+      DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -52,5 +52,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: ${{ env.COMPLETE_TAG }}
+          tag: ${{ steps.artifact-version.outputs.version }}
           commit: ${{ github.sha }}
