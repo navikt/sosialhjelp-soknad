@@ -4,9 +4,6 @@ on:
     branches:
       - '**'      # Build all branches
 
-env:
-  CONFIG_FILE: dev-sbs
-
 # FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
 jobs:
   build:
@@ -42,12 +39,9 @@ jobs:
       - name: Create artifact version
         id: artifact-version
         uses: navikt/sosialhjelp-ci/actions/create-artifact-version@master
-      - name: Get complete tag
-        run: |
-          echo "COMPLETE_TAG=${{ env.CONFIG_FILE }}-$( date +%s )-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
       - name: Create docker image tags
         run: |
-          echo "DOCKER_TAG=${{ env.DOCKER_IMAGE }}:${{ env.COMPLETE_TAG }}" >> $GITHUB_ENV
+          echo "DOCKER_TAG=${{ env.DOCKER_IMAGE }}:${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
       - name: Build docker image
         run: docker build -t ${{ env.DOCKER_TAG }} .
       - name: Push docker image
