@@ -10,6 +10,12 @@ spec:
   port: 8080
   ingresses:
     - "https://sosialhjelp-soknad-dev.dev.nav.no/sosialhjelp/soknad"
+  accessPolicy:
+    outbound:
+      external:
+        - host: dekoratoren.dev.nav.no
+        - host: dekoratoren.ekstern.dev.nav.no
+        - host: digisos.dev.nav.no
 liveness:
   path: /sosialhjelp/soknad/internal/isAlive
   initialDelay: 5
