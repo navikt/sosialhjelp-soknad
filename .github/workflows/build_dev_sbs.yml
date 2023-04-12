@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - '**'      # Build all branches
+env:
+  CONFIG_FILE: dev-sbs
 
 # FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
 jobs:
@@ -18,6 +20,8 @@ jobs:
           node-version: '16'
           registry-url: 'https://npm.pkg.github.com'
           cache: 'npm'
+      - name: Copy env-file for dev
+        run: cp nais/dev/${{ env.CONFIG_FILE }}.env .env.local
       - name: Install dependencies
         run: npm ci
         env:
