@@ -16,6 +16,7 @@ spec:
         - host: dekoratoren.dev.nav.no
         - host: dekoratoren.ekstern.dev.nav.no
         - host: digisos.ekstern.dev.nav.no
+        - host: www.dev.nav.no
   liveness:
     path: /sosialhjelp/soknad/internal/isAlive
     initialDelay: 5
