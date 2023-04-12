@@ -4,7 +4,7 @@ on:
     branches:
       - '**'      # Build all branches
 env:
-  CONFIG_FILE: mock-gcp
+  CONFIG_FILE: dev-sbs
 
 # FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
 jobs:
