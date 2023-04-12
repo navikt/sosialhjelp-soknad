@@ -13,42 +13,43 @@ spec:
   accessPolicy:
     outbound:
       external:
+        - host: dekoratoren.dev.nav.no
         - host: dekoratoren.ekstern.dev.nav.no
         - host: digisos.ekstern.dev.nav.no
-liveness:
-  path: /sosialhjelp/soknad/internal/isAlive
-  initialDelay: 5
-  timeout: 1
-  periodSeconds: 10
-  failureThreshold: 10
-readiness:
-  path: /sosialhjelp/soknad/internal/isAlive
-  initialDelay: 5
-  timeout: 1
-resources:
-  limits:
-    cpu: 300m
-    memory: 256Mi
-  requests:
-    cpu: 1m
-    memory: 50Mi
-replicas:
-  min: 1
-  max: 1
-env:
-  - name: DEKORATOR_MILJO
-    value: dev
-  - name: UNLEASH_API_URL
-    value: https://unleash.nais.io/api/
-  - name: REACT_APP_ENVIRONMENT
-    value: mock
-  - name: REACT_APP_API_BASE_URL
-    value: https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad-api/
-  - name: REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN
-    value: https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad-api/
-  - name: REACT_APP_INNSYN_URL
-    value: https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn/
-  - name: REACT_APP_MIN_SIDE_URL
-    value: https://digisos.ekstern.dev.nav.no/sosialhjelp/mock-alt/
-  - name: REACT_APP_UTLOGGINGS_URL
-    value: https://digisos.ekstern.dev.nav.no/sosialhjelp/mock-alt/
+  liveness:
+    path: /sosialhjelp/soknad/internal/isAlive
+    initialDelay: 5
+    timeout: 1
+    periodSeconds: 10
+    failureThreshold: 10
+  readiness:
+    path: /sosialhjelp/soknad/internal/isAlive
+    initialDelay: 5
+    timeout: 1
+  resources:
+    limits:
+      cpu: 300m
+      memory: 256Mi
+    requests:
+      cpu: 1m
+      memory: 50Mi
+  replicas:
+    min: 1
+    max: 1
+  env:
+    - name: DEKORATOR_MILJO
+      value: dev
+    - name: UNLEASH_API_URL
+      value: https://unleash.nais.io/api/
+    - name: REACT_APP_ENVIRONMENT
+      value: mock
+    - name: REACT_APP_API_BASE_URL
+      value: https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad-api/
+    - name: REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN
+      value: https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad-api/
+    - name: REACT_APP_INNSYN_URL
+      value: https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn/
+    - name: REACT_APP_MIN_SIDE_URL
+      value: https://digisos.ekstern.dev.nav.no/sosialhjelp/mock-alt/
+    - name: REACT_APP_UTLOGGINGS_URL
+      value: https://digisos.ekstern.dev.nav.no/sosialhjelp/mock-alt/
