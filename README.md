@@ -10,17 +10,18 @@ Frontend for søknad om sosialhjelp.
 
 ### Miljøvariabler
 
-Vi bruker env-variabler for å styre en del URLer i appen, disse kan overstyres med å legge følgende inn i en `.env.local`.
-
 ```dotenv
-REACT_APP_ENVIRONMENT="localhost"
-REACT_APP_API_BASE_URL="http://localhost:8181/sosialhjelp/soknad-api/"
-REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN="http://localhost:8181/sosialhjelp/soknad-api/"
-REACT_APP_INNSYN_URL="http://localhost:3000/sosialhjelp/innsyn/"
-REACT_APP_MIN_SIDE_URL="https://www.nav.no/minside/"
+REACT_APP_DIGISOS_ENV="localhost"
 ```
 
-### Backend
+Miljøvariabelen REACT_APP_DIGISOS_ENV velger konfigurasjonsprofiler.
+
+Gyldige profiler er "localhost" til lokal utvikling, "mock" til mock-ekstern,
+"dev-sbs" til dev og "prod-sbs" til prod.
+
+Konfigurasjonsprofiler og feature-toggles utledes fra disse modi i src/lib/config.ts.
+
+### Bakenforliggende tjenester
 
 Eksempel ihht [«Oppsett av lokalt utviklingsmiljø»](https://github.com/navikt/digisos/blob/main/oppsett-devmiljo.md#docker-compose--mock-milj%C3%B8) i digisos-repoet:
 

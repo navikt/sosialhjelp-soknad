@@ -1,7 +1,7 @@
 import {Link} from "@navikt/ds-react";
 import styled from "styled-components";
-import {getApiBaseUrl} from "../../../nav-soknad/utils/rest-utils";
 import {Felt} from "../../../generated/model";
+import {baseURL} from "../../../lib/config";
 
 const StyledList = styled.ul`
     padding-left: 1rem;
@@ -16,7 +16,7 @@ export const Attachment = (props: {behandlingsId: string | undefined; felter?: F
             {props.felter.map((felt) => {
                 return felt.vedlegg?.map((vedlegg) => (
                     <li key={vedlegg.uuid}>
-                        <Link href={`${getApiBaseUrl()}opplastetVedlegg/${props.behandlingsId}/${vedlegg.uuid}/fil`}>
+                        <Link href={`${baseURL}opplastetVedlegg/${props.behandlingsId}/${vedlegg.uuid}/fil`}>
                             {vedlegg.filnavn}
                         </Link>
                     </li>

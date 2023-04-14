@@ -5,6 +5,7 @@ import {now} from "../../utils";
 import useInterval from "../../../lib/hooks/useInterval";
 import {Modal} from "@navikt/ds-react";
 import styled from "styled-components";
+import {logoutURL} from "../../../lib/config";
 
 const ONE_MINUTE_IN_MS = 60 * 1000;
 
@@ -68,7 +69,7 @@ const TimeoutBox = (props: Props) => {
                             onContinueClick={() => {
                                 onContinueClick();
                             }}
-                            utloggingsUrl={`${process.env.REACT_APP_UTLOGGINGS_URL}`}
+                            utloggingsUrl={logoutURL}
                         />
                     )}
                     {showLoggedOut && (

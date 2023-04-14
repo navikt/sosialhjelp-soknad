@@ -1,10 +1,11 @@
 import * as React from "react";
 import {getIntlTextOrKey} from "../../utils";
 import {Button, Loader} from "@navikt/ds-react";
-import {AvbrytSoknadModal, minSideUrl} from "../../../lib/modals/AvbrytSoknadModal";
+import {AvbrytSoknadModal} from "../../../lib/modals/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {SkjemaConfig, SkjemaSteg} from "./digisosSkjema";
 import {useState} from "react";
+import {minSideURL} from "../../../lib/config";
 
 interface SkjemaStegNavigasjonProps {
     skjemaConfig: SkjemaConfig;
@@ -66,7 +67,7 @@ export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep, onSend}: Sk
                     )}
                 </div>
                 <div>
-                    <Button variant="tertiary" onClick={() => (window.location.href = minSideUrl)}>
+                    <Button variant="tertiary" onClick={() => (window.location.href = minSideURL)}>
                         {t("avbryt.fortsettsenere")}
                     </Button>
                     <Button variant="tertiary" onClick={() => setAvbrytModalOpen(true)}>

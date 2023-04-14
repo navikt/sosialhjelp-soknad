@@ -2,6 +2,8 @@ name: Build prod-sbs image
 on:
   push:
     branches: [master]
+env:
+  REACT_APP_DIGISOS_ENV: prod-sbs
 
 # FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
 jobs:
