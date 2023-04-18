@@ -10,7 +10,7 @@ export const NySoknadVelkomst = () => {
     const {t} = useTranslation("skjema");
 
     const logLinkClicked = () => {
-        logAmplitudeEvent("Åpnet lenke");
+        logAmplitudeEvent("navigere", {destinasjon: "okonomisk sosialhjelp"});
     };
 
     return (
