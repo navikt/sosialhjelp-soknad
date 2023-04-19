@@ -21,6 +21,7 @@ import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
+import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 
 const lastOppFil = (
     opplysning: Opplysning,
@@ -49,6 +50,8 @@ const lastOppFil = (
 
                 dispatch(updateOpplysning(opplysningUpdated));
                 dispatch(settFilOpplastingFerdig(opplysning.type));
+
+                logAmplitudeEvent("fil lastet opp", {opplysningType: opplysning.type});
             } catch (reason) {
                 if (reason.message === HttpStatus.UNAUTHORIZED) {
                     return;
