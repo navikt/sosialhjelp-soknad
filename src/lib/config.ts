@@ -25,10 +25,10 @@ const getConfig = (miljo: unknown): SoknadConfig => {
             };
         case "mock":
             return {
-                baseURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad-api/",
-                innsynURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn/",
-                minSideURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/mock-alt/",
-                logoutURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/mock-alt/",
+                baseURL: "https://sosialhjelp-soknad-api-mock.dev.nav.no/sosialhjelp/soknad-api/",
+                innsynURL: "https://sosialhjelp-innsyn-mock.dev.nav.no/sosialhjelp/innsyn/",
+                minSideURL: "https://sosialhjelp-mock-alt-mock.dev.nav.no/sosialhjelp/mock-alt/",
+                logoutURL: "https://sosialhjelp-mock-alt-mock.dev.nav.no/sosialhjelp/mock-alt/",
             };
         case "dev-sbs":
             return {
