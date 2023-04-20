@@ -1,7 +1,6 @@
 const express = require("express");
 const {injectDecoratorServerSide} = require("@navikt/nav-dekoratoren-moduler/ssr");
 const path = require("path");
-const {logError} = require("./src/nav-soknad/utils/loggerUtils");
 
 // This value is duplicated in src/config because imports are weird
 const basePath = "/sosialhjelp/soknad";
@@ -30,7 +29,7 @@ app.use(basePath, (_, res, __) => {
     injectDecoratorServerSide(decoratorParams)
         .then(res.send)
         .catch((e) => {
-            logError(`Failed to get decorator: ${e}`);
+            console.error(`Failed to get decorator: ${e}`);
             res.status(500).send("Det har oppstått en feil. Venligst prøv igjen senere.");
         });
 });
