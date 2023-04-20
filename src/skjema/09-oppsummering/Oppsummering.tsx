@@ -28,6 +28,7 @@ import {OppsummeringSteg} from "./OppsummeringSteg";
 import {OppsummeringHeading, OppsummeringPersonalia} from "./oppsummeringer/personalia";
 import {useAlgebraic} from "../../lib/hooks/useAlgebraic";
 import {useHentBegrunnelse} from "../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
+import {innsynURL} from "../../lib/config";
 
 const OppsummeringBegrunnelse = () => {
     const {expectOK} = useAlgebraic(useHentBegrunnelse(useBehandlingsId()));
@@ -79,7 +80,7 @@ export const Oppsummering = () => {
         mutation: {
             onSuccess: ({id, sendtTil}) => {
                 const redirectUrl: Record<SendTilUrlFrontendSendtTil, string> = {
-                    FIKS_DIGISOS_API: `${process.env.REACT_APP_INNSYN_URL}${id}/status`,
+                    FIKS_DIGISOS_API: `${innsynURL}${id}/status`,
                     SVARUT: `${basePath}/skjema/${id}/ettersendelse`,
                 };
 

@@ -2,9 +2,10 @@ name: Build and deploy to mock-ekstern
 on:
   push:
     branches: [master]
+  workflow_dispatch: {}
 
 env:
-  CONFIG_FILE: mock-gcp
+  REACT_APP_DIGISOS_ENV: mock
 
 # FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
 jobs:
@@ -20,8 +21,6 @@ jobs:
           node-version: '16'
           registry-url: 'https://npm.pkg.github.com'
           cache: 'npm'
-      - name: Copy env-file for dev
-        run: cp nais/dev/${{ env.CONFIG_FILE }}.env .env.local
       - name: Install dependencies
         run: npm ci
         env:
@@ -45,7 +44,7 @@ jobs:
         uses: navikt/sosialhjelp-ci/actions/create-artifact-version@master
       - name: Get complete tag
         run: |
-          echo "COMPLETE_TAG=${{ env.CONFIG_FILE }}-$( date +%s )-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
+          echo "COMPLETE_TAG=${{ env.REACT_APP_DIGISOS_ENV }}-$( date +%s )-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
       - name: Create docker image tags
         run: |
           echo "DOCKER_TAG=${{ env.DOCKER_IMAGE }}:${{ env.COMPLETE_TAG }}" >> $GITHUB_ENV
@@ -61,13 +60,12 @@ jobs:
         with:
           tag: ${{ env.COMPLETE_TAG }}
           commit: ${{ github.sha }}
-      - name: Deploy til dev - ${{ github.event.inputs.config-file-name }}
+      - name: Deploy til dev
         uses: nais/deploy/actions/deploy@v1
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY != '' && secrets.NAIS_DEPLOY_APIKEY || secrets.api_deploy_token }}
-          RESOURCE: nais.yaml
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          RESOURCE: nais/mock.yaml
           CLUSTER: dev-gcp
-          VARS: nais/dev/${{ env.CONFIG_FILE }}.json
           REF: ${{ github.sha }}
           PRINT_PAYLOAD: true
           IMAGE: ${{ env.DOCKER_TAG }}

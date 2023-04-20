@@ -1,36 +1,37 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
-import {getApiBaseUrl, getRedirectPath} from "../../nav-soknad/utils/rest-utils";
+import {getRedirectPath} from "../../nav-soknad/utils/rest-utils";
 import {isLocalhost, isMockAlt} from "../../nav-soknad/utils";
 import {UnauthorizedMelding} from "../../generated/model";
 import {logError, logInfo, logWarning} from "../../nav-soknad/utils/loggerUtils";
+import {baseURL} from "../config";
 
-export const redirectToLogin = async (data?: UnauthorizedMelding) => {
-    if (!data) {
+const makeLoginUrl = ({loginUrl, id}: UnauthorizedMelding) => {
+    const loginURLObj = new URL(loginUrl);
+    loginURLObj.searchParams.set("login_id", id);
+    loginURLObj.searchParams.set("redirect", getRedirectPath());
+    return loginURLObj.toString();
+};
+
+export const redirectToLogin = async (unauthError?: UnauthorizedMelding) => {
+    if (!unauthError) {
         logError(`401-feil uten data`);
         throw new Error(`401-feil uten data`);
     }
 
-    const {id, loginUrl} = data;
-
-    if (new URLSearchParams(window.location.search).get("login_id") === id) {
+    if (new URLSearchParams(window.location.search).get("login_id") === unauthError.id) {
         logError("login_id == id fra 401, kan indikere en redirect loop?");
         return;
     }
 
-    const loginURLObj = new URL(loginUrl);
-    loginURLObj.searchParams.set("login_id", id);
-    loginURLObj.searchParams.set("redirect", getRedirectPath());
-    window.location.href = loginURLObj.toString();
+    window.location.href = makeLoginUrl(unauthError);
 };
 
 export const AXIOS_INSTANCE = Axios.create({
-    baseURL: getApiBaseUrl(true),
+    baseURL,
     xsrfCookieName: "XSRF-TOKEN-SOKNAD-API",
-    withCredentials: isLocalhost(window.location.origin) || isMockAlt(window.location.origin),
     xsrfHeaderName: "X-XSRF-TOKEN",
-    headers: {
-        Accept: "application/json, text/plain, */*",
-    },
+    withCredentials: isLocalhost(window.location.origin) || isMockAlt(window.location.origin),
+    headers: {Accept: "application/json, text/plain, */*"},
 });
 
 interface CancellablePromise<T> extends Promise<T> {
@@ -40,20 +41,21 @@ interface CancellablePromise<T> extends Promise<T> {
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export type DigisosAxiosConfig = {
-    // Ingen feilhåndtering skal utføres (mest nyttig for logging)
+    // If the request fails, silently return a promise which never resolves.
+    // (Useful to prevent packet storms from calls to the logger failing)
     digisosIgnoreErrors?: boolean;
 };
 
-const isLoginRedirect401 = (response: any): response is AxiosResponse<UnauthorizedMelding | undefined, any> =>
-    response?.status === 401;
+const isLoginRedirect401 = (r: any): r is AxiosResponse<UnauthorizedMelding | undefined, any> => r?.status === 401;
 
 /**
  * Digisos Axios client
  *
  * In case of 403, 404, 410 errors, returns an unresolving promise because
- * the rug is about to be pulled out under the code anyway with a redirect.
+ * the rug is about to be pulled out under the code anyway when
+ * window.location.href is assigned to.
  *
- * All others will generate exceptions (409 causes up to ten retries).
+ * All others will generate exceptions (In case of 409, retry up to 10 times).
  *
  * @returns data from the request, *or* a promise that never resolves,
  * in case of an error that is about to be handled by a page redirection.
@@ -71,9 +73,7 @@ export const axiosInstance = <T>(
     })
         .then(({data}) => data)
         .catch(async (e) => {
-            if (!(e instanceof AxiosError<T>)) {
-                logWarning(`non-axioserror error ${e} in axiosinstance`);
-            }
+            if (!(e instanceof AxiosError<T>)) logWarning(`non-axioserror error ${e} in axiosinstance`);
 
             if (isCancel(e) || options?.digisosIgnoreErrors) return new Promise<T>(() => {});
 

@@ -2,10 +2,11 @@ import * as React from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {SkjemaStegContext} from "./SkjemaSteg";
-import {AvbrytSoknadModal, minSideUrl} from "../../../../lib/modals/AvbrytSoknadModal";
+import {AvbrytSoknadModal} from "../../../../lib/modals/AvbrytSoknadModal";
 import {useContext, useState} from "react";
 import {logError} from "../../../utils/loggerUtils";
 import {NavEnhetInaktiv} from "../../../../skjema/01-personalia/adresse/NavEnhet";
+import {minSideURL} from "../../../../lib/config";
 
 interface SkjemaStegNavigasjonProps {
     loading?: boolean;
@@ -49,7 +50,7 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
                 </Button>
             </div>
             <div>
-                <Button variant="tertiary" onClick={() => (window.location.href = minSideUrl)}>
+                <Button variant="tertiary" onClick={() => (window.location.href = minSideURL)}>
                     {t("avbryt.fortsettsenere")}
                 </Button>
                 <Button variant="tertiary" onClick={() => setAvbrytModalOpen(true)}>

@@ -73,7 +73,7 @@ Sentry.init({
             ),
         }),
     ],
-    environment: process.env.REACT_APP_ENVIRONMENT,
+    environment: process.env.REACT_APP_DIGISOS_ENV,
     tracesSampleRate: 1.0,
 });
 
