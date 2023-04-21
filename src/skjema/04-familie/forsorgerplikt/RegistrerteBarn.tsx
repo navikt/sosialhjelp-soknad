@@ -33,9 +33,9 @@ const RegistrerteBarn = () => {
         oppdater(forsorgerplikt);
         lagre(forsorgerplikt);
 
-        logAmplitudeEvent("barn har delt bosted", {
-            barnIndex,
-            harDeltBosted: verdi ? "yes" : "no",
+        logAmplitudeEvent("svart på sporsmal", {
+            sporsmal: "Har barnet delt bosted med deg?",
+            verdi: verdi ? "Ja" : "Nei",
         });
     };
 

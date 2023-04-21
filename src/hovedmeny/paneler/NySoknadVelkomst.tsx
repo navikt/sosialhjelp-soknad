@@ -10,7 +10,10 @@ export const NySoknadVelkomst = () => {
     const {t} = useTranslation("skjema");
 
     const logLinkClicked = () => {
-        logAmplitudeEvent("Åpnet lenke");
+        logAmplitudeEvent("navigere", {
+            lenkeTekst: "opplysninger du kan bli bedt om å levere",
+            destinasjon: "https://www.nav.no/okonomisk-sosialhjelp#soknad",
+        });
     };
 
     return (

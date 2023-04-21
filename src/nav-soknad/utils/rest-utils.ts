@@ -2,15 +2,10 @@ import {basePath} from "../../configuration";
 import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
 import {redirectToLogin} from "../../lib/orval/soknad-api-axios";
 import {logWarning} from "./loggerUtils";
-
-export function getApiBaseUrl(withAccessToken?: boolean) {
-    return withAccessToken
-        ? `${process.env.REACT_APP_API_BASE_URL_WITH_ACCESS_TOKEN}`
-        : `${process.env.REACT_APP_API_BASE_URL}`;
-}
+import {baseURL} from "../../lib/config";
 
 export const determineCredentialsParameter = () =>
-    process.env.REACT_APP_ENVIRONMENT === "localhost" ? "include" : "same-origin";
+    process.env.REACT_APP_DIGISOS_ENV === "localhost" ? "include" : "same-origin";
 
 export const getRedirectPath = () => `${window.location.origin}${basePath}/link?goto=${getGotoPathname()}`;
 
@@ -24,7 +19,7 @@ export function parseGotoValueFromSearchParameters(searchParameters: string): st
     return afterGoto ? afterGoto.split("&login_id")[0] : afterGoto; // Fjerne login_id dersom strengen bak goto= er definert.
 }
 
-export const downloadAttachedFile = (urlPath: string) => window.open(`${getApiBaseUrl()}${urlPath}`);
+export const downloadAttachedFile = (urlPath: string) => window.open(baseURL + urlPath);
 
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -54,7 +49,7 @@ export const serverRequest = <T>(
     };
 
     return new Promise<T>((resolve, reject) => {
-        fetch(getApiBaseUrl(withAccessToken) + urlPath, OPTIONS)
+        fetch(baseURL + urlPath, OPTIONS)
             .then((response: Response) => {
                 if (response.ok) resolve(toJson<T>(response));
 
@@ -105,7 +100,7 @@ export function fetchDelete(urlPath: string) {
         method: "DELETE",
         credentials: determineCredentialsParameter(),
     };
-    return fetch(getApiBaseUrl() + urlPath, OPTIONS).then((response: Response) => {
+    return fetch(baseURL + urlPath, OPTIONS).then((response: Response) => {
         if (response.status === 401) response.json().then((data) => redirectToLogin(data));
         if (!response.ok) throw new DigisosLegacyRESTError(response.status, response.statusText);
         return response.text();
@@ -123,7 +118,7 @@ const generateUploadOptions = (formData: FormData, method: string): RequestInit 
 });
 
 export function fetchUpload<T>(urlPath: string, formData: FormData) {
-    return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData, "POST")).then((response) => {
+    return fetch(baseURL + urlPath, generateUploadOptions(formData, "POST")).then((response) => {
         if (response.status === 401) response.json().then((data) => redirectToLogin(data));
         if (!response.ok) throw new DigisosLegacyRESTError(response.status, response.statusText);
         return toJson<T>(response);
@@ -131,7 +126,7 @@ export function fetchUpload<T>(urlPath: string, formData: FormData) {
 }
 
 export function fetchUploadIgnoreErrors(urlPath: string, formData: FormData, method: string) {
-    return fetch(getApiBaseUrl() + urlPath, generateUploadOptions(formData, method)).then(toJson);
+    return fetch(baseURL + urlPath, generateUploadOptions(formData, method)).then(toJson);
 }
 
 export function toJson<T>(response: Response): Promise<T> {

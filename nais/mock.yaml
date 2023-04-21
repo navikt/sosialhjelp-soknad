@@ -1,17 +1,22 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: {{applicationName}}
-  namespace: {{namespace}}
+  name: sosialhjelp-soknad-mock
+  namespace: teamdigisos
   labels:
     team: teamdigisos
 spec:
   image: {{image}}
   port: 8080
   ingresses:
-{{#each ingresses}}
-    - "{{this}}"
-{{/each}}
+    - "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad"
+  accessPolicy:
+    outbound:
+      external:
+        - host: dekoratoren.dev.nav.no
+        - host: dekoratoren.ekstern.dev.nav.no
+        - host: digisos.ekstern.dev.nav.no
+        - host: www.dev.nav.no
   liveness:
     path: /sosialhjelp/soknad/internal/isAlive
     initialDelay: 5
@@ -24,16 +29,14 @@ spec:
     timeout: 1
   resources:
     limits:
-      cpu: {{cpuLimit}}
-      memory: {{memoryLimit}}
+      cpu: 300m
+      memory: 256Mi
     requests:
-      cpu: {{cpuRequest}}
-      memory: {{memoryRequest}}
+      cpu: 1m
+      memory: 50Mi
   replicas:
-    min: {{minReplicas}}
-    max: {{maxReplicas}}
+    min: 1
+    max: 1
   env:
     - name: DEKORATOR_MILJO
-      value: {{dekoratorMiljo}}
-    - name: UNLEASH_API_URL
-      value: https://unleash.nais.io/api/
+      value: dev

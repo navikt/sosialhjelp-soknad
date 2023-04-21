@@ -6,15 +6,14 @@ import {soknadsdataUrl} from "../../digisos/redux/soknadsdata/soknadsdataActions
 import {SoknadsSti} from "../../digisos/redux/soknadsdata/soknadsdataReducer";
 import "@testing-library/jest-dom/extend-expect";
 import {BosituasjonData} from "./bosituasjonTypes";
-import {getApiBaseUrl} from "../../nav-soknad/utils/rest-utils";
 import {render} from "../../test/test-utils";
+import {baseURL} from "../../lib/config";
 
 const mockGET = <T,>(url: string, mockData: Partial<T>) => {
     return rest.get(url, (_req, res, ctx) => res(ctx.json(mockData)));
 };
 
-const bosituasjonUrl = (behandlingsID: string) =>
-    getApiBaseUrl() + soknadsdataUrl(behandlingsID, SoknadsSti.BOSITUASJON);
+const bosituasjonUrl = (behandlingsId: string) => baseURL + soknadsdataUrl(behandlingsId, SoknadsSti.BOSITUASJON);
 
 const server = setupServer(
     mockGET<BosituasjonData>(bosituasjonUrl("botypeEier"), {botype: "eier", antallPersoner: null}),

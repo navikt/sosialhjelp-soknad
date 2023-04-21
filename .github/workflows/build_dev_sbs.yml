@@ -1,10 +1,10 @@
 name: Build dev-sbs image
 on:
   push:
-    branches: [master]
-
+    branches:
+      - '**'      # Build all branches
 env:
-  CONFIG_FILE: dev-sbs
+  REACT_APP_DIGISOS_ENV: dev-sbs
 
 # FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
 jobs:
@@ -12,7 +12,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     env:
-      DOCKER_IMAGE: ghcr.io/${{ github.repository }}/sosialhjelp-soknad
+      DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -20,8 +20,6 @@ jobs:
           node-version: '16'
           registry-url: 'https://npm.pkg.github.com'
           cache: 'npm'
-      - name: Copy env-file for dev
-        run: cp nais/dev/${{ env.CONFIG_FILE }}.env .env.local
       - name: Install dependencies
         run: npm ci
         env:
@@ -34,6 +32,7 @@ jobs:
         run: npm run build:css
       - name: Build application
         run: npm run build
+
       - name: Login to GitHub Docker Registry
         uses: docker/login-action@v2
         with:
@@ -43,12 +42,9 @@ jobs:
       - name: Create artifact version
         id: artifact-version
         uses: navikt/sosialhjelp-ci/actions/create-artifact-version@master
-      - name: Get complete tag
-        run: |
-          echo "COMPLETE_TAG=${{ env.CONFIG_FILE }}-$( date +%s )-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
       - name: Create docker image tags
         run: |
-          echo "DOCKER_TAG=${{ env.DOCKER_IMAGE }}:${{ env.COMPLETE_TAG }}" >> $GITHUB_ENV
+          echo "DOCKER_TAG=${{ env.DOCKER_IMAGE }}:${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
       - name: Build docker image
         run: docker build -t ${{ env.DOCKER_TAG }} .
       - name: Push docker image
@@ -59,5 +55,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: ${{ env.COMPLETE_TAG }}
+          tag: ${{ steps.artifact-version.outputs.version }}
           commit: ${{ github.sha }}
