@@ -55,5 +55,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: ${{ steps.artifact-version.outputs.version }}
+          tag: dev-sbs-${{ steps.artifact-version.outputs.version }}
           commit: ${{ github.sha }}
