@@ -30,24 +30,26 @@ const OkonomiskeOpplysningerView = () => {
     return (
         <SkjemaSteg.Container page={8}>
             {grupperMedInnhold.map((opplysningGruppe, i) => (
-                <SkjemaSteg.Content className={cx("pb-12", {"lg:space-y-8": i === 0})}>
-                    {i === 0 && (
-                        <>
-                            <SkjemaSteg.Title className={"lg:mb-8"} />
-                            {ikkeBesvartMeldingSkalVises ? (
-                                <OpplysningerIkkeBesvartPanel />
-                            ) : (
-                                <OpplysningerInformasjonspanel />
-                            )}
-                        </>
-                    )}
-                    <Gruppe
-                        key={opplysningGruppe}
-                        gruppeKey={opplysningGruppe}
-                        gruppe={opplysningerSortert.filter(({gruppe}) => gruppe === opplysningGruppe)}
-                    />
-                    {i === grupperMedInnhold.length - 1 && <SkjemaSteg.Buttons />}
-                </SkjemaSteg.Content>
+                <React.Fragment key={opplysningGruppe}>
+                    <SkjemaSteg.Content className={cx("pb-12", {"lg:space-y-8": i === 0})}>
+                        {i === 0 && (
+                            <>
+                                <SkjemaSteg.Title className={"lg:mb-8"} />
+                                {ikkeBesvartMeldingSkalVises ? (
+                                    <OpplysningerIkkeBesvartPanel />
+                                ) : (
+                                    <OpplysningerInformasjonspanel />
+                                )}
+                            </>
+                        )}
+                        <Gruppe
+                            key={opplysningGruppe}
+                            gruppeKey={opplysningGruppe}
+                            gruppe={opplysningerSortert.filter(({gruppe}) => gruppe === opplysningGruppe)}
+                        />
+                        {i === grupperMedInnhold.length - 1 && <SkjemaSteg.Buttons />}
+                    </SkjemaSteg.Content>
+                </React.Fragment>
             ))}
         </SkjemaSteg.Container>
     );

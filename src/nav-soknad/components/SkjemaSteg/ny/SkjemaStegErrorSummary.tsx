@@ -9,8 +9,10 @@ export const SkjemaStegErrorSummary = ({errors}: {errors?: FieldErrors}) => {
 
     return (
         <ErrorSummary heading="Du må fikse disse feilene før du kan gå videre.">
-            {Object.entries(errors).map(([key, value]) => (
-                <ErrorSummary.Item href={`#${key}`}>{t(value?.message?.toString() ?? "")}</ErrorSummary.Item>
+            {Object.entries(errors).map(([key, value], index) => (
+                <ErrorSummary.Item key={index} href={`#${key}`}>
+                    {t(value?.message?.toString() ?? "")}
+                </ErrorSummary.Item>
             ))}
         </ErrorSummary>
     );
