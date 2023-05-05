@@ -158,6 +158,7 @@ const TabellView = (props: {opplysning: Opplysning; gruppeIndex: number}) => {
 
                   return (
                       <InputEnhanced
+                          key={id}
                           id={id}
                           onChange={(input: string) => handleChange(input, radIndex, inputType, key)}
                           onBlur={() => handleBlur(radIndex, inputType, key)}

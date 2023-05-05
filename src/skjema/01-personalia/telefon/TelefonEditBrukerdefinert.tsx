@@ -36,7 +36,7 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
     };
 
     const clear = async () => {
-        setValue("brukerutfyltVerdi", null);
+        setValue("brukerutfyltVerdi", "");
         await handleSubmit(update);
     };
 
@@ -47,8 +47,9 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
                     validate: {
                         isValidTelefonnummer: (nummer) =>
                             nummer === null ||
+                            nummer === undefined ||
                             nummer === "" ||
-                            isValidTelefonnummer(nummer ?? "") ||
+                            isValidTelefonnummer(nummer) ||
                             t("kontakt.telefon.feilmelding"),
                     },
                 })}
