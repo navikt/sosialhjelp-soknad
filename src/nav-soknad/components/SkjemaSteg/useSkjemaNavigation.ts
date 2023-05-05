@@ -3,7 +3,6 @@ import {clearAllValideringsfeil, visValideringsfeilPanel} from "../../../digisos
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../digisos/redux/reducers";
 import {useNavigate} from "react-router";
-import {Opplysning} from "../../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
 
 export const useSkjemaNavigation = (steg: number) => {
     const {validering} = useSelector((state: State) => state);
@@ -12,8 +11,8 @@ export const useSkjemaNavigation = (steg: number) => {
 
     const uploadedDocumentsCount = useSelector((state: State) =>
         state.okonomiskeOpplysninger.opplysningerSortert
-            .map((opplysning: Opplysning) => opplysning.filer.length)
-            .reduce((total: number, fileCount: number) => total + fileCount)
+            .map((opplysning) => opplysning.filer.length)
+            .reduce((total, fileCount) => total + fileCount)
     );
 
     const gotoPage = (newPage: number) => {
