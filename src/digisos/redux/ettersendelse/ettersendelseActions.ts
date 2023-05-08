@@ -8,12 +8,12 @@ import {
     SlettEttersendtVedleggOkAction,
 } from "./ettersendelseTypes";
 import {detekterInternFeilKode} from "../../../nav-soknad/utils/rest-utils";
-import {Fil, OpplysningType} from "../okonomiskeOpplysninger/opplysningerTypes";
+import {FilFrontend, VedleggFrontendType} from "../../../generated/model";
 
 const slettEttersendtVedlegg = (
     behandlingsId: string,
     filUuid: string,
-    opplysningType: OpplysningType
+    opplysningType: VedleggFrontendType
 ): SlettEttersendtVedleggAction => {
     return {
         type: EttersendelseActionTypeKeys.SLETT_VEDLEGG,
@@ -23,7 +23,10 @@ const slettEttersendtVedlegg = (
     };
 };
 
-const slettEttersendtVedleggOk = (filUuid: string, opplysningType: OpplysningType): SlettEttersendtVedleggOkAction => {
+const slettEttersendtVedleggOk = (
+    filUuid: string,
+    opplysningType: VedleggFrontendType
+): SlettEttersendtVedleggOkAction => {
     return {
         type: EttersendelseActionTypeKeys.SLETT_VEDLEGG_OK,
         filUuid,
@@ -47,7 +50,7 @@ const opprettEttersendelseFeilet = (brukerbehandlingId: string): EttersendelseAc
 
 const lastOppEttersendelseVedlegg = (
     behandlingsId: string,
-    opplysningType: OpplysningType,
+    opplysningType: VedleggFrontendType,
     formData: FormData
 ): LastOppEttersendtVedleggAction => {
     return {
@@ -87,7 +90,7 @@ const lesEttersendteVedlegg = (manglendeVedleggsListe: EttersendelseVedleggBacke
     };
 };
 
-const filLastetOpp = (opplysningType: OpplysningType, fil: Fil) => {
+const filLastetOpp = (opplysningType: VedleggFrontendType, fil: FilFrontend) => {
     return {
         type: EttersendelseActionTypeKeys.FIL_OPPLASTING_OK,
         opplysningType,

@@ -1,10 +1,5 @@
 import {useState} from "react";
-import {
-    Fil,
-    Opplysning,
-    OpplysningSpc,
-    VedleggStatus,
-} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
+import {Opplysning, OpplysningSpc} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {useDispatch, useSelector} from "react-redux";
 import LastOppFil from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
@@ -23,6 +18,7 @@ import {getSpcForOpplysning} from "../../digisos/redux/okonomiskeOpplysninger/op
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
 import cx from "classnames";
+import {FilFrontend, VedleggFrontendVedleggStatus} from "../../generated/model";
 
 const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
     const behandlingsId = useBehandlingsId();
@@ -37,28 +33,29 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
     const handleAlleredeLastetOpp = (_: any) => {
         const opplysningUpdated = {...props.okonomiskOpplysning};
 
-        if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND) {
-            opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGGALLEREDESEND;
+        if (opplysningUpdated.vedleggStatus !== VedleggFrontendVedleggStatus.VedleggAlleredeSendt) {
+            opplysningUpdated.vedleggStatus = VedleggFrontendVedleggStatus.VedleggAlleredeSendt;
         } else {
-            opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
+            opplysningUpdated.vedleggStatus = VedleggFrontendVedleggStatus.VedleggKreves;
         }
 
         dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feil));
     };
 
-    const slettVedlegg = (fil: Fil) => {
+    const slettVedlegg = (fil: FilFrontend) => {
         dispatch(settFilOpplastingPending(props.okonomiskOpplysning.type));
 
         setFeilkode(feilkode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR ? null : feilkode);
 
         fetchDelete(`opplastetVedlegg/${behandlingsId}/${fil.uuid}`)
             .then(() => {
-                const filerUpdated = props.okonomiskOpplysning.filer.filter(({uuid}) => uuid !== fil.uuid);
+                const filerUpdated = props.okonomiskOpplysning.filer?.filter(({uuid}) => uuid !== fil.uuid) ?? [];
 
                 const opplysningUpdated: Opplysning = {...props.okonomiskOpplysning};
                 opplysningUpdated.filer = filerUpdated;
 
-                if (!opplysningUpdated.filer.length) opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
+                if (!opplysningUpdated.filer.length)
+                    opplysningUpdated.vedleggStatus = VedleggFrontendVedleggStatus.VedleggKreves;
 
                 dispatch(updateOpplysning(opplysningUpdated));
                 dispatch(settFilOpplastingFerdig(props.okonomiskOpplysning.type));
@@ -74,7 +71,7 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
         const opplysningSpc: OpplysningSpc | undefined = getSpcForOpplysning(opplysning.type);
         const tittelKey = opplysningSpc?.textKey ? `${opplysningSpc.textKey}.vedlegg.sporsmal.tittel` : "";
 
-        const vedleggListe = opplysning.filer.map((fil) => (
+        const vedleggListe = opplysning.filer?.map((fil) => (
             <OpplastetVedlegg
                 key={fil.uuid}
                 behandlingsId={behandlingsId}
@@ -89,7 +86,9 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
                 <div className="vedleggsliste">{vedleggListe}</div>
                 <LastOppFil
                     opplysning={opplysning}
-                    isDisabled={enFilLastesOpp || opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
+                    isDisabled={
+                        enFilLastesOpp || opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt
+                    }
                     visSpinner={opplysning.pendingLasterOppFil}
                     feilkode={feilkode}
                     setFeilkode={setFeilkode}
@@ -97,10 +96,10 @@ const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
                 <Checkbox
                     label={t("opplysninger.vedlegg.alleredelastetopp")}
                     id={opplysning.type + "_allerede_lastet_opp_checkbox"}
-                    className={cx("vedleggLastetOppCheckbox", {"checkboks--disabled": opplysning.filer.length})}
+                    className={cx("vedleggLastetOppCheckbox", {"checkboks--disabled": opplysning.filer?.length})}
                     onChange={(event: any) => handleAlleredeLastetOpp(event)}
-                    checked={opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
-                    disabled={opplysning.filer.length > 0 || opplysning.pendingLasterOppFil}
+                    checked={opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
+                    disabled={!!opplysning.filer?.length || opplysning.pendingLasterOppFil}
                 />
             </div>
         );

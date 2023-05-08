@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Fil, Opplysning, VedleggStatus} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
+import {Opplysning} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../digisos/redux/reducers";
 import {
@@ -22,6 +22,7 @@ import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
+import {FilFrontend, VedleggFrontendVedleggStatus} from "../../generated/model";
 
 const lastOppFil = (
     opplysning: Opplysning,
@@ -35,18 +36,19 @@ const lastOppFil = (
 
     const opplysningUpdated: Opplysning = {...opplysning};
 
-    const filerUpdated: Fil[] = opplysning.filer.map((fil: Fil) => ({
-        ...fil,
-    }));
+    const filerUpdated: FilFrontend[] =
+        opplysning.filer?.map((fil: FilFrontend) => ({
+            ...fil,
+        })) ?? [];
     (async () => {
         for (const formData of formDataList) {
             dispatch(settFilOpplastingPending(opplysning.type));
 
             try {
-                const response = await fetchUpload<Fil>(url, formData);
+                const response = await fetchUpload<FilFrontend>(url, formData);
                 filerUpdated.push(response);
                 opplysningUpdated.filer = filerUpdated;
-                opplysningUpdated.vedleggStatus = VedleggStatus.LASTET_OPP;
+                opplysningUpdated.vedleggStatus = VedleggFrontendVedleggStatus.LastetOpp;
 
                 dispatch(updateOpplysning(opplysningUpdated));
                 dispatch(settFilOpplastingFerdig(opplysning.type));
@@ -89,8 +91,8 @@ const LastOppFil = (props: {
     const behandlingsId = useBehandlingsId();
     const antallFiler = useSelector((state: State) =>
         state.okonomiskeOpplysninger.opplysningerSortert
-            .map((opplysning: Opplysning) => opplysning.filer.length)
-            .reduce((a: number, b: number) => a + b)
+            .map((opplysning: Opplysning) => opplysning.filer?.length ?? 0)
+            .reduce((a, b) => a + b)
     );
     const {t} = useTranslation();
     const dispatch = useDispatch();

@@ -1,33 +1,29 @@
-import {
-    InputType,
-    Opplysning,
-    OpplysningBackend,
-    OpplysningerBackend,
-    VedleggGruppe,
-    OpplysningRad,
-    OpplysningSpc,
-    OpplysningType,
-} from "./opplysningerTypes";
+import {Opplysning, OpplysningSpc, VedleggGruppe} from "./opplysningerTypes";
 import {opplysningsRekkefolgeOgSpc} from "./opplysningerConfig";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
+import {VedleggFrontend, VedleggFrontends, VedleggFrontendType, VedleggRadFrontend} from "../../../generated/model";
 
 export const getOpplysningerUrl = (behandlingsId: string) => `soknader/${behandlingsId}/okonomiskeOpplysninger`;
 
-export const updateSortertOpplysning = (opplysninger: Opplysning[], opplysningUpdated: Opplysning) => {
+export const updateSortertOpplysning = (opplysninger: VedleggFrontend[], opplysningUpdated: VedleggFrontend) => {
     const index = opplysninger.findIndex((o) => o.type === opplysningUpdated.type);
     opplysninger[index] = opplysningUpdated;
     return opplysninger;
 };
 
-export const transformToBackendOpplysning = (opplysning: Opplysning): OpplysningBackend => {
-    return {
-        type: opplysning.type,
-        gruppe: opplysning.gruppe ? opplysning.gruppe : VedleggGruppe.UKJENT,
-        rader: opplysning.rader,
-        vedleggStatus: opplysning.vedleggStatus,
-        filer: opplysning.filer,
-    };
-};
+export const transformToBackendOpplysning = ({
+    type,
+    gruppe,
+    rader,
+    vedleggStatus,
+    filer,
+}: VedleggFrontend): VedleggFrontend => ({
+    type,
+    gruppe,
+    rader,
+    vedleggStatus,
+    filer,
+});
 
 export const Gruppetittel: Record<VedleggGruppe, string> = {
     statsborgerskap: "opplysninger.statsborgerskap",
@@ -41,32 +37,30 @@ export const Gruppetittel: Record<VedleggGruppe, string> = {
     ukjent: "opplysninger.ukjent",
 };
 
-export const getTomVedleggRad: () => OpplysningRad = () => {
+export const getTomVedleggRad: () => VedleggRadFrontend = () => {
     return {
         beskrivelse: "",
-        belop: "",
-        brutto: "",
-        netto: "",
-        avdrag: "",
-        renter: "",
+        belop: 0,
+        brutto: 0,
+        netto: 0,
+        avdrag: 0,
+        renter: 0,
     };
 };
 
-export const getOpplysningByOpplysningType = (opplysningerSortert: Opplysning[], opplysningType: OpplysningType) => {
+export const getOpplysningByType = (opplysningerSortert: Opplysning[], opplysningType: VedleggFrontendType) => {
     return opplysningerSortert.find((o: Opplysning) => {
         return o.type && o.type === opplysningType;
     });
 };
 
-export const getSortertListeAvOpplysninger = (backendData: OpplysningerBackend): Opplysning[] => {
+export const getSortertListeAvOpplysninger = (backendData: VedleggFrontends): Opplysning[] => {
     const {okonomiskeOpplysninger, slettedeVedlegg} = backendData;
-    const opplysningerAktive: Opplysning[] = okonomiskeOpplysninger.map((opplysningBackend: OpplysningBackend) => {
-        return backendOpplysningToOpplysning(opplysningBackend, false);
-    });
+    const opplysningerAktive =
+        okonomiskeOpplysninger?.map((opplysningBackend) => opplysningFrontend(opplysningBackend, false)) ?? [];
 
-    const opplysningerSlettede: Opplysning[] = slettedeVedlegg.map((opplysningBackend: OpplysningBackend) => {
-        return backendOpplysningToOpplysning(opplysningBackend, true);
-    });
+    const opplysningerSlettede =
+        slettedeVedlegg?.map((opplysningBackend) => opplysningFrontend(opplysningBackend, true)) ?? [];
     const alleOpplysninger: Opplysning[] = opplysningerAktive.concat(opplysningerSlettede);
     const opplysningerSortert: MaybeOpplysning[] = sorterOpplysninger(alleOpplysninger, opplysningsRekkefolgeOgSpc);
     return filterOutNullValuesFromList(opplysningerSortert);
@@ -84,21 +78,16 @@ const filterOutNullValuesFromList = (list: MaybeOpplysning[]): Opplysning[] => {
     return listUtenNulls;
 };
 
-export const getSpcForOpplysning = (opplysningType: OpplysningType): OpplysningSpc | undefined => {
-    const opplysningSpcs = opplysningsRekkefolgeOgSpc.filter(({type}: OpplysningSpc) => type === opplysningType);
+export const getSpcForOpplysning = (opplysningType: VedleggFrontendType) => {
+    const opplysningSpcs = opplysningsRekkefolgeOgSpc.find(({type}) => type === opplysningType);
 
-    if (opplysningSpcs?.length === 0) logError(`Spc ikke funnet for opplysning med type: "${opplysningType}"`);
+    if (!opplysningSpcs) logError(`Spc ikke funnet for opplysning med type: "${opplysningType}"`);
 
-    return opplysningSpcs[0];
+    return opplysningSpcs;
 };
 
-const backendOpplysningToOpplysning = (opplysningBackend: OpplysningBackend, erSlettet: boolean): Opplysning => {
-    const spc: OpplysningSpc | undefined = getSpcForOpplysning(opplysningBackend.type);
-
-    let radInnhold_: InputType[] = [];
-    if (spc) {
-        radInnhold_ = spc.radInnhold;
-    }
+const opplysningFrontend = (opplysningBackend: VedleggFrontend, erSlettet: boolean): Opplysning => {
+    const spc = getSpcForOpplysning(opplysningBackend.type);
 
     return {
         type: opplysningBackend.type,
@@ -107,7 +96,7 @@ const backendOpplysningToOpplysning = (opplysningBackend: OpplysningBackend, erS
         vedleggStatus: opplysningBackend.vedleggStatus,
         filer: opplysningBackend.filer,
         slettet: erSlettet,
-        radInnhold: radInnhold_,
+        radInnhold: spc?.radInnhold ?? [],
         pendingLasterOppFil: false,
     };
 };

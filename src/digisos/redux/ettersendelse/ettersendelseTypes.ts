@@ -1,5 +1,5 @@
-import {Fil, OpplysningType, VedleggStatus} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {REST_STATUS} from "../soknadsdata/soknadsdataTypes";
+import {FilFrontend, VedleggFrontendType, VedleggFrontendVedleggStatus} from "../../../generated/model";
 
 export enum EttersendelseActionTypeKeys {
     NY = "ettersendelse/NY",
@@ -81,7 +81,7 @@ export interface SendEttersendelseOkAction {
 export interface LastOppEttersendtVedleggAction {
     type: EttersendelseActionTypeKeys.LAST_OPP;
     behandlingsId: string;
-    opplysningType: OpplysningType;
+    opplysningType: VedleggFrontendType;
     formData: FormData;
 }
 
@@ -89,13 +89,13 @@ export interface SlettEttersendtVedleggAction {
     type: EttersendelseActionTypeKeys.SLETT_VEDLEGG;
     behandlingsId: string;
     filUuid: string;
-    opplysningType: OpplysningType;
+    opplysningType: VedleggFrontendType;
 }
 
 export interface SlettEttersendtVedleggOkAction {
     type: EttersendelseActionTypeKeys.SLETT_VEDLEGG_OK;
     filUuid: string;
-    opplysningType: OpplysningType;
+    opplysningType: VedleggFrontendType;
 }
 
 export interface LesEttersendelsesVedleggAction {
@@ -120,15 +120,15 @@ export interface LesEttersendteVedleggAction {
 
 export interface FilOpplastingOk {
     type: EttersendelseActionTypeKeys.FIL_OPPLASTING_OK;
-    opplysningType: OpplysningType;
-    fil: Fil;
+    opplysningType: VedleggFrontendType;
+    fil: FilFrontend;
 }
 
 export interface LastOppEttersendelseAction {
     type: EttersendelseActionTypeKeys.LAST_OPP;
     vedleggId: number;
     formData: FormData;
-    opplysningType: OpplysningType;
+    opplysningType: VedleggFrontendType;
 }
 
 export interface LastOppEttersendelseOkAction {
@@ -156,7 +156,7 @@ export interface EttersendelseState {
     restStatus: REST_STATUS;
     opplastingStatus: REST_STATUS;
     ettersendStatus: REST_STATUS;
-    opplastingVedleggType: OpplysningType | null;
+    opplastingVedleggType: VedleggFrontendType | null;
     brukerbehandlingId: string | null;
     feilKode: string;
     feiletVedleggId: string;
@@ -164,9 +164,9 @@ export interface EttersendelseState {
 }
 
 export interface EttersendelseVedleggBackend {
-    type: OpplysningType;
-    vedleggStatus: VedleggStatus;
-    filer: Fil[];
+    type: VedleggFrontendType;
+    vedleggStatus: VedleggFrontendVedleggStatus;
+    filer: FilFrontend[];
 }
 
 export interface Behandlingskjede {

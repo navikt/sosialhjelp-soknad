@@ -1823,8 +1823,7 @@
                 "properties": {
                     "navn": {"$ref": "#/components/schemas/NavnFrontend"},
                     "fodselsnummer": {"type": "string"},
-                    "statsborgerskap": {"type": "string"},
-                    "nordiskBorger": {"type": "boolean"}
+                    "statsborgerskap": {"type": "string"}
                 }
             },
             "AdresserFrontend": {

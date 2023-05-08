@@ -1,11 +1,15 @@
 import React from "react";
 import {LinkButton} from "../../nav-soknad/components/linkButton/LinkButton";
 import {downloadAttachedFile} from "../../nav-soknad/utils/rest-utils";
-import {Fil} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {basePath} from "../../configuration";
+import {FilFrontend} from "../../generated/model";
 
-export const OpplastetVedlegg = (props: {behandlingsId: string | undefined; fil: Fil; onSlett: (fil: Fil) => void}) => {
-    const handleSlett = (fil: Fil) => {
+export const OpplastetVedlegg = (props: {
+    behandlingsId: string | undefined;
+    fil: FilFrontend;
+    onSlett: (fil: FilFrontend) => void;
+}) => {
+    const handleSlett = (fil: FilFrontend) => {
         props.onSlett(fil);
     };
 

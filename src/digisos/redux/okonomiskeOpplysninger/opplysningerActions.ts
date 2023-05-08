@@ -1,38 +1,33 @@
 import {Valideringsfeil} from "../validering/valideringActionTypes";
-import {
-    OpplysningerAction,
-    opplysningerActionTypeKeys,
-    OpplysningerBackend,
-    Opplysning,
-    OpplysningType,
-} from "./opplysningerTypes";
+import {OpplysningerAction, opplysningerActionTypeKeys} from "./opplysningerTypes";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
 import {hentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {AxiosError} from "axios";
+import {VedleggFrontendType, VedleggFrontends, VedleggFrontend} from "../../../generated/model";
 
-export const gotDataFromBackend = (response: OpplysningerBackend): OpplysningerAction => {
+export const gotDataFromBackend = (response: VedleggFrontends): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND,
         backendData: response,
     };
 };
 
-export const updateOpplysning = (opplysning: Opplysning): OpplysningerAction => {
+export const updateOpplysning = (opplysning: VedleggFrontend): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.OPPDATER_OPPLYSNING,
         opplysning,
     };
 };
 
-export const settFilOpplastingPending = (opplysningType: OpplysningType): OpplysningerAction => {
+export const settFilOpplastingPending = (opplysningType: VedleggFrontendType): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_PENDING,
         opplysningType,
     };
 };
 
-export const settFilOpplastingFerdig = (opplysningType: OpplysningType): OpplysningerAction => {
+export const settFilOpplastingFerdig = (opplysningType: VedleggFrontendType): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_FERDIG,
         opplysningType,
@@ -43,7 +38,7 @@ export function hentOpplysninger(behandlingsId: string, dispatch: Dispatch) {
     hentOkonomiskeOpplysninger(behandlingsId)
         .then((response) => {
             // TODO: gotDataFromBackend bruker fremdeles klientside datatyper.
-            dispatch(gotDataFromBackend(response as unknown as OpplysningerBackend));
+            dispatch(gotDataFromBackend(response));
         })
         .catch((error: any) => {
             if (error instanceof AxiosError) {
@@ -61,7 +56,7 @@ export function hentOpplysninger(behandlingsId: string, dispatch: Dispatch) {
 
 export const lagreOpplysningHvisGyldigAction = (
     behandlingsId: string,
-    opplysning: Opplysning,
+    opplysning: VedleggFrontend,
     feil: Valideringsfeil[]
 ): OpplysningerAction => {
     return {

@@ -6,7 +6,6 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {downloadAttachedFile} from "../../nav-soknad/utils/rest-utils";
 import {EttersendelseVedleggBackend} from "../../digisos/redux/ettersendelse/ettersendelseTypes";
-import {Fil, OpplysningType} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {State} from "../../digisos/redux/reducers";
 import {LinkButton} from "../../nav-soknad/components/linkButton/LinkButton";
 import {BodyShort, Button, Loader} from "@navikt/ds-react";
@@ -14,6 +13,8 @@ import styled from "styled-components";
 import {Attachment, Delete} from "@navikt/ds-icons";
 import {useTranslation} from "react-i18next";
 import {REST_FEIL, REST_STATUS} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
+import {FilFrontend, VedleggFrontendType} from "../../generated/model";
+import {logError} from "../../nav-soknad/utils/loggerUtils";
 
 const VedleggsListe = styled.div`
     border-radius: 4px;
@@ -69,7 +70,7 @@ const EttersendelseVedlegg = (props: Props) => {
 
     const leggTilVedleggKnapp = useRef<HTMLInputElement>(null);
 
-    const removeFile = (filId: string, opplysningType: OpplysningType) => {
+    const removeFile = (filId: string, opplysningType: VedleggFrontendType) => {
         if (brukerbehandlingId) {
             dispatch(slettEttersendtVedlegg(brukerbehandlingId, filId, opplysningType));
         }
@@ -111,7 +112,7 @@ const EttersendelseVedlegg = (props: Props) => {
                         : "image/jpeg,image/png,application/pdf"
                 }
             />
-            {props.vedlegg?.filer.map((fil: Fil) => {
+            {props.vedlegg?.filer.map((fil: FilFrontend) => {
                 const lastNedUrl = `opplastetVedlegg/${fil.uuid}/fil`;
                 return (
                     <FilenameWrapper key={fil.uuid}>
@@ -123,7 +124,10 @@ const EttersendelseVedlegg = (props: Props) => {
                             variant="tertiary"
                             size="small"
                             title="Fjern vedlegg"
-                            onClick={() => removeFile(fil.uuid, props.vedlegg.type)}
+                            onClick={() => {
+                                if (!fil.uuid) logError("Prøvde fjerne vedlegg med nullish UUID!");
+                                return removeFile(fil.uuid || "", props.vedlegg.type);
+                            }}
                         >
                             Fjern
                             <Delete />
