@@ -12,7 +12,7 @@ export const useSkjemaNavigation = (steg: number) => {
     const uploadedDocumentsCount = useSelector((state: State) =>
         state.okonomiskeOpplysninger.opplysningerSortert
             .map((opplysning) => opplysning.filer.length)
-            .reduce((total, fileCount) => total + fileCount)
+            .reduce((total, fileCount) => total + fileCount, 0)
     );
 
     const gotoPage = (newPage: number) => {
