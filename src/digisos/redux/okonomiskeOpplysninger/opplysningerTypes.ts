@@ -21,8 +21,8 @@ export interface OpplysningerModel {
 export interface Opplysning {
     type: VedleggFrontendType;
     gruppe: VedleggFrontendGruppe;
-    rader?: VedleggRadFrontend[];
-    vedleggStatus?: VedleggFrontendVedleggStatus;
+    rader: VedleggRadFrontend[];
+    vedleggStatus: VedleggFrontendVedleggStatus;
     filer?: FilFrontend[];
     slettet: boolean;
     radInnhold: InputType[];
@@ -41,16 +41,14 @@ export const getOpplysningRows = ({type}: VedleggFrontend): InputType[] => getSp
 export type OpplysningerAction =
     | GotDataFromBackend
     | UpdateOpplysning
-    | SettPendingPaFilOpplasting
-    | SettFerdigPaFilOpplasting
+    | SettVedleggLoading
     | SettOpplysningsFilAlleredeLastetOpp
     | LagreOpplysningHvisGyldig;
 
 export enum opplysningerActionTypeKeys {
     GOT_DATA_FROM_BACKEND = "okonomiskeOpplysninger/GOT_DATA_FROM_BACKEND",
     OPPDATER_OPPLYSNING = "okonomiskeOpplysninger/OPPDATER_OPPLYSNING",
-    SETT_FIL_OPPLASTING_PENDING = "okonomiskeOpplysninger/SETT_FIL_OPPLASTING_PENDING",
-    SETT_FIL_OPPLASTING_FERDIG = "okonomiskeOpplysninger/SETT_FIL_OPPLASTING_FERDIG",
+    SETT_VEDLEGG_LOADING = "okonomiskeOpplysninger/SETT_VEDLEGG_LOADING",
     SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP = "okonomiskeOpplysninger/SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP",
     LAGRE_OPPLYSNING_HVIS_GYLDIG = "okonomiskeOpplysninger/LAGRE_OPPLYSNING_HVIS_GYLDIG",
 }
@@ -65,14 +63,10 @@ export interface GotDataFromBackend {
     backendData: VedleggFrontends;
 }
 
-export interface SettPendingPaFilOpplasting {
-    type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_PENDING;
+export interface SettVedleggLoading {
+    type: opplysningerActionTypeKeys.SETT_VEDLEGG_LOADING;
     opplysningType: VedleggFrontendType;
-}
-
-export interface SettFerdigPaFilOpplasting {
-    type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_FERDIG;
-    opplysningType: VedleggFrontendType;
+    loading: boolean;
 }
 
 export interface SettOpplysningsFilAlleredeLastetOpp {

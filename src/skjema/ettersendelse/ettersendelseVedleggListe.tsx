@@ -28,8 +28,8 @@ const EttersendelseVedleggListe = (props: {
                 {data &&
                     data.map((vedlegg: EttersendelseVedleggBackend) => {
                         const spc = getSpcForOpplysning(vedlegg.type);
-                        const tittelKey = spc ? spc.textKey + ".vedlegg.sporsmal.tittel" : "";
-                        const infoKey = spc ? spc.textKey + ".vedlegg.sporsmal.info" : "";
+                        const tittelKey = spc ? `${spc.textKey}.vedlegg.sporsmal.tittel` : "";
+                        const infoKey = spc ? `${spc.textKey}.vedlegg.sporsmal.info` : "";
                         let info;
                         // FIXME: I think this is broken
                         if (infoKey && !!t(infoKey)) {

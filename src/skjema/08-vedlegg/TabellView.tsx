@@ -3,7 +3,6 @@ import {InputType} from "../../digisos/redux/okonomiskeOpplysninger/opplysninger
 import {Valideringsfeil, ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
 import {useDispatch, useSelector} from "react-redux";
 import {getSpcForOpplysning, getTomVedleggRad} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerUtils";
-import InputEnhanced from "../../nav-soknad/faktum/InputEnhanced";
 import {
     lagreOpplysningHvisGyldigAction,
     updateOpplysning,
@@ -16,6 +15,9 @@ import {State} from "../../digisos/redux/reducers";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import {VedleggFrontend, VedleggRadFrontend} from "../../generated/model";
 import {logWarning} from "../../nav-soknad/utils/loggerUtils";
+import {useTranslation} from "react-i18next";
+import {TextField} from "@navikt/ds-react";
+import {getFeil} from "../../nav-soknad/utils/enhancedComponentUtils";
 
 export const erGyldigTall = (input: string) => erTall(input, true) && parseInt(input, 10) < 2147483648;
 
@@ -36,20 +38,23 @@ const OpplysningBelopInput = ({
     handleBlur: (radIndex: number, inputFelt: InputType, key: string) => void;
     handleChange: (input: string, radIndex: number, inputFelt: InputType, key: string) => void;
 }) => {
-    const key = `${textKey}.${inputType}.${radIndex}`;
-    const text = `${textKey}.${inputType}`;
-    const id = key.replace(/\./gi, "_");
+    const {t} = useTranslation();
+    const feil = useSelector((state: State) => state.validering.feil);
 
     return (
-        <InputEnhanced
-            id={id}
-            onChange={(input: string) => handleChange(input, radIndex, inputType, key)}
-            onBlur={() => handleBlur(radIndex, inputType, key)}
-            verdi={vedleggRad[inputType]?.toString() ?? ""}
+        <TextField
+            label={t(`${textKey}.${inputType}.label`)}
+            id={`${textKey}.${inputType}.${radIndex}`.replace(/\./gi, "_")}
+            onChange={(event) =>
+                handleChange(event.target.value, radIndex, inputType, `${textKey}.${inputType}.${radIndex}`)
+            }
+            onBlur={() => handleBlur(radIndex, inputType, `${textKey}.${inputType}.${radIndex}`)}
+            defaultValue={vedleggRad[inputType]?.toString() ?? ""}
             required={false}
-            bredde={"S"}
-            faktumKey={text}
-            faktumIndex={radIndex}
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            error={getFeil(feil, t, `${textKey}.${inputType}`, radIndex)}
             maxLength={8}
         />
     );
@@ -71,19 +76,19 @@ const OpplysningTekstInput = ({
     handleChange: (input: string, radIndex: number, inputFelt: InputType, key: string) => void;
 }) => {
     const key = `${textKey}.${inputType}.${radIndex}`;
-    const text = `${textKey}.${inputType}`;
     const id = key.replace(/\./gi, "_");
+    const {t} = useTranslation();
+    const feil = useSelector((state: State) => state.validering.feil);
 
     return (
-        <InputEnhanced
+        <TextField
+            label={t(`${textKey}.${inputType}.label`)}
             id={id}
-            onChange={(input: string) => handleChange(input, radIndex, inputType, key)}
+            onChange={(event) => handleChange(event.target.value, radIndex, inputType, key)}
             onBlur={() => handleBlur(radIndex, inputType, key)}
-            verdi={vedleggRad[inputType]?.toString() ?? ""}
+            defaultValue={vedleggRad[inputType]?.toString() ?? ""}
             required={false}
-            bredde={"L"}
-            faktumKey={text}
-            faktumIndex={radIndex}
+            error={getFeil(feil, t, `${textKey}.${inputType}`, radIndex)}
             maxLength={100}
         />
     );
@@ -158,12 +163,12 @@ const TabellView = (props: {opplysning: VedleggFrontend; gruppeIndex: number}) =
         raderUpdated.splice(radIndex, 1);
         opplysningUpdated.rader = raderUpdated;
         fjernAlleFeilForOpplysning(feil, valideringsKey);
-        validerAlleInputfelterPaOpplysning(opplysningUpdated, props.opplysning);
-        const feilUpdated = getOppdatertListeAvFeil(feil, valideringsKey, radIndex);
+        inputRadValiderAlle(opplysningUpdated, props.opplysning);
+        const feilUpdated = inputRadFeil(feil, valideringsKey, radIndex);
         dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feilUpdated));
     };
 
-    const getOppdatertListeAvFeil = (feil: Valideringsfeil[], valideringsKey: string, radIndex: number) =>
+    const inputRadFeil = (feil: Valideringsfeil[], valideringsKey: string, radIndex: number) =>
         feil.filter(
             (f) =>
                 f.faktumKey !== `${valideringsKey}.beskrivelse.${radIndex}` &&
@@ -174,12 +179,14 @@ const TabellView = (props: {opplysning: VedleggFrontend; gruppeIndex: number}) =
                 f.faktumKey !== `${valideringsKey}.renter.${radIndex}`
         );
 
-    const validerAlleInputfelterPaOpplysning = (opplysningUpdated: VedleggFrontend, opplysning: VedleggFrontend) => {
-        opplysningUpdated.rader?.forEach((rad, index: number) => {
-            keysOf(rad).forEach((key) => {
-                if (key === "beskrivelse") return;
-                setValideringsfeilHvisUgyldigTall(key, rad[key]?.toString() ?? "", opplysning, index);
-            });
+    const inputRadValiderAlle = (opplysningUpdated: VedleggFrontend, opplysning: VedleggFrontend) => {
+        opplysningUpdated.rader.forEach((rad, index: number) => {
+            keysOf(rad)
+                .filter((key) => key !== "beskrivelse")
+                .filter((key) => !!rad[key])
+                .forEach((key) => {
+                    setValideringsfeilHvisUgyldigTall(key, rad[key]?.toString() ?? "", opplysning, index);
+                });
         });
     };
 
@@ -219,7 +226,7 @@ const TabellView = (props: {opplysning: VedleggFrontend; gruppeIndex: number}) =
                         <OpplysningTekstInput
                             textKey={textKey}
                             inputType={inputType}
-                            key={radIndex}
+                            key={`${textKey}.${inputType}.${radIndex}`}
                             radIndex={radIndex}
                             vedleggRad={vedleggRad}
                             handleBlur={handleBlur}
@@ -229,7 +236,7 @@ const TabellView = (props: {opplysning: VedleggFrontend; gruppeIndex: number}) =
                         <OpplysningBelopInput
                             textKey={textKey}
                             inputType={inputType}
-                            key={radIndex}
+                            key={`${textKey}.${inputType}.${radIndex}`}
                             radIndex={radIndex}
                             vedleggRad={vedleggRad}
                             handleBlur={handleBlur}

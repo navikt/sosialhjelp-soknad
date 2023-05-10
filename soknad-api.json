@@ -1487,7 +1487,7 @@
                 "readOnly": true
             },
             "VedleggFrontend": {
-                "required": ["gruppe", "type"],
+                "required": ["gruppe", "rader", "type", "vedleggStatus"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -1551,7 +1551,7 @@
                     "vedleggStatus": {
                         "type": "string",
                         "readOnly": true,
-                        "enum": ["LastetOpp", "VedleggKreves", "VedleggAlleredeSendt"]
+                        "enum": ["Ukjent", "LastetOpp", "VedleggKreves", "VedleggAlleredeSendt"]
                     },
                     "filer": {"type": "array", "readOnly": true, "items": {"$ref": "#/components/schemas/FilFrontend"}}
                 }

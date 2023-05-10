@@ -58,11 +58,8 @@ export const opplysningerReducer = (
             };
         }
 
-        case opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_PENDING:
-            return settFilOpplastingStatus(action.opplysningType, state, true);
-
-        case opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_FERDIG:
-            return settFilOpplastingStatus(action.opplysningType, state, false);
+        case opplysningerActionTypeKeys.SETT_VEDLEGG_LOADING:
+            return settFilOpplastingStatus(action.opplysningType, state, action.loading);
 
         case opplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP: {
             const {opplysningType} = action;

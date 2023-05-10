@@ -95,7 +95,7 @@ const EttersendelseVedlegg = (props: Props) => {
     };
 
     const opplastingsFeil: boolean = opplastingStatus === REST_STATUS.FEILET && feiletVedleggId === props.vedlegg.type;
-    const visFeilFiltypeFeilmelding: boolean = opplastingsFeil && props.feilKode === REST_FEIL.FEIL_FILTPYE;
+    const visFeilFiltypeFeilmelding: boolean = opplastingsFeil && props.feilKode === REST_FEIL.FEIL_FILTYPE;
 
     return (
         <VedleggsListe>

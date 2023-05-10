@@ -30,7 +30,7 @@ const OkonomiskeOpplysningerView = () => {
     return (
         <SkjemaSteg.Container page={8}>
             {grupperMedInnhold.map((opplysningGruppe, i) => (
-                <SkjemaSteg.Content className={cx("pb-12", {"lg:space-y-8": i === 0})}>
+                <SkjemaSteg.Content key={i} className={cx("pb-12", {"lg:space-y-8": i === 0})}>
                     {i === 0 && (
                         <>
                             <SkjemaSteg.Title className={"lg:mb-8"} />

@@ -20,17 +20,11 @@ export const updateOpplysning = (opplysning: VedleggFrontend): OpplysningerActio
     };
 };
 
-export const settFilOpplastingPending = (opplysningType: VedleggFrontendType): OpplysningerAction => {
+export const setVedleggLoading = (opplysningType: VedleggFrontendType, loading: boolean): OpplysningerAction => {
     return {
-        type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_PENDING,
+        type: opplysningerActionTypeKeys.SETT_VEDLEGG_LOADING,
         opplysningType,
-    };
-};
-
-export const settFilOpplastingFerdig = (opplysningType: VedleggFrontendType): OpplysningerAction => {
-    return {
-        type: opplysningerActionTypeKeys.SETT_FIL_OPPLASTING_FERDIG,
-        opplysningType,
+        loading,
     };
 };
 
