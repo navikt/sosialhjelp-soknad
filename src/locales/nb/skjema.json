@@ -399,7 +399,7 @@
     "informasjon.svarpasoknad.undertittel": "Når får du svar på søknaden",
     "informasjon.tekster.personopplysninger.ettersendt.tekst": "Når du sender søknaden går den til oppholdskommunen din. Kommunen har ansvar for å behandle søknaden og lagre opplysningene i sitt kommunale fagsystem.",
     "informasjon.tekster.personopplysninger.ettersendt.tittel": "Etter søknaden er sendt",
-    "informasjon.tekster.personopplysninger.fordusender.tekst": "Før du sender søknaden blir opplysningene lagret hos Arbeids- og velferdsdirektoratet. Hvis du klikker «avbryt» før du har sendt søknaden, vil alle opplysninger bli slettet. Du kan velge å avbryte når som helst i søknaden.",
+    "informasjon.tekster.personopplysninger.fordusender.tekst": "Opplysningene i søknaden blir lagret hos NAV. Hvis du trykker på «Slett søknaden» før du har sendt søknaden, vil alle opplysningene bli slettet. Dette kan du gjøre når som helst i søknaden.",
     "informasjon.tekster.personopplysninger.fordusender.tittel": "Før du sender søknaden",
     "informasjon.tekster.personopplysninger.innhenting.tekst": "Du fyller selv inn opplysninger i søknaden. I tillegg henter vi opplysninger fra offentlige registre som vi har lov til å hente fra. Eksempler er opplysninger om familie fra Folkeregisteret, opplysninger om arbeidsforhold fra Arbeidstakerregisteret og informasjon om statlige ytelser fra NAV. Hvis du ikke ønsker at vi henter inn disse opplysningene om deg automatisk, må du ta kontakt med NAV-kontoret ditt for å få søknadskjema på papir.",
     "informasjon.tekster.personopplysninger.innhenting.tittel": "Innhenting av personopplysninger",
