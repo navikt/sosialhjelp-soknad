@@ -21,23 +21,23 @@ const VedleggFeilmelding = ({error}: {error: string | null}) =>
         </div>
     );
 
-const VedleggView = ({okonomiskOpplysning}: {okonomiskOpplysning: Opplysning}) => {
+const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const behandlingsId = useBehandlingsId();
     const feil = useSelector((state: State) => state.validering.feil);
     const {t} = useTranslation();
-    const opplysningSpec = getSpcForOpplysning(okonomiskOpplysning.type);
+    const opplysningSpec = getSpcForOpplysning(opplysning.type);
 
-    const {deleteFile, files, upload, error, loading} = useVedlegg(okonomiskOpplysning);
+    const {deleteFile, files, upload, error, loading} = useVedlegg(opplysning);
 
     const dispatch = useDispatch();
 
     if (!opplysningSpec) {
-        logError(`Ukjent opplysning ${okonomiskOpplysning.type}!`);
+        logError(`Ukjent opplysning ${opplysning.type}!`);
         return null;
     }
 
     const handleAlleredeLastetOpp = (_: any) => {
-        const opplysningUpdated = {...okonomiskOpplysning};
+        const opplysningUpdated = {...opplysning};
 
         if (opplysningUpdated.vedleggStatus !== VedleggFrontendVedleggStatus.VedleggAlleredeSendt) {
             opplysningUpdated.vedleggStatus = VedleggFrontendVedleggStatus.VedleggAlleredeSendt;
@@ -57,22 +57,20 @@ const VedleggView = ({okonomiskOpplysning}: {okonomiskOpplysning: Opplysning}) =
                 ))}
             </div>
             <VedleggFileSelector
-                opplysning={okonomiskOpplysning}
-                isDisabled={
-                    loading || okonomiskOpplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt
-                }
-                visSpinner={okonomiskOpplysning.pendingLasterOppFil}
+                opplysning={opplysning}
+                isDisabled={loading || opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
+                visSpinner={opplysning.pendingLasterOppFil}
                 doUpload={upload}
             />
             <VedleggFeilmelding error={error} />
             <Checkbox
                 label={t("opplysninger.vedlegg.alleredelastetopp")}
-                id={okonomiskOpplysning.type + "_allerede_lastet_opp_checkbox"}
+                id={opplysning.type + "_allerede_lastet_opp_checkbox"}
                 className={cx("vedleggLastetOppCheckbox", {
-                    "checkboks--disabled": okonomiskOpplysning.filer?.length,
+                    "checkboks--disabled": opplysning.filer?.length,
                 })}
                 onChange={(event: any) => handleAlleredeLastetOpp(event)}
-                checked={okonomiskOpplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
+                checked={opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
                 disabled={!!files.length || loading}
             />
         </div>

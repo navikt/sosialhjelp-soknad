@@ -37,17 +37,6 @@ export const Gruppetittel: Record<VedleggGruppe, string> = {
     ukjent: "opplysninger.ukjent",
 };
 
-export const getTomVedleggRad: () => VedleggRadFrontend = () => {
-    return {
-        beskrivelse: "",
-        belop: 0,
-        brutto: 0,
-        netto: 0,
-        avdrag: 0,
-        renter: 0,
-    };
-};
-
 export const getOpplysningByType = (opplysningerSortert: Opplysning[], opplysningType: VedleggFrontendType) => {
     return opplysningerSortert.find((o: Opplysning) => {
         return o.type && o.type === opplysningType;

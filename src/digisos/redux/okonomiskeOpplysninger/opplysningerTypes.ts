@@ -25,18 +25,19 @@ export interface Opplysning {
     vedleggStatus: VedleggFrontendVedleggStatus;
     filer?: FilFrontend[];
     slettet: boolean;
-    radInnhold: InputType[];
+    radInnhold: OpplysningInputType[];
     pendingLasterOppFil: boolean;
 }
 
 export interface OpplysningSpc {
     type: VedleggFrontendType;
     antallRader: "ingen" | "en" | "flere";
-    radInnhold: InputType[];
+    radInnhold: OpplysningInputType[];
     textKey: string;
 }
 
-export const getOpplysningRows = ({type}: VedleggFrontend): InputType[] => getSpcForOpplysning(type)?.radInnhold ?? [];
+export const getOpplysningRows = ({type}: VedleggFrontend): OpplysningInputType[] =>
+    getSpcForOpplysning(type)?.radInnhold ?? [];
 
 export type OpplysningerAction =
     | GotDataFromBackend
@@ -92,4 +93,4 @@ export type VedleggGruppe =
     | "andre utgifter"
     | "ukjent";
 
-export type InputType = "beskrivelse" | "belop" | "brutto" | "netto" | "avdrag" | "renter";
+export type OpplysningInputType = "beskrivelse" | "belop" | "brutto" | "netto" | "avdrag" | "renter";

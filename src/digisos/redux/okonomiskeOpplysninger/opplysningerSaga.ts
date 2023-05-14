@@ -8,6 +8,12 @@ import {Valideringsfeil, ValideringsFeilKode} from "../validering/valideringActi
 import {setValideringsfeil} from "../validering/valideringActions";
 import {logError, logWarning} from "../../../nav-soknad/utils/loggerUtils";
 
+/**
+ * Filtrerer listen av valideringsfeil og returnerer dem som har opplysningTextKey
+ * som en substring av feil.faktumKey.
+ * @param feil Listen av valideringsfeil
+ * @param opplysningTextKey Tekstnøkkel å søke etter
+ */
 export const getFeilForOpplysning = (feil: Valideringsfeil[], opplysningTextKey: string) =>
     feil.filter(({faktumKey}) => faktumKey.indexOf(opplysningTextKey) > -1);
 

@@ -45,7 +45,7 @@ const OpplysningView = (props: {opplysning: Opplysning; gruppeIndex: number}) =>
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
                 <TabellView opplysning={opplysning} gruppeIndex={gruppeIndex} />
-                <VedleggView okonomiskOpplysning={opplysning} />
+                <VedleggView opplysning={opplysning} />
             </Sporsmal>
         </OkonomiskeOpplysningerSporsmal>
     );
