@@ -1,9 +1,11 @@
 import {getIntlTextOrKey, getIntlText} from "./intlUtils";
 import {TFunction} from "i18next";
 
-export type SporsmalTekstTyper = "sporsmal" | "infotekst" | "hjelpetekst";
-
-export type SporsmalTekster = Partial<Record<SporsmalTekstTyper, string>>;
+export type SporsmalTekster = {
+    sporsmal: string;
+    infotekst?: string;
+    hjelpetekst?: string;
+};
 
 export const getFaktumSporsmalTekst = (t: TFunction<"skjema", undefined, "skjema">, key: string): SporsmalTekster => ({
     sporsmal: getIntlTextOrKey(t, `${key}.sporsmal`),
