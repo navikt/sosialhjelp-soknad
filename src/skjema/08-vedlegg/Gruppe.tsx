@@ -15,8 +15,8 @@ const GruppeView = ({gruppeKey, gruppe}: {gruppeKey: VedleggGruppe; gruppe: Oppl
                 {t(`${Gruppetittel[gruppeKey]}.sporsmal`)}
             </Heading>
 
-            {gruppe.map((okonomiskOpplysning: Opplysning, gruppeIndex: number) => (
-                <OpplysningView key={gruppeIndex} opplysning={okonomiskOpplysning} gruppeIndex={gruppeIndex} />
+            {gruppe.map((opplysning, index: number) => (
+                <OpplysningView key={index} opplysning={opplysning} gruppeIndex={index} />
             ))}
         </Panel>
     );

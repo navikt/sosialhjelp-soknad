@@ -1,15 +1,6 @@
 import {Valideringsfeil} from "../validering/valideringActionTypes";
 import {REST_STATUS} from "../soknadsdata/soknadsdataTypes";
-import {
-    FilFrontend,
-    VedleggFrontendGruppe,
-    VedleggFrontends,
-    VedleggFrontendType,
-    VedleggRadFrontend,
-    VedleggFrontendVedleggStatus,
-    VedleggFrontend,
-} from "../../../generated/model";
-import {getSpcForOpplysning} from "./opplysningerUtils";
+import {VedleggFrontends, VedleggFrontendType, VedleggFrontend} from "../../../generated/model";
 
 export interface OpplysningerModel {
     restStatus: REST_STATUS;
@@ -18,16 +9,10 @@ export interface OpplysningerModel {
     enFilLastesOpp: boolean;
 }
 
-export interface Opplysning {
-    type: VedleggFrontendType;
-    gruppe: VedleggFrontendGruppe;
-    rader: VedleggRadFrontend[];
-    vedleggStatus: VedleggFrontendVedleggStatus;
-    filer?: FilFrontend[];
-    slettet: boolean;
-    radInnhold: OpplysningInputType[];
-    pendingLasterOppFil: boolean;
-}
+export type Opplysning = VedleggFrontend & {
+    slettet?: boolean;
+    pendingLasterOppFil?: boolean;
+};
 
 export interface OpplysningSpc {
     type: VedleggFrontendType;
@@ -35,9 +20,6 @@ export interface OpplysningSpc {
     radInnhold: OpplysningInputType[];
     textKey: string;
 }
-
-export const getOpplysningRows = ({type}: VedleggFrontend): OpplysningInputType[] =>
-    getSpcForOpplysning(type)?.radInnhold ?? [];
 
 export type OpplysningerAction =
     | GotDataFromBackend

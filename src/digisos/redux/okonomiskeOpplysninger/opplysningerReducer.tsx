@@ -39,13 +39,11 @@ export const opplysningerReducer = (
 ) => {
     switch (action.type) {
         case opplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND: {
-            const sortert = getSortertListeAvOpplysninger(action.backendData);
-
             return {
                 ...state,
                 restStatus: REST_STATUS.OK,
                 backendData: action.backendData,
-                opplysningerSortert: sortert,
+                opplysningerSortert: getSortertListeAvOpplysninger(action.backendData),
             };
         }
         case opplysningerActionTypeKeys.OPPDATER_OPPLYSNING: {

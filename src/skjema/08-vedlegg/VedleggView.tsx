@@ -59,7 +59,7 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
             <VedleggFileSelector
                 opplysning={opplysning}
                 isDisabled={loading || opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
-                visSpinner={opplysning.pendingLasterOppFil}
+                visSpinner={!!opplysning.pendingLasterOppFil}
                 doUpload={upload}
             />
             <VedleggFeilmelding error={error} />

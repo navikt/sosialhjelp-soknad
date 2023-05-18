@@ -1,4 +1,4 @@
-import {getOpplysningRows, LagreOpplysningHvisGyldig, opplysningerActionTypeKeys} from "./opplysningerTypes";
+import {LagreOpplysningHvisGyldig, opplysningerActionTypeKeys} from "./opplysningerTypes";
 import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {getOpplysningerUrl, getSpcForOpplysning, transformToBackendOpplysning} from "./opplysningerUtils";
@@ -52,7 +52,7 @@ function* lagreOpplysningHvisGyldigSaga({behandlingsId, opplysning, feil}: Lagre
         }
 
         if (status === 404) {
-            const radInnhold = getOpplysningRows(opplysning);
+            const radInnhold = opplysningerSpc.radInnhold;
             for (let i = 0; i < radInnhold.length; i++) {
                 // Setter alle felt til feilet!
                 const validationKey = `${textKey}.${radInnhold[i]}.${i}`;
