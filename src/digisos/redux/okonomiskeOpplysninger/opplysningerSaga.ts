@@ -1,12 +1,13 @@
 import {LagreOpplysningHvisGyldig, opplysningerActionTypeKeys} from "./opplysningerTypes";
 import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {getOpplysningerUrl, getSpcForOpplysning, transformToBackendOpplysning} from "./opplysningerUtils";
+import {getOpplysningerUrl, transformToBackendOpplysning} from "./opplysningerUtils";
 import {DigisosLegacyRESTError, fetchPut} from "../../../nav-soknad/utils/rest-utils";
 import {updateOpplysning} from "./opplysningerActions";
 import {Valideringsfeil, ValideringsFeilKode} from "../validering/valideringActionTypes";
 import {setValideringsfeil} from "../validering/valideringActions";
-import {logError, logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {opplysningSpec} from "./opplysningerConfig";
 
 /**
  * Filtrerer listen av valideringsfeil og returnerer dem som har opplysningTextKey
@@ -18,14 +19,7 @@ export const getFeilForOpplysning = (feil: Valideringsfeil[], opplysningTextKey:
     feil.filter(({faktumKey}) => faktumKey.indexOf(opplysningTextKey) > -1);
 
 function* lagreOpplysningHvisGyldigSaga({behandlingsId, opplysning, feil}: LagreOpplysningHvisGyldig) {
-    const opplysningerSpc = getSpcForOpplysning(opplysning.type);
-
-    if (!opplysningerSpc) {
-        yield call(logError, "Ukjent opplysningstype mottatt. Type: " + opplysning.type);
-        return;
-    }
-
-    const {textKey} = opplysningerSpc;
+    const {textKey, inputFields} = opplysningSpec[opplysning.type];
 
     yield put(updateOpplysning(opplysning));
 
@@ -52,7 +46,7 @@ function* lagreOpplysningHvisGyldigSaga({behandlingsId, opplysning, feil}: Lagre
         }
 
         if (status === 404) {
-            const radInnhold = opplysningerSpc.radInnhold;
+            const radInnhold = inputFields;
             for (let i = 0; i < radInnhold.length; i++) {
                 // Setter alle felt til feilet!
                 const validationKey = `${textKey}.${radInnhold[i]}.${i}`;

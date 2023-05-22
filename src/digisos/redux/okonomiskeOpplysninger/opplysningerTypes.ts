@@ -1,6 +1,11 @@
 import {Valideringsfeil} from "../validering/valideringActionTypes";
 import {REST_STATUS} from "../soknadsdata/soknadsdataTypes";
-import {VedleggFrontends, VedleggFrontendType, VedleggFrontend} from "../../../generated/model";
+import {VedleggFrontends, VedleggFrontendType} from "../../../generated/model";
+import {
+    VedleggFrontendMinusEtParTingSomTrengerAvklaring,
+    VedleggFrontendsMinusEtParTingSomTrengerAvklaring,
+    VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring,
+} from "./opplysningerConfig";
 
 export interface OpplysningerModel {
     restStatus: REST_STATUS;
@@ -9,7 +14,7 @@ export interface OpplysningerModel {
     enFilLastesOpp: boolean;
 }
 
-export type Opplysning = VedleggFrontend & {
+export type Opplysning = VedleggFrontendMinusEtParTingSomTrengerAvklaring & {
     slettet?: boolean;
     pendingLasterOppFil?: boolean;
 };
@@ -39,29 +44,29 @@ export enum opplysningerActionTypeKeys {
 
 export interface UpdateOpplysning {
     type: opplysningerActionTypeKeys.OPPDATER_OPPLYSNING;
-    opplysning: VedleggFrontend;
+    opplysning: VedleggFrontendMinusEtParTingSomTrengerAvklaring;
 }
 
 export interface GotDataFromBackend {
     type: opplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND;
-    backendData: VedleggFrontends;
+    backendData: VedleggFrontendsMinusEtParTingSomTrengerAvklaring;
 }
 
 export interface SettVedleggLoading {
     type: opplysningerActionTypeKeys.SETT_VEDLEGG_LOADING;
-    opplysningType: VedleggFrontendType;
+    opplysningType: VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring;
     loading: boolean;
 }
 
 export interface SettOpplysningsFilAlleredeLastetOpp {
     type: opplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP;
-    opplysningType: VedleggFrontendType;
+    opplysningType: VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring;
 }
 
 export interface LagreOpplysningHvisGyldig {
     type: opplysningerActionTypeKeys.LAGRE_OPPLYSNING_HVIS_GYLDIG;
     behandlingsId: string;
-    opplysning: VedleggFrontend;
+    opplysning: VedleggFrontendMinusEtParTingSomTrengerAvklaring;
     feil: Valideringsfeil[];
 }
 

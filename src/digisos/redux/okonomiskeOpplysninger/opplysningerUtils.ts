@@ -1,5 +1,9 @@
 import {Opplysning, VedleggGruppe} from "./opplysningerTypes";
-import {sortertSpecGammeltFormat} from "./opplysningerConfig";
+import {
+    opplysningSpec,
+    sortertSpecGammeltFormat,
+    VedleggFrontendsMinusEtParTingSomTrengerAvklaring,
+} from "./opplysningerConfig";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 import {VedleggFrontend, VedleggFrontends, VedleggFrontendType} from "../../../generated/model";
 
@@ -43,7 +47,7 @@ export const getOpplysningByType = (opplysninger: Opplysning[], opplysningType: 
 export const getSortertListeAvOpplysninger = ({
     okonomiskeOpplysninger,
     slettedeVedlegg,
-}: VedleggFrontends): Opplysning[] => {
+}: VedleggFrontendsMinusEtParTingSomTrengerAvklaring): Opplysning[] => {
     const current = okonomiskeOpplysninger.map((opplysning): Opplysning => ({...opplysning}));
     const deleted = slettedeVedlegg.map((opplysning): Opplysning => ({...opplysning, slettet: true}));
     return [...current, ...deleted].sort(opplysningerSortFn);
@@ -58,5 +62,4 @@ export const getSpcForOpplysning = (opplysningType: VedleggFrontendType) => {
 };
 
 export const opplysningerSortFn = (a: Opplysning, b: Opplysning) =>
-    sortertSpecGammeltFormat.findIndex(({type}) => a.type === type) -
-    sortertSpecGammeltFormat.findIndex(({type}) => b.type === type);
+    opplysningSpec[a.type].sortKey - opplysningSpec[b.type].sortKey;

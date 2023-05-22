@@ -1,5 +1,5 @@
 import {OpplysningInputType, OpplysningSpecGammeltFormat, VedleggGruppe} from "./opplysningerTypes";
-import {VedleggFrontendType} from "../../../generated/model";
+import {VedleggFrontend, VedleggFrontendType} from "../../../generated/model";
 
 export type OpplysningSpec = {
     numRows: "ingen" | "en" | "flere";
@@ -11,7 +11,11 @@ export type OpplysningSpec = {
 // TODO: Avklare disse:
 //  Disse eksisterer på backend, men er ikke presentert på frontend.
 //  Skal de slettes fra frontend, eller implementeres her?
-type VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring = Exclude<
+//  Jeg vet ikke, så jeg patcher datatypene i første omgang.
+//  Når denne diskrepansen er avklart, kan man fjerne denne patchen,
+//  og all bruk av disse typene kan erstattes med sine respektive
+//  originaltyper, dvs. uten "MinusEtParTingSomTrengerAvklaring".
+export type VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring = Exclude<
     VedleggFrontendType,
     | "dokumentasjon|annet"
     | "dokumentasjon|kjoretoy"
@@ -20,6 +24,18 @@ type VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring = Exclude<
     | "dokumentasjon|campingvogn"
     | "kjopekontrakt|kjopekontrakt"
 >;
+
+// Se over
+export type VedleggFrontendMinusEtParTingSomTrengerAvklaring = VedleggFrontend & {
+    type: VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring;
+};
+
+// Se over
+export type VedleggFrontendsMinusEtParTingSomTrengerAvklaring = {
+    okonomiskeOpplysninger: VedleggFrontendMinusEtParTingSomTrengerAvklaring[];
+    slettedeVedlegg: VedleggFrontendMinusEtParTingSomTrengerAvklaring[];
+    isOkonomiskeOpplysningerBekreftet: boolean;
+};
 
 export const opplysningSpec: Record<VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring, OpplysningSpec> = {
     "lonnslipp|arbeid": {
