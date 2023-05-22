@@ -25,18 +25,18 @@ const zodBelopTekstfeltSchema = z.preprocess((a) => {
     if (isNaN(num)) return "this string is passed as a hack to trigger the invalid_type_error";
 
     return num;
-}, z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL).nullable());
+}, z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL));
 
 const VedleggRadFrontendSchema = z.object({
     rader: z.array(
         z
             .object({
                 beskrivelse: z.string().nullable(),
-                belop: zodBelopTekstfeltSchema,
-                brutto: zodBelopTekstfeltSchema,
-                netto: zodBelopTekstfeltSchema,
-                renter: zodBelopTekstfeltSchema,
-                avdrag: zodBelopTekstfeltSchema,
+                belop: zodBelopTekstfeltSchema.nullable(),
+                brutto: zodBelopTekstfeltSchema.nullable(),
+                netto: zodBelopTekstfeltSchema.nullable(),
+                renter: zodBelopTekstfeltSchema.nullable(),
+                avdrag: zodBelopTekstfeltSchema.nullable(),
             })
             .partial()
     ),
