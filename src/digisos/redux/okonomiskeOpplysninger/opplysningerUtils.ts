@@ -1,5 +1,5 @@
 import {Opplysning, VedleggGruppe} from "./opplysningerTypes";
-import {opplysningsRekkefolgeOgSpc} from "./opplysningerConfig";
+import {sortertSpecGammeltFormat} from "./opplysningerConfig";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 import {VedleggFrontend, VedleggFrontends, VedleggFrontendType} from "../../../generated/model";
 
@@ -44,21 +44,19 @@ export const getSortertListeAvOpplysninger = ({
     okonomiskeOpplysninger,
     slettedeVedlegg,
 }: VedleggFrontends): Opplysning[] => {
-    const current = okonomiskeOpplysninger?.map((opplysning): Opplysning => ({...opplysning}));
-    const deleted = slettedeVedlegg?.map((opplysning): Opplysning => ({...opplysning, slettet: true}));
-    return [...(current ?? []), ...(deleted ?? [])].sort(opplysningerSortFn).filter((o) => !!o);
+    const current = okonomiskeOpplysninger.map((opplysning): Opplysning => ({...opplysning}));
+    const deleted = slettedeVedlegg.map((opplysning): Opplysning => ({...opplysning, slettet: true}));
+    return [...current, ...deleted].sort(opplysningerSortFn);
 };
 
 export const getSpcForOpplysning = (opplysningType: VedleggFrontendType) => {
-    const opplysningSpcs = opplysningsRekkefolgeOgSpc.find(({type}) => type === opplysningType);
+    const spec = sortertSpecGammeltFormat.find(({type}) => type === opplysningType);
 
-    if (!opplysningSpcs) {
-        logError(`Spc ikke funnet for opplysning med type: "${opplysningType}"`);
-    }
+    if (!spec) logError(`Spc ikke funnet for opplysning med type: "${opplysningType}"`);
 
-    return opplysningSpcs!;
+    return spec!;
 };
 
 export const opplysningerSortFn = (a: Opplysning, b: Opplysning) =>
-    opplysningsRekkefolgeOgSpc.findIndex(({type}) => a.type === type) -
-    opplysningsRekkefolgeOgSpc.findIndex(({type}) => b.type === type);
+    sortertSpecGammeltFormat.findIndex(({type}) => a.type === type) -
+    sortertSpecGammeltFormat.findIndex(({type}) => b.type === type);

@@ -1895,7 +1895,7 @@
                 "properties": {"filnavn": {"type": "string"}, "uuid": {"type": "string"}}
             },
             "VedleggFrontends": {
-                "required": ["isOkonomiskeOpplysningerBekreftet"],
+                "required": ["isOkonomiskeOpplysningerBekreftet", "okonomiskeOpplysninger", "slettedeVedlegg"],
                 "type": "object",
                 "properties": {
                     "okonomiskeOpplysninger": {

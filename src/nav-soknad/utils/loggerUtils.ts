@@ -1,4 +1,5 @@
-import {Logg, LoggLevel} from "../../generated/model";
+import {LoggLevel} from "../../generated/model/loggLevel";
+import {Logg} from "../../generated/model/logg";
 import {axiosInstance} from "../../lib/orval/soknad-api-axios";
 
 export const logWindowError: typeof window.onerror = (message, jsFileUrl, lineNumber, columnNumber) => {

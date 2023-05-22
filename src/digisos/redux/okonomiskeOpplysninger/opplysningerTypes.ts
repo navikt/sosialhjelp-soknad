@@ -14,7 +14,8 @@ export type Opplysning = VedleggFrontend & {
     pendingLasterOppFil?: boolean;
 };
 
-export interface OpplysningSpc {
+// Fases ut til fordel for OpplysningSpec
+export interface OpplysningSpecGammeltFormat {
     type: VedleggFrontendType;
     antallRader: "ingen" | "en" | "flere";
     radInnhold: OpplysningInputType[];
