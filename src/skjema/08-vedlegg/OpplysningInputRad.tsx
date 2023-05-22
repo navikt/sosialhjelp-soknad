@@ -42,8 +42,9 @@ export const OpplysningInputRad = ({
 
                         return (
                             <TextField
+                                className={"pb-2"}
                                 label={t(`${textKey}.${fieldName}.label`)}
-                                error={fieldState.error?.message}
+                                error={fieldState.error?.message && t(fieldState.error.message)}
                                 {...formatSpecifier}
                                 {...field}
                                 // To avoid value === null

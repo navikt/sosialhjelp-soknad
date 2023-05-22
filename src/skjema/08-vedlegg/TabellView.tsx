@@ -17,29 +17,26 @@ const TabellView = ({
         textKey,
         numRows,
         inputs,
-        form: {control, handleSubmit},
+        form: {control},
         rows: {entries, append, remove},
     } = useOpplysning(opplysning);
 
     return (
-        <div>
-            <form>
-                <ul>
-                    {entries.map((item, index) => (
-                        <li key={item.id} onBlur={handleSubmit(console.log, console.error)}>
-                            <OpplysningInputRad textKey={textKey} index={index} control={control} fields={inputs} />
-                            {!!index && <LinkButton onClick={() => remove(index)}>Fjern</LinkButton>}
-                        </li>
-                    ))}
-                    {numRows === "flere" && (
-                        <LinkButton onClick={() => append({})} id={gruppeIndex + "_link"}>
-                            <span aria-hidden={true}>+ </span>Legg til
-                        </LinkButton>
-                    )}
-                </ul>
-                <button type={"submit"}>test</button>
-            </form>
-        </div>
+        <form>
+            <ul>
+                {entries.map((item, index) => (
+                    <li className="pb-4" key={item.id}>
+                        <OpplysningInputRad textKey={textKey} index={index} control={control} fields={inputs} />
+                        {!!index && <LinkButton onClick={() => remove(index)}>Fjern</LinkButton>}
+                    </li>
+                ))}
+                {numRows === "flere" && (
+                    <LinkButton onClick={() => append({})} id={gruppeIndex + "_link"}>
+                        <span aria-hidden={true}>+ </span>Legg til
+                    </LinkButton>
+                )}
+            </ul>
+        </form>
     );
 };
 

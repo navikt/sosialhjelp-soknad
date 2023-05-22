@@ -1,7 +1,7 @@
 import * as React from "react";
 import Gruppe from "./Gruppe";
-import {OpplysningerInformasjonspanel} from "./OpplysningerInformasjonspanel";
-import {OpplysningerIkkeBesvartPanel} from "./OpplysningerIkkeBesvartPanel";
+import {InfopanelOpplysninger} from "./InfopanelOpplysninger";
+import {UbesvarteOpplysninger} from "./UbesvarteOpplysninger";
 import {ApplicationSpinner} from "../../nav-soknad/components/applicationSpinner/ApplicationSpinner";
 import {SkjemaSteg} from "../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
 import cx from "classnames";
@@ -12,29 +12,30 @@ export const OkonomiskeOpplysningerView = () => {
 
     if (isLoading) return <ApplicationSpinner />;
 
+    const firstGroup = grupper[0];
+    const middleGroups = grupper.slice(1, grupper.length - 1);
+    const lastGroup = grupper[grupper.length - 1];
+
     return (
         <SkjemaSteg.Container page={8}>
-            {grupper.map((gruppe, i) => {
-                const first = i === 0;
-                const last = i === grupper.length - 1;
-
-                return (
-                    <SkjemaSteg.Content key={i} className={cx("pb-12", {"lg:space-y-8": first})}>
-                        {first && (
-                            <>
-                                <SkjemaSteg.Title className={"lg:mb-8"} />
-                                {bekreftet ? <OpplysningerIkkeBesvartPanel /> : <OpplysningerInformasjonspanel />}
-                            </>
-                        )}
-                        <Gruppe
-                            key={gruppe}
-                            gruppeKey={gruppe}
-                            opplysninger={sorterte.filter((x) => x.gruppe === gruppe)}
-                        />
-                        {last && <SkjemaSteg.Buttons />}
-                    </SkjemaSteg.Content>
-                );
-            })}
+            <SkjemaSteg.Content className={cx("pb-12", {"lg:space-y-8": true})}>
+                <SkjemaSteg.Title className={"lg:mb-8"} />
+                {bekreftet ? <UbesvarteOpplysninger /> : <InfopanelOpplysninger />}
+                <Gruppe gruppeKey={firstGroup} opplysninger={sorterte.filter((x) => x.gruppe === firstGroup)} />
+            </SkjemaSteg.Content>
+            {middleGroups.map((gruppe, i) => (
+                <SkjemaSteg.Content key={i} className={"pb-12"}>
+                    <Gruppe
+                        key={gruppe}
+                        gruppeKey={gruppe}
+                        opplysninger={sorterte.filter((x) => x.gruppe === gruppe)}
+                    />
+                </SkjemaSteg.Content>
+            ))}
+            <SkjemaSteg.Content className={cx("pb-12")}>
+                <Gruppe gruppeKey={lastGroup} opplysninger={sorterte.filter((x) => x.gruppe === lastGroup)} />
+                <SkjemaSteg.Buttons />
+            </SkjemaSteg.Content>
         </SkjemaSteg.Container>
     );
 };
