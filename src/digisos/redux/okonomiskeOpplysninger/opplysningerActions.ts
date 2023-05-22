@@ -1,9 +1,5 @@
 import {Valideringsfeil} from "../validering/valideringActionTypes";
 import {OpplysningerAction, opplysningerActionTypeKeys} from "./opplysningerTypes";
-import {logError} from "../../../nav-soknad/utils/loggerUtils";
-import {Dispatch} from "redux";
-import {hentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
-import {AxiosError} from "axios";
 import {
     UgyldigeFrontendTyper,
     VedleggFrontendMinusEtParTingSomTrengerAvklaring,
@@ -37,41 +33,16 @@ export const setVedleggLoading = (
     };
 };
 
-export const validVedleggFrontend = (
+export const invalidVedleggFrontend = (
     foo: VedleggFrontend | VedleggFrontendMinusEtParTingSomTrengerAvklaring
     // @ts-ignore fordi dette er en midlertidig hack
-): foo is VedleggFrontendMinusEtParTingSomTrengerAvklaring => !UgyldigeFrontendTyper.includes(foo.type);
+): foo is VedleggFrontend => UgyldigeFrontendTyper.includes(foo.type);
 
 export const validVedleggFrontends = (
     foo: VedleggFrontends | VedleggFrontendsMinusEtParTingSomTrengerAvklaring
     // @ts-ignore fordi dette er en midlertidig hack
-): foo is VedleggFrontendsMinusEtParTingSomTrengerAvklaring => {
-    if (foo.slettedeVedlegg.some((vedlegg) => !validVedleggFrontend(vedlegg))) return false;
-    if (foo.okonomiskeOpplysninger.some((vedlegg) => !validVedleggFrontend(vedlegg))) return false;
-    return true;
-};
-
-export function hentOpplysninger(behandlingsId: string, dispatch: Dispatch) {
-    hentOkonomiskeOpplysninger(behandlingsId)
-        .then((response: VedleggFrontends | VedleggFrontendsMinusEtParTingSomTrengerAvklaring) => {
-            if (!validVedleggFrontends(response)) {
-                throw new Error("initOpplysning mottok ugyldig spec - frontends API ute av synk med Swagger?");
-            }
-            dispatch(gotDataFromBackend(response));
-        })
-        .catch((error: any) => {
-            if (error instanceof AxiosError) {
-                logError(`Henting av økonomiske opplysninger feilet: ${error.status}: ${error.message}`);
-            } else {
-                logError(`Henting av økonomiske opplysninger feilet: ${error.message}`);
-            }
-
-            // Gi logError en sjanse
-            setTimeout(() => {
-                window.location.href = "/sosialhjelp/soknad/feil?reason=hentOpplysninger";
-            }, 1000);
-        });
-}
+): foo is VedleggFrontendsMinusEtParTingSomTrengerAvklaring =>
+    foo.slettedeVedlegg.some(invalidVedleggFrontend) || foo.okonomiskeOpplysninger.some(invalidVedleggFrontend);
 
 export const lagreOpplysningHvisGyldigAction = (
     behandlingsId: string,

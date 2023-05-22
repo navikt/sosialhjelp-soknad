@@ -5,9 +5,9 @@ import {useTranslation} from "react-i18next";
 import {Heading, Panel} from "@navikt/ds-react";
 import {Gruppetittel} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerUtils";
 
-const GruppeView = ({gruppeKey, gruppe}: {gruppeKey: VedleggGruppe; gruppe: Opplysning[]}) => {
+const GruppeView = ({gruppeKey, opplysninger}: {gruppeKey: VedleggGruppe; opplysninger: Opplysning[]}) => {
     const {t} = useTranslation();
-    if (!gruppe?.length) return null;
+    if (!opplysninger.length) return null;
 
     return (
         <Panel className={"!px-0"}>
@@ -15,7 +15,7 @@ const GruppeView = ({gruppeKey, gruppe}: {gruppeKey: VedleggGruppe; gruppe: Oppl
                 {t(`${Gruppetittel[gruppeKey]}.sporsmal`)}
             </Heading>
 
-            {gruppe.map((opplysning, index: number) => (
+            {opplysninger.map((opplysning, index: number) => (
                 <OpplysningView key={index} opplysning={opplysning} gruppeIndex={index} />
             ))}
         </Panel>
