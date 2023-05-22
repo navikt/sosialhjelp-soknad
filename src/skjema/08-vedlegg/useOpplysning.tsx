@@ -10,8 +10,12 @@ import {useEffect} from "react";
 import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 
+// OBS: Dette er ikke testet enda
 const zodBelopTekstfeltSchema = z.preprocess((a) => {
-    // OBS: Dette er ikke testet enda
+    if (typeof a === "number") return a;
+
+    if (a === "") return null;
+
     const isNumeric = new RegExp("^\\d+$");
 
     if (!isNumeric.test(a as string)) return "this string is passed as a hack to trigger the invalid_type_error";
@@ -21,13 +25,13 @@ const zodBelopTekstfeltSchema = z.preprocess((a) => {
     if (isNaN(num)) return "this string is passed as a hack to trigger the invalid_type_error";
 
     return num;
-}, z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).positive());
+}, z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL).nullable());
 
 const VedleggRadFrontendSchema = z.object({
     rader: z.array(
         z
             .object({
-                beskrivelse: z.string(),
+                beskrivelse: z.string().nullable(),
                 belop: zodBelopTekstfeltSchema,
                 brutto: zodBelopTekstfeltSchema,
                 netto: zodBelopTekstfeltSchema,
@@ -47,7 +51,7 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
     const {mutate} = useUpdateOkonomiskOpplysning();
 
     const {control, handleSubmit, watch} = useForm<VedleggRadFrontendForm>({
-        defaultValues: opplysning,
+        defaultValues: {rader: opplysning.rader},
         resolver: zodResolver(VedleggRadFrontendSchema),
         mode: "onBlur",
         // Egentlig burde dette være true, men om det ikke er false så vil den
@@ -66,7 +70,7 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
             })()
         );
         return () => subscription.unsubscribe();
-    }, [handleSubmit, watch]);
+    }, [handleSubmit, watch, behandlingsId, mutate, opplysning]);
 
     const {fields, append, remove} = useFieldArray<VedleggRadFrontendForm>({
         control,

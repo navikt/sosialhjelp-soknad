@@ -1,58 +1,43 @@
 import * as React from "react";
 import {Opplysning} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
-import {useDispatch, useSelector} from "react-redux";
 import VedleggFileSelector from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
-import {lagreOpplysningHvisGyldigAction} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerActions";
 import OpplastetVedlegg from "./OpplastetVedlegg";
-import {State} from "../../digisos/redux/reducers";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import cx from "classnames";
 import {VedleggFrontendVedleggStatus} from "../../generated/model";
 import {useVedlegg} from "./useVedlegg";
 import {opplysningSpec} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
-
-/**
- * En versjon av T som returnerer en versjon av T med readonly-flagg fjernet.
- *
- * Dette bruker vi fordi selv om Orval-typene rettmessig flagger vedlegg-data
- * som readonly på backends side, trenger vi en mutable-versjon, slik at
- * Redux-koden kan gjøre endringer i datastrukturen på klientsiden.
- *
- * Vil ikke lenger være nødvendig når Redux-koden er fjernet.
- */
-declare type Mutable<T extends object> = {
-    -readonly [K in keyof T]: T[K];
-};
+import {ChangeEvent} from "react";
+import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 
 const VedleggFeilmelding = ({error}: {error: string | null}) =>
-    !error ? null : (
+    error ? (
         <div role="alert" aria-live="assertive">
             <div className="skjemaelement__feilmelding">{error}</div>
         </div>
-    );
+    ) : null;
 
 const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const behandlingsId = useBehandlingsId();
-    const feil = useSelector((state: State) => state.validering.feil);
     const {t} = useTranslation();
     const {textKey} = opplysningSpec[opplysning.type];
 
+    const {mutate} = useUpdateOkonomiskOpplysning();
+
     const {deleteFile, files, upload, error, loading} = useVedlegg(opplysning);
 
-    const dispatch = useDispatch();
-
-    const handleAlleredeLastetOpp = (_: any) => {
-        const opplysningUpdated: Mutable<Opplysning> = {...opplysning};
-
-        if (opplysningUpdated.vedleggStatus !== VedleggFrontendVedleggStatus.VedleggAlleredeSendt) {
-            opplysningUpdated.vedleggStatus = VedleggFrontendVedleggStatus.VedleggAlleredeSendt;
-        } else {
-            opplysningUpdated.vedleggStatus = VedleggFrontendVedleggStatus.VedleggKreves;
-        }
-
-        dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feil));
+    const handleAlleredeLastetOpp = (e: ChangeEvent<HTMLInputElement>) => {
+        mutate({
+            behandlingsId,
+            data: {
+                ...opplysning,
+                vedleggStatus: e.target.value
+                    ? VedleggFrontendVedleggStatus.VedleggAlleredeSendt
+                    : VedleggFrontendVedleggStatus.VedleggKreves,
+            },
+        });
     };
 
     return (
@@ -76,7 +61,7 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                 className={cx("vedleggLastetOppCheckbox", {
                     "checkboks--disabled": opplysning.filer?.length,
                 })}
-                onChange={(event: any) => handleAlleredeLastetOpp(event)}
+                onChange={handleAlleredeLastetOpp}
                 checked={opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
                 disabled={!!files.length || loading}
             />

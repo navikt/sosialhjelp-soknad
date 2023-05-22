@@ -1559,12 +1559,12 @@
             "VedleggRadFrontend": {
                 "type": "object",
                 "properties": {
-                    "beskrivelse": {"type": "string"},
-                    "belop": {"type": "integer", "format": "int32"},
-                    "brutto": {"type": "integer", "format": "int32"},
-                    "netto": {"type": "integer", "format": "int32"},
-                    "avdrag": {"type": "integer", "format": "int32"},
-                    "renter": {"type": "integer", "format": "int32"}
+                    "beskrivelse": {"type": "string", "nullable": true},
+                    "belop": {"type": "integer", "format": "int32", "nullable": true},
+                    "brutto": {"type": "integer", "format": "int32", "nullable": true},
+                    "netto": {"type": "integer", "format": "int32", "nullable": true},
+                    "avdrag": {"type": "integer", "format": "int32", "nullable": true},
+                    "renter": {"type": "integer", "format": "int32", "nullable": true}
                 }
             },
             "VerdierFrontend": {
