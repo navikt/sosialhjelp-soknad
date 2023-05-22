@@ -4,23 +4,30 @@ import {logError} from "../../../nav-soknad/utils/loggerUtils";
 import {Dispatch} from "redux";
 import {hentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {AxiosError} from "axios";
-import {VedleggFrontendType, VedleggFrontends, VedleggFrontend} from "../../../generated/model";
+import {
+    VedleggFrontendMinusEtParTingSomTrengerAvklaring,
+    VedleggFrontendsMinusEtParTingSomTrengerAvklaring,
+    VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring,
+} from "./opplysningerConfig";
 
-export const gotDataFromBackend = (response: VedleggFrontends): OpplysningerAction => {
+export const gotDataFromBackend = (response: VedleggFrontendsMinusEtParTingSomTrengerAvklaring): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.GOT_DATA_FROM_BACKEND,
         backendData: response,
     };
 };
 
-export const updateOpplysning = (opplysning: VedleggFrontend): OpplysningerAction => {
+export const updateOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrengerAvklaring): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.OPPDATER_OPPLYSNING,
         opplysning,
     };
 };
 
-export const setVedleggLoading = (opplysningType: VedleggFrontendType, loading: boolean): OpplysningerAction => {
+export const setVedleggLoading = (
+    opplysningType: VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring,
+    loading: boolean
+): OpplysningerAction => {
     return {
         type: opplysningerActionTypeKeys.SETT_VEDLEGG_LOADING,
         opplysningType,
@@ -32,7 +39,7 @@ export function hentOpplysninger(behandlingsId: string, dispatch: Dispatch) {
     hentOkonomiskeOpplysninger(behandlingsId)
         .then((response) => {
             // TODO: gotDataFromBackend bruker fremdeles klientside datatyper.
-            dispatch(gotDataFromBackend(response));
+            dispatch(gotDataFromBackend(response as VedleggFrontendsMinusEtParTingSomTrengerAvklaring));
         })
         .catch((error: any) => {
             if (error instanceof AxiosError) {
@@ -50,7 +57,7 @@ export function hentOpplysninger(behandlingsId: string, dispatch: Dispatch) {
 
 export const lagreOpplysningHvisGyldigAction = (
     behandlingsId: string,
-    opplysning: VedleggFrontend,
+    opplysning: VedleggFrontendMinusEtParTingSomTrengerAvklaring,
     feil: Valideringsfeil[]
 ): OpplysningerAction => {
     return {

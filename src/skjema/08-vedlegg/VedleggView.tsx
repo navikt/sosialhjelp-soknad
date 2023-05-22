@@ -6,13 +6,25 @@ import {Checkbox} from "nav-frontend-skjema";
 import {lagreOpplysningHvisGyldigAction} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerActions";
 import OpplastetVedlegg from "./OpplastetVedlegg";
 import {State} from "../../digisos/redux/reducers";
-import {logError} from "../../nav-soknad/utils/loggerUtils";
 import {useTranslation} from "react-i18next";
-import {getSpcForOpplysning} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerUtils";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import cx from "classnames";
 import {VedleggFrontendVedleggStatus} from "../../generated/model";
 import {useVedlegg} from "./useVedlegg";
+import {opplysningSpec} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
+
+/**
+ * En versjon av T som returnerer en versjon av T med readonly-flagg fjernet.
+ *
+ * Dette bruker vi fordi selv om Orval-typene rettmessig flagger vedlegg-data
+ * som readonly på backends side, trenger vi en mutable-versjon, slik at
+ * Redux-koden kan gjøre endringer i datastrukturen på klientsiden.
+ *
+ * Vil ikke lenger være nødvendig når Redux-koden er fjernet.
+ */
+declare type Mutable<T extends object> = {
+    -readonly [K in keyof T]: T[K];
+};
 
 const VedleggFeilmelding = ({error}: {error: string | null}) =>
     !error ? null : (
@@ -25,19 +37,14 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const behandlingsId = useBehandlingsId();
     const feil = useSelector((state: State) => state.validering.feil);
     const {t} = useTranslation();
-    const opplysningSpec = getSpcForOpplysning(opplysning.type);
+    const {textKey} = opplysningSpec[opplysning.type];
 
     const {deleteFile, files, upload, error, loading} = useVedlegg(opplysning);
 
     const dispatch = useDispatch();
 
-    if (!opplysningSpec) {
-        logError(`Ukjent opplysning ${opplysning.type}!`);
-        return null;
-    }
-
     const handleAlleredeLastetOpp = (_: any) => {
-        const opplysningUpdated = {...opplysning};
+        const opplysningUpdated: Mutable<Opplysning> = {...opplysning};
 
         if (opplysningUpdated.vedleggStatus !== VedleggFrontendVedleggStatus.VedleggAlleredeSendt) {
             opplysningUpdated.vedleggStatus = VedleggFrontendVedleggStatus.VedleggAlleredeSendt;
@@ -50,7 +57,7 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
 
     return (
         <div>
-            <p>{t(`${opplysningSpec.textKey}.vedlegg.sporsmal.tittel`)}</p>
+            <p>{t(`${textKey}.vedlegg.sporsmal.tittel`)}</p>
             <div className="vedleggsliste">
                 {files.map((fil) => (
                     <OpplastetVedlegg key={fil.uuid} fil={fil} onDelete={deleteFile} />

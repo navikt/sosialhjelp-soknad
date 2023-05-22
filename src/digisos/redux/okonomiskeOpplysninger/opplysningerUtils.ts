@@ -5,7 +5,7 @@ import {
     VedleggFrontendsMinusEtParTingSomTrengerAvklaring,
 } from "./opplysningerConfig";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
-import {VedleggFrontend, VedleggFrontends, VedleggFrontendType} from "../../../generated/model";
+import {VedleggFrontend, VedleggFrontendType} from "../../../generated/model";
 
 export const getOpplysningerUrl = (behandlingsId: string) => `soknader/${behandlingsId}/okonomiskeOpplysninger`;
 

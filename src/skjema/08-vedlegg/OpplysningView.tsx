@@ -1,7 +1,6 @@
 import * as React from "react";
 import Sporsmal, {LegendTittleStyle} from "../../nav-soknad/components/sporsmal/Sporsmal";
 import {Opplysning} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
-import {getSpcForOpplysning} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerUtils";
 import TabellView from "./TabellView";
 import VedleggView from "./VedleggView";
 import VedleggSlettet from "./vedleggSlettet";
@@ -11,6 +10,7 @@ import {Valideringsfeil} from "../../digisos/redux/validering/valideringActionTy
 import styled from "styled-components";
 import {getFaktumSporsmalTekst} from "../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
+import {opplysningSpec} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
 
 const OkonomiskeOpplysningerSporsmal = styled.div`
     border-radius: 5px;
@@ -26,10 +26,8 @@ const OkonomiskeOpplysningerSporsmal = styled.div`
     }
 `;
 
-const OpplysningView = (props: {opplysning: Opplysning; gruppeIndex: number}) => {
-    const {opplysning, gruppeIndex} = props;
-    const opplysningSpc = getSpcForOpplysning(opplysning.type);
-
+const OpplysningView = ({opplysning, gruppeIndex}: {opplysning: Opplysning; gruppeIndex: number}) => {
+    const {textKey} = opplysningSpec[opplysning.type];
     const {t} = useTranslation("skjema");
     const feilListe = useSelector((state: State) => state.validering.feil);
     const feil = feilListe.find((feil: Valideringsfeil) => feil.faktumKey === opplysning.type);
@@ -40,7 +38,7 @@ const OpplysningView = (props: {opplysning: Opplysning; gruppeIndex: number}) =>
     return (
         <OkonomiskeOpplysningerSporsmal className={"!mb-4"}>
             <Sporsmal
-                tekster={getFaktumSporsmalTekst(t, opplysningSpc?.textKey ?? "")}
+                tekster={getFaktumSporsmalTekst(t, textKey)}
                 feil={sporsmalsFeil}
                 legendTittelStyle={LegendTittleStyle.FET_NORMAL}
             >
