@@ -18,7 +18,7 @@ const OkonomiskeOpplysningerView = () => {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-        behandlingsId && hentOpplysninger(behandlingsId, dispatch);
+        hentOpplysninger(behandlingsId, dispatch);
     }, [behandlingsId, dispatch]);
 
     const ikkeBesvartMeldingSkalVises: boolean | null = backendData && !backendData.isOkonomiskeOpplysningerBekreftet;

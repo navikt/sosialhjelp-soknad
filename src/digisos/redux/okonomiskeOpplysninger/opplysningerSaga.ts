@@ -19,7 +19,7 @@ export const getFeilForOpplysning = (feil: Valideringsfeil[], opplysningTextKey:
     feil.filter(({faktumKey}) => faktumKey.indexOf(opplysningTextKey) > -1);
 
 function* lagreOpplysningHvisGyldigSaga({behandlingsId, opplysning, feil}: LagreOpplysningHvisGyldig) {
-    const {textKey, inputFields} = opplysningSpec[opplysning.type];
+    const {textKey, inputs} = opplysningSpec[opplysning.type];
 
     yield put(updateOpplysning(opplysning));
 
@@ -46,7 +46,7 @@ function* lagreOpplysningHvisGyldigSaga({behandlingsId, opplysning, feil}: Lagre
         }
 
         if (status === 404) {
-            const radInnhold = inputFields;
+            const radInnhold = inputs;
             for (let i = 0; i < radInnhold.length; i++) {
                 // Setter alle felt til feilet!
                 const validationKey = `${textKey}.${radInnhold[i]}.${i}`;

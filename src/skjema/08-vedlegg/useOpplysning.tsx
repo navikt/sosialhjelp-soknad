@@ -1,8 +1,10 @@
-import {VedleggFrontend} from "../../generated/model";
-import {getSpcForOpplysning} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerUtils";
 import {useFieldArray, useForm} from "react-hook-form";
 import {z} from "zod";
 import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
+import {
+    opplysningSpec,
+    VedleggFrontendMinusEtParTingSomTrengerAvklaring,
+} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
 
 const zodBelopTekstfeltSchema = z.preprocess((a) => {
     const num = parseInt(a as string, 10);
@@ -27,19 +29,8 @@ const VedleggRadFrontendSchema = z.object({
 
 export type VedleggRadFrontendForm = z.infer<typeof VedleggRadFrontendSchema>;
 
-export const useOpplysning = (opplysning: VedleggFrontend) => {
-    const spec = getSpcForOpplysning(opplysning.type);
-
-    // Dette skal ikke kunne skje... (TM)
-    // Todo: Refaktorer OpplysningerSpc til en Record<VedleggFrontendType, OpplysningSpecV2> elns
-    if (!spec) {
-        window.location.href = "/sosialhjelp/soknad/feil?reason=initOpplysning";
-        throw new Error("initOpplysning mottok ugyldig spec");
-    }
-
-    const textKey = spec.textKey;
-    const fieldNames = spec.radInnhold;
-    const numRows = spec.antallRader;
+export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrengerAvklaring) => {
+    const {textKey, inputs, numRows} = opplysningSpec[opplysning.type];
 
     const {control, handleSubmit} = useForm<VedleggRadFrontendForm>({
         defaultValues: opplysning,
@@ -61,6 +52,6 @@ export const useOpplysning = (opplysning: VedleggFrontend) => {
         handleSubmit,
         textKey,
         numRows,
-        fieldNames,
+        inputs,
     };
 };

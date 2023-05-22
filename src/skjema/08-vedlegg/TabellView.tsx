@@ -7,6 +7,7 @@ import {useTranslation} from "react-i18next";
 import {TextField, TextFieldProps} from "@navikt/ds-react";
 import {useOpplysning, VedleggRadFrontendForm} from "./useOpplysning";
 import {Control, Controller} from "react-hook-form";
+import {VedleggFrontendMinusEtParTingSomTrengerAvklaring} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
 
 // FIXME I18N: Hardkodet bokmål
 
@@ -60,11 +61,17 @@ const TabellRadInput = ({
     );
 };
 
-const TabellView = ({opplysning, gruppeIndex}: {opplysning: VedleggFrontend; gruppeIndex: number}) => {
+const TabellView = ({
+    opplysning,
+    gruppeIndex,
+}: {
+    opplysning: VedleggFrontendMinusEtParTingSomTrengerAvklaring;
+    gruppeIndex: number;
+}) => {
     const {
         textKey,
         numRows,
-        fieldNames,
+        inputs,
         handleSubmit,
         control,
         rows: {entries, append, remove},
@@ -76,7 +83,7 @@ const TabellView = ({opplysning, gruppeIndex}: {opplysning: VedleggFrontend; gru
                 <ul>
                     {entries.map((item, index) => (
                         <li key={item.id}>
-                            <TabellRadInput textKey={textKey} index={index} control={control} fields={fieldNames} />
+                            <TabellRadInput textKey={textKey} index={index} control={control} fields={inputs} />
                             {!!index && <LinkButton onClick={() => remove(index)}>Fjern</LinkButton>}
                         </li>
                     ))}
