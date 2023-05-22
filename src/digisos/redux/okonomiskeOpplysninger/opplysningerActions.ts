@@ -37,12 +37,12 @@ export const setVedleggLoading = (
     };
 };
 
-const validVedleggFrontend = (
+export const validVedleggFrontend = (
     foo: VedleggFrontend | VedleggFrontendMinusEtParTingSomTrengerAvklaring
     // @ts-ignore fordi dette er en midlertidig hack
 ): foo is VedleggFrontendMinusEtParTingSomTrengerAvklaring => !UgyldigeFrontendTyper.includes(foo.type);
 
-const validVedleggFrontends = (
+export const validVedleggFrontends = (
     foo: VedleggFrontends | VedleggFrontendsMinusEtParTingSomTrengerAvklaring
     // @ts-ignore fordi dette er en midlertidig hack
 ): foo is VedleggFrontendsMinusEtParTingSomTrengerAvklaring => {

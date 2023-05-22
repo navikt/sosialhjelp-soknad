@@ -1,7 +1,7 @@
 import {LagreOpplysningHvisGyldig, opplysningerActionTypeKeys} from "./opplysningerTypes";
 import {SagaIterator} from "redux-saga";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {getOpplysningerUrl, transformToBackendOpplysning} from "./opplysningerUtils";
+import {getOpplysningerUrl} from "./opplysningerUtils";
 import {DigisosLegacyRESTError, fetchPut} from "../../../nav-soknad/utils/rest-utils";
 import {updateOpplysning} from "./opplysningerActions";
 import {Valideringsfeil, ValideringsFeilKode} from "../validering/valideringActionTypes";
@@ -26,11 +26,7 @@ function* lagreOpplysningHvisGyldigSaga({behandlingsId, opplysning, feil}: Lagre
     if (getFeilForOpplysning(feil, textKey).length) return;
 
     try {
-        yield call(
-            fetchPut,
-            getOpplysningerUrl(behandlingsId),
-            JSON.stringify(transformToBackendOpplysning(opplysning))
-        );
+        yield call(fetchPut, getOpplysningerUrl(behandlingsId), JSON.stringify(opplysning));
     } catch (reason) {
         if (!(reason instanceof DigisosLegacyRESTError)) {
             logWarning(`Uventet exception ${reason} i lagreOpplysningHvisGyldigSaga`);

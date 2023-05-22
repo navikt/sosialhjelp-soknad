@@ -2,7 +2,6 @@ import * as React from "react";
 import {RefAttributes} from "react";
 import {OpplysningInputType} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {LinkButton} from "../../nav-soknad/components/linkButton/LinkButton";
-import {VedleggFrontend} from "../../generated/model";
 import {useTranslation} from "react-i18next";
 import {TextField, TextFieldProps} from "@navikt/ds-react";
 import {useOpplysning, VedleggRadFrontendForm} from "./useOpplysning";

@@ -2,32 +2,22 @@ import {Opplysning, VedleggGruppe} from "./opplysningerTypes";
 import {
     opplysningSpec,
     sortertSpecGammeltFormat,
+    VedleggFrontendMinusEtParTingSomTrengerAvklaring,
     VedleggFrontendsMinusEtParTingSomTrengerAvklaring,
 } from "./opplysningerConfig";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
-import {VedleggFrontend, VedleggFrontendType} from "../../../generated/model";
+import {VedleggFrontendType} from "../../../generated/model";
 
 export const getOpplysningerUrl = (behandlingsId: string) => `soknader/${behandlingsId}/okonomiskeOpplysninger`;
 
-export const updateSortertOpplysning = (opplysninger: VedleggFrontend[], opplysningUpdated: VedleggFrontend) => {
+export const updateSortertOpplysning = (
+    opplysninger: VedleggFrontendMinusEtParTingSomTrengerAvklaring[],
+    opplysningUpdated: VedleggFrontendMinusEtParTingSomTrengerAvklaring
+) => {
     const index = opplysninger.findIndex((o) => o.type === opplysningUpdated.type);
     opplysninger[index] = opplysningUpdated;
     return opplysninger;
 };
-
-export const transformToBackendOpplysning = ({
-    type,
-    gruppe,
-    rader,
-    vedleggStatus,
-    filer,
-}: VedleggFrontend): VedleggFrontend => ({
-    type,
-    gruppe,
-    rader,
-    vedleggStatus,
-    filer,
-});
 
 export const Gruppetittel: Record<VedleggGruppe, string> = {
     statsborgerskap: "opplysninger.statsborgerskap",
@@ -41,18 +31,25 @@ export const Gruppetittel: Record<VedleggGruppe, string> = {
     ukjent: "opplysninger.ukjent",
 };
 
-export const getOpplysningByType = (opplysninger: Opplysning[], opplysningType: VedleggFrontendType) =>
-    opplysninger.find(({type}) => type === opplysningType);
-
 export const getSortertListeAvOpplysninger = ({
     okonomiskeOpplysninger,
     slettedeVedlegg,
 }: VedleggFrontendsMinusEtParTingSomTrengerAvklaring): Opplysning[] => {
     const current = okonomiskeOpplysninger.map((opplysning): Opplysning => ({...opplysning}));
     const deleted = slettedeVedlegg.map((opplysning): Opplysning => ({...opplysning, slettet: true}));
-    return [...current, ...deleted].sort(opplysningerSortFn);
+    return [...current, ...deleted].sort(
+        (a: Opplysning, b: Opplysning) => opplysningSpec[a.type].sortKey - opplysningSpec[b.type].sortKey
+    );
 };
 
+/**
+ * @deprecated til fordel for lookups mot opplysningerSpec.
+ *    (noter at selve typen som returneres også er endret)
+ * @example
+ *      før: const spc: OpplysningSpecGammeltFormat = getSpcForOpplysning(vedlegg.type);
+ *      nå: const spec: OpplysningSpec = opplysningSpec[vedlegg.type];
+ * @param opplysningType
+ */
 export const getSpcForOpplysning = (opplysningType: VedleggFrontendType) => {
     const spec = sortertSpecGammeltFormat.find(({type}) => type === opplysningType);
 
@@ -60,6 +57,3 @@ export const getSpcForOpplysning = (opplysningType: VedleggFrontendType) => {
 
     return spec!;
 };
-
-export const opplysningerSortFn = (a: Opplysning, b: Opplysning) =>
-    opplysningSpec[a.type].sortKey - opplysningSpec[b.type].sortKey;

@@ -1,5 +1,5 @@
 import {OpplysningerAction, opplysningerActionTypeKeys, OpplysningerModel} from "./opplysningerTypes";
-import {getOpplysningByType, getSortertListeAvOpplysninger, updateSortertOpplysning} from "./opplysningerUtils";
+import {getSortertListeAvOpplysninger, updateSortertOpplysning} from "./opplysningerUtils";
 import {REST_STATUS} from "../soknadsdata/soknadsdataTypes";
 import {VedleggFrontendType, VedleggFrontendVedleggStatus} from "../../../generated/model";
 
@@ -15,7 +15,7 @@ function settFilOpplastingStatus(
     state: OpplysningerModel,
     enFilLastesOpp: boolean
 ) {
-    const opplysning = getOpplysningByType(state.opplysningerSortert, opplysningType);
+    const opplysning = state.opplysningerSortert.find(({type}) => type === opplysningType);
 
     if (!opplysning) return state;
 
@@ -61,7 +61,8 @@ export const opplysningerReducer = (
 
         case opplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP: {
             const {opplysningType} = action;
-            const opplysning = getOpplysningByType(state.opplysningerSortert, opplysningType);
+            const opplysning = state.opplysningerSortert.find(({type}) => type === opplysningType);
+
             if (!opplysning) return state;
 
             const opplysningerSortertUpdated = updateSortertOpplysning(state.opplysningerSortert, {

@@ -7,6 +7,7 @@ import {
 } from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
 
 const zodBelopTekstfeltSchema = z.preprocess((a) => {
+    // OBS: Dette er ikke testet enda
     const num = parseInt(a as string, 10);
     if (isNaN(num)) return "this string is passed as a hack to trigger the invalid_type_error";
     return num;
