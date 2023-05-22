@@ -5,6 +5,7 @@ import {
     opplysningSpec,
     VedleggFrontendMinusEtParTingSomTrengerAvklaring,
 } from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
+import {zodResolver} from "@hookform/resolvers/zod";
 
 const zodBelopTekstfeltSchema = z.preprocess((a) => {
     // OBS: Dette er ikke testet enda
@@ -35,6 +36,7 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
 
     const {control, handleSubmit} = useForm<VedleggRadFrontendForm>({
         defaultValues: opplysning,
+        resolver: zodResolver(VedleggRadFrontendSchema),
         reValidateMode: "onBlur",
     });
 
@@ -49,8 +51,10 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
             append,
             remove,
         },
-        control,
-        handleSubmit,
+        form: {
+            control,
+            handleSubmit,
+        },
         textKey,
         numRows,
         inputs,
