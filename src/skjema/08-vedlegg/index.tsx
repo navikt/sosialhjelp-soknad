@@ -19,7 +19,7 @@ export const OkonomiskeOpplysningerView = () => {
                 const last = i === grupper.length - 1;
 
                 return (
-                    <SkjemaSteg.Content key={i} className={cx("pb-12", {"lg:space-y-8": i === 0})}>
+                    <SkjemaSteg.Content key={i} className={cx("pb-12", {"lg:space-y-8": first})}>
                         {first && (
                             <>
                                 <SkjemaSteg.Title className={"lg:mb-8"} />
