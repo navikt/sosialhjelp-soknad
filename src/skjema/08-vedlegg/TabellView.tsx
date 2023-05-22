@@ -23,10 +23,10 @@ const TabellView = ({
 
     return (
         <div>
-            <form onSubmit={handleSubmit(console.log, console.error)}>
+            <form>
                 <ul>
                     {entries.map((item, index) => (
-                        <li key={item.id}>
+                        <li key={item.id} onBlur={handleSubmit(console.log, console.error)}>
                             <OpplysningInputRad textKey={textKey} index={index} control={control} fields={inputs} />
                             {!!index && <LinkButton onClick={() => remove(index)}>Fjern</LinkButton>}
                         </li>

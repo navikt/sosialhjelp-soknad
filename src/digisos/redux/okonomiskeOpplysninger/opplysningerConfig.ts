@@ -1,5 +1,5 @@
 import {OpplysningInputType, OpplysningSpecGammeltFormat, VedleggGruppe} from "./opplysningerTypes";
-import {VedleggFrontend, VedleggFrontendType} from "../../../generated/model";
+import {VedleggFrontend, VedleggFrontends, VedleggFrontendType} from "../../../generated/model";
 
 export type OpplysningSpec = {
     numRows: "ingen" | "en" | "flere";
@@ -53,6 +53,14 @@ export type VedleggFrontendsMinusEtParTingSomTrengerAvklaring = {
     slettedeVedlegg: VedleggFrontendMinusEtParTingSomTrengerAvklaring[];
     isOkonomiskeOpplysningerBekreftet: boolean;
 };
+
+export const invalidVedleggFrontend = (
+    data: VedleggFrontend | VedleggFrontendMinusEtParTingSomTrengerAvklaring
+): data is VedleggFrontend => UgyldigeFrontendTyper.includes(data.type as any); // Siden det er midlertidig hack
+export const validVedleggFrontends = (
+    data: VedleggFrontends | VedleggFrontendsMinusEtParTingSomTrengerAvklaring
+): data is VedleggFrontendsMinusEtParTingSomTrengerAvklaring =>
+    !(data.slettedeVedlegg.some(invalidVedleggFrontend) || data.okonomiskeOpplysninger.some(invalidVedleggFrontend));
 
 export const opplysningSpec: Record<VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring, OpplysningSpec> = {
     "lonnslipp|arbeid": {

@@ -3,13 +3,11 @@ import {useDispatch} from "react-redux";
 import {useHentOkonomiskeOpplysninger} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {VedleggFrontends} from "../../generated/model";
 import {
+    validVedleggFrontends,
     VedleggFrontendsMinusEtParTingSomTrengerAvklaring,
     vedleggGrupper,
 } from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
-import {
-    gotDataFromBackend,
-    validVedleggFrontends,
-} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerActions";
+import {gotDataFromBackend} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerActions";
 import * as React from "react";
 import {logWarning} from "../../nav-soknad/utils/loggerUtils";
 import {getSortertListeAvOpplysninger} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerUtils";
@@ -26,7 +24,7 @@ export const useOpplysninger = () => {
     >(behandlingsId, {});
 
     if (data && !validVedleggFrontends(data)) {
-        throw new Error("useOpplysninger mottok ugyldig spec - frontends API ute av synk med Swagger?");
+        throw new Error(`useOpplysninger mottok ugyldig type ${data} - frontends API ute av synk med Swagger?`);
     }
 
     //// Redux-hack for å forsikre oss om at retro-koden fremdeles henter dataene

@@ -23,6 +23,7 @@ export const OpplysningInputRad = ({
         <div>
             {fields.map((fieldName) => (
                 <Controller
+                    key={fieldName}
                     render={({field, fieldState}) => {
                         const formatSpecifier: Partial<TextFieldProps & RefAttributes<HTMLInputElement>> =
                             fieldName === `beskrivelse`
@@ -45,6 +46,8 @@ export const OpplysningInputRad = ({
                                 error={fieldState.error?.message}
                                 {...formatSpecifier}
                                 {...field}
+                                // To avoid value === null
+                                value={field.value || undefined}
                             />
                         );
                     }}
