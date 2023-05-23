@@ -1,4 +1,3 @@
-import {Valideringsfeil} from "../validering/valideringActionTypes";
 import {OpplysningerAction, opplysningerActionTypeKeys} from "./opplysningerTypes";
 import {
     VedleggFrontendMinusEtParTingSomTrengerAvklaring,
@@ -23,23 +22,8 @@ export const updateOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTre
 export const setVedleggLoading = (
     opplysningType: VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring,
     loading: boolean
-): OpplysningerAction => {
-    return {
-        type: opplysningerActionTypeKeys.SETT_VEDLEGG_LOADING,
-        opplysningType,
-        loading,
-    };
-};
-
-export const lagreOpplysningHvisGyldigAction = (
-    behandlingsId: string,
-    opplysning: VedleggFrontendMinusEtParTingSomTrengerAvklaring,
-    feil: Valideringsfeil[]
-): OpplysningerAction => {
-    return {
-        type: opplysningerActionTypeKeys.LAGRE_OPPLYSNING_HVIS_GYLDIG,
-        behandlingsId,
-        opplysning,
-        feil,
-    };
-};
+): OpplysningerAction => ({
+    type: opplysningerActionTypeKeys.SETT_VEDLEGG_LOADING,
+    opplysningType,
+    loading,
+});
