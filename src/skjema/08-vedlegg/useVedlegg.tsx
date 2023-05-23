@@ -1,7 +1,6 @@
 import {FilFrontend, VedleggFrontendVedleggStatus} from "../../generated/model";
 import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
 import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
-import {Opplysning} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {useEffect, useReducer} from "react";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import {useTranslation} from "react-i18next";
@@ -10,6 +9,7 @@ import {logError, logInfo, logWarning} from "../../nav-soknad/utils/loggerUtils"
 import {deleteVedlegg, saveVedlegg} from "../../generated/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {AxiosError} from "axios";
+import {Opplysning} from "../../lib/opplysninger";
 
 type VedleggState = {
     status: VedleggFrontendVedleggStatus;

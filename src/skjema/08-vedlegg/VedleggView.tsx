@@ -1,5 +1,4 @@
 import * as React from "react";
-import {Opplysning} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
 import VedleggFileSelector from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
 import OpplastetVedlegg from "./OpplastetVedlegg";
@@ -8,7 +7,7 @@ import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import cx from "classnames";
 import {VedleggFrontendVedleggStatus} from "../../generated/model";
 import {useVedlegg} from "./useVedlegg";
-import {opplysningSpec} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
+import {Opplysning, opplysningSpec} from "../../lib/opplysninger";
 import {ChangeEvent} from "react";
 import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useQueryClient} from "@tanstack/react-query";

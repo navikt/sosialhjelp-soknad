@@ -7,7 +7,6 @@ import AvsnittMedMarger from "./avsnittMedMarger";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
 import {EttersendelseFeilkode} from "../../digisos/redux/ettersendelse/ettersendelseTypes";
 import Informasjonspanel from "../../nav-soknad/components/Informasjonspanel";
-import {useParams} from "react-router";
 import SoknadAlleredeSendtPrompt from "../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPrompt";
 import HotjarTriggerEttersendelse from "../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
 import {useTitle} from "../../lib/hooks/useTitle";
@@ -18,13 +17,10 @@ import {Trans, useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../generated/nedetid-ressurs/nedetid-ressurs";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 
-type EttersendelseParams = Record<"behandlingsId", string>;
-
 const Ettersendelse = () => {
     const dispatch = useDispatch();
     const {t} = useTranslation("skjema");
 
-    const params = useParams<EttersendelseParams>();
     const behandlingsId = useBehandlingsId();
 
     const {data: nedetid} = useHentNedetidInformasjon();
@@ -34,11 +30,9 @@ const Ettersendelse = () => {
     useTitle("Ettersendelse - Søknad om økonomisk sosialhjelp");
 
     useEffect(() => {
-        if (!params.behandlingsId) return;
-
-        dispatch(opprettEttersendelse(params.behandlingsId));
-        dispatch(lesEttersendelser(params.behandlingsId));
-    }, [behandlingsId, dispatch, params]);
+        dispatch(opprettEttersendelse(behandlingsId));
+        dispatch(lesEttersendelser(behandlingsId));
+    }, [behandlingsId, dispatch]);
 
     useEffect(() => {
         if (data.filter((vedlegg) => vedlegg.filer.length).length) {
@@ -52,12 +46,11 @@ const Ettersendelse = () => {
         event.returnValue = "";
     };
 
-    const skrivUt = () => window.print();
-
     const antallManglendeVedlegg = () => data.filter(({type}) => type !== "annet|annet").length;
     const isEttersendelseAktivert = () => !!originalSoknad?.orgnummer;
     const opprettNyEttersendelseFeilet = feilKode === EttersendelseFeilkode.NY_ETTERSENDELSE_FEILET;
 
+    // FIXME: Hardkodet norsk
     return (
         <div className="ettersendelse">
             <BannerEttersendelse>{t("applikasjon.sidetittel")}</BannerEttersendelse>
@@ -66,7 +59,7 @@ const Ettersendelse = () => {
                 <Ingress spacing>{t("ettersendelse.ingress")}</Ingress>
 
                 {originalSoknad && (
-                    <AvsnittMedMarger venstreIkon={"ok"} hoyreIkon={"printer"} onClickHoyreIkon={() => skrivUt()}>
+                    <AvsnittMedMarger venstreIkon={"ok"} hoyreIkon={"printer"} onClickHoyreIkon={window.print}>
                         <Heading level="2" size="small">
                             {t("ettersendelse.soknad_sendt")} {originalSoknad.navenhet} kommune
                         </Heading>
@@ -145,9 +138,7 @@ const Ettersendelse = () => {
                     <BodyShort>{t("ettersendelse.vedtak.info")}</BodyShort>
                 </AvsnittMedMarger>
             </BlokkCenter>
-            <span>
-                <SoknadAlleredeSendtPrompt />
-            </span>
+            <SoknadAlleredeSendtPrompt />
         </div>
     );
 };

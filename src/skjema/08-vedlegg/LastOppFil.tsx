@@ -1,7 +1,7 @@
 import * as React from "react";
-import {Opplysning} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
+import {Opplysning} from "../../lib/opplysninger";
 
 const LastOppFil = ({
     doUpload,

@@ -1,11 +1,10 @@
 import * as React from "react";
-import {Opplysning} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
 import TabellView from "./TabellView";
 import VedleggView from "./VedleggView";
 import VedleggSlettet from "./vedleggSlettet";
 import {getFaktumSporsmalTekst} from "../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
-import {opplysningSpec} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
+import {Opplysning, opplysningSpec} from "../../lib/opplysninger";
 import {Heading} from "@navikt/ds-react";
 
 const OpplysningView = ({opplysning}: {opplysning: Opplysning}) => {

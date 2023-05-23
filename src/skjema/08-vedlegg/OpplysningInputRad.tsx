@@ -1,10 +1,10 @@
-import {OpplysningInputType} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {Control, Controller} from "react-hook-form";
 import {VedleggRadFrontendForm} from "./useOpplysning";
 import {useTranslation} from "react-i18next";
 import {TextField, TextFieldProps} from "@navikt/ds-react";
 import * as React from "react";
 import {RefAttributes} from "react";
+import {OpplysningInputType} from "../../lib/opplysninger";
 
 export const OpplysningInputRad = ({
     fields,

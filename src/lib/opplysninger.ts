@@ -1,5 +1,21 @@
-import {OpplysningInputType, VedleggGruppe} from "./opplysningerTypes";
-import {VedleggFrontend, VedleggFrontends, VedleggFrontendType} from "../../../generated/model";
+import {VedleggFrontend, VedleggFrontends, VedleggFrontendType} from "../generated/model";
+
+export type Opplysning = VedleggFrontendMinusEtParTingSomTrengerAvklaring & {
+    slettet?: boolean;
+    pendingLasterOppFil?: boolean;
+};
+export type VedleggGruppe =
+    | "statsborgerskap"
+    | "arbeid"
+    | "familie"
+    | "bosituasjon"
+    | "inntekt"
+    | "utgifter"
+    | "generelle vedlegg"
+    | "andre utgifter"
+    | "ukjent";
+
+export type OpplysningInputType = "beskrivelse" | "belop" | "brutto" | "netto" | "avdrag" | "renter";
 
 export type OpplysningSpec = {
     numRows: "ingen" | "en" | "flere";

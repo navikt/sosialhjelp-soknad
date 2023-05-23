@@ -1,9 +1,8 @@
 import * as React from "react";
-import {Opplysning} from "../../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {basePath} from "../../../configuration";
 import {useTranslation} from "react-i18next";
-import {opplysningSpec} from "../../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
+import {Opplysning, opplysningSpec} from "../../../lib/opplysninger";
 
 interface OwnProps {
     opplysning: Opplysning;

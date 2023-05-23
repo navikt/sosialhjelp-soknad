@@ -1,8 +1,8 @@
 import * as React from "react";
-import {Opplysning, VedleggGruppe} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
 import OpplysningView from "./OpplysningView";
 import {useTranslation} from "react-i18next";
 import {Heading, Panel} from "@navikt/ds-react";
+import {Opplysning, VedleggGruppe} from "../../lib/opplysninger";
 
 const Gruppetittel: Record<VedleggGruppe, string> = {
     statsborgerskap: "opplysninger.statsborgerskap",

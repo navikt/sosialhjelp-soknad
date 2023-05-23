@@ -1,7 +1,7 @@
 import * as React from "react";
 import {LinkButton} from "../../nav-soknad/components/linkButton/LinkButton";
 import {useOpplysning} from "./useOpplysning";
-import {VedleggFrontendMinusEtParTingSomTrengerAvklaring} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
+import {VedleggFrontendMinusEtParTingSomTrengerAvklaring} from "../../lib/opplysninger";
 import {OpplysningInputRad} from "./OpplysningInputRad";
 
 // FIXME I18N: Hardkodet bokmål

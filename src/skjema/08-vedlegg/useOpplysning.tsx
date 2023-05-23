@@ -1,10 +1,7 @@
 import {useFieldArray, useForm} from "react-hook-form";
 import {z} from "zod";
 import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
-import {
-    opplysningSpec,
-    VedleggFrontendMinusEtParTingSomTrengerAvklaring,
-} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
+import {opplysningSpec, VedleggFrontendMinusEtParTingSomTrengerAvklaring} from "../../lib/opplysninger";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useEffect, useState} from "react";
 import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";

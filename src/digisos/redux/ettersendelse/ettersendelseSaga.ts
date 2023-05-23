@@ -32,11 +32,9 @@ import {
     filLastetOpp,
     slettEttersendtVedleggOk,
 } from "./ettersendelseActions";
-import {setVedleggLoading} from "../okonomiskeOpplysninger/opplysningerActions";
 import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {REST_FEIL} from "../soknadsdata/soknadsdataTypes";
 import {FilFrontend} from "../../../generated/model";
-import {VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring} from "../okonomiskeOpplysninger/opplysningerConfig";
 
 function* opprettEttersendelseSaga({brukerbehandlingId}: OpprettEttersendelseAction) {
     try {
@@ -132,7 +130,8 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
         if (feilKode !== REST_FEIL.KRYPTERT_FIL && feilKode !== REST_FEIL.SIGNERT_FIL) {
             yield call(logInfo, "Last opp vedlegg for ettersendelse feilet: " + reason.toString());
         }
-        yield put(setVedleggLoading(opplysningType as VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring, false));
+        // FIXME før prodsetting: Gjenskape denne funksjonaliteten under
+        // yield put(setVedleggLoading(opplysningType as VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring, false));
     }
 }
 
