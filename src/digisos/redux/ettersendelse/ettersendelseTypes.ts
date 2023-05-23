@@ -1,5 +1,6 @@
 import {REST_STATUS} from "../soknadsdata/soknadsdataTypes";
 import {FilFrontend, VedleggFrontendType, VedleggFrontendVedleggStatus} from "../../../generated/model";
+import {VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring} from "../okonomiskeOpplysninger/opplysningerConfig";
 
 export enum EttersendelseActionTypeKeys {
     NY = "ettersendelse/NY",
@@ -164,7 +165,7 @@ export interface EttersendelseState {
 }
 
 export interface EttersendelseVedleggBackend {
-    type: VedleggFrontendType;
+    type: VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring;
     vedleggStatus: VedleggFrontendVedleggStatus;
     filer: FilFrontend[];
 }

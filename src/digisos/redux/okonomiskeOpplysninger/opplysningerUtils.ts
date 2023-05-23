@@ -1,11 +1,5 @@
 import {Opplysning} from "./opplysningerTypes";
-import {
-    opplysningSpec,
-    sortertSpecGammeltFormat,
-    VedleggFrontendsMinusEtParTingSomTrengerAvklaring,
-} from "./opplysningerConfig";
-import {logError} from "../../../nav-soknad/utils/loggerUtils";
-import {VedleggFrontendType} from "../../../generated/model";
+import {opplysningSpec, VedleggFrontendsMinusEtParTingSomTrengerAvklaring} from "./opplysningerConfig";
 
 export const getSortertListeAvOpplysninger = ({
     okonomiskeOpplysninger,
@@ -16,20 +10,4 @@ export const getSortertListeAvOpplysninger = ({
     return [...current, ...deleted].sort(
         (a: Opplysning, b: Opplysning) => opplysningSpec[a.type].sortKey - opplysningSpec[b.type].sortKey
     );
-};
-
-/**
- * @deprecated til fordel for lookups mot opplysningerSpec.
- *    (noter at selve typen som returneres også er endret)
- * @example
- *      før: const spc: OpplysningSpecGammeltFormat = getSpcForOpplysning(vedlegg.type);
- *      nå: const spec: OpplysningSpec = opplysningSpec[vedlegg.type];
- * @param opplysningType
- */
-export const getSpcForOpplysning = (opplysningType: VedleggFrontendType) => {
-    const spec = sortertSpecGammeltFormat.find(({type}) => type === opplysningType);
-
-    if (!spec) logError(`Spc ikke funnet for opplysning med type: "${opplysningType}"`);
-
-    return spec!;
 };
