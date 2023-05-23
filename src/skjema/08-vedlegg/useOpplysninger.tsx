@@ -11,6 +11,7 @@ import {gotDataFromBackend} from "../../digisos/redux/okonomiskeOpplysninger/opp
 import * as React from "react";
 import {logWarning} from "../../nav-soknad/utils/loggerUtils";
 import {getSortertListeAvOpplysninger} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerUtils";
+import {useMemo} from "react";
 
 export const useOpplysninger = () => {
     const behandlingsId = useBehandlingsId();
@@ -34,7 +35,7 @@ export const useOpplysninger = () => {
         if (isError) logWarning(`isError i useOpplysninger, error ${error}`);
     }, [data, dispatch, isSuccess, isError, error]);
 
-    const sorterte = data ? getSortertListeAvOpplysninger(data) : [];
+    const sorterte = useMemo(() => (data ? getSortertListeAvOpplysninger(data) : []), [data]);
 
     // Filtrer vekk tomme grupper, slik at vi kan bruke liste.length under for å mekke grønne linjer mellom ting
     const grupper = vedleggGrupper.filter((gruppeNavn) => {

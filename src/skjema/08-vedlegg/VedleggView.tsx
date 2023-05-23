@@ -11,6 +11,7 @@ import {useVedlegg} from "./useVedlegg";
 import {opplysningSpec} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
 import {ChangeEvent} from "react";
 import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {useQueryClient} from "@tanstack/react-query";
 
 const VedleggFeilmelding = ({error}: {error: string | null}) =>
     error ? (
@@ -23,21 +24,27 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
     const {textKey} = opplysningSpec[opplysning.type];
+    const queryClient = useQueryClient();
 
-    const {mutate} = useUpdateOkonomiskOpplysning();
+    const {mutate} = useUpdateOkonomiskOpplysning({});
 
     const {deleteFile, files, upload, error, loading} = useVedlegg(opplysning);
 
-    const handleAlleredeLastetOpp = (e: ChangeEvent<HTMLInputElement>) => {
-        mutate({
+    const handleAlleredeLastetOpp = async (e: ChangeEvent<HTMLInputElement>) => {
+        await mutate({
             behandlingsId,
             data: {
                 ...opplysning,
-                vedleggStatus: e.target.value
+                vedleggStatus: e.target.checked
                     ? VedleggFrontendVedleggStatus.VedleggAlleredeSendt
                     : VedleggFrontendVedleggStatus.VedleggKreves,
             },
         });
+
+        // FIXME: Don't know why this is needed, presumably race condition on back-end
+        await new Promise<void>((resolve) => setTimeout(() => resolve(), 200));
+
+        await queryClient.refetchQueries([`/soknader/${behandlingsId}/okonomiskeOpplysninger`]);
     };
 
     return (

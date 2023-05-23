@@ -6,13 +6,13 @@ import {OpplysningInputRad} from "./OpplysningInputRad";
 
 // FIXME I18N: Hardkodet bokmål
 
-const TabellView = ({
-    opplysning,
-    gruppeIndex,
-}: {
-    opplysning: VedleggFrontendMinusEtParTingSomTrengerAvklaring;
-    gruppeIndex: number;
-}) => {
+const AddRowButton = ({onClick}: {onClick: () => void}) => (
+    <LinkButton onClick={onClick}>
+        <span aria-hidden={true}>+ </span>Legg til
+    </LinkButton>
+);
+
+const TabellView = ({opplysning}: {opplysning: VedleggFrontendMinusEtParTingSomTrengerAvklaring}) => {
     const {
         textKey,
         numRows,
@@ -27,14 +27,10 @@ const TabellView = ({
                 {entries.map((item, index) => (
                     <li className="pb-4" key={item.id}>
                         <OpplysningInputRad textKey={textKey} index={index} control={control} fields={inputs} />
-                        {!!index && <LinkButton onClick={() => remove(index)}>Fjern</LinkButton>}
+                        {index > 0 && <LinkButton onClick={() => remove(index)}>Fjern</LinkButton>}
                     </li>
                 ))}
-                {numRows === "flere" && (
-                    <LinkButton onClick={() => append({})} id={gruppeIndex + "_link"}>
-                        <span aria-hidden={true}>+ </span>Legg til
-                    </LinkButton>
-                )}
+                {numRows === "flere" && <AddRowButton onClick={() => append({})} />}
             </ul>
         </form>
     );

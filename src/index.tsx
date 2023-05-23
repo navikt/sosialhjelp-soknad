@@ -13,6 +13,7 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import "./i18n";
 import {Loader} from "@navikt/ds-react";
 import {configureStore} from "./configureStore";
+import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 
 Modal.setAppElement("#root");
 
@@ -39,6 +40,7 @@ root.render(
         <Suspense fallback={<Loader />}>
             <QueryClientProvider client={queryClient}>
                 <RouterProvider router={router} />
+                <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
         </Suspense>
     </Provider>
