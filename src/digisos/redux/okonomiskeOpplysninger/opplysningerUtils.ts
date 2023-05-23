@@ -1,4 +1,4 @@
-import {Opplysning, VedleggGruppe} from "./opplysningerTypes";
+import {Opplysning} from "./opplysningerTypes";
 import {
     opplysningSpec,
     sortertSpecGammeltFormat,
@@ -8,8 +8,6 @@ import {
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 import {VedleggFrontendType} from "../../../generated/model";
 
-export const getOpplysningerUrl = (behandlingsId: string) => `soknader/${behandlingsId}/okonomiskeOpplysninger`;
-
 export const updateSortertOpplysning = (
     opplysninger: VedleggFrontendMinusEtParTingSomTrengerAvklaring[],
     opplysningUpdated: VedleggFrontendMinusEtParTingSomTrengerAvklaring
@@ -17,18 +15,6 @@ export const updateSortertOpplysning = (
     const index = opplysninger.findIndex((o) => o.type === opplysningUpdated.type);
     opplysninger[index] = opplysningUpdated;
     return opplysninger;
-};
-
-export const Gruppetittel: Record<VedleggGruppe, string> = {
-    statsborgerskap: "opplysninger.statsborgerskap",
-    arbeid: "opplysninger.arbeid",
-    familie: "opplysninger.familiesituasjon",
-    bosituasjon: "opplysninger.bosituasjon",
-    inntekt: "opplysninger.inntekt",
-    utgifter: "opplysninger.utgifter",
-    "generelle vedlegg": "opplysninger.generell",
-    "andre utgifter": "opplysninger.ekstrainfo",
-    ukjent: "opplysninger.ukjent",
 };
 
 export const getSortertListeAvOpplysninger = ({

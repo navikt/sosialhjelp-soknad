@@ -27,18 +27,12 @@ export interface OpplysningSpecGammeltFormat {
     textKey: string;
 }
 
-export type OpplysningerAction =
-    | GotDataFromBackend
-    | UpdateOpplysning
-    | SettVedleggLoading
-    | SettOpplysningsFilAlleredeLastetOpp
-    | LagreOpplysningHvisGyldig;
+export type OpplysningerAction = GotDataFromBackend | UpdateOpplysning | SettVedleggLoading | LagreOpplysningHvisGyldig;
 
 export enum opplysningerActionTypeKeys {
     GOT_DATA_FROM_BACKEND = "okonomiskeOpplysninger/GOT_DATA_FROM_BACKEND",
     OPPDATER_OPPLYSNING = "okonomiskeOpplysninger/OPPDATER_OPPLYSNING",
     SETT_VEDLEGG_LOADING = "okonomiskeOpplysninger/SETT_VEDLEGG_LOADING",
-    SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP = "okonomiskeOpplysninger/SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP",
     LAGRE_OPPLYSNING_HVIS_GYLDIG = "okonomiskeOpplysninger/LAGRE_OPPLYSNING_HVIS_GYLDIG",
 }
 
@@ -56,11 +50,6 @@ export interface SettVedleggLoading {
     type: opplysningerActionTypeKeys.SETT_VEDLEGG_LOADING;
     opplysningType: VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring;
     loading: boolean;
-}
-
-export interface SettOpplysningsFilAlleredeLastetOpp {
-    type: opplysningerActionTypeKeys.SETT_OPPLYSNINGS_FIL_ALLEREDE_LASTET_OPP;
-    opplysningType: VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring;
 }
 
 export interface LagreOpplysningHvisGyldig {

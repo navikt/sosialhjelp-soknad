@@ -3,8 +3,18 @@ import {Opplysning, VedleggGruppe} from "../../digisos/redux/okonomiskeOpplysnin
 import OpplysningView from "./OpplysningView";
 import {useTranslation} from "react-i18next";
 import {Heading, Panel} from "@navikt/ds-react";
-import {Gruppetittel} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerUtils";
 
+const Gruppetittel: Record<VedleggGruppe, string> = {
+    statsborgerskap: "opplysninger.statsborgerskap",
+    arbeid: "opplysninger.arbeid",
+    familie: "opplysninger.familiesituasjon",
+    bosituasjon: "opplysninger.bosituasjon",
+    inntekt: "opplysninger.inntekt",
+    utgifter: "opplysninger.utgifter",
+    "generelle vedlegg": "opplysninger.generell",
+    "andre utgifter": "opplysninger.ekstrainfo",
+    ukjent: "opplysninger.ukjent",
+};
 const GruppeView = ({gruppeKey, opplysninger}: {gruppeKey: VedleggGruppe; opplysninger: Opplysning[]}) => {
     const {t} = useTranslation();
     if (!opplysninger.length) return null;
