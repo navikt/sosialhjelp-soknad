@@ -18,6 +18,7 @@ import {useTranslation} from "react-i18next";
 import {putNavEnhet} from "../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
 import {HorizontalRadioGroup} from "../../../nav-soknad/components/form/HorizontalRadioGroup";
 import {useQueryClient} from "@tanstack/react-query";
+import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
 
 export const AdresseData = () => {
     const queryClient = useQueryClient();
@@ -65,6 +66,7 @@ export const AdresseData = () => {
                 onChange={async (valg) => {
                     setUncommittedAdressevalg(valg);
                     if (valg !== "soknad") await setAdresser(adresser, valg);
+                    logAmplitudeEvent("adresseValg", {addresseValgt: valg});
                 }}
             >
                 <Radio

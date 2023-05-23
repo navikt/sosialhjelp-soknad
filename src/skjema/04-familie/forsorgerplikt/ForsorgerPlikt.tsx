@@ -25,9 +25,12 @@ const ForsorgerPliktView = () => {
                     legendTittelStyle={LegendTittleStyle.DEFAULT}
                 >
                     <BodyShort spacing>
-                        <p>{t("familierelasjon.ingress_folkeregisteret")}</p>
-                        <b>{t("familierelasjon.ingress_forsorger")}</b>:{" "}
-                        {t("familierelasjon.ingress_antallBarn", {antallBarn: ansvar.length})}
+                        <span>{t("familierelasjon.ingress_folkeregisteret")}</span>
+                        <br />
+                        <span>
+                            <b>{t("familierelasjon.ingress_forsorger")}</b>:{" "}
+                            {t("familierelasjon.ingress_antallBarn", {antallBarn: ansvar.length})}
+                        </span>
                     </BodyShort>
 
                     <RegistrerteBarn />

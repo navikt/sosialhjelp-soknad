@@ -34,7 +34,7 @@ const RegistrerteBarn = () => {
         lagre(forsorgerplikt);
 
         logAmplitudeEvent("svart på sporsmal", {
-            sporsmal: "Har barnet delt bosted med deg?",
+            sporsmal: "Har barnet delt bosted?",
             verdi: verdi ? "Ja" : "Nei",
         });
     };
@@ -60,6 +60,16 @@ const RegistrerteBarn = () => {
 
     const barn = soknadsdata.familie.forsorgerplikt.ansvar;
     const tekster = getInputFaktumTekst(t, SAMVAERSGRAD_KEY);
+
+    React.useEffect(() => {
+        barn.forEach((barnet) => {
+            if (!barnet.erFolkeregistrertSammen) {
+                logAmplitudeEvent("sporsmal ikke vist", {
+                    sporsmal: "Har barnet delt bosted?",
+                });
+            }
+        });
+    }, [barn]);
 
     return (
         <div>

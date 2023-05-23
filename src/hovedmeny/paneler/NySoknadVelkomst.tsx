@@ -2,17 +2,19 @@ import VelkomstSnakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeb
 import {BodyLong, Heading} from "@navikt/ds-react";
 import * as React from "react";
 import {Trans, useTranslation} from "react-i18next";
-import {useHentFornavn} from "../../generated/informasjon-ressurs/informasjon-ressurs";
+import {useHarNyligInnsendteSoknader, useHentFornavn} from "../../generated/informasjon-ressurs/informasjon-ressurs";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 
 export const NySoknadVelkomst = () => {
     const {data: fornavnData} = useHentFornavn();
+    const {data: nyligInnsendteSoknader} = useHarNyligInnsendteSoknader();
     const {t} = useTranslation("skjema");
 
     const logLinkClicked = () => {
         logAmplitudeEvent("navigere", {
             lenkeTekst: "opplysninger du kan bli bedt om å levere",
             destinasjon: "https://www.nav.no/okonomisk-sosialhjelp#soknad",
+            antallNyligInnsendteSoknader: nyligInnsendteSoknader?.antallNyligInnsendte ?? 0,
         });
     };
 
