@@ -48,7 +48,7 @@ export const OpplysningInputRad = ({
                                 {...formatSpecifier}
                                 {...field}
                                 // To avoid value === null
-                                value={field.value || undefined}
+                                value={field.value || ""}
                             />
                         );
                     }}

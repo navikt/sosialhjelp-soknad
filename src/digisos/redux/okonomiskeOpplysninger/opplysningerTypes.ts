@@ -1,18 +1,10 @@
 import {Valideringsfeil} from "../validering/valideringActionTypes";
-import {REST_STATUS} from "../soknadsdata/soknadsdataTypes";
-import {VedleggFrontends, VedleggFrontendType} from "../../../generated/model";
+import {VedleggFrontendType} from "../../../generated/model";
 import {
     VedleggFrontendMinusEtParTingSomTrengerAvklaring,
     VedleggFrontendsMinusEtParTingSomTrengerAvklaring,
     VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring,
 } from "./opplysningerConfig";
-
-export interface OpplysningerModel {
-    restStatus: REST_STATUS;
-    backendData: VedleggFrontends | null;
-    opplysningerSortert: Opplysning[];
-    enFilLastesOpp: boolean;
-}
 
 export type Opplysning = VedleggFrontendMinusEtParTingSomTrengerAvklaring & {
     slettet?: boolean;

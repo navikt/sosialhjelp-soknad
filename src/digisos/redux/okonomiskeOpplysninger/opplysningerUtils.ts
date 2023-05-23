@@ -2,20 +2,10 @@ import {Opplysning} from "./opplysningerTypes";
 import {
     opplysningSpec,
     sortertSpecGammeltFormat,
-    VedleggFrontendMinusEtParTingSomTrengerAvklaring,
     VedleggFrontendsMinusEtParTingSomTrengerAvklaring,
 } from "./opplysningerConfig";
 import {logError} from "../../../nav-soknad/utils/loggerUtils";
 import {VedleggFrontendType} from "../../../generated/model";
-
-export const updateSortertOpplysning = (
-    opplysninger: VedleggFrontendMinusEtParTingSomTrengerAvklaring[],
-    opplysningUpdated: VedleggFrontendMinusEtParTingSomTrengerAvklaring
-) => {
-    const index = opplysninger.findIndex((o) => o.type === opplysningUpdated.type);
-    opplysninger[index] = opplysningUpdated;
-    return opplysninger;
-};
 
 export const getSortertListeAvOpplysninger = ({
     okonomiskeOpplysninger,

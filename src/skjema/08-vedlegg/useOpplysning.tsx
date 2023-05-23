@@ -6,9 +6,11 @@ import {
     VedleggFrontendMinusEtParTingSomTrengerAvklaring,
 } from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
+import {VedleggFrontend} from "../../generated/model";
+import {useDebounce} from "react-use";
 
 // OBS: Dette er ikke testet enda
 const zodBelopTekstfeltSchema = z.preprocess((a) => {
@@ -60,15 +62,24 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
         shouldFocusError: false,
     });
 
+    // This has the effect of waiting 1 second after a change to "rader" before we try to push it to backend.
+    const [rader, setRader] = useState<VedleggFrontend["rader"]>([]);
+    useDebounce(
+        () => {
+            mutate({
+                behandlingsId,
+                data: {...opplysning, rader},
+            });
+        },
+        1000,
+        [rader]
+    );
+
+    // Subscribe to changes in the form
     useEffect(() => {
-        const subscription = watch(() =>
-            handleSubmit(({rader}) => {
-                mutate({
-                    behandlingsId,
-                    data: {...opplysning, rader},
-                });
-            })()
-        );
+        const subscription = watch(() => {
+            handleSubmit(({rader}) => setRader(rader));
+        });
         return () => subscription.unsubscribe();
     }, [handleSubmit, watch, behandlingsId, mutate, opplysning]);
 

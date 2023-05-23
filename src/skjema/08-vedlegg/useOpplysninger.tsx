@@ -6,7 +6,6 @@ import {
     VedleggFrontendsMinusEtParTingSomTrengerAvklaring,
     vedleggGrupper,
 } from "../../digisos/redux/okonomiskeOpplysninger/opplysningerConfig";
-import * as React from "react";
 import {getSortertListeAvOpplysninger} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerUtils";
 import {useMemo} from "react";
 
