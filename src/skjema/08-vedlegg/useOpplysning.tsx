@@ -66,6 +66,8 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
     const [rader, setRader] = useState<VedleggFrontend["rader"]>([]);
     useDebounce(
         () => {
+            if (!rader.length) return;
+
             mutate({
                 behandlingsId,
                 data: {...opplysning, rader},
@@ -75,13 +77,13 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
         [rader]
     );
 
-    // Subscribe to changes in the form
+    // Subscribe to changes in the form - this could probably be done better...
     useEffect(() => {
-        const subscription = watch(() => {
-            handleSubmit(({rader}) => setRader(rader));
-        });
+        // If the form state changes, we use setRader to set state. This will start a timer in useDebounce
+        // and when this timer expires the data is persisted to backend.
+        const subscription = watch(() => handleSubmit(({rader}) => setRader(rader))());
         return () => subscription.unsubscribe();
-    }, [handleSubmit, watch, behandlingsId, mutate, opplysning]);
+    }, [handleSubmit, watch]);
 
     const {fields, append, remove} = useFieldArray<VedleggRadFrontendForm>({
         control,
