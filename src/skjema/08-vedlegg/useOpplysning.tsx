@@ -12,7 +12,7 @@ import {belopTekstfeltPreprocessor} from "./belopTekstfeltPreprocessor";
 
 const zodBelopTekstfeltSchema = z.preprocess(
     belopTekstfeltPreprocessor,
-    z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL)
+    z.nullable(z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL))
 );
 
 const VedleggRadFrontendSchema = z.object({
@@ -20,11 +20,11 @@ const VedleggRadFrontendSchema = z.object({
         z
             .object({
                 beskrivelse: z.string().nullable(),
-                belop: zodBelopTekstfeltSchema.nullable(),
-                brutto: zodBelopTekstfeltSchema.nullable(),
-                netto: zodBelopTekstfeltSchema.nullable(),
-                renter: zodBelopTekstfeltSchema.nullable(),
-                avdrag: zodBelopTekstfeltSchema.nullable(),
+                belop: zodBelopTekstfeltSchema,
+                brutto: zodBelopTekstfeltSchema,
+                netto: zodBelopTekstfeltSchema,
+                renter: zodBelopTekstfeltSchema,
+                avdrag: zodBelopTekstfeltSchema,
             })
             .partial()
     ),
