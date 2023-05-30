@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import AvsnittMedMarger from "./avsnittMedMarger";
+import AvsnittMedMargerEttersendelse from "./avsnittMedMargerEttersendelse";
 import EttersendelseVedleggListe from "./ettersendelseVedleggListe";
 import {Accordion, BodyShort} from "@navikt/ds-react";
 import styled from "styled-components";
@@ -15,7 +15,7 @@ const StyledAccordionHeader = styled(Accordion.Header)`
 `;
 
 const StyledAccordionContent = styled(Accordion.Content)`
-    padding: 0rem;
+    padding: 0;
 `;
 
 const getAntallOpplastedeFiler = (data: EttersendelseVedleggBackend[]) => {
@@ -28,7 +28,7 @@ interface Props {
     kunGenerellDokumentasjon?: boolean;
 }
 
-const EttersendelseEkspanderbart = (props: Props) => {
+const EttersendelseEkspanderbart = ({children, ettersendelseAktivert, kunGenerellDokumentasjon}: Props) => {
     const [ekspandert, setEkspandert] = useState(false);
     const [advarselManglerVedlegg, setAdvarselManglerVedlegg] = useState(false);
     const {t} = useTranslation("skjema");
@@ -50,38 +50,28 @@ const EttersendelseEkspanderbart = (props: Props) => {
     const onSendEttersendelse = () => {
         const antallOpplastedeFiler = getAntallOpplastedeFiler(data);
         setAdvarselManglerVedlegg(antallOpplastedeFiler === 0);
-        if (antallOpplastedeFiler > 0) {
-            if (brukerbehandlingId) {
-                dispatch(sendEttersendelse(brukerbehandlingId));
-                setEkspandert(false);
-            }
+        if (antallOpplastedeFiler && brukerbehandlingId) {
+            dispatch(sendEttersendelse(brukerbehandlingId));
+            setEkspandert(false);
         }
     };
 
     return (
         <Accordion>
             <Accordion.Item open={ekspandert}>
-                <StyledAccordionHeader onClick={toggleEkspandering}>
-                    {props.kunGenerellDokumentasjon && (
-                        <AvsnittMedMarger venstreIkon={"dokumenter"}>{props.children}</AvsnittMedMarger>
-                    )}
-
-                    {!props.kunGenerellDokumentasjon && (
-                        <AvsnittMedMarger venstreIkon={"advarsel"}>{props.children}</AvsnittMedMarger>
-                    )}
-                </StyledAccordionHeader>
+                <StyledAccordionHeader onClick={toggleEkspandering}>{children}</StyledAccordionHeader>
                 <StyledAccordionContent>
-                    <AvsnittMedMarger>
-                        {!props.kunGenerellDokumentasjon && props.ettersendelseAktivert && (
-                            <BodyShort spacing>{t("ettersendelse.mangler_info")}</BodyShort>
-                        )}
-                        {!props.ettersendelseAktivert && (
-                            <BodyShort spacing>{t("ettersendelse.mangler_info_manuell")}</BodyShort>
-                        )}
-                    </AvsnittMedMarger>
+                    <AvsnittMedMargerEttersendelse>
+                        {!kunGenerellDokumentasjon &&
+                            (ettersendelseAktivert ? (
+                                <BodyShort spacing>{t("ettersendelse.mangler_info")}</BodyShort>
+                            ) : (
+                                <BodyShort spacing>{t("ettersendelse.mangler_info_manuell")}</BodyShort>
+                            ))}
+                    </AvsnittMedMargerEttersendelse>
 
                     <EttersendelseVedleggListe
-                        ettersendelseAktivert={props.ettersendelseAktivert}
+                        ettersendelseAktivert={ettersendelseAktivert}
                         advarselManglerVedlegg={advarselManglerVedlegg}
                         onSendEttersendelse={onSendEttersendelse}
                     />

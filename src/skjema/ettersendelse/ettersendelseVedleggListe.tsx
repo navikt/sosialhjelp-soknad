@@ -1,13 +1,12 @@
 import React from "react";
-import AvsnittMedMarger from "./avsnittMedMarger";
+import AvsnittMedMargerEttersendelse from "./avsnittMedMargerEttersendelse";
 import EttersendelseVedlegg from "./ettersendelseVedlegg";
 import {useSelector} from "react-redux";
 import {State} from "../../digisos/redux/reducers";
 import {EttersendelseVedleggBackend} from "../../digisos/redux/ettersendelse/ettersendelseTypes";
-import {BodyShort, Button, Heading, Loader} from "@navikt/ds-react";
+import {BodyShort, Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {REST_STATUS} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
-import {opplysningSpec} from "../../lib/opplysninger";
 
 const EttersendelseVedleggListe = (props: {
     ettersendelseAktivert: boolean;
@@ -23,31 +22,20 @@ const EttersendelseVedleggListe = (props: {
     const {t} = useTranslation("skjema");
 
     return (
-        <div>
-            <AvsnittMedMarger>
-                {data?.map((vedlegg: EttersendelseVedleggBackend) => {
-                    const {textKey} = opplysningSpec[vedlegg.type];
-                    const tittelKey = `${textKey}.vedlegg.sporsmal.tittel`;
-                    const infoKey = `${textKey}.vedlegg.sporsmal.info`;
-
-                    if (!props.ettersendelseAktivert && vedlegg.type === "annet|annet") return null;
-
-                    return (
+        <>
+            <AvsnittMedMargerEttersendelse>
+                {data?.map((vedlegg: EttersendelseVedleggBackend) =>
+                    !props.ettersendelseAktivert && vedlegg.type === "annet|annet" ? null : (
                         <EttersendelseVedlegg
                             ettersendelseAktivert={props.ettersendelseAktivert}
                             vedlegg={vedlegg}
                             key={vedlegg.type}
                             feilKode={feiletVedleggId === vedlegg.type ? feilKode : undefined}
-                        >
-                            <Heading level="3" size="xsmall" spacing>
-                                {t(tittelKey)}
-                            </Heading>
-                            {<BodyShort spacing>{t(infoKey)}</BodyShort>}
-                        </EttersendelseVedlegg>
-                    );
-                })}
-            </AvsnittMedMarger>
-            <AvsnittMedMarger>
+                        />
+                    )
+                )}
+            </AvsnittMedMargerEttersendelse>
+            <AvsnittMedMargerEttersendelse>
                 {advarselManglerVedlegg && (
                     <BodyShort spacing className="skjema__feilmelding">
                         {t("ettersendelse.feilmelding.ingen_vedlegg")}
@@ -63,8 +51,8 @@ const EttersendelseVedleggListe = (props: {
                         Send vedlegg {ettersendStatus === REST_STATUS.PENDING && <Loader />}
                     </Button>
                 )}
-            </AvsnittMedMarger>
-        </div>
+            </AvsnittMedMargerEttersendelse>
+        </>
     );
 };
 
