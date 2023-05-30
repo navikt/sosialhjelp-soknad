@@ -1,34 +1,23 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import AvsnittMedMargerEttersendelse from "./avsnittMedMargerEttersendelse";
 import EttersendelseVedleggListe from "./ettersendelseVedleggListe";
 import {Accordion, BodyShort} from "@navikt/ds-react";
-import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../digisos/redux/reducers";
-import {EttersendelseVedleggBackend} from "../../digisos/redux/ettersendelse/ettersendelseTypes";
 import {sendEttersendelse} from "../../digisos/redux/ettersendelse/ettersendelseActions";
 import {useTranslation} from "react-i18next";
 
-const StyledAccordionHeader = styled(Accordion.Header)`
-    padding: 0 1rem 0 0;
-    border-bottom: none;
-`;
-
-const StyledAccordionContent = styled(Accordion.Content)`
-    padding: 0;
-`;
-
-const getAntallOpplastedeFiler = (data: EttersendelseVedleggBackend[]) => {
-    return data.map((vedlegg: any) => vedlegg.filer.length).reduce((a: number, b: number) => a + b);
-};
-
-interface Props {
+interface EttersendelseEkspanderbartProps {
     children: React.ReactNode;
     ettersendelseAktivert: boolean;
     kunGenerellDokumentasjon?: boolean;
 }
 
-const EttersendelseEkspanderbart = ({children, ettersendelseAktivert, kunGenerellDokumentasjon}: Props) => {
+const EttersendelseEkspanderbart = ({
+    children,
+    ettersendelseAktivert,
+    kunGenerellDokumentasjon,
+}: EttersendelseEkspanderbartProps) => {
     const [ekspandert, setEkspandert] = useState(false);
     const [advarselManglerVedlegg, setAdvarselManglerVedlegg] = useState(false);
     const {t} = useTranslation("skjema");
@@ -37,8 +26,13 @@ const EttersendelseEkspanderbart = ({children, ettersendelseAktivert, kunGenerel
 
     const {brukerbehandlingId, data} = useSelector((state: State) => state.ettersendelse);
 
+    const antallOpplastedeFiler = useMemo(
+        () => data.map((vedlegg) => vedlegg.filer.length).reduce((a: number, b: number) => a + b),
+        [data]
+    );
+
     useEffect(() => {
-        if (advarselManglerVedlegg && data && getAntallOpplastedeFiler(data) > 0) {
+        if (advarselManglerVedlegg && data && antallOpplastedeFiler > 0) {
             setAdvarselManglerVedlegg(false);
         }
     }, [advarselManglerVedlegg, data]);
@@ -48,7 +42,6 @@ const EttersendelseEkspanderbart = ({children, ettersendelseAktivert, kunGenerel
     };
 
     const onSendEttersendelse = () => {
-        const antallOpplastedeFiler = getAntallOpplastedeFiler(data);
         setAdvarselManglerVedlegg(antallOpplastedeFiler === 0);
         if (antallOpplastedeFiler && brukerbehandlingId) {
             dispatch(sendEttersendelse(brukerbehandlingId));
@@ -59,8 +52,10 @@ const EttersendelseEkspanderbart = ({children, ettersendelseAktivert, kunGenerel
     return (
         <Accordion>
             <Accordion.Item open={ekspandert}>
-                <StyledAccordionHeader onClick={toggleEkspandering}>{children}</StyledAccordionHeader>
-                <StyledAccordionContent>
+                <Accordion.Header className={"!border-b-0 !p-0 "} onClick={toggleEkspandering}>
+                    {children}
+                </Accordion.Header>
+                <Accordion.Content className={"p-0"}>
                     <AvsnittMedMargerEttersendelse>
                         {!kunGenerellDokumentasjon &&
                             (ettersendelseAktivert ? (
@@ -75,7 +70,7 @@ const EttersendelseEkspanderbart = ({children, ettersendelseAktivert, kunGenerel
                         advarselManglerVedlegg={advarselManglerVedlegg}
                         onSendEttersendelse={onSendEttersendelse}
                     />
-                </StyledAccordionContent>
+                </Accordion.Content>
             </Accordion.Item>
         </Accordion>
     );
