@@ -44,7 +44,7 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
         mode: "onBlur",
         // Egentlig burde dette være true, men om det ikke er false så vil den
         // umiddelbart bytte fokus til første ugyldige felt dersom man endrer
-        // et gyldig felt
+        // et gyldig felt pga. mode: "onBlur"
         shouldFocusError: false,
     });
 
@@ -59,14 +59,13 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
                 data: {...opplysning, rader},
             });
         },
-        1000,
+        200,
         [rader]
     );
 
-    // Subscribe to changes in the form - this could probably be done better...
+    // Submit data to server when form changes, with delay - this could probably be done better.
+    // The row state is changed, which starts a timer in useDebounce above before submitting to backend.
     useEffect(() => {
-        // If the form state changes, we use setRader to set state. This will start a timer in useDebounce
-        // and when this timer expires the data is persisted to backend.
         const subscription = watch(() => handleSubmit(({rader}) => setRader(rader))());
         return () => subscription.unsubscribe();
     }, [handleSubmit, watch]);
