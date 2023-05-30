@@ -39,7 +39,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.ARTIFACT_NAME }}
-          path: ///home/runner/work/sosialhjelp-soknad/sosialhjelp-soknad/app/**
+          path: /home/runner/work/sosialhjelp-soknad/sosialhjelp-soknad/app/**
           if-no-files-found: error
           retention-days: 1
 
