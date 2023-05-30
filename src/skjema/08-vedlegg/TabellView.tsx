@@ -24,11 +24,16 @@ const TabellView = ({opplysning}: {opplysning: VedleggFrontendMinusEtParTingSomT
     return (
         <form>
             <ul>
-                {entries.map((item, index) => (
-                    <li className="pb-4" key={item.id}>
-                        <OpplysningInputRad textKey={textKey} index={index} control={control} fields={inputs} />
-                        {index > 0 && <LinkButton onClick={() => remove(index)}>Fjern</LinkButton>}
-                    </li>
+                {entries.map(({id}, index) => (
+                    <OpplysningInputRad
+                        key={id}
+                        className={"pb-4"}
+                        textKey={textKey}
+                        index={index}
+                        control={control}
+                        fields={inputs}
+                        onDelete={index > 0 ? remove : undefined}
+                    />
                 ))}
                 {numRows === "flere" && <AddRowButton onClick={() => append({})} />}
             </ul>

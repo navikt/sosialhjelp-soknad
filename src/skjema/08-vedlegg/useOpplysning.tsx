@@ -8,23 +8,12 @@ import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysnin
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import {VedleggFrontend} from "../../generated/model";
 import {useDebounce} from "react-use";
+import {belopTekstfeltPreprocessor} from "./belopTekstfeltPreprocessor";
 
-// OBS: Dette er ikke testet enda
-const zodBelopTekstfeltSchema = z.preprocess((a) => {
-    if (typeof a === "number") return a;
-
-    if (a === "") return null;
-
-    const isNumeric = new RegExp("^\\d+$");
-
-    if (!isNumeric.test(a as string)) return "this string is passed as a hack to trigger the invalid_type_error";
-
-    const num = parseInt(a as string, 10);
-
-    if (isNaN(num)) return "this string is passed as a hack to trigger the invalid_type_error";
-
-    return num;
-}, z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL));
+const zodBelopTekstfeltSchema = z.preprocess(
+    belopTekstfeltPreprocessor,
+    z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL)
+);
 
 const VedleggRadFrontendSchema = z.object({
     rader: z.array(
