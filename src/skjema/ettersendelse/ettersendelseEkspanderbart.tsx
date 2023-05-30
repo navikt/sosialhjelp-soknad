@@ -32,10 +32,8 @@ const EttersendelseEkspanderbart = ({
     );
 
     useEffect(() => {
-        if (advarselManglerVedlegg && data && antallOpplastedeFiler > 0) {
-            setAdvarselManglerVedlegg(false);
-        }
-    }, [advarselManglerVedlegg, data]);
+        if (advarselManglerVedlegg && data && antallOpplastedeFiler) setAdvarselManglerVedlegg(false);
+    }, [advarselManglerVedlegg, data, antallOpplastedeFiler]);
 
     const toggleEkspandering = () => {
         setEkspandert(!ekspandert);
