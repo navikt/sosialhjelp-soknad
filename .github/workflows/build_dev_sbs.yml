@@ -12,6 +12,8 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    outputs:
+      artifact_name: ${{ env.ARTIFACT_NAME }}
 #    env:
 #      DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
     steps:
@@ -48,8 +50,8 @@ jobs:
     uses: navikt/sosialhjelp-workflows/.github/workflows/build_image.yml@main
     with:
       image_name: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
-      artifact_name: ${{ env.ARTIFACT_NAME }}
-      tag_prefix: ${{ env.REACT_APP_DIGISOS_ENV }}
+      artifact_name: ${{ needs.build.outputs.artifact_name }}
+      tag_prefix: dev-sbs-
       artifact_folder: app
 
 #      - name: Login to GitHub Docker Registry
