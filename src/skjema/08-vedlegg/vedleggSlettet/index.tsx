@@ -1,9 +1,8 @@
 import * as React from "react";
-import {Opplysning} from "../../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
-import {getSpcForOpplysning} from "../../../digisos/redux/okonomiskeOpplysninger/opplysningerUtils";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {basePath} from "../../../configuration";
 import {useTranslation} from "react-i18next";
+import {Opplysning, opplysningSpec} from "../../../lib/opplysninger";
 
 interface OwnProps {
     opplysning: Opplysning;
@@ -12,8 +11,8 @@ interface OwnProps {
 type Props = OwnProps;
 
 const VedleggSlettet: React.FC<Props> = (props: Props) => {
-    const opplysningSpc = getSpcForOpplysning(props.opplysning.type);
-    const textKeyBase = opplysningSpc ? opplysningSpc.textKey : "";
+    const opplysningSpc = opplysningSpec[props.opplysning.type];
+    const textKeyBase = opplysningSpc.textKey;
     const textKey = textKeyBase + ".slettet";
     const {t} = useTranslation("skjema");
     const intlTextOrKey = getIntlTextOrKey(t, textKey);

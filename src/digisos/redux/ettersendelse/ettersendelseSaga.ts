@@ -32,10 +32,9 @@ import {
     filLastetOpp,
     slettEttersendtVedleggOk,
 } from "./ettersendelseActions";
-import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
-import {settFilOpplastingFerdig} from "../okonomiskeOpplysninger/opplysningerActions";
 import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
 import {REST_FEIL} from "../soknadsdata/soknadsdataTypes";
+import {FilFrontend} from "../../../generated/model";
 
 function* opprettEttersendelseSaga({brukerbehandlingId}: OpprettEttersendelseAction) {
     try {
@@ -102,13 +101,13 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
     const {behandlingsId, opplysningType, formData} = action;
     const url = `opplastetVedlegg/${behandlingsId}/${opplysningType}`;
 
-    let response: Fil = {
+    let response: FilFrontend = {
         filNavn: "",
         uuid: "",
     };
 
     try {
-        const fetchResponse: Fil | undefined = yield call(fetchUpload, url, formData);
+        const fetchResponse: FilFrontend | undefined = yield call(fetchUpload, url, formData);
         if (fetchResponse) response = fetchResponse;
 
         yield put(lastOppEttersendtVedleggOk());
@@ -131,7 +130,8 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
         if (feilKode !== REST_FEIL.KRYPTERT_FIL && feilKode !== REST_FEIL.SIGNERT_FIL) {
             yield call(logInfo, "Last opp vedlegg for ettersendelse feilet: " + reason.toString());
         }
-        yield put(settFilOpplastingFerdig(opplysningType));
+        // FIXME før prodsetting: Gjenskape denne funksjonaliteten under
+        // yield put(setVedleggLoading(opplysningType as VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring, false));
     }
 }
 

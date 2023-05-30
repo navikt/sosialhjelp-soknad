@@ -78,16 +78,15 @@ const SkjemaTitle = ({className}: {className?: string}) => {
 
 const SkjemaContent = React.forwardRef<HTMLDivElement, {children: ReactNode; className?: string}>(
     ({children, className}, ref) => (
-        <main
+        <section
             ref={ref}
-            id="main-content"
             className={cx(
                 "bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 pt-8 pb-8 mb-16 space-y-12 lg:space-y-24",
                 className
             )}
         >
             {children}
-        </main>
+        </section>
     )
 );
 
@@ -120,7 +119,7 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
 
     return (
         <SkjemaStegContext.Provider value={{page, requestNavigation}}>
-            <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn">
+            <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn" id={"main-content"}>
                 <Link href="#main-content" className="sr-only sr-only-focusable">
                     {t("hoppTilHovedinnhold")}
                 </Link>

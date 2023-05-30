@@ -5,8 +5,8 @@ import {
     EttersendelseState,
     EttersendelseVedleggBackend,
 } from "./ettersendelseTypes";
-import {Fil} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {REST_FEIL, REST_STATUS} from "../soknadsdata/soknadsdataTypes";
+import {FilFrontend} from "../../../generated/model";
 
 const initialState: EttersendelseState = {
     restStatus: REST_STATUS.INITIALISERT,
@@ -86,7 +86,7 @@ const reducer = (state: EttersendelseState = initialState, action: Ettersendelse
 
             const dataUpdated = state.data.map((vedlegg: EttersendelseVedleggBackend) => {
                 if (vedlegg.type === opplysningType)
-                    vedlegg.filer = vedlegg.filer.filter((fil: Fil) => fil.uuid !== filUuid);
+                    vedlegg.filer = vedlegg.filer.filter((fil: FilFrontend) => fil.uuid !== filUuid);
 
                 return vedlegg;
             });

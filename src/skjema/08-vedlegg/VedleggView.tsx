@@ -1,112 +1,78 @@
-import {useState} from "react";
-import {
-    Fil,
-    Opplysning,
-    OpplysningSpc,
-    VedleggStatus,
-} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerTypes";
-import {useDispatch, useSelector} from "react-redux";
-import LastOppFil from "./LastOppFil";
+import * as React from "react";
+import VedleggFileSelector from "./LastOppFil";
 import {Checkbox} from "nav-frontend-skjema";
-import {
-    lagreOpplysningHvisGyldigAction,
-    settFilOpplastingFerdig,
-    settFilOpplastingPending,
-    updateOpplysning,
-} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerActions";
 import OpplastetVedlegg from "./OpplastetVedlegg";
-import {State} from "../../digisos/redux/reducers";
-import {fetchDelete, HttpStatus} from "../../nav-soknad/utils/rest-utils";
-import {logWarning} from "../../nav-soknad/utils/loggerUtils";
 import {useTranslation} from "react-i18next";
-import {getSpcForOpplysning} from "../../digisos/redux/okonomiskeOpplysninger/opplysningerUtils";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
-import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
 import cx from "classnames";
+import {VedleggFrontendVedleggStatus} from "../../generated/model";
+import {useVedlegg} from "./useVedlegg";
+import {Opplysning, opplysningSpec} from "../../lib/opplysninger";
+import {ChangeEvent} from "react";
+import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {useQueryClient} from "@tanstack/react-query";
 
-const VedleggView = (props: {okonomiskOpplysning: Opplysning}) => {
+const VedleggFeilmelding = ({error}: {error: string | null}) =>
+    error ? (
+        <div role="alert" aria-live="assertive">
+            <div className="skjemaelement__feilmelding">{error}</div>
+        </div>
+    ) : null;
+
+const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const behandlingsId = useBehandlingsId();
-    const feil = useSelector((state: State) => state.validering.feil);
-    const enFilLastesOpp = useSelector((state: State) => state.okonomiskeOpplysninger.enFilLastesOpp);
     const {t} = useTranslation();
+    const {textKey} = opplysningSpec[opplysning.type];
+    const queryClient = useQueryClient();
 
-    const [feilkode, setFeilkode] = useState<string | null>(null);
+    const {mutate} = useUpdateOkonomiskOpplysning({});
 
-    const dispatch = useDispatch();
+    const {deleteFile, files, upload, error, loading} = useVedlegg(opplysning);
 
-    const handleAlleredeLastetOpp = (_: any) => {
-        const opplysningUpdated = {...props.okonomiskOpplysning};
+    const handleAlleredeLastetOpp = async (e: ChangeEvent<HTMLInputElement>) => {
+        await mutate({
+            behandlingsId,
+            data: {
+                ...opplysning,
+                vedleggStatus: e.target.checked
+                    ? VedleggFrontendVedleggStatus.VedleggAlleredeSendt
+                    : VedleggFrontendVedleggStatus.VedleggKreves,
+            },
+        });
 
-        if (opplysningUpdated.vedleggStatus !== VedleggStatus.VEDLEGGALLEREDESEND) {
-            opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGGALLEREDESEND;
-        } else {
-            opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
-        }
+        // FIXME: Don't know why this is needed, presumably race condition on back-end
+        await new Promise<void>((resolve) => setTimeout(() => resolve(), 200));
 
-        dispatch(lagreOpplysningHvisGyldigAction(behandlingsId, opplysningUpdated, feil));
+        await queryClient.refetchQueries([`/soknader/${behandlingsId}/okonomiskeOpplysninger`]);
     };
 
-    const slettVedlegg = (fil: Fil) => {
-        dispatch(settFilOpplastingPending(props.okonomiskOpplysning.type));
-
-        setFeilkode(feilkode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR ? null : feilkode);
-
-        fetchDelete(`opplastetVedlegg/${behandlingsId}/${fil.uuid}`)
-            .then(() => {
-                const filerUpdated = props.okonomiskOpplysning.filer.filter(({uuid}) => uuid !== fil.uuid);
-
-                const opplysningUpdated: Opplysning = {...props.okonomiskOpplysning};
-                opplysningUpdated.filer = filerUpdated;
-
-                if (!opplysningUpdated.filer.length) opplysningUpdated.vedleggStatus = VedleggStatus.VEDLEGG_KREVES;
-
-                dispatch(updateOpplysning(opplysningUpdated));
-                dispatch(settFilOpplastingFerdig(props.okonomiskOpplysning.type));
-            })
-            .catch((reason) => {
-                if (reason.message === HttpStatus.UNAUTHORIZED) return;
-                logWarning("Slett vedlegg feilet: " + reason);
-                window.location.href = "/sosialhjelp/soknad/feil?reason=slettVedlegg";
-            });
-    };
-
-    const renderOpplastingAvVedleggSeksjon = (opplysning: Opplysning) => {
-        const opplysningSpc: OpplysningSpc | undefined = getSpcForOpplysning(opplysning.type);
-        const tittelKey = opplysningSpc?.textKey ? `${opplysningSpc.textKey}.vedlegg.sporsmal.tittel` : "";
-
-        const vedleggListe = opplysning.filer.map((fil) => (
-            <OpplastetVedlegg
-                key={fil.uuid}
-                behandlingsId={behandlingsId}
-                fil={fil}
-                onSlett={() => slettVedlegg(fil)}
-            />
-        ));
-
-        return (
-            <div>
-                <p>{t(tittelKey)}</p>
-                <div className="vedleggsliste">{vedleggListe}</div>
-                <LastOppFil
-                    opplysning={opplysning}
-                    isDisabled={enFilLastesOpp || opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
-                    visSpinner={opplysning.pendingLasterOppFil}
-                    feilkode={feilkode}
-                    setFeilkode={setFeilkode}
-                />
-                <Checkbox
-                    label={t("opplysninger.vedlegg.alleredelastetopp")}
-                    id={opplysning.type + "_allerede_lastet_opp_checkbox"}
-                    className={cx("vedleggLastetOppCheckbox", {"checkboks--disabled": opplysning.filer.length})}
-                    onChange={(event: any) => handleAlleredeLastetOpp(event)}
-                    checked={opplysning.vedleggStatus === VedleggStatus.VEDLEGGALLEREDESEND}
-                    disabled={opplysning.filer.length > 0 || opplysning.pendingLasterOppFil}
-                />
+    return (
+        <div>
+            <p>{t(`${textKey}.vedlegg.sporsmal.tittel`)}</p>
+            <div className="vedleggsliste">
+                {files.map((fil) => (
+                    <OpplastetVedlegg key={fil.uuid} fil={fil} onDelete={deleteFile} />
+                ))}
             </div>
-        );
-    };
-
-    return <div>{renderOpplastingAvVedleggSeksjon(props.okonomiskOpplysning)}</div>;
+            <VedleggFileSelector
+                opplysning={opplysning}
+                isDisabled={loading || opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
+                visSpinner={!!opplysning.pendingLasterOppFil}
+                doUpload={upload}
+            />
+            <VedleggFeilmelding error={error} />
+            <Checkbox
+                label={t("opplysninger.vedlegg.alleredelastetopp")}
+                id={opplysning.type + "_allerede_lastet_opp_checkbox"}
+                className={cx("vedleggLastetOppCheckbox", {
+                    "checkboks--disabled": opplysning.filer?.length,
+                })}
+                onChange={handleAlleredeLastetOpp}
+                checked={opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
+                disabled={!!files.length || loading}
+            />
+        </div>
+    );
 };
 
 export default VedleggView;

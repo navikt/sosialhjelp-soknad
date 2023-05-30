@@ -4,33 +4,6 @@ import styled from "styled-components";
 import {mobile} from "../../nav-soknad/styles/variables";
 import {MargIkon, MargIkoner} from "./margIkoner";
 
-const StyledAvsnittMedMarger = styled.div`
-    display: flex;
-    width: 100%;
-    background-color: var(--a-bg-default);
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-`;
-
-const Venstremarg = styled.div`
-    flex-direction: row;
-    width: 55px;
-    min-width: 35px;
-
-    text-align: left;
-    padding-left: 1rem;
-    padding-right: 1rem;
-
-    @media ${mobile} {
-        padding-left: 4px;
-    }
-
-    svg {
-        height: 26px;
-        width: 26px;
-    }
-`;
-
 const Hoyremarg = styled.div`
     flex-direction: row;
     width: 40px;
@@ -61,16 +34,31 @@ interface Props {
     className?: string;
 }
 
+export const EttersendelseAvsnitt = ({children}: {children: React.ReactNode}) => (
+    <div className={"flex w-full bg-[var(--a-bg-default)] my-4"}>{children}</div>
+);
+
+export const EttersendelseTittel = ({children}: {children: React.ReactNode}) => (
+    <div className={"flex flex-row"}>{children}</div>
+);
+
 /**
  * Vis et avsnitt med marger. Vis eventuelt ikoner i margene.
  * Hvis callback onClickHoyreIkon er satt, vis peker og hovereffekt på mouseover på ikonet.
  */
-const AvsnittMedMarger: React.FC<Props> = ({children, venstreIkon, hoyreIkon, onClickHoyreIkon, className}) => {
+const AvsnittMedMargerEttersendelse: React.FC<Props> = ({
+    children,
+    venstreIkon,
+    hoyreIkon,
+    onClickHoyreIkon,
+    className,
+}) => {
     return (
-        <StyledAvsnittMedMarger>
-            <Venstremarg>{venstreIkon && <MargIkon ikon={venstreIkon} />}</Venstremarg>
-            <Avsnitt className={className}>{children}</Avsnitt>
-
+        <div className={"flex w-full bg-[var(--a-bg-default)] my-4"}>
+            <div className={"flex flex-row"}>
+                <div className={"w-14"}>{venstreIkon && <MargIkon ikon={venstreIkon} />}</div>
+                <Avsnitt className={className}>{children}</Avsnitt>
+            </div>
             <Hoyremarg>
                 {hoyreIkon && (
                     <>
@@ -84,8 +72,8 @@ const AvsnittMedMarger: React.FC<Props> = ({children, venstreIkon, hoyreIkon, on
                     </>
                 )}
             </Hoyremarg>
-        </StyledAvsnittMedMarger>
+        </div>
     );
 };
 
-export default AvsnittMedMarger;
+export default AvsnittMedMargerEttersendelse;

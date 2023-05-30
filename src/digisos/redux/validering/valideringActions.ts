@@ -2,7 +2,6 @@ import {
     ClearAllValideringsfeilAction,
     ClearValideringsfeilAction,
     SetValideringsfeilAction,
-    SkjulValideringsfeilPanelAction,
     ValideringActionTypeKeys,
     ValideringsFeilKode,
     VisValideringsfeilPanelAction,
@@ -11,12 +10,6 @@ import {
 export function visValideringsfeilPanel(): VisValideringsfeilPanelAction {
     return {
         type: ValideringActionTypeKeys.VIS_VALIDERINGSFEIL_PANEL,
-    };
-}
-
-export function skjulValideringsfeilPanel(): SkjulValideringsfeilPanelAction {
-    return {
-        type: ValideringActionTypeKeys.SKJUL_VALIDERINGSFEIL_PANEL,
     };
 }
 
