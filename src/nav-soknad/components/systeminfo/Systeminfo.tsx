@@ -10,7 +10,7 @@ const SysteminfoList = styled.ul`
     }
 `;
 
-const ListItem = styled.li<{multiline?: boolean}>`
+const ListItemContents = styled.div<{multiline?: boolean}>`
     p {
         display: ${(props) => (props.multiline ? "block" : "inline")};
     }
@@ -42,10 +42,10 @@ interface OldSysteminfoProps {
 export const OldSysteminfo = ({multiline, systeminfoMap}: OldSysteminfoProps) => (
     <SysteminfoList>
         {systeminfoMap.map(({key, value}, index) => (
-            <ListItem key={index} multiline={multiline}>
+            <ListItemContents key={index} multiline={multiline}>
                 <Label size="small">{key}</Label>
                 {value}
-            </ListItem>
+            </ListItemContents>
         ))}
     </SysteminfoList>
 );
@@ -63,19 +63,19 @@ export const SysteminfoItem = ({
     children?: ReactNode;
     className?: string;
 }) => (
-    <div>
+    <li>
         {comment && (
             <Detail className={cx("opacity-90 pb-1")} data-testid="personalia-infotekst">
                 {comment}
             </Detail>
         )}
-        <ListItem className={cx("!leading-5 ", className)} multiline={multiline}>
+        <ListItemContents className={cx("!leading-5 ", className)} multiline={multiline}>
             <Label className="pr-1 after:content-[':']" size="small">
                 {label}
             </Label>
             <BodyShort size="small">{children}</BodyShort>
-        </ListItem>
-    </div>
+        </ListItemContents>
+    </li>
 );
 
 export const Systeminfo = ({children, className}: {children: React.ReactNode; className?: string}) => (

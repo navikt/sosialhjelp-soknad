@@ -29,28 +29,25 @@ const LastOppFil = ({
         if (vedleggElement?.current) vedleggElement.current.value = "";
     };
 
-    const handleOnClick = () => vedleggElement?.current?.click();
-
     return (
         <div>
             <Button
                 variant="secondary"
                 id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
                 disabled={isDisabled}
-                onClick={() => {
-                    handleOnClick();
-                }}
+                onClick={() => vedleggElement?.current?.click()}
                 className="last-opp-vedlegg-knapp"
             >
                 + {t("opplysninger.vedlegg.knapp.tekst")}
                 {visSpinner && <Loader />}
             </Button>
             <input
+                aria-hidden
                 id={opplysning.type.replace(/\./g, "_") + "_skjult_upload_input"}
                 ref={vedleggElement}
                 onChange={handleFileUpload}
                 type="file"
-                className="visuallyhidden"
+                className="hidden"
                 tabIndex={-1}
                 accept={
                     window.navigator.platform.match(/iPad|iPhone|iPod/) !== null

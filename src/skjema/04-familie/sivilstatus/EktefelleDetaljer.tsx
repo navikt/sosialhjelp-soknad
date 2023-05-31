@@ -13,22 +13,22 @@ const EktefelleNavn = () => {
     const {expectOK} = useAlgebraic(useHentSivilstatus(useBehandlingsId()));
 
     // FIXME: Handle the reverse case of this if clause
-    return expectOK(({ektefelle, erFolkeregistrertSammen, harDiskresjonskode}) => (
-        <div className="sivilstatus__ektefelleinfo">
-            {ektefelle?.navn?.fulltNavn && (
-                <>
+    return expectOK(({ektefelle, erFolkeregistrertSammen, harDiskresjonskode}) =>
+        ektefelle?.navn?.fulltNavn ? (
+            <>
+                <li>
                     <BodyShort spacing>{t("label")}:</BodyShort>
-                    <SysteminfoItem label={t(`gift.ektefelle.navn`)}>{ektefelle.navn.fulltNavn}</SysteminfoItem>
-                    {ektefelle?.fodselsdato && (
-                        <SysteminfoItem label={t(`gift.ektefelle.fodselsdato`)}>{ektefelle.fodselsdato}</SysteminfoItem>
-                    )}
-                    <SysteminfoItem label={t(`gift.ektefelle.folkereg`)}>
-                        {erFolkeregistrertSammen ? "Ja" : "Nei"}
-                    </SysteminfoItem>
-                </>
-            )}
-        </div>
-    ));
+                </li>
+                <SysteminfoItem label={t(`gift.ektefelle.navn`)}>{ektefelle?.navn?.fulltNavn}</SysteminfoItem>
+                {ektefelle?.fodselsdato && (
+                    <SysteminfoItem label={t(`gift.ektefelle.fodselsdato`)}>{ektefelle.fodselsdato}</SysteminfoItem>
+                )}
+                <SysteminfoItem label={t(`gift.ektefelle.folkereg`)}>
+                    {erFolkeregistrertSammen ? "Ja" : "Nei"}
+                </SysteminfoItem>
+            </>
+        ) : null
+    );
 };
 
 const EktefelleDetaljer = () => {
@@ -39,7 +39,9 @@ const EktefelleDetaljer = () => {
         <div className="sivilstatus skjema-sporsmal space-y-4">
             <Sporsmal sporsmal={t("system.familie.sivilstatus.sporsmal")} stil="system">
                 <Systeminfo>
-                    <Detail className={cx("opacity-90 pb-1")}>{t("system.familie.sivilstatus")}</Detail>
+                    <li>
+                        <Detail className={cx("opacity-90 pb-1")}>{t("system.familie.sivilstatus")}</Detail>{" "}
+                    </li>
                     {harDiskresjonskode ? t("system.familie.sivilstatus.ikkeTilgang.label") : <EktefelleNavn />}
                 </Systeminfo>
             </Sporsmal>
