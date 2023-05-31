@@ -100,9 +100,7 @@ const ArbeidOgUtdanning = () => {
                         </Heading>
                         <UtdanningInput control={control} />
                     </div>
-                    {(isErrorArbeid || isErrorUtdanning) && (
-                        <div>Beklager, et teknisk problem oppstod ved innsending. Prøv gjerne igjen.</div>
-                    )}
+                    {(isErrorArbeid || isErrorUtdanning) && <div>{t("skjema.navigering.feil")}</div>}
                     <SkjemaSteg.Buttons />
                 </form>
             </SkjemaSteg.Content>

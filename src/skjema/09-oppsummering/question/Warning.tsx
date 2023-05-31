@@ -2,6 +2,7 @@ import React from "react";
 import {Warning as WarningIcon} from "@navikt/ds-icons";
 import {BodyShort} from "@navikt/ds-react";
 import styled from "styled-components";
+import {useTranslation} from "react-i18next";
 
 const StyledWarning = styled.div`
     display: flex;
@@ -16,10 +17,12 @@ const StyledWarning = styled.div`
 `;
 
 export const Warning = () => {
+    const {t} = useTranslation();
+
     return (
         <StyledWarning>
             <WarningIcon focusable={false} aria-label="Advarsel" role="img" />
-            <BodyShort>Ikke besvart</BodyShort>
+            <BodyShort>{t("oppsummering.ikkeutfylt")}</BodyShort>
         </StyledWarning>
     );
 };

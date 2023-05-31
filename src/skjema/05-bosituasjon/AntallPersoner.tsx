@@ -19,7 +19,7 @@ interface AntallPersonerProps {
 export const validerAntallPersoner = (formValue: string) => {
     if (!formValue.length) return null;
     if (Number.isInteger(Number.parseFloat(formValue))) return formValue;
-    throw new Error("Må være et heltall!");
+    throw new Error(ValideringsFeilKode.ER_TALL);
 };
 
 const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
@@ -57,7 +57,7 @@ const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
                 defaultValue={bosituasjon?.antallPersoner || ""}
                 onBlur={validateAndStore}
                 onChange={() => dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL))}
-                feil={errorMessage}
+                feil={errorMessage && t(errorMessage)}
             />
         </SkjemaGruppe>
     );

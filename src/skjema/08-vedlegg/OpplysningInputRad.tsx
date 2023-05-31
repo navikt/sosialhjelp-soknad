@@ -43,7 +43,7 @@ export const OpplysningInputRad = ({
                     control={control}
                 />
             ))}
-            {onDelete && <LinkButton onClick={() => onDelete(index)}>Fjern</LinkButton>}
+            {onDelete && <LinkButton onClick={() => onDelete(index)}>{t("opplysninger.fjern")}</LinkButton>}
         </li>
     );
 };
