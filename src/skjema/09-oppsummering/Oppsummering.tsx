@@ -200,13 +200,11 @@ export const Oppsummering = () => {
                 </ConfirmationPanel>
 
                 {isError && (
-                    <div role="alert">
-                        <Alert variant="error" style={{marginTop: "1rem"}}>
-                            Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg prøve
-                            igjen. Søknaden din er lagret og dersom problemet fortsetter kan du forsøke igjen senere.
-                            Kontakt ditt NAV kontor dersom du er i en nødsituasjon.
-                        </Alert>
-                    </div>
+                    <Alert role="alert" variant="error" style={{marginTop: "1rem"}}>
+                        Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg prøve igjen.
+                        Søknaden din er lagret og dersom problemet fortsetter kan du forsøke igjen senere. Kontakt ditt
+                        NAV kontor dersom du er i en nødsituasjon.
+                    </Alert>
                 )}
 
                 <NavEnhetInaktiv navEnhet={adresser?.navEnhet} />

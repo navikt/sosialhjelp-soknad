@@ -35,7 +35,11 @@ const TabellView = ({opplysning}: {opplysning: VedleggFrontendMinusEtParTingSomT
                         onDelete={index > 0 ? remove : undefined}
                     />
                 ))}
-                {numRows === "flere" && <AddRowButton onClick={() => append({})} />}
+                {numRows === "flere" && (
+                    <li>
+                        <AddRowButton onClick={() => append({})} />
+                    </li>
+                )}
             </ul>
         </form>
     );

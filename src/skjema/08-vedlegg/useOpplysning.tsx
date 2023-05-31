@@ -19,7 +19,7 @@ const VedleggRadFrontendSchema = z.object({
     rader: z.array(
         z
             .object({
-                beskrivelse: z.string().nullable(),
+                beskrivelse: z.string().max(100, ValideringsFeilKode.MAX_LENGDE).nullable(),
                 belop: zodBelopTekstfeltSchema,
                 brutto: zodBelopTekstfeltSchema,
                 netto: zodBelopTekstfeltSchema,
