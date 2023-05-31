@@ -1,5 +1,4 @@
 import * as React from "react";
-import {getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {basePath} from "../../../configuration";
 import {useTranslation} from "react-i18next";
 import {Opplysning, opplysningSpec} from "../../../lib/opplysninger";

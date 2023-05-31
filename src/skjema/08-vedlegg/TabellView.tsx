@@ -5,8 +5,6 @@ import {VedleggFrontendMinusEtParTingSomTrengerAvklaring} from "../../lib/opplys
 import {OpplysningInputRad} from "./OpplysningInputRad";
 import {useTranslation} from "react-i18next";
 
-// FIXME I18N: Hardkodet bokmål
-
 const AddRowButton = ({onClick}: {onClick: () => void}) => {
     const {t} = useTranslation();
 
