@@ -44,6 +44,6 @@ export const KontonrShow = () => {
 
         if (systemverdi) return <KontonrShowSysteminfo />;
 
-        return <div>Ingen opplysninger om bankkonto</div>;
+        return <div>{t("kontakt.kontonummer.ingeninfo")}</div>;
     });
 };
