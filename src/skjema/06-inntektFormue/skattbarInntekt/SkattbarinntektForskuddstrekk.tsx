@@ -27,6 +27,7 @@ const UtbetalingVerdi = ({description, value}: {description: string; value: numb
 type SkattbartForskuddProps = {skattbarinntektogforskuddstrekk: SkattbarInntekt[]};
 
 const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({skattbarinntektogforskuddstrekk}) => {
+    const {t} = useTranslation();
     return (
         <span>
             {skattbarinntektogforskuddstrekk.map((skattbarInntekt: SkattbarInntekt) => {
@@ -48,7 +49,7 @@ const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({skattb
                                     if (utbetaling.brutto) {
                                         utbetalingVerdier.push(
                                             <UtbetalingVerdi
-                                                description={"Bruttoinntekt"}
+                                                description={t("utbetalinger.inntekt.skattbar.bruttoinntekt")}
                                                 value={utbetaling.brutto}
                                                 key={`Bruttoinntekt-${index}`}
                                             />
@@ -57,7 +58,7 @@ const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({skattb
                                     if (utbetaling.forskuddstrekk) {
                                         utbetalingVerdier.push(
                                             <UtbetalingVerdi
-                                                description={"Forskuddstrekk"}
+                                                description={t("utbetalinger.inntekt.skattbar.forskuddstrekk")}
                                                 value={utbetaling.forskuddstrekk}
                                                 key={`Forskuddstrekk-${index}`}
                                             />
@@ -67,7 +68,7 @@ const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({skattb
                                 })}
                             </div>
                             <Link href={lenkeSti} target="_blank" rel="noopener noreferrer">
-                                Se detaljer hos Skatteetaten.
+                                {t("utbetalinger.inntekt.skattbar.skatteetaten")}
                             </Link>
                         </div>
                     );
