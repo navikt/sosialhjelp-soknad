@@ -26,7 +26,7 @@ export const SkjemaStegStepper = () => {
                 onStepChange={(s: number) => requestNavigation(s)}
             >
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((key) => (
-                    <Stepper.Step key={key} as="button">
+                    <Stepper.Step aria-label={`steg ${key}`} key={key} as="button">
                         {t(SkjemaHeadings[page].tittel)}
                     </Stepper.Step>
                 ))}

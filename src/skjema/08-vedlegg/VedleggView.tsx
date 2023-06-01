@@ -11,13 +11,7 @@ import {Opplysning, opplysningSpec} from "../../lib/opplysninger";
 import {ChangeEvent} from "react";
 import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
-
-const VedleggFeilmelding = ({error}: {error: string | null}) =>
-    error ? (
-        <div role="alert" aria-live="assertive">
-            <div className="skjemaelement__feilmelding">{error}</div>
-        </div>
-    ) : null;
+import {ErrorMessage} from "@navikt/ds-react";
 
 const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const behandlingsId = useBehandlingsId();
@@ -60,7 +54,8 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                 visSpinner={!!opplysning.pendingLasterOppFil}
                 doUpload={upload}
             />
-            <VedleggFeilmelding error={error} />
+            {error && <ErrorMessage className={"py-2"}>{t(error)}</ErrorMessage>}
+
             <Checkbox
                 label={t("opplysninger.vedlegg.alleredelastetopp")}
                 id={opplysning.type + "_allerede_lastet_opp_checkbox"}

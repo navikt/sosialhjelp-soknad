@@ -12,19 +12,19 @@ import {belopTekstfeltPreprocessor} from "./belopTekstfeltPreprocessor";
 
 const zodBelopTekstfeltSchema = z.preprocess(
     belopTekstfeltPreprocessor,
-    z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL)
+    z.nullable(z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL))
 );
 
 const VedleggRadFrontendSchema = z.object({
     rader: z.array(
         z
             .object({
-                beskrivelse: z.string().nullable(),
-                belop: zodBelopTekstfeltSchema.nullable(),
-                brutto: zodBelopTekstfeltSchema.nullable(),
-                netto: zodBelopTekstfeltSchema.nullable(),
-                renter: zodBelopTekstfeltSchema.nullable(),
-                avdrag: zodBelopTekstfeltSchema.nullable(),
+                beskrivelse: z.string().max(100, ValideringsFeilKode.MAX_LENGDE).nullable(),
+                belop: zodBelopTekstfeltSchema,
+                brutto: zodBelopTekstfeltSchema,
+                netto: zodBelopTekstfeltSchema,
+                renter: zodBelopTekstfeltSchema,
+                avdrag: zodBelopTekstfeltSchema,
             })
             .partial()
     ),
@@ -44,7 +44,7 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
         mode: "onBlur",
         // Egentlig burde dette være true, men om det ikke er false så vil den
         // umiddelbart bytte fokus til første ugyldige felt dersom man endrer
-        // et gyldig felt
+        // et gyldig felt pga. mode: "onBlur"
         shouldFocusError: false,
     });
 
@@ -59,14 +59,13 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
                 data: {...opplysning, rader},
             });
         },
-        1000,
+        200,
         [rader]
     );
 
-    // Subscribe to changes in the form - this could probably be done better...
+    // Submit data to server when form changes, with delay - this could probably be done better.
+    // The row state is changed, which starts a timer in useDebounce above before submitting to backend.
     useEffect(() => {
-        // If the form state changes, we use setRader to set state. This will start a timer in useDebounce
-        // and when this timer expires the data is persisted to backend.
         const subscription = watch(() => handleSubmit(({rader}) => setRader(rader))());
         return () => subscription.unsubscribe();
     }, [handleSubmit, watch]);

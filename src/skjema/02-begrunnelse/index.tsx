@@ -85,7 +85,7 @@ const Begrunnelse = () => {
                         error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
                     />
                 </form>
-                {isError && <div>Beklager, et teknisk problem oppstod ved innsending. Prøv gjerne igjen.</div>}
+                {isError && <div>{t("skjema.navigering.feil")}</div>}
                 <SkjemaSteg.Buttons />
             </SkjemaSteg.Content>
         </SkjemaSteg>

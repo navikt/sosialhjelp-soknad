@@ -86,7 +86,9 @@ const RegistrerteBarn = () => {
                                 {barnet.barn.fodselsdato ?? ""}
                             </SysteminfoItem>
                             <SysteminfoItem label={t("familierelasjon.samme_folkeregistrerte_adresse")}>
-                                {barnet.erFolkeregistrertSammen ? "Ja" : "Nei"}
+                                {barnet.erFolkeregistrertSammen
+                                    ? t("familie.barn.true.barn.borsammen.true")
+                                    : t("familie.barn.true.barn.borsammen.false")}
                             </SysteminfoItem>
                         </Systeminfo>
                         {barnet.erFolkeregistrertSammen && (

@@ -49,19 +49,20 @@ export const NavEnhetInaktiv = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
     return null;
 };
 const NavEnhet = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
+    const {t} = useTranslation();
     if (!navEnhet) return null;
     const {enhetsnavn, kommunenavn} = navEnhet;
 
     if (!erAktiv(navEnhet)) return <NavEnhetInaktiv navEnhet={navEnhet} />;
-    else
-        return (
-            <Alert variant={"success"}>
-                <Heading size={"small"} level={"4"} spacing>
-                    Søknaden vil bli sendt til:
-                </Heading>
-                <BodyShort>{`${enhetsnavn}, ${kommunenavn} kommune`}</BodyShort>
-            </Alert>
-        );
+
+    return (
+        <Alert variant={"success"}>
+            <Heading size={"small"} level={"4"} spacing>
+                {t("adresse.alertstripe.suksess")}
+            </Heading>
+            <BodyShort>{t("adresse.alertstripe.navKontor", {enhetsnavn, kommunenavn})}</BodyShort>
+        </Alert>
+    );
 };
 
 export const NyNavEnhet = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
