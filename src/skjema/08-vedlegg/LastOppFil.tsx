@@ -2,6 +2,7 @@ import * as React from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {Opplysning} from "../../lib/opplysninger";
+import {useFeatureFlags} from "../../lib/featureFlags";
 
 const LastOppFil = ({
     doUpload,
@@ -15,6 +16,7 @@ const LastOppFil = ({
     doUpload: (file: File) => void;
 }) => {
     const {t} = useTranslation();
+    const {tilgjengeliggjorFlereFilformater} = useFeatureFlags();
 
     const vedleggElement = React.useRef<HTMLInputElement>(null);
 
@@ -25,9 +27,12 @@ const LastOppFil = ({
 
         [...files].forEach(doUpload);
 
-        // What does this do?
         if (vedleggElement?.current) vedleggElement.current.value = "";
     };
+
+    const alwaysAllowedFormats = "image/jpeg,image/png,application/pdf";
+    const devOnlyFormats =
+        ",text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
     return (
         <div>
@@ -52,7 +57,9 @@ const LastOppFil = ({
                 accept={
                     window.navigator.platform.match(/iPad|iPhone|iPod/) !== null
                         ? "*"
-                        : "image/jpeg,image/png,application/pdf"
+                        : tilgjengeliggjorFlereFilformater
+                        ? alwaysAllowedFormats + devOnlyFormats
+                        : alwaysAllowedFormats
                 }
                 multiple
             />

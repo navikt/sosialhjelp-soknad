@@ -10,6 +10,9 @@ export type FeatureFlags = {
 
     // Ny NAV-kontor-visning i oppsummering
     oppsummeringNavEnhet: boolean;
+
+    // Tilgjengeliggjør flere filformater
+    tilgjengeliggjorFlereFilformater: boolean;
 };
 
 export const useFeatureFlags = (): FeatureFlags => {
@@ -19,6 +22,7 @@ export const useFeatureFlags = (): FeatureFlags => {
             viStolerPaaDeg: true,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
+            tilgjengeliggjorFlereFilformater: true,
         };
     }
     return {
@@ -26,5 +30,6 @@ export const useFeatureFlags = (): FeatureFlags => {
         viStolerPaaDeg: false,
         nyOppsummering: false,
         oppsummeringNavEnhet: false,
+        tilgjengeliggjorFlereFilformater: false,
     };
 };
