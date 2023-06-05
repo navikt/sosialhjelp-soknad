@@ -2,7 +2,7 @@ import * as React from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {Opplysning} from "../../lib/opplysninger";
-import {isLocalhost, isMockAlt} from "../../nav-soknad/utils";
+import {useFeatureFlags} from "../../lib/featureFlags";
 
 const LastOppFil = ({
     doUpload,
@@ -16,6 +16,7 @@ const LastOppFil = ({
     doUpload: (file: File) => void;
 }) => {
     const {t} = useTranslation();
+    const {tilgjengeliggjorFlereFilformater} = useFeatureFlags();
 
     const vedleggElement = React.useRef<HTMLInputElement>(null);
 
@@ -26,7 +27,6 @@ const LastOppFil = ({
 
         [...files].forEach(doUpload);
 
-        // What does this do?
         if (vedleggElement?.current) vedleggElement.current.value = "";
     };
 
@@ -57,9 +57,7 @@ const LastOppFil = ({
                 accept={
                     window.navigator.platform.match(/iPad|iPhone|iPod/) !== null
                         ? "*"
-                        : process.env.NODE_ENV !== "production" ||
-                          isLocalhost(window.location.hostname) ||
-                          isMockAlt(window.location.hostname)
+                        : tilgjengeliggjorFlereFilformater
                         ? alwaysAllowedFormats + devOnlyFormats
                         : alwaysAllowedFormats
                 }
