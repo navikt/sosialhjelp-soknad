@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REACT_APP_DIGISOS_ENV: dev-sbs
-      PREFIX: dev-sbs
+      PREFIX: dev-sbs-
 
     steps:
       - uses: actions/checkout@v3
@@ -41,4 +41,4 @@ jobs:
         with:
           image-name: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          artifact-version: ${{ env.PREFIX }}-${{ steps.artifact-version.outputs.artifact-version }}
+          artifact-version: ${{ env.PREFIX }}${{ steps.artifact-version.outputs.artifact-version }}
