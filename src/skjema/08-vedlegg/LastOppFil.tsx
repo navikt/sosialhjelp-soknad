@@ -2,6 +2,7 @@ import * as React from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {Opplysning} from "../../lib/opplysninger";
+import {isLocalhost, isMockAlt} from "../../nav-soknad/utils";
 
 const LastOppFil = ({
     doUpload,
@@ -29,6 +30,10 @@ const LastOppFil = ({
         if (vedleggElement?.current) vedleggElement.current.value = "";
     };
 
+    const alwaysAllowedFormats = "image/jpeg,image/png,application/pdf";
+    const devOnlyFormats =
+        ",text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
     return (
         <div>
             <Button
@@ -52,7 +57,11 @@ const LastOppFil = ({
                 accept={
                     window.navigator.platform.match(/iPad|iPhone|iPod/) !== null
                         ? "*"
-                        : "image/jpeg,image/png,application/pdf"
+                        : process.env.NODE_ENV !== "production" ||
+                          isLocalhost(window.location.hostname) ||
+                          isMockAlt(window.location.hostname)
+                        ? alwaysAllowedFormats + devOnlyFormats
+                        : alwaysAllowedFormats
                 }
                 multiple
             />
