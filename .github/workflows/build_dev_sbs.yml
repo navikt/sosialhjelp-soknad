@@ -23,8 +23,7 @@ jobs:
         with:
           prefix: dev-sbs-
 
-      - name: Build and push docker Image
-        uses: navikt/sosialhjelp-ci/actions/build-and-push-docker-image@master
+      - uses: navikt/sosialhjelp-ci/actions/build-and-push-docker-image@master
         with:
           image-name: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
