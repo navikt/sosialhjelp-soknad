@@ -1,15 +1,16 @@
 name: Build dev-sbs image
 on:
   push:
-env:
-  REACT_APP_DIGISOS_ENV: dev-sbs
-  ARTIFACT_NAME: app-folder
 
 # FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      REACT_APP_DIGISOS_ENV: dev-sbs
+      PREFIX: dev-sbs-
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -30,8 +31,12 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Build, tag, push and release docker Image
-        uses: navikt/sosialhjelp-ci/actions/build-image@master
+      - uses: navikt/sosialhjelp-ci/actions/create-and-release-tag@test_prefix
+        id: artifact-version
+
+      - name: Build and push docker Image
+        uses: navikt/sosialhjelp-ci/actions/build-and-push-docker-image@master
         with:
           image-name: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          artifact-version: dev-sbs-${{ steps.artifact-version.outputs.artifact-version }}
