@@ -1,6 +1,6 @@
 import * as React from "react";
 import {getIntlTextOrKey} from "../nav-soknad/utils";
-import IkkeTilgang from "./IkkeTilgang";
+import {PersonbeskyttelseFeilmelding} from "./PersonbeskyttelseFeilmelding";
 import AppBanner from "../nav-soknad/components/appHeader/AppHeader";
 import {useTitle} from "../lib/hooks/useTitle";
 import {NedetidPanel} from "../components/common/NedetidPanel";
@@ -43,7 +43,7 @@ const Informasjon = () => {
                 </div>
             </div>
         ) : (
-            <IkkeTilgang />
+            <PersonbeskyttelseFeilmelding />
         )
     );
 };

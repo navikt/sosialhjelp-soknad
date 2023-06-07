@@ -33,7 +33,7 @@ export const OpplysningInputRad = ({
                         <TextField
                             className={cx("pb-2", {"w-32": fieldName !== "beskrivelse"})}
                             label={t(`${textKey}.${fieldName}.label`)}
-                            error={fieldState.error?.message && t(fieldState.error.message)}
+                            error={fieldState.isTouched && fieldState.error?.message && t(fieldState.error.message)}
                             {...field}
                             // To avoid value === null
                             value={field.value || ""}
