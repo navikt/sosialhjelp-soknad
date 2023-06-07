@@ -40,10 +40,10 @@ export const SoknadsmottakerInfoPanel = () => {
                 />
                 <StyledGuidePanel illustration={<Brevkonvolutt />} poster>
                     <Heading level="2" size="medium" spacing>
-                        {t("soknasosialhjelp.oppsummering.hvorsendes_del1", {valgtEnhetsNavn})}
+                        {t("soknadsosialhjelp.oppsummering.hvorsendes_del1", {valgtEnhetsNavn})}
                     </Heading>
                     <BodyShort spacing>
-                        {t("soknasosialhjelp.oppsummering.hvorsendes_del2", {valgtEnhetsNavn})}
+                        {t("soknadsosialhjelp.oppsummering.hvorsendes_del2", {valgtEnhetsNavn})}
                     </BodyShort>
 
                     <LinkButton type="button" onClick={() => setVisPersonopplysningerModal(true)}>

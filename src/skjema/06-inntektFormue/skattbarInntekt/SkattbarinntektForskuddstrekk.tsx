@@ -40,7 +40,7 @@ const SkattbarinntektForskuddstrekk: React.FC<SkattbartForskuddProps> = ({skattb
                             <div className="blokk-s">
                                 <UndertekstBold className="blokk-null">{organisasjon.organisasjonsnavn}</UndertekstBold>
                                 <div>
-                                    Fra {fom} til {tom}
+                                    {t("utbetalinger.inntekt.fra")} {fom} {t("utbetalinger.inntekt.til")} {tom}
                                 </div>
                             </div>
                             <div className="blokk-xs">
