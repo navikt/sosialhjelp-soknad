@@ -1,11 +1,13 @@
 import {Attachment} from "@navikt/ds-icons";
-import {Accordion, Heading, Link} from "@navikt/ds-react";
+import {Accordion, Heading} from "@navikt/ds-react";
 import React from "react";
+import {Trans, useTranslation} from "react-i18next";
 import {useHarNyligInnsendteSoknader} from "../../generated/informasjon-ressurs/informasjon-ressurs";
 import {innsynURL} from "../../lib/config";
 
 export const EttersendDokuPanel = () => {
     const {data: nyligInnsendte} = useHarNyligInnsendteSoknader();
+    const {t} = useTranslation("skjema");
 
     if (!nyligInnsendte?.antallNyligInnsendte) return null;
 
@@ -22,19 +24,24 @@ export const EttersendDokuPanel = () => {
                             <Attachment className={"w-6 h-6 block"} aria-hidden="true" />
                         </div>
                         <Heading level="2" size="small">
-                            Send dokumentasjon til en søknad du har sendt inn
+                            {t("applikasjon.dokumentasjon.tittel")}
                         </Heading>
                     </div>
                 </Accordion.Header>
                 <Accordion.Content className={"!px-0 !border-0"}>
                     <div className={"p-4 lg:pl-24"}>
-                        Dokumentasjon kan sendes til søknader du har sendt inn tidligere.
+                        {t("applikasjon.dokumentasjon.informasjon.del1")}
                         <ul className={"list-disc list-inside py-5"}>
                             <li>
-                                Gå til listen over <Link href={innsynURL}>dine sosialhjelpssøknader</Link>
+                                <Trans
+                                    i18nKey="applikasjon.dokumentasjon.informasjon.del2"
+                                    components={{
+                                        lenke: <a href={innsynURL} />,
+                                    }}
+                                />
                             </li>
-                            <li>Åpne søknaden du ønsker å ettersende dokumenter til</li>
-                            <li>Last opp dokumentene du skal ettersende under “dine vedlegg”</li>
+                            <li>{t("applikasjon.dokumentasjon.informasjon.del3")}</li>
+                            <li>{t("applikasjon.dokumentasjon.informasjon.del4")}</li>
                         </ul>
                     </div>
                 </Accordion.Content>
