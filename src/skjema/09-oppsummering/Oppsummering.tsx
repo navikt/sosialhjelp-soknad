@@ -179,9 +179,7 @@ export const Oppsummering = () => {
                 <ConfirmationPanel
                     label={
                         viStolerPaaDeg ? (
-                            <div className={"!whitespace-pre"}>
-                                {t("soknadsosialhjelp.oppsummering.bekreftelse.ny.checkbox")}
-                            </div>
+                            <div>{t("soknadsosialhjelp.oppsummering.bekreftelse.ny.checkbox")}</div>
                         ) : (
                             t("soknadsosialhjelp.oppsummering.harLestSamtykker")
                         )
