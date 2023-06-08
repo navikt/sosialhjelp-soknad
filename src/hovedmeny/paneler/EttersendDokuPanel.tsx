@@ -36,7 +36,7 @@ export const EttersendDokuPanel = () => {
                                 <Trans
                                     i18nKey="applikasjon.dokumentasjon.informasjon.del2"
                                     components={{
-                                        lenke: <a href={innsynURL} />,
+                                        lenke: <a href={innsynURL}>{t("applikasjon.dokumentasjon.informasjon.url")}</a>,
                                     }}
                                 />
                             </li>
