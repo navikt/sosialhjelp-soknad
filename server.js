@@ -17,7 +17,6 @@ app.use(basePath, express.static(buildPath, {index: false}));
 app.get(`${basePath}/internal/isAlive|isReady`, (_, res) => res.sendStatus(200));
 
 app.use(basePath, (req, res, __) => {
-    let language = req.headers['language'] || 'nb';
     injectDecoratorServerSide({
         env: process.env.DEKORATOR_MILJO ?? "dev",
         filePath: `${buildPath}/index.html`,
@@ -25,11 +24,6 @@ app.use(basePath, (req, res, __) => {
         feedback: false,
         chatbot: false,
         shareScreen: false,
-        language: language,
-        availableLanguages: [
-            {locale: "nb", url: basePath, handleInApp: true},
-            {locale: "en", url: basePath, handleInApp: true},
-        ],
     })
         .then((text) => res.send(text))
         .catch((e) => {
