@@ -115,7 +115,7 @@ const BostotteView = () => {
     const samtykkeTidspunkt: Date | null = bostotte.samtykkeTidspunkt;
     let samtykkeTidspunktStreng = "";
     if (samtykkeTidspunkt) {
-        samtykkeTidspunktStreng = formatTidspunkt(samtykkeTidspunkt.toString());
+        samtykkeTidspunktStreng = formatTidspunkt(samtykkeTidspunkt.toString(), t);
     }
     const harBostotterUtbetalinger: boolean = bostotte.utbetalinger && bostotte.utbetalinger.length > 0;
     const harBostotterSaker: boolean = bostotte.saker && bostotte.saker.length > 0;
