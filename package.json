@@ -80,7 +80,7 @@
     "@typescript-eslint/parser": "^5.52.0",
     "ajv": "^8.12.0",
     "autoprefixer": "^10.4.14",
-    "concurrently": "^7.0.0",
+    "concurrently": "^8.2.0",
     "cypress": "^12.8.1",
     "eslint": "^8.34.0",
     "eslint-plugin-react": "^7.32.2",
