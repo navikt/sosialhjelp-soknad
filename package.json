@@ -27,7 +27,7 @@
     "dotenv": "^16.0.0",
     "downshift": "^7.0.4",
     "express": "^4.18.1",
-    "i18next": "^22.4.9",
+    "i18next": "^22.5.1",
     "i18next-browser-languagedetector": "^7.0.1",
     "nav-frontend-chevron": "^1.0.30",
     "nav-frontend-chevron-style": "^1.0.4",
