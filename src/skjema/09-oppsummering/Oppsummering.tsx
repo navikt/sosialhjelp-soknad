@@ -25,12 +25,12 @@ import {basePath} from "../../configuration";
 import {useSendSoknad} from "../../generated/soknad-actions/soknad-actions";
 import {useFeatureFlags} from "../../lib/featureFlags";
 import {OppsummeringSteg} from "./OppsummeringSteg";
-import {OppsummeringHeading, OppsummeringPersonalia} from "./oppsummeringer/personalia";
+import {OppsummeringHeading, NyOppsummeringPrototypePersonalia} from "./oppsummeringer/personalia";
 import {useAlgebraic} from "../../lib/hooks/useAlgebraic";
 import {useHentBegrunnelse} from "../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
 import {innsynURL} from "../../lib/config";
 
-const OppsummeringBegrunnelse = () => {
+const NyOppsummeringPrototypeBegrunnelse = () => {
     const {expectOK} = useAlgebraic(useHentBegrunnelse(useBehandlingsId()));
 
     return expectOK(({hvorforSoke, hvaSokesOm}) => {
@@ -118,7 +118,7 @@ export const Oppsummering = () => {
 
     const sendInnSoknad = async () => {
         if (!bekreftet) {
-            setBekreftetFeil("Du må bekrefte før du kan fortsette");
+            setBekreftetFeil("oppsummering.feilmelding.bekreftmangler");
             return;
         }
 
@@ -137,8 +137,8 @@ export const Oppsummering = () => {
             <div>
                 {nyOppsummering && (
                     <>
-                        <OppsummeringPersonalia />
-                        <OppsummeringBegrunnelse />
+                        <NyOppsummeringPrototypePersonalia />
+                        <NyOppsummeringPrototypeBegrunnelse />
                     </>
                 )}
                 {data?.steg.filter(kunLegacySteg).map((steg) => (
@@ -179,16 +179,14 @@ export const Oppsummering = () => {
                 <ConfirmationPanel
                     label={
                         viStolerPaaDeg ? (
-                            <div className={"!whitespace-pre"}>
-                                {t("soknadsosialhjelp.oppsummering.bekreftelse.ny.checkbox")}
-                            </div>
+                            <div>{t("soknadsosialhjelp.oppsummering.bekreftelse.ny.checkbox")}</div>
                         ) : (
                             t("soknadsosialhjelp.oppsummering.harLestSamtykker")
                         )
                     }
                     checked={bekreftet}
                     onChange={(e) => setBekreftet(e.target.checked)}
-                    error={bekreftetFeil}
+                    error={bekreftetFeil && t(bekreftetFeil)}
                 >
                     {viStolerPaaDeg ? (
                         <Heading level={"4"} size={"small"}>
@@ -200,13 +198,9 @@ export const Oppsummering = () => {
                 </ConfirmationPanel>
 
                 {isError && (
-                    <div role="alert">
-                        <Alert variant="error" style={{marginTop: "1rem"}}>
-                            Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg prøve
-                            igjen. Søknaden din er lagret og dersom problemet fortsetter kan du forsøke igjen senere.
-                            Kontakt ditt NAV kontor dersom du er i en nødsituasjon.
-                        </Alert>
-                    </div>
+                    <Alert role="alert" variant="error" style={{marginTop: "1rem"}}>
+                        {t("soknad.innsendingFeilet")}
+                    </Alert>
                 )}
 
                 <NavEnhetInaktiv navEnhet={adresser?.navEnhet} />

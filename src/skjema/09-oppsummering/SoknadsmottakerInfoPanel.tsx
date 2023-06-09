@@ -40,11 +40,10 @@ export const SoknadsmottakerInfoPanel = () => {
                 />
                 <StyledGuidePanel illustration={<Brevkonvolutt />} poster>
                     <Heading level="2" size="medium" spacing>
-                        Søknaden din blir sendt til {valgtEnhetsNavn}
+                        {t("soknadsosialhjelp.oppsummering.hvorsendes_del1", {valgtEnhetsNavn})}
                     </Heading>
                     <BodyShort spacing>
-                        Dette kontoret har ansvar for å behandle søknaden din, og {valgtEnhetsNavn} lagrer opplysningene
-                        fra søknaden.
+                        {t("soknadsosialhjelp.oppsummering.hvorsendes_del2", {valgtEnhetsNavn})}
                     </BodyShort>
 
                     <LinkButton type="button" onClick={() => setVisPersonopplysningerModal(true)}>

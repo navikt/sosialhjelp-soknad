@@ -1487,7 +1487,7 @@
                 "readOnly": true
             },
             "VedleggFrontend": {
-                "required": ["gruppe", "type"],
+                "required": ["gruppe", "rader", "type", "vedleggStatus"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -1551,7 +1551,7 @@
                     "vedleggStatus": {
                         "type": "string",
                         "readOnly": true,
-                        "enum": ["LastetOpp", "VedleggKreves", "VedleggAlleredeSendt"]
+                        "enum": ["Ukjent", "LastetOpp", "VedleggKreves", "VedleggAlleredeSendt"]
                     },
                     "filer": {"type": "array", "readOnly": true, "items": {"$ref": "#/components/schemas/FilFrontend"}}
                 }
@@ -1559,12 +1559,12 @@
             "VedleggRadFrontend": {
                 "type": "object",
                 "properties": {
-                    "beskrivelse": {"type": "string"},
-                    "belop": {"type": "integer", "format": "int32"},
-                    "brutto": {"type": "integer", "format": "int32"},
-                    "netto": {"type": "integer", "format": "int32"},
-                    "avdrag": {"type": "integer", "format": "int32"},
-                    "renter": {"type": "integer", "format": "int32"}
+                    "beskrivelse": {"type": "string", "nullable": true},
+                    "belop": {"type": "integer", "format": "int32", "nullable": true},
+                    "brutto": {"type": "integer", "format": "int32", "nullable": true},
+                    "netto": {"type": "integer", "format": "int32", "nullable": true},
+                    "avdrag": {"type": "integer", "format": "int32", "nullable": true},
+                    "renter": {"type": "integer", "format": "int32", "nullable": true}
                 }
             },
             "VerdierFrontend": {
@@ -1823,8 +1823,7 @@
                 "properties": {
                     "navn": {"$ref": "#/components/schemas/NavnFrontend"},
                     "fodselsnummer": {"type": "string"},
-                    "statsborgerskap": {"type": "string"},
-                    "nordiskBorger": {"type": "boolean"}
+                    "statsborgerskap": {"type": "string"}
                 }
             },
             "AdresserFrontend": {
@@ -1896,7 +1895,7 @@
                 "properties": {"filnavn": {"type": "string"}, "uuid": {"type": "string"}}
             },
             "VedleggFrontends": {
-                "required": ["isOkonomiskeOpplysningerBekreftet"],
+                "required": ["isOkonomiskeOpplysningerBekreftet", "okonomiskeOpplysninger", "slettedeVedlegg"],
                 "type": "object",
                 "properties": {
                     "okonomiskeOpplysninger": {

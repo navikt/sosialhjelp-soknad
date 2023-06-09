@@ -27,7 +27,7 @@ export const SkjemaStegNavStepperLegacy = ({
                 {Object.entries(skjemaConfig.steg)
                     .filter(([_, s]) => s.type === "skjema")
                     .map(([key, _]) => (
-                        <Stepper.Step key={key} as="button">
+                        <Stepper.Step aria-label={`steg ${key}`} key={key} as="button">
                             {t(`${key}.tittel`)}
                         </Stepper.Step>
                     ))}

@@ -58,7 +58,7 @@ const SelectMenu = styled.ul`
     position: absolute;
     z-index: 3;
 
-    margin-top: 0rem;
+    margin-top: 0;
 
     box-sizing: border-box;
     width: 25rem;
@@ -83,7 +83,7 @@ const Item = styled.li<{isHighlighted: boolean}>`
 
 const StyledInput = styled(Input)`
     margin-top: 1rem;
-    margin-bottom: 0rem !important;
+    margin-bottom: 0 !important;
     width: 100%;
 `;
 

@@ -173,7 +173,7 @@ export function detekterInternFeilKode(feilKode: string): string {
         }
     }
 
-    if (feilKode.match(/Unsupp?orted Media Type/i)) internFeilKode = REST_FEIL.FEIL_FILTPYE;
+    if (feilKode.match(/Unsupp?orted Media Type/i)) internFeilKode = REST_FEIL.FEIL_FILTYPE;
 
     return internFeilKode;
 }

@@ -56,7 +56,6 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: S
     const {data: nedetid} = useHentNedetidInformasjon();
     const {
         validering: {feil, visValideringsfeil},
-        okonomiskeOpplysninger: {enFilLastesOpp},
     } = useSelector((state: State) => state);
 
     const {stegTittel, documentTitle, aktivtSteg} = useSkjemaConfig(skjemaConfig, steg);
@@ -95,7 +94,6 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: S
                             skjemaConfig={skjemaConfig}
                             steg={skjemaConfig.steg[steg]}
                             goToStep={gotoPage}
-                            loading={enFilLastesOpp}
                             onSend={onSend}
                         />
                     </div>
