@@ -57,8 +57,8 @@ const NavYtelserView = () => {
             </Heading>
             {!visAnimerteStreker && !utbetalingerFraNavFeilet && harNavytelser && (
                 <Lesmerpanel
-                    apneTekst={"Se detaljer"}
-                    lukkTekst={"Lukk"}
+                    apneTekst={t("utbetalinger.infotekst.detaljer")}
+                    lukkTekst={t("utbetalinger.infotekst.lukk")}
                     intro={<div>{t("navytelser.infotekst.tekst")}</div>}
                     border={true}
                 >

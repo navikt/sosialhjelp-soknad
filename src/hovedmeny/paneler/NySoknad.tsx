@@ -63,6 +63,7 @@ export const NySoknadInfo = () => {
 };
 
 export const NySoknadPanel = () => {
+    const {t} = useTranslation("skjema");
     return (
         <Accordion>
             <Accordion.Item className={"bg-white rounded-md"}>
@@ -76,7 +77,7 @@ export const NySoknadPanel = () => {
                             <FillForms className={"w-6 h-6 block"} aria-hidden="true" />
                         </div>
                         <Heading level="2" size="small">
-                            Start en ny søknad
+                            {t("applikasjon.start.ny.soknad")}
                         </Heading>
                     </div>
                 </Accordion.Header>
