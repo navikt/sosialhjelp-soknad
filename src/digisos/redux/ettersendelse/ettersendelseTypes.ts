@@ -1,30 +1,23 @@
-import {Fil, OpplysningType, VedleggStatus} from "../okonomiskeOpplysninger/opplysningerTypes";
 import {REST_STATUS} from "../soknadsdata/soknadsdataTypes";
+import {FilFrontend, VedleggFrontendType, VedleggFrontendVedleggStatus} from "../../../generated/model";
+import {VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring} from "../../../lib/opplysninger";
 
 export enum EttersendelseActionTypeKeys {
     NY = "ettersendelse/NY",
     NY_FEILET = "ettersendelse/NY_FEILET",
     NY_OK = "ettersendelse/NY_OK",
     LAST_OPP = "ettersendelse/LAST_OPP",
-    LAST_OPP_PENDING = "ettersendelse/LAST_OPP_PENDING",
     LAST_OPP_OK = "ettersendelse/LAST_OPP_OK",
     LAST_OPP_FEILET = "ettersendelse/LAST_OPP_FEILET",
     SEND = "ettersendelse/SEND",
-    SEND_PENDING = "ettersendelse/SEND_PENDING",
-    SEND_OK = "ettersendelse/SEND_OK",
-    NYTT_VEDLEGG = "ettersendelse/NYTT_VEDLEGG",
-    OPPDATERT_VEDLEGG = "ettersendelse/OPPDATERT_VEDLEGG",
     SLETT_VEDLEGG = "ettersendelse/SLETT_VEDLEGG",
     SLETT_VEDLEGG_OK = "ettersendelse/SLETT_VEDLEGG_OK",
     LES_ETTERSENDELSES_VEDLEGG = "ettersendelse/LES_ETTERSENDELSES_VEDLEGG",
     LES_ETTERSENDELSES_VEDLEGG_OK = "ettersendelse/LES_ETTERSENDELSES_VEDLEGG_OK",
-    VEDLEGG_ALLEREDE_SENDT = "ettersendelse/VEDLEGG_ALLEREDE_SENDT",
-    VEDLEGG_ALLEREDE_SENDT_OK = "ettersendelse/VEDLEGG_ALLEREDE_SENDT_OK",
     LES_ETTERSENDELSER = "ettersendelse/LES_ETTERSENDELSER",
     LES_ETTERSENDELSER_OK = "ettersendelse/LES_ETTERSENDELSER_OK",
     ETTERSEND_PENDING = "ettersendelse/ETTERSEND_PENDING",
     ETTERSEND_OK = "ettersendelse/ETTERSEND_OK",
-    INIT = "ettersendelse/INIT",
     OTHER_ACTION = "__any_other_action_type__",
     FIL_OPPLASTING_OK = "ettersendelse/FIL_OPPLASTING_OK",
     VIS_SOKNAD_ALLEREDE_SENDT_PROMPT = "ettersendelse/VIS_SOKNAD_ALLEREDE_SENDT_PROMPT",
@@ -81,7 +74,7 @@ export interface SendEttersendelseOkAction {
 export interface LastOppEttersendtVedleggAction {
     type: EttersendelseActionTypeKeys.LAST_OPP;
     behandlingsId: string;
-    opplysningType: OpplysningType;
+    opplysningType: VedleggFrontendType;
     formData: FormData;
 }
 
@@ -89,13 +82,13 @@ export interface SlettEttersendtVedleggAction {
     type: EttersendelseActionTypeKeys.SLETT_VEDLEGG;
     behandlingsId: string;
     filUuid: string;
-    opplysningType: OpplysningType;
+    opplysningType: VedleggFrontendType;
 }
 
 export interface SlettEttersendtVedleggOkAction {
     type: EttersendelseActionTypeKeys.SLETT_VEDLEGG_OK;
     filUuid: string;
-    opplysningType: OpplysningType;
+    opplysningType: VedleggFrontendType;
 }
 
 export interface LesEttersendelsesVedleggAction {
@@ -120,15 +113,15 @@ export interface LesEttersendteVedleggAction {
 
 export interface FilOpplastingOk {
     type: EttersendelseActionTypeKeys.FIL_OPPLASTING_OK;
-    opplysningType: OpplysningType;
-    fil: Fil;
+    opplysningType: VedleggFrontendType;
+    fil: FilFrontend;
 }
 
 export interface LastOppEttersendelseAction {
     type: EttersendelseActionTypeKeys.LAST_OPP;
     vedleggId: number;
     formData: FormData;
-    opplysningType: OpplysningType;
+    opplysningType: VedleggFrontendType;
 }
 
 export interface LastOppEttersendelseOkAction {
@@ -156,7 +149,7 @@ export interface EttersendelseState {
     restStatus: REST_STATUS;
     opplastingStatus: REST_STATUS;
     ettersendStatus: REST_STATUS;
-    opplastingVedleggType: OpplysningType | null;
+    opplastingVedleggType: VedleggFrontendType | null;
     brukerbehandlingId: string | null;
     feilKode: string;
     feiletVedleggId: string;
@@ -164,9 +157,9 @@ export interface EttersendelseState {
 }
 
 export interface EttersendelseVedleggBackend {
-    type: OpplysningType;
-    vedleggStatus: VedleggStatus;
-    filer: Fil[];
+    type: VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring;
+    vedleggStatus: VedleggFrontendVedleggStatus;
+    filer: FilFrontend[];
 }
 
 export interface Behandlingskjede {

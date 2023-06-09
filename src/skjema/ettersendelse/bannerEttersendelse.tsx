@@ -57,7 +57,7 @@ const StyledEllaForfra = styled.div`
     }
 `;
 
-const BannerEttersendelse: React.FC<{children: React.ReactNode}> = ({children}) => {
+const BannerEttersendelse = ({children}: {children: React.ReactNode}) => {
     return (
         <StyledBannerEttersendelse>
             <BlokkCenter>

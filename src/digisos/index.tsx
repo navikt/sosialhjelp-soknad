@@ -21,7 +21,7 @@ import Steg4 from "../skjema/04-familie";
 import Steg5 from "../skjema/05-bosituasjon";
 import Steg6 from "../skjema/06-inntektFormue";
 import Steg7 from "../skjema/07-utgifterGjeld";
-import Steg8 from "../skjema/08-vedlegg";
+import {OkonomiskeOpplysningerView} from "../skjema/08-vedlegg";
 import NyOppsummering from "../skjema/09-oppsummering/Oppsummering";
 import * as Sentry from "@sentry/react";
 import {BrowserTracing} from "@sentry/tracing";
@@ -51,7 +51,7 @@ const Routes = (
             <Route path="5" element={<Steg5 />} />
             <Route path="6" element={<Steg6 />} />
             <Route path="7" element={<Steg7 />} />
-            <Route path="8" element={<Steg8 />} />
+            <Route path="8" element={<OkonomiskeOpplysningerView />} />
             <Route path="9" element={<NyOppsummering />} />
             <Route path="ettersendelse" element={<Ettersendelse />} />
             <Route element={<SideIkkeFunnet />} />

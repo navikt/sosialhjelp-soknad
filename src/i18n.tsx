@@ -3,6 +3,10 @@ import {initReactI18next} from "react-i18next";
 import {isLocalhost} from "./nav-soknad/utils";
 
 import skjemaNb from "./locales/nb/skjema.json";
+import skjemaEn from "./locales/en/skjema.json";
+
+const storedLanguage = localStorage.getItem("language");
+
 i18n
     // pass the i18n instance to react-i18next.
     .use(initReactI18next)
@@ -13,8 +17,8 @@ i18n
         // and not string | null. Might be irrelevant at some future point.
         // See also src/@types/i18next.d.ts
         returnNull: false,
-        lng: "nb",
-        fallbackLng: "nb",
+        lng: storedLanguage || "nb",
+        fallbackLng: "en",
         ns: ["skjema"],
         defaultNS: "skjema",
         debug: isLocalhost(window.location.href),
@@ -24,6 +28,7 @@ i18n
         },
         resources: {
             nb: {skjema: skjemaNb},
+            en: {skjema: skjemaEn},
         },
     });
 

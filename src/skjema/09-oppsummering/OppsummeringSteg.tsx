@@ -9,10 +9,12 @@ import styled from "styled-components";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const behandlingsId = useBehandlingsId();
+    const {t} = useTranslation();
+
     return (
         <Link href={`/sosialhjelp/soknad/skjema/${behandlingsId}/${props.steg}#${props.questionId}`}>
             <Edit />
-            Endre svar
+            {t("endre")}
         </Link>
     );
 };
@@ -31,7 +33,7 @@ export const OppsummeringSteg = ({steg: {stegNr, tittel}, children}: {steg: Steg
                 <Accordion.Content>
                     <EditAnswer>
                         <ReactRouterLink className="navds-link" to={`/skjema/${behandlingsId}/${stegNr}`}>
-                            Gå tilbake for å endre
+                            {t("oppsummering.gatilbake")}
                         </ReactRouterLink>
                     </EditAnswer>
                     {children}

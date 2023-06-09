@@ -3,11 +3,10 @@ import {State} from "../../digisos/redux/reducers";
 import React, {useEffect} from "react";
 import BannerEttersendelse from "./bannerEttersendelse";
 import {lesEttersendelser, opprettEttersendelse} from "../../digisos/redux/ettersendelse/ettersendelseActions";
-import AvsnittMedMarger from "./avsnittMedMarger";
+import AvsnittMedMargerEttersendelse from "./avsnittMedMargerEttersendelse";
 import EttersendelseEkspanderbart from "./ettersendelseEkspanderbart";
 import {EttersendelseFeilkode} from "../../digisos/redux/ettersendelse/ettersendelseTypes";
 import Informasjonspanel from "../../nav-soknad/components/Informasjonspanel";
-import {useParams} from "react-router";
 import SoknadAlleredeSendtPrompt from "../../nav-soknad/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPrompt";
 import HotjarTriggerEttersendelse from "../../nav-soknad/components/hotjarTrigger/HotjarTriggerEttersendelse";
 import {useTitle} from "../../lib/hooks/useTitle";
@@ -15,30 +14,23 @@ import {BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
 import {BlokkCenter} from "./BlokkCenter";
 import {NedetidPanel} from "../../components/common/NedetidPanel";
 import {Trans, useTranslation} from "react-i18next";
-import {useHentNedetidInformasjon} from "../../generated/nedetid-ressurs/nedetid-ressurs";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
-
-type EttersendelseParams = Record<"behandlingsId", string>;
-
+import {ExclamationmarkTriangleFillIcon} from "@navikt/aksel-icons";
 const Ettersendelse = () => {
     const dispatch = useDispatch();
     const {t} = useTranslation("skjema");
 
-    const params = useParams<EttersendelseParams>();
     const behandlingsId = useBehandlingsId();
 
-    const {data: nedetid} = useHentNedetidInformasjon();
     const {data, feilKode} = useSelector((state: State) => state.ettersendelse);
     const {originalSoknad, ettersendelser} = useSelector((state: State) => state.ettersendelse.innsendte);
 
     useTitle("Ettersendelse - Søknad om økonomisk sosialhjelp");
 
     useEffect(() => {
-        if (!params.behandlingsId) return;
-
-        dispatch(opprettEttersendelse(params.behandlingsId));
-        dispatch(lesEttersendelser(params.behandlingsId));
-    }, [behandlingsId, dispatch, params]);
+        dispatch(opprettEttersendelse(behandlingsId));
+        dispatch(lesEttersendelser(behandlingsId));
+    }, [behandlingsId, dispatch]);
 
     useEffect(() => {
         if (data.filter((vedlegg) => vedlegg.filer.length).length) {
@@ -52,12 +44,11 @@ const Ettersendelse = () => {
         event.returnValue = "";
     };
 
-    const skrivUt = () => window.print();
-
-    const antallManglendeVedlegg = () => data.filter(({type}) => type !== "annet|annet").length;
-    const isEttersendelseAktivert = () => !!originalSoknad?.orgnummer;
+    const antallManglendeVedlegg = data.filter(({type}) => type !== "annet|annet").length;
+    const isEttersendelseAktivert = !!originalSoknad?.orgnummer;
     const opprettNyEttersendelseFeilet = feilKode === EttersendelseFeilkode.NY_ETTERSENDELSE_FEILET;
 
+    // FIXME: Hardkodet norsk
     return (
         <div className="ettersendelse">
             <BannerEttersendelse>{t("applikasjon.sidetittel")}</BannerEttersendelse>
@@ -66,18 +57,22 @@ const Ettersendelse = () => {
                 <Ingress spacing>{t("ettersendelse.ingress")}</Ingress>
 
                 {originalSoknad && (
-                    <AvsnittMedMarger venstreIkon={"ok"} hoyreIkon={"printer"} onClickHoyreIkon={() => skrivUt()}>
+                    <AvsnittMedMargerEttersendelse
+                        venstreIkon={"ok"}
+                        hoyreIkon={"printer"}
+                        onClickHoyreIkon={window.print}
+                    >
                         <Heading level="2" size="small">
                             {t("ettersendelse.soknad_sendt")} {originalSoknad.navenhet} kommune
                         </Heading>
                         <BodyShort>
                             Innsendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}
                         </BodyShort>
-                    </AvsnittMedMarger>
+                    </AvsnittMedMargerEttersendelse>
                 )}
 
                 {ettersendelser?.map(({behandlingsId, innsendtTidspunkt, innsendtDato}) => (
-                    <AvsnittMedMarger venstreIkon={"ok"} key={behandlingsId}>
+                    <AvsnittMedMargerEttersendelse venstreIkon={"ok"} key={behandlingsId}>
                         <Heading level="2" size="small">
                             {t("ettersendelse.vedlegg_sendt")}
                         </Heading>
@@ -87,7 +82,7 @@ const Ettersendelse = () => {
                                 tid: innsendtTidspunkt,
                             })}
                         </BodyShort>
-                    </AvsnittMedMarger>
+                    </AvsnittMedMargerEttersendelse>
                 ))}
 
                 <HotjarTriggerEttersendelse
@@ -95,35 +90,40 @@ const Ettersendelse = () => {
                     originalSoknad={originalSoknad ?? undefined}
                 />
 
-                {opprettNyEttersendelseFeilet && !nedetid?.isNedetid && (
-                    <AvsnittMedMarger>
+                {opprettNyEttersendelseFeilet ? (
+                    <AvsnittMedMargerEttersendelse>
                         <Informasjonspanel ikon={"hensyn"} farge="viktig">
                             {t("ettersendelse.ikke.mulig")}
                         </Informasjonspanel>
-                    </AvsnittMedMarger>
-                )}
-                {!opprettNyEttersendelseFeilet && (
+                    </AvsnittMedMargerEttersendelse>
+                ) : (
                     <EttersendelseEkspanderbart
-                        kunGenerellDokumentasjon={antallManglendeVedlegg() === 0}
-                        ettersendelseAktivert={isEttersendelseAktivert()}
+                        kunGenerellDokumentasjon={antallManglendeVedlegg === 0}
+                        ettersendelseAktivert={isEttersendelseAktivert}
                     >
-                        {antallManglendeVedlegg() > 0 && (
-                            <span>
+                        {!!antallManglendeVedlegg ? (
+                            <>
+                                <div className={"flex flex-row justify-between"}>
+                                    <div className={"w-12 !text-[var(--a-icon-warning)]"}>
+                                        <ExclamationmarkTriangleFillIcon title="Advarsel" fontSize="1.5rem" />
+                                    </div>
+                                    <Heading level="2" size="small" className={"grow whitespace-nowrap"}>
+                                        Vedlegg mangler
+                                    </Heading>
+                                </div>
+                                <BodyShort className={"pl-12"}>Det gjenstår {antallManglendeVedlegg} vedlegg</BodyShort>
+                            </>
+                        ) : (
+                            <>
                                 <Heading level="2" size="small">
-                                    Vedlegg mangler
+                                    {t("ettersendelse.generell.dokumentasjon")}
                                 </Heading>
-                                <BodyShort>Det gjenstår {antallManglendeVedlegg()} vedlegg</BodyShort>
-                            </span>
-                        )}
-                        {antallManglendeVedlegg() === 0 && (
-                            <Heading level="2" size="small">
-                                {t("ettersendelse.generell.dokumentasjon")}
-                            </Heading>
+                            </>
                         )}
                     </EttersendelseEkspanderbart>
                 )}
 
-                <AvsnittMedMarger venstreIkon={"snakkebobler"}>
+                <AvsnittMedMargerEttersendelse venstreIkon={"snakkebobler"}>
                     <Heading level="2" size="small" spacing>
                         {t("ettersendelse.samtale.tittel")}
                     </Heading>
@@ -136,18 +136,16 @@ const Ettersendelse = () => {
                             }}
                         />
                     </BodyShort>
-                </AvsnittMedMarger>
+                </AvsnittMedMargerEttersendelse>
 
-                <AvsnittMedMarger venstreIkon={"konvolutt"}>
+                <AvsnittMedMargerEttersendelse venstreIkon={"konvolutt"}>
                     <Heading level="2" size="small" spacing>
                         {t("ettersendelse.vedtak.tittel")}
                     </Heading>
                     <BodyShort>{t("ettersendelse.vedtak.info")}</BodyShort>
-                </AvsnittMedMarger>
+                </AvsnittMedMargerEttersendelse>
             </BlokkCenter>
-            <span>
-                <SoknadAlleredeSendtPrompt />
-            </span>
+            <SoknadAlleredeSendtPrompt />
         </div>
     );
 };

@@ -1,5 +1,3 @@
-import {Steg} from "../../../generated/model";
-
 export enum OppsummeringActionTypeKeys {
     FEILET = "oppsummering/FEILET",
     BEKREFT_OPPSUMMERING = "oppsummering/BEKREFT_OPPSUMMERING",
@@ -12,19 +10,6 @@ export type OppsummeringActionTypes =
     | HentOppsummeringFeilet
     | SetVisBekreftMangler
     | SetNyOppsummering;
-
-export interface NyOppsummeringResponse {
-    steg: Steg[];
-}
-
-export interface Question {
-    title: string;
-    questionType: "SYSTEM" | "FREETEXT" | "RADIO_CHECKBOX" | "DOCUMENTATION";
-    systemValues?: {key: string; value: string}[];
-    freeText?: string;
-    values?: string[];
-    files?: {filename: string; url: string}[];
-}
 
 export interface HentOppsummeringFeilet {
     type: OppsummeringActionTypeKeys.FEILET;
