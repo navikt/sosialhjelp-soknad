@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - '**'      # Build all branches
+  workflow_dispatch:
 env:
   REACT_APP_DIGISOS_ENV: dev-sbs
 
