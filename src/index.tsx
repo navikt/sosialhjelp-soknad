@@ -1,6 +1,6 @@
 import "./index.css";
 import "@navikt/ds-css";
-import React, {Suspense, useEffect} from "react";
+import {Suspense, useEffect} from "react";
 import {createRoot} from "react-dom/client";
 import {Provider} from "react-redux";
 import Modal from "react-modal";
@@ -39,11 +39,16 @@ const App = () => {
         const handleLanguageSelect = (language: {locale: Locale}) => {
             i18n.changeLanguage(language.locale);
             setParams({language: language.locale});
-            localStorage.setItem("language", language.locale);
+            localStorage.setItem("digisos-language", language.locale);
         };
 
+        const storedLanguage = localStorage.getItem("digisos-language");
+        if (storedLanguage) {
+            i18n.changeLanguage(storedLanguage);
+            setParams({language: storedLanguage as Locale});
+        }
+
         onLanguageSelect(handleLanguageSelect);
-        setParams({language: i18n.language as Locale});
     }, []);
 
     return (
