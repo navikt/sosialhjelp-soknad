@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "/sosialhjelp/soknad/",
   "dependencies": {
-    "@amplitude/analytics-browser": "^1.8.0",
+    "@amplitude/analytics-browser": "^1.10.3",
     "@fremtind/jkl-formatters-util": "^3.0.22",
     "@fremtind/jkl-validators-util": "^2.5.3",
     "@hookform/error-message": "^2.0.1",
