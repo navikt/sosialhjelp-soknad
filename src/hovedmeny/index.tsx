@@ -13,9 +13,6 @@ import {useAlgebraic} from "../lib/hooks/useAlgebraic";
 import {useSearchParams} from "react-router-dom";
 import {useEffect} from "react";
 import {logInfo} from "../nav-soknad/utils/loggerUtils";
-import {setAvailableLanguages, setParams} from "@navikt/nav-dekoratoren-moduler";
-import {onLanguageSelect} from "@navikt/nav-dekoratoren-moduler";
-import i18n from "../i18n";
 
 const Informasjon = () => {
     const {expectOK} = useAlgebraic(useGetUtslagskriterier());
@@ -33,20 +30,6 @@ const Informasjon = () => {
         logInfo(`Reached main page with reason, ${reason}`);
         setSearchParams({});
     }, [searchParams, setSearchParams]);
-
-    useEffect(() => {
-        setAvailableLanguages([
-            {locale: "nb", url: "/", handleInApp: true},
-            {locale: "en", url: "/", handleInApp: true},
-        ]);
-    }, []);
-
-    useEffect(() => {
-        onLanguageSelect((language: {locale: string}) => {
-            i18n.changeLanguage(language.locale);
-            setParams({language: language.locale} as any);
-        });
-    }, []);
 
     return expectOK(({harTilgang}) =>
         harTilgang ? (
