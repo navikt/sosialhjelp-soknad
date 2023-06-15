@@ -29,7 +29,12 @@ const ForsorgerPliktView = () => {
                         <br />
                         <span>
                             <b>{t("familierelasjon.ingress_forsorger")}</b>:{" "}
-                            {t("familierelasjon.ingress_antallBarn", {antallBarn: ansvar.length})}
+                            {t(
+                                ansvar.length === 1
+                                    ? "familierelasjon.ingress_antallBarn.entall"
+                                    : "familierelasjon.ingress_antallBarn",
+                                {antallBarn: ansvar.length}
+                            )}
                         </span>
                     </BodyShort>
 
