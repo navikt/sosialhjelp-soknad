@@ -20,7 +20,7 @@ app.use(basePath, (req, res, __) => {
     injectDecoratorServerSide({
         env: process.env.DEKORATOR_MILJO ?? "dev",
         filePath: `${buildPath}/index.html`,
-        simple: false,
+        simple: true,
         feedback: false,
         chatbot: false,
         shareScreen: false,
