@@ -10,7 +10,7 @@ export const PersonbeskyttelseFeilmelding = () => {
         <div>
             <AppBanner />
             <div className={"py-24 px-4 max-w-3xl mx-auto"}>
-                <Alert variant={"warning"} className={"whitespace-pre"}>
+                <Alert variant={"warning"}>
                     <Heading level={"2"} size={"medium"}>
                         {t("informasjon.ikketilgang.bruker.tittel")}
                     </Heading>
