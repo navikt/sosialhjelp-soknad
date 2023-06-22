@@ -13,6 +13,9 @@ export type FeatureFlags = {
 
     // Tilgjengeliggjør flere filformater
     tilgjengeliggjorFlereFilformater: boolean;
+
+    // Tilgjengeliggjør språkvelger
+    tilgengeliggjorSprakvelger: boolean;
 };
 
 export const useFeatureFlags = (): FeatureFlags => {
@@ -23,6 +26,7 @@ export const useFeatureFlags = (): FeatureFlags => {
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             tilgjengeliggjorFlereFilformater: true,
+            tilgengeliggjorSprakvelger: false,
         };
     }
     return {
@@ -31,5 +35,6 @@ export const useFeatureFlags = (): FeatureFlags => {
         nyOppsummering: false,
         oppsummeringNavEnhet: false,
         tilgjengeliggjorFlereFilformater: false,
+        tilgengeliggjorSprakvelger: false,
     };
 };
