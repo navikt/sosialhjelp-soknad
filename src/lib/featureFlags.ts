@@ -26,7 +26,7 @@ export const useFeatureFlags = (): FeatureFlags => {
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             tilgjengeliggjorFlereFilformater: true,
-            tilgengeliggjorSprakvelger: false,
+            tilgengeliggjorSprakvelger: true,
         };
     }
     return {
