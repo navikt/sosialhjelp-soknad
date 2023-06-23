@@ -1,4 +1,4 @@
-name: Build prod-sbs image
+name: Build prod-sbs image - HUSK MANUELL DEPLOY TIL PROD!
 on:
   push:
     branches: [master]
