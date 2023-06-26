@@ -24,7 +24,7 @@ import Steg7 from "../skjema/07-utgifterGjeld";
 import {OkonomiskeOpplysningerView} from "../skjema/08-vedlegg";
 import NyOppsummering from "../skjema/09-oppsummering/Oppsummering";
 import * as Sentry from "@sentry/react";
-import {BrowserTracing} from "@sentry/tracing";
+import {BrowserTracing} from "@sentry/browser";
 import {ServerFeil} from "../nav-soknad/feilsider/ServerFeil";
 
 const redirectFromLogin = async () => {
