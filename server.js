@@ -7,6 +7,9 @@ const basePath = "/sosialhjelp/soknad";
 
 const buildPath = path.resolve(__dirname, "build");
 
+const dockerImage = process.env.IMAGE || process.env.NAIS_APP_IMAGE;
+console.log("starter søknad fra docker image: ", dockerImage);
+
 console.log(`Dekoratormiljø: ${process.env.DEKORATOR_MILJO}`);
 
 const app = express(); // create express app

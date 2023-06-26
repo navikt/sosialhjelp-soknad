@@ -7,10 +7,10 @@ import Modal from "react-modal";
 import {logWindowError} from "./nav-soknad/utils/loggerUtils";
 import {
     injectDecoratorClientSide,
-    Locale,
     onLanguageSelect,
     setAvailableLanguages,
     setParams,
+    Locale,
 } from "@navikt/nav-dekoratoren-moduler";
 import {RouterProvider} from "react-router-dom";
 import {router} from "./digisos";
@@ -21,6 +21,7 @@ import {configureStore} from "./configureStore";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {basePath} from "./configuration";
 import i18n from "./i18n";
+import {useFeatureFlags} from "./lib/featureFlags";
 
 Modal.setAppElement("#root");
 
@@ -30,26 +31,30 @@ window.onerror = logWindowError;
 const queryClient = new QueryClient();
 
 const App = () => {
+    const {tilgengeliggjorSprakvelger} = useFeatureFlags();
+
     useEffect(() => {
-        setAvailableLanguages([
-            {locale: "nb", url: basePath, handleInApp: true},
-            {locale: "en", url: basePath, handleInApp: true},
-        ]);
+        if (tilgengeliggjorSprakvelger) {
+            setAvailableLanguages([
+                {locale: "nb", url: basePath, handleInApp: true},
+                {locale: "en", url: basePath, handleInApp: true},
+            ]);
 
-        const handleLanguageSelect = (language: {locale: Locale}) => {
-            i18n.changeLanguage(language.locale);
-            setParams({language: language.locale});
-            localStorage.setItem("digisos-language", language.locale);
-        };
+            const handleLanguageSelect = (language: {locale: Locale}) => {
+                i18n.changeLanguage(language.locale);
+                setParams({language: language.locale});
+                localStorage.setItem("digisos-language", language.locale);
+            };
 
-        const storedLanguage = localStorage.getItem("digisos-language");
-        if (storedLanguage) {
-            i18n.changeLanguage(storedLanguage);
-            setParams({language: storedLanguage as Locale});
+            const storedLanguage = localStorage.getItem("digisos-language");
+            if (storedLanguage) {
+                i18n.changeLanguage(storedLanguage);
+                setParams({language: storedLanguage as Locale});
+            }
+
+            onLanguageSelect(handleLanguageSelect);
         }
-
-        onLanguageSelect(handleLanguageSelect);
-    }, []);
+    }, [tilgengeliggjorSprakvelger]);
 
     return (
         <Provider store={store}>

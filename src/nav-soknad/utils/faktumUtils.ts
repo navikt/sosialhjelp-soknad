@@ -7,7 +7,7 @@ export type SporsmalTekster = {
     hjelpetekst?: string;
 };
 
-export const getFaktumSporsmalTekst = (t: TFunction<"skjema", undefined, "skjema">, key: string): SporsmalTekster => ({
+export const getFaktumSporsmalTekst = (t: TFunction<"skjema", "skjema">, key: string): SporsmalTekster => ({
     sporsmal: getIntlTextOrKey(t, `${key}.sporsmal`),
     infotekst: getIntlText(t, `${key}.infotekst.tekst`),
     hjelpetekst: getIntlText(t, `${key}.hjelpetekst.tekst`),
@@ -17,7 +17,7 @@ export type SporsmalInputTekstTyper = "label" | "sporsmal" | "infotekst" | "hjel
 
 export type SporsmalInputTekst = Partial<Record<SporsmalInputTekstTyper, string>>;
 
-export const getInputFaktumTekst = (t: TFunction<"skjema", undefined, "skjema">, key: string): SporsmalInputTekst => ({
+export const getInputFaktumTekst = (t: TFunction<"skjema", "skjema">, key: string): SporsmalInputTekst => ({
     label: getIntlTextOrKey(t, `${key}.label`),
     sporsmal: getIntlTextOrKey(t, `${key}.sporsmal`),
     infotekst: getIntlText(t, `${key}.infotekst.tekst`),
