@@ -17,7 +17,7 @@ const IkkeFunnet: React.FC = () => {
         <Feilside
             onClick={onClick}
             visKnapp={true}
-            knappTekst={"Gå til startside sosialhjelp"}
+            knappTekst={t("feilside.ikkefunnet.returner.knapp")}
             tittel={t("feilside.ikkefunnet.tittel")}
         >
             <Trans

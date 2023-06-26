@@ -1,6 +1,5 @@
 import {FieldErrors} from "react-hook-form";
 import {ErrorSummary} from "@navikt/ds-react";
-import * as React from "react";
 import {useTranslation} from "react-i18next";
 
 export const SkjemaStegErrorSummary = ({errors}: {errors?: FieldErrors}) => {
@@ -8,7 +7,7 @@ export const SkjemaStegErrorSummary = ({errors}: {errors?: FieldErrors}) => {
     if (!errors || !Object.keys(errors).length) return null;
 
     return (
-        <ErrorSummary heading="Du må fikse disse feilene før du kan gå videre.">
+        <ErrorSummary heading={t("tittel")}>
             {Object.entries(errors).map(([key, value], index) => (
                 <ErrorSummary.Item key={index} href={`#${key}`}>
                     {t(value?.message?.toString() ?? "")}
