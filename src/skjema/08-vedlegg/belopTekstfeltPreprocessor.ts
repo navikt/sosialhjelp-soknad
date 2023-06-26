@@ -14,6 +14,8 @@ import {logError} from "../../nav-soknad/utils/loggerUtils";
  * @todo Testdekning
  */
 export const belopTekstfeltPreprocessor = (inputString: unknown) => {
+    if (inputString === undefined || inputString === null) return null;
+
     if (typeof inputString === "number") return inputString;
 
     if (typeof inputString !== "string") {
