@@ -1,9 +1,8 @@
 import i18next, {TFunction} from "i18next";
 
-export const getIntlText = (t: TFunction<"skjema", undefined, "skjema">, key: string) =>
-    key !== t(key) ? t(key) : undefined;
+export const getIntlText = (t: TFunction<"skjema", "skjema">, key: string) => (key !== t(key) ? t(key) : undefined);
 
-export function getIntlTextOrKey(t: TFunction<"skjema", undefined, "skjema">, key: string): string {
+export function getIntlTextOrKey(t: TFunction<"skjema", "skjema">, key: string): string {
     if (typeof t === "undefined") {
         return key;
     }
@@ -26,7 +25,7 @@ export function formatDato(isoDate: string, lang: string) {
     return formatter.format(dato).replace(/([0-9]) /, "$1. ");
 }
 // Eksempel: "2019-08-01T12:12:12.123123Z" => "1. august 2019 klokken 12:12"
-export function formatTidspunkt(isoDate: string, t: TFunction<"skjema", undefined, "skjema">) {
+export function formatTidspunkt(isoDate: string, t: TFunction<"skjema", "skjema">) {
     const dato: Date = new Date(isoDate);
     const currentLang = i18next.language;
     const formatter = new Intl.DateTimeFormat(currentLang === "en" ? "en" : "nb", {
