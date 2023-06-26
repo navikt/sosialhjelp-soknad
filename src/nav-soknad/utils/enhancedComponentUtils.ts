@@ -3,7 +3,7 @@ import {TFunction} from "i18next";
 
 export function getFeil(
     feil: Valideringsfeil[] | undefined,
-    t: TFunction<"skjema", undefined, "skjema">,
+    t: TFunction<"skjema", "skjema">,
     faktumKey: string,
     faktumIndex: number | undefined
 ): string | undefined {
