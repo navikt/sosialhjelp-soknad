@@ -24,7 +24,6 @@ import Steg7 from "../skjema/07-utgifterGjeld";
 import {OkonomiskeOpplysningerView} from "../skjema/08-vedlegg";
 import NyOppsummering from "../skjema/09-oppsummering/Oppsummering";
 import * as Sentry from "@sentry/react";
-import {BrowserTracing} from "@sentry/browser";
 import {ServerFeil} from "../nav-soknad/feilsider/ServerFeil";
 
 const redirectFromLogin = async () => {
@@ -63,7 +62,7 @@ const Routes = (
 Sentry.init({
     dsn: "https://e81d69cb0fb645068f8b9329fd3a138a@sentry.gc.nav.no/99",
     integrations: [
-        new BrowserTracing({
+        new Sentry.BrowserTracing({
             routingInstrumentation: Sentry.reactRouterV6Instrumentation(
                 React.useEffect,
                 useLocation,

@@ -16,7 +16,6 @@
     "@navikt/ds-tailwind": "^2.0.5",
     "@navikt/fnrvalidator": "^1.2.0",
     "@navikt/nav-dekoratoren-moduler": "^1.6.14",
-    "@sentry/browser": "^7.56.0",
     "@sentry/react": "^7.37.2",
     "@swan-io/boxed": "^0.12.0",
     "@tanstack/react-query": "^4.22.0",
