@@ -1139,6 +1139,8 @@
     "system.familie.sivilstatus.gift.ektefelle.folkeregistrertsammen.false": "No",
     "system.familie.sivilstatus.gift.ektefelle.folkeregistrertsammen.sporsmal": "Registered at the same address as spouse in the National Population Register",
     "system.familie.sivilstatus.gift.ektefelle.folkeregistrertsammen.true": "Yes",
+    "system.familie.sivilstatus.gift.ektefelle.borsammen.true": "Yes",
+    "system.familie.sivilstatus.gift.ektefelle.borsammen.false": "No",
     "system.familie.sivilstatus.gift.ektefelle.fornavn.label": "First name",
     "system.familie.sivilstatus.gift.ektefelle.mellomnavn.label": "Middle name",
     "system.familie.sivilstatus.gift.ektefelle.navn": "Name",

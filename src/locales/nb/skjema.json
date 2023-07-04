@@ -1144,6 +1144,8 @@
     "system.familie.sivilstatus.gift.ektefelle.folkeregistrertsammen.false": "Nei",
     "system.familie.sivilstatus.gift.ektefelle.folkeregistrertsammen.sporsmal": "Folkeregistrert på samme adresse som ektefelle",
     "system.familie.sivilstatus.gift.ektefelle.folkeregistrertsammen.true": "Ja",
+    "system.familie.sivilstatus.gift.ektefelle.borsammen.true": "Ja",
+    "system.familie.sivilstatus.gift.ektefelle.borsammen.false": "Nei",
     "system.familie.sivilstatus.gift.ektefelle.fornavn.label": "Fornavn",
     "system.familie.sivilstatus.gift.ektefelle.mellomnavn.label": "Mellomnavn",
     "system.familie.sivilstatus.gift.ektefelle.navn": "Navn",
