@@ -53,7 +53,9 @@ const Skatt = () => {
             {harSamtykke && inntektFraSkatteetatenFeilet && (
                 <div className={"ytelser_panel"}>
                     <div>
-                        <Label spacing>{t("utbetalinger.inntekt.skattbar.samtykke_sporsmal")}</Label>
+                        <Label spacing as="p">
+                            {t("utbetalinger.inntekt.skattbar.samtykke_sporsmal")}
+                        </Label>
                         <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.samtykke_info")}</BodyShort>
                     </div>
                     <Button
@@ -109,7 +111,9 @@ const Skatt = () => {
                     {!harSamtykke && (
                         <>
                             <div>
-                                <Label spacing>{t("utbetalinger.inntekt.skattbar.samtykke_sporsmal")}</Label>
+                                <Label spacing as="p">
+                                    {t("utbetalinger.inntekt.skattbar.samtykke_sporsmal")}
+                                </Label>
                                 <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.samtykke_info")}</BodyShort>
                             </div>
                             <Button
