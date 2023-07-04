@@ -23,14 +23,20 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
 
     const {deleteFile, files, upload, error, loading} = useVedlegg(opplysning);
 
-    const handleAlleredeLastetOpp = async (e: ChangeEvent<HTMLInputElement>) => {
-        await mutate({
+    const handleAlleredeLastetOpp = async (event: ChangeEvent<HTMLInputElement>) => {
+        let newStatus = event.target.checked
+            ? VedleggFrontendVedleggStatus.VedleggAlleredeSendt
+            : VedleggFrontendVedleggStatus.VedleggKreves;
+
+        if (files.length > 0 && newStatus === VedleggFrontendVedleggStatus.VedleggKreves) {
+            return;
+        }
+
+        mutate({
             behandlingsId,
             data: {
                 ...opplysning,
-                vedleggStatus: e.target.checked
-                    ? VedleggFrontendVedleggStatus.VedleggAlleredeSendt
-                    : VedleggFrontendVedleggStatus.VedleggKreves,
+                vedleggStatus: newStatus,
             },
         });
 
