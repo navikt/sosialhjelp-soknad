@@ -22,6 +22,7 @@ import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {basePath} from "./configuration";
 import i18n from "./i18n";
 import {useFeatureFlags} from "./lib/featureFlags";
+import {logAmplitudeEvent} from "./nav-soknad/utils/amplitude";
 
 Modal.setAppElement("#root");
 
@@ -44,6 +45,8 @@ const App = () => {
                 i18n.changeLanguage(language.locale);
                 setParams({language: language.locale});
                 localStorage.setItem("digisos-language", language.locale);
+
+                logAmplitudeEvent("Valg språk", {language: language.locale});
             };
 
             const storedLanguage = localStorage.getItem("digisos-language");
