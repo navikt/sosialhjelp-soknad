@@ -7,7 +7,6 @@ import {LinkButton} from "../../../nav-soknad/components/linkButton/LinkButton";
 import * as React from "react";
 import {SysteminfoItem} from "../../../nav-soknad/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
-// TODO: Hardkodet i18n-streng
 
 export const TelefonShow = ({onEdit}: {onEdit?: () => void}) => {
     const {expectOK} = useAlgebraic(useHentTelefonnummer(useBehandlingsId()));
@@ -18,7 +17,7 @@ export const TelefonShow = ({onEdit}: {onEdit?: () => void}) => {
             return <TelefonShowBrukerdefinert brukerutfyltVerdi={brukerutfyltVerdi} onEdit={onEdit} />;
         if (systemverdi?.length) return <TelefonShowFraKRR systemverdi={systemverdi} onEdit={onEdit} />;
 
-        if (!onEdit) return <SysteminfoItem label={"Telefonnummer"}>Intet nummer oppgitt</SysteminfoItem>;
+        if (!onEdit) return <SysteminfoItem label={"Telefonnummer"}>{t("kontakt.telefon.feilmelding")}</SysteminfoItem>;
         return (
             <>
                 {t("kontakt.system.telefoninfo.ingeninfo")}

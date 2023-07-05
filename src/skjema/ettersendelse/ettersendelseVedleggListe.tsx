@@ -48,7 +48,7 @@ const EttersendelseVedleggListe = (props: {
                         disabled={ettersendStatus === REST_STATUS.PENDING || opplastingStatus === REST_STATUS.PENDING}
                         onClick={() => props.onSendEttersendelse()}
                     >
-                        Send vedlegg {ettersendStatus === REST_STATUS.PENDING && <Loader />}
+                        {t("ettersendelse.send.vedlegg")} {ettersendStatus === REST_STATUS.PENDING && <Loader />}
                     </Button>
                 )}
             </AvsnittMedMargerEttersendelse>
