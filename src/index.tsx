@@ -10,7 +10,7 @@ import {
     onLanguageSelect,
     setAvailableLanguages,
     setParams,
-    Locale,
+    DecoratorLocale,
 } from "@navikt/nav-dekoratoren-moduler";
 import {RouterProvider} from "react-router-dom";
 import {router} from "./digisos";
@@ -41,7 +41,7 @@ const App = () => {
                 {locale: "en", url: basePath, handleInApp: true},
             ]);
 
-            const handleLanguageSelect = (language: {locale: Locale}) => {
+            const handleLanguageSelect = (language: {locale: DecoratorLocale}) => {
                 i18n.changeLanguage(language.locale);
                 setParams({language: language.locale});
                 localStorage.setItem("digisos-language", language.locale);
@@ -52,7 +52,7 @@ const App = () => {
             const storedLanguage = localStorage.getItem("digisos-language");
             if (storedLanguage) {
                 i18n.changeLanguage(storedLanguage);
-                setParams({language: storedLanguage as Locale});
+                setParams({language: storedLanguage as DecoratorLocale});
             }
 
             onLanguageSelect(handleLanguageSelect);
@@ -75,10 +75,12 @@ const App = () => {
 if (process.env.NODE_ENV !== "production") {
     injectDecoratorClientSide({
         env: "dev",
-        simple: true,
-        feedback: false,
-        chatbot: false,
-        shareScreen: false,
+        params: {
+            simple: true,
+            feedback: false,
+            chatbot: false,
+            shareScreen: false,
+        },
     });
 }
 

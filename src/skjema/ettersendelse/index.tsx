@@ -48,7 +48,6 @@ const Ettersendelse = () => {
     const isEttersendelseAktivert = !!originalSoknad?.orgnummer;
     const opprettNyEttersendelseFeilet = feilKode === EttersendelseFeilkode.NY_ETTERSENDELSE_FEILET;
 
-    // FIXME: Hardkodet norsk
     return (
         <div className="ettersendelse">
             <BannerEttersendelse>{t("applikasjon.sidetittel")}</BannerEttersendelse>
@@ -63,10 +62,13 @@ const Ettersendelse = () => {
                         onClickHoyreIkon={window.print}
                     >
                         <Heading level="2" size="small">
-                            {t("ettersendelse.soknad_sendt")} {originalSoknad.navenhet} kommune
+                            {t("ettersendelse.soknad_sendt")} {originalSoknad.navenhet} {t("ettersendelse.kommune")}
                         </Heading>
                         <BodyShort>
-                            Innsendt {originalSoknad.innsendtDato} kl. {originalSoknad.innsendtTidspunkt}
+                            {t("soknad.innsendt.dato_tid", {
+                                originalSoknadDato: originalSoknad.innsendtDato,
+                                originalSoknadTid: originalSoknad.innsendtTidspunkt,
+                            })}
                         </BodyShort>
                     </AvsnittMedMargerEttersendelse>
                 )}
@@ -108,10 +110,12 @@ const Ettersendelse = () => {
                                         <ExclamationmarkTriangleFillIcon title="Advarsel" fontSize="1.5rem" />
                                     </div>
                                     <Heading level="2" size="small" className={"grow whitespace-nowrap"}>
-                                        Vedlegg mangler
+                                        {t("ettersendelse.vedlegg.mangler")}
                                     </Heading>
                                 </div>
-                                <BodyShort className={"pl-12"}>Det gjenstår {antallManglendeVedlegg} vedlegg</BodyShort>
+                                <BodyShort className={"pl-12"}>
+                                    {t("ettersendelse.manglende.vedlegg", {antallManglende: antallManglendeVedlegg})}
+                                </BodyShort>
                             </>
                         ) : (
                             <>

@@ -28,24 +28,22 @@ export const ServerFeil = () => {
                     </div>
                     <div className={"col-span-3"}>
                         <Heading level="1" size="xlarge">
-                            Vi beklager!
+                            {t("feilside.serverfeil.beklager")}
                         </Heading>
                         <Heading level={"2"} size={"large"}>
-                            En teknisk feil har oppstått.
+                            {t("feilside.serverfeil.teknisk.feil")}
                         </Heading>
                         <Heading level={"3"} size={"medium"}>
-                            Vi anbefaler at du prøver på nytt.
+                            {t("feilside.serverfeil.prov.igjen")}
                         </Heading>
                         <Button
                             className="!mb-8 !mt-4"
                             variant="secondary"
                             onClick={() => (window.location.href = "/sosialhjelp/soknad")}
                         >
-                            Til startsiden for søknad
+                            {t("feilside.serverfeil.til.startsiden")}
                         </Button>
-                        <BodyShort spacing>
-                            Hendelsen har blitt loggført og problemet utbedres så fort som mulig.
-                        </BodyShort>
+                        <BodyShort spacing>{t("feilside.serverfeil.loggfort")}</BodyShort>
                     </div>
                 </div>
             </div>
@@ -55,30 +53,30 @@ export const ServerFeil = () => {
                         {t("feilside.serverfeil.nodsituasjon.tittel")}
                     </Heading>
                     <BodyShort spacing>
-                        Du kan også{" "}
+                        {t("feilside.serverfeil.dukanogsa")}{" "}
                         <Link href={"https://www.nav.no/sosialhjelp/sok-papir"} className={"!inline"}>
-                            søke om sosialhjelp på papir
+                            {t("feilside.serverfeil.soke.papir")}
                         </Link>{" "}
-                        hos ditt NAV-kontor.
+                        {t("feilside.serverfeil.kontakt.nav.kontor")}
                     </BodyShort>
                     <BodyShort className={"whitespace-pre-line pb-3"} spacing>
                         {t("feilside.serverfeil.nodsituasjon.tekst")}
                     </BodyShort>
 
                     <BodyShort spacing>
-                        <Link href="/sosialhjelp/soknad">Gå til forsiden for sosialhjelp</Link>
+                        <Link href="/sosialhjelp/soknad">{t("feilside.serverfeil.startside")}</Link>
                     </BodyShort>
 
                     <BodyShort spacing>
-                        <Link href="https://www.nav.no">Gå til nav.no</Link>
+                        <Link href="https://www.nav.no">{t("feilside.serverfeil.lenke.nav")}</Link>
                     </BodyShort>
 
                     <BodyShort spacing>
-                        <Link href="https://www.nav.no/minside">Gå til Min side</Link>
+                        <Link href="https://www.nav.no/minside">{t("feilside.serverfeil.lenke.minside")}</Link>
                     </BodyShort>
                     <BodyShort>
                         <Link href="https://www.nav.no/person/kontakt-oss/nb/tilbakemeldinger/feil-og-mangler">
-                            Send feilrapport
+                            {t("feilside.serverfeil.lenke.meldfra")}
                         </Link>
                     </BodyShort>
                 </div>
