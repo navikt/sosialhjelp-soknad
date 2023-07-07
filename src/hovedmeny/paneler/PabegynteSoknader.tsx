@@ -3,7 +3,7 @@ import {Accordion, BodyShort, Heading, Label, LinkPanel} from "@navikt/ds-react"
 import React from "react";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {format, formatDistance} from "date-fns";
-import {nb} from "date-fns/locale";
+import {nb, nn, enUS} from "date-fns/locale";
 import {basePath} from "../../configuration";
 import {DAYS_BEFORE_DELETION, usePabegynteSoknader} from "../usePabegynteSoknader";
 import TextPlaceholder from "../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
@@ -32,6 +32,19 @@ const PabegyntSoknad = ({
         window.location.href = href;
     };
 
+    const getLocale = () => {
+        switch (i18n.language) {
+            case "en":
+                return enUS;
+            case "nn":
+                return nn;
+            case "nb":
+                return nb;
+            default:
+                return nb;
+        }
+    };
+
     return (
         <li>
             <LinkPanel
@@ -43,11 +56,11 @@ const PabegyntSoknad = ({
                 <LinkPanel.Title className={"flex flex-col lg:flex-row align-center"}>
                     <Label style={{marginRight: "1rem"}}>
                         {t("applikasjon.paabegynt.soknad.sist.oppdatert")}{" "}
-                        {format(lastUpdatedDate, "d. MMMM H  HH:mm", {locale: i18n.language === "en" ? undefined : nb})}
+                        {format(lastUpdatedDate, "d. MMMM H  HH:mm", {locale: getLocale()})}
                     </Label>
                     <BodyShort>
                         {t("applikasjon.paabegynt.soknad.slettes")}{" "}
-                        {formatDistance(deleteDate, currentDate, {locale: i18n.language === "en" ? undefined : nb})}
+                        {formatDistance(deleteDate, currentDate, {locale: getLocale(), addSuffix: true})}
                     </BodyShort>
                 </LinkPanel.Title>
             </LinkPanel>

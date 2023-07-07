@@ -37,6 +37,7 @@ const App = () => {
     useEffect(() => {
         if (tilgengeliggjorSprakvelger) {
             setAvailableLanguages([
+                {locale: "nn", url: basePath, handleInApp: true},
                 {locale: "nb", url: basePath, handleInApp: true},
                 {locale: "en", url: basePath, handleInApp: true},
             ]);
