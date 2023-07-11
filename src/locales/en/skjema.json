@@ -21,7 +21,7 @@
     "applikasjon.advarsel.gjenopptatt": "We are working to improve the application, therefore some changes may have been made since the last time you were logged in. Some questions and information may have been added or deleted.",
     "applikasjon.opprettsoknadfeilet": "An error occurred when setting up the application. Please try later",
     "applikasjon.start.ny.soknad": "Start a new application",
-    "applikasjon.fortsett.soknad": "Continue with with an application you have started",
+    "applikasjon.fortsett.soknad": "Continue with an application you have started",
     "applikasjon.paabegynt.soknad": "application started",
     "applikasjon.paabegynt.soknad.flertall": "started applications",
     "applikasjon.paabegynt.soknad.informasjon": "Please note that started applications are deleted after {{DAYS_BEFORE_DELETION}} days.",

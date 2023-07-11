@@ -56,7 +56,7 @@ const PabegyntSoknad = ({
                 <LinkPanel.Title className={"flex flex-col lg:flex-row align-center"}>
                     <Label style={{marginRight: "1rem"}}>
                         {t("applikasjon.paabegynt.soknad.sist.oppdatert")}{" "}
-                        {format(lastUpdatedDate, "d. MMMM H  HH:mm", {locale: getLocale()})}
+                        {format(lastUpdatedDate, "d. MMMM HH:mm", {locale: getLocale()})}
                     </Label>
                     <BodyShort>
                         {t("applikasjon.paabegynt.soknad.slettes")}{" "}
