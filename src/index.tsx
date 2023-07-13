@@ -47,7 +47,7 @@ const App = () => {
                 setParams({language: language.locale});
                 localStorage.setItem("digisos-language", language.locale);
 
-                logAmplitudeEvent("Valg språk", {language: language.locale});
+                logAmplitudeEvent("Valgt språk", {language: language.locale});
             };
 
             const storedLanguage = localStorage.getItem("digisos-language");
