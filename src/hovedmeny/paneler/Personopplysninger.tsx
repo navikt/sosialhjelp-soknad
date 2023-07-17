@@ -1,9 +1,9 @@
 import * as React from "react";
 import BehandlingAvPersonopplysningerModal from "./BehandlingAvPersonopplysningerModal";
 import {LinkButton} from "../../nav-soknad/components/linkButton/LinkButton";
-import {Accordion, BodyLong, Heading} from "@navikt/ds-react";
+import {Accordion, BodyLong, Heading, Link} from "@navikt/ds-react";
 import styled from "styled-components";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 import {useState} from "react";
 
 const LeftAlignedButton = styled(LinkButton)`
@@ -29,7 +29,15 @@ const Personopplysninger = () => {
                     <Heading level="3" size="small" spacing>
                         {t("informasjon.tekster.personopplysninger.innhenting.tittel")}
                     </Heading>
-                    <BodyLong spacing>{t("informasjon.tekster.personopplysninger.innhenting.tekst")}</BodyLong>
+                    <BodyLong spacing>
+                        <Trans
+                            t={t}
+                            i18nKey={"informasjon.tekster.personopplysninger.innhenting.tekst"}
+                            components={{
+                                a: <Link href="https://www.nav.no/">nav.no</Link>,
+                            }}
+                        />
+                    </BodyLong>
                     <Heading level="3" size="small" spacing>
                         {t("informasjon.tekster.personopplysninger.fordusender.tittel")}
                     </Heading>

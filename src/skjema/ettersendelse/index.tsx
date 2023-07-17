@@ -65,7 +65,7 @@ const Ettersendelse = () => {
                             {t("ettersendelse.soknad_sendt")} {originalSoknad.navenhet} {t("ettersendelse.kommune")}
                         </Heading>
                         <BodyShort>
-                            {t("soknad.innsendt.dato_tid", {
+                            {t("innsendt.dato_tid", {
                                 originalSoknadDato: originalSoknad.innsendtDato,
                                 originalSoknadTid: originalSoknad.innsendtTidspunkt,
                             })}
