@@ -9,7 +9,7 @@ import {
     vedleggGrupper,
 } from "../../lib/opplysninger";
 import {useMemo} from "react";
-import {logError} from "../../nav-soknad/utils/loggerUtils.js";
+import {logError} from "../../nav-soknad/utils/loggerUtils";
 
 export const flettOgSorter = ({
     okonomiskeOpplysninger,
