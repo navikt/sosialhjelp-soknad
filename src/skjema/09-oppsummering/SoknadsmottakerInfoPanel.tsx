@@ -19,7 +19,6 @@ const StyledGuidePanel = styled(GuidePanel)`
     margin-bottom: 2rem;
 `;
 
-// FIXME: Translation
 export const SoknadsmottakerInfoPanel = () => {
     const {expectOK} = useAlgebraic(useHentAdresser(useBehandlingsId()));
     const {t} = useTranslation("skjema");
@@ -30,7 +29,7 @@ export const SoknadsmottakerInfoPanel = () => {
         if (!erAktiv(navEnhet)) return <NavEnhetInaktiv />;
 
         const {enhetsnavn, kommunenavn} = navEnhet;
-        const valgtEnhetsNavn = `${enhetsnavn}, ${kommunenavn} kommune`;
+        const valgtEnhetsNavn = `${enhetsnavn}, ${kommunenavn} ${t("generelt.kommune")}`;
 
         return (
             <>

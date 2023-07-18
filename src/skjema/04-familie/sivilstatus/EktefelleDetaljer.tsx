@@ -24,9 +24,7 @@ const EktefelleNavn = () => {
                     <SysteminfoItem label={t(`gift.ektefelle.fodselsdato`)}>{ektefelle.fodselsdato}</SysteminfoItem>
                 )}
                 <SysteminfoItem label={t(`gift.ektefelle.folkereg`)}>
-                    {erFolkeregistrertSammen
-                        ? t("familie.sivilstatus.gift.ektefelle.borsammen.true")
-                        : t("familie.sivilstatus.gift.ektefelle.borsammen.false")}
+                    {erFolkeregistrertSammen ? t("gift.ektefelle.borsammen.true") : t("gift.ektefelle.borsammen.false")}
                 </SysteminfoItem>
             </>
         ) : null

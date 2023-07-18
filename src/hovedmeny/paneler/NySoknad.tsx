@@ -31,6 +31,7 @@ export const NySoknadInfo = () => {
             antallPabegynteSoknader: antallPabegynteSoknader,
             enableModalV2: true,
             erProdsatt: true,
+            language: localStorage.getItem("digisos-language"),
         });
         try {
             const {brukerBehandlingId} = await opprettSoknad();

@@ -4,6 +4,10 @@ on:
     branches:
       - '**'      # Build all branches
   workflow_dispatch:
+permissions:
+  contents: write
+  packages: write
+  actions: write
 env:
   REACT_APP_DIGISOS_ENV: dev-sbs
 
