@@ -8,7 +8,7 @@
     "@fremtind/jkl-formatters-util": "^3.0.22",
     "@fremtind/jkl-validators-util": "^2.5.3",
     "@hookform/error-message": "^2.0.1",
-    "@hookform/resolvers": "^2.9.11",
+    "@hookform/resolvers": "^3.1.1",
     "@navikt/aksel-icons": "^3.3.1",
     "@navikt/ds-css": "^2.1.7",
     "@navikt/ds-icons": "^2.1.7",
