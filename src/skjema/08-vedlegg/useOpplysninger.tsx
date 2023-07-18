@@ -9,6 +9,7 @@ import {
     vedleggGrupper,
 } from "../../lib/opplysninger";
 import {useMemo} from "react";
+import {logError} from "../../nav-soknad/utils/loggerUtils";
 
 export const flettOgSorter = ({
     okonomiskeOpplysninger,
@@ -24,9 +25,13 @@ export const flettOgSorter = ({
 export const useOpplysninger = () => {
     const behandlingsId = useBehandlingsId();
 
-    const {data, isLoading} = useHentOkonomiskeOpplysninger<
+    const {data, isLoading, error} = useHentOkonomiskeOpplysninger<
         VedleggFrontends | VedleggFrontendsMinusEtParTingSomTrengerAvklaring
     >(behandlingsId, {});
+
+    if (error) {
+        logError(`Feil ved HentOkonomiskeOpplysninger: ${error}`);
+    }
 
     if (data && !validVedleggFrontends(data)) {
         throw new Error(`useOpplysninger mottok ugyldig type ${data} - frontends API ute av synk med Swagger?`);

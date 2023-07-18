@@ -20,7 +20,7 @@ export const OkonomiskeOpplysningerView = () => {
         <SkjemaSteg.Container page={8}>
             <SkjemaSteg.Content className={cx("pb-12", {"lg:space-y-8": true})}>
                 <SkjemaSteg.Title className={"lg:mb-8"} />
-                {bekreftet ? <UbesvarteOpplysninger /> : <InfopanelOpplysninger />}
+                {bekreftet ? <InfopanelOpplysninger /> : <UbesvarteOpplysninger />}
                 <Gruppe gruppeKey={firstGroup} opplysninger={sorterte.filter((x) => x.gruppe === firstGroup)} />
             </SkjemaSteg.Content>
             {middleGroups.map((gruppe, i) => (
