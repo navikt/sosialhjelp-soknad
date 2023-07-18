@@ -47,15 +47,18 @@ const Skatt = () => {
 
     return (
         <div className={"skatt-wrapper"}>
-            <Heading size="medium" level="2">
+            <Heading size="medium" level="2" spacing>
                 {getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.tittel")}
             </Heading>
             {harSamtykke && inntektFraSkatteetatenFeilet && (
                 <div className={"ytelser_panel"}>
                     <div>
-                        <Label spacing>{t("utbetalinger.inntekt.skattbar.samtykke_sporsmal")}</Label>
+                        <Label spacing as="p">
+                            {t("utbetalinger.inntekt.skattbar.samtykke_sporsmal")}
+                        </Label>
                         <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.samtykke_info")}</BodyShort>
                     </div>
+                    <br></br>
                     <Button
                         variant="secondary"
                         id="gi_skatteetaten_samtykke"
@@ -109,9 +112,12 @@ const Skatt = () => {
                     {!harSamtykke && (
                         <>
                             <div>
-                                <Label spacing>{t("utbetalinger.inntekt.skattbar.samtykke_sporsmal")}</Label>
+                                <Label spacing as="p">
+                                    {t("utbetalinger.inntekt.skattbar.samtykke_sporsmal")}
+                                </Label>
                                 <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.samtykke_info")}</BodyShort>
                             </div>
+                            <br></br>
                             <Button
                                 variant="secondary"
                                 id="gi_skatteetaten_samtykke"

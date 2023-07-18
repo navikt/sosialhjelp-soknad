@@ -35,6 +35,6 @@ export const useFeatureFlags = (): FeatureFlags => {
         nyOppsummering: false,
         oppsummeringNavEnhet: false,
         tilgjengeliggjorFlereFilformater: false,
-        tilgengeliggjorSprakvelger: false,
+        tilgengeliggjorSprakvelger: true,
     };
 };
