@@ -153,7 +153,7 @@ const EttersendelseVedlegg = ({vedlegg, ettersendelseAktivert, feilKode}: Props)
                 }
                 onClick={() => ettersendelseAktivert && leggTilVedleggKnapp.current?.click()}
             >
-                Velg vedlegg
+                {t("ettersendelse.velg.vedlegg")}
                 {vedlegg.type === opplastingVedleggType && <Loader />}
             </Button>
         </VedleggsListe>

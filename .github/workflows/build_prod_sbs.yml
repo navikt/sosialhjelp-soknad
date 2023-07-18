@@ -2,6 +2,11 @@ name: Build prod-sbs image - HUSK MANUELL DEPLOY TIL PROD!
 on:
   push:
     branches: [master]
+
+permissions:
+  contents: write
+  packages: write
+  actions: write
 env:
   REACT_APP_DIGISOS_ENV: prod-sbs
 
