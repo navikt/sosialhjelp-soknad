@@ -32,6 +32,9 @@ const VedleggRadFrontendSchema = z.object({
 
 export type VedleggRadFrontendForm = z.infer<typeof VedleggRadFrontendSchema>;
 
+// This is the delay we wait between keystrokes before we push changes to backend
+const DEBOUNCE_DELAY_MS = 500 as const;
+
 export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrengerAvklaring) => {
     const {textKey, inputs, numRows} = opplysningSpec[opplysning.type];
 
@@ -48,7 +51,7 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
         shouldFocusError: false,
     });
 
-    // This has the effect of waiting 1 second after a change to "rader" before we try to push it to backend.
+    // Wait DEBOUNCE_DELAY_MS after a change to "rader" before we try to push it to backend.
     const [rader, setRader] = useState<VedleggFrontend["rader"]>([]);
     useDebounce(
         () => {
@@ -59,7 +62,7 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
                 data: {...opplysning, rader},
             });
         },
-        200,
+        DEBOUNCE_DELAY_MS,
         [rader]
     );
 
