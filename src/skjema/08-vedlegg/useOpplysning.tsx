@@ -9,6 +9,7 @@ import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import {VedleggFrontend} from "../../generated/model";
 import {useDebounce} from "react-use";
 import {belopTekstfeltPreprocessor} from "./belopTekstfeltPreprocessor";
+import deepEqual from "deep-equal";
 
 const zodBelopTekstfeltSchema = z.preprocess(
     belopTekstfeltPreprocessor,
@@ -55,7 +56,7 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
     const [rader, setRader] = useState<VedleggFrontend["rader"]>([]);
     useDebounce(
         () => {
-            if (!rader.length) return;
+            if (deepEqual(rader, opplysning.rader)) return;
 
             mutate({
                 behandlingsId,
