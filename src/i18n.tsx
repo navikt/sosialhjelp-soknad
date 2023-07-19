@@ -2,6 +2,7 @@ import i18n from "i18next";
 import {initReactI18next} from "react-i18next";
 import {isLocalhost} from "./nav-soknad/utils";
 
+import skjemaNn from "./locales/nn/skjema.json";
 import skjemaNb from "./locales/nb/skjema.json";
 import skjemaEn from "./locales/en/skjema.json";
 
@@ -18,7 +19,7 @@ i18n
         // See also src/@types/i18next.d.ts
         returnNull: false,
         lng: storedLanguage || "nb",
-        fallbackLng: "en",
+        fallbackLng: "nb",
         ns: ["skjema"],
         defaultNS: "skjema",
         debug: isLocalhost(window.location.href),
@@ -27,6 +28,7 @@ i18n
             escapeValue: false, // not needed for react as it escapes by default
         },
         resources: {
+            nn: {skjema: skjemaNn},
             nb: {skjema: skjemaNb},
             en: {skjema: skjemaEn},
         },

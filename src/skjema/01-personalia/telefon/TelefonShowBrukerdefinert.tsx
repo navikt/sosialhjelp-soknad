@@ -15,10 +15,10 @@ export const TelefonShowBrukerdefinert = ({
     const {t} = useTranslation("skjema", {keyPrefix: "kontakt.system"});
     return (
         <>
-            <SysteminfoItem comment="Du har oppgitt:" label={t("telefon.label")}>
+            <SysteminfoItem comment={t("telefon.oppgitt")} label={t("telefon.label")}>
                 {brukerutfyltVerdi && formatTelefonnummer(strip47(brukerutfyltVerdi))}
             </SysteminfoItem>
-            {onEdit && <LinkButton onClick={onEdit}>Endre</LinkButton>}
+            {onEdit && <LinkButton onClick={onEdit}>{t("telefon.endre")}</LinkButton>}
         </>
     );
 };

@@ -52,7 +52,7 @@ const NavYtelserView = () => {
 
     return (
         <div className={"skatt-wrapper"}>
-            <Heading size="medium" level="2">
+            <Heading size="medium" level="2" spacing>
                 {getIntlTextOrKey(t, "navytelser.sporsmal")}
             </Heading>
             {!visAnimerteStreker && !utbetalingerFraNavFeilet && harNavytelser && (

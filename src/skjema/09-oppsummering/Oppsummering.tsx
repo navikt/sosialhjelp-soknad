@@ -112,6 +112,8 @@ export const Oppsummering = () => {
             )
         );
 
+        attr.language = localStorage.getItem("digisos-language");
+
         return attr;
     };
     const adresseValg = useHentAdresser(behandlingsId).data?.valg;
