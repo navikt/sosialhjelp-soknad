@@ -49,7 +49,7 @@
     "react-collapse": "^5.1.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.3",
-    "react-i18next": "^12.1.4",
+    "react-i18next": "^13.0.2",
     "react-modal": "^3.12.1",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
