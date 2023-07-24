@@ -28,7 +28,7 @@
     "downshift": "^7.0.4",
     "express": "^4.18.1",
     "i18next": "^23.2.11",
-    "i18next-browser-languagedetector": "^7.0.1",
+    "i18next-browser-languagedetector": "^7.1.0",
     "nav-frontend-chevron": "^1.0.30",
     "nav-frontend-chevron-style": "^1.0.4",
     "nav-frontend-core": "^6.0.1",
