@@ -3,6 +3,7 @@ import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {Opplysning} from "../../lib/opplysninger";
 import {useFeatureFlags} from "../../lib/featureFlags";
+import {ForhandsvisningVedleggModal} from "./ForhandsvisningVedleggModal";
 
 const LastOppFil = ({
     doUpload,
@@ -19,15 +20,40 @@ const LastOppFil = ({
     const {tilgjengeliggjorFlereFilformater} = useFeatureFlags();
 
     const vedleggElement = React.useRef<HTMLInputElement>(null);
+    const [filePreviews, setFilePreviews] = React.useState<Array<{file: File; isPDF: boolean}>>([]);
+    const [showModal, setShowModal] = React.useState(false);
+    const [fullScreenMode, setFullScreenMode] = React.useState(false);
+
+    const handleFullScreen = () => setFullScreenMode(!fullScreenMode);
 
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {files} = event.target;
 
-        if (!files) return;
+        if (!files || files.length === 0) return;
 
-        [...files].forEach(doUpload);
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const fileType = file.type;
+            const isPDF = fileType === "application/pdf";
+
+            setFilePreviews((prevFiles) => [...prevFiles, {file, isPDF}]);
+        }
+
+        setShowModal(true);
 
         if (vedleggElement?.current) vedleggElement.current.value = "";
+    };
+
+    const handleAccept = async () => {
+        await Promise.all(filePreviews.map((filePreview) => doUpload(filePreview.file)));
+
+        setFilePreviews([]);
+        setShowModal(false);
+    };
+
+    const handleClose = () => {
+        setShowModal(false);
+        setFilePreviews([]);
     };
 
     const alwaysAllowedFormats = "image/jpeg,image/png,application/pdf";
@@ -62,6 +88,14 @@ const LastOppFil = ({
                         : alwaysAllowedFormats
                 }
                 multiple
+            />
+            <ForhandsvisningVedleggModal
+                filePreviews={filePreviews}
+                showModal={showModal}
+                fullScreenMode={fullScreenMode}
+                handleFullScreen={handleFullScreen}
+                handleAccept={handleAccept}
+                handleClose={handleClose}
             />
         </div>
     );
