@@ -22,9 +22,6 @@ const LastOppFil = ({
     const vedleggElement = React.useRef<HTMLInputElement>(null);
     const [filePreviews, setFilePreviews] = React.useState<Array<{file: File; isPDF: boolean}>>([]);
     const [showModal, setShowModal] = React.useState(false);
-    const [fullScreenMode, setFullScreenMode] = React.useState(false);
-
-    const handleFullScreen = () => setFullScreenMode(!fullScreenMode);
 
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {files} = event.target;
@@ -92,8 +89,6 @@ const LastOppFil = ({
             <ForhandsvisningVedleggModal
                 filePreviews={filePreviews}
                 showModal={showModal}
-                fullScreenMode={fullScreenMode}
-                handleFullScreen={handleFullScreen}
                 handleAccept={handleAccept}
                 handleClose={handleClose}
             />
