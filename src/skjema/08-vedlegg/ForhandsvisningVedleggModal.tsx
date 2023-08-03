@@ -1,21 +1,23 @@
 import React from "react";
 import {Button, Modal} from "@navikt/ds-react";
-import {ExpandIcon} from "@navikt/aksel-icons";
+import {ExpandIcon, TrashIcon} from "@navikt/aksel-icons";
 import styled from "styled-components";
 import {FullskjermModal} from "./FullskjermModal";
 
-const DEFAULT_MODAL_STYLE = {
-    content: {},
-};
-
-const FullScreenButtonContainer = styled.div`
+const ButtonContainer = styled.div`
     position: absolute;
     right: 20px;
-    top: 80px;
+    top: 10px;
     z-index: 1;
 `;
 
 const FullScreenButtonContent = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+`;
+
+const DeleteButtonContent = styled.div`
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -45,6 +47,7 @@ interface ForhandsvisningModalProps {
     showModal: boolean;
     handleAccept: () => void;
     handleClose: () => void;
+    handleDelete: (index: number) => void;
 }
 
 export const ForhandsvisningVedleggModal = ({
@@ -52,6 +55,7 @@ export const ForhandsvisningVedleggModal = ({
     showModal,
     handleAccept,
     handleClose,
+    handleDelete,
 }: ForhandsvisningModalProps) => {
     const [fullScreenFile, setFullScreenFile] = React.useState<{file: File; isPDF: boolean} | null>(null);
 
@@ -65,10 +69,10 @@ export const ForhandsvisningVedleggModal = ({
 
     return (
         <React.Fragment>
-            <Modal open={showModal && !fullScreenFile} onClose={handleClose} style={DEFAULT_MODAL_STYLE}>
+            <Modal open={showModal && !fullScreenFile} onClose={handleClose}>
                 <Modal.Content
                     style={{
-                        width: "90vw",
+                        width: "40vw",
                         height: "80vh",
                         paddingTop: "50px",
                         display: "flex",
@@ -79,25 +83,31 @@ export const ForhandsvisningVedleggModal = ({
                 >
                     {filePreviews.map((filePreview, index) => (
                         <FilePreviewContainer key={index}>
-                            <FullScreenButtonContainer>
+                            <ButtonContainer>
+                                <Button variant="tertiary" onClick={() => handleDelete(index)}>
+                                    <DeleteButtonContent>
+                                        <TrashIcon />
+                                        <span>Slett</span>
+                                    </DeleteButtonContent>
+                                </Button>
                                 <Button variant="tertiary" onClick={() => handleFullScreen(filePreview)}>
                                     <FullScreenButtonContent>
                                         <ExpandIcon />
                                         <span>Fullskjerm</span>
                                     </FullScreenButtonContent>
                                 </Button>
-                            </FullScreenButtonContainer>
+                            </ButtonContainer>
                             {filePreview.isPDF ? (
                                 <iframe
                                     title={`File preview ${index}`}
                                     src={URL.createObjectURL(filePreview.file)}
-                                    style={{width: "100%", height: "100%"}}
+                                    style={{width: "70%", height: "70%"}}
                                 />
                             ) : (
                                 <img
                                     src={URL.createObjectURL(filePreview.file)}
                                     alt={`File preview ${index}`}
-                                    style={{maxWidth: "100%", maxHeight: "100%", objectFit: "contain"}}
+                                    style={{maxWidth: "70%", maxHeight: "70%", objectFit: "contain"}}
                                 />
                             )}
                         </FilePreviewContainer>

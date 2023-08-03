@@ -1,4 +1,3 @@
-import React from "react";
 import {Button, Modal} from "@navikt/ds-react";
 import {ShrinkIcon} from "@navikt/aksel-icons";
 import styled from "styled-components";
@@ -38,7 +37,11 @@ export const FullskjermModal = ({filePreview, handleClose}: FullscreenModalProps
     return (
         <Modal open={true} onClose={handleClose} style={FULLSCREEN_MODAL_STYLE}>
             <FullScreenButtonContainer>
-                <Button variant="tertiary" onClick={handleClose}>
+                <Button
+                    variant={filePreview.isPDF ? "tertiary-neutral" : "tertiary"}
+                    style={filePreview.isPDF ? {color: "white"} : {color: ""}}
+                    onClick={handleClose}
+                >
                     <FullScreenButtonContent>
                         <ShrinkIcon />
                         <span>Fullskjerm</span>

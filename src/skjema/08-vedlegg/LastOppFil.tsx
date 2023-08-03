@@ -53,6 +53,15 @@ const LastOppFil = ({
         setFilePreviews([]);
     };
 
+    const handleDelete = (index: number) => {
+        const updatedFilePreviews = filePreviews.filter((_, i) => i !== index);
+        setFilePreviews((prevFiles) => prevFiles.filter((_, i) => i !== index));
+
+        if (updatedFilePreviews.length === 0) {
+            handleClose();
+        }
+    };
+
     const alwaysAllowedFormats = "image/jpeg,image/png,application/pdf";
     const devOnlyFormats =
         ",text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
@@ -91,6 +100,7 @@ const LastOppFil = ({
                 showModal={showModal}
                 handleAccept={handleAccept}
                 handleClose={handleClose}
+                handleDelete={handleDelete}
             />
         </div>
     );
