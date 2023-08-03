@@ -19,8 +19,14 @@ const FULLSCREEN_MODAL_STYLE = {
 
 const FullScreenButtonContainer = styled.div`
     position: absolute;
-    top: 20px;
-    left: 10px;
+    right: 20px;
+    top: 80px;
+`;
+
+const FullScreenButtonContent = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 `;
 
 interface FullscreenModalProps {
@@ -32,8 +38,11 @@ export const FullskjermModal = ({filePreview, handleClose}: FullscreenModalProps
     return (
         <Modal open={true} onClose={handleClose} style={FULLSCREEN_MODAL_STYLE}>
             <FullScreenButtonContainer>
-                <Button variant="secondary" onClick={handleClose}>
-                    <ShrinkIcon />
+                <Button variant="tertiary" onClick={handleClose}>
+                    <FullScreenButtonContent>
+                        <ShrinkIcon />
+                        <span>Fullskjerm</span>
+                    </FullScreenButtonContent>
                 </Button>
             </FullScreenButtonContainer>
             <Modal.Content style={{width: "100%", height: "100%"}}>
@@ -48,7 +57,11 @@ export const FullskjermModal = ({filePreview, handleClose}: FullscreenModalProps
                     }}
                 >
                     {filePreview.isPDF ? (
-                        <iframe src={URL.createObjectURL(filePreview.file)} style={{width: "100%", height: "100%"}} />
+                        <iframe
+                            src={URL.createObjectURL(filePreview.file)}
+                            title="Forhåndsvisning av fil"
+                            style={{width: "100%", height: "100%"}}
+                        />
                     ) : (
                         <img
                             src={URL.createObjectURL(filePreview.file)}

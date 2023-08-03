@@ -11,8 +11,14 @@ const DEFAULT_MODAL_STYLE = {
 const FullScreenButtonContainer = styled.div`
     position: absolute;
     right: 20px;
-    top: 10px;
+    top: 80px;
     z-index: 1;
+`;
+
+const FullScreenButtonContent = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 `;
 
 const ButtonRow = styled.div`
@@ -75,8 +81,10 @@ export const ForhandsvisningVedleggModal = ({
                         <FilePreviewContainer key={index}>
                             <FullScreenButtonContainer>
                                 <Button variant="tertiary" onClick={() => handleFullScreen(filePreview)}>
-                                    <ExpandIcon />
-                                    Fullskjerm
+                                    <FullScreenButtonContent>
+                                        <ExpandIcon />
+                                        <span>Fullskjerm</span>
+                                    </FullScreenButtonContent>
                                 </Button>
                             </FullScreenButtonContainer>
                             {filePreview.isPDF ? (
