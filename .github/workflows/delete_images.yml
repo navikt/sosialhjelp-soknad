@@ -1,0 +1,17 @@
+name: 'Remove Old Images'
+on:
+  schedule:
+    - cron: '*/5 * * * 5,6,0'
+
+jobs:
+  remove-images:
+    name: 'Remove old images job except 50 most recent'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/delete-package-versions@v4
+        with:
+          package-name: 'sosialhjelp-soknad/sosialhjelp-soknad'
+          package-type: 'container'
+          min-versions-to-keep: 50
