@@ -13,13 +13,14 @@ const FULLSCREEN_MODAL_STYLE = {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column" as "column",
+        padding: "50px 20px 20px 20px",
     },
 };
 
 const FullScreenButtonContainer = styled.div`
-    position: absolute;
-    right: 20px;
-    top: 80px;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
 `;
 
 const FullScreenButtonContent = styled.div`
@@ -37,11 +38,7 @@ export const FullskjermModal = ({filePreview, handleClose}: FullscreenModalProps
     return (
         <Modal open={true} onClose={handleClose} style={FULLSCREEN_MODAL_STYLE}>
             <FullScreenButtonContainer>
-                <Button
-                    variant={filePreview.isPDF ? "tertiary-neutral" : "tertiary"}
-                    style={filePreview.isPDF ? {color: "white"} : {color: ""}}
-                    onClick={handleClose}
-                >
+                <Button variant="tertiary" onClick={handleClose}>
                     <FullScreenButtonContent>
                         <ShrinkIcon />
                         <span>Fullskjerm</span>

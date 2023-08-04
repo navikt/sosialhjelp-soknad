@@ -1,14 +1,40 @@
 import React from "react";
-import {Button, Modal} from "@navikt/ds-react";
+import {BodyShort, Button, Modal} from "@navikt/ds-react";
 import {ExpandIcon, TrashIcon} from "@navikt/aksel-icons";
 import styled from "styled-components";
 import {FullskjermModal} from "./FullskjermModal";
 
+const FilePreviewContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    margin: 1rem 0;
+`;
+
 const ButtonContainer = styled.div`
-    position: absolute;
-    right: 20px;
-    top: 10px;
-    z-index: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+
+    @media (max-width: 600px) {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+`;
+
+const ButtonWrapper = styled.div`
+    margin-left: 10px;
+
+    @media (max-width: 600px) {
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
 `;
 
 const FullScreenButtonContent = styled.div`
@@ -23,23 +49,17 @@ const DeleteButtonContent = styled.div`
     gap: 0.5rem;
 `;
 
-const ButtonRow = styled.div`
-    text-align: center;
-    margin: 2rem;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
+const InformationText = styled.div`
+    text-align: left;
+    margin: 1rem 2rem;
 `;
 
-const FilePreviewContainer = styled.div`
-    position: relative;
+const ButtonRow = styled.div`
+    text-align: left;
+    margin: 2rem;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
+    justify-content: left;
+    gap: 1rem;
 `;
 
 interface ForhandsvisningModalProps {
@@ -57,19 +77,19 @@ export const ForhandsvisningVedleggModal = ({
     handleClose,
     handleDelete,
 }: ForhandsvisningModalProps) => {
-    const [fullScreenFile, setFullScreenFile] = React.useState<{file: File; isPDF: boolean} | null>(null);
+    const [fullskjerm, setFullskjerm] = React.useState<{file: File; isPDF: boolean} | null>(null);
 
     const handleFullScreen = (filePreview: {file: File; isPDF: boolean}) => {
-        setFullScreenFile(filePreview);
+        setFullskjerm(filePreview);
     };
 
     const handleExitFullScreen = () => {
-        setFullScreenFile(null);
+        setFullskjerm(null);
     };
 
     return (
         <React.Fragment>
-            <Modal open={showModal && !fullScreenFile} onClose={handleClose}>
+            <Modal open={showModal && !fullskjerm} onClose={handleClose}>
                 <Modal.Content
                     style={{
                         width: "40vw",
@@ -79,23 +99,28 @@ export const ForhandsvisningVedleggModal = ({
                         flexDirection: "column",
                         justifyContent: "center",
                         alignItems: "center",
+                        position: "relative",
                     }}
                 >
                     {filePreviews.map((filePreview, index) => (
                         <FilePreviewContainer key={index}>
                             <ButtonContainer>
-                                <Button variant="tertiary" onClick={() => handleDelete(index)}>
-                                    <DeleteButtonContent>
-                                        <TrashIcon />
-                                        <span>Slett</span>
-                                    </DeleteButtonContent>
-                                </Button>
-                                <Button variant="tertiary" onClick={() => handleFullScreen(filePreview)}>
-                                    <FullScreenButtonContent>
-                                        <ExpandIcon />
-                                        <span>Fullskjerm</span>
-                                    </FullScreenButtonContent>
-                                </Button>
+                                <ButtonWrapper>
+                                    <Button variant="tertiary" onClick={() => handleDelete(index)}>
+                                        <DeleteButtonContent>
+                                            <TrashIcon />
+                                            <span>Slett</span>
+                                        </DeleteButtonContent>
+                                    </Button>
+                                </ButtonWrapper>
+                                <ButtonWrapper>
+                                    <Button variant="tertiary" onClick={() => handleFullScreen(filePreview)}>
+                                        <FullScreenButtonContent>
+                                            <ExpandIcon />
+                                            <span>Fullskjerm</span>
+                                        </FullScreenButtonContent>
+                                    </Button>
+                                </ButtonWrapper>
                             </ButtonContainer>
                             {filePreview.isPDF ? (
                                 <iframe
@@ -113,6 +138,9 @@ export const ForhandsvisningVedleggModal = ({
                         </FilePreviewContainer>
                     ))}
                 </Modal.Content>
+                <InformationText>
+                    <BodyShort>Sørg for at dokumentene er leselige og viser riktig informasjon</BodyShort>
+                </InformationText>
                 <ButtonRow>
                     <Button variant="primary" onClick={handleAccept}>
                         Last opp fil
@@ -122,8 +150,7 @@ export const ForhandsvisningVedleggModal = ({
                     </Button>
                 </ButtonRow>
             </Modal>
-
-            {fullScreenFile && <FullskjermModal filePreview={fullScreenFile} handleClose={handleExitFullScreen} />}
+            {fullskjerm && <FullskjermModal filePreview={fullskjerm} handleClose={handleExitFullScreen} />}
         </React.Fragment>
     );
 };
