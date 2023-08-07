@@ -11,7 +11,7 @@ import {Opplysning, opplysningSpec} from "../../lib/opplysninger";
 import {ChangeEvent} from "react";
 import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
-import {ErrorMessage} from "@navikt/ds-react";
+import {Alert} from "@navikt/ds-react";
 
 const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const behandlingsId = useBehandlingsId();
@@ -21,7 +21,7 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
 
     const {mutate} = useUpdateOkonomiskOpplysning({});
 
-    const {deleteFile, files, upload, error, loading} = useVedlegg(opplysning);
+    const {deleteFile, files, upload, error, success, loading} = useVedlegg(opplysning);
 
     const handleAlleredeLastetOpp = async (e: ChangeEvent<HTMLInputElement>) => {
         await mutate({
@@ -54,8 +54,16 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                 visSpinner={!!opplysning.pendingLasterOppFil}
                 doUpload={upload}
             />
-            {error && <ErrorMessage className={"py-2"}>{t(error)}</ErrorMessage>}
-
+            {success && (
+                <Alert variant="success" className={"py-2"}>
+                    {success}
+                </Alert>
+            )}
+            {error && (
+                <Alert variant="error" className={"py-2"}>
+                    {t(error)}
+                </Alert>
+            )}
             <Checkbox
                 label={t("opplysninger.vedlegg.alleredelastetopp")}
                 id={opplysning.type + "_allerede_lastet_opp_checkbox"}
