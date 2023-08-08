@@ -27,10 +27,12 @@ const initialVedleggState: VedleggState = {
 
 type VedleggAction =
     | {type: "deleteFile"; uuid: string}
-    | {type: "addFile"; file: FilFrontend}
+    | {type: "addFile"; file: FilFrontend; successMessage: string}
     | {type: "setError"; error: ValideringsFeilKode | REST_FEIL; variables?: object}
     | {type: "setLoading"; loading: boolean}
-    | {type: "setFiles"; files: FilFrontend[]};
+    | {type: "setFiles"; files: FilFrontend[]}
+    | {type: "resetError"}
+    | {type: "resetSuccess"};
 
 const VedleggReducer = (state: VedleggState, action: VedleggAction) => {
     switch (action.type) {
@@ -57,13 +59,25 @@ const VedleggReducer = (state: VedleggState, action: VedleggAction) => {
             return {
                 ...state,
                 files: [...state.files, action.file],
-                successMessage: "Vedlegg lastet opp!", // assuming this key exists in your translation file
+                successMessage: action.successMessage,
             };
         case "setError":
             return {
                 ...state,
                 error: action.error,
             };
+        case "resetError":
+            return {
+                ...state,
+                error: undefined,
+            };
+        case "resetSuccess":
+            return {
+                ...state,
+                successMessage: undefined,
+            };
+        default:
+            return state;
     }
 };
 
@@ -73,7 +87,7 @@ export const useVedlegg = (opplysning: Opplysning) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
     const error = state.error ? t(state.error) : null;
-    const success = state.successMessage ? "Fil lastet opp!" : null;
+    const success = state.successMessage;
 
     useEffect(() => {
         hentOkonomiskeOpplysninger(behandlingsId)
@@ -116,13 +130,13 @@ export const useVedlegg = (opplysning: Opplysning) => {
             case "404":
                 dispatch({type: "setError", error: ValideringsFeilKode.FIL_EKSISTERER_IKKE});
                 break;
-            case "413": // Request entity too large
+            case "413":
                 if (!errorId) {
                     logError("413-feil i upload, antakelse har vist seg feilaktig: at alle 413-feil gir JSON med 'id'");
                 }
                 dispatch({type: "setError", error: REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR});
                 break;
-            case "415": // Unsupported media type
+            case "415":
             default:
                 dispatch({type: "setError", error: REST_FEIL.FEIL_FILTYPE});
                 break;
@@ -142,17 +156,32 @@ export const useVedlegg = (opplysning: Opplysning) => {
     };
 
     const upload = async (file: File) => {
+        resetError();
+        resetSuccess();
+
         dispatch({type: "setLoading", loading: true});
 
         try {
             const resultFile = await saveVedlegg(behandlingsId, opplysning.type, {file});
-            dispatch({type: "addFile", file: resultFile});
+            dispatch({
+                type: "addFile",
+                file: resultFile,
+                successMessage: t("vedlegg.opplasting.suksess"),
+            });
             logAmplitudeEvent("fil lastet opp", {opplysningType: opplysning.type});
         } catch (reason) {
             handleError(reason);
         } finally {
             dispatch({type: "setLoading", loading: false});
         }
+    };
+
+    const resetError = () => {
+        dispatch({type: "resetError"});
+    };
+
+    const resetSuccess = () => {
+        dispatch({type: "resetSuccess"});
     };
 
     return {
@@ -162,5 +191,7 @@ export const useVedlegg = (opplysning: Opplysning) => {
         error,
         success,
         loading,
+        resetError,
+        resetSuccess,
     };
 };

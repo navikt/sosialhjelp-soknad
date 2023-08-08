@@ -8,12 +8,25 @@ import cx from "classnames";
 import {VedleggFrontendVedleggStatus} from "../../generated/model";
 import {useVedlegg} from "./useVedlegg";
 import {Opplysning, opplysningSpec} from "../../lib/opplysninger";
-import {ChangeEvent} from "react";
+import {ChangeEvent, useEffect, useRef} from "react";
 import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
 import {Alert} from "@navikt/ds-react";
+import styled from "styled-components";
+
+const ToastAlert = styled(Alert)`
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+`;
 
 const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
+    const [showSuccessToast, setShowSuccessToast] = React.useState(false);
+    const [showErrorToast, setShowErrorToast] = React.useState(false);
+    const previousSuccessRef = React.useRef<string | null | undefined>();
+    const previousErrorRef = React.useRef<string | null | undefined>();
+
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
     const {textKey} = opplysningSpec[opplysning.type];
@@ -21,7 +34,7 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
 
     const {mutate} = useUpdateOkonomiskOpplysning({});
 
-    const {deleteFile, files, upload, error, success, loading} = useVedlegg(opplysning);
+    const {deleteFile, files, upload, error, success, resetError, resetSuccess, loading} = useVedlegg(opplysning);
 
     const handleAlleredeLastetOpp = async (e: ChangeEvent<HTMLInputElement>) => {
         await mutate({
@@ -34,10 +47,35 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
             },
         });
 
-        // FIXME: Don't know why this is needed, presumably race condition on back-end
         await new Promise<void>((resolve) => setTimeout(() => resolve(), 200));
 
         await queryClient.refetchQueries([`/soknader/${behandlingsId}/okonomiskeOpplysninger`]);
+    };
+
+    useEffect(() => {
+        if (success && success !== previousSuccessRef.current) {
+            setShowSuccessToast(true);
+            setTimeout(() => setShowSuccessToast(false), 3000);
+        } else if (!success) {
+            setShowSuccessToast(false);
+        }
+        previousSuccessRef.current = success;
+    }, [success]);
+
+    useEffect(() => {
+        if (error && error !== previousErrorRef.current) {
+            setShowErrorToast(true);
+            setTimeout(() => setShowErrorToast(false), 3000);
+        } else if (!error) {
+            setShowErrorToast(false);
+        }
+        previousErrorRef.current = error;
+    }, [error]);
+
+    const handleUpload = async (file: File) => {
+        resetError();
+        resetSuccess();
+        await upload(file);
     };
 
     return (
@@ -52,17 +90,17 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                 opplysning={opplysning}
                 isDisabled={loading || opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
                 visSpinner={!!opplysning.pendingLasterOppFil}
-                doUpload={upload}
+                doUpload={handleUpload}
             />
-            {success && (
-                <Alert variant="success" className={"py-2"}>
+            {showSuccessToast && (
+                <ToastAlert variant="success" className={"py-2"}>
                     {success}
-                </Alert>
+                </ToastAlert>
             )}
-            {error && (
-                <Alert variant="error" className={"py-2"}>
-                    {t(error)}
-                </Alert>
+            {showErrorToast && (
+                <ToastAlert variant="error" className={"py-2"}>
+                    {error}
+                </ToastAlert>
             )}
             <Checkbox
                 label={t("opplysninger.vedlegg.alleredelastetopp")}
