@@ -24,8 +24,8 @@ const ToastAlert = styled(Alert)`
 const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const [showSuccessToast, setShowSuccessToast] = React.useState(false);
     const [showErrorToast, setShowErrorToast] = React.useState(false);
-    const previousSuccessRef = React.useRef<string | null | undefined>();
-    const previousErrorRef = React.useRef<string | null | undefined>();
+    const previousSuccessRef = useRef<string | null | undefined>();
+    const previousErrorRef = useRef<string | null | undefined>();
 
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
