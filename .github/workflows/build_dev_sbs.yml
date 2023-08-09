@@ -46,7 +46,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Create artifact version
         id: artifact-version
-        uses: navikt/sosialhjelp-ci/actions/create-artifact-version@v2
+        uses: navikt/sosialhjelp-ci/actions/create-artifact-version@master
       - name: Create docker image tags
         run: |
           echo "DOCKER_TAG=${{ env.DOCKER_IMAGE }}:dev-sbs-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
