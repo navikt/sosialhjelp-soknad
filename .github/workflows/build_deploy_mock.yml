@@ -45,7 +45,7 @@ jobs:
                   password: ${{ secrets.GITHUB_TOKEN }}
             - name: Create artifact version
               id: artifact-version
-              uses: navikt/sosialhjelp-ci/actions/create-artifact-version@master
+              uses: navikt/sosialhjelp-ci/actions/create-artifact-version@v2
             - name: Get complete tag
               run: |
                   echo "COMPLETE_TAG=${{ env.REACT_APP_DIGISOS_ENV }}-$( date +%s )-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
