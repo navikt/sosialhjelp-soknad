@@ -155,25 +155,26 @@ export const useVedlegg = (opplysning: Opplysning) => {
         }
     };
 
-    const upload = async (file: File) => {
+    const upload = (file: File) => {
         resetError();
         resetSuccess();
 
         dispatch({type: "setLoading", loading: true});
 
-        try {
-            const resultFile = await saveVedlegg(behandlingsId, opplysning.type, {file});
-            dispatch({
-                type: "addFile",
-                file: resultFile,
-                successMessage: t("vedlegg.opplasting.suksess"),
+        saveVedlegg(behandlingsId, opplysning.type, {file})
+            .then((resultFile) => {
+                const successMessage = t("vedlegg.opplasting.suksess");
+                dispatch({
+                    type: "addFile",
+                    file: resultFile,
+                    successMessage: successMessage,
+                });
+                logAmplitudeEvent("fil lastet opp", {opplysningType: opplysning.type});
+            })
+            .catch(handleError)
+            .finally(() => {
+                dispatch({type: "setLoading", loading: false});
             });
-            logAmplitudeEvent("fil lastet opp", {opplysningType: opplysning.type});
-        } catch (reason) {
-            handleError(reason);
-        } finally {
-            dispatch({type: "setLoading", loading: false});
-        }
     };
 
     const resetError = () => {
@@ -191,7 +192,5 @@ export const useVedlegg = (opplysning: Opplysning) => {
         error,
         success,
         loading,
-        resetError,
-        resetSuccess,
     };
 };

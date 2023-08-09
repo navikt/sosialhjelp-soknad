@@ -34,7 +34,7 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
 
     const {mutate} = useUpdateOkonomiskOpplysning({});
 
-    const {deleteFile, files, upload, error, success, resetError, resetSuccess, loading} = useVedlegg(opplysning);
+    const {deleteFile, files, upload, error, success, loading} = useVedlegg(opplysning);
 
     const handleAlleredeLastetOpp = async (e: ChangeEvent<HTMLInputElement>) => {
         await mutate({
@@ -73,8 +73,6 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     }, [error]);
 
     const handleUpload = async (file: File) => {
-        resetError();
-        resetSuccess();
         await upload(file);
     };
 
