@@ -1379,7 +1379,7 @@
     "vedlegg.netbetalingsplan.avdraglaan.tittel": "Instalment plan",
     "vedlegg.oppholdstillatel.oppholdstillatel.tittel": "Registration certificate or residence permit",
     "vedlegg.opplasting.feil.forStor": "Upload failed. The total file size cannot exceed 10 MB",
-    "vedlegg.opplasting.feil.filType": "Upload failed. The file type is not supported",
+    "vedlegg.opplasting.feil.filType": "Upload failed. Only JPEG, PNG, and PDF files are supported.",
     "vedlegg.opplasting.feil.generell": "Upload failed. Please try again.",
     "vedlegg.opplasting.feil.infotekst": "Upload of attachment failed. Please try again or submit the attachment later.",
     "vedlegg.opplasting.feil.muligVirus": "Uploading was stopped by antivirus software. You can try again with a different file.",
