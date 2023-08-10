@@ -21,6 +21,8 @@ const ToastAlert = styled(Alert)`
     z-index: 1000;
 `;
 
+const VISNINGSTID_TOAST = 5000;
+
 const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const [showSuccessToast, setShowSuccessToast] = React.useState(false);
     const [showErrorToast, setShowErrorToast] = React.useState(false);
@@ -36,17 +38,18 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
 
     const {deleteFile, files, upload, error, success, loading} = useVedlegg(opplysning);
 
-    const handleAlleredeLastetOpp = async (e: ChangeEvent<HTMLInputElement>) => {
+    const handleAlleredeLastetOpp = async (event: ChangeEvent<HTMLInputElement>) => {
         await mutate({
             behandlingsId,
             data: {
                 ...opplysning,
-                vedleggStatus: e.target.checked
+                vedleggStatus: event.target.checked
                     ? VedleggFrontendVedleggStatus.VedleggAlleredeSendt
                     : VedleggFrontendVedleggStatus.VedleggKreves,
             },
         });
 
+        // FIXME: Don't know why this is needed, presumably race condition on back-end
         await new Promise<void>((resolve) => setTimeout(() => resolve(), 200));
 
         await queryClient.refetchQueries([`/soknader/${behandlingsId}/okonomiskeOpplysninger`]);
@@ -55,7 +58,7 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     useEffect(() => {
         if (success && success !== previousSuccessRef.current) {
             setShowSuccessToast(true);
-            setTimeout(() => setShowSuccessToast(false), 3000);
+            setTimeout(() => setShowSuccessToast(false), VISNINGSTID_TOAST);
         } else if (!success) {
             setShowSuccessToast(false);
         }
@@ -65,7 +68,7 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     useEffect(() => {
         if (error && error !== previousErrorRef.current) {
             setShowErrorToast(true);
-            setTimeout(() => setShowErrorToast(false), 3000);
+            setTimeout(() => setShowErrorToast(false), VISNINGSTID_TOAST);
         } else if (!error) {
             setShowErrorToast(false);
         }
