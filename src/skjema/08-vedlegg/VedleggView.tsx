@@ -12,13 +12,25 @@ import {ChangeEvent, useEffect, useRef} from "react";
 import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
 import {Alert} from "@navikt/ds-react";
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
+
+const slideInRight = keyframes`
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+`;
 
 const ToastAlert = styled(Alert)`
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 1000;
+    animation: ${slideInRight} 0.3s forwards;
 `;
 
 const VISNINGSTID_TOAST = 5000;
