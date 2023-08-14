@@ -6,7 +6,7 @@
   "dependencies": {
     "@amplitude/analytics-browser": "^2.1.2",
     "@fremtind/jkl-formatters-util": "^5.0.2",
-    "@fremtind/jkl-validators-util": "^2.5.3",
+    "@fremtind/jkl-validators-util": "^3.0.0",
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.1.1",
     "@navikt/aksel-icons": "^3.3.1",
