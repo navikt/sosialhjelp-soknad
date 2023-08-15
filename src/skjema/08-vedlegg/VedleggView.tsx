@@ -12,32 +12,10 @@ import {ChangeEvent, useEffect, useRef} from "react";
 import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
 import {Alert} from "@navikt/ds-react";
-import styled, {keyframes} from "styled-components";
-
-const slideInRight = keyframes`
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-`;
-
-const ToastAlert = styled(Alert)`
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    animation: ${slideInRight} 0.3s forwards;
-`;
-
-const VISNINGSTID_TOAST = 5000;
 
 const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
-    const [showSuccessToast, setShowSuccessToast] = React.useState(false);
-    const [showErrorToast, setShowErrorToast] = React.useState(false);
+    const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
+    const [showErrorAlert, setShowErrorAlert] = React.useState(false);
     const previousSuccessRef = useRef<string | null | undefined>();
     const previousErrorRef = useRef<string | null | undefined>();
 
@@ -69,20 +47,18 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
 
     useEffect(() => {
         if (success && success !== previousSuccessRef.current) {
-            setShowSuccessToast(true);
-            setTimeout(() => setShowSuccessToast(false), VISNINGSTID_TOAST);
+            setShowSuccessAlert(true);
         } else if (!success) {
-            setShowSuccessToast(false);
+            setShowSuccessAlert(false);
         }
         previousSuccessRef.current = success;
     }, [success]);
 
     useEffect(() => {
         if (error && error !== previousErrorRef.current) {
-            setShowErrorToast(true);
-            setTimeout(() => setShowErrorToast(false), VISNINGSTID_TOAST);
+            setShowErrorAlert(true);
         } else if (!error) {
-            setShowErrorToast(false);
+            setShowErrorAlert(false);
         }
         previousErrorRef.current = error;
     }, [error]);
@@ -96,25 +72,32 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
             <p>{t(`${textKey}.vedlegg.sporsmal.tittel`)}</p>
             <div className="vedleggsliste">
                 {files.map((fil) => (
-                    <OpplastetVedlegg key={fil.uuid} fil={fil} onDelete={deleteFile} />
+                    <OpplastetVedlegg
+                        key={fil.uuid}
+                        fil={fil}
+                        onDelete={() => {
+                            deleteFile(fil.uuid);
+                            setShowSuccessAlert(false);
+                        }}
+                    />
                 ))}
             </div>
+            {showSuccessAlert && (
+                <Alert variant="success" className={"py-2"} inline>
+                    {success}
+                </Alert>
+            )}
+            {showErrorAlert && (
+                <Alert variant="error" className={"py-2"} inline>
+                    {error}
+                </Alert>
+            )}
             <VedleggFileSelector
                 opplysning={opplysning}
                 isDisabled={loading || opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
                 visSpinner={!!opplysning.pendingLasterOppFil}
                 doUpload={handleUpload}
             />
-            {showSuccessToast && (
-                <ToastAlert variant="success" className={"py-2"}>
-                    {success}
-                </ToastAlert>
-            )}
-            {showErrorToast && (
-                <ToastAlert variant="error" className={"py-2"}>
-                    {error}
-                </ToastAlert>
-            )}
             <Checkbox
                 label={t("opplysninger.vedlegg.alleredelastetopp")}
                 id={opplysning.type + "_allerede_lastet_opp_checkbox"}
