@@ -9,11 +9,13 @@ const LastOppFil = ({
     visSpinner,
     isDisabled,
     opplysning,
+    resetAlerts,
 }: {
     opplysning: Opplysning;
     isDisabled: boolean;
     visSpinner: boolean;
     doUpload: (file: File) => void;
+    resetAlerts: () => void;
 }) => {
     const {t} = useTranslation();
     const {tilgjengeliggjorFlereFilformater} = useFeatureFlags();
@@ -40,7 +42,10 @@ const LastOppFil = ({
                 variant="secondary"
                 id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
                 disabled={isDisabled}
-                onClick={() => vedleggElement?.current?.click()}
+                onClick={() => {
+                    resetAlerts();
+                    vedleggElement?.current?.click();
+                }}
                 className="last-opp-vedlegg-knapp"
             >
                 + {t("opplysninger.vedlegg.knapp.tekst")}

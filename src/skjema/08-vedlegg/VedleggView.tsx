@@ -12,6 +12,11 @@ import {ChangeEvent, useEffect, useRef} from "react";
 import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
 import {Alert} from "@navikt/ds-react";
+import styled from "styled-components";
+
+const StyledAlert = styled(Alert)`
+    padding-bottom: 1rem;
+`;
 
 const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
@@ -83,20 +88,24 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                 ))}
             </div>
             {showSuccessAlert && (
-                <Alert variant="success" className={"py-2"} inline>
+                <StyledAlert variant="success" className={"py-2"} inline>
                     {success}
-                </Alert>
+                </StyledAlert>
             )}
             {showErrorAlert && (
-                <Alert variant="error" className={"py-2"} inline>
+                <StyledAlert variant="error" className={"py-2"} inline>
                     {error}
-                </Alert>
+                </StyledAlert>
             )}
             <VedleggFileSelector
                 opplysning={opplysning}
                 isDisabled={loading || opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
                 visSpinner={!!opplysning.pendingLasterOppFil}
                 doUpload={handleUpload}
+                resetAlerts={() => {
+                    setShowSuccessAlert(false);
+                    setShowErrorAlert(false);
+                }}
             />
             <Checkbox
                 label={t("opplysninger.vedlegg.alleredelastetopp")}
