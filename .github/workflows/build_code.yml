@@ -8,16 +8,12 @@ permissions:
   contents: write
   packages: write
   actions: write
-env:
-  REACT_APP_DIGISOS_ENV: dev-sbs
 
 # FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
 jobs:
   build:
-    name: Build
+    name: Build Code
     runs-on: ubuntu-latest
-    env:
-      DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
