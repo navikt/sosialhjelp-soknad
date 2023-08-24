@@ -12,12 +12,11 @@ jobs:
     name: 'Build npm'
     runs-on: ubuntu-latest
     permissions:
-      packages: read
-      contents: read
+      contents: write
+      packages: write
+      actions: write
     steps:
       - uses: actions/checkout@v3
-
-      - run: npm run orval
 
       - name: 'Build npm and run tests'
         uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
