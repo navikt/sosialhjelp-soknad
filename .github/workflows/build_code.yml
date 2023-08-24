@@ -26,15 +26,15 @@ jobs:
         run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-      - name: Build application
-        run: npm run build
+
       - name: Generate code from OpenAPI
         run: npm run orval
       - name: Run tests
         run: npm run test
       - name: Build less
         run: npm run build:css
-
+      - name: Build application
+        run: npm run build
 
 #      - name: 'Build npm and run tests'
 #        uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
