@@ -1,9 +1,9 @@
 name: Build dev-sbs image
-on:
-  push:
-    branches:
-      - '**'      # Build all branches
-  workflow_dispatch:
+#on:
+#  push:
+#    branches:
+#      - '**'      # Build all branches
+#  workflow_dispatch:
 permissions:
   contents: write
   packages: write
