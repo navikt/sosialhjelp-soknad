@@ -38,32 +38,6 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Login to GitHub Docker Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create artifact version
-        id: artifact-version
-        uses: navikt/sosialhjelp-ci/actions/create-artifact-version@v2
-      - name: Create docker image tags
-        run: |
-          echo "DOCKER_TAG=${{ env.DOCKER_IMAGE }}:dev-sbs-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_ENV
-      - name: Build docker image
-        run: docker build -t ${{ env.DOCKER_TAG }} .
-      - name: Push docker image
-        run: |
-          docker push ${{ env.DOCKER_TAG }}
-      - name: Create tag and release
-        uses: ncipollo/release-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag: dev-sbs-${{ steps.artifact-version.outputs.version }}
-          commit: ${{ github.sha }}
-
-
 #      - name: 'Build npm and run tests'
 #        uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
 #        with:
