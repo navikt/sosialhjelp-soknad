@@ -1,0 +1,24 @@
+name: 'Build code and run tests'
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+  workflow_dispatch:
+
+jobs:
+  build-code:
+    name: 'Build npm'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - name: 'Build npm and run tests'
+        uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
+        with:
+          reader-token: ${{ secrets.READER-TOKEN }}
+          build-less: 'true'
+          run-orval: 'true'
