@@ -19,6 +19,6 @@ jobs:
       - name: 'Build npm and run tests'
         uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
         with:
-          reader-token: ${{ secrets.READER-TOKEN }}
+          reader-token: ${{ secrets.READER_TOKEN }}
           build-less: 'true'
           run-orval: 'true'
