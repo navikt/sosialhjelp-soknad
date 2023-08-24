@@ -1,46 +1,26 @@
-name: "Build code"
+name: 'Build code and run test'
 on:
   push:
     branches:
       - '**'      # Build all branches
   workflow_dispatch:
 permissions:
-  contents: write
-  packages: write
-  actions: write
+  packages: read
 env:
-  REACT_APP_DIGISOS_ENV: dev-sbs
+  REACT_APP_DIGISOS_ENV: dev-sbs # tester er pr. nå avhengig av denne
 
-# FIXME: Legg til docker layer caching, f.eks. https://github.com/marketplace/actions/build-docker-images-using-cache
 jobs:
-  build:
-    name: Build
+  build_code:
+    name: 'Build Code and run Tests'
     runs-on: ubuntu-latest
     env:
       DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          registry-url: 'https://npm.pkg.github.com'
-          cache: 'npm'
-      - name: Install dependencies
-        run: npm ci
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-      - name: Generate code from OpenAPI
-        run: npm run orval
-      - name: Run tests
-        run: npm run test
-      - name: Build less
-        run: npm run build:css
-      - name: Build application
-        run: npm run build
 
-#      - name: 'Build npm and run tests'
-#        uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
-#        with:
-#          reader-token: ${{ secrets.READER_TOKEN }}
-#          build-less: 'true'
-#          run-orval: 'true'
+      - name: 'Build npm project and run Tests'
+        uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
+        with:
+          reader-token: ${{ secrets.READER_TOKEN }}
+          build-less: 'true'
+          run-orval: 'true'
