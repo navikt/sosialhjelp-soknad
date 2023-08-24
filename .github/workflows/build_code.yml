@@ -16,6 +16,9 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v3
+
+      - run: npm run orval
+
       - name: 'Build npm and run tests'
         uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
         with:
