@@ -20,5 +20,5 @@ jobs:
         uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
         with:
           reader-token: ${{ secrets.READER_TOKEN }}
-#          build-less: 'true'
-#          run-orval: 'true'
+          build-less: 'true'
+          run-orval: 'true'
