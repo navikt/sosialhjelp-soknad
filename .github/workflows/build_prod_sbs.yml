@@ -1,7 +1,8 @@
 name: Build prod-sbs image - HUSK MANUELL DEPLOY TIL PROD!
 on:
-  push:
-    branches: [master]
+#  push:
+#    branches: [master]
+  workflow_dispatch:
 
 permissions:
   contents: write
