@@ -39,7 +39,7 @@ jobs:
 
       - id: docker-image-tag
         run: |
-          echo "image-tag=${{ env.DOCKER_image }}:${{ needs.build-image.outputs.docker-tag }}" >> $GITHUB_OUTPUT
+          echo "IMAGE_TAG=${{ env.DOCKER_image }}:${{ needs.build-image.outputs.docker-tag }}" >> $GITHUB_ENV
 
       - name: Deploy til dev
         uses: nais/deploy/actions/deploy@v1
@@ -49,4 +49,4 @@ jobs:
           CLUSTER: dev-gcp
           REF: ${{ github.sha }}
           PRINT_PAYLOAD: true
-          IMAGE: ${{ steps.docker-image-tag.outputs.image-tag }}
+          IMAGE: ${{ env.IMAGE_TAG }}
