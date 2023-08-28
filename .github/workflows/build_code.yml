@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - '**'      # Build all branches
+    tags-ignore:
+      - '**' # Don't build any tags
   workflow_dispatch:
 permissions:
   packages: read
