@@ -43,7 +43,7 @@ runs:
         allowUpdates: true
 
     - name: 'Build and Push Docker Image'
-      uses: navikt/sosialhjelp-ci/actions/build-and-push-docker-image@v2
+      uses: navikt/sosialhjelp-ci/actions/build-and-push-docker-image@v2-beta
       with:
         artifact-version: ${{ steps.final-tag.outputs.tag }}
         image-name: ${{ env.DOCKER_IMAGE }}
