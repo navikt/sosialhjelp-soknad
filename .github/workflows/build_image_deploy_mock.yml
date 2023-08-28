@@ -40,7 +40,7 @@ jobs:
 
       - id: docker-image-tag
         run: |
-          echo "IMAGE_TAG=${{ env.DOCKER_image }}:${{ needs.build-image.outputs.docker-tag }}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${{ env.DOCKER_IMAGE }}:${{ needs.build-image.outputs.docker-tag }}" >> $GITHUB_ENV
 
       - name: Deploy til dev
         uses: nais/deploy/actions/deploy@v1
