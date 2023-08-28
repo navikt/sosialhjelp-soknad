@@ -6,15 +6,15 @@ on:
     tags-ignore:
       - '**' # Don't build any tags
   workflow_dispatch:
-permissions:
-  packages: read
-env:
-  REACT_APP_DIGISOS_ENV: dev-sbs # tester er pr. nå avhengig av denne
 
 jobs:
   build_code:
     name: 'Build Code and run Tests'
     runs-on: ubuntu-latest
+    permissions:
+      packages: read
+    env:
+      REACT_APP_DIGISOS_ENV: dev-sbs # tester er pr. nå avhengig av denne
     steps:
       - uses: actions/checkout@v3
 
