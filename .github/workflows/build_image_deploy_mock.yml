@@ -4,19 +4,20 @@ on:
   push:
     branches: [master]
   workflow_dispatch:
+env:
+  DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
 
 jobs:
   build-image:
     name: 'Build Artifact and Image'
     runs-on: ubuntu-latest
     outputs:
-      docker-tag: ${{ steps.docker-image.outputs.docker-tag }}
+      docker-tag: ${{ steps.docker-image.outputs.full-tag }}
     permissions:
       contents: write
       packages: write
       actions: write
     env:
-      DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
       REACT_APP_DIGISOS_ENV: mock
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
       WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
