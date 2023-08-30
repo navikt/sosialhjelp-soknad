@@ -1,0 +1,26 @@
+name: 'Build code and run test'
+on:
+  push:
+    branches:
+      - '**'      # Build all branches
+    tags-ignore:
+      - '**' # Don't build any tags
+  workflow_dispatch:
+
+jobs:
+  build_code:
+    name: 'Build Code and run Tests'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+    env:
+      REACT_APP_DIGISOS_ENV: dev-sbs # tester er pr. nå avhengig av denne
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 'Build npm project and run Tests'
+        uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
+        with:
+          reader-token: ${{ secrets.READER_TOKEN }}
+          build-less: 'true'
+          run-orval: 'true'
