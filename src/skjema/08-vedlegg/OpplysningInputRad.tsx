@@ -31,12 +31,13 @@ export const OpplysningInputRad = ({
                     key={fieldName}
                     render={({field, fieldState}) => (
                         <TextField
-                            className={cx("pb-2", {"w-32": fieldName !== "beskrivelse"})}
+                            className={cx("pb-2")}
                             label={t(`${textKey}.${fieldName}.label`)}
                             error={fieldState.isTouched && fieldState.error?.message && t(fieldState.error.message)}
                             {...field}
                             // To avoid value === null
                             value={field.value || ""}
+                            htmlSize={fieldName === "beskrivelse" ? 32 : 20}
                         />
                     )}
                     name={`rader.${index}.${fieldName}`}

@@ -74,7 +74,6 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
 
     return (
         <div>
-            <p>{t(`${textKey}.vedlegg.sporsmal.tittel`)}</p>
             <div className="vedleggsliste">
                 {files.map((fil) => (
                     <OpplastetVedlegg
@@ -107,6 +106,7 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                     setShowErrorAlert(false);
                 }}
             />
+            <p className="pt-4">{t(`${textKey}.vedlegg.sporsmal.tittel`)}</p>
             <Checkbox
                 label={t("opplysninger.vedlegg.alleredelastetopp")}
                 id={opplysning.type + "_allerede_lastet_opp_checkbox"}
