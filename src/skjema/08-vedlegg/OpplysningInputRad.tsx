@@ -2,7 +2,6 @@ import {Control, Controller} from "react-hook-form";
 import {VedleggRadFrontendForm} from "./useOpplysning";
 import {useTranslation} from "react-i18next";
 import {TextField} from "@navikt/ds-react";
-import * as React from "react";
 import {OpplysningInputType} from "../../lib/opplysninger";
 import {LinkButton} from "../../nav-soknad/components/linkButton/LinkButton";
 import cx from "classnames";
@@ -30,15 +29,18 @@ export const OpplysningInputRad = ({
                 <Controller
                     key={fieldName}
                     render={({field, fieldState}) => (
-                        <TextField
-                            className={cx("pb-2")}
-                            label={t(`${textKey}.${fieldName}.label`)}
-                            error={fieldState.isTouched && fieldState.error?.message && t(fieldState.error.message)}
-                            {...field}
-                            // To avoid value === null
-                            value={field.value || ""}
-                            htmlSize={fieldName === "beskrivelse" ? 32 : 20}
-                        />
+                        <>
+                            <p style={{fontSize: 16}}>{t(`${textKey}.${fieldName}.label`)}</p>
+                            <TextField
+                                label=""
+                                className={cx("pb-2")}
+                                error={fieldState.isTouched && fieldState.error?.message && t(fieldState.error.message)}
+                                {...field}
+                                // To avoid value === null
+                                value={field.value || ""}
+                                htmlSize={fieldName === "beskrivelse" ? 32 : 20}
+                            />
+                        </>
                     )}
                     name={`rader.${index}.${fieldName}`}
                     control={control}

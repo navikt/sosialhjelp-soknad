@@ -7,7 +7,7 @@ import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import cx from "classnames";
 import {VedleggFrontendVedleggStatus} from "../../generated/model";
 import {useVedlegg} from "./useVedlegg";
-import {Opplysning, opplysningSpec} from "../../lib/opplysninger";
+import {Opplysning} from "../../lib/opplysninger";
 import {ChangeEvent, useEffect, useRef} from "react";
 import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
@@ -15,7 +15,7 @@ import {Alert} from "@navikt/ds-react";
 import styled from "styled-components";
 
 const StyledAlert = styled(Alert)`
-    padding-bottom: 1rem;
+    margin-top: 1rem;
 `;
 
 const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
@@ -26,7 +26,6 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
 
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
-    const {textKey} = opplysningSpec[opplysning.type];
     const queryClient = useQueryClient();
 
     const {mutate} = useUpdateOkonomiskOpplysning({});
@@ -74,28 +73,6 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
 
     return (
         <div>
-            <div className="vedleggsliste">
-                {files.map((fil) => (
-                    <OpplastetVedlegg
-                        key={fil.uuid}
-                        fil={fil}
-                        onDelete={() => {
-                            deleteFile(fil.uuid);
-                            setShowSuccessAlert(false);
-                        }}
-                    />
-                ))}
-            </div>
-            {showSuccessAlert && (
-                <StyledAlert variant="success" className={"py-2"} inline>
-                    {success}
-                </StyledAlert>
-            )}
-            {showErrorAlert && (
-                <StyledAlert variant="error" className={"py-2"} inline>
-                    {error}
-                </StyledAlert>
-            )}
             <VedleggFileSelector
                 opplysning={opplysning}
                 isDisabled={loading || opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
@@ -106,7 +83,30 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                     setShowErrorAlert(false);
                 }}
             />
-            <p className="pt-4">{t(`${textKey}.vedlegg.sporsmal.tittel`)}</p>
+            {files.length > 0 && (
+                <div className="vedleggsliste">
+                    {files.map((fil) => (
+                        <OpplastetVedlegg
+                            key={fil.uuid}
+                            fil={fil}
+                            onDelete={() => {
+                                deleteFile(fil.uuid);
+                                setShowSuccessAlert(false);
+                            }}
+                        />
+                    ))}
+                </div>
+            )}
+            {showSuccessAlert && (
+                <StyledAlert variant="success" className={"py-2"}>
+                    {success}
+                </StyledAlert>
+            )}
+            {showErrorAlert && (
+                <StyledAlert variant="error" className={"py-2"}>
+                    {error}
+                </StyledAlert>
+            )}
             <Checkbox
                 label={t("opplysninger.vedlegg.alleredelastetopp")}
                 id={opplysning.type + "_allerede_lastet_opp_checkbox"}
