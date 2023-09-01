@@ -14,7 +14,7 @@ export const LinkButton = ({
     children,
     className,
     ...rest
-}: {className?: string} & React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+}: {className?: string; children: React.ReactNode} & React.ButtonHTMLAttributes<HTMLButtonElement>) => (
     <StyledLinkButton type="button" className={classNames("navds-link", className)} {...rest}>
         <BodyShort>{children}</BodyShort>
     </StyledLinkButton>
