@@ -4,16 +4,16 @@ import {axiosInstance} from "../../lib/orval/soknad-api-axios";
 // duplicated them here to prevent orval throwing an error when generating
 // the types. Presumed harmless; I suspect this API won't change much before
 // we get rid of it.
-type LoggLevel = (typeof LoggLevel)[keyof typeof LoggLevel];
+type LoggLevelCopy = (typeof LoggLevelCopy)[keyof typeof LoggLevelCopy];
 
-const LoggLevel = {
+const LoggLevelCopy = {
     ERROR: "ERROR",
     WARN: "WARN",
     INFO: "INFO",
 } as const;
 
 interface Logg {
-    level: LoggLevel;
+    level: LoggLevelCopy;
     message?: string;
     jsFileUrl?: string;
     lineNumber?: string;
@@ -27,16 +27,16 @@ export const logWindowError: typeof window.onerror = (message, jsFileUrl, lineNu
         url: window.location.href,
         userAgent: window.navigator.userAgent,
         message: `window.onerror: ${message.toString()}`,
-        level: LoggLevel.WARN,
+        level: LoggLevelCopy.WARN,
         jsFileUrl,
         lineNumber: lineNumber?.toString(),
         columnNumber: columnNumber?.toString(),
     }).then();
 };
 
-export const logInfo = (message: string): Promise<void> => log(message, LoggLevel.INFO);
-export const logWarning = (message: string): Promise<void> => log(message, LoggLevel.WARN);
-export const logError = (message: string): Promise<void> => log(message, LoggLevel.ERROR);
+export const logInfo = (message: string): Promise<void> => log(message, LoggLevelCopy.INFO);
+export const logWarning = (message: string): Promise<void> => log(message, LoggLevelCopy.WARN);
+export const logError = (message: string): Promise<void> => log(message, LoggLevelCopy.ERROR);
 
 const logLocally = ({message, level}: Logg) => {
     switch (level) {
@@ -52,7 +52,7 @@ const logLocally = ({message, level}: Logg) => {
     }
 };
 
-const log = async (message: string, level: LoggLevel) => {
+const log = async (message: string, level: LoggLevelCopy) => {
     const navLogEntry: Logg = {
         url: window.location.href,
         userAgent: window.navigator.userAgent,
