@@ -1,7 +1,9 @@
 name: 'Remove Old Images'
 on:
-  schedule:
-    - cron: '0 5 * * 1'
+  workflow_dispatch:
+
+#  schedule:   FIXME: Fjerner inntil det foreligger automatisk deploy
+#    - cron: '0 5 * * 1'
 
 jobs:
   remove-images:
