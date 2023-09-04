@@ -4,16 +4,16 @@ import {axiosInstance} from "../../lib/orval/soknad-api-axios";
 // duplicated them here to prevent orval throwing an error when generating
 // the types. Presumed harmless; I suspect this API won't change much before
 // we get rid of it.
-type LoggLevelCopy = (typeof LoggLevelCopy)[keyof typeof LoggLevelCopy];
+type LoggLevel = (typeof LoggLevelValues)[keyof typeof LoggLevelValues];
 
-const LoggLevelCopy = {
+const LoggLevelValues = {
     ERROR: "ERROR",
     WARN: "WARN",
     INFO: "INFO",
 } as const;
 
 interface Logg {
-    level: LoggLevelCopy;
+    level: LoggLevel;
     message?: string;
     jsFileUrl?: string;
     lineNumber?: string;
@@ -27,16 +27,16 @@ export const logWindowError: typeof window.onerror = (message, jsFileUrl, lineNu
         url: window.location.href,
         userAgent: window.navigator.userAgent,
         message: `window.onerror: ${message.toString()}`,
-        level: LoggLevelCopy.WARN,
+        level: LoggLevelValues.WARN,
         jsFileUrl,
         lineNumber: lineNumber?.toString(),
         columnNumber: columnNumber?.toString(),
     }).then();
 };
 
-export const logInfo = (message: string): Promise<void> => log(message, LoggLevelCopy.INFO);
-export const logWarning = (message: string): Promise<void> => log(message, LoggLevelCopy.WARN);
-export const logError = (message: string): Promise<void> => log(message, LoggLevelCopy.ERROR);
+export const logInfo = (message: string): Promise<void> => log(message, LoggLevelValues.INFO);
+export const logWarning = (message: string): Promise<void> => log(message, LoggLevelValues.WARN);
+export const logError = (message: string): Promise<void> => log(message, LoggLevelValues.ERROR);
 
 const logLocally = ({message, level}: Logg) => {
     switch (level) {
@@ -52,7 +52,7 @@ const logLocally = ({message, level}: Logg) => {
     }
 };
 
-const log = async (message: string, level: LoggLevelCopy) => {
+const log = async (message: string, level: LoggLevel) => {
     const navLogEntry: Logg = {
         url: window.location.href,
         userAgent: window.navigator.userAgent,
