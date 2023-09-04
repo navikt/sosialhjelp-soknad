@@ -20,7 +20,7 @@ const GruppeView = ({gruppeKey, opplysninger}: {gruppeKey: VedleggGruppe; opplys
     if (!opplysninger.length) return null;
 
     return (
-        <Panel className={"!px-0"}>
+        <Panel className={"!px-0"} style={{display: "grid", gap: "1rem"}}>
             <Heading level={"3"} size={"xlarge"} className={"pb-6"}>
                 {t(`${Gruppetittel[gruppeKey]}.sporsmal`)}
             </Heading>

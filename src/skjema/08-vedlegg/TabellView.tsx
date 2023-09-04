@@ -1,22 +1,26 @@
-import * as React from "react";
 import {LinkButton} from "../../nav-soknad/components/linkButton/LinkButton";
 import {useOpplysning} from "./useOpplysning";
 import {VedleggFrontendMinusEtParTingSomTrengerAvklaring} from "../../lib/opplysninger";
 import {OpplysningInputRad} from "./OpplysningInputRad";
 import {useTranslation} from "react-i18next";
 
-const AddRowButton = ({onClick}: {onClick: () => void}) => {
+const AddRowButton = ({onClick, textKey}: {onClick: () => void; textKey: string}) => {
     const {t} = useTranslation();
+    const undertekstKey = `${textKey}.leggtil`;
+    const translatedText = t(undertekstKey, {defaultValue: t("opplysninger.leggtil")});
 
     return (
-        <LinkButton onClick={onClick}>
-            <span aria-hidden={true}>+ </span>
-            {t("opplysninger.leggtil")}
-        </LinkButton>
+        <div className={`pt-3 pb-4`}>
+            <LinkButton onClick={onClick}>
+                <span aria-hidden={true}>+ </span>
+                {translatedText}
+            </LinkButton>
+        </div>
     );
 };
 
 const TabellView = ({opplysning}: {opplysning: VedleggFrontendMinusEtParTingSomTrengerAvklaring}) => {
+    const {t} = useTranslation();
     const {
         textKey,
         numRows,
@@ -31,7 +35,6 @@ const TabellView = ({opplysning}: {opplysning: VedleggFrontendMinusEtParTingSomT
                 {entries.map(({id}, index) => (
                     <OpplysningInputRad
                         key={id}
-                        className={"pb-4"}
                         textKey={textKey}
                         index={index}
                         control={control}
@@ -41,10 +44,11 @@ const TabellView = ({opplysning}: {opplysning: VedleggFrontendMinusEtParTingSomT
                 ))}
                 {numRows === "flere" && (
                     <li>
-                        <AddRowButton onClick={() => append({})} />
+                        <AddRowButton onClick={() => append({})} textKey={textKey} />
                     </li>
                 )}
             </ul>
+            <p style={{fontSize: 16}}>{t(`${textKey}.vedlegg.sporsmal.tittel`)}</p>
         </form>
     );
 };

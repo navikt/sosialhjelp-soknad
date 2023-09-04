@@ -9,11 +9,13 @@ const LastOppFil = ({
     visSpinner,
     isDisabled,
     opplysning,
+    resetAlerts,
 }: {
     opplysning: Opplysning;
     isDisabled: boolean;
     visSpinner: boolean;
     doUpload: (file: File) => void;
+    resetAlerts: () => void;
 }) => {
     const {t} = useTranslation();
     const {tilgjengeliggjorFlereFilformater} = useFeatureFlags();
@@ -36,16 +38,21 @@ const LastOppFil = ({
 
     return (
         <div>
-            <Button
-                variant="secondary"
-                id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
-                disabled={isDisabled}
-                onClick={() => vedleggElement?.current?.click()}
-                className="last-opp-vedlegg-knapp"
-            >
-                + {t("opplysninger.vedlegg.knapp.tekst")}
-                {visSpinner && <Loader />}
-            </Button>
+            <div className="pt-1">
+                <Button
+                    variant="secondary"
+                    id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
+                    disabled={isDisabled}
+                    onClick={() => {
+                        resetAlerts();
+                        vedleggElement?.current?.click();
+                    }}
+                    className="last-opp-vedlegg-knapp"
+                >
+                    + {t("opplysninger.vedlegg.knapp.tekst")}
+                    {visSpinner && <Loader />}
+                </Button>
+            </div>
             <input
                 aria-hidden
                 id={opplysning.type.replace(/\./g, "_") + "_skjult_upload_input"}
