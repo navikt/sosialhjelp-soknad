@@ -20,7 +20,7 @@ jobs:
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
       WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: 'Build Docker Image'
         uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
