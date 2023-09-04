@@ -13,22 +13,24 @@ import deepEqual from "deep-equal";
 
 const zodBelopTekstfeltSchema = z.preprocess(
     belopTekstfeltPreprocessor,
-    z.nullable(z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL))
+    z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL)
 );
 
 const VedleggRadFrontendSchema = z.object({
-    rader: z.array(
-        z
-            .object({
-                beskrivelse: z.string().max(100, ValideringsFeilKode.MAX_LENGDE).nullable(),
-                belop: zodBelopTekstfeltSchema,
-                brutto: zodBelopTekstfeltSchema,
-                netto: zodBelopTekstfeltSchema,
-                renter: zodBelopTekstfeltSchema,
-                avdrag: zodBelopTekstfeltSchema,
-            })
-            .partial()
-    ),
+    rader: z
+        .array(
+            z
+                .object({
+                    beskrivelse: z.string().max(100, ValideringsFeilKode.MAX_LENGDE),
+                    belop: zodBelopTekstfeltSchema,
+                    brutto: zodBelopTekstfeltSchema,
+                    netto: zodBelopTekstfeltSchema,
+                    renter: zodBelopTekstfeltSchema,
+                    avdrag: zodBelopTekstfeltSchema,
+                })
+                .partial()
+        )
+        .optional(),
 });
 
 export type VedleggRadFrontendForm = z.infer<typeof VedleggRadFrontendSchema>;
