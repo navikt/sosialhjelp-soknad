@@ -13,7 +13,7 @@ import deepEqual from "deep-equal";
 
 const zodBelopTekstfeltSchema = z.preprocess(
     belopTekstfeltPreprocessor,
-    z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL)
+    z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL).nullable()
 );
 
 const VedleggRadFrontendSchema = z.object({
@@ -21,7 +21,7 @@ const VedleggRadFrontendSchema = z.object({
         .array(
             z
                 .object({
-                    beskrivelse: z.string().max(100, ValideringsFeilKode.MAX_LENGDE),
+                    beskrivelse: z.string().max(100, ValideringsFeilKode.MAX_LENGDE).nullable(),
                     belop: zodBelopTekstfeltSchema,
                     brutto: zodBelopTekstfeltSchema,
                     netto: zodBelopTekstfeltSchema,
@@ -45,7 +45,7 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
     const {mutate} = useUpdateOkonomiskOpplysning();
 
     const {control, handleSubmit, watch} = useForm<VedleggRadFrontendForm>({
-        defaultValues: {rader: opplysning.rader},
+        defaultValues: {rader: opplysning.rader ?? []},
         resolver: zodResolver(VedleggRadFrontendSchema),
         mode: "onBlur",
         // Egentlig burde dette være true, men om det ikke er false så vil den
@@ -72,7 +72,7 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
     // Submit data to server when form changes, with delay - this could probably be done better.
     // The row state is changed, which starts a timer in useDebounce above before submitting to backend.
     useEffect(() => {
-        const subscription = watch(() => handleSubmit(({rader}) => setRader(rader))());
+        const subscription = watch(() => handleSubmit(({rader}) => setRader(rader ?? []))());
         return () => subscription.unsubscribe();
     }, [handleSubmit, watch]);
 
