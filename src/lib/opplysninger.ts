@@ -76,7 +76,7 @@ export const invalidVedleggFrontend = (
 export const validVedleggFrontends = (
     data: VedleggFrontends | VedleggFrontendsMinusEtParTingSomTrengerAvklaring
 ): data is VedleggFrontendsMinusEtParTingSomTrengerAvklaring =>
-    !(data.slettedeVedlegg.some(invalidVedleggFrontend) || data.okonomiskeOpplysninger.some(invalidVedleggFrontend));
+    !(data.slettedeVedlegg?.some(invalidVedleggFrontend) || data.okonomiskeOpplysninger?.some(invalidVedleggFrontend));
 
 export const opplysningSpec: Record<VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring, OpplysningSpec> = {
     "lonnslipp|arbeid": {

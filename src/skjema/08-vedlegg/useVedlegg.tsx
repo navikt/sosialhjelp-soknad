@@ -20,7 +20,7 @@ type VedleggState = {
 };
 
 const initialVedleggState: VedleggState = {
-    status: VedleggFrontendVedleggStatus.Ukjent,
+    status: VedleggFrontendVedleggStatus.VedleggKreves,
     loading: true,
     files: [],
 };
