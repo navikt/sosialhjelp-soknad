@@ -1,5 +1,26 @@
-import {Logg, LoggLevel} from "../../generated/model";
 import {axiosInstance} from "../../lib/orval/soknad-api-axios";
+
+// Caveat coder: These types are originally from the OpenAPI spec, but I've
+// duplicated them here to prevent orval throwing an error when generating
+// the types. Presumed harmless; I suspect this API won't change much before
+// we get rid of it.
+type LoggLevel = (typeof LoggLevel)[keyof typeof LoggLevel];
+
+const LoggLevel = {
+    ERROR: "ERROR",
+    WARN: "WARN",
+    INFO: "INFO",
+} as const;
+
+interface Logg {
+    level: LoggLevel;
+    message?: string;
+    jsFileUrl?: string;
+    lineNumber?: string;
+    columnNumber?: string;
+    url?: string;
+    userAgent?: string;
+}
 
 export const logWindowError: typeof window.onerror = (message, jsFileUrl, lineNumber, columnNumber) => {
     logToServer({
