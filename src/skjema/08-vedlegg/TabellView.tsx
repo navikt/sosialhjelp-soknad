@@ -4,25 +4,20 @@ import {VedleggFrontendMinusEtParTingSomTrengerAvklaring} from "../../lib/opplys
 import {OpplysningInputRad} from "./OpplysningInputRad";
 import {useTranslation} from "react-i18next";
 
-const AddRowButton = ({onClick, textKey}: {onClick: () => void; textKey: string}) => {
-    const {t} = useTranslation();
-    const undertekstKey = `${textKey}.leggtil`;
-
-    return (
-        <div className={`pt-3 pb-4`}>
-            <LinkButton onClick={onClick}>
-                <span aria-hidden={true}>+ </span>
-                {t(undertekstKey)}
-            </LinkButton>
-        </div>
-    );
-};
+const OpplysningRadNy = ({onClick, label}: {onClick: () => void; label: string}) => (
+    <li className={`pt-3 pb-4`}>
+        <LinkButton onClick={onClick}>
+            <span aria-hidden={true}>+ </span>
+            {label}
+        </LinkButton>
+    </li>
+);
 
 const TabellView = ({opplysning}: {opplysning: VedleggFrontendMinusEtParTingSomTrengerAvklaring}) => {
     const {t} = useTranslation();
     const {
         textKey,
-        numRows,
+        multirow,
         inputs,
         form: {control},
         rows: {entries, append, remove},
@@ -41,11 +36,7 @@ const TabellView = ({opplysning}: {opplysning: VedleggFrontendMinusEtParTingSomT
                         onDelete={index > 0 ? remove : undefined}
                     />
                 ))}
-                {numRows === "flere" && (
-                    <li>
-                        <AddRowButton onClick={() => append({})} textKey={textKey} />
-                    </li>
-                )}
+                {multirow && <OpplysningRadNy onClick={() => append({})} label={t(`${textKey}.leggtil`)} />}
             </ul>
             <p style={{fontSize: 16}}>{t(`${textKey}.vedlegg.sporsmal.tittel`)}</p>
         </form>
