@@ -117,33 +117,40 @@ export const useVedlegg = (opplysning: Opplysning) => {
             .finally(() => dispatch({type: "setLoading", loading: false}));
     };
 
-    const handleError = (reason: any) => {
-        if (!(reason instanceof AxiosError) || !reason.response) return;
+    const errorCodeMapping: Record<string, ValideringsFeilKode | REST_FEIL> = {
+        "404": ValideringsFeilKode.FIL_EKSISTERER_IKKE,
+        "413": REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR,
+        "415": REST_FEIL.FEIL_FILTYPE,
+    };
 
-        let errorId = extractErrorIdFromResponse(reason.response);
+    const errorIdMapping: Record<string, REST_FEIL> = {
+        duplikat_fil: REST_FEIL.DUPLIKAT_FIL,
+        konvertering_til_pdf_error: REST_FEIL.KONVERTERINGS_FEIL,
+    };
 
-        if (errorId && errorId !== REST_FEIL.KRYPTERT_FIL && errorId !== REST_FEIL.SIGNERT_FIL) {
+    const handleError = (reason: AxiosError<any, any> | any) => {
+        if (!(reason instanceof AxiosError)) {
+            return;
+        }
+        if (!reason.response) {
+            return;
+        }
+
+        const errorId = extractErrorIdFromResponse(reason.response);
+
+        if (errorId && ![REST_FEIL.KRYPTERT_FIL, REST_FEIL.SIGNERT_FIL].includes(errorId as REST_FEIL)) {
             logInfo(`Last opp vedlegg feilet: ${reason.response.status} - error id: ${errorId}`);
         }
 
-        switch (reason.code) {
-            case "404":
-                dispatch({type: "setError", error: ValideringsFeilKode.FIL_EKSISTERER_IKKE});
-                break;
-            case "413":
-                if (!errorId) {
-                    logError("413-feil i upload, antakelse har vist seg feilaktig: at alle 413-feil gir JSON med 'id'");
-                }
-                dispatch({type: "setError", error: REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR});
-                break;
-            case "415":
-            default:
-                if (errorId === "duplikat_fil") {
-                    dispatch({type: "setError", error: REST_FEIL.DUPLIKAT_FIL});
-                } else {
-                    dispatch({type: "setError", error: REST_FEIL.FEIL_FILTYPE});
-                }
-                break;
+        const errorTypeFromCode = errorCodeMapping[reason.code || ""];
+        const errorTypeFromId = errorIdMapping[errorId || ""];
+
+        if (errorTypeFromCode) {
+            dispatch({type: "setError", error: errorTypeFromCode});
+        } else if (errorTypeFromId) {
+            dispatch({type: "setError", error: errorTypeFromId});
+        } else {
+            dispatch({type: "setError", error: REST_FEIL.GENERELL_FEIL, variables: {errorId}});
         }
     };
 
