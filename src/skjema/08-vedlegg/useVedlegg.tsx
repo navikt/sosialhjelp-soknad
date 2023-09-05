@@ -141,6 +141,9 @@ export const useVedlegg = (opplysning: Opplysning) => {
         if (errorId && ![REST_FEIL.KRYPTERT_FIL, REST_FEIL.SIGNERT_FIL].includes(errorId as REST_FEIL)) {
             logInfo(`Last opp vedlegg feilet: ${reason.response.status} - error id: ${errorId}`);
         }
+        if (reason.code === "413" && !errorId) {
+            logError("413-feil i upload, antakelse har vist seg feilaktig: at alle 413-feil gir JSON med 'id'");
+        }
 
         const errorTypeFromCode = errorCodeMapping[reason.code || ""];
         const errorTypeFromId = errorIdMapping[errorId || ""];
