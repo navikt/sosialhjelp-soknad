@@ -13,7 +13,7 @@ import deepEqual from "deep-equal";
 
 const zodBelopTekstfeltSchema = z.preprocess(
     belopTekstfeltPreprocessor,
-    z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL)
+    z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL).nullable()
 );
 
 const VedleggRadFrontendSchema = z.object({
@@ -21,7 +21,7 @@ const VedleggRadFrontendSchema = z.object({
         .array(
             z
                 .object({
-                    beskrivelse: z.string().max(100, ValideringsFeilKode.MAX_LENGDE),
+                    beskrivelse: z.string().max(100, ValideringsFeilKode.MAX_LENGDE).nullable(),
                     belop: zodBelopTekstfeltSchema,
                     brutto: zodBelopTekstfeltSchema,
                     netto: zodBelopTekstfeltSchema,
@@ -54,8 +54,19 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
         shouldFocusError: false,
     });
 
+    // Initialize with all members being null
+    const [rader, setRader] = useState<VedleggFrontend["rader"]>([
+        {
+            beskrivelse: null,
+            belop: null,
+            brutto: null,
+            netto: null,
+            renter: null,
+            avdrag: null,
+        },
+    ] as VedleggFrontend["rader"]);
+
     // Wait DEBOUNCE_DELAY_MS after a change to "rader" before we try to push it to backend.
-    const [rader, setRader] = useState<VedleggFrontend["rader"]>([]);
     useDebounce(
         () => {
             if (deepEqual(rader, opplysning.rader)) return;

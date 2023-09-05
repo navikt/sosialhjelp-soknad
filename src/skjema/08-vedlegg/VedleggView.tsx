@@ -36,10 +36,9 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
         await mutate({
             behandlingsId,
             data: {
-                ...opplysning,
-                vedleggStatus: event.target.checked
-                    ? VedleggFrontendVedleggStatus.VedleggAlleredeSendt
-                    : VedleggFrontendVedleggStatus.VedleggKreves,
+                gruppe: opplysning.gruppe,
+                type: opplysning.type,
+                alleredeLevert: event.target.checked,
             },
         });
 
