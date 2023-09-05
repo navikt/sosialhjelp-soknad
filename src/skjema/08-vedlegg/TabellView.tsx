@@ -7,13 +7,12 @@ import {useTranslation} from "react-i18next";
 const AddRowButton = ({onClick, textKey}: {onClick: () => void; textKey: string}) => {
     const {t} = useTranslation();
     const undertekstKey = `${textKey}.leggtil`;
-    const translatedText = t(undertekstKey, {defaultValue: t("opplysninger.leggtil")});
 
     return (
         <div className={`pt-3 pb-4`}>
             <LinkButton onClick={onClick}>
                 <span aria-hidden={true}>+ </span>
-                {translatedText}
+                {t(undertekstKey)}
             </LinkButton>
         </div>
     );
