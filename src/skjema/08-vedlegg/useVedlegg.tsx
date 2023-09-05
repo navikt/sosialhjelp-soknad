@@ -138,7 +138,11 @@ export const useVedlegg = (opplysning: Opplysning) => {
                 break;
             case "415":
             default:
-                dispatch({type: "setError", error: REST_FEIL.FEIL_FILTYPE});
+                if (errorId === "duplikat_fil") {
+                    dispatch({type: "setError", error: REST_FEIL.DUPLIKAT_FIL});
+                } else {
+                    dispatch({type: "setError", error: REST_FEIL.FEIL_FILTYPE});
+                }
                 break;
         }
     };
