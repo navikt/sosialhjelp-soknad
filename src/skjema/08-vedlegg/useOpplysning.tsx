@@ -103,7 +103,7 @@ export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrenge
             handleSubmit,
         },
         textKey,
-        numRows,
         inputs,
+        multirow: numRows === "flere",
     };
 };
