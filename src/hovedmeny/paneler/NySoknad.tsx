@@ -8,8 +8,10 @@ import {NedetidPanel} from "../../components/common/NedetidPanel";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
 import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
-import {usePabegynteSoknader} from "../usePabegynteSoknader";
-import {useHarNyligInnsendteSoknader} from "../../generated/informasjon-ressurs/informasjon-ressurs";
+import {
+    useHarNyligInnsendteSoknader,
+    useHentPabegynteSoknader,
+} from "../../generated/informasjon-ressurs/informasjon-ressurs";
 import {useState} from "react";
 import {opprettSoknad} from "../../generated/soknad-ressurs/soknad-ressurs";
 
@@ -18,7 +20,9 @@ export const NySoknadInfo = () => {
     const [startSoknadError, setStartSoknadError] = useState<Error | null>(null);
 
     const {data: nyligInnsendteSoknader} = useHarNyligInnsendteSoknader();
-    const antallPabegynteSoknader = usePabegynteSoknader()?.length;
+
+    const {data: pabegynteSoknader} = useHentPabegynteSoknader();
+    const antallPabegynteSoknader = pabegynteSoknader?.length;
 
     const navigate = useNavigate();
     const {t} = useTranslation("skjema");
