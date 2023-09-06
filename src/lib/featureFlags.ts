@@ -2,9 +2,6 @@ export type FeatureFlags = {
     // Bruk ny tekst i Begrunnelse
     begrunnelseNyTekst: boolean;
 
-    // Ny tekst i Oppsummering
-    viStolerPaaDeg: boolean;
-
     // Ny versjon av Personalia oppsummering
     nyOppsummering: boolean;
 
@@ -22,7 +19,6 @@ export const useFeatureFlags = (): FeatureFlags => {
     if (["mock", "localhost"].includes(process.env.REACT_APP_DIGISOS_ENV ?? "")) {
         return {
             begrunnelseNyTekst: true,
-            viStolerPaaDeg: true,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             tilgjengeliggjorFlereFilformater: true,
@@ -31,7 +27,6 @@ export const useFeatureFlags = (): FeatureFlags => {
     }
     return {
         begrunnelseNyTekst: false,
-        viStolerPaaDeg: false,
         nyOppsummering: false,
         oppsummeringNavEnhet: false,
         tilgjengeliggjorFlereFilformater: false,
