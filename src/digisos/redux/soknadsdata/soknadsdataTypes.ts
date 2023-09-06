@@ -13,4 +13,6 @@ export enum REST_FEIL {
     FEIL_FILTYPE = "vedlegg.opplasting.feil.filType",
     KRYPTERT_FIL = "opplasting.feilmelding.pdf.kryptert",
     SIGNERT_FIL = "opplasting.feilmelding.pdf.signert",
+    DUPLIKAT_FIL = "opplasting.feilmelding.duplikat",
+    KONVERTERING_FEILET = "opplasting.feilmelding.konvertering",
 }

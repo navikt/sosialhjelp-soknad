@@ -729,6 +729,8 @@
     "opplasting.feilmelding.manglerVedlegg": "You must add an attachment",
     "opplasting.feilmelding.pdf.applepreview": "The document you uploaded has an invalid format from Mac. First, select «Arkiv” in the menu for Forhåndsvisning, then «Eksporter...». Select the format «JPG» from the pull-down menu. Then upload the form again from where you saved it.",
     "opplasting.feilmelding.pdf.kryptert": "The document you have uploaded is protected with a password. Store the document without a password, or print it out and scan it again. Then upload again.",
+    "opplasting.feilmelding.duplikat": "The document you have uploaded is a duplicate of a document you have already uploaded. Please check that you have uploaded the correct document.",
+    "opplasting.feilmelding.konvertering": "Conversion failed. Please try again.",
     "opplasting.ferdig": "Attached to application",
     "opplasting.lastopp": "Upload",
     "opplasting.leggtil": "Add",
