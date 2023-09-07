@@ -730,7 +730,7 @@
     "opplasting.feilmelding.maksstorrelse": "Opplasting feilet fordi filen var for stor. Du kan kun laste opp filer som har en størrelse mindre enn 10MB",
     "opplasting.feilmelding.manglerVedlegg": "Du må legge til et vedlegg",
     "opplasting.feilmelding.pdf.applepreview": "Dokumentet du lastet opp har ugyldig format fra Mac. Velg først «Arkiv» i menyen til Forhåndsvisning, så «Eksporter …». Velg formatet «JPG» fra nedtrekksmenyen. Deretter kan du laste opp skjemaet igjen fra der du lagret det.",
-    "opplasting.feilmelding.pdf.kryptert": "Dokumentet du lastet opp er beskyttet med passord. Lagre dokumentet uten passord eller skriv det ut og skann det inn igjen. Last det opp på nytt.",
+    "opplasting.feilmelding.pdf.kryptert": "Dokumentet du lastet opp er beskyttet med passord. Lagre dokumentet uten passord eller skriv det ut og skann det inn igjen. Last det så opp på nytt igjen.",
     "opplasting.feilmelding.duplikat": "Dokumentet du lastet opp er et duplikat av et annet dokument. Last opp et annet dokument.",
     "opplasting.feilmelding.konvertering": "Konvertering av dokumentet feilet. Prøv å laste opp dokumentet på nytt.",
     "opplasting.ferdig": "Legg ved søknaden",

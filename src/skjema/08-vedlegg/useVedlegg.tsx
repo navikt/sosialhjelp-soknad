@@ -136,6 +136,11 @@ export const useVedlegg = (opplysning: Opplysning) => {
             return;
         }
 
+        if (errorId === "opplasting.feilmelding.pdf.kryptert") {
+            dispatch({type: "setError", error: REST_FEIL.KRYPTERT_FIL});
+            return;
+        }
+
         switch (reason.code) {
             case "404":
                 dispatch({type: "setError", error: ValideringsFeilKode.FIL_EKSISTERER_IKKE});
