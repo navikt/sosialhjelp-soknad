@@ -53,7 +53,7 @@
     "react-modal": "^3.12.1",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
-    "react-scripts": "^5.0.0",
+    "react-scripts": "^5.0.1",
     "react-scroll": "^1.8.7",
     "react-use": "^17.3.2",
     "redux": "^4.2.1",
@@ -63,6 +63,7 @@
     "zod": "^3.19.1"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@faker-js/faker": "^7.6.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
@@ -93,6 +94,7 @@
     "orval": "^6.11.0",
     "postcss": "^8.4.27",
     "prettier": "^3.0.0",
+    "react-dev-utils": "^12.0.1",
     "tailwindcss": "^3.2.4",
     "typescript": "^5.2.2"
   },
