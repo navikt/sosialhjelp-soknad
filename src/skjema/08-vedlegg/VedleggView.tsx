@@ -66,17 +66,13 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
         previousErrorRef.current = error;
     }, [error]);
 
-    const handleUpload = async (file: File) => {
-        await upload(file);
-    };
-
     return (
         <div>
             <VedleggFileSelector
                 opplysning={opplysning}
                 isDisabled={loading || opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
                 visSpinner={!!opplysning.pendingLasterOppFil}
-                doUpload={handleUpload}
+                doUpload={upload}
                 resetAlerts={() => {
                     setShowSuccessAlert(false);
                     setShowErrorAlert(false);

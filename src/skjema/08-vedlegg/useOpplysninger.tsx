@@ -40,9 +40,7 @@ export const useOpplysninger = () => {
     const sorterte = useMemo(() => (data ? flettOgSorter(data) : []), [data]);
 
     // Filtrer vekk tomme grupper, slik at vi kan bruke liste.length under for å mekke grønne linjer mellom ting
-    const grupper = vedleggGrupper.filter((gruppeNavn) => {
-        return sorterte.filter(({gruppe}) => gruppe === gruppeNavn).length;
-    });
+    const grupper = vedleggGrupper.filter((gruppeNavn) => sorterte.filter(({gruppe}) => gruppe === gruppeNavn).length);
 
     return {
         data,
