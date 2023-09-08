@@ -126,6 +126,21 @@ export const useVedlegg = (opplysning: Opplysning) => {
             logInfo(`Last opp vedlegg feilet: ${reason.response.status} - error id: ${errorId}`);
         }
 
+        if (errorId === "duplikat_fil") {
+            dispatch({type: "setError", error: REST_FEIL.DUPLIKAT_FIL});
+            return;
+        }
+
+        if (errorId === "konvertering_til_pdf_error") {
+            dispatch({type: "setError", error: REST_FEIL.KONVERTERING_FEILET});
+            return;
+        }
+
+        if (errorId === "opplasting.feilmelding.pdf.kryptert") {
+            dispatch({type: "setError", error: REST_FEIL.KRYPTERT_FIL});
+            return;
+        }
+
         switch (reason.code) {
             case "404":
                 dispatch({type: "setError", error: ValideringsFeilKode.FIL_EKSISTERER_IKKE});
