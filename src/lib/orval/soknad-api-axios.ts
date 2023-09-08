@@ -73,7 +73,7 @@ export const axiosInstance = <T>(
     })
         .then(({data}) => data)
         .catch(async (e) => {
-            if (!(e instanceof AxiosError<T>)) logWarning(`non-axioserror error ${e} in axiosinstance`);
+            if (!(e instanceof AxiosError)) logWarning(`non-axioserror error ${e} in axiosinstance`);
 
             if (isCancel(e) || options?.digisosIgnoreErrors) return new Promise<T>(() => {});
 
