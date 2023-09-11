@@ -16,20 +16,23 @@ type VedleggState = {
     loading: boolean;
     files: FilFrontend[];
     error?: string;
+    successMessage?: string;
 };
 
 const initialVedleggState: VedleggState = {
-    status: VedleggFrontendVedleggStatus.Ukjent,
+    status: VedleggFrontendVedleggStatus.VedleggKreves,
     loading: true,
     files: [],
 };
 
 type VedleggAction =
     | {type: "deleteFile"; uuid: string}
-    | {type: "addFile"; file: FilFrontend}
+    | {type: "addFile"; file: FilFrontend; successMessage: string}
     | {type: "setError"; error: ValideringsFeilKode | REST_FEIL; variables?: object}
     | {type: "setLoading"; loading: boolean}
-    | {type: "setFiles"; files: FilFrontend[]};
+    | {type: "setFiles"; files: FilFrontend[]}
+    | {type: "resetError"}
+    | {type: "resetSuccess"};
 
 const VedleggReducer = (state: VedleggState, action: VedleggAction) => {
     switch (action.type) {
@@ -41,7 +44,6 @@ const VedleggReducer = (state: VedleggState, action: VedleggAction) => {
             };
         case "deleteFile":
             const files = state.files.filter((file) => file.uuid !== action.uuid);
-
             const newState = {
                 ...state,
                 files,
@@ -57,12 +59,25 @@ const VedleggReducer = (state: VedleggState, action: VedleggAction) => {
             return {
                 ...state,
                 files: [...state.files, action.file],
+                successMessage: action.successMessage,
             };
         case "setError":
             return {
                 ...state,
                 error: action.error,
             };
+        case "resetError":
+            return {
+                ...state,
+                error: undefined,
+            };
+        case "resetSuccess":
+            return {
+                ...state,
+                successMessage: undefined,
+            };
+        default:
+            return state;
     }
 };
 
@@ -72,6 +87,7 @@ export const useVedlegg = (opplysning: Opplysning) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
     const error = state.error ? t(state.error) : null;
+    const success = state.successMessage;
 
     useEffect(() => {
         hentOkonomiskeOpplysninger(behandlingsId)
@@ -101,47 +117,87 @@ export const useVedlegg = (opplysning: Opplysning) => {
             .finally(() => dispatch({type: "setLoading", loading: false}));
     };
 
-    const upload = (file: File) => {
-        dispatch({type: "setLoading", loading: true});
-        saveVedlegg(behandlingsId, opplysning.type, {file})
-            .then((file) => {
-                dispatch({type: "addFile", file});
+    const handleError = (reason: any) => {
+        if (!(reason instanceof AxiosError) || !reason.response) return;
 
+        let errorId = extractErrorIdFromResponse(reason.response);
+
+        if (errorId && errorId !== REST_FEIL.KRYPTERT_FIL && errorId !== REST_FEIL.SIGNERT_FIL) {
+            logInfo(`Last opp vedlegg feilet: ${reason.response.status} - error id: ${errorId}`);
+        }
+
+        if (errorId === "duplikat_fil") {
+            dispatch({type: "setError", error: REST_FEIL.DUPLIKAT_FIL});
+            return;
+        }
+
+        if (errorId === "konvertering_til_pdf_error") {
+            dispatch({type: "setError", error: REST_FEIL.KONVERTERING_FEILET});
+            return;
+        }
+
+        if (errorId === "opplasting.feilmelding.pdf.kryptert") {
+            dispatch({type: "setError", error: REST_FEIL.KRYPTERT_FIL});
+            return;
+        }
+
+        switch (reason.code) {
+            case "404":
+                dispatch({type: "setError", error: ValideringsFeilKode.FIL_EKSISTERER_IKKE});
+                break;
+            case "413":
+                if (!errorId) {
+                    logError("413-feil i upload, antakelse har vist seg feilaktig: at alle 413-feil gir JSON med 'id'");
+                }
+                dispatch({type: "setError", error: REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR});
+                break;
+            case "415":
+            default:
+                dispatch({type: "setError", error: REST_FEIL.FEIL_FILTYPE});
+                break;
+        }
+    };
+
+    const extractErrorIdFromResponse = (response: any): string | undefined => {
+        if (typeof response.data === "string") {
+            try {
+                return JSON.parse(response.data)?.id;
+            } catch (error) {
+                logWarning("Error parsing the error response: " + error);
+            }
+        } else if (typeof response.data === "object" && response.data.id) {
+            return response.data.id;
+        }
+    };
+
+    const upload = (file: File) => {
+        resetError();
+        resetSuccess();
+
+        dispatch({type: "setLoading", loading: true});
+
+        saveVedlegg(behandlingsId, opplysning.type, {file})
+            .then((resultFile) => {
+                const successMessage = t("vedlegg.opplasting.suksess");
+                dispatch({
+                    type: "addFile",
+                    file: resultFile,
+                    successMessage: successMessage,
+                });
                 logAmplitudeEvent("fil lastet opp", {opplysningType: opplysning.type});
             })
-            .catch((reason) => {
-                if (reason instanceof AxiosError && reason.response) {
-                    const error = JSON.parse(reason.response.data)?.id;
-
-                    if (error !== REST_FEIL.KRYPTERT_FIL && error !== REST_FEIL.SIGNERT_FIL) {
-                        logInfo(`Last opp vedlegg feilet: ${reason.response.status} - error id: ${error}`);
-                    }
-
-                    switch (reason.code) {
-                        case "404":
-                            dispatch({type: "setError", error: ValideringsFeilKode.FIL_EKSISTERER_IKKE});
-                            return;
-                        case "413": // Request entity too large
-                            // En liten sikkerhetssjekk her vi refaktorerer
-                            if (!error) {
-                                logError(
-                                    "413-feil i upload, antakelse har vist seg feilaktig: at alle 413-feil gir JSON med 'id'"
-                                );
-                            }
-                            dispatch({type: "setError", error});
-                            return;
-                        case "415": // Unsupported media type
-                            dispatch({type: "setError", error: REST_FEIL.FEIL_FILTYPE});
-                            return;
-                        default:
-                            dispatch({type: "setError", error});
-                            return;
-                    }
-                }
-            })
+            .catch(handleError)
             .finally(() => {
                 dispatch({type: "setLoading", loading: false});
             });
+    };
+
+    const resetError = () => {
+        dispatch({type: "resetError"});
+    };
+
+    const resetSuccess = () => {
+        dispatch({type: "resetSuccess"});
     };
 
     return {
@@ -149,6 +205,7 @@ export const useVedlegg = (opplysning: Opplysning) => {
         deleteFile,
         files,
         error,
+        success,
         loading,
     };
 };

@@ -1,0 +1,50 @@
+name: 'Build Docker Image'
+description: 'Create tag and release, Build code, artifact and Docker Image.'
+
+inputs:
+  prefix:
+    required: true
+    description: 'Tag prefix (prod/dev)'
+
+outputs:
+  full-tag:
+    description: 'Full tag'
+    value: ${{ steps.final-tag.outputs.tag }}
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v3
+    - name: 'Build npm artifact'
+      uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
+      with:
+        reader-token: ${{ env.READER_TOKEN }}
+        build-less: 'true'
+        run-orval: 'true'
+        run-test: 'false'
+
+    - name: 'Create artifact version'
+      id: artifact-version
+      uses: navikt/sosialhjelp-ci/actions/create-artifact-version@v2
+
+    - name: 'Tag with prefix'
+      id: final-tag
+      run: |
+        echo "tag=${{ inputs.prefix }}-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: 'Release Tag'
+      uses: ncipollo/release-action@v1
+      env:
+        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+      with:
+        tag: ${{ steps.final-tag.outputs.tag }}
+        commit: ${{ github.sha }}
+        allowUpdates: true
+
+    - name: 'Build and Push Docker Image'
+      uses: navikt/sosialhjelp-ci/actions/build-and-push-docker-image@v2-beta
+      with:
+        artifact-version: ${{ steps.final-tag.outputs.tag }}
+        image-name: ${{ env.DOCKER_IMAGE }}
+        github-token: ${{ env.WORKFLOW_TOKEN }}

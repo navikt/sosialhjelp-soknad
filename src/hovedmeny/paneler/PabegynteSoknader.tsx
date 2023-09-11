@@ -2,28 +2,27 @@ import {FileContent} from "@navikt/ds-icons";
 import {Accordion, BodyShort, Heading, Label, LinkPanel} from "@navikt/ds-react";
 import React from "react";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
-import {format, formatDistance} from "date-fns";
+import {addDays, format, formatDistance} from "date-fns";
 import {nb, nn, enUS} from "date-fns/locale";
 import {basePath} from "../../configuration";
-import {DAYS_BEFORE_DELETION, usePabegynteSoknader} from "../usePabegynteSoknader";
 import TextPlaceholder from "../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {useTranslation} from "react-i18next";
 import i18n from "../../i18n";
+import {useHentPabegynteSoknader} from "../../generated/informasjon-ressurs/informasjon-ressurs";
+export const DAYS_BEFORE_DELETION = 14;
 
 const PabegyntSoknad = ({
     behandlingsId,
-    lastUpdatedDate,
-    deleteDate,
-    currentDate,
+    sistOppdatert,
     antallPabegynteSoknader,
 }: {
     behandlingsId: string;
-    lastUpdatedDate: Date;
-    currentDate: Date;
-    deleteDate: Date;
+    sistOppdatert: string;
     antallPabegynteSoknader: number;
 }) => {
     const {t} = useTranslation("skjema");
+    const lastUpdate = new Date(sistOppdatert);
+    const expiryDate = addDays(lastUpdate, DAYS_BEFORE_DELETION);
     const onPabegyntSoknadClick = (event: React.SyntheticEvent, href: string) => {
         event.preventDefault();
         logAmplitudeEvent("Klikk på påbegynt søknad", {
@@ -56,11 +55,11 @@ const PabegyntSoknad = ({
                 <LinkPanel.Title className={"flex flex-col lg:flex-row align-center"}>
                     <Label style={{marginRight: "1rem"}}>
                         {t("applikasjon.paabegynt.soknad.sist.oppdatert")}{" "}
-                        {format(lastUpdatedDate, "d. MMMM HH:mm", {locale: getLocale()})}
+                        {format(lastUpdate, "d. MMMM HH:mm", {locale: getLocale()})}
                     </Label>
                     <BodyShort>
                         {t("applikasjon.paabegynt.soknad.slettes")}{" "}
-                        {formatDistance(deleteDate, currentDate, {locale: getLocale(), addSuffix: true})}
+                        {formatDistance(expiryDate, new Date(), {locale: getLocale(), addSuffix: true})}
                     </BodyShort>
                 </LinkPanel.Title>
             </LinkPanel>
@@ -69,7 +68,9 @@ const PabegyntSoknad = ({
 };
 
 const PabegynteSoknaderCount = () => {
-    const num = usePabegynteSoknader()?.length;
+    const {data: pabegynteSoknader} = useHentPabegynteSoknader();
+    const num = pabegynteSoknader?.length;
+
     const {t} = useTranslation("skjema");
 
     if (num === undefined) return <TextPlaceholder lines={1} />;
@@ -86,10 +87,11 @@ const PabegynteSoknaderCount = () => {
 };
 
 export const PabegynteSoknaderPanel = () => {
-    const pabegynteSoknader = usePabegynteSoknader();
+    const {data: pabegynteSoknaderResponse} = useHentPabegynteSoknader();
+
     const {t} = useTranslation("skjema");
 
-    if (!pabegynteSoknader?.length) return null;
+    if (!pabegynteSoknaderResponse?.length) return null;
 
     return (
         <Accordion>
@@ -117,14 +119,12 @@ export const PabegynteSoknaderPanel = () => {
                             })}
                         </BodyShort>
                         <ul className={"space-y-4"}>
-                            {pabegynteSoknader?.map(({lastUpdatedDate, deleteDate, behandlingsId}) => (
+                            {pabegynteSoknaderResponse?.map(({behandlingsId, sistOppdatert}) => (
                                 <PabegyntSoknad
                                     key={behandlingsId}
-                                    lastUpdatedDate={lastUpdatedDate}
-                                    deleteDate={deleteDate}
                                     behandlingsId={behandlingsId}
-                                    antallPabegynteSoknader={pabegynteSoknader.length}
-                                    currentDate={new Date()}
+                                    sistOppdatert={sistOppdatert}
+                                    antallPabegynteSoknader={pabegynteSoknaderResponse.length}
                                 />
                             ))}
                         </ul>

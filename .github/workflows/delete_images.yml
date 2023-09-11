@@ -1,0 +1,19 @@
+name: 'Remove Old Images'
+on:
+  workflow_dispatch:
+
+#  schedule:   FIXME: Fjerner inntil det foreligger automatisk deploy
+#    - cron: '0 5 * * 1'
+
+jobs:
+  remove-images:
+    name: 'Remove old images job except 50 most recent'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/delete-package-versions@v4
+        with:
+          package-name: 'sosialhjelp-soknad/sosialhjelp-soknad'
+          package-type: 'container'
+          min-versions-to-keep: 50

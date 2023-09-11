@@ -982,11 +982,7 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {"type": "array", "items": {"type": "string", "format": "byte"}}
-                            }
-                        }
+                        "content": {"application/json": {"schema": {"type": "string", "format": "byte"}}}
                     }
                 }
             }
@@ -1006,11 +1002,7 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {"type": "array", "items": {"type": "string", "format": "byte"}}
-                            }
-                        }
+                        "content": {"application/json": {"schema": {"type": "string", "format": "byte"}}}
                     }
                 }
             }
@@ -1487,7 +1479,7 @@
                 "readOnly": true
             },
             "VedleggFrontend": {
-                "required": ["gruppe", "rader", "type", "vedleggStatus"],
+                "required": ["gruppe", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -1550,8 +1542,14 @@
                     "rader": {"type": "array", "items": {"$ref": "#/components/schemas/VedleggRadFrontend"}},
                     "vedleggStatus": {
                         "type": "string",
+                        "description": "Ignoreres dersom alleredeLevert === true",
                         "readOnly": true,
-                        "enum": ["Ukjent", "LastetOpp", "VedleggKreves", "VedleggAlleredeSendt"]
+                        "deprecated": true,
+                        "enum": ["LastetOpp", "VedleggKreves", "VedleggAlleredeSendt"]
+                    },
+                    "alleredeLevert": {
+                        "type": "boolean",
+                        "description": "Vedlegg er levert inn utenom denne søknaden (f. eks. levert til NAV-kontor)"
                     },
                     "filer": {"type": "array", "readOnly": true, "items": {"$ref": "#/components/schemas/FilFrontend"}}
                 }
@@ -1895,7 +1893,7 @@
                 "properties": {"filnavn": {"type": "string"}, "uuid": {"type": "string"}}
             },
             "VedleggFrontends": {
-                "required": ["isOkonomiskeOpplysningerBekreftet", "okonomiskeOpplysninger", "slettedeVedlegg"],
+                "required": ["isOkonomiskeOpplysningerBekreftet"],
                 "type": "object",
                 "properties": {
                     "okonomiskeOpplysninger": {
@@ -1903,7 +1901,12 @@
                         "items": {"$ref": "#/components/schemas/VedleggFrontend"}
                     },
                     "slettedeVedlegg": {"type": "array", "items": {"$ref": "#/components/schemas/VedleggFrontend"}},
-                    "isOkonomiskeOpplysningerBekreftet": {"type": "boolean"}
+                    "isOkonomiskeOpplysningerBekreftet": {
+                        "type": "boolean",
+                        "description": "True dersom bruker har oppgitt noen økonomiske opplysninger",
+                        "readOnly": true
+                    },
+                    "okonomiskeOpplysningerBekreftet": {"type": "boolean", "writeOnly": true}
                 }
             },
             "SysteminntektFrontend": {
@@ -2479,7 +2482,7 @@
                     "uuid": {"type": "string"},
                     "eier": {"type": "string"},
                     "vedleggType": {"$ref": "#/components/schemas/OpplastetVedleggType"},
-                    "data": {"type": "array", "items": {"type": "string", "format": "byte"}},
+                    "data": {"type": "string", "format": "byte"},
                     "soknadId": {"type": "integer", "format": "int64"},
                     "filnavn": {"type": "string"},
                     "sha512": {"type": "string"}

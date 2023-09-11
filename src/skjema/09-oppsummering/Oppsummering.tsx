@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {Alert, ConfirmationPanel, Heading, Label} from "@navikt/ds-react";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import {ListOfValues} from "./question/ListOfValues";
@@ -62,7 +62,7 @@ const INTL_KEYS_MAP: Record<string, string> = {
 };
 const mapChangedIntlKeys = (intlKey: string): string => INTL_KEYS_MAP?.[intlKey] ?? intlKey;
 export const Oppsummering = () => {
-    const {viStolerPaaDeg, oppsummeringNavEnhet} = useFeatureFlags();
+    const {oppsummeringNavEnhet} = useFeatureFlags();
     const [bekreftet, setBekreftet] = useState<boolean>(false);
     const [bekreftetFeil, setBekreftetFeil] = useState<string | null>(null);
     const behandlingsId = useBehandlingsId();
@@ -179,24 +179,12 @@ export const Oppsummering = () => {
                 {oppsummeringNavEnhet ? <NyNavEnhet navEnhet={adresser?.navEnhet} /> : <SoknadsmottakerInfoPanel />}
 
                 <ConfirmationPanel
-                    label={
-                        viStolerPaaDeg ? (
-                            <div>{t("soknadsosialhjelp.oppsummering.bekreftelse.ny.checkbox")}</div>
-                        ) : (
-                            t("soknadsosialhjelp.oppsummering.harLestSamtykker")
-                        )
-                    }
+                    label={t("soknadsosialhjelp.oppsummering.harLestSamtykker")}
                     checked={bekreftet}
                     onChange={(e) => setBekreftet(e.target.checked)}
                     error={bekreftetFeil && t(bekreftetFeil)}
                 >
-                    {viStolerPaaDeg ? (
-                        <Heading level={"4"} size={"small"}>
-                            {t("soknadsosialhjelp.oppsummering.bekreftelse.ny.label")}
-                        </Heading>
-                    ) : (
-                        t("soknadsosialhjelp.oppsummering.bekreftOpplysninger")
-                    )}
+                    {t("soknadsosialhjelp.oppsummering.bekreftOpplysninger")}
                 </ConfirmationPanel>
 
                 {isError && (
