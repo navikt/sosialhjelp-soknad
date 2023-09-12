@@ -21,19 +21,28 @@ const ButtonContainer = styled.div`
     align-items: center;
     width: 100%;
     margin-bottom: 10px;
-
-    @media (max-width: 600px) {
-        flex-direction: column;
-        align-items: flex-end;
-    }
+    flex-wrap: wrap;
 `;
 
 const ButtonWrapper = styled.div`
-    margin-left: 10px;
+    margin: 5px;
+`;
+
+const ModalContentWrapper = styled.div`
+    width: 80%;
+    height: 80vh;
+    max-width: 800px;
+    max-height: 600px;
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 
     @media (max-width: 600px) {
-        margin-left: 0;
-        margin-bottom: 10px;
+        width: 95%;
+        height: auto;
     }
 `;
 
@@ -88,20 +97,9 @@ export const ForhandsvisningVedleggModal = ({
     };
 
     return (
-        <React.Fragment>
+        <>
             <Modal open={showModal && !fullskjerm} onClose={handleClose}>
-                <Modal.Content
-                    style={{
-                        width: "40vw",
-                        height: "80vh",
-                        paddingTop: "50px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        position: "relative",
-                    }}
-                >
+                <ModalContentWrapper>
                     {filePreviews.map((filePreview, index) => (
                         <FilePreviewContainer key={index}>
                             <ButtonContainer>
@@ -137,7 +135,7 @@ export const ForhandsvisningVedleggModal = ({
                             )}
                         </FilePreviewContainer>
                     ))}
-                </Modal.Content>
+                </ModalContentWrapper>
                 <InformationText>
                     <BodyShort>Sørg for at dokumentene er leselige og viser riktig informasjon</BodyShort>
                 </InformationText>
@@ -151,6 +149,6 @@ export const ForhandsvisningVedleggModal = ({
                 </ButtonRow>
             </Modal>
             {fullskjerm && <FullskjermModal filePreview={fullskjerm} handleClose={handleExitFullScreen} />}
-        </React.Fragment>
+        </>
     );
 };
