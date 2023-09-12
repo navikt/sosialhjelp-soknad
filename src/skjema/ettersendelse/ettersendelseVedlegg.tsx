@@ -16,7 +16,7 @@ import {REST_FEIL, REST_STATUS} from "../../digisos/redux/soknadsdata/soknadsdat
 import {FilFrontend, VedleggFrontendType} from "../../generated/model";
 import {logError} from "../../nav-soknad/utils/loggerUtils";
 import {PaperclipIcon} from "@navikt/aksel-icons";
-import {opplysningSpec, VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring} from "../../lib/opplysninger";
+import {opplysningSpec} from "../../lib/opplysninger";
 
 const VedleggsListe = styled.div`
     border-radius: 4px;
@@ -77,12 +77,12 @@ const EttersendelseVedlegg = ({vedlegg, ettersendelseAktivert, feilKode}: Props)
 
     const opplastingsFeil: boolean = opplastingStatus === REST_STATUS.FEILET && feiletVedleggId === vedlegg.type;
     const visFeilFiltypeFeilmelding: boolean = opplastingsFeil && feilKode === REST_FEIL.FEIL_FILTYPE;
-    const tittelKey = (opplysningType: VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring) => {
+    const tittelKey = (opplysningType: VedleggFrontendType) => {
         const key = `${opplysningSpec[opplysningType].textKey}.vedlegg.sporsmal.tittel`;
         return i18n.exists(key) ? t(key) : undefined;
     };
 
-    const infoKey = (opplysningType: VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring) => {
+    const infoKey = (opplysningType: VedleggFrontendType) => {
         const key = `${opplysningSpec[opplysningType].textKey}.vedlegg.sporsmal.info`;
         return i18n.exists(key) ? t(key) : undefined;
     };

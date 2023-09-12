@@ -1,6 +1,6 @@
-import {VedleggFrontend, VedleggFrontends, VedleggFrontendType} from "../generated/model";
+import {VedleggFrontend, VedleggFrontendType} from "../generated/model";
 
-export type Opplysning = VedleggFrontendMinusEtParTingSomTrengerAvklaring & {
+export type Opplysning = VedleggFrontend & {
     slettet?: boolean;
     pendingLasterOppFil?: boolean;
 };
@@ -24,61 +24,7 @@ export type OpplysningSpec = {
     sortKey: number;
 };
 
-// TODO: Avklare disse:
-//  Disse eksisterer på backend, men er ikke presentert på frontend.
-//  Skal de slettes fra frontend, eller implementeres her?
-//  Jeg vet ikke, så jeg patcher datatypene i første omgang.
-//  Når denne diskrepansen er avklart, kan man fjerne denne patchen,
-//  og all bruk av disse typene kan erstattes med sine respektive
-//  originaltyper, dvs. uten "MinusEtParTingSomTrengerAvklaring".
-export const UgyldigeFrontendTyper = [
-    "dokumentasjon|annet",
-    "dokumentasjon|kjoretoy",
-    "dokumentasjon|annetverdi",
-    "dokumentasjon|fritidseiendom",
-    "dokumentasjon|campingvogn",
-    "kjopekontrakt|kjopekontrakt",
-] as const;
-
-/**
- * VedleggFrontendType minus UgyldigeFrontendTyper
- *
- * @see UgyldigeFrontendTyper for kontekst
- */
-export type VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring = Exclude<
-    VedleggFrontendType,
-    (typeof UgyldigeFrontendTyper)[number]
->;
-
-/**
- * VedleggFrontend minus UgyldigeFrontendTyper
- *
- * @see UgyldigeFrontendTyper for kontekst
- */
-export type VedleggFrontendMinusEtParTingSomTrengerAvklaring = VedleggFrontend & {
-    type: VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring;
-};
-
-/**
- * VedleggFrontend minus UgyldigeFrontendTyper
- *
- * @see UgyldigeFrontendTyper for kontekst
- */
-export type VedleggFrontendsMinusEtParTingSomTrengerAvklaring = {
-    okonomiskeOpplysninger: VedleggFrontendMinusEtParTingSomTrengerAvklaring[];
-    slettedeVedlegg: VedleggFrontendMinusEtParTingSomTrengerAvklaring[];
-    isOkonomiskeOpplysningerBekreftet: boolean;
-};
-
-export const invalidVedleggFrontend = (
-    data: VedleggFrontend | VedleggFrontendMinusEtParTingSomTrengerAvklaring
-): data is VedleggFrontend => UgyldigeFrontendTyper.includes(data.type as any); // Siden det er midlertidig hack
-export const validVedleggFrontends = (
-    data: VedleggFrontends | VedleggFrontendsMinusEtParTingSomTrengerAvklaring
-): data is VedleggFrontendsMinusEtParTingSomTrengerAvklaring =>
-    !(data.slettedeVedlegg?.some(invalidVedleggFrontend) || data.okonomiskeOpplysninger?.some(invalidVedleggFrontend));
-
-export const opplysningSpec: Record<VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring, OpplysningSpec> = {
+export const opplysningSpec: Record<VedleggFrontendType, OpplysningSpec> = {
     "lonnslipp|arbeid": {
         numRows: "flere",
         inputs: ["brutto", "netto"],
