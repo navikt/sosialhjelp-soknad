@@ -1,7 +1,7 @@
 import {useFieldArray, useForm} from "react-hook-form";
 import {z} from "zod";
 import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
-import {opplysningSpec, VedleggFrontendMinusEtParTingSomTrengerAvklaring} from "../../lib/opplysninger";
+import {opplysningSpec} from "../../lib/opplysninger";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useEffect, useState} from "react";
 import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
@@ -38,7 +38,7 @@ export type VedleggRadFrontendForm = z.infer<typeof VedleggRadFrontendSchema>;
 // This is the delay we wait between keystrokes before we push changes to backend
 const DEBOUNCE_DELAY_MS = 500;
 
-export const useOpplysning = (opplysning: VedleggFrontendMinusEtParTingSomTrengerAvklaring) => {
+export const useOpplysning = (opplysning: VedleggFrontend) => {
     const {textKey, inputs, numRows} = opplysningSpec[opplysning.type];
 
     const behandlingsId = useBehandlingsId();
