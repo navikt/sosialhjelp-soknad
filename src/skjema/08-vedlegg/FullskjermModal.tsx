@@ -1,76 +1,45 @@
 import {Button, Modal} from "@navikt/ds-react";
 import {ShrinkIcon} from "@navikt/aksel-icons";
-import styled from "styled-components";
-
-const FULLSCREEN_MODAL_STYLE = {
-    content: {
-        position: "fixed" as "fixed",
-        top: "0",
-        left: "0",
-        right: "0",
-        bottom: "0",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column" as "column",
-        padding: "50px 20px 20px 20px",
-    },
-};
-
-const FullScreenButtonContainer = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-`;
-
-const FullScreenButtonContent = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-`;
+import {PreviewFile} from "./ForhandsvisningVedleggModal.js";
 
 interface FullscreenModalProps {
-    filePreview: {file: File; isPDF: boolean};
-    handleClose: () => void;
+    filePreview: PreviewFile | null;
+    onClose: () => void;
 }
 
-export const FullskjermModal = ({filePreview, handleClose}: FullscreenModalProps) => {
+const FullskjermPreview = ({filePreview}: {filePreview: PreviewFile | null}) => {
+    if (!filePreview) return null;
+
     return (
-        <Modal open={true} onClose={handleClose} style={FULLSCREEN_MODAL_STYLE}>
-            <FullScreenButtonContainer>
-                <Button variant="tertiary" onClick={handleClose}>
-                    <FullScreenButtonContent>
-                        <ShrinkIcon />
-                        <span>Fullskjerm</span>
-                    </FullScreenButtonContent>
-                </Button>
-            </FullScreenButtonContainer>
-            <Modal.Content style={{width: "100%", height: "100%"}}>
-                <div
-                    style={{
-                        width: "100%",
-                        height: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        overflow: "auto",
-                    }}
-                >
-                    {filePreview.isPDF ? (
-                        <iframe
-                            src={URL.createObjectURL(filePreview.file)}
-                            title="Forhåndsvisning av fil"
-                            style={{width: "100%", height: "100%"}}
-                        />
-                    ) : (
-                        <img
-                            src={URL.createObjectURL(filePreview.file)}
-                            alt={`File preview`}
-                            style={{maxWidth: "100%", maxHeight: "100%", objectFit: "contain"}}
-                        />
-                    )}
-                </div>
-            </Modal.Content>
-        </Modal>
+        <div className={"w-full h-full flex content-center items-center overflow-auto p-4 lg:p-12 xl:p-48"}>
+            {filePreview?.isPDF ? (
+                <iframe
+                    src={URL.createObjectURL(filePreview.file)}
+                    title="Forhåndsvisning av fil"
+                    className={"w-full h-full"}
+                />
+            ) : (
+                <img
+                    src={URL.createObjectURL(filePreview.file)}
+                    alt={`File preview`}
+                    className={"max-w-full max-h-full m-auto object-contain"}
+                />
+            )}
+        </div>
     );
 };
+
+export const FullskjermModal = ({filePreview, onClose}: FullscreenModalProps) => (
+    <Modal open={!!filePreview} onClose={onClose}>
+        <Modal.Content className={"fixed inset-0"}>
+            <div className={"w-fit ml-auto"}>
+                <Button variant="tertiary" onClick={onClose}>
+                    <span className={"flex items-center gap-2 text-white hover:text-gray-900"}>
+                        <ShrinkIcon /> Fullskjerm
+                    </span>
+                </Button>
+            </div>
+            <FullskjermPreview filePreview={filePreview} />
+        </Modal.Content>
+    </Modal>
+);

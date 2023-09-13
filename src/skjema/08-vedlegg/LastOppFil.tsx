@@ -105,9 +105,9 @@ const LastOppFil = ({
             <ForhandsvisningVedleggModal
                 filePreviews={filePreviews}
                 showModal={showModal}
-                handleAccept={handleAccept}
-                handleClose={handleClose}
-                handleDelete={handleDelete}
+                onAccept={handleAccept}
+                onClose={handleClose}
+                onDelete={handleDelete}
             />
         </div>
     );

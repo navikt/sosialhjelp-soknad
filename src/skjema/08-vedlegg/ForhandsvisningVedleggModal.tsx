@@ -3,14 +3,14 @@ import {BodyShort, Button, Modal} from "@navikt/ds-react";
 import {ExpandIcon, TrashIcon} from "@navikt/aksel-icons";
 import {FullskjermModal} from "./FullskjermModal";
 
-type PreviewFile = {file: File; isPDF: boolean};
+export type PreviewFile = {file: File; isPDF: boolean};
 
 interface ForhandsvisningModalProps {
     filePreviews: PreviewFile[];
     showModal: boolean;
-    handleAccept: () => void;
-    handleClose: () => void;
-    handleDelete: (index: number) => void;
+    onAccept: () => void;
+    onClose: () => void;
+    onDelete: (index: number) => void;
 }
 
 const FilePreview = ({file: {isPDF, file}}: {file: PreviewFile}) =>
@@ -20,10 +20,11 @@ const FilePreview = ({file: {isPDF, file}}: {file: PreviewFile}) =>
         <img
             src={URL.createObjectURL(file)}
             alt={`File preview ${file.name}`}
-            className={"max-w-[70%] max-h-[70%] object-contain"}
+            className={"max-w-[70%] max-h-[70%] object-contain m-auto"}
         />
     );
 
+// 24/23 px-tallene er satt slik for å matche høyden til X-knappen i Modal-komponenten
 const FilePreviewButtons = ({onDelete, onFullscreen}: {onDelete: () => void; onFullscreen: () => void}) => (
     <div className={"ml-auto text-[24px] leading-[23px] mt-0.5 pr-4"}>
         <Button variant="tertiary" onClick={onDelete}>
@@ -42,20 +43,20 @@ const FilePreviewButtons = ({onDelete, onFullscreen}: {onDelete: () => void; onF
 export const ForhandsvisningVedleggModal = ({
     filePreviews,
     showModal,
-    handleAccept,
-    handleClose,
-    handleDelete,
+    onAccept,
+    onClose,
+    onDelete,
 }: ForhandsvisningModalProps) => {
     const [fullskjerm, setFullskjerm] = React.useState<{file: File; isPDF: boolean} | null>(null);
 
     return (
         <>
-            <Modal open={showModal && !fullskjerm} onClose={handleClose} className={"p-8 pt-2 space-y-4"}>
+            <Modal open={showModal && !fullskjerm} onClose={onClose} className={"p-8 pt-2 space-y-4"}>
                 <div className={"h-[80vh] max-w-[800px] max-h-[600px] relative max-sm:(w-[95%] h-auto)"}>
                     {filePreviews.map((filePreview, index) => (
                         <div className={"flex flex-col items-center w-full h-full overflow-auto my-4"} key={index}>
                             <FilePreviewButtons
-                                onDelete={() => handleDelete(index)}
+                                onDelete={() => onDelete(index)}
                                 onFullscreen={() => setFullskjerm(filePreview)}
                             />
                             <FilePreview file={filePreview} />
@@ -63,14 +64,14 @@ export const ForhandsvisningVedleggModal = ({
                     ))}
                 </div>
                 <BodyShort>Sørg for at dokumentene er leselige og viser riktig informasjon</BodyShort>
-                <Button variant="primary" className="!mr-4" onClick={handleAccept}>
+                <Button variant="primary" className="!mr-4" onClick={onAccept}>
                     Last opp fil
                 </Button>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button variant="secondary" onClick={onClose}>
                     Avbryt
                 </Button>
             </Modal>
-            {fullskjerm && <FullskjermModal filePreview={fullskjerm} handleClose={() => setFullskjerm(null)} />}
+            <FullskjermModal filePreview={fullskjerm} onClose={() => setFullskjerm(null)} />
         </>
     );
 };
