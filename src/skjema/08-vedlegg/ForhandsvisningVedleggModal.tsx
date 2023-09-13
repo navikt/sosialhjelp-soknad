@@ -3,10 +3,6 @@ import {BodyShort, Button, Modal} from "@navikt/ds-react";
 import {ExpandIcon, TrashIcon} from "@navikt/aksel-icons";
 import {FullskjermModal} from "./FullskjermModal";
 
-const filePreviewContainerStyle = "flex flex-col items-center justify-center w-full h-full overflow-auto my-4";
-
-const modalContentWrapperStyle = "h-[80vh] max-w-[800px] max-h-[600px] relative max-sm:(w-[95%] h-auto)";
-
 type PreviewFile = {file: File; isPDF: boolean};
 
 interface ForhandsvisningModalProps {
@@ -29,7 +25,7 @@ const FilePreview = ({file: {isPDF, file}}: {file: PreviewFile}) =>
     );
 
 const FilePreviewButtons = ({onDelete, onFullscreen}: {onDelete: () => void; onFullscreen: () => void}) => (
-    <div className={"ml-auto"}>
+    <div className={"ml-auto text-[24px] leading-[23px] mt-0.5 pr-4"}>
         <Button variant="tertiary" onClick={onDelete}>
             <div className={"flex items-center gap-2"}>
                 <TrashIcon /> Slett
@@ -52,23 +48,15 @@ export const ForhandsvisningVedleggModal = ({
 }: ForhandsvisningModalProps) => {
     const [fullskjerm, setFullskjerm] = React.useState<{file: File; isPDF: boolean} | null>(null);
 
-    const handleFullScreen = (filePreview: {file: File; isPDF: boolean}) => {
-        setFullskjerm(filePreview);
-    };
-
-    const handleExitFullScreen = () => {
-        setFullskjerm(null);
-    };
-
     return (
         <>
-            <Modal open={showModal && !fullskjerm} onClose={handleClose} className={"p-8 space-y-4"}>
-                <div className={modalContentWrapperStyle}>
+            <Modal open={showModal && !fullskjerm} onClose={handleClose} className={"p-8 pt-2 space-y-4"}>
+                <div className={"h-[80vh] max-w-[800px] max-h-[600px] relative max-sm:(w-[95%] h-auto)"}>
                     {filePreviews.map((filePreview, index) => (
-                        <div className={filePreviewContainerStyle} key={index}>
+                        <div className={"flex flex-col items-center w-full h-full overflow-auto my-4"} key={index}>
                             <FilePreviewButtons
                                 onDelete={() => handleDelete(index)}
-                                onFullscreen={() => handleFullScreen(filePreview)}
+                                onFullscreen={() => setFullskjerm(filePreview)}
                             />
                             <FilePreview file={filePreview} />
                         </div>
@@ -82,7 +70,7 @@ export const ForhandsvisningVedleggModal = ({
                     Avbryt
                 </Button>
             </Modal>
-            {fullskjerm && <FullskjermModal filePreview={fullskjerm} handleClose={handleExitFullScreen} />}
+            {fullskjerm && <FullskjermModal filePreview={fullskjerm} handleClose={() => setFullskjerm(null)} />}
         </>
     );
 };
