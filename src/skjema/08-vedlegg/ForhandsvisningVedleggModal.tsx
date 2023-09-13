@@ -1,75 +1,26 @@
 import React from "react";
 import {BodyShort, Button, Modal} from "@navikt/ds-react";
 import {ExpandIcon, TrashIcon} from "@navikt/aksel-icons";
-import styled from "styled-components";
 import {FullskjermModal} from "./FullskjermModal";
 
-const FilePreviewContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    margin: 1rem 0;
-`;
+const filePreviewContainerStyle = "flex flex-col items-center justify-center w-full h-full overflow-auto my-4";
 
-const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 10px;
-    flex-wrap: wrap;
-`;
+const buttonContainerStyle = "flex justify-end items-center w-full mb-2 flex-wrap";
 
-const ButtonWrapper = styled.div`
-    margin: 5px;
-`;
+const buttonWrapperStyle = "m-1";
 
-const ModalContentWrapper = styled.div`
-    width: 80%;
-    height: 80vh;
-    max-width: 800px;
-    max-height: 600px;
-    padding-top: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+const modalContentWrapperStyle =
+    "w-[80%] h-[80vh] max-w-[800px] max-h-[600px] " +
+    "pt-[50px] flex flex-col justify-center items-center relative" +
+    "max-sm:(w-[95%] h-auto)";
 
-    @media (max-width: 600px) {
-        width: 95%;
-        height: auto;
-    }
-`;
+const fullscreenButtonStyle = "flex items-center gap-2";
 
-const FullScreenButtonContent = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-`;
+const deleteButtonStyle = "flex items-center gap-2";
 
-const DeleteButtonContent = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-`;
+const informationTextStyle = "text-left mx-8 my-4";
 
-const InformationText = styled.div`
-    text-align: left;
-    margin: 1rem 2rem;
-`;
-
-const ButtonRow = styled.div`
-    text-align: left;
-    margin: 2rem;
-    display: flex;
-    justify-content: left;
-    gap: 1rem;
-`;
+const buttonRowStyle = "text-left m-8 flex justify-left gap-4";
 
 interface ForhandsvisningModalProps {
     filePreviews: Array<{file: File; isPDF: boolean}>;
@@ -99,27 +50,27 @@ export const ForhandsvisningVedleggModal = ({
     return (
         <>
             <Modal open={showModal && !fullskjerm} onClose={handleClose}>
-                <ModalContentWrapper>
+                <div className={modalContentWrapperStyle}>
                     {filePreviews.map((filePreview, index) => (
-                        <FilePreviewContainer key={index}>
-                            <ButtonContainer>
-                                <ButtonWrapper>
+                        <div className={filePreviewContainerStyle} key={index}>
+                            <div className={buttonContainerStyle}>
+                                <div className={buttonWrapperStyle}>
                                     <Button variant="tertiary" onClick={() => handleDelete(index)}>
-                                        <DeleteButtonContent>
+                                        <div className={deleteButtonStyle}>
                                             <TrashIcon />
                                             <span>Slett</span>
-                                        </DeleteButtonContent>
+                                        </div>
                                     </Button>
-                                </ButtonWrapper>
-                                <ButtonWrapper>
+                                </div>
+                                <div className={buttonWrapperStyle}>
                                     <Button variant="tertiary" onClick={() => handleFullScreen(filePreview)}>
-                                        <FullScreenButtonContent>
+                                        <div className={fullscreenButtonStyle}>
                                             <ExpandIcon />
                                             <span>Fullskjerm</span>
-                                        </FullScreenButtonContent>
+                                        </div>
                                     </Button>
-                                </ButtonWrapper>
-                            </ButtonContainer>
+                                </div>
+                            </div>
                             {filePreview.isPDF ? (
                                 <iframe
                                     title={`File preview ${index}`}
@@ -133,20 +84,20 @@ export const ForhandsvisningVedleggModal = ({
                                     style={{maxWidth: "70%", maxHeight: "70%", objectFit: "contain"}}
                                 />
                             )}
-                        </FilePreviewContainer>
+                        </div>
                     ))}
-                </ModalContentWrapper>
-                <InformationText>
+                </div>
+                <div className={informationTextStyle}>
                     <BodyShort>Sørg for at dokumentene er leselige og viser riktig informasjon</BodyShort>
-                </InformationText>
-                <ButtonRow>
+                </div>
+                <div className={buttonRowStyle}>
                     <Button variant="primary" onClick={handleAccept}>
                         Last opp fil
                     </Button>
                     <Button variant="secondary" onClick={handleClose}>
                         Avbryt
                     </Button>
-                </ButtonRow>
+                </div>
             </Modal>
             {fullskjerm && <FullskjermModal filePreview={fullskjerm} handleClose={handleExitFullScreen} />}
         </>
