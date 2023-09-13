@@ -5,30 +5,43 @@ import {FullskjermModal} from "./FullskjermModal";
 
 const filePreviewContainerStyle = "flex flex-col items-center justify-center w-full h-full overflow-auto my-4";
 
-const buttonContainerStyle = "flex justify-end items-center w-full mb-2 flex-wrap";
+const modalContentWrapperStyle = "h-[80vh] max-w-[800px] max-h-[600px] relative max-sm:(w-[95%] h-auto)";
 
-const buttonWrapperStyle = "m-1";
-
-const modalContentWrapperStyle =
-    "w-[80%] h-[80vh] max-w-[800px] max-h-[600px] " +
-    "pt-[50px] flex flex-col justify-center items-center relative" +
-    "max-sm:(w-[95%] h-auto)";
-
-const fullscreenButtonStyle = "flex items-center gap-2";
-
-const deleteButtonStyle = "flex items-center gap-2";
-
-const informationTextStyle = "text-left mx-8 my-4";
-
-const buttonRowStyle = "text-left m-8 flex justify-left gap-4";
+type PreviewFile = {file: File; isPDF: boolean};
 
 interface ForhandsvisningModalProps {
-    filePreviews: Array<{file: File; isPDF: boolean}>;
+    filePreviews: PreviewFile[];
     showModal: boolean;
     handleAccept: () => void;
     handleClose: () => void;
     handleDelete: (index: number) => void;
 }
+
+const FilePreview = ({file: {isPDF, file}}: {file: PreviewFile}) =>
+    isPDF ? (
+        <iframe title={`File preview ${file.name}`} src={URL.createObjectURL(file)} className={"w-[70%] h-[70%]"} />
+    ) : (
+        <img
+            src={URL.createObjectURL(file)}
+            alt={`File preview ${file.name}`}
+            className={"max-w-[70%] max-h-[70%] object-contain"}
+        />
+    );
+
+const FilePreviewButtons = ({onDelete, onFullscreen}: {onDelete: () => void; onFullscreen: () => void}) => (
+    <div className={"ml-auto"}>
+        <Button variant="tertiary" onClick={onDelete}>
+            <div className={"flex items-center gap-2"}>
+                <TrashIcon /> Slett
+            </div>
+        </Button>
+        <Button variant="tertiary" onClick={onFullscreen}>
+            <span className={"flex items-center gap-2"}>
+                <ExpandIcon /> Fullskjerm
+            </span>
+        </Button>
+    </div>
+);
 
 export const ForhandsvisningVedleggModal = ({
     filePreviews,
@@ -49,55 +62,25 @@ export const ForhandsvisningVedleggModal = ({
 
     return (
         <>
-            <Modal open={showModal && !fullskjerm} onClose={handleClose}>
+            <Modal open={showModal && !fullskjerm} onClose={handleClose} className={"p-8 space-y-4"}>
                 <div className={modalContentWrapperStyle}>
                     {filePreviews.map((filePreview, index) => (
                         <div className={filePreviewContainerStyle} key={index}>
-                            <div className={buttonContainerStyle}>
-                                <div className={buttonWrapperStyle}>
-                                    <Button variant="tertiary" onClick={() => handleDelete(index)}>
-                                        <div className={deleteButtonStyle}>
-                                            <TrashIcon />
-                                            <span>Slett</span>
-                                        </div>
-                                    </Button>
-                                </div>
-                                <div className={buttonWrapperStyle}>
-                                    <Button variant="tertiary" onClick={() => handleFullScreen(filePreview)}>
-                                        <div className={fullscreenButtonStyle}>
-                                            <ExpandIcon />
-                                            <span>Fullskjerm</span>
-                                        </div>
-                                    </Button>
-                                </div>
-                            </div>
-                            {filePreview.isPDF ? (
-                                <iframe
-                                    title={`File preview ${index}`}
-                                    src={URL.createObjectURL(filePreview.file)}
-                                    style={{width: "70%", height: "70%"}}
-                                />
-                            ) : (
-                                <img
-                                    src={URL.createObjectURL(filePreview.file)}
-                                    alt={`File preview ${index}`}
-                                    style={{maxWidth: "70%", maxHeight: "70%", objectFit: "contain"}}
-                                />
-                            )}
+                            <FilePreviewButtons
+                                onDelete={() => handleDelete(index)}
+                                onFullscreen={() => handleFullScreen(filePreview)}
+                            />
+                            <FilePreview file={filePreview} />
                         </div>
                     ))}
                 </div>
-                <div className={informationTextStyle}>
-                    <BodyShort>Sørg for at dokumentene er leselige og viser riktig informasjon</BodyShort>
-                </div>
-                <div className={buttonRowStyle}>
-                    <Button variant="primary" onClick={handleAccept}>
-                        Last opp fil
-                    </Button>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Avbryt
-                    </Button>
-                </div>
+                <BodyShort>Sørg for at dokumentene er leselige og viser riktig informasjon</BodyShort>
+                <Button variant="primary" className="!mr-4" onClick={handleAccept}>
+                    Last opp fil
+                </Button>
+                <Button variant="secondary" onClick={handleClose}>
+                    Avbryt
+                </Button>
             </Modal>
             {fullskjerm && <FullskjermModal filePreview={fullskjerm} handleClose={handleExitFullScreen} />}
         </>
