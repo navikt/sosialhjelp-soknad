@@ -1,8 +1,8 @@
 import {LinkButton} from "../../nav-soknad/components/linkButton/LinkButton";
 import {useOpplysning} from "./useOpplysning";
-import {VedleggFrontendMinusEtParTingSomTrengerAvklaring} from "../../lib/opplysninger";
 import {OpplysningInputRad} from "./OpplysningInputRad";
 import {useTranslation} from "react-i18next";
+import {VedleggFrontend} from "../../generated/model";
 
 const OpplysningRadNy = ({onClick, label}: {onClick: () => void; label: string}) => (
     <li className={`pt-3 pb-4`}>
@@ -13,7 +13,7 @@ const OpplysningRadNy = ({onClick, label}: {onClick: () => void; label: string})
     </li>
 );
 
-const TabellView = ({opplysning}: {opplysning: VedleggFrontendMinusEtParTingSomTrengerAvklaring}) => {
+const TabellView = ({opplysning}: {opplysning: VedleggFrontend}) => {
     const {t} = useTranslation();
     const {
         textKey,
