@@ -1241,6 +1241,8 @@
     "utbetalinger.inntekt.skattbar.forskuddstrekk": "Forskuddstrekk",
     "utbetalinger.inntekt.skattbar.skatteetaten": "Se detaljer hos Skatteetaten.",
     "utbetalinger.inntekt.skattbar.gi_samtykke": "Hent fra Skatteetaten",
+    "utbetalinger.inntekt.skattbar.gi_samtykke.true": "Ja",
+    "utbetalinger.inntekt.skattbar.gi_samtykke.false": "Nei",
     "utbetalinger.inntekt.skattbar.har_gitt_samtykke": "Du har hentet informasjon fra Skatteetaten",
     "utbetalinger.inntekt.skattbar.ingen": "Du har ingen skattbar inntekt registrert hos Skatteetaten for siste måned.",
     "utbetalinger.inntekt.skattbar.inntekt.tittel": "Inntekt",

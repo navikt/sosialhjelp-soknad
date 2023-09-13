@@ -1,4 +1,3 @@
-import * as React from "react";
 import {useDispatch} from "react-redux";
 
 import {SkattbarInntektInfo, SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
@@ -8,11 +7,12 @@ import SkattbarinntektForskuddstrekk from "./SkattbarinntektForskuddstrekk";
 import {settSamtykkeOgOppdaterData} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {formatTidspunkt, getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
-import {Alert, BodyShort, Button, Heading, Label, Link} from "@navikt/ds-react";
+import {Alert, BodyShort, Heading, Label, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
+import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 
 const Skatt = () => {
     const dispatch = useDispatch();
@@ -45,6 +45,10 @@ const Skatt = () => {
         }
     }
 
+    const handleJaNeiChange = (verdi: boolean) => {
+        handleSettSkatteetatenSamtykke(verdi);
+    };
+
     return (
         <div className={"skatt-wrapper"}>
             <Heading size="medium" level="2" spacing>
@@ -59,15 +63,15 @@ const Skatt = () => {
                         <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.samtykke_info")}</BodyShort>
                     </div>
                     <br></br>
-                    <Button
-                        variant="secondary"
-                        id="gi_skatteetaten_samtykke"
-                        onClick={() => {
-                            handleSettSkatteetatenSamtykke(true);
+                    <JaNeiSporsmal
+                        faktumKey="utbetalinger.inntekt.skattbar.gi_samtykke"
+                        tekster={{
+                            true: getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.gi_samtykke.true"),
+                            false: getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.gi_samtykke.false"),
                         }}
-                    >
-                        {getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.gi_samtykke")}
-                    </Button>
+                        verdi={harSamtykke}
+                        onChange={handleJaNeiChange}
+                    />
                     {samtykkeTidspunktStreng === "" && (
                         <Alert variant="error">{t("utbetalinger.skattbar.kontaktproblemer")}</Alert>
                     )}
@@ -118,15 +122,15 @@ const Skatt = () => {
                                 <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.samtykke_info")}</BodyShort>
                             </div>
                             <br></br>
-                            <Button
-                                variant="secondary"
-                                id="gi_skatteetaten_samtykke"
-                                onClick={() => {
-                                    handleSettSkatteetatenSamtykke(true);
+                            <JaNeiSporsmal
+                                faktumKey="utbetalinger.inntekt.skattbar.gi_samtykke"
+                                tekster={{
+                                    true: getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.gi_samtykke.true"),
+                                    false: getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.gi_samtykke.false"),
                                 }}
-                            >
-                                {getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.gi_samtykke")}
-                            </Button>
+                                verdi={harSamtykke}
+                                onChange={handleJaNeiChange}
+                            />
                         </>
                     )}
                 </div>
