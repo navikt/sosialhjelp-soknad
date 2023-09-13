@@ -131,7 +131,7 @@ function* lastOppEttersendelsesVedleggSaga(action: LastOppEttersendtVedleggActio
             yield call(logInfo, "Last opp vedlegg for ettersendelse feilet: " + reason.toString());
         }
         // FIXME før prodsetting: Gjenskape denne funksjonaliteten under
-        // yield put(setVedleggLoading(opplysningType as VedleggFrontendTypeMinusEtParTingSomTrengerAvklaring, false));
+        // yield put(setVedleggLoading(opplysningType as VedleggFrontendType, false));
     }
 }
 
