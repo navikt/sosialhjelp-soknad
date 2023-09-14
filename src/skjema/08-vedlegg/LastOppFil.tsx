@@ -5,6 +5,8 @@ import {Opplysning} from "../../lib/opplysninger";
 import {useFeatureFlags} from "../../lib/featureFlags";
 import {ForhandsvisningVedleggModal} from "./ForhandsvisningVedleggModal";
 
+export const isPdf = (file: File) => file.type === "application/pdf";
+
 const LastOppFil = ({
     doUpload,
     visSpinner,
@@ -22,29 +24,20 @@ const LastOppFil = ({
     const {tilgjengeliggjorFlereFilformater} = useFeatureFlags();
 
     const vedleggElement = React.useRef<HTMLInputElement>(null);
-    const [filePreviews, setFilePreviews] = React.useState<Array<{file: File; isPDF: boolean}>>([]);
+    const [filePreviews, setFilePreviews] = React.useState<File[]>([]);
     const [showModal, setShowModal] = React.useState(false);
 
-    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const {files} = event.target;
+    const handleFileUpload = ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => {
+        if (!files?.length) return;
 
-        if (!files || files.length === 0) return;
-
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const fileType = file.type;
-            const isPDF = fileType === "application/pdf";
-
-            setFilePreviews((prevFiles) => [...prevFiles, {file, isPDF}]);
-        }
-
+        setFilePreviews((prevFiles) => [...prevFiles, ...files]);
         setShowModal(true);
 
         if (vedleggElement?.current) vedleggElement.current.value = "";
     };
 
     const handleAccept = async () => {
-        await Promise.all(filePreviews.map((filePreview) => doUpload(filePreview.file)));
+        await Promise.all(filePreviews.map((file) => doUpload(file)));
 
         setFilePreviews([]);
         setShowModal(false);

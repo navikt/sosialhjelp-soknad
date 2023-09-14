@@ -2,19 +2,18 @@ import React from "react";
 import {BodyShort, Button, Modal} from "@navikt/ds-react";
 import {ExpandIcon, TrashIcon} from "@navikt/aksel-icons";
 import {FullskjermModal} from "./FullskjermModal";
-
-export type PreviewFile = {file: File; isPDF: boolean};
+import {isPdf} from "./LastOppFil.js";
 
 interface ForhandsvisningModalProps {
-    filePreviews: PreviewFile[];
+    filePreviews: File[];
     showModal: boolean;
     onAccept: () => void;
     onClose: () => void;
     onDelete: (index: number) => void;
 }
 
-const FilePreview = ({file: {isPDF, file}}: {file: PreviewFile}) =>
-    isPDF ? (
+const FilePreview = ({file}: {file: File}) =>
+    isPdf(file) ? (
         <iframe title={`File preview ${file.name}`} src={URL.createObjectURL(file)} className={"w-[70%] h-[70%]"} />
     ) : (
         <img
@@ -47,7 +46,7 @@ export const ForhandsvisningVedleggModal = ({
     onClose,
     onDelete,
 }: ForhandsvisningModalProps) => {
-    const [fullskjerm, setFullskjerm] = React.useState<{file: File; isPDF: boolean} | null>(null);
+    const [fullskjerm, setFullskjerm] = React.useState<File | null>(null);
 
     return (
         <>
