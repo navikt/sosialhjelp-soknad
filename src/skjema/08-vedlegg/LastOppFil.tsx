@@ -22,40 +22,17 @@ const LastOppFil = ({
 }) => {
     const {t} = useTranslation();
     const {tilgjengeliggjorFlereFilformater} = useFeatureFlags();
-
     const vedleggElement = React.useRef<HTMLInputElement>(null);
     const [filePreviews, setFilePreviews] = React.useState<File[]>([]);
-    const [showModal, setShowModal] = React.useState(false);
 
-    const handleFileUpload = ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileSelect = ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => {
         if (!files?.length) return;
-
         setFilePreviews((prevFiles) => [...prevFiles, ...files]);
-        setShowModal(true);
-
         if (vedleggElement?.current) vedleggElement.current.value = "";
     };
 
-    const handleAccept = async () => {
-        await Promise.all(filePreviews.map((file) => doUpload(file)));
-
-        setFilePreviews([]);
-        setShowModal(false);
-    };
-
-    const handleClose = () => {
-        setShowModal(false);
-        setFilePreviews([]);
-    };
-
-    const handleDelete = (index: number) => {
-        const updatedFilePreviews = filePreviews.filter((_, i) => i !== index);
-        setFilePreviews((prevFiles) => prevFiles.filter((_, i) => i !== index));
-
-        if (updatedFilePreviews.length === 0) {
-            handleClose();
-        }
-    };
+    const uploadFiles = async () => Promise.all(filePreviews.map((file) => doUpload(file)));
+    const deleteFile = (index: number) => setFilePreviews((prevFiles) => prevFiles.filter((_, i) => i !== index));
 
     const alwaysAllowedFormats = "image/jpeg,image/png,application/pdf";
     const devOnlyFormats =
@@ -82,7 +59,7 @@ const LastOppFil = ({
                 aria-hidden
                 id={opplysning.type.replace(/\./g, "_") + "_skjult_upload_input"}
                 ref={vedleggElement}
-                onChange={handleFileUpload}
+                onChange={handleFileSelect}
                 type="file"
                 className="hidden"
                 tabIndex={-1}
@@ -97,10 +74,10 @@ const LastOppFil = ({
             />
             <ForhandsvisningVedleggModal
                 filePreviews={filePreviews}
-                showModal={showModal}
-                onAccept={handleAccept}
-                onClose={handleClose}
-                onDelete={handleDelete}
+                showModal={!!filePreviews?.length}
+                onAccept={() => uploadFiles().then(() => setFilePreviews([]))}
+                onClose={() => setFilePreviews([])}
+                onDelete={deleteFile}
             />
         </div>
     );
