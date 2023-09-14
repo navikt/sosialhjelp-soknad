@@ -1224,6 +1224,8 @@
     "utbetalinger.ingen.true": "Vi har ingen registrerte utbetalingar på deg frå NAV den siste månaden.",
     "utbetalinger.inntekt.skattbar.beskrivelse": "Du har henta informasjon om inntekta di frå Skatteetaten.",
     "utbetalinger.inntekt.skattbar.gi_samtykke": "Hent frå Skatteetaten",
+    "utbetalinger.inntekt.skattbar.gi_samtykke.true": "Ja",
+    "utbetalinger.inntekt.skattbar.gi_samtykke.false": "Nei",
     "utbetalinger.inntekt.skattbar.skatteetaten": "Sjå detaljar hjå Skatteetaten.",
     "utbetalinger.inntekt.skattbar.har_gitt_samtykke": "Du har henta informasjon frå Skatteetaten",
     "utbetalinger.inntekt.skattbar.ingen": "Du er ikkje registrert med skattbar inntekt hos Skatteetaten for siste månad.",
