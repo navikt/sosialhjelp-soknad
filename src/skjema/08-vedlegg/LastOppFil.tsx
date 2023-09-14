@@ -39,22 +39,20 @@ const LastOppFil = ({
         ",text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
     return (
-        <div>
-            <div className="pt-1">
-                <Button
-                    variant="secondary"
-                    id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
-                    disabled={isDisabled}
-                    onClick={() => {
-                        resetAlerts();
-                        vedleggElement?.current?.click();
-                    }}
-                    className="last-opp-vedlegg-knapp"
-                >
-                    + {t("opplysninger.vedlegg.knapp.tekst")}
-                    {visSpinner && <Loader />}
-                </Button>
-            </div>
+        <div className="pt-2">
+            <Button
+                variant="secondary"
+                id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
+                disabled={isDisabled}
+                onClick={() => {
+                    resetAlerts();
+                    vedleggElement?.current?.click();
+                }}
+                className="last-opp-vedlegg-knapp"
+            >
+                + {t("opplysninger.vedlegg.knapp.tekst")}
+                {visSpinner && <Loader />}
+            </Button>
             <input
                 aria-hidden
                 id={opplysning.type.replace(/\./g, "_") + "_skjult_upload_input"}
