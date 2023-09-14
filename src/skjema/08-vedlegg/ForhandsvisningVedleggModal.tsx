@@ -2,7 +2,7 @@ import React from "react";
 import {BodyShort, Button, Modal} from "@navikt/ds-react";
 import {ExpandIcon, TrashIcon} from "@navikt/aksel-icons";
 import {FullskjermModal} from "./FullskjermModal";
-import {isPdf} from "./LastOppFil.js";
+import {isPdf} from "./LastOppFil";
 
 interface ForhandsvisningModalProps {
     filePreviews: File[];
