@@ -4,6 +4,7 @@ import {useTranslation} from "react-i18next";
 import {Opplysning} from "../../lib/opplysninger";
 import {useFeatureFlags} from "../../lib/featureFlags";
 import {ForhandsvisningVedleggModal} from "./ForhandsvisningVedleggModal";
+import {PlusIcon} from "@navikt/aksel-icons";
 
 export const isPdf = (file: File) => file.type === "application/pdf";
 
@@ -50,8 +51,10 @@ const LastOppFil = ({
                 }}
                 className="last-opp-vedlegg-knapp"
             >
-                + {t("opplysninger.vedlegg.knapp.tekst")}
-                {visSpinner && <Loader />}
+                <div className={"flex gap-1 items-center"}>
+                    <PlusIcon /> {t("opplysninger.vedlegg.knapp.tekst")}
+                    {visSpinner && <Loader className={"ml-1"} />}
+                </div>
             </Button>
             <input
                 aria-hidden
