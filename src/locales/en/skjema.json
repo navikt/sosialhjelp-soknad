@@ -1237,6 +1237,8 @@
     "utbetalinger.inntekt.skattbar.forskuddstrekk": "Tax withholding",
     "utbetalinger.inntekt.skattbar.skatteetaten": "See details from the Tax Administration",
     "utbetalinger.inntekt.skattbar.gi_samtykke": "Obtain from the Tax Administration",
+    "utbetalinger.inntekt.skattbar.gi_samtykke.true": "Yes",
+    "utbetalinger.inntekt.skattbar.gi_samtykke.false": "No",
     "utbetalinger.inntekt.skattbar.har_gitt_samtykke": "You have obtained information from the Tax Administration",
     "utbetalinger.inntekt.skattbar.ingen": "You have no taxable income registered with the Tax Administration for the last month.",
     "utbetalinger.inntekt.skattbar.inntekt.tittel": "Income",
