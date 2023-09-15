@@ -3,6 +3,7 @@ import {BodyShort, Button, Modal} from "@navikt/ds-react";
 import {ExpandIcon, TrashIcon} from "@navikt/aksel-icons";
 import {FilePreviewFullscreen} from "./FilePreviewFullscreen";
 import {isPdf} from "./LastOppFil";
+import {useTranslation} from "react-i18next";
 Modal.setAppElement("#root");
 
 interface ForhandsvisningModalProps {
@@ -21,20 +22,23 @@ const FilePreviewDisplay = ({file}: {file: File}) =>
     );
 
 // 24/23 px-tallene er satt slik for å matche høyden til X-knappen i Modal-komponenten
-const FilePreviewButtons = ({onDelete, onFullscreen}: {onDelete: () => void; onFullscreen: () => void}) => (
-    <div className={"w-fit ml-auto"}>
-        <Button variant="tertiary" onClick={onDelete}>
-            <div className={"flex items-center gap-2"}>
-                <TrashIcon /> Slett
-            </div>
-        </Button>
-        <Button variant="tertiary" onClick={onFullscreen}>
-            <span className={"flex items-center gap-2"}>
-                <ExpandIcon /> Fullskjerm
-            </span>
-        </Button>
-    </div>
-);
+const FilePreviewButtons = ({onDelete, onFullscreen}: {onDelete: () => void; onFullscreen: () => void}) => {
+    const {t} = useTranslation();
+    return (
+        <div className={"w-fit ml-auto"}>
+            <Button variant="tertiary" onClick={onDelete}>
+                <div className={"flex items-center gap-2"}>
+                    <TrashIcon /> {t("vedlegg.forhandsvisning.slett")}
+                </div>
+            </Button>
+            <Button variant="tertiary" onClick={onFullscreen}>
+                <span className={"flex items-center gap-2"}>
+                    <ExpandIcon /> {t("vedlegg.forhandsvisning.fullskjerm")}
+                </span>
+            </Button>
+        </div>
+    );
+};
 
 const FilePreview = ({file, onDelete}: {file: File; onDelete: () => void}) => {
     const [fullscreen, setFullscreen] = React.useState<boolean>(false);
@@ -54,27 +58,30 @@ export const ForhandsvisningVedleggModal = ({
     onAccept,
     onClose,
     onDelete,
-}: ForhandsvisningModalProps) => (
-    <Modal
-        open={showModal}
-        onClose={onClose}
-        className={"p-8 pt-2 h-[80vh] max-w-[800px] max-h-[600px] max-sm:(w-[95%] h-auto)"}
-    >
-        <Modal.Content className={"flex flex-col space-y-4 h-full"}>
-            <div className={"grow w-full mx-auto"}>
-                {filePreviews.map((filePreview, index) => (
-                    <FilePreview file={filePreview} onDelete={() => onDelete(index)} key={index} />
-                ))}
-            </div>
-            <BodyShort>Sørg for at dokumentene er leselige og viser riktig informasjon</BodyShort>
-            <div className={"flex gap-4"}>
-                <Button variant="primary" onClick={onAccept}>
-                    Last opp fil
-                </Button>
-                <Button variant="secondary" onClick={onClose}>
-                    Avbryt
-                </Button>
-            </div>
-        </Modal.Content>
-    </Modal>
-);
+}: ForhandsvisningModalProps) => {
+    const {t} = useTranslation();
+    return (
+        <Modal
+            open={showModal}
+            onClose={onClose}
+            className={"p-8 pt-2 h-[80vh] max-w-[800px] max-h-[600px] max-sm:(w-[95%] h-auto)"}
+        >
+            <Modal.Content className={"flex flex-col space-y-4 h-full"}>
+                <div className={"grow w-full mx-auto"}>
+                    {filePreviews.map((filePreview, index) => (
+                        <FilePreview file={filePreview} onDelete={() => onDelete(index)} key={index} />
+                    ))}
+                </div>
+                <BodyShort>{t("vedlegg.forhandsvisning.info")}</BodyShort>
+                <div className={"flex gap-4"}>
+                    <Button variant="primary" onClick={onAccept}>
+                        {t("vedlegg.forhandsvisning.opplast")}
+                    </Button>
+                    <Button variant="secondary" onClick={onClose}>
+                        {t("vedlegg.forhandsvisning.avbryt")}
+                    </Button>
+                </div>
+            </Modal.Content>
+        </Modal>
+    );
+};
