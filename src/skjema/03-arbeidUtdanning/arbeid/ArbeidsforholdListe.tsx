@@ -6,6 +6,8 @@ import {useHentArbeid} from "../../../generated/arbeid-ressurs/arbeid-ressurs";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
 import {BodyShort} from "@navikt/ds-react";
+import {formatDato} from "../../../nav-soknad/utils";
+import i18next from "i18next";
 
 export const ArbeidsforholdListe = () => {
     const {t} = useTranslation("skjema");
@@ -26,11 +28,12 @@ export const ArbeidsforholdListe = () => {
 const ArbeidsforholdDetalj = ({arbeidsforhold}: {arbeidsforhold: ArbeidsforholdFrontend}) => {
     const {arbeidsgivernavn, stillingsprosent, fom, tom} = arbeidsforhold;
     const {t} = useTranslation("skjema", {keyPrefix: "arbeidsforhold"});
+    const currentLang = i18next.language;
 
     return (
         <Systeminfo>
             <SysteminfoItem label={t("arbeidsgivernavn.label")}>{arbeidsgivernavn}</SysteminfoItem>
-            <SysteminfoItem label={t("fom.label")}>{fom}</SysteminfoItem>
+            <SysteminfoItem label={t("fom.label")}>{fom ? formatDato(fom, currentLang) : ""}</SysteminfoItem>
             {tom?.length && <SysteminfoItem label={t("tom.label")}>{tom}</SysteminfoItem>}
             <SysteminfoItem label={t("stillingsprosent.label")}>{stillingsprosent} %</SysteminfoItem>
         </Systeminfo>

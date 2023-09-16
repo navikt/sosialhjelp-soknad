@@ -6,11 +6,14 @@ import {useHentSivilstatus} from "../../../generated/sivilstatus-ressurs/sivilst
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
 import Sporsmal from "../../../nav-soknad/components/sporsmal/Sporsmal";
+import {formatDato} from "../../../nav-soknad/utils";
 import cx from "classnames";
+import i18next from "i18next";
 
 const EktefelleNavn = () => {
     const {t} = useTranslation("skjema", {keyPrefix: "system.familie.sivilstatus"});
     const {expectOK} = useAlgebraic(useHentSivilstatus(useBehandlingsId()));
+    const currentLang = i18next.language;
 
     // FIXME: Handle the reverse case of this if clause
     return expectOK(({ektefelle, erFolkeregistrertSammen, harDiskresjonskode}) =>
@@ -21,7 +24,9 @@ const EktefelleNavn = () => {
                 </li>
                 <SysteminfoItem label={t(`gift.ektefelle.navn`)}>{ektefelle?.navn?.fulltNavn}</SysteminfoItem>
                 {ektefelle?.fodselsdato && (
-                    <SysteminfoItem label={t(`gift.ektefelle.fodselsdato`)}>{ektefelle.fodselsdato}</SysteminfoItem>
+                    <SysteminfoItem label={t(`gift.ektefelle.fodselsdato`)}>
+                        {formatDato(ektefelle.fodselsdato, currentLang)}
+                    </SysteminfoItem>
                 )}
                 <SysteminfoItem label={t(`gift.ektefelle.folkereg`)}>
                     {erFolkeregistrertSammen ? t("gift.ektefelle.borsammen.true") : t("gift.ektefelle.borsammen.false")}

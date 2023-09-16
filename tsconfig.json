@@ -2,7 +2,8 @@
     "extends": "@tsconfig/create-react-app/tsconfig.json",
     "compilerOptions": {
         "noFallthroughCasesInSwitch": true,
-        "useUnknownInCatchVariables": false
+        "useUnknownInCatchVariables": false,
+        "moduleResolution": "node",
     },
     "include": ["src"],
     "exclude": ["node_modules"]
