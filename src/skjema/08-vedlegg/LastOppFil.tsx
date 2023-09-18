@@ -71,7 +71,6 @@ const LastOppFil = ({
                         ? alwaysAllowedFormats + devOnlyFormats
                         : alwaysAllowedFormats
                 }
-                multiple
             />
             <ForhandsvisningVedleggModal
                 filePreviews={filePreviews}
