@@ -3,6 +3,10 @@ import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {Opplysning} from "../../lib/opplysninger";
 import {useFeatureFlags} from "../../lib/featureFlags";
+import {ForhandsvisningVedleggModal} from "./ForhandsvisningVedleggModal";
+import {PlusIcon} from "@navikt/aksel-icons";
+
+export const isPdf = (file: File) => file.type === "application/pdf";
 
 const LastOppFil = ({
     doUpload,
@@ -19,45 +23,44 @@ const LastOppFil = ({
 }) => {
     const {t} = useTranslation();
     const {tilgjengeliggjorFlereFilformater} = useFeatureFlags();
-
     const vedleggElement = React.useRef<HTMLInputElement>(null);
+    const [filePreviews, setFilePreviews] = React.useState<File[]>([]);
 
-    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const {files} = event.target;
-
-        if (!files) return;
-
-        [...files].forEach(doUpload);
-
+    const handleFileSelect = ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => {
+        if (!files?.length) return;
+        setFilePreviews((prevFiles) => [...prevFiles, ...files]);
         if (vedleggElement?.current) vedleggElement.current.value = "";
     };
+
+    const uploadFiles = async () => Promise.all(filePreviews.map((file) => doUpload(file)));
+    const deleteFile = (index: number) => setFilePreviews((prevFiles) => prevFiles.filter((_, i) => i !== index));
 
     const alwaysAllowedFormats = "image/jpeg,image/png,application/pdf";
     const devOnlyFormats =
         ",text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
     return (
-        <div>
-            <div className="pt-1">
-                <Button
-                    variant="secondary"
-                    id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
-                    disabled={isDisabled}
-                    onClick={() => {
-                        resetAlerts();
-                        vedleggElement?.current?.click();
-                    }}
-                    className="last-opp-vedlegg-knapp"
-                >
-                    + {t("opplysninger.vedlegg.knapp.tekst")}
-                    {visSpinner && <Loader />}
-                </Button>
-            </div>
+        <div className="pt-2">
+            <Button
+                variant="secondary"
+                id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
+                disabled={isDisabled}
+                onClick={() => {
+                    resetAlerts();
+                    vedleggElement?.current?.click();
+                }}
+                className="last-opp-vedlegg-knapp"
+            >
+                <div className={"flex gap-1 items-center"}>
+                    <PlusIcon /> {t("opplysninger.vedlegg.knapp.tekst")}
+                    {visSpinner && <Loader className={"ml-1"} />}
+                </div>
+            </Button>
             <input
                 aria-hidden
                 id={opplysning.type.replace(/\./g, "_") + "_skjult_upload_input"}
                 ref={vedleggElement}
-                onChange={handleFileUpload}
+                onChange={handleFileSelect}
                 type="file"
                 className="hidden"
                 tabIndex={-1}
@@ -68,7 +71,13 @@ const LastOppFil = ({
                         ? alwaysAllowedFormats + devOnlyFormats
                         : alwaysAllowedFormats
                 }
-                multiple
+            />
+            <ForhandsvisningVedleggModal
+                filePreviews={filePreviews}
+                showModal={!!filePreviews?.length}
+                onAccept={() => uploadFiles().then(() => setFilePreviews([]))}
+                onClose={() => setFilePreviews([])}
+                onDelete={deleteFile}
             />
         </div>
     );
