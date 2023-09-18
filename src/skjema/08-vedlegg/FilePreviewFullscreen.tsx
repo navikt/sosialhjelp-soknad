@@ -11,7 +11,13 @@ interface FullscreenModalProps {
 
 const FilePreviewFullscreenDisplay = ({file}: {file: File}) =>
     isPdf(file) ? (
-        <iframe src={URL.createObjectURL(file)} title="Forhåndsvisning av fil" className={"w-full h-full"} />
+        <div className={"flex h-full w-full border-2 border-red-200"}>
+            <iframe
+                src={URL.createObjectURL(file) + "#toolbar=0"}
+                title="Forhåndsvisning av fil"
+                className={"w-full h-full"}
+            />
+        </div>
     ) : (
         <img
             src={URL.createObjectURL(file)}
@@ -32,7 +38,7 @@ export const FilePreviewFullscreen = ({file, show, onClose}: FullscreenModalProp
                         </span>
                     </Button>
                 </div>
-                <div className={"w-full h-full flex content-center items-center overflow-auto p-4 lg:p-12 xl:p-48"}>
+                <div className={"w-full h-full flex content-center items-center m-4"}>
                     <FilePreviewFullscreenDisplay file={file} />
                 </div>
             </Modal.Content>

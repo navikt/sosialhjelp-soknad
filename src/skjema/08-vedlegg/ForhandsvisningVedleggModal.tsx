@@ -16,9 +16,13 @@ interface ForhandsvisningModalProps {
 
 const FilePreviewDisplay = ({file}: {file: File}) =>
     isPdf(file) ? (
-        <iframe title={`File preview ${file.name}`} src={URL.createObjectURL(file)} className={"h-[100%] w-full"} />
+        <iframe title={`File preview ${file.name}`} src={URL.createObjectURL(file)} className={"h-full w-full my-4"} />
     ) : (
-        <img alt={`File preview ${file.name}`} src={URL.createObjectURL(file)} className={"h-fit mx-auto"} />
+        <img
+            alt={`File preview ${file.name}`}
+            src={URL.createObjectURL(file)}
+            className={"w-full max-h-[450px] my-4 mx-auto"}
+        />
     );
 
 // 24/23 px-tallene er satt slik for å matche høyden til X-knappen i Modal-komponenten
