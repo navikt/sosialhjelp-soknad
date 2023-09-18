@@ -1417,6 +1417,11 @@
     "vedleggtekst.T7": "Dokumentasjon av inntekt",
     "vedleggtekst.U2": "Legeerklæring",
     "vedleggtekst.Z3": "Stadfesting av funksjonsnedsetjing",
+    "vedlegg.forhandsvisning.info": "Sørg for at dokumenta er leselege og viser rett informasjon",
+    "vedlegg.forhandsvisning.fullskjerm": "Fullskjerm",
+    "vedlegg.forhandsvisning.slett": "Slett",
+    "vedlegg.forhandsvisning.opplast": "Last opp vedlegg",
+    "vedlegg.forhandsvisning.avbryt": "Avbryt",
     "visSoknadAlleredeSendtPrompt.overskrift": "Søknaden er send",
     "visSoknadAlleredeSendtPrompt.tekst": "Det er førebels ikkje mogleg å vise søknaden som er send inn.",
     "hoppTilHovedinnhold": "Gå til hovudinnhaldet"
