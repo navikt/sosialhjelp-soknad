@@ -1,6 +1,5 @@
 import i18n from "i18next";
 import {initReactI18next} from "react-i18next";
-import {isLocalhost} from "./nav-soknad/utils";
 import {logWarning} from "./nav-soknad/utils/loggerUtils";
 
 // Supported languages - add new languages here
@@ -47,7 +46,7 @@ i18n
         fallbackLng: "nb",
         ns: ["skjema"],
         defaultNS: "skjema",
-        debug: isLocalhost(window.location.href),
+        debug: window.location.hostname === "localhost",
 
         interpolation: {
             escapeValue: false, // not needed for react as it escapes by default
