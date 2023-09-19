@@ -20,7 +20,7 @@ import {Loader} from "@navikt/ds-react";
 import {configureStore} from "./configureStore";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {basePath} from "./configuration";
-import i18n from "./i18n";
+import i18n, {SUPPORTED_LANGUAGES} from "./i18n";
 import {useFeatureFlags} from "./lib/featureFlags";
 import {logAmplitudeEvent} from "./nav-soknad/utils/amplitude";
 
@@ -36,12 +36,9 @@ const App = () => {
 
     useEffect(() => {
         if (tilgengeliggjorSprakvelger) {
-            setAvailableLanguages([
-                {locale: "nn", url: basePath, handleInApp: true},
-                {locale: "nb", url: basePath, handleInApp: true},
-                {locale: "en", url: basePath, handleInApp: true},
-            ]);
-
+            setAvailableLanguages(
+                SUPPORTED_LANGUAGES.map((locale) => ({locale: locale, url: basePath, handleInApp: true}))
+            );
             const handleLanguageSelect = (language: {locale: DecoratorLocale}) => {
                 i18n.changeLanguage(language.locale);
                 setParams({language: language.locale});
