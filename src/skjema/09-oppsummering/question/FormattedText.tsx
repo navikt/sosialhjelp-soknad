@@ -1,9 +1,9 @@
 import {BodyShort} from "@navikt/ds-react";
-import {formatDato, formatTidspunkt} from "../../../nav-soknad/utils";
+import {formatTidspunkt} from "../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
-import i18next from "i18next";
 import {SvarType} from "../../../generated/model";
 import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {LocalizedDate} from "../../../components/LocalizedDate";
 
 const validSvarTypes = new Set(Object.values(SvarType));
 
@@ -23,7 +23,7 @@ const FormatAsType = ({type, children}: {type: SvarType; children: string}) => {
         case "LOCALE_TEKST":
             return t(children);
         case "DATO":
-            return formatDato(children, i18next.language);
+            return <LocalizedDate date={children} />;
         case "TIDSPUNKT":
             return formatTidspunkt(children, t);
     }
