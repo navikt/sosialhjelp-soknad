@@ -2,17 +2,14 @@ import i18next, {TFunction} from "i18next";
 
 export const getIntlText = (t: TFunction<"skjema", "skjema">, key: string) => (key !== t(key) ? t(key) : undefined);
 
-export function getIntlTextOrKey(t: TFunction<"skjema", "skjema">, key: string): string {
-    if (typeof t === "undefined") {
-        return key;
-    }
+export const getIntlTextOrKey = (t: TFunction<"skjema", "skjema">, key: string): string => {
+    if (typeof t === "undefined") return key;
+
     const tekst = t(key);
     return tekst || key;
-}
-
-export const replaceDotWithUnderscore = (verdi: string): string => {
-    return verdi.replace(/\./g, "_");
 };
+
+export const replaceDotWithUnderscore = (verdi: string) => verdi.replace(/\./g, "_");
 
 /**
  * Formats an ISO-8601 date to a string
