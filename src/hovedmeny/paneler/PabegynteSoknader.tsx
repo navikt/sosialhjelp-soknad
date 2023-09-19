@@ -2,13 +2,14 @@ import {FileContent} from "@navikt/ds-icons";
 import {Accordion, BodyShort, Heading, Label, LinkPanel} from "@navikt/ds-react";
 import React from "react";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
-import {addDays, format, formatDistance} from "date-fns";
-import {nb, nn, enUS} from "date-fns/locale";
+import {addDays, formatDistance} from "date-fns";
 import {basePath} from "../../configuration";
 import TextPlaceholder from "../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {useTranslation} from "react-i18next";
-import i18n from "../../i18n";
 import {useHentPabegynteSoknader} from "../../generated/informasjon-ressurs/informasjon-ressurs";
+import {LocalizedDate} from "../../components/LocalizedDate";
+import {getDateFnLocale} from "../../i18n";
+
 export const DAYS_BEFORE_DELETION = 14;
 
 const PabegyntSoknad = ({
@@ -31,19 +32,6 @@ const PabegyntSoknad = ({
         window.location.href = href;
     };
 
-    const getLocale = () => {
-        switch (i18n.language) {
-            case "en":
-                return enUS;
-            case "nn":
-                return nn;
-            case "nb":
-                return nb;
-            default:
-                return nb;
-        }
-    };
-
     return (
         <li>
             <LinkPanel
@@ -54,12 +42,11 @@ const PabegyntSoknad = ({
             >
                 <LinkPanel.Title className={"flex flex-col lg:flex-row align-center"}>
                     <Label style={{marginRight: "1rem"}}>
-                        {t("applikasjon.paabegynt.soknad.sist.oppdatert")}{" "}
-                        {format(lastUpdate, "d. MMMM HH:mm", {locale: getLocale()})}
+                        {t("applikasjon.paabegynt.soknad.sist.oppdatert")} <LocalizedDate date={sistOppdatert} />
                     </Label>
                     <BodyShort>
                         {t("applikasjon.paabegynt.soknad.slettes")}{" "}
-                        {formatDistance(expiryDate, new Date(), {locale: getLocale(), addSuffix: true})}
+                        {formatDistance(expiryDate, new Date(), {locale: getDateFnLocale(), addSuffix: true})}
                     </BodyShort>
                 </LinkPanel.Title>
             </LinkPanel>

@@ -1,22 +1,14 @@
 import {FormattedText} from "./FormattedText";
-import {Felt} from "../../../generated/model";
+import {Felt, Svar} from "../../../generated/model";
 
-export const FreeText = (props: {felter?: Felt[]}) => {
-    if (!props.felter || props.felter.length === 0) return null;
-
-    return (
-        <div>
-            {props.felter.map(
-                (felt) =>
-                    felt.svar && (
-                        <FormattedText
-                            key={felt.svar.value}
-                            value={felt.svar.value ?? ""}
-                            type={felt.svar.type}
-                            spacing
-                        />
-                    )
-            )}
-        </div>
-    );
-};
+export const FreeText = ({felter}: {felter?: Felt[]}) => (
+    <>
+        {felter
+            ?.filter((felt): felt is Felt & {svar: Svar} => !!felt.svar)
+            .map(({svar}, index) => (
+                <span className={"pb-3"} key={index}>
+                    <FormattedText value={svar.value ?? ""} type={svar.type} />
+                </span>
+            ))}
+    </>
+);

@@ -1,19 +1,43 @@
 import {BodyShort} from "@navikt/ds-react";
-import {formatDato, formatTidspunkt} from "../../../nav-soknad/utils/intlUtils";
+import {formatTidspunkt} from "../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
-import i18next from "i18next";
+import {SvarType} from "../../../generated/model";
+import {logWarning} from "../../../nav-soknad/utils/loggerUtils";
+import {LocalizedDate} from "../../../components/LocalizedDate";
 
-export const FormattedText = (props: {value: string; type: string; label?: string; spacing?: boolean}) => {
+const validSvarTypes = new Set(Object.values(SvarType));
+
+const FormatAsType = ({type, children}: {type: SvarType; children: string}) => {
     const {t} = useTranslation("skjema");
-    const currentLang = i18next.language;
 
-    return (
-        <BodyShort spacing={!!props.spacing}>
-            {props.label && <>{t(props.label)}: </>}
-            {props.type === "TEKST" && props.value}
-            {props.type === "LOCALE_TEKST" && props.value ? t(props.value) : ""}
-            {props.type === "DATO" && props.value ? formatDato(props.value, currentLang) : ""}
-            {props.type === "TIDSPUNKT" && props.value ? formatTidspunkt(props.value, t) : ""}
-        </BodyShort>
-    );
+    if (!children) return "";
+
+    if (!validSvarTypes.has(type)) {
+        logWarning("Ugyldig SvarType i FormattedTextValue");
+        return children;
+    }
+
+    switch (type) {
+        case "TEKST":
+            return children;
+        case "LOCALE_TEKST":
+            return t(children);
+        case "DATO":
+            return <LocalizedDate date={children} />;
+        case "TIDSPUNKT":
+            return formatTidspunkt(children, t);
+    }
 };
+
+interface FormattedTextProps {
+    type: SvarType;
+    value: string;
+    label?: string;
+}
+
+export const FormattedText = ({type, value, label}: FormattedTextProps) => (
+    <BodyShort>
+        {label && <span className={"pr-1 after:content-[':']"}>{label}</span>}
+        <FormatAsType type={type}>{value}</FormatAsType>
+    </BodyShort>
+);

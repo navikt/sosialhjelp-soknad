@@ -1,29 +1,23 @@
-import styled from "styled-components";
 import {FormattedText} from "./FormattedText";
-import {Felt} from "../../../generated/model";
+import {Felt, Svar} from "../../../generated/model";
+import {useTranslation} from "react-i18next";
 
-const StyledSystemList = styled.ul`
-    list-style: none;
-    padding: 0.5rem 0 0.5rem 1rem;
-    margin: 0;
-    border-left: 1px solid var(--a-border-default);
-    margin-bottom: 1rem;
-`;
+export const SYSTEM_LIST_STYLE = "list-none py-2 pl-4 border-l-[1px] border-l-[var(--a-border-default)] mb-4";
 
 export const SystemData = (props: {felter?: Felt[]}) => {
-    if (!props.felter || props.felter.length === 0) return null;
+    const {t} = useTranslation("skjema");
+
+    if (!props.felter?.length) return null;
 
     return (
-        <StyledSystemList>
-            {props.felter.map((felt) => {
-                return (
-                    felt.svar && (
-                        <li key={felt.label}>
-                            <FormattedText value={felt.svar.value ?? ""} type={felt.svar.type} label={felt.label} />
-                        </li>
-                    )
-                );
-            })}
-        </StyledSystemList>
+        <ul className={SYSTEM_LIST_STYLE}>
+            {props.felter
+                ?.filter((felt): felt is Felt & {svar: Svar} => !!felt.svar)
+                .map(({label, svar: {value, type}}, idx) => (
+                    <li key={label}>
+                        <FormattedText value={value ?? ""} type={type} label={t(label ?? "")} />
+                    </li>
+                ))}
+        </ul>
     );
 };

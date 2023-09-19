@@ -7,6 +7,7 @@ import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
 import Sporsmal from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import cx from "classnames";
+import {LocalizedDate} from "../../../components/LocalizedDate";
 
 const EktefelleNavn = () => {
     const {t} = useTranslation("skjema", {keyPrefix: "system.familie.sivilstatus"});
@@ -21,7 +22,9 @@ const EktefelleNavn = () => {
                 </li>
                 <SysteminfoItem label={t(`gift.ektefelle.navn`)}>{ektefelle?.navn?.fulltNavn}</SysteminfoItem>
                 {ektefelle?.fodselsdato && (
-                    <SysteminfoItem label={t(`gift.ektefelle.fodselsdato`)}>{ektefelle.fodselsdato}</SysteminfoItem>
+                    <SysteminfoItem label={t(`gift.ektefelle.fodselsdato`)}>
+                        <LocalizedDate date={ektefelle.fodselsdato} />
+                    </SysteminfoItem>
                 )}
                 <SysteminfoItem label={t(`gift.ektefelle.folkereg`)}>
                     {erFolkeregistrertSammen ? t("gift.ektefelle.borsammen.true") : t("gift.ektefelle.borsammen.false")}

@@ -15,6 +15,7 @@ import {SysteminfoItem, Systeminfo} from "../../../nav-soknad/components/systemi
 import {useTranslation} from "react-i18next";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
+import {LocalizedDate} from "../../../components/LocalizedDate";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
 
@@ -83,7 +84,7 @@ const RegistrerteBarn = () => {
                                 {barnet.barn.navn.fulltNavn}
                             </SysteminfoItem>
                             <SysteminfoItem label={t("familierelasjon.fodselsdato")}>
-                                {barnet.barn.fodselsdato ?? ""}
+                                <LocalizedDate date={barnet.barn.fodselsdato} />
                             </SysteminfoItem>
                             <SysteminfoItem label={t("familierelasjon.samme_folkeregistrerte_adresse")}>
                                 {barnet.erFolkeregistrertSammen
