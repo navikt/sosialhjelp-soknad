@@ -13,9 +13,9 @@ export const SystemData = (props: {felter?: Felt[]}) => {
         <ul className={SYSTEM_LIST_STYLE}>
             {props.felter
                 ?.filter((felt): felt is Felt & {svar: Svar} => !!felt.svar)
-                .map(({label, svar}, idx) => (
+                .map(({label, svar: {value, type}}, idx) => (
                     <li key={label}>
-                        <FormattedText value={svar.value ?? ""} type={svar.type} label={t(label ?? "")} />
+                        <FormattedText value={value ?? ""} type={type} label={t(label ?? "")} />
                     </li>
                 ))}
         </ul>
