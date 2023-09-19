@@ -14,7 +14,14 @@ export const replaceDotWithUnderscore = (verdi: string): string => {
     return verdi.replace(/\./g, "_");
 };
 
-// Eksempel: "2019-08-01" => "1. august 2019"
+/**
+ * Formats an ISO-8601 date to a string
+ * @param isoDate ISO-8601 date string
+ * @param lang Two-letter locale code (currently only "en" and "nb" are supported!)
+ * @example formatDato("2019-08-01", "nb") => "1. august 2019"
+ * @todo Add support for other locales than en or nb
+ * @todo Better handling of invalid/nullish dates
+ */
 export function formatDato(isoDate: string, lang: string) {
     const dato: Date = new Date(isoDate);
     const formatter = new Intl.DateTimeFormat(lang === "en" ? "en" : "nb", {

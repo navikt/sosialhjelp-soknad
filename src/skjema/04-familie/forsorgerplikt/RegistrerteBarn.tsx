@@ -1,12 +1,7 @@
 import * as React from "react";
 import {Barn} from "./ForsorgerPliktTypes";
 import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
-import {
-    getFaktumSporsmalTekst,
-    getInputFaktumTekst,
-    replaceDotWithUnderscore,
-    formatDato,
-} from "../../../nav-soknad/utils";
+import {getFaktumSporsmalTekst, getInputFaktumTekst, replaceDotWithUnderscore} from "../../../nav-soknad/utils";
 import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -20,7 +15,7 @@ import {SysteminfoItem, Systeminfo} from "../../../nav-soknad/components/systemi
 import {useTranslation} from "react-i18next";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
-import i18next from "i18next";
+import {LocalizedDate} from "../../../components/LocalizedDate";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
 
@@ -32,7 +27,6 @@ const RegistrerteBarn = () => {
     const dispatch = useDispatch();
 
     const {t} = useTranslation("skjema");
-    const currentLang = i18next.language;
 
     const handleClickJaNeiSpsm = (verdi: boolean, barnIndex: number) => {
         const barnet = forsorgerplikt.ansvar[barnIndex];
@@ -90,7 +84,7 @@ const RegistrerteBarn = () => {
                                 {barnet.barn.navn.fulltNavn}
                             </SysteminfoItem>
                             <SysteminfoItem label={t("familierelasjon.fodselsdato")}>
-                                {barnet.barn.fodselsdato ? formatDato(barnet.barn.fodselsdato, currentLang) : ""}
+                                <LocalizedDate date={barnet.barn.fodselsdato} />
                             </SysteminfoItem>
                             <SysteminfoItem label={t("familierelasjon.samme_folkeregistrerte_adresse")}>
                                 {barnet.erFolkeregistrertSammen
