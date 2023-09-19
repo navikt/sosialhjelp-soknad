@@ -1,4 +1,7 @@
-import i18next, {TFunction} from "i18next";
+import {TFunction} from "i18next";
+import {getDateFnLocale} from "../../i18n";
+import {format, isValid} from "date-fns";
+import {logWarning} from "./loggerUtils";
 
 export const getIntlText = (t: TFunction<"skjema", "skjema">, key: string) => (key !== t(key) ? t(key) : undefined);
 
@@ -16,25 +19,26 @@ export const replaceDotWithUnderscore = (verdi: string) => verdi.replace(/\./g, 
  * @param isoDate ISO-8601 date string
  * @param lang Two-letter locale code (currently only "en" and "nb" are supported!)
  * @example formatDato("2019-08-01", "nb") => "1. august 2019"
- * @todo Add support for other locales than en or nb
- * @todo Better handling of invalid/nullish dates
  */
 export function formatDato(isoDate: string, lang: string) {
     const dato: Date = new Date(isoDate);
-    const formatter = new Intl.DateTimeFormat(lang === "en" ? "en" : "nb", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-    });
-    return formatter.format(dato).replace(/([0-9]) /, "$1. ");
+
+    if (!isValid(dato)) {
+        logWarning(`formatDato: Invalid date: ${isoDate}`);
+        return isoDate;
+    }
+
+    return format(dato, "PPP", {locale: getDateFnLocale()});
 }
+
 // Eksempel: "2019-08-01T12:12:12.123123Z" => "1. august 2019 klokken 12:12"
 export function formatTidspunkt(isoDate: string, t: TFunction<"skjema", "skjema">) {
     const dato: Date = new Date(isoDate);
-    const currentLang = i18next.language;
-    const formatter = new Intl.DateTimeFormat(currentLang === "en" ? "en" : "nb", {
-        hour: "numeric",
-        minute: "numeric",
-    });
-    return `${formatDato(isoDate, currentLang)} ${getIntlTextOrKey(t, "utils.klokken")} ${formatter.format(dato)}`;
+
+    if (!isValid(dato)) {
+        logWarning(`formatDato: Invalid date: ${isoDate}`);
+        return isoDate;
+    }
+
+    return format(dato, "PPPpp", {locale: getDateFnLocale()});
 }
