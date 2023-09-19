@@ -7,7 +7,8 @@ import {logWarning} from "./nav-soknad/utils/loggerUtils";
 import skjemaNn from "./locales/nn/skjema.json";
 import skjemaNb from "./locales/nb/skjema.json";
 import skjemaEn from "./locales/en/skjema.json";
-import {enUS, nb, nn} from "date-fns/locale";
+import {enGB, nb, nn} from "date-fns/locale";
+
 export const SUPPORTED_LANGUAGES = ["en", "nb", "nn"] as const;
 
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
@@ -60,7 +61,7 @@ i18n
 
 export default i18n;
 const dateFnLocales: Record<SupportedLanguage, Locale> = {
-    en: enUS,
+    en: enGB,
     nn: nn,
     nb: nb,
 };
