@@ -26,7 +26,7 @@
     "applikasjon.paabegynt.soknad.flertall": "started applications",
     "applikasjon.paabegynt.soknad.informasjon": "Please note that started applications are deleted after {{DAYS_BEFORE_DELETION}} days.",
     "applikasjon.paabegynt.soknad.sist.oppdatert": "Last updated",
-    "applikasjon.paabegynt.soknad.slettes": "Deleted in",
+    "applikasjon.paabegynt.soknad.slettes": "Deleted",
     "applikasjon.dokumentasjon.tittel": "Send documentation for an application you have submitted",
     "applikasjon.dokumentasjon.informasjon.del1": "Documentation can be sent to applications you have previously submitted.",
     "applikasjon.dokumentasjon.informasjon.del2": "Go to the list of <lenke>your social assistance applications</lenke>",

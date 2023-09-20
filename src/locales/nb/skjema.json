@@ -26,7 +26,7 @@
     "applikasjon.paabegynt.soknad.flertall": "påbegynte søknader",
     "applikasjon.paabegynt.soknad.informasjon": "Vær oppmerksom på at påbegynte søknader slettes etter {{DAYS_BEFORE_DELETION}} dager.",
     "applikasjon.paabegynt.soknad.sist.oppdatert": "Sist oppdatert",
-    "applikasjon.paabegynt.soknad.slettes": "Slettes om",
+    "applikasjon.paabegynt.soknad.slettes": "Slettes",
     "applikasjon.dokumentasjon.tittel": "Send dokumentasjon til en søknad du har sendt inn",
     "applikasjon.dokumentasjon.informasjon.del1": "Dokumentasjon kan sendes til søknader du har sendt inn tidligere.",
     "applikasjon.dokumentasjon.informasjon.del2": "Gå til listen over <lenke>dine sosialhjelpssøknader</lenke>",
