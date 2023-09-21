@@ -1,13 +1,23 @@
-import {formatDato} from "../nav-soknad/utils";
-import i18next from "i18next";
+import {format, isValid} from "date-fns";
+import {logWarning} from "../nav-soknad/utils/loggerUtils";
+import {getDateFnLocale} from "../i18n";
 
 /**
  * Formats a date to the current language (i18next.language)
- * @param date - Date in ISO-8601 format
+ * @param date - Date as Date or as ISO-8601 string
  * @returns Formatted date, or "" if date is null or undefined
  * @example
- *  <LocalizedDate date={"2021-01-01"} />
- *  -> "1. august 2019"
+ *  <LocalizedDate date={"2021-01-01"} /> -> "1. august 2019"
  */
-export const LocalizedDate = ({date}: {date: string | null | undefined}) =>
-    date ? formatDato(date, i18next.language) : "";
+export const LocalizedDate = ({date}: {date: Date | string | null | undefined}): string => {
+    if (!date) return "";
+
+    const dato = typeof date === "string" ? new Date(date) : date;
+
+    if (!isValid(dato)) {
+        logWarning(`formatDato: Invalid date: ${date}`);
+        return date.toString();
+    }
+
+    return format(dato, "PPP", {locale: getDateFnLocale()});
+};
