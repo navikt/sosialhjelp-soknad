@@ -1,16 +1,7 @@
-export interface Boutgifter {
-    bekreftelse: null | boolean;
-    husleie: boolean;
-    strom: boolean;
-    kommunalAvgift: boolean;
-    oppvarming: boolean;
-    boliglan: boolean;
-    annet: boolean;
-    skalViseInfoVedBekreftelse: boolean;
-}
+import {BoutgifterFrontend} from "../../../generated/model";
 
-export const initialBoutgifterState: Boutgifter = {
-    bekreftelse: null,
+export const initialBoutgifterState: BoutgifterFrontend = {
+    bekreftelse: true,
     husleie: false,
     strom: false,
     kommunalAvgift: false,
@@ -21,7 +12,6 @@ export const initialBoutgifterState: Boutgifter = {
 };
 
 export enum BoutgifterKeys {
-    BEKREFTELSE = "bekreftelse",
     HUSLEIE = "husleie",
     STROM = "strom",
     KOMMUNALAVGIFT = "kommunalAvgift",
