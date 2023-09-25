@@ -59,7 +59,7 @@
     "redux": "^4.2.1",
     "redux-saga": "^1.2.3",
     "styled-components": "^6.0.8",
-    "swr": "^1.2.2",
+    "swr": "^2.2.4",
     "zod": "^3.19.1"
   },
   "devDependencies": {
