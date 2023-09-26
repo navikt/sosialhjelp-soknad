@@ -9,7 +9,7 @@ spec:
   image: {{image}}
   port: 8080
   ingresses:
-    - "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad"
+    - "https://sosialhjelp-soknad-mock.ekstern.dev.nav.no/sosialhjelp/soknad"
   accessPolicy:
     outbound:
       external:
