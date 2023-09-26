@@ -7,34 +7,48 @@ import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel"
 import {Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
-import {Boutgifter, BoutgifterKeys} from "./BoutgifterTypes";
+import {BoutgifterKeys} from "./BoutgifterTypes";
 
 const BOUTGIFTER = "utgifter.boutgift";
 
 export const BoutgifterView = () => {
-    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.BOUTGIFTER);
-    const boutgifter: Boutgifter = soknadsdata.utgifter.boutgifter;
+    const {
+        soknadsdata: {
+            utgifter: {boutgifter},
+        },
+        lagre,
+        oppdater,
+    } = useSoknadsdata(SoknadsSti.BOUTGIFTER);
     const {t} = useTranslation("skjema");
 
-    const handleClickRadio = (idToToggle: BoutgifterKeys) => {
-        boutgifter[idToToggle] = !boutgifter[idToToggle];
+    const setCheckboxValue = (idToToggle: BoutgifterKeys, value: boolean) => {
+        boutgifter[idToToggle] = value;
+        // FIXME: Vet ikke hvorfor dette er nødvendig,
+        //  dette er en feil som går langt inn i backend.
+        boutgifter.bekreftelse = harSvartJa();
         oppdater(boutgifter);
         lagre(boutgifter);
     };
 
-    const renderCheckBox = (navn: BoutgifterKeys, textKey: string) => {
-        const isChecked = !!boutgifter[navn];
+    const renderCheckBox = (navn: BoutgifterKeys, textKey: string) => (
+        <CheckboxPanel
+            id={"boutgifter_" + navn + "_checkbox"}
+            name={navn}
+            checked={boutgifter[navn]}
+            label={t(BOUTGIFTER + ".true.type." + textKey)}
+            onClick={(value) => setCheckboxValue(navn, value)}
+        />
+    );
 
-        return (
-            <CheckboxPanel
-                id={"boutgifter_" + navn + "_checkbox"}
-                name={navn}
-                checked={isChecked}
-                label={t(BOUTGIFTER + ".true.type." + textKey)}
-                onClick={() => handleClickRadio(navn)}
-            />
-        );
-    };
+    const harSvartJa = () =>
+        [
+            BoutgifterKeys.HUSLEIE,
+            BoutgifterKeys.STROM,
+            BoutgifterKeys.KOMMUNALAVGIFT,
+            BoutgifterKeys.OPPVARMING,
+            BoutgifterKeys.BOLIGLAN,
+            BoutgifterKeys.ANNET,
+        ].some((key) => boutgifter[key]);
 
     return (
         <div className="skjema-sporsmal">
@@ -49,7 +63,7 @@ export const BoutgifterView = () => {
                 {renderCheckBox(BoutgifterKeys.BOLIGLAN, BoutgifterKeys.BOLIGLAN)}
                 {renderCheckBox(BoutgifterKeys.ANNET, "andreutgifter")}
             </Sporsmal>
-            {boutgifter && boutgifter.skalViseInfoVedBekreftelse && boutgifter.bekreftelse === true && (
+            {boutgifter?.skalViseInfoVedBekreftelse && boutgifter?.bekreftelse && (
                 <Informasjonspanel ikon={"ella"} farge="viktig">
                     <Trans
                         t={t}

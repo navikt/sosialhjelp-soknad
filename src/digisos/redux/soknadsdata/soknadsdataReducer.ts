@@ -6,7 +6,7 @@ import {Bostotte, initialBostotteState} from "../../../skjema/06-inntektFormue/b
 import {initialUtbetalingerState, Utbetalinger} from "../../../skjema/06-inntektFormue/utbetalinger/utbetalingerTypes";
 import {initialVerdierState, Verdier} from "../../../skjema/06-inntektFormue/verdier/VerdierTypes";
 import {initialFormueState, Formue} from "../../../skjema/06-inntektFormue/formue/FormueTypes";
-import {initialBoutgifterState, Boutgifter} from "../../../skjema/07-utgifterGjeld/boutgifter/BoutgifterTypes";
+import {initialBoutgifterState} from "../../../skjema/07-utgifterGjeld/boutgifter/BoutgifterTypes";
 import {
     initialBarneutgifterState,
     Barneutgifter,
@@ -19,6 +19,7 @@ import {
 import {Systeminntekter, initialSysteminntekter} from "../../../skjema/06-inntektFormue/navytelser/navYtelserTypes";
 import {Studielan, initialStudielanState} from "../../../skjema/06-inntektFormue/studielan/StudielanTypes";
 import {REST_STATUS} from "./soknadsdataTypes";
+import {BoutgifterFrontend} from "../../../generated/model";
 
 export enum SoknadsdataActionTypeKeys {
     OPPDATER_SOKNADSDATA_STI = "soknadsdata/OPPDATER_STI",
@@ -78,7 +79,7 @@ export const initialInntektState: Inntekt = {
 };
 
 export interface Utgifter {
-    boutgifter: Boutgifter;
+    boutgifter: BoutgifterFrontend;
     barneutgifter: Barneutgifter;
 }
 
@@ -117,7 +118,7 @@ export type SoknadsdataType =
     | Utgifter
     | Utbetalinger
     | Barneutgifter
-    | Boutgifter
+    | BoutgifterFrontend
     | SkattbarInntektInfo;
 
 interface SoknadsdataActionType {
@@ -161,20 +162,16 @@ const reducer = (state: Soknadsdata = initialSoknadsdataState, action: Soknadsda
     }
 };
 
-export const settRestStatus = (sti: string, restStatus: REST_STATUS): SoknadsdataActionType => {
-    return {
-        type: SoknadsdataActionTypeKeys.SETT_REST_STATUS,
-        sti,
-        restStatus,
-    };
-};
+export const settRestStatus = (sti: string, restStatus: REST_STATUS): SoknadsdataActionType => ({
+    type: SoknadsdataActionTypeKeys.SETT_REST_STATUS,
+    sti,
+    restStatus,
+});
 
-export const oppdaterSoknadsdataSti = (sti: string, verdi: SoknadsdataType | null): SoknadsdataActionType => {
-    return {
-        type: SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA_STI,
-        sti,
-        verdi,
-    };
-};
+export const oppdaterSoknadsdataSti = (sti: string, verdi: SoknadsdataType | null): SoknadsdataActionType => ({
+    type: SoknadsdataActionTypeKeys.OPPDATER_SOKNADSDATA_STI,
+    sti,
+    verdi,
+});
 
 export default reducer;
