@@ -1,15 +1,8 @@
 import {SkattbarInntektInfo} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {Organisasjon} from "../../../generated/model";
 
 export interface SkattbarInntekt {
     organisasjoner: Organisasjon[];
-}
-
-export interface Organisasjon {
-    utbetalinger: Utbetaling[];
-    organisasjonsnavn: string;
-    orgnr: string;
-    fom: null | string;
-    tom: null | string;
 }
 
 export interface Utbetaling {
