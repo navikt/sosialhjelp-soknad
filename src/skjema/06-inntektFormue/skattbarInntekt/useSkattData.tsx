@@ -30,8 +30,8 @@ export const useSkattData = () => {
     const isLoading = isFetching || isMutating;
     const samtykke = data?.samtykke ?? null;
 
-    const samtykkeTimestamp: Date = new Date(data!.samtykkeTidspunkt!);
-    const samtykkeTidspunkt = isValid(samtykkeTimestamp) ? formatTidspunkt(samtykkeTimestamp.toString(), t) : "";
+    const samtykkeTimestamp = new Date(data!.samtykkeTidspunkt!);
+    const samtykkeTidspunkt = isValid(samtykkeTimestamp) ? formatTidspunkt(samtykkeTimestamp, t) : "";
 
     return {data, samtykke, samtykkeTidspunkt, isLoading, setSamtykke};
 };

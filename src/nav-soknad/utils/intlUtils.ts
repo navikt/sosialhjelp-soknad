@@ -15,12 +15,12 @@ export const getIntlTextOrKey = (t: TFunction<"skjema", "skjema">, key: string):
 export const replaceDotWithUnderscore = (verdi: string) => verdi.replace(/\./g, "_");
 
 // Eksempel: "2019-08-01T12:12:12.123123Z" => "1. august 2019 klokken 12:12"
-export function formatTidspunkt(isoDate: string, t: TFunction<"skjema", "skjema">) {
-    const dato: Date = new Date(isoDate);
+export function formatTidspunkt(isoDate: string | Date, t: TFunction<"skjema", "skjema">) {
+    const dato: Date = typeof isoDate === "string" ? new Date(isoDate) : isoDate;
 
     if (!isValid(dato)) {
         logWarning(`formatDato: Invalid date: ${isoDate}`);
-        return isoDate;
+        return "";
     }
 
     return format(dato, "PPPpp", {locale: getDateFnLocale()});
