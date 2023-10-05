@@ -2,12 +2,12 @@ import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placehol
 import SkattbarinntektForskuddstrekk from "./SkattbarinntektForskuddstrekk";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils";
 import {UndertekstBold} from "nav-frontend-typografi";
-import {Alert, BodyShort, Heading, Label, Link} from "@navikt/ds-react";
+import {Alert, BodyShort, Label, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {useSkattData} from "./useSkattData";
 
-const Skatt = () => {
+const SkattbarInntekt = () => {
     const {data, samtykke, samtykkeTidspunkt, isLoading, setSamtykke} = useSkattData();
     const {t} = useTranslation("skjema");
 
@@ -16,10 +16,7 @@ const Skatt = () => {
     const inntektFraSkatteetatenFeilet = data?.inntektFraSkatteetatenFeilet;
 
     return (
-        <div className={"skatt-wrapper"}>
-            <Heading size="medium" level="2" spacing>
-                {getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.tittel")}
-            </Heading>
+        <>
             {samtykke && inntektFraSkatteetatenFeilet && (
                 <div className={"ytelser_panel"}>
                     <div>
@@ -63,9 +60,9 @@ const Skatt = () => {
                     </Link>
                 </div>
             )}
-            {!isLoading && inntektFraSkatteetaten && inntektFraSkatteetaten.length === 0 && (
+            {!isLoading && inntektFraSkatteetaten?.length === 0 && (
                 <div className={"ytelser_panel"}>
-                    {samtykke && (
+                    {samtykke ? (
                         <>
                             <div>{t("utbetalinger.inntekt.skattbar.ingen")}</div>
                             <Link
@@ -79,8 +76,7 @@ const Skatt = () => {
                                 {getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
                             </Link>
                         </>
-                    )}
-                    {!samtykke && (
+                    ) : (
                         <>
                             <div>
                                 <Label spacing as="p">
@@ -102,10 +98,10 @@ const Skatt = () => {
                     )}
                 </div>
             )}
-        </div>
+        </>
     );
 };
 
-export {Skatt};
+export {SkattbarInntekt};
 
-export default Skatt;
+export default SkattbarInntekt;
