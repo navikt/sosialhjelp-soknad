@@ -1,6 +1,10 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
 
+/**
+ * @deprecated til fordel for LocalizedDate
+ * @param children Dato som ISO-8601
+ */
 const Dato = ({children}: {children: string}) => {
     const {i18n} = useTranslation();
     const language = i18n.language === "nn" ? "nb" : i18n.language;

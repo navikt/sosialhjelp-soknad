@@ -385,6 +385,48 @@
                 }
             }
         },
+        "/soknader/{behandlingsId}/inntekt/skattbarinntektogforskuddstrekk": {
+            "get": {
+                "tags": ["skattbar-inntekt-ressurs"],
+                "operationId": "hentSkattbareInntekter",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/SkattbarInntektFrontend"}}
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["skattbar-inntekt-ressurs"],
+                "operationId": "putSkatteetatenSamtykke",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "requestBody": {
+                    "content": {
+                        "application/json": {"schema": {"$ref": "#/components/schemas/SkattbarInntektInputDTO"}}
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/SkattbarInntektFrontend"}}
+                        }
+                    }
+                }
+            }
+        },
         "/soknader/{behandlingsId}/inntekt/formue": {
             "get": {
                 "tags": ["formue-ressurs"],
@@ -658,10 +700,7 @@
             "post": {
                 "tags": ["skattbar-inntekt-ressurs"],
                 "operationId": "updateSamtykke",
-                "parameters": [
-                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
-                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
-                ],
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "requestBody": {"content": {"application/json": {"schema": {"type": "boolean"}}}, "required": true},
                 "responses": {
                     "401": {
@@ -669,7 +708,8 @@
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
-                }
+                },
+                "deprecated": true
             }
         },
         "/soknader/{behandlingsId}/inntekt/bostotte/samtykke": {
@@ -907,25 +947,6 @@
                 }
             }
         },
-        "/soknader/{behandlingsId}/inntekt/skattbarinntektogforskuddstrekk": {
-            "get": {
-                "tags": ["skattbar-inntekt-ressurs"],
-                "operationId": "hentSkattbareInntekter",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/SkattbarInntektFrontend"}}
-                        }
-                    }
-                }
-            }
-        },
         "/soknader/{behandlingsId}/hentSamtykker": {
             "get": {
                 "tags": ["soknad-ressurs"],
@@ -1133,6 +1154,23 @@
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Utslagskriterier"}}}
                     }
+                },
+                "deprecated": true
+            }
+        },
+        "/informasjon/session": {
+            "get": {
+                "tags": ["informasjon-ressurs"],
+                "operationId": "getSessionInfo",
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SessionResponse"}}}
+                    }
                 }
             }
         },
@@ -1153,7 +1191,8 @@
                             }
                         }
                     }
-                }
+                },
+                "deprecated": true
             }
         },
         "/informasjon/harNyligInnsendteSoknader": {
@@ -1169,7 +1208,8 @@
                         "description": "OK",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/NyligInnsendteSoknaderResponse"}}}
                     }
-                }
+                },
+                "deprecated": true
             }
         },
         "/informasjon/fornavn": {
@@ -1185,7 +1225,8 @@
                         "description": "OK",
                         "content": {"*/*": {"schema": {"type": "object", "additionalProperties": {"type": "string"}}}}
                     }
-                }
+                },
+                "deprecated": true
             }
         },
         "/informasjon/adressesok": {
@@ -1590,6 +1631,55 @@
                 "type": "object",
                 "properties": {"skalVises": {"type": "boolean"}, "bekreftelse": {"type": "boolean"}}
             },
+            "SkattbarInntektInputDTO": {
+                "required": ["samtykke"],
+                "type": "object",
+                "properties": {
+                    "samtykke": {
+                        "type": "boolean",
+                        "description": "Samtykke til å hente skattbar inntekt fra skatteetaten",
+                        "nullable": true,
+                        "example": true
+                    }
+                }
+            },
+            "Organisasjon": {
+                "required": ["fom", "tom"],
+                "type": "object",
+                "properties": {
+                    "utbetalinger": {"type": "array", "items": {"$ref": "#/components/schemas/Utbetaling"}},
+                    "organisasjonsnavn": {"type": "string"},
+                    "orgnr": {"type": "string"},
+                    "fom": {"type": "string"},
+                    "tom": {"type": "string"}
+                }
+            },
+            "SkattbarInntektFrontend": {
+                "type": "object",
+                "properties": {
+                    "inntektFraSkatteetaten": {
+                        "type": "array",
+                        "items": {"$ref": "#/components/schemas/SkattbarInntektOgForskuddstrekk"}
+                    },
+                    "inntektFraSkatteetatenFeilet": {"type": "boolean"},
+                    "samtykke": {"type": "boolean"},
+                    "samtykkeTidspunkt": {"type": "string"}
+                }
+            },
+            "SkattbarInntektOgForskuddstrekk": {
+                "type": "object",
+                "properties": {
+                    "organisasjoner": {"type": "array", "items": {"$ref": "#/components/schemas/Organisasjon"}}
+                }
+            },
+            "Utbetaling": {
+                "type": "object",
+                "properties": {
+                    "brutto": {"type": "number", "format": "double"},
+                    "forskuddstrekk": {"type": "number", "format": "double"},
+                    "tittel": {"type": "string"}
+                }
+            },
             "FormueFrontend": {
                 "required": ["annet", "brukskonto", "bsu", "livsforsikring", "sparekonto", "verdipapirer"],
                 "type": "object",
@@ -1919,42 +2009,6 @@
                         "items": {"$ref": "#/components/schemas/SysteminntektFrontend"}
                     },
                     "utbetalingerFraNavFeilet": {"type": "boolean"}
-                }
-            },
-            "Organisasjon": {
-                "type": "object",
-                "properties": {
-                    "utbetalinger": {"type": "array", "items": {"$ref": "#/components/schemas/Utbetaling"}},
-                    "organisasjonsnavn": {"type": "string"},
-                    "orgnr": {"type": "string"},
-                    "fom": {"type": "string"},
-                    "tom": {"type": "string"}
-                }
-            },
-            "SkattbarInntektFrontend": {
-                "type": "object",
-                "properties": {
-                    "inntektFraSkatteetaten": {
-                        "type": "array",
-                        "items": {"$ref": "#/components/schemas/SkattbarInntektOgForskuddstrekk"}
-                    },
-                    "inntektFraSkatteetatenFeilet": {"type": "boolean"},
-                    "samtykke": {"type": "boolean"},
-                    "samtykkeTidspunkt": {"type": "string"}
-                }
-            },
-            "SkattbarInntektOgForskuddstrekk": {
-                "type": "object",
-                "properties": {
-                    "organisasjoner": {"type": "array", "items": {"$ref": "#/components/schemas/Organisasjon"}}
-                }
-            },
-            "Utbetaling": {
-                "type": "object",
-                "properties": {
-                    "brutto": {"type": "number", "format": "double"},
-                    "forskuddstrekk": {"type": "number", "format": "double"},
-                    "tittel": {"type": "string"}
                 }
             },
             "NedetidFrontend": {
@@ -2591,7 +2645,35 @@
             "PabegyntSoknad": {
                 "required": ["behandlingsId", "sistOppdatert"],
                 "type": "object",
-                "properties": {"sistOppdatert": {"type": "string"}, "behandlingsId": {"type": "string"}}
+                "properties": {"sistOppdatert": {"type": "string"}, "behandlingsId": {"type": "string"}},
+                "description": "Påbegynte men ikke innleverte søknader"
+            },
+            "SessionResponse": {
+                "required": ["daysBeforeDeletion", "numRecentlySent", "open", "userBlocked"],
+                "type": "object",
+                "properties": {
+                    "userBlocked": {
+                        "type": "boolean",
+                        "description": "Bruker har adressebeskyttelse og kan ikke bruke digital søknad"
+                    },
+                    "fornavn": {"type": "string", "description": "Brukerens fornavn"},
+                    "daysBeforeDeletion": {
+                        "type": "integer",
+                        "description": "Antall dager etter siste endring før søknader slettes",
+                        "format": "int64"
+                    },
+                    "open": {
+                        "type": "array",
+                        "description": "Påbegynte men ikke innleverte søknader",
+                        "items": {"$ref": "#/components/schemas/PabegyntSoknad"}
+                    },
+                    "numRecentlySent": {
+                        "type": "integer",
+                        "description": "Antall nylig innsendte søknader",
+                        "format": "int32"
+                    }
+                },
+                "description": "Informasjon om brukerøkt"
             },
             "NyligInnsendteSoknaderResponse": {
                 "required": ["antallNyligInnsendte"],

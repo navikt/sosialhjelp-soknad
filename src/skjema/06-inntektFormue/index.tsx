@@ -6,11 +6,12 @@ import Utbetalinger from "./utbetalinger";
 import Verdier from "./verdier/Verdier";
 import Formue from "./formue/Formue";
 import NavYtelser from "./navytelser";
-import SkattbarInntekt from "./skattbarInntekt";
+import {SkattbarInntekt} from "./skattbarInntekt";
 import Studielan from "./studielan/Studielan";
 import StegMedNavigasjon from "../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
 import {Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
+import {getIntlTextOrKey} from "../../nav-soknad/utils";
 
 const InntektFormue = () => {
     const {t} = useTranslation("skjema");
@@ -18,6 +19,12 @@ const InntektFormue = () => {
     return (
         <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"inntektbolk"} ikon={<Penger />}>
             <div className={"skjema-sporsmal"}>
+                <div className={"skatt-wrapper"}>
+                    <Heading size="medium" level="2" spacing>
+                        {getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.tittel")}
+                    </Heading>
+                </div>
+
                 <SkattbarInntekt />
                 <NavYtelser />
                 <Bostotte />
