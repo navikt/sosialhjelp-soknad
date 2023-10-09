@@ -2,25 +2,24 @@ import VelkomstSnakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeb
 import {BodyLong, Heading} from "@navikt/ds-react";
 import * as React from "react";
 import {Trans, useTranslation} from "react-i18next";
-import {useHarNyligInnsendteSoknader, useHentFornavn} from "../../generated/informasjon-ressurs/informasjon-ressurs";
+import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 
 export const NySoknadVelkomst = () => {
-    const {data: fornavnData} = useHentFornavn();
-    const {data: nyligInnsendteSoknader} = useHarNyligInnsendteSoknader();
+    const {data: sessionInfo} = useGetSessionInfo();
     const {t} = useTranslation("skjema");
 
     const logLinkClicked = () => {
         logAmplitudeEvent("navigere", {
             lenkeTekst: "opplysninger du kan bli bedt om å levere",
             destinasjon: "https://www.nav.no/okonomisk-sosialhjelp#soknad",
-            antallNyligInnsendteSoknader: nyligInnsendteSoknader?.antallNyligInnsendte ?? 0,
+            antallNyligInnsendteSoknader: sessionInfo?.numRecentlySent ?? 0,
         });
     };
 
     return (
         <div className={"p-8 lg:py-12 lg:px-24"}>
-            <VelkomstSnakkeboble fornavn={fornavnData?.fornavn} />
+            <VelkomstSnakkeboble fornavn={sessionInfo?.fornavn} />
             <Heading level="2" size="small" spacing>
                 {t("informasjon.start.undertittel")}
             </Heading>

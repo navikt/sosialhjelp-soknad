@@ -2,14 +2,14 @@ import {Attachment} from "@navikt/ds-icons";
 import {Accordion, Heading} from "@navikt/ds-react";
 import React from "react";
 import {Trans, useTranslation} from "react-i18next";
-import {useHarNyligInnsendteSoknader} from "../../generated/informasjon-ressurs/informasjon-ressurs";
+import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs";
 import {innsynURL} from "../../lib/config";
 
 export const EttersendDokuPanel = () => {
-    const {data: nyligInnsendte} = useHarNyligInnsendteSoknader();
+    const {data} = useGetSessionInfo();
     const {t} = useTranslation("skjema");
 
-    if (!nyligInnsendte?.antallNyligInnsendte) return null;
+    if (!data?.numRecentlySent) return null;
 
     return (
         <Accordion>

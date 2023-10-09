@@ -6,7 +6,7 @@ import {addDays, formatDistance} from "date-fns";
 import {basePath} from "../../configuration";
 import TextPlaceholder from "../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {useTranslation} from "react-i18next";
-import {useHentPabegynteSoknader} from "../../generated/informasjon-ressurs/informasjon-ressurs";
+import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs";
 import {LocalizedDate} from "../../components/LocalizedDate";
 import {getDateFnLocale} from "../../i18n";
 
@@ -55,8 +55,8 @@ const PabegyntSoknad = ({
 };
 
 const PabegynteSoknaderCount = () => {
-    const {data: pabegynteSoknader} = useHentPabegynteSoknader();
-    const num = pabegynteSoknader?.length;
+    const {data: session} = useGetSessionInfo();
+    const num = session?.open?.length;
 
     const {t} = useTranslation("skjema");
 
@@ -74,11 +74,12 @@ const PabegynteSoknaderCount = () => {
 };
 
 export const PabegynteSoknaderPanel = () => {
-    const {data: pabegynteSoknaderResponse} = useHentPabegynteSoknader();
+    const {data: session} = useGetSessionInfo();
+    const openSoknader = session?.open;
 
     const {t} = useTranslation("skjema");
 
-    if (!pabegynteSoknaderResponse?.length) return null;
+    if (!openSoknader?.length) return null;
 
     return (
         <Accordion>
@@ -106,12 +107,12 @@ export const PabegynteSoknaderPanel = () => {
                             })}
                         </BodyShort>
                         <ul className={"space-y-4"}>
-                            {pabegynteSoknaderResponse?.map(({behandlingsId, sistOppdatert}) => (
+                            {openSoknader?.map(({behandlingsId, sistOppdatert}) => (
                                 <PabegyntSoknad
                                     key={behandlingsId}
                                     behandlingsId={behandlingsId}
                                     sistOppdatert={sistOppdatert}
-                                    antallPabegynteSoknader={pabegynteSoknaderResponse.length}
+                                    antallPabegynteSoknader={openSoknader.length}
                                 />
                             ))}
                         </ul>

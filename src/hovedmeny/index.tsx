@@ -8,14 +8,14 @@ import {NySoknadPanel} from "./paneler/NySoknad";
 import {PabegynteSoknaderPanel} from "./paneler/PabegynteSoknader";
 import {EttersendDokuPanel} from "./paneler/EttersendDokuPanel";
 import {useTranslation} from "react-i18next";
-import {useGetUtslagskriterier} from "../generated/informasjon-ressurs/informasjon-ressurs";
+import {useGetSessionInfo} from "../generated/informasjon-ressurs/informasjon-ressurs";
 import {useAlgebraic} from "../lib/hooks/useAlgebraic";
 import {useSearchParams} from "react-router-dom";
 import {useEffect} from "react";
 import {logInfo} from "../nav-soknad/utils/loggerUtils";
 
 const Informasjon = () => {
-    const {expectOK} = useAlgebraic(useGetUtslagskriterier());
+    const {expectOK} = useAlgebraic(useGetSessionInfo());
     const {t} = useTranslation();
     useTitle(getIntlTextOrKey(t, "applikasjon.sidetittel"));
     const [searchParams, setSearchParams] = useSearchParams();
@@ -31,8 +31,10 @@ const Informasjon = () => {
         setSearchParams({});
     }, [searchParams, setSearchParams]);
 
-    return expectOK(({harTilgang}) =>
-        harTilgang ? (
+    return expectOK(({userBlocked}) =>
+        userBlocked ? (
+            <PersonbeskyttelseFeilmelding />
+        ) : (
             <div className={"bg-digisosGronnBakgrunn flex flex-col"}>
                 <AppBanner />
                 <NedetidPanel varselType={"infoside"} />
@@ -42,8 +44,6 @@ const Informasjon = () => {
                     <EttersendDokuPanel />
                 </div>
             </div>
-        ) : (
-            <PersonbeskyttelseFeilmelding />
         )
     );
 };
