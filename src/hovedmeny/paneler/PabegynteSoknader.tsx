@@ -1,5 +1,5 @@
 import {FileContent} from "@navikt/ds-icons";
-import {Accordion, BodyShort, Heading, Label, LinkPanel} from "@navikt/ds-react";
+import {BodyShort, ExpansionCard, Heading, Label, LinkPanel} from "@navikt/ds-react";
 import React from "react";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {addDays, formatDistance} from "date-fns";
@@ -82,43 +82,39 @@ export const PabegynteSoknaderPanel = () => {
     if (!openSoknader?.length) return null;
 
     return (
-        <Accordion>
-            <Accordion.Item className={"bg-white rounded-md"}>
-                <Accordion.Header className={"!items-center !border-0 !py-6 !px-8 rounded-t-md"}>
-                    <div className={"flex flex-row items-center gap-8"}>
-                        <div
-                            className={
-                                "rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"
-                            }
-                        >
-                            <FileContent className={"w-6 h-6"} aria-hidden="true" />
-                        </div>
-                        <Heading level="2" size="small" className={"flex flex-col lg:flex-row"}>
-                            {t("applikasjon.fortsett.soknad")}
-                            <PabegynteSoknaderCount />
-                        </Heading>
+        <ExpansionCard aria-label={t("applikasjon.fortsett.soknad")}>
+            <ExpansionCard.Header>
+                <ExpansionCard.Title className={"flex flex-row items-center gap-6 pb-2"}>
+                    <div
+                        className={
+                            "rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"
+                        }
+                    >
+                        <FileContent className={"w-6 h-6"} aria-hidden="true" />
                     </div>
-                </Accordion.Header>
-                <Accordion.Content className={"!px-0 !border-0"}>
-                    <div className={"p-8 lg:pl-24"}>
-                        <BodyShort className={"pb-4"}>
-                            {t("applikasjon.paabegynt.soknad.informasjon", {
-                                DAYS_BEFORE_DELETION,
-                            })}
-                        </BodyShort>
-                        <ul className={"space-y-4"}>
-                            {openSoknader?.map(({behandlingsId, sistOppdatert}) => (
-                                <PabegyntSoknad
-                                    key={behandlingsId}
-                                    behandlingsId={behandlingsId}
-                                    sistOppdatert={sistOppdatert}
-                                    antallPabegynteSoknader={openSoknader.length}
-                                />
-                            ))}
-                        </ul>
-                    </div>
-                </Accordion.Content>
-            </Accordion.Item>
-        </Accordion>
+                    <Heading level="2" size="small" className={"flex flex-col lg:flex-row"}>
+                        {t("applikasjon.fortsett.soknad")}
+                        <PabegynteSoknaderCount />
+                    </Heading>
+                </ExpansionCard.Title>
+            </ExpansionCard.Header>
+            <ExpansionCard.Content>
+                <BodyShort className={"pb-4"}>
+                    {t("applikasjon.paabegynt.soknad.informasjon", {
+                        DAYS_BEFORE_DELETION,
+                    })}
+                </BodyShort>
+                <ul className={"space-y-4"}>
+                    {openSoknader?.map(({behandlingsId, sistOppdatert}) => (
+                        <PabegyntSoknad
+                            key={behandlingsId}
+                            behandlingsId={behandlingsId}
+                            sistOppdatert={sistOppdatert}
+                            antallPabegynteSoknader={openSoknader.length}
+                        />
+                    ))}
+                </ul>
+            </ExpansionCard.Content>
+        </ExpansionCard>
     );
 };

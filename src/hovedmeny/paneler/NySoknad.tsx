@@ -1,4 +1,4 @@
-import {Accordion, Alert, Button, Heading, Loader} from "@navikt/ds-react";
+import {Alert, Button, ExpansionCard, Heading, Loader} from "@navikt/ds-react";
 import * as React from "react";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import Personopplysninger from "./Personopplysninger";
@@ -67,10 +67,10 @@ export const NySoknadInfo = () => {
 export const NySoknadPanel = () => {
     const {t} = useTranslation("skjema");
     return (
-        <Accordion>
-            <Accordion.Item className={"bg-white rounded-md"}>
-                <Accordion.Header className={"!items-center !border-0 !py-6 !px-8 rounded-t-md"}>
-                    <div className={"flex items-center gap-8"}>
+        <ExpansionCard aria-label={t("applikasjon.start.ny.soknad")}>
+            <ExpansionCard.Header>
+                <ExpansionCard.Title>
+                    <div className={"flex items-center gap-6 mb-2"}>
                         <div
                             className={
                                 "rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"
@@ -82,11 +82,11 @@ export const NySoknadPanel = () => {
                             {t("applikasjon.start.ny.soknad")}
                         </Heading>
                     </div>
-                </Accordion.Header>
-                <Accordion.Content className={"!px-0 !border-0"}>
-                    <NySoknadInfo />
-                </Accordion.Content>
-            </Accordion.Item>
-        </Accordion>
+                </ExpansionCard.Title>
+            </ExpansionCard.Header>
+            <ExpansionCard.Content>
+                <NySoknadInfo />
+            </ExpansionCard.Content>
+        </ExpansionCard>
     );
 };
