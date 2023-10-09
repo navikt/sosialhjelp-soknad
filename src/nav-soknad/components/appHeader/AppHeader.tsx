@@ -3,22 +3,23 @@ import {isLocalhost} from "../../utils";
 import {DeveloperToolkit} from "./DeveloperToolkit";
 import {useTranslation} from "react-i18next";
 import {Heading} from "@navikt/ds-react";
+import cx from "classnames";
 
-const AppHeader = () => {
+const AppHeader = ({className}: {className?: string}) => {
     const {t} = useTranslation("skjema");
-
+    const styles = cx("text-center p-4 bg-[#9bd0b0]", className);
     if (isLocalhost(window.location.href))
         return (
             <>
-                <Heading level="1" size="small" className={"text-center p-4 bg-[#9bd0b0]"}>
+                <DeveloperToolkit />
+                <Heading level="1" size="small" className={styles}>
                     {t("skjema.tittel")}
                 </Heading>
-                <DeveloperToolkit />
             </>
         );
 
     return (
-        <Heading level="1" size="small" className={"text-center p-4 bg-[#9bd0b0]"}>
+        <Heading level="1" size="small" className={styles}>
             {t("skjema.tittel")}
         </Heading>
     );
