@@ -1,14 +1,9 @@
+/*
+    Denne hacken er her for at h3, h4 og h5 fra rå HTML i språknøkkelen
+    skal rendre med ds-typografi-klasser når det settes med innerHTML.
+*/
+
 .personopplysning_info {
-    padding: 3rem 2rem 0 2rem;
-    max-width: 600px;
-
-    @media @mobile {
-        padding-top: 3rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
-        padding-bottom: 1rem;
-    }
-
     h3 {
         &:extend(.typo-systemtittel);
     }
