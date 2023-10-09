@@ -38,13 +38,17 @@ const PabegyntSoknad = ({
                 href={`${basePath}/skjema/${behandlingsId}/1`}
                 onClick={(event) => onPabegyntSoknadClick(event, `${basePath}/skjema/${behandlingsId}/1`)}
                 border
-                className={"!p-4"}
+                className={"!p-4 group !text-[#222] hover:!text-[#000]"}
             >
-                <LinkPanel.Title className={"flex flex-col lg:flex-row align-center"}>
+                <LinkPanel.Title
+                    className={
+                        "flex flex-col !text-[#222] group-hover:!text-[#000] lg:flex-row align-center !no-underline"
+                    }
+                >
                     <Label style={{marginRight: "1rem"}}>
                         {t("applikasjon.paabegynt.soknad.sist.oppdatert")} <LocalizedDate date={sistOppdatert} />
                     </Label>
-                    <BodyShort>
+                    <BodyShort className={"!active:no-underline"}>
                         {t("applikasjon.paabegynt.soknad.slettes")}{" "}
                         {formatDistance(expiryDate, new Date(), {locale: getDateFnLocale(), addSuffix: true})}
                     </BodyShort>
