@@ -1,5 +1,5 @@
 import {Attachment} from "@navikt/ds-icons";
-import {BodyShort, ExpansionCard, Heading} from "@navikt/ds-react";
+import {BodyShort, ExpansionCard} from "@navikt/ds-react";
 import React from "react";
 import {Trans, useTranslation} from "react-i18next";
 import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs";
@@ -13,8 +13,8 @@ export const EttersendDokuPanel = () => {
 
     return (
         <ExpansionCard aria-label={t("applikasjon.dokumentasjon.tittel")}>
-            <ExpansionCard.Header>
-                <ExpansionCard.Title className={"flex items-center gap-6 pb-2"}>
+            <ExpansionCard.Header className={"!border-0"}>
+                <ExpansionCard.Title className={"flex !items-center gap-6"}>
                     <div
                         className={
                             "rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"
@@ -22,12 +22,10 @@ export const EttersendDokuPanel = () => {
                     >
                         <Attachment className={"w-6 h-6 block"} aria-hidden="true" />
                     </div>
-                    <Heading level="2" size="small">
-                        {t("applikasjon.dokumentasjon.tittel")}
-                    </Heading>
+                    {t("applikasjon.dokumentasjon.tittel")}
                 </ExpansionCard.Title>
             </ExpansionCard.Header>
-            <ExpansionCard.Content>
+            <ExpansionCard.Content className={"!border-0"}>
                 <BodyShort spacing>{t("applikasjon.dokumentasjon.informasjon.del1")}</BodyShort>
                 <ul className={"list-disc list-inside py-2"}>
                     <li>

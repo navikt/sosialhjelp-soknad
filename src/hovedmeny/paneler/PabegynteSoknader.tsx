@@ -1,5 +1,5 @@
 import {FileContent} from "@navikt/ds-icons";
-import {BodyShort, ExpansionCard, Heading, Label, LinkPanel} from "@navikt/ds-react";
+import {BodyShort, ExpansionCard, Label, LinkPanel} from "@navikt/ds-react";
 import React from "react";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {addDays, formatDistance} from "date-fns";
@@ -65,7 +65,7 @@ const PabegynteSoknaderCount = () => {
     if (num === 0) return null;
 
     return (
-        <span className={"opacity-70 lg:pl-4 font-normal"}>
+        <span className={"opacity-70 font-normal"}>
             {num === 1
                 ? `1 ${t("applikasjon.paabegynt.soknad")}`
                 : `${num} ${t("applikasjon.paabegynt.soknad.flertall")}`}
@@ -83,7 +83,7 @@ export const PabegynteSoknaderPanel = () => {
 
     return (
         <ExpansionCard aria-label={t("applikasjon.fortsett.soknad")}>
-            <ExpansionCard.Header>
+            <ExpansionCard.Header className={"!border-0"}>
                 <ExpansionCard.Title className={"flex flex-row items-center gap-6 pb-2"}>
                     <div
                         className={
@@ -92,13 +92,14 @@ export const PabegynteSoknaderPanel = () => {
                     >
                         <FileContent className={"w-6 h-6"} aria-hidden="true" />
                     </div>
-                    <Heading level="2" size="small" className={"flex flex-col lg:flex-row"}>
+                    <div>
                         {t("applikasjon.fortsett.soknad")}
+                        <br />
                         <PabegynteSoknaderCount />
-                    </Heading>
+                    </div>
                 </ExpansionCard.Title>
             </ExpansionCard.Header>
-            <ExpansionCard.Content>
+            <ExpansionCard.Content className={"!border-0"}>
                 <BodyShort className={"pb-4"}>
                     {t("applikasjon.paabegynt.soknad.informasjon", {
                         DAYS_BEFORE_DELETION,
