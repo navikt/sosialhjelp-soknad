@@ -3,7 +3,6 @@ import "@navikt/ds-css";
 import {Suspense, useEffect} from "react";
 import {createRoot} from "react-dom/client";
 import {Provider} from "react-redux";
-import Modal from "react-modal";
 import {logWindowError} from "./nav-soknad/utils/loggerUtils";
 import {
     injectDecoratorClientSide,
@@ -23,8 +22,6 @@ import {basePath} from "./configuration";
 import i18n, {SUPPORTED_LANGUAGES} from "./i18n";
 import {useFeatureFlags} from "./lib/featureFlags";
 import {logAmplitudeEvent} from "./nav-soknad/utils/amplitude";
-
-Modal.setAppElement("#root");
 
 const store = configureStore();
 

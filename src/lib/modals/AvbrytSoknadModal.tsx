@@ -16,7 +16,7 @@ const StyledModal = styled(Modal)`
     overflow: visible;
 `;
 
-const ModalContent = styled(Modal.Content)`
+const ModalContent = styled(Modal.Body)`
     padding: 2rem;
     margin-top: 1rem;
     display: flex;

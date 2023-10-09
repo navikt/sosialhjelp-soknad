@@ -57,12 +57,8 @@ const TimeoutBox = (props: Props) => {
     };
 
     return (
-        <ModalWithoutCloseButton
-            open={showWarning || showLoggedOut}
-            onClose={() => null}
-            shouldCloseOnOverlayClick={false}
-        >
-            <Modal.Content>
+        <ModalWithoutCloseButton open={showWarning || showLoggedOut} onClose={() => null}>
+            <Modal.Body>
                 <div className="timeoutbox">
                     {showWarning && (
                         <Nedtelling
@@ -80,7 +76,7 @@ const TimeoutBox = (props: Props) => {
                         />
                     )}
                 </div>
-            </Modal.Content>
+            </Modal.Body>
         </ModalWithoutCloseButton>
     );
 };

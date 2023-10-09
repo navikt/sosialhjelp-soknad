@@ -30,7 +30,7 @@ export const FilePreviewFullscreen = ({file, show, onClose}: FullscreenModalProp
     const {t} = useTranslation();
     return (
         <Modal open={show} onClose={onClose}>
-            <Modal.Content className={"fixed inset-0"}>
+            <Modal.Body className={"fixed inset-0"}>
                 <div className={"w-fit ml-auto"}>
                     <Button variant="tertiary" onClick={onClose}>
                         <span className={"flex items-center gap-2 text-white hover:text-gray-900"}>
@@ -41,7 +41,7 @@ export const FilePreviewFullscreen = ({file, show, onClose}: FullscreenModalProp
                 <div className={"w-full h-full flex content-center items-center m-4"}>
                     <FilePreviewFullscreenDisplay file={file} />
                 </div>
-            </Modal.Content>
+            </Modal.Body>
         </Modal>
     );
 };

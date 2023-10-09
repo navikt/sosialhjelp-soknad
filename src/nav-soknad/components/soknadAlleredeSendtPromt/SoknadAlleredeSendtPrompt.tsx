@@ -19,7 +19,7 @@ const SoknadAlleredeSendtPrompt = () => {
 
     return (
         <Modal open={visPrompt} onClose={() => onClose()}>
-            <Modal.Content>
+            <Modal.Body>
                 <div className="avbrytmodal">
                     <div className="avbrytmodal__infoikon_wrapper">
                         <img src={`${basePath}/statisk/bilder/ikon_ark.svg`} alt={""} />
@@ -28,7 +28,7 @@ const SoknadAlleredeSendtPrompt = () => {
                     <Innholdstittel className="blokk-s avbrytmodal__overskrift">{t("overskrift")}</Innholdstittel>
                     <Normaltekst className="blokk-xxs avbrytmodal__tekst">{t("tekst")}</Normaltekst>
                 </div>
-            </Modal.Content>
+            </Modal.Body>
         </Modal>
     );
 };

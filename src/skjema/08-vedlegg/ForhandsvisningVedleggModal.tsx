@@ -4,7 +4,6 @@ import {ExpandIcon, TrashIcon} from "@navikt/aksel-icons";
 import {FilePreviewFullscreen} from "./FilePreviewFullscreen";
 import {isPdf} from "./LastOppFil";
 import {useTranslation} from "react-i18next";
-Modal.setAppElement("#root");
 
 interface ForhandsvisningModalProps {
     filePreviews: File[];
@@ -70,7 +69,7 @@ export const ForhandsvisningVedleggModal = ({
             onClose={onClose}
             className={"p-8 pt-2 h-[80vh] max-w-[800px] max-h-[600px] max-sm:(w-[95%] h-auto)"}
         >
-            <Modal.Content className={"flex flex-col space-y-4 h-full"}>
+            <Modal.Body className={"flex flex-col space-y-4 h-full"}>
                 <div className={"grow w-full mx-auto"}>
                     {filePreviews.map((filePreview, index) => (
                         <FilePreview file={filePreview} onDelete={() => onDelete(index)} key={index} />
@@ -85,7 +84,7 @@ export const ForhandsvisningVedleggModal = ({
                         {t("vedlegg.forhandsvisning.avbryt")}
                     </Button>
                 </div>
-            </Modal.Content>
+            </Modal.Body>
         </Modal>
     );
 };

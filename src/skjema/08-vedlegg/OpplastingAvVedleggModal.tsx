@@ -18,7 +18,7 @@ export const OpplastingAvVedleggModal = ({open, onClose}: {open: boolean; onClos
 
     return (
         <StyledModal open={open} onClose={onClose}>
-            <Modal.Content>
+            <Modal.Body>
                 <Heading level="1" size="medium" spacing>
                     {t("opplysninger.informasjon.modal.overskrift")}
                 </Heading>
@@ -48,7 +48,7 @@ export const OpplastingAvVedleggModal = ({open, onClose}: {open: boolean; onClos
                     <li>{t("opplysninger.informasjon.modal.bolk4.avsnitt3")}</li>
                     <li>{t("opplysninger.informasjon.modal.bolk4.avsnitt4")}</li>
                 </ul>
-            </Modal.Content>
+            </Modal.Body>
         </StyledModal>
     );
 };

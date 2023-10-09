@@ -8,7 +8,7 @@ const BehandlingAvPersonopplysningerModal = ({open, onClose}: {open: boolean; on
     // FIXME: this is broken!!
     return (
         <Modal open={open} onClose={onClose}>
-            <Modal.Content>
+            <Modal.Body>
                 <div className="personopplysning_info">
                     <div
                         dangerouslySetInnerHTML={{
@@ -21,7 +21,7 @@ const BehandlingAvPersonopplysningerModal = ({open, onClose}: {open: boolean; on
                         </Button>
                     </div>
                 </div>
-            </Modal.Content>
+            </Modal.Body>
         </Modal>
     );
 };
