@@ -1,6 +1,5 @@
 import * as React from "react";
 import VedleggFileSelector from "./LastOppFil";
-import {Checkbox} from "nav-frontend-skjema";
 import OpplastetVedlegg from "./OpplastetVedlegg";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
@@ -11,7 +10,7 @@ import {Opplysning} from "../../lib/opplysninger";
 import {ChangeEvent, useEffect, useRef} from "react";
 import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
-import {Alert} from "@navikt/ds-react";
+import {Alert, Checkbox} from "@navikt/ds-react";
 import styled from "styled-components";
 
 const StyledAlert = styled(Alert)`
@@ -103,7 +102,6 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                 </StyledAlert>
             )}
             <Checkbox
-                label={t("opplysninger.vedlegg.alleredelastetopp")}
                 id={opplysning.type + "_allerede_lastet_opp_checkbox"}
                 className={cx("vedleggLastetOppCheckbox", {
                     "checkboks--disabled": opplysning.filer?.length,
@@ -111,7 +109,9 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                 onChange={handleAlleredeLastetOpp}
                 checked={opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
                 disabled={!!files.length || loading}
-            />
+            >
+                {t("opplysninger.vedlegg.alleredelastetopp")}
+            </Checkbox>
         </div>
     );
 };
