@@ -1,9 +1,8 @@
 import * as React from "react";
 import classNames from "classnames";
-import {SkjemaGruppe} from "nav-frontend-skjema";
 import {SporsmalTekster} from "../../utils";
 import styled from "styled-components";
-import {HelpText} from "@navikt/ds-react";
+import {Fieldset, HelpText} from "@navikt/ds-react";
 
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
 
@@ -69,8 +68,8 @@ const Sporsmal = ({
 
     return (
         <div id={id} className={sporsmalCls}>
-            <SkjemaGruppe
-                feil={feil}
+            <Fieldset
+                error={feil}
                 className={cls}
                 legend={
                     <div className={legendTittelStyle}>
@@ -87,7 +86,7 @@ const Sporsmal = ({
                 }
             >
                 <div className="skjema-sporsmal__innhold">{children}</div>
-            </SkjemaGruppe>
+            </Fieldset>
         </div>
     );
 };
