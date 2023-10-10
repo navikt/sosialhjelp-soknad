@@ -6,15 +6,14 @@ import {formatTidspunkt, getFaktumSporsmalTekst, getIntlTextOrKey} from "../../.
 import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {Bostotte} from "./bostotteTypes";
-import Dato from "../../../nav-soknad/components/tidspunkt/Dato";
 import {settSamtykkeOgOppdaterData} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
-import {UndertekstBold} from "nav-frontend-typografi";
-import {Alert, BodyShort, Button, Heading, Link, Loader} from "@navikt/ds-react";
+import {Alert, BodyShort, Button, Detail, Heading, Link, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {fmtCurrency} from "../../../lib/fmtCurrency";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
+import LocalizedDate from "../../../components/LocalizedDate";
 
 const FAKTUM_BOSTOTTE = "inntekt.bostotte.sporsmal";
 
@@ -67,7 +66,7 @@ const BostotteView = () => {
                         {t("utbetalinger.utbetaling.erutbetalt.label")}
                         <span className="dato">
                             &nbsp;
-                            <Dato>{dato}</Dato>
+                            <LocalizedDate date={dato} />
                         </span>
                     </span>
                     <span className="verdi detaljeliste__verdi">{fmtCurrency(i18n.language, netto)}</span>
@@ -142,7 +141,7 @@ const BostotteView = () => {
                 >
                     {(requestToHusbankenFeilet || !harSamtykke) && (
                         <>
-                            {bostotte && bostotte.bekreftelse && (
+                            {bostotte?.bekreftelse && (
                                 <>
                                     <BodyShort spacing>
                                         {getIntlTextOrKey(t, "inntekt.bostotte.gi_samtykke.tekst")}
@@ -169,16 +168,12 @@ const BostotteView = () => {
                     {samtykkeTidspunktStreng !== "" && harSamtykke && (
                         <>
                             <div>
-                                <UndertekstBold>{samtykkeTidspunktStreng}</UndertekstBold>
-                                <p>{t("inntekt.bostotte.husbanken.info")}</p>
+                                <Detail>{samtykkeTidspunktStreng}</Detail>
+                                <BodyShort>{t("inntekt.bostotte.husbanken.info")}</BodyShort>
                             </div>
-                            <UndertekstBold className="blokk-null">
-                                {t("inntekt.bostotte.husbanken.utbetalinger")}
-                            </UndertekstBold>
+                            <Detail>{t("inntekt.bostotte.husbanken.utbetalinger")}</Detail>
                             {!harBostotterUtbetalinger && (
-                                <div className="utbetalinger">
-                                    {t("inntekt.bostotte.husbanken.ingenutbetalingerfunnet")}
-                                </div>
+                                <BodyShort>{t("inntekt.bostotte.husbanken.ingenutbetalingerfunnet")}</BodyShort>
                             )}
                             {bostotte.utbetalinger.map((utbetaling, index) => {
                                 return renderUtbetaling(
@@ -188,9 +183,7 @@ const BostotteView = () => {
                                     index
                                 );
                             })}
-                            <UndertekstBold className="blokk-null saksoverskrift">
-                                {t("inntekt.bostotte.husbanken.saker")}
-                            </UndertekstBold>
+                            <Detail>{t("inntekt.bostotte.husbanken.saker")}</Detail>
                             {!harBostotterSaker && (
                                 <div className="sak blokk-xs">{t("inntekt.bostotte.husbanken.ingensakerfunnet")}</div>
                             )}
