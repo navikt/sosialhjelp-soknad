@@ -58,7 +58,7 @@ const Begrunnelse = () => {
                         begrunnelseNyTekst,
                     });
 
-                    await mutate({behandlingsId, data}, {onSuccess: resolve, onError: reject});
+                    mutate({behandlingsId, data}, {onSuccess: resolve, onError: reject});
                 },
                 () => reject(new DigisosValidationError())
             )();
