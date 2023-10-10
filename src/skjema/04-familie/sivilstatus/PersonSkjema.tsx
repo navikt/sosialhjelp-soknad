@@ -169,7 +169,7 @@ const PersonSkjema = () => {
             >
                 <RadioEnhanced
                     id={"sivilstatus_gift_bor_sammen_radio_ja"}
-                    faktumKey="familie.sivilstatus.gift.ektefelle.borsammen"
+                    label={t("familie.sivilstatus.gift.ektefelle.borsammen.true")}
                     value="true"
                     checked={borSammenMed === true}
                     onChange={() => onClickBorSammen(true)}
@@ -177,7 +177,7 @@ const PersonSkjema = () => {
                 />
                 <RadioEnhanced
                     id={"sivilstatus_gift_bor_sammen_radio_nei"}
-                    faktumKey="familie.sivilstatus.gift.ektefelle.borsammen"
+                    label={t("familie.sivilstatus.gift.ektefelle.borsammen.false")}
                     value="false"
                     checked={borSammenMed === false}
                     onChange={() => onClickBorSammen(false)}
