@@ -1,6 +1,5 @@
 import * as React from "react";
-import {UndertekstBold} from "nav-frontend-typografi";
-import {Link} from "@navikt/ds-react";
+import {Detail, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {fmtCurrency} from "../../../lib/fmtCurrency";
 import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
@@ -64,7 +63,7 @@ const SkattbarinntektForskuddstrekk = ({inntektOgForskuddstrekk}: SkattbartForsk
                     organisasjoner?.map((org) => (
                         <div key={org.orgnr} className="utbetaling blokk">
                             <div className="blokk-s">
-                                <UndertekstBold className="blokk-null">{org.organisasjonsnavn}</UndertekstBold>
+                                <Detail>{org.organisasjonsnavn}</Detail>
                                 <div>
                                     {t("fra")} <LocalizedDate date={org.fom} /> {t("til")}{" "}
                                     <LocalizedDate date={org.tom} />

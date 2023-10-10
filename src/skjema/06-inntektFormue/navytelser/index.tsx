@@ -6,8 +6,7 @@ import {Systeminntekt} from "./navYtelserTypes";
 import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import Dato from "../../../nav-soknad/components/tidspunkt/Dato";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils";
-import {UndertekstBold} from "nav-frontend-typografi";
-import {Heading, Link} from "@navikt/ds-react";
+import {Detail, Heading, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {fmtCurrency} from "../../../lib/fmtCurrency";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
@@ -38,7 +37,7 @@ const NavYtelserView = () => {
         return (
             <div key={index} className="utbetaling blokk-s">
                 <div>
-                    <UndertekstBold className="blokk-null">{type}</UndertekstBold>
+                    <Detail>{type}</Detail>
                     <span className="verdi detaljeliste__verdi">{belop}</span>
                 </div>
                 {formattedDato && (

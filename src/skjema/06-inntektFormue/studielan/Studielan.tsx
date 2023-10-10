@@ -5,8 +5,7 @@ import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {Studielan} from "./StudielanTypes";
 import Informasjonspanel from "../../../nav-soknad/components/Informasjonspanel";
-import {UndertekstBold} from "nav-frontend-typografi";
-import {Heading, Link} from "@navikt/ds-react";
+import {Detail, Heading, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
@@ -54,9 +53,7 @@ const StudielanView = () => {
             />
             {studielan && studielan.bekreftelse === true && (
                 <Informasjonspanel ikon={"ella"} farge="viktig">
-                    <UndertekstBold className="skjema-sporsmal__infotekst__tittel">
-                        {t(STUDERER_INFO_TITTEL)}
-                    </UndertekstBold>
+                    <Detail className="skjema-sporsmal__infotekst__tittel">{t(STUDERER_INFO_TITTEL)}</Detail>
                     <p>
                         <Trans
                             t={t}

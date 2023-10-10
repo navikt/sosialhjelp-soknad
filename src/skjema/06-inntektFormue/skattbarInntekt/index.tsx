@@ -1,8 +1,7 @@
 import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import SkattbarinntektForskuddstrekk from "./SkattbarinntektForskuddstrekk";
 import {getIntlTextOrKey} from "../../../nav-soknad/utils";
-import {UndertekstBold} from "nav-frontend-typografi";
-import {Alert, BodyShort, Label, Link} from "@navikt/ds-react";
+import {Detail, Alert, BodyShort, Label, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import {useSkattData} from "./useSkattData";
@@ -43,7 +42,7 @@ const SkattbarInntekt = () => {
             {isLoading && <TextPlaceholder lines={3} />}
             {!isLoading && !!inntektFraSkatteetaten?.length && (
                 <div className={"ytelser_panel"}>
-                    <UndertekstBold>{samtykkeTidspunkt}</UndertekstBold>
+                    <Detail>{samtykkeTidspunkt}</Detail>
                     {t("utbetalinger.inntekt.skattbar.beskrivelse")}
                     <div className="utbetalinger">
                         <SkattbarinntektForskuddstrekk inntektOgForskuddstrekk={inntektFraSkatteetaten} />
