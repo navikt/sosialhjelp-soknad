@@ -16,7 +16,7 @@ export const SkjemaStegNavStepperLegacy = ({
     const {t} = useTranslation("skjema");
 
     return (
-        <div className={"max-w-md mx-auto py-8"}>
+        <div className={"max-w-md mx-auto w-full"}>
             <Stepper
                 className={"top-stepper"}
                 aria-label="Søknadssteg"

@@ -5,9 +5,13 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                digisosGronnLys: "#9bd0b0",
-                digisosGronnMork: "#38a161",
-                digisosGronnBakgrunn: "#D4E6D8",
+                olddigisosGronnLys: "#9bd0b0",
+                olddigisosGronnMork: "#38a161",
+                olddigisosGronnBakgrunn: "#D4E6D8",
+                digisosGronnLys: "#A8D5C2",
+                digisosGronnMork: "#2E8B57",
+                digisosGronnBakgrunnTop: "#E0F2E9",
+                digisosGronnBakgrunnBottom: "#C8E0D5",
             },
         },
     },

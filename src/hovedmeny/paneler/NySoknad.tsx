@@ -1,4 +1,4 @@
-import {Alert, Button, ExpansionCard, Loader} from "@navikt/ds-react";
+import {Alert, Button, ExpansionCard, Heading, Loader} from "@navikt/ds-react";
 import * as React from "react";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import Personopplysninger from "./Personopplysninger";
@@ -64,23 +64,23 @@ export const NySoknadInfo = () => {
     );
 };
 
+const NySoknadIkon = () => (
+    <div className={"rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"}>
+        <FillForms className={"w-6 h-6 block"} aria-hidden="true" />
+    </div>
+);
+
 export const NySoknadPanel = () => {
     const {t} = useTranslation("skjema");
     return (
         <ExpansionCard aria-label={t("applikasjon.start.ny.soknad")}>
-            <ExpansionCard.Header className={"!border-0"}>
-                <ExpansionCard.Title>
-                    <div className={"flex items-center gap-6 mb-2"}>
-                        <div
-                            className={
-                                "rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"
-                            }
-                        >
-                            <FillForms className={"w-6 h-6 block"} aria-hidden="true" />
-                        </div>
+            <ExpansionCard.Header className={"!border-0 [&>button]:my-auto"}>
+                <div className={"flex items-center gap-6 h-full"}>
+                    <NySoknadIkon />
+                    <Heading level={"2"} size={"small"}>
                         {t("applikasjon.start.ny.soknad")}
-                    </div>
-                </ExpansionCard.Title>
+                    </Heading>
+                </div>
             </ExpansionCard.Header>
             <ExpansionCard.Content className={"!border-0"}>
                 <NySoknadInfo />

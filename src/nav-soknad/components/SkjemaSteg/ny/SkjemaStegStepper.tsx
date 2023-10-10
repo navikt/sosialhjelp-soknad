@@ -17,9 +17,9 @@ export const SkjemaStegStepper = () => {
     const {page, requestNavigation} = context;
 
     return (
-        <div className={"max-w-md mx-auto"}>
+        <div className={"max-w-md w-full mx-auto"}>
             <Stepper
-                className={"py-8 top-stepper"}
+                className={"top-stepper"}
                 aria-label="Søknadssteg"
                 activeStep={page}
                 orientation={"horizontal"}

@@ -1,5 +1,5 @@
 import {FileContent} from "@navikt/ds-icons";
-import {BodyShort, ExpansionCard, Label, LinkPanel} from "@navikt/ds-react";
+import {BodyShort, ExpansionCard, Heading, Label, LinkPanel} from "@navikt/ds-react";
 import React from "react";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {addDays, formatDistance} from "date-fns";
@@ -9,6 +9,8 @@ import {useTranslation} from "react-i18next";
 import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs";
 import {LocalizedDate} from "../../components/LocalizedDate";
 import {getDateFnLocale} from "../../i18n";
+import cx from "classnames";
+import {useAlgebraic} from "../../lib/hooks/useAlgebraic";
 
 export const DAYS_BEFORE_DELETION = 14;
 
@@ -58,22 +60,18 @@ const PabegyntSoknad = ({
     );
 };
 
-const PabegynteSoknaderCount = () => {
-    const {data: session} = useGetSessionInfo();
-    const num = session?.open?.length;
-
+const PabegynteSoknaderCount = ({className}: {className?: string}) => {
+    const {expectOK} = useAlgebraic(useGetSessionInfo(), <TextPlaceholder lines={1} />);
     const {t} = useTranslation("skjema");
 
-    if (num === undefined) return <TextPlaceholder lines={1} />;
-
-    if (num === 0) return null;
-
-    return (
-        <span className={"opacity-70 font-normal"}>
-            {num === 1
-                ? `1 ${t("applikasjon.paabegynt.soknad")}`
-                : `${num} ${t("applikasjon.paabegynt.soknad.flertall")}`}
-        </span>
+    return expectOK(({open}) =>
+        open.length ? (
+            <span className={cx("opacity-70 font-normal", className)}>
+                {open.length === 1
+                    ? `1 ${t("applikasjon.paabegynt.soknad")}`
+                    : `${open.length} ${t("applikasjon.paabegynt.soknad.flertall")}`}
+            </span>
+        ) : null
     );
 };
 
@@ -87,8 +85,8 @@ export const PabegynteSoknaderPanel = () => {
 
     return (
         <ExpansionCard aria-label={t("applikasjon.fortsett.soknad")}>
-            <ExpansionCard.Header className={"!border-0"}>
-                <ExpansionCard.Title className={"flex flex-row items-center gap-6 pb-2"}>
+            <ExpansionCard.Header className={"!border-0 [&>button]:my-auto"}>
+                <div className={"flex flex-row items-center gap-6"}>
                     <div
                         className={
                             "rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"
@@ -96,12 +94,13 @@ export const PabegynteSoknaderPanel = () => {
                     >
                         <FileContent className={"w-6 h-6"} aria-hidden="true" />
                     </div>
-                    <div>
-                        {t("applikasjon.fortsett.soknad")}
-                        <br />
+                    <div className={""}>
+                        <Heading level={"2"} size={"small"}>
+                            {t("applikasjon.fortsett.soknad")}
+                        </Heading>
                         <PabegynteSoknaderCount />
                     </div>
-                </ExpansionCard.Title>
+                </div>
             </ExpansionCard.Header>
             <ExpansionCard.Content className={"!border-0"}>
                 <BodyShort className={"pb-4"}>

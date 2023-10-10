@@ -119,12 +119,15 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
 
     return (
         <SkjemaStegContext.Provider value={{page, requestNavigation}}>
-            <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn" id={"main-content"}>
+            <div
+                className="pb-4 lg:pb-40 bg-gradient-to-b from-digisosGronnBakgrunnTop to-digisosGronnBakgrunnBottom flex gap-10 pt-10 items-center flex-col"
+                id={"main-content"}
+            >
                 <Link href="#main-content" className="sr-only sr-only-focusable">
                     {t("hoppTilHovedinnhold")}
                 </Link>
                 <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
-                <AppBanner />
+                <AppBanner className={"lg:!text-2xl !p-0 bg-transparent"} />
                 <SkjemaStegStepper />
                 <div className={"max-w-3xl mx-auto"}>
                     <NedetidPanel varselType={"infoside"} />

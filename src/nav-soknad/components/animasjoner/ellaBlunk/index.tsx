@@ -41,7 +41,7 @@ const EllaBlunk: React.FC<EllaProps> = (props: EllaProps) => {
                 <mask id="ella-blunk-b" fill="#fff">
                     <use href="#ella-blunk-a" />
                 </mask>
-                <use fill="#9BD0B0" href="#ella-blunk-a" />
+                <use fill="#A8D5C2" href="#ella-blunk-a" />
                 <g mask="url(#ella-blunk-b)">
                     <path
                         fill="#E7E5E2"
