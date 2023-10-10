@@ -28,41 +28,60 @@ export const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) =
     return <>{t(error.message)}</>;
 };
 
-const Begrunnelse = () => {
-    const {t} = useTranslation("skjema", {keyPrefix: "begrunnelse"});
+const useBegrunnelse = () => {
     const behandlingsId = useBehandlingsId();
     const {mutate, isError} = useUpdateBegrunnelse();
     const {begrunnelseNyTekst} = useFeatureFlags();
 
+    const hent = () => hentBegrunnelse(behandlingsId);
+    const lagre = (data: BegrunnelseFrontend) => {
+        logAmplitudeEvent("begrunnelse fullført", {
+            hvaLengde: (Math.round((data?.hvaSokesOm?.length ?? 0) / 20) - 1) * 20,
+            hvorforLengde: (Math.round((data?.hvorforSoke?.length ?? 0) / 20) - 1) * 20,
+            begrunnelseNyTekst,
+        });
+
+        return new Promise((resolve, reject) => {
+            mutate({behandlingsId, data}, {onSuccess: resolve, onError: reject});
+        });
+    };
+
     useEffect(() => {
         logAmplitudeEvent("begrunnelse åpnet", {begrunnelseNyTekst});
     }, [begrunnelseNyTekst]);
+
+    return {
+        hent,
+        lagre,
+        isError,
+    };
+};
+
+const Feilmelding = () => {
+    const {t} = useTranslation("skjema");
+    return <div>{t("skjema.navigering.feil")}</div>;
+};
+
+const Begrunnelse = () => {
+    const {hent, lagre, isError} = useBegrunnelse();
+    const {t} = useTranslation("skjema", {keyPrefix: "begrunnelse"});
+    const {begrunnelseNyTekst} = useFeatureFlags();
 
     const {
         register,
         handleSubmit,
         formState: {errors},
     } = useForm<BegrunnelseFrontend>({
-        defaultValues: async () => hentBegrunnelse(behandlingsId),
+        defaultValues: async () => hent(),
         resolver: zodResolver(begrunnelseSchema),
         mode: "onChange",
     });
 
-    const onRequestNavigation = () =>
-        new Promise<void>((resolve, reject) => {
-            handleSubmit(
-                async (data) => {
-                    logAmplitudeEvent("begrunnelse fullført", {
-                        hvaLengde: (Math.round((data?.hvaSokesOm?.length ?? 0) / 20) - 1) * 20,
-                        hvorforLengde: (Math.round((data?.hvorforSoke?.length ?? 0) / 20) - 1) * 20,
-                        begrunnelseNyTekst,
-                    });
-
-                    mutate({behandlingsId, data}, {onSuccess: resolve, onError: reject});
-                },
-                () => reject(new DigisosValidationError())
-            )();
-        });
+    const onRequestNavigation = async () =>
+        handleSubmit(
+            (data) => lagre(data),
+            () => new DigisosValidationError()
+        )();
 
     return (
         <SkjemaSteg page={2} onRequestNavigation={onRequestNavigation}>
@@ -85,7 +104,7 @@ const Begrunnelse = () => {
                         error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
                     />
                 </form>
-                {isError && <div>{t("skjema.navigering.feil")}</div>}
+                {isError && <Feilmelding />}
                 <SkjemaSteg.Buttons />
             </SkjemaSteg.Content>
         </SkjemaSteg>
