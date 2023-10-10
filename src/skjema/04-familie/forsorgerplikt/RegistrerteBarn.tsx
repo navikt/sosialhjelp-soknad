@@ -9,13 +9,13 @@ import {State} from "../../../digisos/redux/reducers";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
 import {erSamvaersgrad} from "../../../nav-soknad/validering/valideringer";
 import {clearValideringsfeil, setValideringsfeil} from "../../../digisos/redux/validering/valideringActions";
-import {Input} from "nav-frontend-skjema";
 import {getFeil} from "../../../nav-soknad/utils/enhancedComponentUtils";
 import {SysteminfoItem, Systeminfo} from "../../../nav-soknad/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
 import {LocalizedDate} from "../../../components/LocalizedDate";
+import {TextField} from "@navikt/ds-react";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
 
@@ -41,9 +41,12 @@ const RegistrerteBarn = () => {
     };
 
     const onChangeSamvaersgrad = (verdi: string, barnIndex: number) => {
-        const barnet = forsorgerplikt.ansvar[barnIndex];
-        barnet.samvarsgrad = parseInt(verdi, 10);
-        oppdater(forsorgerplikt);
+        const grad = parseInt(verdi, 10);
+        if (!isNaN(grad)) {
+            const barnet = forsorgerplikt.ansvar[barnIndex];
+            barnet.samvarsgrad = grad;
+            oppdater(forsorgerplikt);
+        }
     };
 
     const onBlur = (barnIndex: number, samvaersgradBarnKeyMedIndex: string) => {
@@ -105,19 +108,21 @@ const RegistrerteBarn = () => {
                             </div>
                         )}
                         {!barnet.erFolkeregistrertSammen && (
-                            <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
-                                <Input
+                            <div className="">
+                                <TextField
                                     id={replaceDotWithUnderscore(samvaersgradBarnKeyMedIndex)}
-                                    className={"input--xxl faktumInput"}
-                                    type="number"
+                                    type="text"
+                                    inputMode="numeric"
+                                    pattern="[0-9]*"
                                     autoComplete="off"
+                                    htmlSize={15}
                                     name={"barn" + index + "_samvaersgrad"}
                                     value={barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""}
-                                    onChange={(event: any) => onChangeSamvaersgrad(event.target.value, index)}
+                                    onChange={({target: {value}}) => onChangeSamvaersgrad(value, index)}
                                     onBlur={() => onBlur(index, samvaersgradBarnKeyMedIndex)}
                                     label={tekster.label}
-                                    placeholder={tekster.pattern}
-                                    feil={feil_}
+                                    description={tekster.pattern}
+                                    error={feil_}
                                     maxLength={3}
                                     required={false}
                                 />
