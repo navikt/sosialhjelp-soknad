@@ -31,14 +31,14 @@ const Informasjon = () => {
         logInfo(`Reached main page with reason, ${reason}`);
         setSearchParams({});
     }, [searchParams, setSearchParams]);
-    //  <div className={"bg-gradient-to-b from-digisosGronnBakgrunnTop to-digisosGronnBakgrunnBottom grow"}>
+
     return expectOK(({userBlocked}) =>
         userBlocked ? (
             <PersonbeskyttelseFeilmelding />
         ) : (
-            <div className={"bg-digisosGronnLys grow"}>
+            <div className={"bg-gradient-to-b from-digisosGronnBakgrunnTop to-digisosGronnBakgrunnBottom grow"}>
                 <NedetidPanel varselType={"infoside"} />
-                {false && isLocalhost(window.location.href) && <DeveloperToolkit />}
+                {isLocalhost(window.location.href) && <DeveloperToolkit />}
                 <div className="max-w-lg lg:max-w-3xl w-full mx-auto gap-6 max-lg:px-2 py-6 lg:gap-16 lg:py-16 flex flex-col grow">
                     <AppBanner className={"bg-transparent lg:!text-heading-xlarge !w-full !p-0 !text-left"} />
 
