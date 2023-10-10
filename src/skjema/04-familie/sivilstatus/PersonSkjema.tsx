@@ -1,5 +1,4 @@
 import * as React from "react";
-import InputEnhanced from "../../../nav-soknad/faktum/InputEnhanced";
 import {setPath} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {erTall, fdato, maksLengde, minLengde} from "../../../nav-soknad/validering/valideringer";
@@ -13,6 +12,7 @@ import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringA
 import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
+import {TextField} from "@navikt/ds-react";
 
 const FAKTUM_KEY = "familie.sivilstatus.gift.ektefelle";
 const FAKTUM_KEY_FNR = FAKTUM_KEY + ".fnr";
@@ -113,63 +113,53 @@ const PersonSkjema = () => {
 
     return (
         <div className="personskjema">
-            <InputEnhanced
-                getName={() => FAKTUM_KEY + "_fornavn_input"}
-                id={FAKTUM_KEY + "_fornavn_input"}
+            <TextField
                 maxLength={100}
-                verdi={ektefelle.navn.fornavn}
-                onChange={(verdi: string) => oppdaterTekstfelt("navn/fornavn", verdi)}
+                value={ektefelle.navn.fornavn}
+                onChange={({target: {value}}) => oppdaterTekstfelt("navn/fornavn", value)}
                 onBlur={() => onBlur()}
-                faktumKey="familie.sivilstatus.gift.ektefelle.fornavn"
+                label={t("familie.sivilstatus.gift.ektefelle.fornavn.label")}
                 required={false}
             />
 
-            <InputEnhanced
-                getName={() => FAKTUM_KEY + "_mellomnavn_input"}
-                id={FAKTUM_KEY + "_mellomnavn_input"}
+            <TextField
                 maxLength={100}
-                verdi={ektefelle.navn.mellomnavn ? ektefelle.navn.mellomnavn : ""}
-                onChange={(verdi: string) => oppdaterTekstfelt("navn/mellomnavn", verdi)}
+                value={ektefelle.navn.mellomnavn ? ektefelle.navn.mellomnavn : ""}
+                onChange={({target: {value}}) => oppdaterTekstfelt("navn/mellomnavn", value)}
                 onBlur={() => onBlur()}
-                faktumKey="familie.sivilstatus.gift.ektefelle.mellomnavn"
+                label={t("familie.sivilstatus.gift.ektefelle.mellomnavn.label")}
                 required={false}
             />
 
-            <InputEnhanced
+            <TextField
                 className="pb-4"
-                getName={() => FAKTUM_KEY + "_etternavn_input"}
-                id={FAKTUM_KEY + "_etternavn_input"}
                 maxLength={100}
-                verdi={ektefelle.navn.etternavn}
-                onChange={(verdi: string) => oppdaterTekstfelt("navn/etternavn", verdi)}
+                value={ektefelle.navn.etternavn}
+                onChange={({target: {value}}) => oppdaterTekstfelt("navn/etternavn", value)}
                 onBlur={() => onBlur()}
-                faktumKey="familie.sivilstatus.gift.ektefelle.etternavn"
+                label={t("familie.sivilstatus.gift.ektefelle.etternavn.label")}
                 required={false}
             />
 
-            <InputEnhanced
-                getName={() => FAKTUM_KEY_FNR}
-                id={FAKTUM_KEY_FNR}
+            <TextField
                 maxLength={8}
                 minLength={8}
-                verdi={fodselsdato}
-                onChange={(verdi: string) => oppdaterTekstfelt("fodselsdato", verdi)}
-                bredde="S"
+                value={fodselsdato}
+                onChange={({target: {value}}) => oppdaterTekstfelt("fodselsdato", value)}
+                style={{width: "140px"}}
                 onBlur={() => onBlur()}
-                faktumKey="familie.sivilstatus.gift.ektefelle.fnr"
+                label={t("familie.sivilstatus.gift.ektefelle.fnr.label")}
                 required={false}
             />
 
-            <InputEnhanced
-                getName={() => FAKTUM_KEY_PERSONNUMMER}
-                id={FAKTUM_KEY_PERSONNUMMER}
+            <TextField
                 maxLength={5}
                 minLength={5}
-                verdi={personnummer}
-                onChange={(verdi: string) => oppdaterTekstfelt("personnummer", verdi)}
-                bredde="S"
+                value={personnummer}
+                onChange={({target: {value}}) => oppdaterTekstfelt("personnummer", value)}
+                style={{width: "140px"}}
                 onBlur={() => onBlur()}
-                faktumKey="familie.sivilstatus.gift.ektefelle.pnr"
+                label={t("familie.sivilstatus.gift.ektefelle.pnr.label")}
                 required={false}
             />
 
