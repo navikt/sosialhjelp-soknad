@@ -32,10 +32,7 @@ export enum SoknadsdataActionTypeKeys {
  * og legges på redux state state.soknadsdata.personalia.kontonummer
  */
 export enum SoknadsSti {
-    OPPDATER_SAMTYKKE = "oppdaterSamtykker",
-    ARBEID = "arbeid",
     BOSITUASJON = "bosituasjon",
-    UTDANNING = "utdanning",
     BOSTOTTE = "inntekt/bostotte",
     BOSTOTTE_SAMTYKKE = "inntekt/bostotte/samtykke",
     STUDIELAN = "inntekt/studielan",
@@ -47,8 +44,6 @@ export enum SoknadsSti {
     SIVILSTATUS = "familie/sivilstatus",
     FORSORGERPLIKT = "familie/forsorgerplikt",
     INNTEKT_SYSTEMDATA = "inntekt/systemdata",
-    SKATTBARINNTEKT = "inntekt/skattbarinntektogforskuddstrekk",
-    SKATTBARINNTEKT_SAMTYKKE = "inntekt/skattbarinntektogforskuddstrekk/samtykke",
 }
 
 export interface Inntekt {
