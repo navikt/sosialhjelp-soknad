@@ -4,6 +4,7 @@ import {scrollToElement} from "../../utils";
 import {Valideringsfeil} from "../../../digisos/redux/validering/valideringActionTypes";
 import {LinkButtonValidation} from "../linkButton/LinkButton";
 import {useTranslation} from "react-i18next";
+import {Heading} from "@navikt/ds-react";
 
 const scrollToFaktum = (evt: React.MouseEvent<any>, faktumKey: string) => {
     evt.stopPropagation();
@@ -63,9 +64,9 @@ class Feiloppsummering extends React.Component<Props> {
                         }
                     }}
                 >
-                    <Undertittel className="feiloppsummering__tittel blokk-s">
+                    <Heading size={"small"} level={"3"} className="feiloppsummering__tittel blokk-s">
                         Det er {valideringsfeil ? valideringsfeil.length : 1} feil i skjemaet
-                    </Undertittel>
+                    </Heading>
                     <ul className="feiloppsummering__liste">
                         {valideringsfeil &&
                             valideringsfeil.map((feilmld, index) => <FeillisteMelding key={index} {...feilmld} />)}
