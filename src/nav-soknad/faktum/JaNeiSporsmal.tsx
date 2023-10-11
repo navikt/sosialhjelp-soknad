@@ -1,8 +1,7 @@
 import * as React from "react";
 import Sporsmal, {LegendTittleStyle} from "../components/sporsmal/Sporsmal";
-import RadioEnhanced from "./RadioEnhanced";
 import {useTranslation} from "react-i18next";
-import {HGrid} from "@navikt/ds-react";
+import {HStack, Radio, RadioGroup} from "@navikt/ds-react";
 
 interface JaNeiSporsmalProps {
     faktumKey: string;
@@ -16,31 +15,22 @@ interface JaNeiSporsmalProps {
     children?: React.ReactNode;
 }
 
+const className = "border-[1px] border-[val(--a-border-strong)] !grow min-w-sm rounded-lg py-2 px-6";
+
 const JaNeiSporsmal = ({faktumKey, children, verdi, onChange, tekster, legendTittelStyle}: JaNeiSporsmalProps) => {
     const {t} = useTranslation("skjema");
-
     return (
         <Sporsmal
             tekster={tekster}
             stil={children ? "jaNeiSporsmal" : "normal"}
             legendTittelStyle={legendTittelStyle || LegendTittleStyle.DEFAULT}
         >
-            <HGrid columns={{lg: 2}} gap={{sm: "0", lg: "4"}}>
-                <RadioEnhanced
-                    checked={verdi === true}
-                    className="jaNeiSpormal"
-                    label={`${t(`${faktumKey}.true`)}`}
-                    onChange={() => onChange(true)}
-                    value={"true"}
-                />
-                <RadioEnhanced
-                    checked={verdi === false}
-                    className="jaNeiSpormal"
-                    label={`${t(`${faktumKey}.false`)}`}
-                    onChange={() => onChange(false)}
-                    value={"false"}
-                />
-            </HGrid>
+            <RadioGroup legend={tekster.label} onChange={(value) => onChange(value === "true")}>
+                <HStack align={"stretch"} gap={{xs: "2", lg: "4"}}>
+                    <Radio className={className} value={"true"}>{`${t(`${faktumKey}.true`)}`}</Radio>
+                    <Radio className={className} value={"false"}>{`${t(`${faktumKey}.false`)}`}</Radio>
+                </HStack>
+            </RadioGroup>
             {children && verdi && children}
         </Sporsmal>
     );
