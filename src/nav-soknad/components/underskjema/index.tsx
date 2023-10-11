@@ -1,8 +1,6 @@
 import * as React from "react";
 import classNames from "classnames";
 import {UnmountClosed} from "react-collapse";
-import {logWarning} from "../../utils/loggerUtils";
-
 interface UnderskjemaProps {
     visible?: boolean;
     // Show an arrow in the top-left corner, indicating relevance to element above.
