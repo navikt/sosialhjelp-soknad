@@ -12,9 +12,6 @@
     }
 }
 
-@nodeModulesPath: "./../../";
-@coreModulePath: "./../../";
-
 #root {
     flex-grow: 1;
     display: flex;
@@ -27,5 +24,28 @@ body {
     min-height: 100dvh;
 }
 
-@import "sosialhjelp.less";
-@import "nav-soknad/styles/nav-soknad.less";
+.top-stepper .navds-stepper__item {
+    flex: 1 1 0;
+    gap: 0;
+}
+
+.top-stepper .navds-stepper__step {
+    margin: -2px;
+    margin-bottom: -10px;
+}
+
+.top-stepper .navds-stepper__step--active > .navds-stepper__circle {
+    color: white;
+    background-color: black;
+}
+
+.top-stepper .navds-stepper__circle {
+    font-weight: normal;
+    border: none;
+    background-color: white;
+    color: black;
+}
+
+.top-stepper .navds-stepper__content {
+    display: none;
+}
