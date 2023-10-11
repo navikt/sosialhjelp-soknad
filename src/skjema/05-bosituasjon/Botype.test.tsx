@@ -28,39 +28,39 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 test("Eier is checked if botype = 'eier'", async () => {
-    const {getByRole} = render(<Botype behandlingsId={"botypeEier"} />);
+    const {getByRole} = render(<Botype />);
 
     await waitFor(() => expect(getByRole("radio", {name: "Jeg bor i bolig jeg eier selv"})).toBeChecked());
     await waitFor(() => expect(getByRole("radio", {name: "Jeg leier privat bolig"})).not.toBeChecked());
 });
 
 test("Eier is not checked if botype = 'leier'", async () => {
-    const {getByRole} = render(<Botype behandlingsId={"botypeLeier"} />);
+    const {getByRole} = render(<Botype />);
 
     await waitFor(() => expect(getByRole("radio", {name: "Jeg bor i bolig jeg eier selv"})).not.toBeChecked());
     await waitFor(() => expect(getByRole("radio", {name: "Jeg leier privat bolig"})).toBeChecked());
 });
 
 test("None checked if botype = null", async () => {
-    const {queryByRole} = render(<Botype behandlingsId={"ingenBotype"} />);
+    const {queryByRole} = render(<Botype />);
 
     await waitFor(() => expect(queryByRole("radio", {checked: true})).toBeNull());
 });
 
 test("Annet submenu not in document if botype = leier", async () => {
-    const {queryByText} = render(<Botype behandlingsId={"botypeLeier"} />);
+    const {queryByText} = render(<Botype />);
 
     await waitFor(() => expect(queryByText("Vil du utdype?", {selector: "legend"})).not.toBeInTheDocument());
 });
 
 test("Annet submenu in document if botype = annet", async () => {
-    const {getByText} = render(<Botype behandlingsId={"botypeAnnet"} />);
+    const {getByText} = render(<Botype />);
 
     await waitFor(() => expect(getByText("Vil du utdype?", {selector: "legend"})).toBeInTheDocument());
 });
 
 test("Annet submenu in document if botype = fengsel", async () => {
-    const {getByText} = render(<Botype behandlingsId={"botypeFengsel"} />);
+    const {getByText} = render(<Botype />);
 
     await waitFor(() => expect(getByText("Vil du utdype?", {selector: "legend"})).toBeInTheDocument());
 });

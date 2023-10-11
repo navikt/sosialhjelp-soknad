@@ -1,48 +1,45 @@
 import * as React from "react";
-import {BotypeListe, BotypePrimaerValg, BotypeSekundaerValg} from "./bosituasjonTypes";
 import {useBosituasjon} from "./useBosituasjon";
-import {RadioPanelGruppe, RadioPanelProps, SkjemaGruppe} from "nav-frontend-skjema";
 import {NyttUnderskjema} from "./NyttUnderskjema";
 import {useTranslation} from "react-i18next";
+import {Radio, RadioGroup} from "@navikt/ds-react";
+import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 
-interface BotypeProps {
-    behandlingsId: string;
-}
-
-const Botype = ({behandlingsId}: BotypeProps) => {
+const Botype = () => {
+    const behandlingsId = useBehandlingsId();
     const {t} = useTranslation("skjema");
     const {bosituasjon, setBosituasjon} = useBosituasjon(behandlingsId);
 
     // Hjelpefunksjon: Vis kun undermenyen dersom ikke "eier", "leier", "kommunal" eller "ingen" er valgt
-    const showBosituasjonSubmenu = () =>
-        !["eier", "leier", "kommunal", "ingen", null].includes(bosituasjon?.botype || null);
-
-    // Hjelpefunksjon: Generer RadioPanelProps fra BotypeListe
-    const radiosFromBotyper = (botypeListe: BotypeListe): RadioPanelProps[] =>
-        Object.entries(botypeListe).map(([name, descriptor]) => ({
-            label: t(descriptor.messageDescriptor.id!),
-            id: name,
-            value: name,
-            checked: bosituasjon?.botype === name,
-        }));
+    const erAnnet = () => !["eier", "leier", "kommunal", "ingen", null].includes(bosituasjon?.botype || null);
 
     return (
-        <SkjemaGruppe legend={t("bosituasjon.sporsmal")}>
-            <RadioPanelGruppe
-                radios={radiosFromBotyper(BotypePrimaerValg)}
-                name={"bosituasjon"}
-                onChange={async (_e, botype) => setBosituasjon({botype})}
-            />
-
-            <NyttUnderskjema hidden={!showBosituasjonSubmenu()}>
-                <RadioPanelGruppe
+        <div>
+            <RadioGroup
+                legend={t("bosituasjon.sporsmal")}
+                value={erAnnet() ? "annet" : bosituasjon?.botype}
+                onChange={(botype) => setBosituasjon({botype})}
+            >
+                <Radio value={"eier"}>{t("bosituasjon.eier")}</Radio>
+                <Radio value={"leier"}>{t("bosituasjon.leier")}</Radio>
+                <Radio value={"kommunal"}>{t("bosituasjon.kommunal")}</Radio>
+                <Radio value={"ingen"}>{t("bosituasjon.ingen")}</Radio>
+                <Radio value={"annet"}>{t("bosituasjon.annet")}</Radio>
+            </RadioGroup>
+            <NyttUnderskjema hidden={!erAnnet()}>
+                <RadioGroup
                     legend={t("bosituasjon.annet.botype.sporsmal")}
-                    radios={radiosFromBotyper(BotypeSekundaerValg)}
-                    name={"bosituasjon.annet.botype"}
-                    onChange={async (_e, botype) => setBosituasjon({botype})}
-                />
+                    onChange={(botype) => setBosituasjon({botype})}
+                >
+                    <Radio value={"foreldre"}>{t("bosituasjon.annet.botype.foreldre")}</Radio>
+                    <Radio value={"familie"}>{t("bosituasjon.annet.botype.familie")}</Radio>
+                    <Radio value={"venner"}>{t("bosituasjon.annet.botype.venner")}</Radio>
+                    <Radio value={"institusjon"}>{t("bosituasjon.annet.botype.institusjon")}</Radio>
+                    <Radio value={"fengsel"}>{t("bosituasjon.annet.botype.fengsel")}</Radio>
+                    <Radio value={"krisesenter"}>{t("bosituasjon.annet.botype.krisesenter")}</Radio>
+                </RadioGroup>
             </NyttUnderskjema>
-        </SkjemaGruppe>
+        </div>
     );
 };
 
