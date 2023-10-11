@@ -1,9 +1,8 @@
 import * as React from "react";
-import ValgMedUnderskjema from "../components/valgMedUnderskjema";
-import Underskjema from "../components/underskjema";
 import Sporsmal, {LegendTittleStyle} from "../components/sporsmal/Sporsmal";
 import RadioEnhanced from "./RadioEnhanced";
 import {useTranslation} from "react-i18next";
+import {HGrid} from "@navikt/ds-react";
 
 interface JaNeiSporsmalProps {
     faktumKey: string;
@@ -12,72 +11,37 @@ interface JaNeiSporsmalProps {
     legendTittelStyle?: LegendTittleStyle;
     tekster: any;
     verdi: null | boolean;
-    onChange?: (verdi: boolean) => void;
+    onChange: (verdi: boolean) => void;
     visPlaceholder?: boolean;
     children?: React.ReactNode;
 }
 
-const erMobilVisning = () =>
-    Math.max(
-        document.body.scrollWidth,
-        document.documentElement.scrollWidth,
-        document.body.offsetWidth,
-        document.documentElement.offsetWidth,
-        document.documentElement.clientWidth
-    ) < 480;
-
-const JaNeiSporsmal = (props: JaNeiSporsmalProps) => {
-    const handleOnChange = (verdi: any) => {
-        props.onChange && props.onChange(verdi);
-    };
-    const {faktumKey, children, verdi} = props;
+const JaNeiSporsmal = ({faktumKey, children, verdi, onChange, tekster, legendTittelStyle}: JaNeiSporsmalProps) => {
     const {t} = useTranslation("skjema");
-    const harUnderSkjema = children !== undefined;
-    const visUnderSkjema = harUnderSkjema && verdi === true;
-
-    let idRadioJa: string;
-    let idRadioNei: string;
-    if (props.id) {
-        idRadioJa = props.id + "_radio_ja";
-        idRadioNei = props.id + "_radio_nei";
-    } else {
-        idRadioJa = faktumKey.replace(/\./g, "_") + "_radio_ja";
-        idRadioJa = idRadioJa.replace(/__/g, "_");
-        idRadioNei = faktumKey.replace(/\./g, "_") + "_radio_nei";
-        idRadioNei = idRadioNei.replace(/__/g, "_");
-    }
-    const radioName = faktumKey.replace(/\./g, "_") + "_radio";
-
-    const mobilVisning = erMobilVisning();
 
     return (
         <Sporsmal
-            tekster={props.tekster}
-            stil={harUnderSkjema ? "jaNeiSporsmal" : "normal"}
-            legendTittelStyle={props.legendTittelStyle || LegendTittleStyle.DEFAULT}
+            tekster={tekster}
+            stil={children ? "jaNeiSporsmal" : "normal"}
+            legendTittelStyle={legendTittelStyle || LegendTittleStyle.DEFAULT}
         >
-            <ValgMedUnderskjema
-                underskjema={children ? <Underskjema visible={visUnderSkjema}>{children}</Underskjema> : <span />}
-            >
+            <HGrid columns={{lg: 2}} gap={{sm: "0", lg: "4"}}>
                 <RadioEnhanced
                     checked={verdi === true}
                     className="jaNeiSpormal"
-                    label={`${t(`${props.faktumKey}.true`)}`}
-                    id={idRadioJa}
-                    name={radioName}
-                    onChange={() => handleOnChange(true)}
+                    label={`${t(`${faktumKey}.true`)}`}
+                    onChange={() => onChange(true)}
                     value={"true"}
                 />
                 <RadioEnhanced
                     checked={verdi === false}
                     className="jaNeiSpormal"
-                    label={`${t(`${props.faktumKey}.false`)}`}
-                    id={idRadioNei}
-                    name={radioName}
-                    onChange={() => handleOnChange(false)}
+                    label={`${t(`${faktumKey}.false`)}`}
+                    onChange={() => onChange(false)}
                     value={"false"}
                 />
-            </ValgMedUnderskjema>
+            </HGrid>
+            {children && verdi && children}
         </Sporsmal>
     );
 };
