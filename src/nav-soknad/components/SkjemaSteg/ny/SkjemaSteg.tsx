@@ -68,7 +68,7 @@ const SkjemaTitle = ({className}: {className?: string}) => {
 
     return (
         <div tabIndex={-1} className={cx("text-center mb-12 lg:mb-24", className)}>
-            <div className="text-center mb-2">{SkjemaHeadings[page].ikon}</div>
+            <div className="mx-auto w-fit mb-2">{SkjemaHeadings[page].ikon}</div>
             <Heading level={"2"} size={"xlarge"} data-testid={page === 2 ? "skjemasteg-heading" : null}>
                 {t(SkjemaHeadings[page].tittel)}
             </Heading>

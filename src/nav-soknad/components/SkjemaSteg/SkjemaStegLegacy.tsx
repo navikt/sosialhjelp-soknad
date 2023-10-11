@@ -43,7 +43,7 @@ export const useSkjemaConfig = (skjemaConfig: SkjemaConfig, steg: DigisosSkjemaS
 function SkjemaStegHeading(props: {ikon: ReactNode; stegTittel: string}) {
     return (
         <div className={"text-center mb-12 lg:mb-24"}>
-            <div className="text-center mb-2">{props.ikon}</div>
+            <div className="mx-auto w-fit mb-2">{props.ikon}</div>
             <div className="skjema-steg__tittel" tabIndex={-1}>
                 <Heading size={"large"}>{props.stegTittel}</Heading>
             </div>
