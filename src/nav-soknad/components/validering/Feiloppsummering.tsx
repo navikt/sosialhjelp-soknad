@@ -1,5 +1,4 @@
 import * as React from "react";
-import {Undertittel} from "nav-frontend-typografi";
 import {scrollToElement} from "../../utils";
 import {Valideringsfeil} from "../../../digisos/redux/validering/valideringActionTypes";
 import {LinkButtonValidation} from "../linkButton/LinkButton";

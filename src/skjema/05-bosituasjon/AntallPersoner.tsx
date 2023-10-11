@@ -4,9 +4,9 @@ import {State} from "../../digisos/redux/reducers";
 import {clearValideringsfeil, setValideringsfeil} from "../../digisos/redux/validering/valideringActions";
 import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
 import {getFeil} from "../../nav-soknad/utils/enhancedComponentUtils";
-import {Input, SkjemaGruppe} from "nav-frontend-skjema";
 import {useBosituasjon} from "./useBosituasjon";
 import {useTranslation} from "react-i18next";
+import {Fieldset, TextField} from "@navikt/ds-react";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -46,20 +46,20 @@ const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
     };
 
     return (
-        <SkjemaGruppe legend={t("bosituasjon.antallpersoner.sporsmal")}>
-            <Input
+        <Fieldset legend={t("bosituasjon.antallpersoner.sporsmal")}>
+            <TextField
                 label={t("bosituasjon.antallpersoner.label")}
                 id={FAKTUM_KEY_ANTALL}
                 inputMode="numeric"
                 pattern="[0-9]*"
                 maxLength={2}
-                bredde={"XS"}
+                htmlSize={5}
                 defaultValue={bosituasjon?.antallPersoner || ""}
                 onBlur={validateAndStore}
                 onChange={() => dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL))}
-                feil={errorMessage && t(errorMessage)}
+                error={errorMessage && t(errorMessage)}
             />
-        </SkjemaGruppe>
+        </Fieldset>
     );
 };
 
