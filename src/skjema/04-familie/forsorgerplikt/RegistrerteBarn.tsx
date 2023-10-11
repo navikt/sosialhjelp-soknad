@@ -16,6 +16,7 @@ import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata"
 import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
 import {LocalizedDate} from "../../../components/LocalizedDate";
 import {TextField} from "@navikt/ds-react";
+import cx from "classnames";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
 
@@ -81,7 +82,10 @@ const RegistrerteBarn = () => {
                 const samvaersgradBarnKeyMedIndex = SAMVAERSGRAD_KEY + index;
                 const feil_: string | undefined = getFeil(feil, t, samvaersgradBarnKeyMedIndex, undefined);
                 return (
-                    <div key={index} className={index + 1 === barn.length ? "barn barn_siste_liste_element" : "barn"}>
+                    <div
+                        key={index}
+                        className={cx("barn space-y-4", {barn_siste_liste_element: index + 1 === barn.length})}
+                    >
                         <Systeminfo>
                             <SysteminfoItem label={t("kontakt.system.personalia.navn")}>
                                 {barnet.barn.navn.fulltNavn}
@@ -95,38 +99,33 @@ const RegistrerteBarn = () => {
                                     : t("familie.barn.true.barn.borsammen.false")}
                             </SysteminfoItem>
                         </Systeminfo>
-                        {barnet.erFolkeregistrertSammen && (
-                            <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
-                                <JaNeiSporsmal
-                                    id={"barn_radio_" + index}
-                                    tekster={getFaktumSporsmalTekst(t, "system.familie.barn.true.barn.deltbosted")}
-                                    faktumKey={"system.familie.barn.true.barn.deltbosted"}
-                                    verdi={barnet.harDeltBosted}
-                                    onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi, index)}
-                                    legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                                />
-                            </div>
-                        )}
-                        {!barnet.erFolkeregistrertSammen && (
-                            <div className="">
-                                <TextField
-                                    id={replaceDotWithUnderscore(samvaersgradBarnKeyMedIndex)}
-                                    type="text"
-                                    inputMode="numeric"
-                                    pattern="[0-9]*"
-                                    autoComplete="off"
-                                    htmlSize={15}
-                                    name={"barn" + index + "_samvaersgrad"}
-                                    value={barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""}
-                                    onChange={({target: {value}}) => onChangeSamvaersgrad(value, index)}
-                                    onBlur={() => onBlur(index, samvaersgradBarnKeyMedIndex)}
-                                    label={tekster.label}
-                                    description={tekster.pattern}
-                                    error={feil_}
-                                    maxLength={3}
-                                    required={false}
-                                />
-                            </div>
+                        {barnet.erFolkeregistrertSammen ? (
+                            <JaNeiSporsmal
+                                id={"barn_radio_" + index}
+                                tekster={getFaktumSporsmalTekst(t, "system.familie.barn.true.barn.deltbosted")}
+                                faktumKey={"system.familie.barn.true.barn.deltbosted"}
+                                verdi={barnet.harDeltBosted}
+                                onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi, index)}
+                                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+                            />
+                        ) : (
+                            <TextField
+                                id={replaceDotWithUnderscore(samvaersgradBarnKeyMedIndex)}
+                                type="text"
+                                inputMode="numeric"
+                                pattern="[0-9]*"
+                                autoComplete="off"
+                                htmlSize={15}
+                                name={"barn" + index + "_samvaersgrad"}
+                                value={barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""}
+                                onChange={({target: {value}}) => onChangeSamvaersgrad(value, index)}
+                                onBlur={() => onBlur(index, samvaersgradBarnKeyMedIndex)}
+                                label={tekster.label}
+                                description={tekster.pattern}
+                                error={feil_}
+                                maxLength={3}
+                                required={false}
+                            />
                         )}
                     </div>
                 );

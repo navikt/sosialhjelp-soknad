@@ -8,7 +8,6 @@ import {useTranslation} from "react-i18next";
 interface JaNeiSporsmalProps {
     faktumKey: string;
     skjemaTilhorerValg?: "ja" | "nei";
-    visible?: boolean;
     id?: string;
     legendTittelStyle?: LegendTittleStyle;
     tekster: any;
@@ -50,8 +49,6 @@ const JaNeiSporsmal = (props: JaNeiSporsmalProps) => {
     const radioName = faktumKey.replace(/\./g, "_") + "_radio";
 
     const mobilVisning = erMobilVisning();
-
-    if (props.visible === false) return null;
 
     return (
         <Sporsmal
