@@ -1,9 +1,7 @@
 import * as React from "react";
 import {TelefonData} from "./telefon/Telefon";
 import {AdresseData} from "./adresse/Adresse";
-import Sporsmal from "../../nav-soknad/components/sporsmal/Sporsmal";
-import {BasisPersonaliaData} from "./BasisPersonalia";
-import {useTranslation} from "react-i18next";
+import {BasisPersonalia} from "./BasisPersonalia";
 import Kontonr from "./Kontonr";
 import {DigisosValidationError, SkjemaSteg} from "../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
 import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
@@ -12,10 +10,8 @@ import {useEffect, useState} from "react";
 import {FieldErrorsImpl} from "react-hook-form";
 import {NavEnhetFrontend} from "../../generated/model";
 import {erAktiv} from "../../nav-soknad/containers/navEnhetStatus";
-import {Systeminfo} from "../../nav-soknad/components/systeminfo/Systeminfo";
 
 const Personopplysninger = () => {
-    const {t} = useTranslation("skjema");
     const behandlingsId = useBehandlingsId();
     const {data: adresser} = useHentAdresser(behandlingsId);
     const [error, setError] = useState<string | null>(null);
@@ -48,17 +44,9 @@ const Personopplysninger = () => {
                         errors={{soknadsmottaker: {message: error}} as FieldErrorsImpl<NavEnhetFrontend>}
                     />
                 )}
-                <Sporsmal id={"soknadsmottaker"} sporsmal={t("kontakt.system.personalia.sporsmal")}>
-                    <Systeminfo>
-                        <BasisPersonaliaData />
-                    </Systeminfo>
-                </Sporsmal>
-                <Sporsmal sporsmal={t(`soknadsmottaker.sporsmal`)} hjelpetekst={t("soknadsmottaker.hjelpetekst.tekst")}>
-                    <AdresseData />
-                </Sporsmal>
-                <Sporsmal sporsmal={t("kontakt.telefon.sporsmal")} infotekst={t("kontakt.telefon.infotekst.tekst")}>
-                    <TelefonData />
-                </Sporsmal>
+                <BasisPersonalia />
+                <AdresseData />
+                <TelefonData />
                 <Kontonr />
                 <SkjemaSteg.Buttons />
             </SkjemaSteg.Content>

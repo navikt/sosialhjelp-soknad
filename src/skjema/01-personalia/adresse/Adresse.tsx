@@ -9,7 +9,7 @@ import {
     updateAdresse,
     useHentAdresser,
 } from "../../../generated/adresse-ressurs/adresse-ressurs";
-import {Radio} from "@navikt/ds-react";
+import {BodyLong, Heading, Radio} from "@navikt/ds-react";
 import {formaterSoknadsadresse} from "./AdresseUtils";
 import {AdresseSok} from "./AdresseSok";
 import {AdresseFrontend, AdresserFrontend, AdresserFrontendValg} from "../../../generated/model";
@@ -58,7 +58,11 @@ export const AdresseData = () => {
     };
 
     return expectOK((adresser) => (
-        <>
+        <div className={"space-y-2"}>
+            <Heading size={"small"} level={"3"}>
+                {t("soknadsmottaker.sporsmal")}
+            </Heading>
+            <BodyLong>{t("soknadsmottaker.hjelpetekst.tekst")}</BodyLong>
             <HorizontalRadioGroup
                 legend={t("soknadsmottaker.infotekst.tekst")}
                 value={uncommittedAdressevalg}
@@ -92,6 +96,6 @@ export const AdresseData = () => {
                 )}
             </HorizontalRadioGroup>
             <NavEnhet navEnhet={adresser.navEnhet} />
-        </>
+        </div>
     ));
 };
