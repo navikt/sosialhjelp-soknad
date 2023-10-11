@@ -41,12 +41,6 @@ const Underskjema = ({
         </div>
     );
 
-    let content = <span />;
-    try {
-        content = renderContent();
-    } catch (e) {
-        logWarning("Feil ved rendering av underskjema: " + e.toString());
-    }
     if (collapsable) {
         return (
             <UnmountClosed
@@ -54,7 +48,7 @@ const Underskjema = ({
                 className="underskjema__wrapper"
                 hasNestedCollapse={true}
             >
-                {content}
+                {renderContent()}
             </UnmountClosed>
         );
     }

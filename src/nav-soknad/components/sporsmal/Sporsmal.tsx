@@ -54,11 +54,15 @@ const Sporsmal = ({
     legendTittelStyle = LegendTittleStyle.DEFAULT,
     ...restProps
 }: SporsmalProps) => {
-    const sporsmalCls = classNames(className, "skjema-sporsmal", {
-        "skjema-sporsmal--noBottomPadding": stil === "system" || stil === "jaNeiSporsmal",
-        "skjema-sporsmal--systeminfo": stil === "system",
-        "skjema-sporsmal--jaNeiSporsmal": stil === "jaNeiSporsmal",
-    });
+    const sporsmalCls = classNames(
+        "skjema-sporsmal",
+        {
+            "skjema-sporsmal--noBottomPadding": stil === "system" || stil === "jaNeiSporsmal",
+            "skjema-sporsmal--systeminfo": stil === "system",
+            "skjema-sporsmal--jaNeiSporsmal": stil === "jaNeiSporsmal",
+        },
+        className
+    );
 
     const cls = classNames("skjema-fieldset", {
         "skjema-fieldset--harFeil": !!feilkode,

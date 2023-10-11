@@ -3,16 +3,13 @@ import {setPath} from "../../../digisos/redux/soknadsdata/soknadsdataActions";
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {erTall, fdato, maksLengde, minLengde} from "../../../nav-soknad/validering/valideringer";
 import {konverterFraISODato, konverterTilISODato} from "./datoUtils";
-import RadioEnhanced from "../../../nav-soknad/faktum/RadioEnhanced";
-import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import {Familie, Sivilstatus} from "./FamilieTypes";
 import {useDispatch} from "react-redux";
 import {clearValideringsfeil, setValideringsfeil} from "../../../digisos/redux/validering/valideringActions";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
-import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import {useTranslation} from "react-i18next";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
-import {TextField} from "@navikt/ds-react";
+import {Heading, Radio, RadioGroup, TextField} from "@navikt/ds-react";
 
 const FAKTUM_KEY = "familie.sivilstatus.gift.ektefelle";
 const FAKTUM_KEY_FNR = FAKTUM_KEY + ".fnr";
@@ -112,7 +109,10 @@ const PersonSkjema = () => {
     const borSammenMed = familie && familie.sivilstatus ? familie.sivilstatus.borSammenMed : null;
 
     return (
-        <div className="personskjema">
+        <div className="space-y-4">
+            <Heading size={"small"} level={"3"} spacing>
+                {t("familie.sivilstatus.gift.ektefelle.sporsmal")}
+            </Heading>
             <TextField
                 maxLength={100}
                 value={ektefelle.navn.fornavn}
@@ -121,7 +121,6 @@ const PersonSkjema = () => {
                 label={t("familie.sivilstatus.gift.ektefelle.fornavn.label")}
                 required={false}
             />
-
             <TextField
                 maxLength={100}
                 value={ektefelle.navn.mellomnavn ? ektefelle.navn.mellomnavn : ""}
@@ -130,7 +129,6 @@ const PersonSkjema = () => {
                 label={t("familie.sivilstatus.gift.ektefelle.mellomnavn.label")}
                 required={false}
             />
-
             <TextField
                 className="pb-4"
                 maxLength={100}
@@ -140,7 +138,6 @@ const PersonSkjema = () => {
                 label={t("familie.sivilstatus.gift.ektefelle.etternavn.label")}
                 required={false}
             />
-
             <TextField
                 maxLength={8}
                 minLength={8}
@@ -151,7 +148,6 @@ const PersonSkjema = () => {
                 label={t("familie.sivilstatus.gift.ektefelle.fnr.label")}
                 required={false}
             />
-
             <TextField
                 maxLength={5}
                 minLength={5}
@@ -163,27 +159,14 @@ const PersonSkjema = () => {
                 required={false}
             />
 
-            <Sporsmal
-                tekster={getFaktumSporsmalTekst(t, "familie.sivilstatus.gift.ektefelle.borsammen")}
-                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+            <RadioGroup
+                legend={t("familie.sivilstatus.gift.ektefelle.borsammen.sporsmal")}
+                onChange={(value) => onClickBorSammen(value === "false")}
+                value={borSammenMed?.toString()}
             >
-                <RadioEnhanced
-                    id={"sivilstatus_gift_bor_sammen_radio_ja"}
-                    label={t("familie.sivilstatus.gift.ektefelle.borsammen.true")}
-                    value="true"
-                    checked={borSammenMed === true}
-                    onChange={() => onClickBorSammen(true)}
-                    name="borsammen"
-                />
-                <RadioEnhanced
-                    id={"sivilstatus_gift_bor_sammen_radio_nei"}
-                    label={t("familie.sivilstatus.gift.ektefelle.borsammen.false")}
-                    value="false"
-                    checked={borSammenMed === false}
-                    onChange={() => onClickBorSammen(false)}
-                    name="borsammen"
-                />
-            </Sporsmal>
+                <Radio value="true">{t("familie.sivilstatus.gift.ektefelle.borsammen.true")}</Radio>
+                <Radio value="false">{t("familie.sivilstatus.gift.ektefelle.borsammen.false")}</Radio>
+            </RadioGroup>
         </div>
     );
 };
