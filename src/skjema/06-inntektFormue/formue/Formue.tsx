@@ -6,7 +6,6 @@ import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsm
 import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../nav-soknad/utils";
 import {Formue, FormueId} from "./FormueTypes";
 import CheckboxPanel from "../../../nav-soknad/faktum/CheckboxPanel";
-import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {State} from "../../../digisos/redux/reducers";
@@ -14,10 +13,11 @@ import {validateAndDispatchTextFieldMaxLength} from "../../../nav-soknad/valider
 import {useTranslation} from "react-i18next";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
+import {Textarea} from "@navikt/ds-react";
 
 const MAX_CHARS = 500;
 const FORMUE = "inntekt.bankinnskudd";
-const FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY = FORMUE + "formue.annet.textarea";
+const FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY = "inntekt.bankinnskudd.formue.annet.textarea";
 
 export const FormueView = () => {
     const [oppstartsModus, setOppstartsModus] = useState(true);
@@ -103,16 +103,14 @@ export const FormueView = () => {
             {renderCheckBox(FormueId.LIVSFORSIKRING)}
             {renderCheckBox(FormueId.VERDIPAPIRER)}
             {renderCheckBox(FormueId.ANNET)}
-            <NivaTreSkjema visible={formue !== undefined && formue.annet} size="small">
-                <TextareaEnhanced
+            <NivaTreSkjema visible={formue?.annet} size="small">
+                <Textarea
                     id={replaceDotWithUnderscore(FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY)}
-                    placeholder=""
                     onChange={(evt: any) => onChangeAnnet(evt.target.value)}
                     onBlur={() => onBlurTekstfeltAnnet()}
-                    faktumKey={FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY}
-                    labelId={FORMUE + ".true.type.annet.true.beskrivelse.label"}
+                    label={t("inntekt.bankinnskudd.true.type.annet.true.beskrivelse.label")}
                     maxLength={MAX_CHARS}
-                    value={formue && formue.beskrivelseAvAnnet ? formue.beskrivelseAvAnnet : ""}
+                    value={formue?.beskrivelseAvAnnet ?? ""}
                 />
             </NivaTreSkjema>
         </Sporsmal>
