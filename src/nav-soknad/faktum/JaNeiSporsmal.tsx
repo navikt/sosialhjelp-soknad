@@ -25,13 +25,17 @@ const JaNeiSporsmal = ({faktumKey, children, verdi, onChange, tekster, legendTit
             stil={children ? "jaNeiSporsmal" : "normal"}
             legendTittelStyle={legendTittelStyle || LegendTittleStyle.DEFAULT}
         >
-            <RadioGroup legend={tekster.label} onChange={(value) => onChange(value === "true")}>
+            <RadioGroup
+                legend={tekster.label}
+                value={verdi?.toString()}
+                onChange={(value) => onChange(value === "true")}
+            >
                 <HStack align={"stretch"} gap={{xs: "2", lg: "4"}}>
                     <Radio className={className} value={"true"}>{`${t(`${faktumKey}.true`)}`}</Radio>
                     <Radio className={className} value={"false"}>{`${t(`${faktumKey}.false`)}`}</Radio>
                 </HStack>
             </RadioGroup>
-            {children && verdi && children}
+            {verdi && children}
         </Sporsmal>
     );
 };
