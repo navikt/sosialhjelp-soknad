@@ -97,7 +97,7 @@ const RegistrerteBarn = () => {
                         <JaNeiCheckbox
                             legend={t("system.familie.barn.true.barn.deltbosted.sporsmal")}
                             description={
-                                <ReadMore header={"Det må være en header her"}>
+                                <ReadMore header={"Les mer"}>
                                     {t("system.familie.barn.true.barn.deltbosted.hjelpetekst.tekst")}
                                 </ReadMore>
                             }
