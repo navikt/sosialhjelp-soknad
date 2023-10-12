@@ -135,7 +135,12 @@
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
-                    "200": {"description": "OK"}
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/TelefonnummerFrontend"}}
+                        }
+                    }
                 }
             }
         },
@@ -1806,6 +1811,7 @@
                 }
             },
             "ForsorgerpliktFrontend": {
+                "required": ["ansvar"],
                 "type": "object",
                 "properties": {
                     "harForsorgerplikt": {"type": "boolean"},
