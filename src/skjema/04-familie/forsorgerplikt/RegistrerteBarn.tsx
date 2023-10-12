@@ -15,7 +15,7 @@ import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
 import {LocalizedDate} from "../../../components/LocalizedDate";
 import {ReadMore, TextField} from "@navikt/ds-react";
 import cx from "classnames";
-import {JaNeiCheckbox} from "../../../nav-soknad/components/jaNeiCheckbox/JaNeiCheckbox";
+import {YesNoInput} from "../../../nav-soknad/components/jaNeiCheckbox/YesNoInput";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
 
@@ -94,7 +94,7 @@ const RegistrerteBarn = () => {
                         </SysteminfoItem>
                     </Systeminfo>
                     {barnet.erFolkeregistrertSammen ? (
-                        <JaNeiCheckbox
+                        <YesNoInput
                             legend={t("system.familie.barn.true.barn.deltbosted.sporsmal")}
                             description={
                                 <ReadMore header={"Les mer"}>

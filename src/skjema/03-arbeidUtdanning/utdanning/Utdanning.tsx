@@ -1,11 +1,10 @@
 import * as React from "react";
 import {useTranslation} from "react-i18next";
-import {Radio} from "@navikt/ds-react";
+import {Radio, RadioGroup} from "@navikt/ds-react";
 import Underskjema from "../../../nav-soknad/components/underskjema";
-import {HorizontalRadioGroup, VerticalRadioGroup} from "../../../nav-soknad/components/form/HorizontalRadioGroup";
-import {TranslatedError} from "../../02-begrunnelse";
 import {Control, Controller, useWatch} from "react-hook-form";
 import {ArbeidOgUtdanningType} from "../index";
+import {YesNoInput} from "../../../nav-soknad/components/jaNeiCheckbox/YesNoInput";
 
 type UtdanningViewProps = {
     control: Control<ArbeidOgUtdanningType>;
@@ -16,21 +15,16 @@ const UtdanningInput = React.forwardRef<HTMLDivElement, UtdanningViewProps>(({co
     const erStudent = useWatch({control, name: "utdanning.erStudent"});
 
     return (
-        <div ref={ref}>
+        <div ref={ref} className={"space-y-2"}>
             <Controller
                 control={control}
                 name="utdanning.erStudent"
-                render={({field: {onChange, value: erStudent, name, ref}, formState: {errors}}) => (
-                    <VerticalRadioGroup
-                        name={name}
-                        onChange={(valueStr) => onChange({target: {value: valueStr === "true"}})}
-                        value={erStudent?.toString() || null}
+                render={({field: {onChange, value: erStudent}, formState: {errors}}) => (
+                    <YesNoInput
                         legend={t("dinsituasjon.studerer.sporsmal")}
-                        error={errors.utdanning?.erStudent && <TranslatedError error={errors.utdanning?.erStudent} />}
-                    >
-                        <Radio value={"true"}>{t("dinsituasjon.studerer.true")}</Radio>
-                        <Radio value={"false"}>{t("dinsituasjon.studerer.false")}</Radio>
-                    </VerticalRadioGroup>
+                        defaultValue={erStudent ?? null}
+                        onChange={(value) => onChange({target: {value}})}
+                    />
                 )}
             />
             <Controller
@@ -38,14 +32,14 @@ const UtdanningInput = React.forwardRef<HTMLDivElement, UtdanningViewProps>(({co
                 name="utdanning.studengradErHeltid"
                 render={({field: {onChange, value: studengradErHeltid, name, ref}, formState: {errors}}) => (
                     <Underskjema jaNeiSporsmal visible={!!erStudent}>
-                        <HorizontalRadioGroup
+                        <RadioGroup
                             onChange={(value) => onChange({target: {value: value === "true"}})}
                             value={(erStudent && studengradErHeltid?.toString()) || null}
                             legend={t("dinsituasjon.studerer.grad.sporsmal")}
                         >
                             <Radio value={"true"}>{t("dinsituasjon.studerer.grad.heltid")}</Radio>
                             <Radio value={"false"}>{t("dinsituasjon.studerer.grad.deltid")}</Radio>
-                        </HorizontalRadioGroup>
+                        </RadioGroup>
                     </Underskjema>
                 )}
             />
