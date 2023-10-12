@@ -6,10 +6,7 @@ import {strip47} from "./Telefon";
 import {isValidTelefonnummer} from "@fremtind/jkl-validators-util";
 
 type FormType = Pick<TelefonnummerFrontend, "brukerutfyltVerdi">;
-export const useTelefonnummerForm = (
-    initialValue: TelefonnummerFrontend | undefined,
-    setTelefonnummer: (tlfnr: string) => Promise<void>
-) => {
+export const useTelefonnummerForm = (initialValue: TelefonnummerFrontend | undefined) => {
     const {t} = useTranslation("skjema");
 
     const form = useForm<FormType>({
@@ -19,20 +16,25 @@ export const useTelefonnummerForm = (
                 : "",
         },
     });
+
     const validate = (nummer: string | null | undefined): string | true =>
         !nummer?.length || isValidTelefonnummer(nummer) || t("kontakt.telefon.feilmelding");
 
     const {registerWithTelefonnummerMask} = registerWithMasks(form);
-    const {handleSubmit} = form;
+
     const registerInput = registerWithTelefonnummerMask("brukerutfyltVerdi", {
         validate: {isValidTelefonnummer: validate},
     });
+
     const error = form.formState.errors.brukerutfyltVerdi?.message;
+
+    const {handleSubmit, reset} = form;
 
     return {
         form,
         registerInput,
         error,
         handleSubmit,
+        reset,
     };
 };

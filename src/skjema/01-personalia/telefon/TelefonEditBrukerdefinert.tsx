@@ -6,7 +6,7 @@ import {useTelefonnummerForm} from "./useTelefonnummerForm";
 
 export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
     const {data, setTelefonnummer} = useTelefonnummer();
-    const {registerInput, error, handleSubmit} = useTelefonnummerForm(data, setTelefonnummer);
+    const {registerInput, error, handleSubmit, reset} = useTelefonnummerForm(data);
     const {t} = useTranslation("skjema");
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = handleSubmit(async ({brukerutfyltVerdi}) =>
@@ -26,7 +26,7 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
                 error={error}
             />
             <div className={"space-x-2"}>
-                <Button variant="secondary" onClick={() => setTelefonnummer(null)}>
+                <Button variant="secondary" onClick={() => setTelefonnummer(null).then(() => reset())}>
                     {t("avbryt")}
                 </Button>
                 <Button type={"submit"} data-testid="lagre-telefonnummer">
