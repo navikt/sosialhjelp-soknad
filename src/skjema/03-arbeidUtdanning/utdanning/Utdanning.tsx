@@ -4,7 +4,7 @@ import {Radio, RadioGroup} from "@navikt/ds-react";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import {Control, Controller, useWatch} from "react-hook-form";
 import {ArbeidOgUtdanningType} from "../index";
-import {YesNoInput} from "../../../nav-soknad/components/jaNeiCheckbox/YesNoInput";
+import {YesNoInput} from "../../../nav-soknad/components/form/YesNoInput";
 
 type UtdanningViewProps = {
     control: Control<ArbeidOgUtdanningType>;

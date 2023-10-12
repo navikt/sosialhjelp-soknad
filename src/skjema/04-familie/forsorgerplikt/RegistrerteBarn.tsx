@@ -15,7 +15,7 @@ import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
 import {LocalizedDate} from "../../../components/LocalizedDate";
 import {ReadMore, TextField} from "@navikt/ds-react";
 import cx from "classnames";
-import {YesNoInput} from "../../../nav-soknad/components/jaNeiCheckbox/YesNoInput";
+import {YesNoInput} from "../../../nav-soknad/components/form/YesNoInput";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
 
