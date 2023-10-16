@@ -193,9 +193,7 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/KontonummerFrontend"}}
-                        }
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontonummerFrontend"}}}
                     }
                 }
             },
@@ -204,7 +202,7 @@
                 "operationId": "updateKontonummer",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/KontonummerFrontend"}}},
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/KontonummerInputDTO"}}},
                     "required": true
                 },
                 "responses": {
@@ -212,7 +210,10 @@
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
-                    "200": {"description": "OK"}
+                    "200": {
+                        "description": "OK",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontonummerFrontend"}}}
+                    }
                 }
             }
         },
@@ -1461,15 +1462,36 @@
                     "isMottakDeaktivert": {"type": "boolean"}
                 }
             },
-            "KontonummerFrontend": {
-                "required": ["brukerdefinert"],
+            "KontonummerInputDTO": {
                 "type": "object",
                 "properties": {
-                    "brukerdefinert": {"type": "boolean"},
-                    "systemverdi": {"type": "string", "readOnly": true},
-                    "brukerutfyltVerdi": {"type": "string", "nullable": true},
-                    "harIkkeKonto": {"type": "boolean"}
+                    "brukerutfyltVerdi": {
+                        "pattern": "^\\d{11}$",
+                        "type": "string",
+                        "description": "Kontonummer fra bruker",
+                        "nullable": true
+                    },
+                    "harIkkeKonto": {
+                        "type": "boolean",
+                        "description": "Bruker oppgir at de ikke har konto",
+                        "nullable": true
+                    }
                 }
+            },
+            "KontonummerFrontend": {
+                "required": ["brukerdefinert", "harIkkeKonto"],
+                "type": "object",
+                "properties": {
+                    "systemverdi": {
+                        "type": "string",
+                        "description": "Kontonummer fra kontoregisteret",
+                        "readOnly": true
+                    },
+                    "brukerutfyltVerdi": {"type": "string", "description": "Kontonummer fra bruker", "nullable": true},
+                    "harIkkeKonto": {"type": "boolean", "description": "Bruker oppgir at de ikke har konto"},
+                    "brukerdefinert": {"type": "boolean"}
+                },
+                "description": "Kontonummer for bruker - obs: PUT med (systemverdi !== null) vil nullstille brukerutfyltVerdi"
             },
             "AdresseFrontend": {
                 "type": "object",
