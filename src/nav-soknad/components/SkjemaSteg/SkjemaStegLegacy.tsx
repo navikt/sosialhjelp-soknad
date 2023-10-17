@@ -74,14 +74,11 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: S
     useTitle(`${stegTittel} - ${documentTitle}`);
 
     return (
-        <div
-            id="main-content"
-            className="pb-4 lg:pb-40 gap-10 pt-10 flex flex-col bg-gradient-to-b from-digisosGronnBakgrunnTop to-digisosGronnBakgrunnBottom"
-        >
+        <div id="main-content" className="pb-4 lg:pb-40 gap-10 flex flex-col bg-digisosGronnBakgrunn">
             <Link href="#main-content" className="sr-only sr-only-focusable">
                 {t("hoppTilHovedinnhold")}
             </Link>
-            <AppBanner className={"lg:!text-2xl !p-0 bg-transparent"} />
+            <AppBanner className={"w-full"} />
             <SkjemaStegNavStepperLegacy skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={gotoPage} />
             <main id="main-content">
                 <div className={"max-w-3xl mx-auto skjema-steg skjema-content"}>
