@@ -72,7 +72,7 @@ const Begrunnelse = () => {
         handleSubmit,
         formState: {errors},
     } = useForm<BegrunnelseFrontend>({
-        defaultValues: async () => hent(),
+        defaultValues: hent,
         resolver: zodResolver(begrunnelseSchema),
         mode: "onChange",
     });

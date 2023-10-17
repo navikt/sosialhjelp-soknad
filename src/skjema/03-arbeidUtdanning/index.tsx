@@ -7,11 +7,12 @@ import {ArbeidFrontend, UtdanningFrontend} from "../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import {z} from "zod";
-import {hentArbeid, useUpdateArbeid} from "../../generated/arbeid-ressurs/arbeid-ressurs";
+import {hentArbeid, updateArbeid} from "../../generated/arbeid-ressurs/arbeid-ressurs";
 import {ArbeidsforholdListe} from "./arbeid/ArbeidsforholdListe";
 import {TranslatedError} from "../02-begrunnelse";
-import {hentUtdanning, useUpdateUtdanning} from "../../generated/utdanning-ressurs/utdanning-ressurs";
+import {hentUtdanning, updateUtdanning} from "../../generated/utdanning-ressurs/utdanning-ressurs";
 import UtdanningInput from "./utdanning/Utdanning";
+import * as Sentry from "@sentry/react";
 
 const ArbeidOgUtdanningSchema = z.object({
     arbeid: z.object({kommentarTilArbeidsforhold: z.string().max(500, "maksLengde").nullable()}),
@@ -43,30 +44,24 @@ const ArbeidOgUtdanning = () => {
         resolver: zodResolver(ArbeidOgUtdanningSchema),
     });
 
-    const {mutate: mutateArbeid, isError: isErrorArbeid} = useUpdateArbeid();
-    const {mutate: mutateUtdanning, isError: isErrorUtdanning} = useUpdateUtdanning();
+    const [error, setError] = React.useState<boolean>(false);
 
-    const onRequestNavigation = () =>
-        new Promise<void>((resolve, reject) => {
-            handleSubmit(
-                (data) => {
-                    mutateArbeid(
-                        {behandlingsId, data: data.arbeid},
-                        {
-                            onSuccess: () =>
-                                mutateUtdanning(
-                                    {behandlingsId, data: data.utdanning},
-                                    {onSuccess: resolve, onError: reject}
-                                ),
-                            onError: reject,
-                        }
-                    );
-                },
-                () => {
-                    reject(new DigisosValidationError());
+    const onRequestNavigation = async () =>
+        handleSubmit(
+            async (data: ArbeidOgUtdanningType) => {
+                try {
+                    await updateArbeid(behandlingsId, data.arbeid);
+                    await updateUtdanning(behandlingsId, data.utdanning);
+                } catch (e) {
+                    Sentry.captureException(e);
+                    setError(true);
+                    throw new DigisosValidationError();
                 }
-            )();
-        });
+            },
+            () => {
+                throw new DigisosValidationError();
+            }
+        )();
 
     return (
         <SkjemaSteg page={3} onRequestNavigation={onRequestNavigation}>
@@ -100,7 +95,7 @@ const ArbeidOgUtdanning = () => {
                         </Heading>
                         <UtdanningInput control={control} />
                     </div>
-                    {(isErrorArbeid || isErrorUtdanning) && <div>{t("skjema.navigering.feil")}</div>}
+                    {error && <div>{t("skjema.navigering.feil")}</div>}
                     <SkjemaSteg.Buttons />
                 </form>
             </SkjemaSteg.Content>

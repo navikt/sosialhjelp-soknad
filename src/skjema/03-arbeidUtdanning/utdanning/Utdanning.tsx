@@ -19,18 +19,18 @@ const UtdanningInput = React.forwardRef<HTMLDivElement, UtdanningViewProps>(({co
             <Controller
                 control={control}
                 name="utdanning.erStudent"
-                render={({field: {onChange, value: erStudent}, formState: {errors}}) => (
+                render={({field: {value: erStudent, onChange}}) => (
                     <YesNoInput
                         legend={t("dinsituasjon.studerer.sporsmal")}
                         defaultValue={erStudent ?? null}
-                        onChange={(value) => onChange({target: {value}})}
+                        onChange={onChange}
                     />
                 )}
             />
             <Controller
                 control={control}
                 name="utdanning.studengradErHeltid"
-                render={({field: {onChange, value: studengradErHeltid, name, ref}, formState: {errors}}) => (
+                render={({field: {onChange, value: studengradErHeltid}, formState: {errors}}) => (
                     <Underskjema jaNeiSporsmal visible={!!erStudent}>
                         <RadioGroup
                             onChange={(value) => onChange({target: {value: value === "true"}})}

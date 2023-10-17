@@ -8,8 +8,8 @@ const responsiveWidth = "!grow min-w-sm";
 /**
  * En <Radio> som er stylet for bruk til ja/nei/null-valg i <BooleanInput />
  */
-const BooleanInputRadio = ({value, label}: {value: boolean; label: ReactNode}) => (
-    <Radio className={cx(roundedBorder, responsiveWidth)} value={value?.toString()}>
+const BooleanInputRadio = ({value, label}: {value: string; label: ReactNode}) => (
+    <Radio className={cx(roundedBorder, responsiveWidth)} value={value.toString()}>
         {label}
     </Radio>
 );
@@ -22,20 +22,26 @@ export interface BaseBooleanInputProps {
 }
 
 interface GenericBooleanInputProps {
+    // True and false labels
     radioLabels: [ReactNode, ReactNode];
 }
 
 export const BooleanInput = ({
-    radioLabels: [falseLabel, trueLabel],
+    radioLabels: [trueLabel, falseLabel],
     defaultValue,
     onChange,
     legend,
     description,
 }: BaseBooleanInputProps & GenericBooleanInputProps) => (
-    <RadioGroup legend={legend} description={description} onChange={onChange} defaultValue={defaultValue}>
+    <RadioGroup
+        legend={legend}
+        description={description}
+        onChange={(value) => onChange(value === "true")}
+        defaultValue={defaultValue}
+    >
         <HStack align={"stretch"} gap={{xs: "2", lg: "4"}}>
-            <BooleanInputRadio value={false} label={falseLabel} />
-            <BooleanInputRadio value={true} label={trueLabel} />
+            <BooleanInputRadio value={"true"} label={trueLabel} />
+            <BooleanInputRadio value={"false"} label={falseLabel} />
         </HStack>
     </RadioGroup>
 );
