@@ -1,17 +1,12 @@
 import * as React from "react";
 import {ReactNode} from "react";
-import {HStack, Radio, RadioGroup} from "@navikt/ds-react";
-import cx from "classnames";
+import {Radio, RadioGroup} from "@navikt/ds-react";
 
-const roundedBorder = "border-[1px] border-[val(--a-border-strong)] rounded-lg py-2 px-6";
-const responsiveWidth = "!grow min-w-sm";
 /**
  * En <Radio> som er stylet for bruk til ja/nei/null-valg i <BooleanInput />
  */
 const BooleanInputRadio = ({value, label}: {value: string; label: ReactNode}) => (
-    <Radio className={cx(roundedBorder, responsiveWidth)} value={value.toString()}>
-        {label}
-    </Radio>
+    <Radio value={value.toString()}>{label}</Radio>
 );
 
 export interface BaseBooleanInputProps {
@@ -39,9 +34,7 @@ export const BooleanInput = ({
         onChange={(value) => onChange(value === "true")}
         defaultValue={defaultValue}
     >
-        <HStack align={"stretch"} gap={{xs: "2", lg: "4"}}>
-            <BooleanInputRadio value={"true"} label={trueLabel} />
-            <BooleanInputRadio value={"false"} label={falseLabel} />
-        </HStack>
+        <BooleanInputRadio value={"true"} label={trueLabel} />
+        <BooleanInputRadio value={"false"} label={falseLabel} />
     </RadioGroup>
 );
