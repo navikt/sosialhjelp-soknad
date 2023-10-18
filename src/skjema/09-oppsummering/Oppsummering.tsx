@@ -22,13 +22,14 @@ import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
 import {erAktiv} from "../../nav-soknad/containers/navEnhetStatus";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {basePath} from "../../configuration";
-import {useSendSoknad} from "../../generated/soknad-actions/soknad-actions";
+import {sendSoknad} from "../../generated/soknad-actions/soknad-actions";
 import {useFeatureFlags} from "../../lib/featureFlags";
 import {OppsummeringSteg} from "./OppsummeringSteg";
 import {OppsummeringHeading, NyOppsummeringPrototypePersonalia} from "./oppsummeringer/personalia";
 import {useAlgebraic} from "../../lib/hooks/useAlgebraic";
 import {useHentBegrunnelse} from "../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
 import {innsynURL} from "../../lib/config";
+import * as Sentry from "@sentry/react";
 
 const NyOppsummeringPrototypeBegrunnelse = () => {
     const {expectOK} = useAlgebraic(useHentBegrunnelse(useBehandlingsId()));
@@ -73,21 +74,10 @@ export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
 
     const {isLoading, data} = useGetOppsummering(behandlingsId);
+    const [isError, setIsError] = useState<boolean>(false);
 
     const {data: adresser} = useHentAdresser(behandlingsId);
 
-    const {mutateAsync, isError} = useSendSoknad({
-        mutation: {
-            onSuccess: ({id, sendtTil}) => {
-                const redirectUrl: Record<SendTilUrlFrontendSendtTil, string> = {
-                    FIKS_DIGISOS_API: `${innsynURL}${id}/status`,
-                    SVARUT: `${basePath}/skjema/${id}/ettersendelse`,
-                };
-
-                window.location.href = redirectUrl[sendtTil];
-            },
-        },
-    });
     useEffect(() => {
         if (adresser === undefined) return;
         if (erAktiv(adresser.navEnhet)) return;
@@ -127,7 +117,19 @@ export const Oppsummering = () => {
         logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent());
         if (adresseValg) logInfo("klikk--" + adresseValg);
 
-        await mutateAsync({behandlingsId});
+        try {
+            const {id, sendtTil} = await sendSoknad(behandlingsId);
+
+            const redirectUrl: Record<SendTilUrlFrontendSendtTil, string> = {
+                FIKS_DIGISOS_API: `${innsynURL}${id}/status`,
+                SVARUT: `${basePath}/skjema/${id}/ettersendelse`,
+            };
+
+            window.location.href = redirectUrl[sendtTil];
+        } catch (e) {
+            Sentry.captureException(e);
+            setIsError(true);
+        }
     };
 
     if (isLoading) return <ApplicationSpinner />;

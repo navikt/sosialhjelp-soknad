@@ -53,16 +53,16 @@ export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep, onSend}: Sk
                         <Button
                             variant="primary"
                             id="send_button"
-                            onClick={() => {
-                                if (onSend) {
-                                    setSendSoknadPending(true);
-                                    onSend().then(() => setSendSoknadPending(false));
-                                }
+                            onClick={async () => {
+                                if (!onSend) return;
+                                setSendSoknadPending(true);
+                                await onSend();
+                                setSendSoknadPending(false);
                             }}
                             disabled={sendSoknadPending || forwardInhibited}
                         >
                             {t("skjema.knapper.send")}
-                            {sendSoknadPending && <Loader />}
+                            {sendSoknadPending && <Loader className={"ml-2 h-[1em]"} />}
                         </Button>
                     )}
                 </div>
