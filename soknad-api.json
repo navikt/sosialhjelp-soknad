@@ -379,7 +379,7 @@
                 "operationId": "updateStudielan",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudielanFrontend"}}},
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudielanInputDTO"}}},
                     "required": true
                 },
                 "responses": {
@@ -387,7 +387,10 @@
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
-                    "200": {"description": "OK"}
+                    "200": {
+                        "description": "OK",
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudielanFrontend"}}}
+                    }
                 }
             }
         },
@@ -1147,23 +1150,6 @@
                 }
             }
         },
-        "/informasjon/utslagskriterier/sosialhjelp": {
-            "get": {
-                "tags": ["informasjon-ressurs"],
-                "operationId": "getUtslagskriterier",
-                "responses": {
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Utslagskriterier"}}}
-                    }
-                },
-                "deprecated": true
-            }
-        },
         "/informasjon/session": {
             "get": {
                 "tags": ["informasjon-ressurs"],
@@ -1178,61 +1164,6 @@
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SessionResponse"}}}
                     }
                 }
-            }
-        },
-        "/informasjon/pabegynteSoknader": {
-            "get": {
-                "tags": ["informasjon-ressurs"],
-                "operationId": "hentPabegynteSoknader",
-                "responses": {
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/PabegyntSoknad"}}
-                            }
-                        }
-                    }
-                },
-                "deprecated": true
-            }
-        },
-        "/informasjon/harNyligInnsendteSoknader": {
-            "get": {
-                "tags": ["informasjon-ressurs"],
-                "operationId": "harNyligInnsendteSoknader",
-                "responses": {
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/NyligInnsendteSoknaderResponse"}}}
-                    }
-                },
-                "deprecated": true
-            }
-        },
-        "/informasjon/fornavn": {
-            "get": {
-                "tags": ["informasjon-ressurs"],
-                "operationId": "hentFornavn",
-                "responses": {
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"*/*": {"schema": {"type": "object", "additionalProperties": {"type": "string"}}}}
-                    }
-                },
-                "deprecated": true
             }
         },
         "/informasjon/adressesok": {
@@ -1475,7 +1406,8 @@
                         "type": "boolean",
                         "description": "Bruker oppgir at de ikke har konto",
                         "nullable": true
-                    }
+                    },
+                    "brukerdefinert": {"type": "boolean"}
                 }
             },
             "KontonummerFrontend": {
@@ -1653,6 +1585,7 @@
                     "utbetalingerFraNavFeilet": {"type": "boolean"}
                 }
             },
+            "StudielanInputDTO": {"type": "object", "properties": {"bekreftelse": {"type": "boolean"}}},
             "StudielanFrontend": {
                 "required": ["skalVises"],
                 "type": "object",
@@ -2665,15 +2598,13 @@
                     "vedleggListe": {"type": "array", "items": {"$ref": "#/components/schemas/VedleggMetadataDto"}}
                 }
             },
-            "Utslagskriterier": {
-                "required": ["harTilgang"],
-                "type": "object",
-                "properties": {"harTilgang": {"type": "boolean"}, "sperrekode": {"type": "string", "enum": ["bruker"]}}
-            },
             "PabegyntSoknad": {
                 "required": ["behandlingsId", "sistOppdatert"],
                 "type": "object",
-                "properties": {"sistOppdatert": {"type": "string"}, "behandlingsId": {"type": "string"}},
+                "properties": {
+                    "sistOppdatert": {"type": "string", "format": "date-time"},
+                    "behandlingsId": {"type": "string"}
+                },
                 "description": "Påbegynte men ikke innleverte søknader"
             },
             "SessionResponse": {
@@ -2702,11 +2633,6 @@
                     }
                 },
                 "description": "Informasjon om brukerøkt"
-            },
-            "NyligInnsendteSoknaderResponse": {
-                "required": ["antallNyligInnsendte"],
-                "type": "object",
-                "properties": {"antallNyligInnsendte": {"type": "integer", "format": "int32"}}
             },
             "AdresseForslag": {
                 "required": ["type"],
