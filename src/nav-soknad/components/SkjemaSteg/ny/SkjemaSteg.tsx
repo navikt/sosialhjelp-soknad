@@ -129,7 +129,7 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
                 <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
                 <AppBanner className={"w-full"} />
                 <SkjemaStegStepper />
-                <div className={"max-w-3xl mx-auto"}>
+                <div className={"max-w-3xl mx-auto w-full"}>
                     <NedetidPanel varselType={"infoside"} />
                     {children}
                 </div>
