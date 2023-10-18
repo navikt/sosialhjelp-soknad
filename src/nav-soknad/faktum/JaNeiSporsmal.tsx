@@ -1,110 +1,44 @@
 import * as React from "react";
-import ValgMedUnderskjema from "../components/valgMedUnderskjema";
-import Underskjema from "../components/underskjema";
 import Sporsmal, {LegendTittleStyle} from "../components/sporsmal/Sporsmal";
-import RadioEnhanced from "./RadioEnhanced";
+import {useTranslation} from "react-i18next";
+import {HStack, Radio, RadioGroup} from "@navikt/ds-react";
 
 interface JaNeiSporsmalProps {
     faktumKey: string;
     skjemaTilhorerValg?: "ja" | "nei";
-    visible?: boolean;
     id?: string;
     legendTittelStyle?: LegendTittleStyle;
     tekster: any;
     verdi: null | boolean;
-    onChange?: (verdi: boolean) => void;
+    onChange: (verdi: boolean) => void;
     visPlaceholder?: boolean;
     children?: React.ReactNode;
 }
 
-const erMobilVisning = () =>
-    Math.max(
-        document.body.scrollWidth,
-        document.documentElement.scrollWidth,
-        document.body.offsetWidth,
-        document.documentElement.offsetWidth,
-        document.documentElement.clientWidth
-    ) < 480;
+const className = "border-[1px] border-[val(--a-border-strong)] !grow min-w-sm rounded-lg py-2 px-6";
 
-class JaNeiSporsmal extends React.Component<JaNeiSporsmalProps> {
-    handleOnChange(verdi: any) {
-        this.props.onChange && this.props.onChange(verdi);
-    }
-
-    render() {
-        const {faktumKey, children, verdi} = this.props;
-
-        const harUnderSkjema = children !== undefined;
-        const visUnderSkjema = harUnderSkjema && verdi === true;
-
-        let idRadioJa: string;
-        let idRadioNei: string;
-        if (this.props.id) {
-            idRadioJa = this.props.id + "_radio_ja";
-            idRadioNei = this.props.id + "_radio_nei";
-        } else {
-            idRadioJa = faktumKey.replace(/\./g, "_") + "_radio_ja";
-            idRadioJa = idRadioJa.replace(/__/g, "_");
-            idRadioNei = faktumKey.replace(/\./g, "_") + "_radio_nei";
-            idRadioNei = idRadioNei.replace(/__/g, "_");
-        }
-        const radioName = faktumKey.replace(/\./g, "_") + "_radio";
-
-        const mobilVisning = erMobilVisning();
-
-        if (this.props.visible === false) return null;
-
-        return (
-            <Sporsmal
-                tekster={this.props.tekster}
-                stil={harUnderSkjema ? "jaNeiSporsmal" : "normal"}
-                legendTittelStyle={this.props.legendTittelStyle || LegendTittleStyle.DEFAULT}
+const JaNeiSporsmal = ({faktumKey, children, verdi, onChange, tekster, legendTittelStyle}: JaNeiSporsmalProps) => {
+    const {t} = useTranslation("skjema");
+    return (
+        <Sporsmal
+            tekster={tekster}
+            stil={children ? "jaNeiSporsmal" : "normal"}
+            legendTittelStyle={legendTittelStyle || LegendTittleStyle.DEFAULT}
+        >
+            <RadioGroup
+                className={"!mb-4"}
+                legend={tekster.label}
+                value={verdi?.toString()}
+                onChange={(value) => onChange(value === "true")}
             >
-                <ValgMedUnderskjema
-                    underskjema={children ? <Underskjema visible={visUnderSkjema}>{children}</Underskjema> : <span />}
-                >
-                    <RadioEnhanced
-                        checked={verdi === true}
-                        className="jaNeiSpormal"
-                        faktumKey={this.props.faktumKey}
-                        id={idRadioJa}
-                        name={radioName}
-                        onChange={() => this.handleOnChange(true)}
-                        value={"true"}
-                        visPlaceholder={this.props.visPlaceholder}
-                    />
-                    {!mobilVisning && (
-                        <RadioEnhanced
-                            checked={verdi === false}
-                            className="jaNeiSpormal"
-                            faktumKey={this.props.faktumKey}
-                            id={idRadioNei}
-                            name={radioName}
-                            onChange={() => this.handleOnChange(false)}
-                            value={"false"}
-                            visPlaceholder={this.props.visPlaceholder}
-                        />
-                    )}
-                </ValgMedUnderskjema>
-                {mobilVisning && (
-                    <RadioEnhanced
-                        faktumKey={this.props.faktumKey}
-                        id={idRadioNei}
-                        value={"false"}
-                        checked={!verdi}
-                        name={radioName}
-                        onChange={() => this.handleOnChange(false)}
-                        className={
-                            "jaNeiSpormal inputPanel__mobil--nei " + visUnderSkjema
-                                ? "inputPanel__mobil--uten-underSkjema"
-                                : ""
-                        }
-                        visPlaceholder={this.props.visPlaceholder}
-                    />
-                )}
-            </Sporsmal>
-        );
-    }
-}
+                <HStack align={"stretch"} gap={{xs: "2", lg: "4"}}>
+                    <Radio className={className} value={"true"}>{`${t(`${faktumKey}.true`)}`}</Radio>
+                    <Radio className={className} value={"false"}>{`${t(`${faktumKey}.false`)}`}</Radio>
+                </HStack>
+            </RadioGroup>
+            {verdi && children}
+        </Sporsmal>
+    );
+};
 
 export default JaNeiSporsmal;

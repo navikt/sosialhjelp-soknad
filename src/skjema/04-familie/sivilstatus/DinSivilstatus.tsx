@@ -2,7 +2,7 @@ import * as React from "react";
 import {useState, useEffect} from "react";
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {Status} from "./FamilieTypes";
-import SivilstatusComponent from "./SivilstatusComponent";
+import Sivilstatus from "./Sivilstatus";
 import EktefelleDetaljer from "./EktefelleDetaljer";
 import Sporsmal from "../../../nav-soknad/components/sporsmal/Sporsmal";
 import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
@@ -11,34 +11,37 @@ import {useTranslation} from "react-i18next";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 
-const DinSivilstatusView = () => {
-    const [oppstartsModus, setOppstartsModus] = useState(true);
+const useSivilstatus = () => {
+    const [isLoading, setIsLoading] = useState(true);
     const {soknadsdata} = useSoknadsdata(SoknadsSti.SIVILSTATUS);
-    const {t} = useTranslation("skjema");
-
     const sivilstatus = soknadsdata.familie.sivilstatus;
     const restStatus = soknadsdata.restStatus.familie.sivilstatus;
 
     useEffect(() => {
-        if (oppstartsModus && restStatus === REST_STATUS.OK) setOppstartsModus(false);
-    }, [oppstartsModus, restStatus]);
+        if (isLoading && restStatus === REST_STATUS.OK) setIsLoading(false);
+    }, [isLoading, restStatus]);
 
     // Denne er vel unødvendig...
-    if (oppstartsModus && restStatus === REST_STATUS.OK) setOppstartsModus(false);
+    if (isLoading && restStatus === REST_STATUS.OK) setIsLoading(false);
 
-    if (oppstartsModus) {
+    return {sivilstatus, isLoading};
+};
+
+const DinSivilstatusView = () => {
+    const {sivilstatus, isLoading} = useSivilstatus();
+    const {t} = useTranslation("skjema");
+
+    if (isLoading) {
         return (
-            <div className="skjema-sporsmal">
-                <Sporsmal tekster={getFaktumSporsmalTekst(t, "familie.sivilstatus")}>
-                    <TextPlaceholder lines={6} />
-                </Sporsmal>
-            </div>
+            <Sporsmal tekster={getFaktumSporsmalTekst(t, "familie.sivilstatus")}>
+                <TextPlaceholder lines={6} />
+            </Sporsmal>
         );
     }
     if (sivilstatus?.sivilstatus === Status.GIFT && sivilstatus.kildeErSystem) {
         return <EktefelleDetaljer />;
     } else {
-        return <SivilstatusComponent />;
+        return <Sivilstatus />;
     }
 };
 

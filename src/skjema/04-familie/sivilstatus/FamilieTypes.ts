@@ -45,16 +45,3 @@ export const initialFamilieStatus: Familie = {
     sivilstatus: initialSivilstatusState,
     forsorgerplikt: initialForsorgerPlikt,
 };
-
-export const lagBlankPerson = (): Person => {
-    return {
-        navn: {
-            fornavn: "",
-            mellomnavn: "",
-            etternavn: "",
-            fulltNavn: "",
-        },
-        fodselsdato: null,
-        personnummer: null,
-    };
-};

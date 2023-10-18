@@ -1,21 +1,21 @@
 import * as React from "react";
 import {Barn} from "./ForsorgerPliktTypes";
-import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
-import {getFaktumSporsmalTekst, getInputFaktumTekst, replaceDotWithUnderscore} from "../../../nav-soknad/utils";
-import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
+import {getInputFaktumTekst, replaceDotWithUnderscore} from "../../../nav-soknad/utils";
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../digisos/redux/reducers";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
 import {erSamvaersgrad} from "../../../nav-soknad/validering/valideringer";
 import {clearValideringsfeil, setValideringsfeil} from "../../../digisos/redux/validering/valideringActions";
-import {Input} from "nav-frontend-skjema";
 import {getFeil} from "../../../nav-soknad/utils/enhancedComponentUtils";
-import {SysteminfoItem, Systeminfo} from "../../../nav-soknad/components/systeminfo/Systeminfo";
+import {Systeminfo, SysteminfoItem} from "../../../nav-soknad/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
 import {LocalizedDate} from "../../../components/LocalizedDate";
+import {ReadMore, TextField} from "@navikt/ds-react";
+import cx from "classnames";
+import {YesNoInput} from "../../../nav-soknad/components/form/YesNoInput";
 
 const SAMVAERSGRAD_KEY = "system.familie.barn.true.barn.grad";
 
@@ -41,9 +41,12 @@ const RegistrerteBarn = () => {
     };
 
     const onChangeSamvaersgrad = (verdi: string, barnIndex: number) => {
-        const barnet = forsorgerplikt.ansvar[barnIndex];
-        barnet.samvarsgrad = parseInt(verdi, 10);
-        oppdater(forsorgerplikt);
+        const grad = parseInt(verdi, 10);
+        if (!isNaN(grad)) {
+            const barnet = forsorgerplikt.ansvar[barnIndex];
+            barnet.samvarsgrad = grad;
+            oppdater(forsorgerplikt);
+        }
     };
 
     const onBlur = (barnIndex: number, samvaersgradBarnKeyMedIndex: string) => {
@@ -63,69 +66,65 @@ const RegistrerteBarn = () => {
     const tekster = getInputFaktumTekst(t, SAMVAERSGRAD_KEY);
 
     React.useEffect(() => {
-        barn.forEach((barnet) => {
-            if (!barnet.erFolkeregistrertSammen) {
-                logAmplitudeEvent("sporsmal ikke vist", {
-                    sporsmal: "Har barnet delt bosted?",
-                });
-            }
+        barn.filter(({erFolkeregistrertSammen}) => !erFolkeregistrertSammen).forEach((barnet) => {
+            logAmplitudeEvent("sporsmal ikke vist", {
+                sporsmal: "Har barnet delt bosted?",
+            });
         });
     }, [barn]);
 
     return (
         <div>
-            {barn.map((barnet: Barn, index: number) => {
-                const samvaersgradBarnKeyMedIndex = SAMVAERSGRAD_KEY + index;
-                const feil_: string | undefined = getFeil(feil, t, samvaersgradBarnKeyMedIndex, undefined);
-                return (
-                    <div key={index} className={index + 1 === barn.length ? "barn barn_siste_liste_element" : "barn"}>
-                        <Systeminfo>
-                            <SysteminfoItem label={t("kontakt.system.personalia.navn")}>
-                                {barnet.barn.navn.fulltNavn}
-                            </SysteminfoItem>
-                            <SysteminfoItem label={t("familierelasjon.fodselsdato")}>
-                                <LocalizedDate date={barnet.barn.fodselsdato} />
-                            </SysteminfoItem>
-                            <SysteminfoItem label={t("familierelasjon.samme_folkeregistrerte_adresse")}>
-                                {barnet.erFolkeregistrertSammen
-                                    ? t("familie.barn.true.barn.borsammen.true")
-                                    : t("familie.barn.true.barn.borsammen.false")}
-                            </SysteminfoItem>
-                        </Systeminfo>
-                        {barnet.erFolkeregistrertSammen && (
-                            <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
-                                <JaNeiSporsmal
-                                    id={"barn_radio_" + index}
-                                    tekster={getFaktumSporsmalTekst(t, "system.familie.barn.true.barn.deltbosted")}
-                                    faktumKey={"system.familie.barn.true.barn.deltbosted"}
-                                    verdi={barnet.harDeltBosted}
-                                    onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi, index)}
-                                    legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-                                />
-                            </div>
-                        )}
-                        {!barnet.erFolkeregistrertSammen && (
-                            <div className="skjema-sporsmal skjema-sporsmal__innhold barn_samvaer_block">
-                                <Input
-                                    id={replaceDotWithUnderscore(samvaersgradBarnKeyMedIndex)}
-                                    className={"input--xxl faktumInput"}
-                                    type="number"
-                                    autoComplete="off"
-                                    name={"barn" + index + "_samvaersgrad"}
-                                    value={barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""}
-                                    onChange={(event: any) => onChangeSamvaersgrad(event.target.value, index)}
-                                    onBlur={() => onBlur(index, samvaersgradBarnKeyMedIndex)}
-                                    label={tekster.label}
-                                    placeholder={tekster.pattern}
-                                    feil={feil_}
-                                    maxLength={3}
-                                    required={false}
-                                />
-                            </div>
-                        )}
-                    </div>
-                );
-            })}
+            {barn.map((barnet: Barn, index: number) => (
+                <div
+                    key={index}
+                    className={cx("barn space-y-2", {barn_siste_liste_element: index + 1 === barn.length})}
+                >
+                    <Systeminfo>
+                        <SysteminfoItem label={t("kontakt.system.personalia.navn")}>
+                            {barnet.barn.navn.fulltNavn}
+                        </SysteminfoItem>
+                        <SysteminfoItem label={t("familierelasjon.fodselsdato")}>
+                            <LocalizedDate date={barnet.barn.fodselsdato} />
+                        </SysteminfoItem>
+                        <SysteminfoItem label={t("familierelasjon.samme_folkeregistrerte_adresse")}>
+                            {barnet.erFolkeregistrertSammen
+                                ? t("familie.barn.true.barn.borsammen.true")
+                                : t("familie.barn.true.barn.borsammen.false")}
+                        </SysteminfoItem>
+                    </Systeminfo>
+                    {barnet.erFolkeregistrertSammen ? (
+                        <YesNoInput
+                            legend={t("system.familie.barn.true.barn.deltbosted.sporsmal")}
+                            description={
+                                <ReadMore header={"Les mer"}>
+                                    {t("system.familie.barn.true.barn.deltbosted.hjelpetekst.tekst")}
+                                </ReadMore>
+                            }
+                            defaultValue={barnet.harDeltBosted}
+                            onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi, index)}
+                        />
+                    ) : (
+                        <TextField
+                            id={replaceDotWithUnderscore(SAMVAERSGRAD_KEY + index)}
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            autoComplete="off"
+                            htmlSize={15}
+                            name={"barn" + index + "_samvaersgrad"}
+                            value={barnet.samvarsgrad !== null ? barnet.samvarsgrad.toString() : ""}
+                            onChange={({target: {value}}) => onChangeSamvaersgrad(value, index)}
+                            onBlur={() => onBlur(index, SAMVAERSGRAD_KEY + index)}
+                            label={tekster.label}
+                            description={tekster.pattern}
+                            error={getFeil(feil, t, SAMVAERSGRAD_KEY + index, undefined)}
+                            maxLength={3}
+                            required={false}
+                        />
+                    )}
+                </div>
+            ))}
         </div>
     );
 };

@@ -18,17 +18,20 @@ const InntektFormue = () => {
 
     return (
         <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"inntektbolk"} ikon={<Penger />}>
-            <div className={"skjema-sporsmal"}>
-                <div className={"skatt-wrapper"}>
-                    <Heading size="medium" level="2" spacing>
-                        {getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.tittel")}
-                    </Heading>
-                </div>
-
+            <div>
+                <Heading size="medium" level="2" spacing>
+                    {getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.tittel")}
+                </Heading>
                 <SkattbarInntekt />
-                <NavYtelser />
-                <Bostotte />
             </div>
+
+            <div>
+                <Heading size="medium" level="2" spacing>
+                    {t("navytelser.sporsmal")}
+                </Heading>
+                <NavYtelser />
+            </div>
+            <Bostotte />
 
             <Studielan />
             <Utbetalinger />

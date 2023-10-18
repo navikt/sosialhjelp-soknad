@@ -3,8 +3,8 @@ import {Familie, initialFamilieStatus, Sivilstatus} from "../../../skjema/04-fam
 import {initialUtdanningState, Utdanning} from "../../../skjema/03-arbeidUtdanning/utdanning/utdanningTypes";
 import {setPath} from "./soknadsdataActions";
 import {Bostotte, initialBostotteState} from "../../../skjema/06-inntektFormue/bostotte/bostotteTypes";
-import {initialUtbetalingerState, Utbetalinger} from "../../../skjema/06-inntektFormue/utbetalinger/utbetalingerTypes";
-import {initialVerdierState, Verdier} from "../../../skjema/06-inntektFormue/verdier/VerdierTypes";
+import {initialUtbetalingerState} from "../../../skjema/06-inntektFormue/utbetalinger/utbetalingerTypes";
+import {initialVerdierState} from "../../../skjema/06-inntektFormue/verdier/VerdierTypes";
 import {initialFormueState, Formue} from "../../../skjema/06-inntektFormue/formue/FormueTypes";
 import {initialBoutgifterState} from "../../../skjema/07-utgifterGjeld/boutgifter/BoutgifterTypes";
 import {
@@ -19,7 +19,7 @@ import {
 import {Systeminntekter, initialSysteminntekter} from "../../../skjema/06-inntektFormue/navytelser/navYtelserTypes";
 import {Studielan, initialStudielanState} from "../../../skjema/06-inntektFormue/studielan/StudielanTypes";
 import {REST_STATUS} from "./soknadsdataTypes";
-import {BoutgifterFrontend} from "../../../generated/model";
+import {BoutgifterFrontend, UtbetalingerFrontend, VerdierFrontend} from "../../../generated/model";
 
 export enum SoknadsdataActionTypeKeys {
     OPPDATER_SOKNADSDATA_STI = "soknadsdata/OPPDATER_STI",
@@ -50,9 +50,9 @@ export interface Inntekt {
     skattbarinntektogforskuddstrekk: SkattbarInntektInfo;
     bostotte: Bostotte;
     studielan: Studielan;
-    utbetalinger: Utbetalinger;
+    utbetalinger: UtbetalingerFrontend;
     formue: Formue;
-    verdier: Verdier;
+    verdier: VerdierFrontend;
     systemdata: Systeminntekter;
 }
 
@@ -109,9 +109,9 @@ export type SoknadsdataType =
     | Bostotte
     | Studielan
     | Formue
-    | Verdier
+    | VerdierFrontend
     | Utgifter
-    | Utbetalinger
+    | UtbetalingerFrontend
     | Barneutgifter
     | BoutgifterFrontend
     | SkattbarInntektInfo;

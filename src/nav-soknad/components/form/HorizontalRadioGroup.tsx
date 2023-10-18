@@ -12,22 +12,3 @@ export const HorizontalRadioGroup = styled(RadioGroup)`
         background-color: white;
     }
 `;
-
-export const VerticalRadioGroup = styled(RadioGroup)`
-    .navds-radio {
-        border: 1px solid black;
-        padding: 0 1rem;
-        margin: 1rem 0 0 0;
-        border-radius: 5px;
-    }
-
-    .navds-radio-buttons {
-        display: flex;
-        gap: 1rem;
-        > * {
-            flex-basis: 10rem;
-        }
-    }
-
-    margin-bottom: 1rem !important;
-`;

@@ -21,3 +21,5 @@ export const LocalizedDate = ({date}: {date: Date | string | null | undefined}):
 
     return format(dato, "PPP", {locale: getDateFnLocale()});
 };
+
+export default LocalizedDate;

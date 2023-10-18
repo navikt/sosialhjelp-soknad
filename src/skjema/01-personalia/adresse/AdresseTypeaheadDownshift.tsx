@@ -1,6 +1,5 @@
-import {Heading, Loader} from "@navikt/ds-react";
+import {Heading, Loader, TextField} from "@navikt/ds-react";
 import Downshift from "downshift";
-import {Input} from "nav-frontend-skjema";
 import {useState} from "react";
 import {useDebounce} from "react-use";
 import styled from "styled-components";
@@ -81,12 +80,6 @@ const Item = styled.li<{isHighlighted: boolean}>`
     background-color: ${(props) => (props.isHighlighted ? "var(--a-blue-400)" : "inherit")};
 `;
 
-const StyledInput = styled(Input)`
-    margin-top: 1rem;
-    margin-bottom: 0 !important;
-    width: 100%;
-`;
-
 export const AdresseTypeahead = (props: {
     defaultValue?: string;
     onNullstill: () => void;
@@ -119,7 +112,7 @@ export const AdresseTypeahead = (props: {
                         </div>
                         <div>{t("kontakt.system.kontaktinfo.infotekst.ekstratekst")}</div>
                     </label>
-                    <StyledInput {...getInputProps()} />
+                    <TextField {...getInputProps()} />
                     {isOpen && (
                         <FetchAddress searchvalue={inputValue}>
                             {({isLoading, isError, result}) => (

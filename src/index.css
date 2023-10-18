@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* We can't use "hidden" with tailwind because ye olde nav-frontend-core
+   overrides it -- so we declare an alias tw-hidden which should enable
+   a very fast search-and-replace once we're done migrating to ds-react
+*/
+@layer utilities {
+    .tw-hidden {
+        display: none;
+    }
+}
+
+#root {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+.top-stepper .navds-stepper__item {
+    flex: 1 1 0;
+    gap: 0;
+}
+
+.top-stepper .navds-stepper__step {
+    margin: -2px;
+    margin-bottom: -10px;
+}
+
+.top-stepper .navds-stepper__step--active > .navds-stepper__circle {
+    color: white;
+    background-color: black;
+}
+
+.top-stepper .navds-stepper__circle {
+    font-weight: normal;
+    border: none;
+    background-color: white;
+    color: black;
+}
+
+.top-stepper .navds-stepper__content {
+    display: none;
+}

@@ -3,8 +3,6 @@ import Nedtelling from "./Nedtelling";
 import LoggetUt from "./LoggetUt";
 import {now} from "../../utils";
 import useInterval from "../../../lib/hooks/useInterval";
-import {Modal} from "@navikt/ds-react";
-import styled from "styled-components";
 import {logoutURL} from "../../../lib/config";
 
 const ONE_MINUTE_IN_MS = 60 * 1000;
@@ -23,12 +21,6 @@ const beregnVisAdvarseTidspunkt = (showWarningerAfterMinutes: number): number =>
     const millisekunderTilAdvarsel = showWarningerAfterMinutes * ONE_MINUTE_IN_MS;
     return now() + millisekunderTilAdvarsel;
 };
-
-const ModalWithoutCloseButton = styled(Modal)`
-    .navds-modal__button {
-        display: none;
-    }
-`;
 
 const TimeoutBox = (props: Props) => {
     const [showWarning, setShowWarning] = React.useState(false);
@@ -57,27 +49,10 @@ const TimeoutBox = (props: Props) => {
     };
 
     return (
-        <ModalWithoutCloseButton open={showWarning || showLoggedOut} onClose={() => null}>
-            <Modal.Body>
-                <div className="timeoutbox">
-                    {showWarning && (
-                        <Nedtelling
-                            onContinueClick={() => {
-                                onContinueClick();
-                            }}
-                            utloggingsUrl={logoutURL}
-                        />
-                    )}
-                    {showLoggedOut && (
-                        <LoggetUt
-                            onLoginAgainClick={() => {
-                                onLoginAgainClick();
-                            }}
-                        />
-                    )}
-                </div>
-            </Modal.Body>
-        </ModalWithoutCloseButton>
+        <>
+            <Nedtelling open={showWarning} onContinueClick={onContinueClick} utloggingsUrl={logoutURL} />
+            <LoggetUt open={showLoggedOut} onLoginAgainClick={onLoginAgainClick} />
+        </>
     );
 };
 

@@ -15,13 +15,6 @@ runs:
   using: 'composite'
   steps:
     - uses: actions/checkout@v3
-    - name: 'Build npm artifact'
-      uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
-      with:
-        reader-token: ${{ env.READER_TOKEN }}
-        build-less: 'true'
-        run-orval: 'true'
-        run-test: 'false'
 
     - name: 'Create artifact version'
       id: artifact-version
@@ -31,6 +24,23 @@ runs:
       id: final-tag
       run: |
         echo "tag=${{ inputs.prefix }}-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: 'Build npm artifact'
+      uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
+      env:
+        REACT_APP_RELEASE: ${{ steps.final-tag.outputs.tag }}
+      with:
+        reader-token: ${{ env.READER_TOKEN }}
+        build-less: 'false'
+        run-orval: 'true'
+        run-test: 'false'
+
+    - name: 'Build sourcemaps and upload to Sentry'
+      env:
+        REACT_APP_RELEASE: ${{ steps.final-tag.outputs.tag }}
+      run: |
+        npm run sentry:sourcemaps
       shell: bash
 
     - name: 'Release Tag'

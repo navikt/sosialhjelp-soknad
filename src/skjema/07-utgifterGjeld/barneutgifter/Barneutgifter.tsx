@@ -50,10 +50,11 @@ export const BarneutgifterView = () => {
         );
     };
 
+    if (!barneutgifter.harForsorgerplikt) return null;
+
     return (
         <JaNeiSporsmal
             tekster={getFaktumSporsmalTekst(t, BarneutgifterKey)}
-            visible={barneutgifter.harForsorgerplikt}
             faktumKey={BarneutgifterKey}
             verdi={barneutgifter.bekreftelse}
             onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}

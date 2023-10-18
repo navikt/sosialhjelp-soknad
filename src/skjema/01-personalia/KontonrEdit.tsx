@@ -1,54 +1,51 @@
-import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
-import {updateKontonummer, useHentKontonummer} from "../../generated/kontonummer-ressurs/kontonummer-ressurs";
 import {useTranslation} from "react-i18next";
-import {useForm} from "react-hook-form";
-import {formatKontonummer, registerWithMasks} from "@fremtind/jkl-formatters-util";
-import {Button, TextField} from "@navikt/ds-react";
-import {isValidKontonummer} from "../../nav-soknad/validering/isValidKontonummer";
-import {HorizontalCheckbox} from "../../nav-soknad/components/form/HorizontalCheckbox";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {Button, Checkbox, TextField} from "@navikt/ds-react";
 import * as React from "react";
-import {KontonummerFrontend} from "../../generated/model";
+import {KontonummerFrontend, KontonummerInputDTO} from "../../generated/model";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {z} from "zod";
 
-type KontonrFormType = Pick<KontonummerFrontend, "brukerutfyltVerdi" | "harIkkeKonto">;
+const KontonummerRegex = new RegExp("^\\d{11}$");
 
-export const KontonrEdit = ({onClose}: {onClose: () => void}) => {
-    const behandlingsId = useBehandlingsId();
-    const {refetch, data} = useHentKontonummer(behandlingsId);
+const transformEmptyStringToNull = z.literal("").transform(() => null);
+
+const KontonummerSchema = z.object({
+    brukerutfyltVerdi: z
+        .string()
+        .regex(KontonummerRegex, "kontakt.kontonummer.feilmelding")
+        .optional()
+        .or(transformEmptyStringToNull),
+    harIkkeKonto: z.boolean().optional(),
+});
+
+export const KontonrEdit = ({
+    defaultValues,
+    onSave,
+    onCancel,
+}: {
+    defaultValues: KontonummerFrontend;
+    onSave: SubmitHandler<KontonummerInputDTO>;
+    onCancel: () => void;
+}) => {
     const {t} = useTranslation("skjema");
 
-    const form = useForm<KontonrFormType>({
-        defaultValues: {
-            brukerutfyltVerdi: data?.brukerutfyltVerdi ? formatKontonummer(data.brukerutfyltVerdi) : "",
-            harIkkeKonto: data?.harIkkeKonto,
+    const {
+        handleSubmit,
+        register,
+        watch,
+        formState: {
+            errors: {brukerutfyltVerdi: kontonummerError},
         },
+    } = useForm<KontonummerInputDTO>({
+        defaultValues: defaultValues,
+        resolver: zodResolver(KontonummerSchema),
     });
 
-    const {registerWithKontonummerMask} = registerWithMasks<Pick<KontonrFormType, "brukerutfyltVerdi">>(form);
-    const {handleSubmit, register, watch} = form;
-
-    const update = async ({brukerutfyltVerdi, harIkkeKonto}: KontonrFormType) => {
-        await updateKontonummer(behandlingsId, {
-            harIkkeKonto: !!harIkkeKonto,
-            brukerutfyltVerdi: brukerutfyltVerdi?.length ? brukerutfyltVerdi : null,
-            brukerdefinert: !!brukerutfyltVerdi?.length || !!harIkkeKonto,
-        });
-        await refetch();
-        onClose();
-    };
-
-    if (!data) return null;
-
     return (
-        <form onSubmit={handleSubmit(update)}>
+        <form onSubmit={handleSubmit(onSave)}>
             <TextField
-                {...registerWithKontonummerMask("brukerutfyltVerdi", {
-                    validate: {
-                        isValidKontonummer: (brukerutfyltVerdi) =>
-                            !brukerutfyltVerdi?.length ||
-                            isValidKontonummer(brukerutfyltVerdi!) ||
-                            t("kontakt.kontonummer.feilmelding"),
-                    },
-                })}
+                {...register("brukerutfyltVerdi")}
                 label={t("kontakt.kontonummer.sporsmal")}
                 inputMode="numeric"
                 htmlSize={13}
@@ -56,11 +53,11 @@ export const KontonrEdit = ({onClose}: {onClose: () => void}) => {
                 disabled={watch("harIkkeKonto") === true}
                 required={false}
                 maxLength={13}
-                error={form.formState.errors.brukerutfyltVerdi?.message}
+                error={kontonummerError?.message && t(kontonummerError.message)}
             />
-            <HorizontalCheckbox {...register("harIkkeKonto")}>{t("kontakt.kontonummer.harikke")}</HorizontalCheckbox>
+            <Checkbox {...register("harIkkeKonto")}>{t("kontakt.kontonummer.harikke")}</Checkbox>
             <div className={"space-x-2"}>
-                <Button variant="secondary" onClick={onClose}>
+                <Button variant="secondary" onClick={onCancel}>
                     {t("avbryt")}
                 </Button>
                 <Button type={"submit"} data-testid="lagre-kontonummer">

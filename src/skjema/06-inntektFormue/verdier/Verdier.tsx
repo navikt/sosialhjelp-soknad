@@ -1,12 +1,9 @@
 import * as React from "react";
 import {onEndretValideringsfeil} from "../../../digisos/redux/validering/valideringUtils";
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../nav-soknad/utils";
+import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
+import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
 import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
-import {VerdierKeys} from "./VerdierTypes";
-import CheckboxPanel from "../../../nav-soknad/faktum/CheckboxPanel";
-import TextareaEnhanced from "../../../nav-soknad/faktum/TextareaEnhanced";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 import {maksLengde} from "../../../nav-soknad/validering/valideringer";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
@@ -16,6 +13,8 @@ import {setValideringsfeil, clearValideringsfeil} from "../../../digisos/redux/v
 import {useTranslation} from "react-i18next";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
+import {Checkbox, CheckboxGroup, Textarea} from "@navikt/ds-react";
+import {VerdierFrontend} from "../../../generated/model";
 
 const MAX_CHARS = 500;
 const VERDIER = "inntekt.eierandeler";
@@ -50,14 +49,19 @@ export const VerdierView = () => {
         lagre(verdier);
     };
 
-    const handleClickRadio = (idToToggle: VerdierKeys) => {
-        //@ts-ignore
-        verdier[idToToggle] = !verdier[idToToggle];
-        if (!verdier.bekreftelse || !verdier.annet) {
-            verdier.beskrivelseAvAnnet = "";
-        }
-        oppdater(verdier);
-        lagre(verdier);
+    const handleClickRadio = (checked: (keyof VerdierFrontend)[]) => {
+        const ny: VerdierFrontend = {
+            bekreftelse: !!checked.length,
+            bolig: checked.includes("bolig"),
+            campingvogn: checked.includes("campingvogn"),
+            kjoretoy: checked.includes("kjoretoy"),
+            fritidseiendom: checked.includes("fritidseiendom"),
+            annet: checked.includes("annet"),
+            beskrivelseAvAnnet: checked.includes("annet") ? verdier.beskrivelseAvAnnet : "",
+        };
+
+        oppdater(ny);
+        lagre(ny);
     };
 
     const onChangeAnnet = (value: string) => {
@@ -68,7 +72,7 @@ export const VerdierView = () => {
 
     const onBlurTekstfeltAnnet = () => {
         const {beskrivelseAvAnnet} = verdier;
-        const erGyldigLengde = validerTekstfeltVerdi(beskrivelseAvAnnet, VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
+        const erGyldigLengde = validerTekstfeltVerdi(beskrivelseAvAnnet ?? "", VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY);
         if (erGyldigLengde) lagre(verdier);
     };
 
@@ -87,49 +91,35 @@ export const VerdierView = () => {
         return erInnenforMaksLengde;
     };
 
-    const renderCheckBox = (navn: VerdierKeys) => {
-        return (
-            <CheckboxPanel
-                id={"verdier_" + navn + "_checkbox"}
-                name={navn}
-                checked={!!verdier[navn]}
-                label={t(VERDIER + ".true.type." + navn)}
-                onClick={() => handleClickRadio(navn)}
-            />
-        );
-    };
-
     return (
         <JaNeiSporsmal
             visPlaceholder={oppstartsModus && restStatus !== REST_STATUS.OK}
             tekster={getFaktumSporsmalTekst(t, VERDIER)}
             faktumKey={VERDIER}
-            verdi={verdier.bekreftelse}
+            verdi={verdier.bekreftelse ?? null}
             onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
             legendTittelStyle={LegendTittleStyle.FET_NORMAL}
         >
-            <Sporsmal
-                tekster={getFaktumSporsmalTekst(t, VERDIER + ".true.type")}
-                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+            <CheckboxGroup
+                legend={t("inntekt.eierandeler.true.type.sporsmal")}
+                onChange={(navn: (keyof VerdierFrontend)[]) => handleClickRadio(navn)}
+                value={Object.keys(verdier).filter((key) => verdier[key as keyof VerdierFrontend])}
             >
-                {renderCheckBox(VerdierKeys.BOLIG)}
-                {renderCheckBox(VerdierKeys.CAMPINGVOGN)}
-                {renderCheckBox(VerdierKeys.KJORETOY)}
-                {renderCheckBox(VerdierKeys.FRITIDSEIENDOM)}
-                {renderCheckBox(VerdierKeys.ANNET)}
-                <NivaTreSkjema visible={!!(verdier.bekreftelse && verdier.annet)} size="small">
-                    <TextareaEnhanced
-                        id={replaceDotWithUnderscore(VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY)}
-                        placeholder=""
+                <Checkbox value={"bolig"}>{t("inntekt.eierandeler.true.type.bolig")} </Checkbox>
+                <Checkbox value={"campingvogn"}>{t("inntekt.eierandeler.true.type.campingvogn")}</Checkbox>
+                <Checkbox value={"kjoretoy"}>{t("inntekt.eierandeler.true.type.kjoretoy")}</Checkbox>
+                <Checkbox value={"fritidseiendom"}>{t("inntekt.eierandeler.true.type.fritidseiendom")}</Checkbox>
+                <Checkbox value={"annet"}>{t("inntekt.eierandeler.true.type.annet")}</Checkbox>
+                <NivaTreSkjema visible={verdier.annet} size="small">
+                    <Textarea
+                        label={t("inntekt.eierandeler.true.type.annet.true.beskrivelse.label")}
                         onChange={(evt: any) => onChangeAnnet(evt.target.value)}
                         onBlur={() => onBlurTekstfeltAnnet()}
-                        faktumKey={VERDIER_TEXT_AREA_ANNET_FAKTUM_KEY}
-                        labelId={VERDIER + ".true.type.annet.true.beskrivelse.label"}
                         maxLength={MAX_CHARS}
-                        value={verdier.beskrivelseAvAnnet ? verdier.beskrivelseAvAnnet : ""}
+                        value={verdier?.beskrivelseAvAnnet ?? ""}
                     />
                 </NivaTreSkjema>
-            </Sporsmal>
+            </CheckboxGroup>
         </JaNeiSporsmal>
     );
 };

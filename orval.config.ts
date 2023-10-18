@@ -11,7 +11,6 @@ export default {
                     path: "./src/lib/orval/soknad-api-axios.ts",
                     name: "axiosInstance",
                 },
-                useDates: true,
             },
             mock: true,
         },

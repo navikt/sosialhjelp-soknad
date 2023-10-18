@@ -1,9 +1,8 @@
 import * as React from "react";
 import classNames from "classnames";
-import {SkjemaGruppe} from "nav-frontend-skjema";
 import {SporsmalTekster} from "../../utils";
 import styled from "styled-components";
-import {HelpText} from "@navikt/ds-react";
+import {Fieldset, HelpText} from "@navikt/ds-react";
 
 export type SporsmalStyle = "normal" | "system" | "jaNeiSporsmal";
 
@@ -55,11 +54,15 @@ const Sporsmal = ({
     legendTittelStyle = LegendTittleStyle.DEFAULT,
     ...restProps
 }: SporsmalProps) => {
-    const sporsmalCls = classNames(className, "skjema-sporsmal", {
-        "skjema-sporsmal--noBottomPadding": stil === "system" || stil === "jaNeiSporsmal",
-        "skjema-sporsmal--systeminfo": stil === "system",
-        "skjema-sporsmal--jaNeiSporsmal": stil === "jaNeiSporsmal",
-    });
+    const sporsmalCls = classNames(
+        "skjema-sporsmal",
+        {
+            "skjema-sporsmal--noBottomPadding": stil === "system" || stil === "jaNeiSporsmal",
+            "skjema-sporsmal--systeminfo": stil === "system",
+            "skjema-sporsmal--jaNeiSporsmal": stil === "jaNeiSporsmal",
+        },
+        className
+    );
 
     const cls = classNames("skjema-fieldset", {
         "skjema-fieldset--harFeil": !!feilkode,
@@ -69,8 +72,8 @@ const Sporsmal = ({
 
     return (
         <div id={id} className={sporsmalCls}>
-            <SkjemaGruppe
-                feil={feil}
+            <Fieldset
+                error={feil}
                 className={cls}
                 legend={
                     <div className={legendTittelStyle}>
@@ -87,7 +90,7 @@ const Sporsmal = ({
                 }
             >
                 <div className="skjema-sporsmal__innhold">{children}</div>
-            </SkjemaGruppe>
+            </Fieldset>
         </div>
     );
 };
