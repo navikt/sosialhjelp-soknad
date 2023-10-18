@@ -26,6 +26,7 @@ const JaNeiSporsmal = ({faktumKey, children, verdi, onChange, tekster, legendTit
             legendTittelStyle={legendTittelStyle || LegendTittleStyle.DEFAULT}
         >
             <RadioGroup
+                className={"!mb-4"}
                 legend={tekster.label}
                 value={verdi?.toString()}
                 onChange={(value) => onChange(value === "true")}
