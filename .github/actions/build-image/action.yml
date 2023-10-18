@@ -38,9 +38,17 @@ runs:
 
     - name: 'Build sourcemaps and upload to Sentry'
       env:
-        REACT_APP_RELEASE: ${{ steps.final-tag.outputs.tag }}
+        SENTRY_RELEASE: ${{ steps.final-tag.outputs.tag }}
+        SENTRY_PROJECT: sosialhjelp-soknad
+        SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
+        SENTRY_URL: "https://sentry.gc.nav.no/"
+        SENTRY_ORG: nav
       run: |
-        npm run sentry:sourcemaps
+        curl -sL https://sentry.io/get-cli/ | bash
+        sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE
+        sentry-cli releases finalize $SENTRY_RELEASE
+        sentry-cli sourcemaps inject ./build
+        sentry-cli sourcemaps upload --release $SENTRY_RELEASE ./build
       shell: bash
 
     - name: 'Release Tag'
