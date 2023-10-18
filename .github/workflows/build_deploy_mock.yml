@@ -21,11 +21,11 @@ jobs:
       REACT_APP_DIGISOS_ENV: mock
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
       WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit
     steps:
       - name: 'Build Docker Image'
         id: docker-image
         uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
-        secrets: inherit
         with:
           prefix: ${{ env.REACT_APP_DIGISOS_ENV }}
 
