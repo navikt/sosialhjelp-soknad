@@ -2,8 +2,7 @@ import * as React from "react";
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
 import {Systeminntekt} from "./navYtelserTypes";
 import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
-import {getIntlTextOrKey} from "../../../nav-soknad/utils";
-import {Detail, ExpansionCard, Link} from "@navikt/ds-react";
+import {Detail, Link, ReadMore} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {fmtCurrency} from "../../../lib/fmtCurrency";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
@@ -28,10 +27,10 @@ const NavYtelserView = () => {
         const formattedDato = utbetalingsdato?.length > 9 ? <LocalizedDate date={utbetalingsdato} /> : null;
         const belop = fmtCurrency(i18n.language, utbetaling.belop);
         return (
-            <div key={index} className="utbetaling blokk-s">
+            <div key={index}>
                 <div>
                     <Detail>{type}</Detail>
-                    <span className="verdi detaljeliste__verdi">{belop}</span>
+                    <span>{belop}</span>
                 </div>
                 {formattedDato && (
                     <div>
@@ -43,29 +42,24 @@ const NavYtelserView = () => {
     });
 
     return (
-        <div className={"skatt-wrapper"}>
+        <div>
             {!visAnimerteStreker && !utbetalingerFraNavFeilet && harNavytelser && (
-                <ExpansionCard aria-label={t("utbetalinger.infotekst.detaljer")}>
-                    <ExpansionCard.Header>
-                        <ExpansionCard.Title>{getIntlTextOrKey(t, "navytelser.sporsmal")}</ExpansionCard.Title>
-                    </ExpansionCard.Header>
-                    <ExpansionCard.Content>
-                        <div className="utbetalinger">
-                            {navYtelserJsx}
-                            <Trans
-                                t={t}
-                                i18nKey={"utbetalinger.infotekst.tekst.v2"}
-                                components={{
-                                    lenke: (
-                                        <Link href={t("utbetalinger.infotekst.tekst.url")} target="_blank">
-                                            {null}
-                                        </Link>
-                                    ),
-                                }}
-                            />
-                        </div>
-                    </ExpansionCard.Content>
-                </ExpansionCard>
+                <ReadMore header={t("utbetalinger.infotekst.detaljer")}>
+                    <div>
+                        {navYtelserJsx}
+                        <Trans
+                            t={t}
+                            i18nKey={"utbetalinger.infotekst.tekst.v2"}
+                            components={{
+                                lenke: (
+                                    <Link href={t("utbetalinger.infotekst.tekst.url")} target="_blank">
+                                        {null}
+                                    </Link>
+                                ),
+                            }}
+                        />
+                    </div>
+                </ReadMore>
             )}
             {!visAnimerteStreker && !utbetalingerFraNavFeilet && !harNavytelser && (
                 <div className={"ytelser_panel"}>
