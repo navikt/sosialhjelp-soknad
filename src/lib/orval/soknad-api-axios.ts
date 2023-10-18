@@ -84,7 +84,10 @@ export const axiosInstance = <T>(
 
             const {status, data} = e.response;
 
-            if (isLoginRedirect401(e.response)) await redirectToLogin(e.response.data);
+            if (isLoginRedirect401(e.response)) {
+                await redirectToLogin(e.response.data);
+                return new Promise<T>(() => {});
+            }
 
             // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
             if ([403, 404, 410].includes(status)) {
