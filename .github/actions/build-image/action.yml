@@ -32,7 +32,7 @@ runs:
         REACT_APP_RELEASE: ${{ steps.final-tag.outputs.tag }}
       with:
         reader-token: ${{ env.READER_TOKEN }}
-        build-less: 'true'
+        build-less: 'false'
         run-orval: 'true'
         run-test: 'false'
 
