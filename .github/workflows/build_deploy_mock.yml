@@ -53,12 +53,3 @@ jobs:
           REF: ${{ github.sha }}
           PRINT_PAYLOAD: true
           IMAGE: ${{ env.IMAGE_TAG }}
-
-      - name: Marker deployment til Sentry
-        env:
-          SENTRY_PROJECT: sosialhjelp-soknad
-          SENTRY_URL: "https://sentry.gc.nav.no/"
-          SENTRY_ORG: nav
-        run: |
-          curl -sL https://sentry.io/get-cli/ | bash
-        shell: bash

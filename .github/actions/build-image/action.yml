@@ -44,12 +44,18 @@ runs:
         SENTRY_ORG: nav
       run: |
         curl -sL https://sentry.io/get-cli/ | bash
-        sentry-cli releases new $SENTRY_RELEASE
-        sentry-cli releases set-commits "$SENTRY_RELEASE" --auto --ignore-missing
-        sentry-cli releases finalize $SENTRY_RELEASE
+        if sentry-cli releases info $SENTRY_RELEASE; then
+          echo "Relase $SENTRY_RELEASE already exists..."
+        else
+          echo "Creating release $SENTRY_RELEASE..."
+          sentry-cli releases new $SENTRY_RELEASE
+          sentry-cli releases set-commits "$SENTRY_RELEASE" --auto --ignore-missing
+          sentry-cli sourcemaps inject ./build
+          sentry-cli sourcemaps upload --release $SENTRY_RELEASE ./build
+          sentry-cli releases finalize $SENTRY_RELEASE
+        fi
+        
         sentry-cli deploys $SENTRY_RELEASE new -e ${{ inputs.prefix }}
-        sentry-cli sourcemaps inject ./build
-        sentry-cli sourcemaps upload --release $SENTRY_RELEASE ./build
       shell: bash
 
     - name: 'Release Tag'
