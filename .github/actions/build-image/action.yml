@@ -37,8 +37,10 @@ runs:
         run-test: 'false'
 
     - name: 'Build sourcemaps and upload to Sentry'
+      env:
+        REACT_APP_RELEASE: ${{ steps.final-tag.outputs.tag }}
       run: |
-        npm run sentry:sourcemaps --release ${{ steps.final-tag.outputs.tag }}
+        npm run sentry:sourcemaps
       shell: bash
 
     - name: 'Release Tag'

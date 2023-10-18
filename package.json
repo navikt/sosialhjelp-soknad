@@ -97,7 +97,7 @@
     "lint": "lint-staged",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject ./build && sentry-cli sourcemaps upload  --release 0.1.0  ./build"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject ./build && sentry-cli sourcemaps upload --release $REACT_APP_RELEASE ./build"
   },
   "eslintConfig": {
     "extends": "react-app"
