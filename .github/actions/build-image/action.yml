@@ -55,7 +55,7 @@ runs:
           sentry-cli releases finalize $SENTRY_RELEASE
         fi
         
-        sentry-cli deploys $SENTRY_RELEASE new -e ${{ inputs.prefix }}
+        sentry-cli releases deploys $SENTRY_RELEASE new -e ${{ inputs.prefix }}
       shell: bash
 
     - name: 'Release Tag'
