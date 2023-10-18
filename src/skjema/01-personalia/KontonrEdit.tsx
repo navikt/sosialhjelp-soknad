@@ -8,8 +8,14 @@ import {z} from "zod";
 
 const KontonummerRegex = new RegExp("^\\d{11}$");
 
+const transformEmptyStringToNull = z.literal("").transform(() => null);
+
 const KontonummerSchema = z.object({
-    brukerutfyltVerdi: z.string().regex(KontonummerRegex, "kontakt.kontonummer.feilmelding").optional(),
+    brukerutfyltVerdi: z
+        .string()
+        .regex(KontonummerRegex, "kontakt.kontonummer.feilmelding")
+        .optional()
+        .or(transformEmptyStringToNull),
     harIkkeKonto: z.boolean().optional(),
 });
 
