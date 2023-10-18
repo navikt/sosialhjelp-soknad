@@ -18,5 +18,7 @@ jobs:
     steps:
       - name: 'Build Docker Image'
         uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
+        secrets:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         with:
           prefix: ${{ env.REACT_APP_DIGISOS_ENV }}
