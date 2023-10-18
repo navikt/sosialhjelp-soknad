@@ -32,7 +32,7 @@ export const BooleanInput = ({
         legend={legend}
         description={description}
         onChange={(value) => onChange(value === "true")}
-        defaultValue={defaultValue}
+        defaultValue={typeof defaultValue === "boolean" ? defaultValue.toString() : undefined}
     >
         <BooleanInputRadio value={"true"} label={trueLabel} />
         <BooleanInputRadio value={"false"} label={falseLabel} />
