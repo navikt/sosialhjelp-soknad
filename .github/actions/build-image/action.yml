@@ -56,11 +56,12 @@ runs:
           echo "Creating release $SENTRY_RELEASE..."
           sentry-cli releases new $SENTRY_RELEASE
           sentry-cli releases set-commits "$SENTRY_RELEASE" --auto --ignore-missing
-          sentry-cli sourcemaps inject ./build
-          sentry-cli sourcemaps upload --release $SENTRY_RELEASE --url-prefix=/sosialhjelp/soknad ./build
+
           sentry-cli releases finalize $SENTRY_RELEASE
         fi
         
+        sentry-cli sourcemaps inject ./build
+        sentry-cli sourcemaps upload --release $SENTRY_RELEASE --url-prefix=/sosialhjelp/soknad ./build
         sentry-cli releases deploys $SENTRY_RELEASE new -e ${{ inputs.prefix }}
       shell: bash
 
