@@ -20,17 +20,14 @@ const StyledEllaBlunk = styled.svg`
         }
     }
 `;
-interface EllaProps {
-    size: string;
-}
 
-const EllaBlunk: React.FC<EllaProps> = (props: EllaProps) => {
+const EllaBlunk = () => {
     return (
         <StyledEllaBlunk
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 175 175"
-            width={props.size}
+            width="100%"
             pointerEvents="none"
         >
             <title>Veileder</title>

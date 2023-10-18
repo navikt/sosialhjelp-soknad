@@ -1,9 +1,9 @@
-import VelkomstSnakkeboble from "../../nav-soknad/components/snakkeboble/Snakkeboble";
-import {BodyLong, Heading} from "@navikt/ds-react";
+import {BodyLong, BodyShort, GuidePanel, Heading} from "@navikt/ds-react";
 import * as React from "react";
 import {Trans, useTranslation} from "react-i18next";
 import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
+import EllaBlunk from "../../nav-soknad/components/animasjoner/ellaBlunk";
 
 export const NySoknadVelkomst = () => {
     const {data: sessionInfo} = useGetSessionInfo();
@@ -19,7 +19,14 @@ export const NySoknadVelkomst = () => {
 
     return (
         <div className={"p-8 lg:py-12 lg:px-24"}>
-            <VelkomstSnakkeboble fornavn={sessionInfo?.fornavn} />
+            <GuidePanel className={"!-ml-10 pb-8"} illustration={<EllaBlunk />}>
+                {sessionInfo?.fornavn?.length && (
+                    <Heading level={"3"} size={"small"} spacing>
+                        {t("informasjon.hilsen.hei", {fornavn: sessionInfo?.fornavn!})}
+                    </Heading>
+                )}
+                <BodyShort>{t("informasjon.hilsen.tittel")}</BodyShort>
+            </GuidePanel>
             <Heading level="2" size="small" spacing>
                 {t("informasjon.start.undertittel")}
             </Heading>
