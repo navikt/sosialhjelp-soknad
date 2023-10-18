@@ -14,12 +14,12 @@ jobs:
       contents: write
       packages: write
       actions: write
-    secrets: inherit
     env:
       REACT_APP_DIGISOS_ENV: prod-sbs
       DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
       WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 

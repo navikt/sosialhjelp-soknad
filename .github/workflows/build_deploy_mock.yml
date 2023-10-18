@@ -21,7 +21,7 @@ jobs:
       REACT_APP_DIGISOS_ENV: mock
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
       WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    secrets: inherit
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     steps:
       - name: 'Build Docker Image'
         id: docker-image

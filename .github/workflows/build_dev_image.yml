@@ -15,7 +15,7 @@ jobs:
       DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
       WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    secrets: inherit
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     steps:
       - name: 'Build Docker Image'
         uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
