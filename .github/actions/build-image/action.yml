@@ -40,7 +40,7 @@ runs:
       env:
         SENTRY_RELEASE: ${{ steps.final-tag.outputs.tag }}
         SENTRY_PROJECT: sosialhjelp-soknad
-        SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
+        SENTRY_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         SENTRY_URL: "https://sentry.gc.nav.no/"
         SENTRY_ORG: nav
       run: |
