@@ -29,7 +29,7 @@ runs:
     - name: 'Build npm artifact'
       uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
       env:
-        REACT_APP_RELEASE: ${{ steps.final-tag.outputs.tag }}
+        REACT_APP_RELEASE: ${{ steps.artifact-version.outputs.version }}
       with:
         reader-token: ${{ env.READER_TOKEN }}
         build-less: 'false'
@@ -38,14 +38,16 @@ runs:
 
     - name: 'Build sourcemaps and upload to Sentry'
       env:
-        SENTRY_RELEASE: ${{ steps.final-tag.outputs.tag }}
+        SENTRY_RELEASE: ${{ steps.artifact-version.outputs.version }}
         SENTRY_PROJECT: sosialhjelp-soknad
         SENTRY_URL: "https://sentry.gc.nav.no/"
         SENTRY_ORG: nav
       run: |
         curl -sL https://sentry.io/get-cli/ | bash
-        sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE
+        sentry-cli releases new $SENTRY_RELEASE
+        sentry-cli releases set-commits "$SENTRY_RELEASE" --auto --ignore-missing
         sentry-cli releases finalize $SENTRY_RELEASE
+        sentry-cli deploys $SENTRY_RELEASE new -e ${{ inputs.prefix }}
         sentry-cli sourcemaps inject ./build
         sentry-cli sourcemaps upload --release $SENTRY_RELEASE ./build
       shell: bash
