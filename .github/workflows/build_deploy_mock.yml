@@ -25,6 +25,7 @@ jobs:
       - name: 'Build Docker Image'
         id: docker-image
         uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
+        secrets: inherit
         with:
           prefix: ${{ env.REACT_APP_DIGISOS_ENV }}
 
