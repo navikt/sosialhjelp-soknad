@@ -87,7 +87,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && sentry-cli sourcemaps inject ./build",
     "build:css": "echo brukes ikke lenger",
     "dev": "react-scripts start",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
