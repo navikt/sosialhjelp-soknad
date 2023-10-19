@@ -11,7 +11,7 @@ export const Bosituasjon = () => {
 
     return (
         <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"bosituasjonbolk"} ikon={<BoligIllustrasjon />}>
-            <div className={"space-y-5"}>
+            <div className={"space-y-20"}>
                 <Botype />
                 <AntallPersoner behandlingsId={behandlingsId} />
             </div>

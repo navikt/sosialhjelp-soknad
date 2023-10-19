@@ -7,8 +7,10 @@ import StegMedNavigasjon from "../../nav-soknad/components/SkjemaSteg/SkjemaSteg
 
 const Familie = () => (
     <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"familiebolk"} ikon={<FamilieIllustrasjon />}>
-        <DinSivilstatus />
-        <ForsorgerPlikt />
+        <div className={"space-y-20"}>
+            <DinSivilstatus />
+            <ForsorgerPlikt />
+        </div>
     </StegMedNavigasjon>
 );
 
