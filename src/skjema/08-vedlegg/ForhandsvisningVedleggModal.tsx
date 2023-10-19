@@ -1,7 +1,6 @@
 import React from "react";
 import {BodyShort, Button, Modal} from "@navikt/ds-react";
-import {ExpandIcon, TrashIcon} from "@navikt/aksel-icons";
-import {FilePreviewFullscreen} from "./FilePreviewFullscreen";
+import {TrashIcon} from "@navikt/aksel-icons";
 import {isPdf} from "./LastOppFil";
 import {useTranslation} from "react-i18next";
 
@@ -34,23 +33,17 @@ const FilePreviewButtons = ({onDelete, onFullscreen}: {onDelete: () => void; onF
                     <TrashIcon /> {t("vedlegg.forhandsvisning.slett")}
                 </div>
             </Button>
-            <Button variant="tertiary" onClick={onFullscreen}>
-                <span className={"flex items-center gap-2"}>
-                    <ExpandIcon /> {t("vedlegg.forhandsvisning.fullskjerm")}
-                </span>
-            </Button>
         </div>
     );
 };
 
 const FilePreview = ({file, onDelete}: {file: File; onDelete: () => void}) => {
-    const [fullscreen, setFullscreen] = React.useState<boolean>(false);
-
+    // const [fullscreen, setFullscreen] = React.useState<boolean>(false);
+    //            <FilePreviewFullscreen show={fullscreen} file={file} onClose={() => setFullscreen(false)} />
     return (
         <div className={"flex flex-col h-full grow my-4"}>
-            <FilePreviewButtons onDelete={onDelete} onFullscreen={() => setFullscreen(true)} />
+            <FilePreviewButtons onDelete={onDelete} onFullscreen={() => {}} />
             <FilePreviewDisplay file={file} />
-            <FilePreviewFullscreen show={fullscreen} file={file} onClose={() => setFullscreen(false)} />
         </div>
     );
 };
