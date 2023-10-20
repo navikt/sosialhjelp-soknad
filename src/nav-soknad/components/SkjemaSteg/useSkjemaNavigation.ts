@@ -6,7 +6,7 @@ import {useNavigate} from "react-router";
 import {useOpplysninger} from "../../../skjema/08-vedlegg/useOpplysninger";
 
 export const useSkjemaNavigation = (steg: number) => {
-    const {validering} = useSelector((state: State) => state);
+    const feil = useSelector((state: State) => state.validering.feil);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -22,7 +22,7 @@ export const useSkjemaNavigation = (steg: number) => {
         if (newPage < steg) {
             dispatch(clearAllValideringsfeil());
         } else {
-            if (validering.feil.length) {
+            if (feil.length) {
                 dispatch(visValideringsfeilPanel());
             } else {
                 if (steg === 8 && uploadedDocumentsCount === 0) {
