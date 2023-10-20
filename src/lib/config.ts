@@ -47,8 +47,7 @@ const getConfig = (miljo: unknown): SoknadConfig => {
     }
 };
 
-const config = getConfig(process.env.REACT_APP_DIGISOS_ENV);
-
+const config = getConfig(import.meta.env.REACT_APP_DIGISOS_ENV);
 export const baseURL = config.baseURL;
 export const innsynURL = config.innsynURL;
 export const minSideURL = config.minSideURL;

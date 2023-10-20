@@ -20,7 +20,6 @@ import {configureStore} from "./configureStore";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {basePath} from "./configuration";
 import i18n, {SUPPORTED_LANGUAGES} from "./i18n";
-import {useFeatureFlags} from "./lib/featureFlags";
 import {logAmplitudeEvent} from "./nav-soknad/utils/amplitude";
 
 const store = configureStore();
@@ -63,7 +62,7 @@ const App = () => {
 };
 
 // Dersom appen bygges og deployes med docker-image vil dekoratøren bli lagt på serverside med express i Docker (eks ved deploy til miljø)
-if (process.env.NODE_ENV !== "production") {
+if (import.meta.env.REACT_APP_DIGISOS_ENVNODE_ENV !== "production") {
     injectDecoratorClientSide({
         env: "dev",
         params: {

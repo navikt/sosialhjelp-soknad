@@ -13,7 +13,7 @@ export type FeatureFlags = {
 };
 
 export const useFeatureFlags = (): FeatureFlags => {
-    if (["mock", "localhost"].includes(process.env.REACT_APP_DIGISOS_ENV ?? "")) {
+    if (["mock", "localhost"].includes(import.meta.env.REACT_APP_DIGISOS_ENV ?? "")) {
         return {
             begrunnelseNyTekst: true,
             nyOppsummering: false,

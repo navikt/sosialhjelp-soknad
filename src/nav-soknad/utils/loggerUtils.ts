@@ -60,7 +60,7 @@ const log = async (message: string, level: LoggLevel) => {
         level,
     };
 
-    if (process.env.NODE_ENV === "development") logLocally(navLogEntry);
+    if (import.meta.env.REACT_APP_DIGISOS_ENVNODE_ENV === "development") logLocally(navLogEntry);
     logToServer(navLogEntry);
 };
 
