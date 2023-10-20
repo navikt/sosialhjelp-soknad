@@ -1,33 +1,24 @@
-import {fetchPut, fetchToJson} from "../../nav-soknad/utils/rest-utils";
-import useSWR from "swr";
-import {SoknadsSti} from "../../digisos/redux/soknadsdata/soknadsdataReducer";
-import {BosituasjonData} from "./bosituasjonTypes";
-import {soknadsdataUrl} from "../../digisos/redux/soknadsdata/soknadsdataActions";
+import {useHentBosituasjon, useUpdateBosituasjon} from "../../generated/bosituasjon-ressurs/bosituasjon-ressurs";
+import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
+import {BosituasjonFrontend} from "../../generated/model";
+import {useQueryClient} from "@tanstack/react-query";
 
-export const useBosituasjon = (behandlingsId?: string) => {
-    const soknadUrl = behandlingsId ? soknadsdataUrl(behandlingsId, SoknadsSti.BOSITUASJON) : null;
+export const useBosituasjon = () => {
+    const behandlingsId = useBehandlingsId();
+    const queryClient = useQueryClient();
+    const {data: bosituasjon, isLoading, isError, queryKey} = useHentBosituasjon(behandlingsId);
+    const {mutate} = useUpdateBosituasjon();
 
-    const {data, error, mutate} = useSWR<BosituasjonData>(soknadUrl, fetchToJson);
-
-    // Updates local bosituasjon state first, then stores it to server.
-    const setBosituasjon = async (nyBosituasjon: Partial<BosituasjonData>) => {
-        if (!soknadUrl) return;
-        const updatedBosituasjon = {...(data as BosituasjonData), ...nyBosituasjon};
-        await mutate(
-            async (dataPayload) => {
-                await fetchPut(soknadUrl, JSON.stringify(dataPayload));
-                // The put doesn't return anything, so we just return what we got back.
-                return dataPayload;
-            },
-            // We assume the request succeeded and use the new data until fetchPut resolves
-            {optimisticData: updatedBosituasjon}
-        );
+    const setBosituasjon = async (nyBosituasjon: Partial<BosituasjonFrontend>) => {
+        const data = {...(bosituasjon as BosituasjonFrontend), ...nyBosituasjon};
+        mutate({behandlingsId, data});
+        queryClient.setQueryData(queryKey, data);
     };
 
     return {
-        bosituasjon: data,
+        bosituasjon,
         setBosituasjon,
-        isLoading: behandlingsId && !error && !data,
-        isError: error,
+        isLoading,
+        isError,
     };
 };

@@ -6,17 +6,13 @@ import Botype from "./Botype";
 import StegMedNavigasjon from "../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 
-export const Bosituasjon = () => {
-    const behandlingsId = useBehandlingsId();
-
-    return (
-        <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"bosituasjonbolk"} ikon={<BoligIllustrasjon />}>
-            <div className={"space-y-20"}>
-                <Botype />
-                <AntallPersoner behandlingsId={behandlingsId} />
-            </div>
-        </StegMedNavigasjon>
-    );
-};
+export const Bosituasjon = () => (
+    <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"bosituasjonbolk"} ikon={<BoligIllustrasjon />}>
+        <div className={"space-y-20"}>
+            <Botype />
+            <AntallPersoner />
+        </div>
+    </StegMedNavigasjon>
+);
 
 export default Bosituasjon;
