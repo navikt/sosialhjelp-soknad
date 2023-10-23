@@ -1,8 +1,9 @@
 import * as React from "react";
+import * as Sentry from "@sentry/react";
 import * as z from "zod";
 import {BegrunnelseFrontend} from "../../generated/model";
 import {Textarea} from "@navikt/ds-react";
-import {hentBegrunnelse, useUpdateBegrunnelse} from "../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
+import {hentBegrunnelse, updateBegrunnelse} from "../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import {FieldError, useForm} from "react-hook-form";
 import {useTranslation} from "react-i18next";
@@ -30,20 +31,23 @@ export const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) =
 
 const useBegrunnelse = () => {
     const behandlingsId = useBehandlingsId();
-    const {mutate, isError} = useUpdateBegrunnelse();
     const {begrunnelseNyTekst} = useFeatureFlags();
+    const [isError, setIsError] = React.useState(false);
 
     const hent = () => hentBegrunnelse(behandlingsId);
-    const lagre = (data: BegrunnelseFrontend) => {
+    const lagre = async (data: BegrunnelseFrontend) => {
         logAmplitudeEvent("begrunnelse fullført", {
             hvaLengde: (Math.round((data?.hvaSokesOm?.length ?? 0) / 20) - 1) * 20,
             hvorforLengde: (Math.round((data?.hvorforSoke?.length ?? 0) / 20) - 1) * 20,
             begrunnelseNyTekst,
         });
 
-        return new Promise((resolve, reject) => {
-            mutate({behandlingsId, data}, {onSuccess: resolve, onError: reject});
-        });
+        try {
+            await updateBegrunnelse(behandlingsId, data);
+        } catch (e) {
+            setIsError(true);
+            Sentry.captureException(e);
+        }
     };
 
     useEffect(() => {

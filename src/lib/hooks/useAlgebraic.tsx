@@ -43,7 +43,7 @@ const resolveQueryState = <TData, TError>(
             return AsyncData.Done(Result.Error(error));
         case "success":
             return AsyncData.Done(Result.Ok(data));
-        case "loading":
+        case "pending":
             return AsyncData.Loading();
     }
 };

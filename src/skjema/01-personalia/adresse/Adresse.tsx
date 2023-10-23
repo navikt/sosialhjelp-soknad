@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import NavEnhet from "./NavEnhet";
 import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
@@ -22,18 +22,13 @@ import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
 export const AdresseData = () => {
     const queryClient = useQueryClient();
     const behandlingsId = useBehandlingsId();
-    const {expectOK} = useAlgebraic(
-        useHentAdresser(behandlingsId, {
-            query: {
-                onSuccess: ({valg}) => {
-                    setUncommittedAdressevalg(valg!);
-                },
-            },
-        })
-    );
-
+    const {expectOK, data} = useAlgebraic(useHentAdresser(behandlingsId));
     const [uncommittedAdressevalg, setUncommittedAdressevalg] = useState<AdresserFrontendValg | null>(null);
     const {t} = useTranslation();
+
+    useEffect(() => {
+        if (data) setUncommittedAdressevalg(data.valg ?? null);
+    }, [data]);
 
     const setAdresser = async (adresser: AdresserFrontend, valg: AdresserFrontendValg, soknad?: AdresseFrontend) => {
         const inputAdresser = {
