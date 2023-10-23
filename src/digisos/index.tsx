@@ -80,7 +80,6 @@ Sentry.init({
     ],
     environment: import.meta.env.REACT_APP_DIGISOS_ENV,
     tracesSampleRate: 1.0,
-    release: import.meta.env.REACT_APP_RELEASE,
 });
 
 const sentryCreateBrowserRouter = Sentry.wrapCreateBrowserRouter(createBrowserRouter);
