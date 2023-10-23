@@ -15,7 +15,6 @@ import {AdresseSok} from "./AdresseSok";
 import {AdresseFrontend, AdresserFrontend, AdresserFrontendValg} from "../../../generated/model";
 import cx from "classnames";
 import {useTranslation} from "react-i18next";
-import {putNavEnhet} from "../../../generated/nav-enhet-ressurs/nav-enhet-ressurs";
 import {HorizontalRadioGroup} from "../../../nav-soknad/components/form/HorizontalRadioGroup";
 import {useQueryClient} from "@tanstack/react-query";
 import {logAmplitudeEvent} from "../../../nav-soknad/utils/amplitude";
