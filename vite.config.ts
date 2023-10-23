@@ -13,6 +13,10 @@ if (process.env.SENTRY_AUTH_TOKEN) {
             project: "sosialhjelp-soknad",
             authToken: process.env.SENTRY_AUTH_TOKEN,
 
+            build: {
+                sourceMaps: true,
+            },
+
             release: {
                 name: process.env.REACT_APP_RELEASE,
                 uploadLegacySourceMaps: {
