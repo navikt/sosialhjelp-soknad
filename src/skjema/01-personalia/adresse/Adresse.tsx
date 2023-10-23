@@ -50,11 +50,6 @@ export const AdresseData = () => {
             ...inputAdresser,
             navEnhet: navEnheter[0] ?? null,
         });
-
-        // Velg den første NAV-enheten
-        // TODO: Fiks PUT /adresser så navEnhet[0].valgt = true
-        const navEnhet = {...navEnheter[0], valgt: true};
-        await putNavEnhet(behandlingsId, navEnhet);
     };
 
     return expectOK((adresser) => (
