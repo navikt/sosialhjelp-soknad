@@ -4,7 +4,6 @@ import {digisosSkjemaConfig} from "../../nav-soknad/components/SkjemaSteg/digiso
 import AntallPersoner from "./AntallPersoner";
 import Botype from "./Botype";
 import StegMedNavigasjon from "../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
-import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 
 export const Bosituasjon = () => (
     <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"bosituasjonbolk"} ikon={<BoligIllustrasjon />}>
