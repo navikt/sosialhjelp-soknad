@@ -4,7 +4,7 @@ import {useNavigate} from "react-router";
 import {Trans, useTranslation} from "react-i18next";
 import {Link} from "react-router-dom";
 
-const IkkeFunnet: React.FC = () => {
+const IkkeFunnet = () => {
     const {t} = useTranslation("skjema");
 
     const navigate = useNavigate();

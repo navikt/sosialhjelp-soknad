@@ -4,6 +4,9 @@ import {BodyShort, Button, Heading, Link} from "@navikt/ds-react";
 import AppHeader from "../components/appHeader/AppHeader";
 import {SystemError} from "@navikt/ds-icons";
 import {useTranslation} from "react-i18next";
+import {useRouteError} from "react-router-dom";
+import * as Sentry from "@sentry/react";
+import {useEffect} from "react";
 
 export interface FeilsideProps {
     tittel?: string;
@@ -22,10 +25,19 @@ const Feilside: React.FC<FeilsideProps> = ({
 }) => {
     const {t} = useTranslation("skjema");
     useTitle(`Feilside - ${document.location.hostname}`);
+    const error = useRouteError();
+
+    useEffect(() => {
+        if (!error) return;
+
+        Sentry.captureException(error);
+        console.warn("error", error);
+    }, [error]);
+
     return (
         <>
             <AppHeader />
-            <div className={"text-center space-y-4 pb-10 bg-[var(--a-surface-danger-subtle)]"}>
+            <div className={"text-center space-y-4 pb-10 bg-[var(--a-surface-danger-subtle)] grow"}>
                 <div
                     className={
                         "flex justify-center gap-4 text-[var(--a-text-on-danger)] bg-[var(--a-surface-danger)] p-4"
