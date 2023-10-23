@@ -11,6 +11,7 @@ if (process.env.SENTRY_AUTH_TOKEN) {
         org: "nav",
         project: "sosialhjelp-soknad",
         authToken: process.env.SENTRY_AUTH_TOKEN,
+        url: "https://sentry.gc.nav.no",
 
         release: {
             name: process.env.REACT_APP_RELEASE,
