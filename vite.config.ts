@@ -15,7 +15,7 @@ if (process.env.SENTRY_AUTH_TOKEN) {
 
             release: {
                 name: process.env.REACT_APP_RELEASE,
-                uploadLeacySourceMaps: {
+                uploadLegacySourceMaps: {
                     paths: ["build"],
                     urlPrefix: "/sosialhjelp/soknad",
                 },
