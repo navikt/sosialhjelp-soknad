@@ -33,16 +33,6 @@ runs:
         (echo -n "version="; sentry-cli releases propose-version) >> $GITHUB_OUTPUT
       shell: bash
 
-    - name: 'Build npm artifact'
-      uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
-      env:
-        REACT_APP_RELEASE: ${{ steps.sentry-version.outputs.version }}
-      with:
-        reader-token: ${{ env.READER_TOKEN }}
-        build-less: 'false'
-        run-orval: 'true'
-        run-test: 'false'
-
     - name: Create Sentry release
       uses: getsentry/action-release@v1
       env:
@@ -52,6 +42,16 @@ runs:
       with:
         environment: ${{ inputs.prefix }}
         version: ${{ steps.sentry-version.outputs.version }}
+
+    - name: 'Build npm artifact'
+      uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
+      env:
+        REACT_APP_RELEASE: ${{ steps.sentry-version.outputs.version }}
+      with:
+        reader-token: ${{ env.READER_TOKEN }}
+        build-less: 'false'
+        run-orval: 'true'
+        run-test: 'false'
 
     - name: 'Release Tag'
       uses: ncipollo/release-action@v1
