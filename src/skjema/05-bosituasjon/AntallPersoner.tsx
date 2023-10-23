@@ -10,20 +10,18 @@ import {Fieldset, TextField} from "@navikt/ds-react";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
-interface AntallPersonerProps {
-    behandlingsId: string;
-}
-
 // Parse og validér antall personer.
-// Returnerer en tallstreng ved et gyldig heltall, null ved tom streng, ellers exception.
+// Returnerer en tallstreng ved et gyldig heltall, undefined ved tom streng, ellers exception.
 export const validerAntallPersoner = (formValue: string) => {
-    if (!formValue.length) return null;
-    if (Number.isInteger(Number.parseFloat(formValue))) return formValue;
-    throw new Error(ValideringsFeilKode.ER_TALL);
+    if (!formValue.length) return undefined;
+
+    const antallPersoner = parseInt(formValue);
+    if (isNaN(antallPersoner)) throw new Error(ValideringsFeilKode.ER_TALL);
+    return antallPersoner;
 };
 
-const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
-    const {bosituasjon, setBosituasjon} = useBosituasjon(behandlingsId);
+const AntallPersoner = () => {
+    const {bosituasjon, setBosituasjon} = useBosituasjon();
     const {t} = useTranslation("skjema");
 
     const dispatch = useDispatch();
@@ -32,17 +30,14 @@ const AntallPersoner = ({behandlingsId}: AntallPersonerProps) => {
     const errorMessage = getFeil(validationErrors, t, FAKTUM_KEY_ANTALL, undefined);
 
     const validateAndStore = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        let antallPersoner: string | null = null;
-
         try {
-            antallPersoner = validerAntallPersoner(event.target.value);
+            const antallPersoner = validerAntallPersoner(event.target.value);
+            dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
+            await setBosituasjon({antallPersoner});
         } catch (_e) {
             dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL));
             return;
         }
-
-        dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
-        await setBosituasjon({antallPersoner});
     };
 
     return (

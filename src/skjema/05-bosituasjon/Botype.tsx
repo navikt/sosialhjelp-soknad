@@ -3,12 +3,10 @@ import {useBosituasjon} from "./useBosituasjon";
 import {NyttUnderskjema} from "./NyttUnderskjema";
 import {useTranslation} from "react-i18next";
 import {Radio, RadioGroup} from "@navikt/ds-react";
-import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 
 const Botype = () => {
-    const behandlingsId = useBehandlingsId();
     const {t} = useTranslation("skjema");
-    const {bosituasjon, setBosituasjon} = useBosituasjon(behandlingsId);
+    const {bosituasjon, setBosituasjon} = useBosituasjon();
 
     // Hjelpefunksjon: Vis kun undermenyen dersom ikke "eier", "leier", "kommunal" eller "ingen" er valgt
     const erAnnet = () => !["eier", "leier", "kommunal", "ingen", null].includes(bosituasjon?.botype || null);

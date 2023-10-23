@@ -20,7 +20,6 @@ import {configureStore} from "./configureStore";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {basePath} from "./configuration";
 import i18n, {SUPPORTED_LANGUAGES} from "./i18n";
-import {useFeatureFlags} from "./lib/featureFlags";
 import {logAmplitudeEvent} from "./nav-soknad/utils/amplitude";
 
 const store = configureStore();
@@ -29,30 +28,26 @@ window.onerror = logWindowError;
 const queryClient = new QueryClient();
 
 const App = () => {
-    const {tilgengeliggjorSprakvelger} = useFeatureFlags();
-
     useEffect(() => {
-        if (tilgengeliggjorSprakvelger) {
-            setAvailableLanguages(
-                SUPPORTED_LANGUAGES.map((locale) => ({locale: locale, url: basePath, handleInApp: true}))
-            );
-            const handleLanguageSelect = (language: {locale: DecoratorLocale}) => {
-                i18n.changeLanguage(language.locale);
-                setParams({language: language.locale});
-                localStorage.setItem("digisos-language", language.locale);
+        setAvailableLanguages(
+            SUPPORTED_LANGUAGES.map((locale) => ({locale: locale, url: basePath, handleInApp: true}))
+        );
+        const handleLanguageSelect = (language: {locale: DecoratorLocale}) => {
+            i18n.changeLanguage(language.locale);
+            setParams({language: language.locale});
+            localStorage.setItem("digisos-language", language.locale);
 
-                logAmplitudeEvent("Valgt språk", {language: language.locale});
-            };
+            logAmplitudeEvent("Valgt språk", {language: language.locale});
+        };
 
-            const storedLanguage = localStorage.getItem("digisos-language");
-            if (storedLanguage) {
-                i18n.changeLanguage(storedLanguage);
-                setParams({language: storedLanguage as DecoratorLocale});
-            }
-
-            onLanguageSelect(handleLanguageSelect);
+        const storedLanguage = localStorage.getItem("digisos-language");
+        if (storedLanguage) {
+            i18n.changeLanguage(storedLanguage);
+            setParams({language: storedLanguage as DecoratorLocale});
         }
-    }, [tilgengeliggjorSprakvelger]);
+
+        onLanguageSelect(handleLanguageSelect);
+    }, []);
 
     return (
         <Provider store={store}>
@@ -67,7 +62,7 @@ const App = () => {
 };
 
 // Dersom appen bygges og deployes med docker-image vil dekoratøren bli lagt på serverside med express i Docker (eks ved deploy til miljø)
-if (process.env.NODE_ENV !== "production") {
+if (import.meta.env.REACT_APP_DIGISOS_ENV === "localhost") {
     injectDecoratorClientSide({
         env: "dev",
         params: {

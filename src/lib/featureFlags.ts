@@ -10,19 +10,15 @@ export type FeatureFlags = {
 
     // Tilgjengeliggjør flere filformater
     tilgjengeliggjorFlereFilformater: boolean;
-
-    // Tilgjengeliggjør språkvelger
-    tilgengeliggjorSprakvelger: boolean;
 };
 
 export const useFeatureFlags = (): FeatureFlags => {
-    if (["mock", "localhost"].includes(process.env.REACT_APP_DIGISOS_ENV ?? "")) {
+    if (["mock", "localhost"].includes(import.meta.env.REACT_APP_DIGISOS_ENV ?? "")) {
         return {
             begrunnelseNyTekst: true,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             tilgjengeliggjorFlereFilformater: true,
-            tilgengeliggjorSprakvelger: true,
         };
     }
     return {
@@ -30,6 +26,5 @@ export const useFeatureFlags = (): FeatureFlags => {
         nyOppsummering: false,
         oppsummeringNavEnhet: false,
         tilgjengeliggjorFlereFilformater: false,
-        tilgengeliggjorSprakvelger: true,
     };
 };

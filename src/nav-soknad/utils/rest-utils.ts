@@ -5,7 +5,7 @@ import {logWarning} from "./loggerUtils";
 import {baseURL} from "../../lib/config";
 
 export const determineCredentialsParameter = () =>
-    process.env.REACT_APP_DIGISOS_ENV === "localhost" ? "include" : "same-origin";
+    import.meta.env.REACT_APP_DIGISOS_ENV === "localhost" ? "include" : "same-origin";
 
 export const getRedirectPath = () => `${window.location.origin}${basePath}/link?goto=${getGotoPathname()}`;
 
@@ -63,11 +63,14 @@ export const serverRequest = <T>(
                 if (status === 409) {
                     if (!retries) throw new DigisosLegacyRESTError(status, `Ran out of 409 retries: ${statusText}`);
 
-                    setTimeout(() => {
-                        serverRequest(method, urlPath, body, withAccessToken, retries - 1)
-                            .then((data: unknown) => resolve(data as T))
-                            .catch(reject);
-                    }, 100 * (7 - retries));
+                    setTimeout(
+                        () => {
+                            serverRequest(method, urlPath, body, withAccessToken, retries - 1)
+                                .then((data: unknown) => resolve(data as T))
+                                .catch(reject);
+                        },
+                        100 * (7 - retries)
+                    );
 
                     return;
                 }

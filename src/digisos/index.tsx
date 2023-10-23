@@ -33,6 +33,11 @@ const redirectFromLogin = async () => {
     return redirect(destination);
 };
 
+/** Midlertidig hack for å teste Sentry i dev */
+const ExceptionThrower = () => {
+    throw new Error("Test");
+};
+
 const Routes = (
     <Route errorElement={<SideIkkeFunnet />}>
         <Route index path={`/`} loader={() => redirect("/informasjon")} />
@@ -42,6 +47,7 @@ const Routes = (
         {!isMockAlt(window.location.origin) && !isLocalhost(window.location.origin) && (
             <Route path={`/mock-login`} loader={redirectFromLogin} />
         )}
+        <Route path={`/kastException`} element={<ExceptionThrower />} />
         <Route path={"/skjema/:behandlingsId/*"}>
             <Route index path="1" element={<Steg1 />} />
             <Route path="2" element={<Steg2 />} />
@@ -72,9 +78,8 @@ Sentry.init({
             ),
         }),
     ],
-    environment: process.env.REACT_APP_DIGISOS_ENV,
+    environment: import.meta.env.REACT_APP_DIGISOS_ENV,
     tracesSampleRate: 1.0,
-    release: process.env.REACT_APP_RELEASE,
 });
 
 const sentryCreateBrowserRouter = Sentry.wrapCreateBrowserRouter(createBrowserRouter);

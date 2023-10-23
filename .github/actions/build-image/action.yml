@@ -33,6 +33,16 @@ runs:
         (echo -n "version="; sentry-cli releases propose-version) >> $GITHUB_OUTPUT
       shell: bash
 
+    - name: Create Sentry release
+      uses: getsentry/action-release@v1
+      env:
+        SENTRY_PROJECT: sosialhjelp-soknad
+        SENTRY_URL: "https://sentry.gc.nav.no/"
+        SENTRY_ORG: nav
+      with:
+        environment: ${{ inputs.prefix }}
+        version: ${{ steps.sentry-version.outputs.version }}
+
     - name: 'Build npm artifact'
       uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
       env:
@@ -42,40 +52,6 @@ runs:
         build-less: 'false'
         run-orval: 'true'
         run-test: 'false'
-
-    - name: Create Sentry release
-      uses: getsentry/action-release@v1
-      env:
-        SENTRY_PROJECT: sosialhjelp-soknad
-        SENTRY_URL: "https://sentry.gc.nav.no/"
-        SENTRY_ORG: nav
-      with:
-        environment: ${{ inputs.prefix }}
-        sourcemaps: ./build
-        url_prefix: /sosialhjelp/soknad
-        version: ${{ steps.sentry-version.outputs.version }}
-
-    #  kommentert ut til fordel for workflow over
-    #- name: 'Build sourcemaps and upload to Sentry'
-    #  env:
-    #    SENTRY_RELEASE: ${{ steps.sentry-version.outputs.version }}
-    #    SENTRY_PROJECT: sosialhjelp-soknad
-    #    SENTRY_URL: "https://sentry.gc.nav.no/"
-    #    SENTRY_ORG: nav
-    #  run: |
-    #    if sentry-cli releases info $SENTRY_RELEASE; then
-    #      echo "Relase $SENTRY_RELEASE already exists..."
-    #    else
-    #      echo "Creating release $SENTRY_RELEASE..."
-    #      sentry-cli releases new $SENTRY_RELEASE
-    #      sentry-cli releases set-commits "$SENTRY_RELEASE" --auto --ignore-missing
-    #      sentry-cli releases finalize $SENTRY_RELEASE
-    #    fi
-    #
-    #    sentry-cli sourcemaps inject ./build
-    #    sentry-cli sourcemaps upload --release $SENTRY_RELEASE --url-prefix=/sosialhjelp/soknad ./build
-    #    sentry-cli releases deploys $SENTRY_RELEASE new -e ${{ inputs.prefix }}
-    #  shell: bash
 
     - name: 'Release Tag'
       uses: ncipollo/release-action@v1
