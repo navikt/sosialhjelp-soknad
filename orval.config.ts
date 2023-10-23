@@ -12,7 +12,9 @@ export default {
                     name: "axiosInstance",
                 },
             },
-            mock: true,
+            // Vi bruker ikke mocks enda, og avventer ny versjon av orval
+            // som støtter msw v2.
+            mock: false,
         },
         hooks: {
             afterAllFilesWrite: "prettier --write",
