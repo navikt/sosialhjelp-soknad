@@ -11,10 +11,10 @@ import {updateArbeid, useHentArbeid} from "../../generated/arbeid-ressurs/arbeid
 import {ArbeidsforholdListe} from "./arbeid/ArbeidsforholdListe";
 import {TranslatedError} from "../02-begrunnelse";
 import {updateUtdanning, useHentUtdanning} from "../../generated/utdanning-ressurs/utdanning-ressurs";
-import * as Sentry from "@sentry/react";
 import {YesNoInput} from "../../nav-soknad/components/form/YesNoInput";
 import {UnmountClosed} from "react-collapse";
 import {useQueryClient} from "@tanstack/react-query";
+import {faro} from "@grafana/faro-react";
 
 const ArbeidOgUtdanningSchema = z.object({
     arbeid: z.object({kommentarTilArbeidsforhold: z.string().max(500, "maksLengde").nullable()}),
@@ -69,7 +69,7 @@ const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => {
                 try {
                     await mutate(data);
                 } catch (e) {
-                    Sentry.captureException(e);
+                    faro.api.pushError(e);
                     setError(true);
                     throw new DigisosValidationError();
                 }

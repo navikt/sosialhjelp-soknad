@@ -1,7 +1,7 @@
 import {Result} from "@swan-io/boxed";
 import {QueryKey, useQueryClient, UseQueryResult} from "@tanstack/react-query";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
-import * as Sentry from "@sentry/react";
+import {faro} from "@grafana/faro-react";
 
 /**
  * Placeholder-type
@@ -27,7 +27,7 @@ export const useDigisosMutation = <TOutput, TInput>(
             queryClient.setQueryData(queryKey, mutatedResource);
             return Result.Ok(mutatedResource);
         } catch (e) {
-            Sentry.captureException(e);
+            faro.api.pushError(e);
             return Result.Error(e);
         }
     };

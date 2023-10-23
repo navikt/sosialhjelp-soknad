@@ -7,6 +7,9 @@ type SoknadConfig = {
     innsynURL: string;
     minSideURL: string;
     logoutURL: string;
+    faro: {
+        url: string;
+    };
 };
 
 const isValidDigisosEnvironment = (miljo: unknown): miljo is SoknadMiljo =>
@@ -22,6 +25,9 @@ const getConfig = (miljo: unknown): SoknadConfig => {
                 innsynURL: "http://localhost:3000/sosialhjelp/innsyn/",
                 minSideURL: "https://www.nav.no/minside/",
                 logoutURL: "http://localhost:3008/",
+                faro: {
+                    url: "http://localhost:12347/collect",
+                },
             };
         case "mock":
             return {
@@ -29,6 +35,9 @@ const getConfig = (miljo: unknown): SoknadConfig => {
                 innsynURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn/",
                 minSideURL: "https://sosialhjelp-mock-alt-mock.ekstern.dev.nav.no/sosialhjelp/mock-alt/",
                 logoutURL: "https://sosialhjelp-mock-alt-mock.ekstern.dev.nav.no/sosialhjelp/mock-alt/",
+                faro: {
+                    url: "http://localhost:12347/collect", // FIXME
+                },
             };
         case "dev-sbs":
             return {
@@ -36,6 +45,9 @@ const getConfig = (miljo: unknown): SoknadConfig => {
                 innsynURL: "https://www-q0.dev.nav.no/sosialhjelp/innsyn/",
                 minSideURL: "https://www.dev.nav.no/minside/",
                 logoutURL: "https://loginservice.dev.nav.no/slo",
+                faro: {
+                    url: "https://telemetry.ekstern.dev.nav.no/collect",
+                },
             };
         case "prod-sbs":
             return {
@@ -43,6 +55,9 @@ const getConfig = (miljo: unknown): SoknadConfig => {
                 innsynURL: "https://www.nav.no/sosialhjelp/innsyn/",
                 minSideURL: "https://www.nav.no/minside/",
                 logoutURL: "https://loginservice.nav.no/slo",
+                faro: {
+                    url: "https://telemetry.nav.no/collect",
+                },
             };
     }
 };

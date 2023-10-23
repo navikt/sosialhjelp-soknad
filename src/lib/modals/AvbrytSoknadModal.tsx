@@ -5,18 +5,18 @@ import {useBehandlingsId} from "../hooks/useBehandlingsId";
 import {logError} from "../../nav-soknad/utils/loggerUtils";
 import {useSlettSoknad} from "../../generated/soknad-ressurs/soknad-ressurs";
 import {minSideURL} from "../config";
-import * as Sentry from "@sentry/react";
+import {faro} from "@grafana/faro-react";
 export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () => void}) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
-    const {mutate, isLoading, isError} = useSlettSoknad();
+    const {mutate, isPending: isLoading, isError} = useSlettSoknad();
 
     const deleteAndRedirect = async () => {
         try {
             await mutate({behandlingsId});
             window.location.href = minSideURL;
         } catch (e) {
-            Sentry.captureException(e);
+            faro.api.pushError(e);
             logError(`Feil ved sletting: ${e}`);
         }
     };
