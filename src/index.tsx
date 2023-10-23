@@ -62,7 +62,7 @@ const App = () => {
 };
 
 // Dersom appen bygges og deployes med docker-image vil dekoratøren bli lagt på serverside med express i Docker (eks ved deploy til miljø)
-if (import.meta.env.REACT_APP_DIGISOS_ENV !== "production") {
+if (import.meta.env.REACT_APP_DIGISOS_ENV !== "localhost") {
     injectDecoratorClientSide({
         env: "dev",
         params: {
