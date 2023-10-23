@@ -109,8 +109,7 @@
         "orval": "rm -rf ./src/generated & orval --prettier",
         "lint": "lint-staged",
         "cypress:open": "cypress open",
-        "cypress:run": "cypress run",
-        "sentry:sourcemaps": "sentry-cli sourcemaps inject ./build && sentry-cli sourcemaps upload --release $REACT_APP_RELEASE ./build"
+        "cypress:run": "cypress run"
     },
     "eslintConfig": {
         "extends": "react-app"
