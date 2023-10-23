@@ -100,7 +100,7 @@
     },
     "scripts": {
         "start": "vite start",
-        "build": "vite build && sentry-cli sourcemaps inject ./build",
+        "build": "vite build",
         "build:css": "echo brukes ikke lenger",
         "dev": "vite dev",
         "test": "echo Midlertidig disabled",
