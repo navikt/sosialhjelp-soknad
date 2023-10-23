@@ -45,11 +45,19 @@ export const AdresseData = () => {
 
         queryClient.setQueryData(getHentAdresserQueryKey(behandlingsId), {...inputAdresser, navEnhet: null});
         // TODO: Fiks PUT /adresser så den returnerer Adresser
-        const navEnheter = await updateAdresse(behandlingsId, {...inputAdresser});
-        queryClient.setQueryData(getHentAdresserQueryKey(behandlingsId), {
-            ...inputAdresser,
-            navEnhet: navEnheter[0] ?? null,
-        });
+        const navEnheter = (await updateAdresse(behandlingsId, {...inputAdresser})) as any;
+
+        if (navEnheter?.soknad) {
+            queryClient.setQueryData(getHentAdresserQueryKey(behandlingsId), {
+                ...inputAdresser,
+                navEnhet: navEnheter?.navEnhet,
+            });
+        } else {
+            queryClient.setQueryData(getHentAdresserQueryKey(behandlingsId), {
+                ...inputAdresser,
+                navEnhet: navEnheter[0] ?? null,
+            });
+        }
     };
 
     return expectOK((adresser) => (
