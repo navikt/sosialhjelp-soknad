@@ -51,8 +51,6 @@ runs:
         SENTRY_ORG: nav
       with:
         environment: ${{ inputs.prefix }}
-        sourcemaps: ./build
-        url_prefix: /sosialhjelp/soknad
         version: ${{ steps.sentry-version.outputs.version }}
 
     #  kommentert ut til fordel for workflow over

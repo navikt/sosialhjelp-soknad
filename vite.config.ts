@@ -1,9 +1,10 @@
 import {defineConfig, loadEnv, PluginOption} from "vite";
 import react from "@vitejs/plugin-react-swc";
 import viteTsconfigPaths from "vite-tsconfig-paths";
+import eslint from "vite-plugin-eslint";
 const {sentryVitePlugin} = require("@sentry/vite-plugin");
 
-const plugins: PluginOption[] = [react(), viteTsconfigPaths()];
+const plugins: PluginOption[] = [react(), viteTsconfigPaths(), eslint()];
 
 if (process.env.SENTRY_AUTH_TOKEN) {
     plugins.push(
@@ -11,6 +12,16 @@ if (process.env.SENTRY_AUTH_TOKEN) {
             org: "nav",
             project: "sosialhjelp-soknad",
             authToken: process.env.SENTRY_AUTH_TOKEN,
+
+            release: {
+                name: process.env.REACT_APP_RELEASE,
+                uploadLeacySourceMaps: {
+                    paths: ["build"],
+                    urlPrefix: "/sosialhjelp/soknad",
+                },
+                dist: process.env.REACT_APP_DIGISOS_ENV,
+                setCommits: {auto: true},
+            },
         })
     );
 }
