@@ -6,7 +6,7 @@ import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActi
 import {getFeil} from "../../nav-soknad/utils/enhancedComponentUtils";
 import {useBosituasjon} from "./useBosituasjon";
 import {useTranslation} from "react-i18next";
-import {Fieldset, TextField} from "@navikt/ds-react";
+import {TextField} from "@navikt/ds-react";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -41,20 +41,19 @@ const AntallPersoner = () => {
     };
 
     return (
-        <Fieldset legend={t("bosituasjon.antallpersoner.sporsmal")}>
-            <TextField
-                label={t("bosituasjon.antallpersoner.label")}
-                id={FAKTUM_KEY_ANTALL}
-                inputMode="numeric"
-                pattern="[0-9]*"
-                maxLength={2}
-                htmlSize={5}
-                defaultValue={bosituasjon?.antallPersoner || ""}
-                onBlur={validateAndStore}
-                onChange={() => dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL))}
-                error={errorMessage && t(errorMessage)}
-            />
-        </Fieldset>
+        <TextField
+            description={t("bosituasjon.antallpersoner.label")}
+            label={t("bosituasjon.antallpersoner.sporsmal")}
+            id={FAKTUM_KEY_ANTALL}
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={2}
+            htmlSize={5}
+            defaultValue={bosituasjon?.antallPersoner}
+            onBlur={validateAndStore}
+            onChange={() => dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL))}
+            error={errorMessage && t(errorMessage)}
+        />
     );
 };
 

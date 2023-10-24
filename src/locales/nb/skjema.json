@@ -102,7 +102,7 @@
     "bosituasjon.annet.botype.venner": "Bor hos venner",
     "bosituasjon.annet.true.botype.familie": "Bor hos familie",
     "bosituasjon.annet.true.botype.venner": "Bor hos venner",
-    "bosituasjon.antallpersoner.label": "Antall",
+    "bosituasjon.antallpersoner.label": "Antall. Ikke tell med deg selv.",
     "bosituasjon.antallpersoner.sporsmal": "Hvor mange personer bor du sammen med?",
     "bosituasjon.eier": "Jeg bor i bolig jeg eier selv",
     "bosituasjon.feilmelding": "Du må oppgi hvordan du bor",
