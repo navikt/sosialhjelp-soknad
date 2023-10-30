@@ -21,6 +21,7 @@ import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {basePath} from "./configuration";
 import i18n, {SUPPORTED_LANGUAGES} from "./i18n";
 import {logAmplitudeEvent} from "./nav-soknad/utils/amplitude";
+import {withFaroProfiler} from "@grafana/faro-react";
 
 const store = configureStore();
 
@@ -76,4 +77,5 @@ if (import.meta.env.REACT_APP_DIGISOS_ENV === "localhost") {
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
-root.render(<App />);
+const ProfiledApp = withFaroProfiler(App);
+root.render(<ProfiledApp />);

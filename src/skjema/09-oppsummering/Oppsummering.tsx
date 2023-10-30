@@ -29,7 +29,7 @@ import {OppsummeringHeading, NyOppsummeringPrototypePersonalia} from "./oppsumme
 import {useAlgebraic} from "../../lib/hooks/useAlgebraic";
 import {useHentBegrunnelse} from "../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
 import {innsynURL} from "../../lib/config";
-import * as Sentry from "@sentry/react";
+import {faro} from "@grafana/faro-react";
 
 const NyOppsummeringPrototypeBegrunnelse = () => {
     const {expectOK} = useAlgebraic(useHentBegrunnelse(useBehandlingsId()));
@@ -127,7 +127,7 @@ export const Oppsummering = () => {
 
             window.location.href = redirectUrl[sendtTil];
         } catch (e) {
-            Sentry.captureException(e);
+            faro.api.pushError(e);
             setIsError(true);
         }
     };

@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as Sentry from "@sentry/react";
 import * as z from "zod";
 import {BegrunnelseFrontend} from "../../generated/model";
 import {Textarea} from "@navikt/ds-react";
@@ -12,6 +11,7 @@ import {useFeatureFlags} from "../../lib/featureFlags";
 import {DigisosValidationError, SkjemaSteg} from "../../nav-soknad/components/SkjemaSteg/ny/SkjemaSteg";
 import {logAmplitudeEvent} from "../../nav-soknad/utils/amplitude";
 import {useEffect} from "react";
+import {faro} from "@grafana/faro-react";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;
@@ -46,7 +46,7 @@ const useBegrunnelse = () => {
             await updateBegrunnelse(behandlingsId, data);
         } catch (e) {
             setIsError(true);
-            Sentry.captureException(e);
+            faro.api.pushError(e);
         }
     };
 

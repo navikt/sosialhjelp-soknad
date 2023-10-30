@@ -4,14 +4,14 @@ import {
     Route,
     useLocation,
     useNavigationType,
-    createBrowserRouter,
     createRoutesFromElements,
     redirect,
+    createBrowserRouter,
+    Routes,
 } from "react-router-dom";
 import SideIkkeFunnet from "../nav-soknad/feilsider/SideIkkeFunnet";
 import Informasjon from "../hovedmeny";
 import {isLocalhost, isMockAlt} from "../nav-soknad/utils";
-import {basePath} from "../configuration";
 import * as React from "react";
 import Ettersendelse from "../skjema/ettersendelse";
 import Steg1 from "../skjema/01-personalia";
@@ -23,9 +23,18 @@ import Steg6 from "../skjema/06-inntektFormue";
 import Steg7 from "../skjema/07-utgifterGjeld";
 import {OkonomiskeOpplysningerView} from "../skjema/08-vedlegg";
 import NyOppsummering from "../skjema/09-oppsummering/Oppsummering";
-import * as Sentry from "@sentry/react";
 import {ServerFeil} from "../nav-soknad/feilsider/ServerFeil";
-
+import {
+    ConsoleInstrumentation,
+    getWebInstrumentations,
+    initializeFaro,
+    LogLevel,
+    ReactIntegration,
+    ReactRouterVersion,
+} from "@grafana/faro-react";
+import {TracingInstrumentation} from "@grafana/faro-web-tracing";
+import config from "../lib/config";
+import {basePath} from "../configuration";
 const redirectFromLogin = async () => {
     const url = window.location.href;
     const match = url.match(/goto=\/sosialhjelp\/soknad(.+?)(&login_id.*$|$)/);
@@ -38,7 +47,7 @@ const ExceptionThrower = () => {
     throw new Error("Test");
 };
 
-const Routes = (
+const routes = (
     <Route errorElement={<SideIkkeFunnet />}>
         <Route index path={`/`} loader={() => redirect("/informasjon")} />
         <Route path={`/informasjon`} element={<Informasjon />} />
@@ -65,23 +74,35 @@ const Routes = (
     </Route>
 );
 
-Sentry.init({
-    dsn: "https://e81d69cb0fb645068f8b9329fd3a138a@sentry.gc.nav.no/99",
-    integrations: [
-        new Sentry.BrowserTracing({
-            routingInstrumentation: Sentry.reactRouterV6Instrumentation(
-                React.useEffect,
-                useLocation,
-                useNavigationType,
-                createRoutesFromChildren,
-                matchRoutes
-            ),
+export const router = createBrowserRouter(createRoutesFromElements(routes), {basename: basePath});
+
+initializeFaro({
+    url: config.faro.url,
+    app: {
+        name: "frontend",
+        version: "1.0.0",
+    },
+    instrumentations: [
+        // Load the default Web instrumentations
+        ...getWebInstrumentations(),
+
+        // Tracing Instrumentation is needed if you want to use the React Profiler
+        new TracingInstrumentation(),
+
+        new ConsoleInstrumentation({disabledLevels: [LogLevel.TRACE]}),
+
+        new ReactIntegration({
+            // Only needed if you want to use the React Router instrumentation
+            router: {
+                version: ReactRouterVersion.V6,
+                dependencies: {
+                    createRoutesFromChildren,
+                    matchRoutes,
+                    Routes,
+                    useLocation,
+                    useNavigationType,
+                },
+            },
         }),
     ],
-    environment: import.meta.env.REACT_APP_DIGISOS_ENV,
-    tracesSampleRate: 1.0,
 });
-
-const sentryCreateBrowserRouter = Sentry.wrapCreateBrowserRouter(createBrowserRouter);
-
-export const router = sentryCreateBrowserRouter(createRoutesFromElements(Routes), {basename: basePath});

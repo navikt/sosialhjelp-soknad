@@ -4,9 +4,9 @@ import {BodyShort, Button, Heading, Link} from "@navikt/ds-react";
 import AppHeader from "../components/appHeader/AppHeader";
 import {SystemError} from "@navikt/ds-icons";
 import {useTranslation} from "react-i18next";
-import {useRouteError} from "react-router-dom";
-import * as Sentry from "@sentry/react";
+import {isRouteErrorResponse, useRouteError} from "react-router-dom";
 import {useEffect} from "react";
+import {faro} from "@grafana/faro-react";
 
 export interface FeilsideProps {
     tittel?: string;
@@ -29,9 +29,11 @@ const Feilside: React.FC<FeilsideProps> = ({
 
     useEffect(() => {
         if (!error) return;
-
-        Sentry.captureException(error);
-        console.warn("error", error);
+        if (isRouteErrorResponse(error)) {
+            faro.api.pushError(new Error(`${error.status} ${error.statusText}`));
+        } else {
+            faro.api.pushError(new Error(JSON.stringify(error)));
+        }
     }, [error]);
 
     return (
