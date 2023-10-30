@@ -47,7 +47,6 @@
         "zod": "^3.22.4"
     },
     "devDependencies": {
-        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
         "@babel/preset-env": "^7.23.2",
         "@babel/preset-react": "^7.22.15",
         "@faker-js/faker": "^8.2.0",

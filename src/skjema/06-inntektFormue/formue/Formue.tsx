@@ -1,22 +1,18 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst, replaceDotWithUnderscore} from "../../../nav-soknad/utils";
-import {Formue, FormueId} from "./FormueTypes";
-import CheckboxPanel from "../../../nav-soknad/faktum/CheckboxPanel";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
-import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
 import {State} from "../../../digisos/redux/reducers";
 import {validateAndDispatchTextFieldMaxLength} from "../../../nav-soknad/validering/validateAndDispatch";
 import {useTranslation} from "react-i18next";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
-import {Textarea} from "@navikt/ds-react";
+import {Checkbox, CheckboxGroup, Textarea} from "@navikt/ds-react";
+import {FormueFrontend} from "../../../generated/model";
+import {DigisosReadMore} from "./DigisosReadMore";
 
 const MAX_CHARS = 500;
-const FORMUE = "inntekt.bankinnskudd";
 const FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY = "inntekt.bankinnskudd.formue.annet.textarea";
 
 export const FormueView = () => {
@@ -25,7 +21,7 @@ export const FormueView = () => {
     const dispatch = useDispatch();
 
     const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.FORMUE);
-    const formue: Formue = soknadsdata.inntekt.formue;
+    const formue: FormueFrontend = soknadsdata.inntekt.formue;
 
     const feil = useSelector((state: State) => state.validering.feil);
     const restStatus = soknadsdata.restStatus.inntekt.formue;
@@ -36,14 +32,10 @@ export const FormueView = () => {
         if (oppstartsModus && restStatus === REST_STATUS.OK) setOppstartsModus(false);
     }, [oppstartsModus, restStatus]);
 
-    const handleClickCheckbox = (idToToggle: FormueId) => {
-        if (!(!oppstartsModus && restStatus === REST_STATUS.OK)) return;
-
-        let formueElement: boolean | string = formue[idToToggle];
-        if (typeof formueElement === "boolean" && typeof formue[idToToggle] === "boolean") {
-            // @ts-ignore
-            formue[idToToggle] = !formueElement;
-        }
+    const handleClickCheckbox = (values: (keyof Omit<FormueFrontend, "beskrivelseAvAnnet">)[]) => {
+        values.forEach((value) => {
+            formue[value] = true;
+        });
         if (formue && !formue.annet) formue.beskrivelseAvAnnet = "";
         oppdater(formue);
         lagre(formue);
@@ -61,7 +53,7 @@ export const FormueView = () => {
         if (!formue) return;
         const {beskrivelseAvAnnet} = formue;
         const erInnenforMaksLengde = validateAndDispatchTextFieldMaxLength(
-            beskrivelseAvAnnet,
+            beskrivelseAvAnnet ?? "",
             FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY,
             MAX_CHARS,
             feil,
@@ -70,50 +62,40 @@ export const FormueView = () => {
         if (erInnenforMaksLengde) lagre(formue);
     };
 
-    const renderCheckBox = (navn: FormueId) => {
-        let label: React.ReactNode;
-
-        if (oppstartsModus) {
-            if (restStatus === REST_STATUS.OK) setOppstartsModus(false);
-
-            label = <TextPlaceholder lines={1} style={{marginTop: "0.2rem"}} />;
-        } else {
-            label = t(FORMUE + ".true.type." + navn);
-        }
-
-        return (
-            <CheckboxPanel
-                id={"formue_" + navn + "_checkbox"}
-                name={navn}
-                checked={!!formue[navn]}
-                label={label}
-                onClick={() => handleClickCheckbox(navn)}
-            />
-        );
-    };
-
     return (
-        <Sporsmal
-            tekster={getFaktumSporsmalTekst(t, FORMUE + ".true.type")}
-            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
+        <CheckboxGroup
+            legend={t("inntekt.bankinnskudd.true.type.sporsmal")}
+            description={<DigisosReadMore>{t("inntekt.bankinnskudd.true.type.hjelpetekst.tekst")}</DigisosReadMore>}
+            onChange={handleClickCheckbox}
         >
-            {renderCheckBox(FormueId.BRUKSKONTO)}
-            {renderCheckBox(FormueId.SPAREKONTO)}
-            {renderCheckBox(FormueId.BSU)}
-            {renderCheckBox(FormueId.LIVSFORSIKRING)}
-            {renderCheckBox(FormueId.VERDIPAPIRER)}
-            {renderCheckBox(FormueId.ANNET)}
+            <Checkbox name={"brukskonto"} value={"brukskonto"}>
+                {t("inntekt.bankinnskudd.true.type.brukskonto")}
+            </Checkbox>
+            <Checkbox name={"sparekonto"} value={"sparekonto"}>
+                {t("inntekt.bankinnskudd.true.type.sparekonto")}
+            </Checkbox>
+            <Checkbox name={"bsu"} value={"bsu"}>
+                {t("inntekt.bankinnskudd.true.type.bsu")}
+            </Checkbox>
+            <Checkbox name={"livsforsikring"} value={"livsforsikring"}>
+                {t("inntekt.bankinnskudd.true.type.livsforsikring")}
+            </Checkbox>
+            <Checkbox name={"verdipapirer"} value={"verdipapirer"}>
+                {t("inntekt.bankinnskudd.true.type.verdipapirer")}
+            </Checkbox>
+            <Checkbox name={"annet"} value={"annet"}>
+                {t("inntekt.bankinnskudd.true.type.annet")}
+            </Checkbox>
             <NivaTreSkjema visible={formue?.annet} size="small">
                 <Textarea
-                    id={replaceDotWithUnderscore(FORMUE_ANNET_TEXT_AREA_FAKTUM_KEY)}
-                    onChange={(evt: any) => onChangeAnnet(evt.target.value)}
-                    onBlur={() => onBlurTekstfeltAnnet()}
+                    onChange={(evt) => onChangeAnnet(evt.target.value)}
+                    onBlur={onBlurTekstfeltAnnet}
                     label={t("inntekt.bankinnskudd.true.type.annet.true.beskrivelse.label")}
                     maxLength={MAX_CHARS}
-                    value={formue?.beskrivelseAvAnnet ?? ""}
+                    value={formue?.beskrivelseAvAnnet}
                 />
             </NivaTreSkjema>
-        </Sporsmal>
+        </CheckboxGroup>
     );
 };
 

@@ -1,9 +1,6 @@
 import * as React from "react";
 import {onEndretValideringsfeil} from "../../../digisos/redux/validering/valideringUtils";
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
-import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
-import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 import {maksLengde} from "../../../nav-soknad/validering/valideringer";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
@@ -15,6 +12,8 @@ import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 import {Checkbox, CheckboxGroup, Textarea} from "@navikt/ds-react";
 import {VerdierFrontend} from "../../../generated/model";
+import {YesNoInput} from "../../../nav-soknad/components/form/YesNoInput";
+import {DigisosReadMore} from "../formue/DigisosReadMore";
 
 const MAX_CHARS = 500;
 const VERDIER = "inntekt.eierandeler";
@@ -92,35 +91,41 @@ export const VerdierView = () => {
     };
 
     return (
-        <JaNeiSporsmal
-            visPlaceholder={oppstartsModus && restStatus !== REST_STATUS.OK}
-            tekster={getFaktumSporsmalTekst(t, VERDIER)}
-            faktumKey={VERDIER}
-            verdi={verdier.bekreftelse ?? null}
-            onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
-            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-        >
-            <CheckboxGroup
-                legend={t("inntekt.eierandeler.true.type.sporsmal")}
-                onChange={(navn: (keyof VerdierFrontend)[]) => handleClickRadio(navn)}
-                value={Object.keys(verdier).filter((key) => verdier[key as keyof VerdierFrontend])}
-            >
-                <Checkbox value={"bolig"}>{t("inntekt.eierandeler.true.type.bolig")} </Checkbox>
-                <Checkbox value={"campingvogn"}>{t("inntekt.eierandeler.true.type.campingvogn")}</Checkbox>
-                <Checkbox value={"kjoretoy"}>{t("inntekt.eierandeler.true.type.kjoretoy")}</Checkbox>
-                <Checkbox value={"fritidseiendom"}>{t("inntekt.eierandeler.true.type.fritidseiendom")}</Checkbox>
-                <Checkbox value={"annet"}>{t("inntekt.eierandeler.true.type.annet")}</Checkbox>
-                <NivaTreSkjema visible={verdier.annet} size="small">
-                    <Textarea
-                        label={t("inntekt.eierandeler.true.type.annet.true.beskrivelse.label")}
-                        onChange={(evt: any) => onChangeAnnet(evt.target.value)}
-                        onBlur={() => onBlurTekstfeltAnnet()}
-                        maxLength={MAX_CHARS}
-                        value={verdier?.beskrivelseAvAnnet ?? ""}
-                    />
-                </NivaTreSkjema>
-            </CheckboxGroup>
-        </JaNeiSporsmal>
+        <div>
+            <YesNoInput
+                legend={t("inntekt.eierandeler.sporsmal")}
+                description={
+                    <div>
+                        {t("inntekt.eierandeler.infotekst.tekst")}
+                        <DigisosReadMore>{t("inntekt.eierandeler.hjelpetekst.tekst")}</DigisosReadMore>
+                    </div>
+                }
+                defaultValue={verdier?.bekreftelse}
+                onChange={handleClickJaNeiSpsm}
+            />
+            {verdier?.bekreftelse && (
+                <CheckboxGroup
+                    legend={t("inntekt.eierandeler.true.type.sporsmal")}
+                    onChange={(navn: (keyof VerdierFrontend)[]) => handleClickRadio(navn)}
+                    value={Object.keys(verdier).filter((key) => verdier[key as keyof VerdierFrontend])}
+                >
+                    <Checkbox value={"bolig"}>{t("inntekt.eierandeler.true.type.bolig")} </Checkbox>
+                    <Checkbox value={"campingvogn"}>{t("inntekt.eierandeler.true.type.campingvogn")}</Checkbox>
+                    <Checkbox value={"kjoretoy"}>{t("inntekt.eierandeler.true.type.kjoretoy")}</Checkbox>
+                    <Checkbox value={"fritidseiendom"}>{t("inntekt.eierandeler.true.type.fritidseiendom")}</Checkbox>
+                    <Checkbox value={"annet"}>{t("inntekt.eierandeler.true.type.annet")}</Checkbox>
+                    <NivaTreSkjema visible={verdier.annet} size="small">
+                        <Textarea
+                            label={t("inntekt.eierandeler.true.type.annet.true.beskrivelse.label")}
+                            onChange={(evt: any) => onChangeAnnet(evt.target.value)}
+                            onBlur={() => onBlurTekstfeltAnnet()}
+                            maxLength={MAX_CHARS}
+                            value={verdier?.beskrivelseAvAnnet ?? ""}
+                        />
+                    </NivaTreSkjema>
+                </CheckboxGroup>
+            )}
+        </div>
     );
 };
 

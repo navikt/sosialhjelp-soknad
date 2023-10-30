@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Detail, Link} from "@navikt/ds-react";
+import {Detail, Heading, Link, Table} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {fmtCurrency} from "../../../lib/fmtCurrency";
 import TextPlaceholder from "../../../nav-soknad/components/animasjoner/placeholder/TextPlaceholder";
@@ -28,23 +28,26 @@ const UtbetalingsListe = ({utbetalinger}: {utbetalinger?: Utbetaling[]}) => {
     const {t} = useTranslation("skjema", {keyPrefix: "utbetalinger.inntekt.skattbar"});
 
     return (
-        <div className="blokk-xs">
-            {utbetalinger?.map(({brutto, forskuddstrekk: trekk}, i) => (
-                <>
-                    {brutto && <Betaling description={t("bruttoinntekt")} value={brutto} key={`${i}b`} />}
-                    {trekk && <Betaling description={t("forskuddstrekk")} value={trekk} key={`${i}f`} />}
-                </>
+        <>
+            {utbetalinger?.map(({brutto, forskuddstrekk: trekk}, index) => (
+                <React.Fragment key={`utbetaling-${index}`}>
+                    {brutto && (
+                        <Table.Row>
+                            <Table.HeaderCell>{t("bruttoinntekt")}:</Table.HeaderCell>
+                            <Table.DataCell align={"right"}>{fmtCurrency(i18next.language, brutto)}</Table.DataCell>
+                        </Table.Row>
+                    )}
+                    {trekk && (
+                        <Table.Row>
+                            <Table.HeaderCell>{t("forskuddstrekk")}:</Table.HeaderCell>
+                            <Table.DataCell align={"right"}>{fmtCurrency(i18next.language, trekk)}</Table.DataCell>
+                        </Table.Row>
+                    )}
+                </React.Fragment>
             ))}
-        </div>
+        </>
     );
 };
-
-const Betaling = ({description, value}: {description: string; value: number}) => (
-    <div className="flex justify-between">
-        <div>{description}:</div>
-        <div>{fmtCurrency(i18next.language, value)}</div>
-    </div>
-);
 
 type SkattbartForskuddProps = {
     inntektOgForskuddstrekk?: SkattbarInntektOgForskuddstrekk[];
@@ -57,26 +60,39 @@ const SkattbarinntektForskuddstrekk = ({inntektOgForskuddstrekk}: SkattbartForsk
     if (!inntektOgForskuddstrekk) return <TextPlaceholder lines={3} />;
 
     return (
-        <>
+        <div className={"border-l-4 bg-[var(--a-surface-info-subtle)] border-l-[var(--a-surface-info)] p-4 space-y-4"}>
+            {!inntektOgForskuddstrekk.length && (
+                <Heading size={"xsmall"} level={"4"}>
+                    {t("utbetalinger.inntekt.skattbar.ingen")}
+                </Heading>
+            )}
             {inntektOgForskuddstrekk.map(
                 ({organisasjoner}) =>
                     organisasjoner?.map((org) => (
-                        <div key={org.orgnr} className="utbetaling blokk">
-                            <div className="blokk-s">
-                                <Detail>{org.organisasjonsnavn}</Detail>
-                                <div>
-                                    {t("fra")} <LocalizedDate date={org.fom} /> {t("til")}{" "}
-                                    <LocalizedDate date={org.tom} />
-                                </div>
-                            </div>
-                            <UtbetalingsListe utbetalinger={org.utbetalinger} />
-                            <Link href={getLenkeSti(org)} target="_blank" rel="noopener noreferrer">
-                                {t("skattbar.skatteetaten")}
-                            </Link>
-                        </div>
+                        <Table key={org.orgnr}>
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell colSpan={2}>
+                                        <div>{org.organisasjonsnavn}</div>
+                                        <Detail>
+                                            {t("fra")} <LocalizedDate date={org.fom} /> {t("til")}{" "}
+                                            <LocalizedDate date={org.tom} />
+                                        </Detail>
+                                        <Detail>
+                                            <Link href={getLenkeSti(org)} target="_blank" rel="noopener noreferrer">
+                                                {t("skattbar.skatteetaten")}
+                                            </Link>
+                                        </Detail>
+                                    </Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
+                            <Table.Body>
+                                <UtbetalingsListe utbetalinger={org.utbetalinger} />
+                            </Table.Body>
+                        </Table>
                     ))
             )}
-        </>
+        </div>
     );
 };
 

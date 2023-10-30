@@ -11,7 +11,6 @@ import Studielan from "./studielan/Studielan";
 import StegMedNavigasjon from "../../nav-soknad/components/SkjemaSteg/SkjemaStegLegacy";
 import {Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {getIntlTextOrKey} from "../../nav-soknad/utils";
 
 const InntektFormue = () => {
     const {t} = useTranslation("skjema");
@@ -20,17 +19,12 @@ const InntektFormue = () => {
         <StegMedNavigasjon skjemaConfig={digisosSkjemaConfig} steg={"inntektbolk"} ikon={<Penger />}>
             <div>
                 <Heading size="medium" level="2" spacing>
-                    {getIntlTextOrKey(t, "utbetalinger.inntekt.skattbar.tittel")}
+                    {t("utbetalinger.inntekt.skattbar.tittel")}
                 </Heading>
                 <SkattbarInntekt />
             </div>
 
-            <div>
-                <Heading size="medium" level="2" spacing>
-                    {t("navytelser.sporsmal")}
-                </Heading>
-                <NavYtelser />
-            </div>
+            <NavYtelser />
             <Bostotte />
 
             <Studielan />

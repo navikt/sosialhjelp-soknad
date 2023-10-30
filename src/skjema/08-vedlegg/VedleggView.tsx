@@ -8,7 +8,10 @@ import {VedleggFrontendVedleggStatus} from "../../generated/model";
 import {useVedlegg} from "./useVedlegg";
 import {Opplysning} from "../../lib/opplysninger";
 import {ChangeEvent, useEffect, useRef} from "react";
-import {useUpdateOkonomiskOpplysning} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {
+    updateOkonomiskOpplysning,
+    useHentOkonomiskeOpplysninger,
+} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
 import {Alert, Checkbox} from "@navikt/ds-react";
 import styled from "styled-components";
@@ -27,24 +30,21 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const {t} = useTranslation();
     const queryClient = useQueryClient();
 
-    const {mutate} = useUpdateOkonomiskOpplysning({});
+    const {queryKey} = useHentOkonomiskeOpplysninger(behandlingsId);
 
     const {deleteFile, files, upload, error, success, loading} = useVedlegg(opplysning);
 
     const handleAlleredeLastetOpp = async (event: ChangeEvent<HTMLInputElement>) => {
-        await mutate({
-            behandlingsId,
-            data: {
-                gruppe: opplysning.gruppe,
-                type: opplysning.type,
-                alleredeLevert: event.target.checked,
-            },
+        await updateOkonomiskOpplysning(behandlingsId, {
+            gruppe: opplysning.gruppe,
+            type: opplysning.type,
+            alleredeLevert: event.target.checked,
         });
 
         // FIXME: Don't know why this is needed, presumably race condition on back-end
         await new Promise<void>((resolve) => setTimeout(() => resolve(), 200));
 
-        await queryClient.refetchQueries([`/soknader/${behandlingsId}/okonomiskeOpplysninger`]);
+        await queryClient.invalidateQueries({queryKey});
     };
 
     useEffect(() => {

@@ -1,17 +1,15 @@
 import * as React from "react";
 import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
-import {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst, getIntlTextOrKey} from "../../../nav-soknad/utils";
-import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
 import {useDispatch, useSelector} from "react-redux";
 import {State} from "../../../digisos/redux/reducers";
 import {validateAndDispatchTextFieldMaxLength} from "../../../nav-soknad/validering/validateAndDispatch";
 import {useTranslation} from "react-i18next";
-import {Checkbox, CheckboxGroup, Heading, Textarea} from "@navikt/ds-react";
+import {Checkbox, CheckboxGroup, Heading, ReadMore, Textarea} from "@navikt/ds-react";
 import {REST_STATUS} from "../../../digisos/redux/soknadsdata/soknadsdataTypes";
 import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
 import {UtbetalingerFrontend} from "../../../generated/model";
+import {YesNoInput} from "../../../nav-soknad/components/form/YesNoInput";
 
 const MAX_CHARS = 500;
 const UTBETALINGER = "inntekt.inntekter";
@@ -87,18 +85,21 @@ export const UtbetalingerView = () => {
 
     if (oppstartsModus && restStatus === REST_STATUS.OK) setOppstartsModus(false);
     return (
-        <div className="skjema-sporsmal">
-            <Heading size="medium" level="2">
-                {getIntlTextOrKey(t, "inntekt.inntekter.titel")}
-            </Heading>
-            <JaNeiSporsmal
-                visPlaceholder={oppstartsModus}
-                tekster={getFaktumSporsmalTekst(t, UTBETALINGER)}
-                faktumKey={UTBETALINGER}
-                verdi={utbetalinger.bekreftelse ?? null}
+        <div>
+            <YesNoInput
+                legend={
+                    <Heading size="medium" level="2">
+                        {t("inntekt.inntekter.tittel")}
+                    </Heading>
+                }
+                description={
+                    <ReadMore header={t("generelt.merinfo")}>{t("inntekt.inntekter.hjelpetekst.tekst")}</ReadMore>
+                }
+                defaultValue={utbetalinger.bekreftelse ?? null}
                 onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
-                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-            >
+            />
+
+            {utbetalinger.bekreftelse && (
                 <CheckboxGroup
                     legend={t("inntekt.inntekter.true.type.sporsmal")}
                     onChange={(navn: (keyof UtbetalingerFrontend)[]) => handleClickRadio(navn)}
@@ -118,7 +119,7 @@ export const UtbetalingerView = () => {
                         />
                     </NivaTreSkjema>
                 </CheckboxGroup>
-            </JaNeiSporsmal>
+            )}
         </div>
     );
 };

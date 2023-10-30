@@ -2,10 +2,10 @@ import {BosituasjonData, initialBosituasjonState} from "../../../skjema/05-bosit
 import {Familie, initialFamilieStatus, Sivilstatus} from "../../../skjema/04-familie/sivilstatus/FamilieTypes";
 import {initialUtdanningState, Utdanning} from "../../../skjema/03-arbeidUtdanning/utdanning/utdanningTypes";
 import {setPath} from "./soknadsdataActions";
-import {Bostotte, initialBostotteState} from "../../../skjema/06-inntektFormue/bostotte/bostotteTypes";
+import {Bostotte} from "../../../skjema/06-inntektFormue/bostotte/bostotteTypes";
 import {initialUtbetalingerState} from "../../../skjema/06-inntektFormue/utbetalinger/utbetalingerTypes";
 import {initialVerdierState} from "../../../skjema/06-inntektFormue/verdier/VerdierTypes";
-import {initialFormueState, Formue} from "../../../skjema/06-inntektFormue/formue/FormueTypes";
+import {initialFormueState} from "../../../skjema/06-inntektFormue/formue/FormueTypes";
 import {initialBoutgifterState} from "../../../skjema/07-utgifterGjeld/boutgifter/BoutgifterTypes";
 import {
     initialBarneutgifterState,
@@ -16,10 +16,9 @@ import {
     initialSkattbarInntektInfoState,
     SkattbarInntekt,
 } from "../../../skjema/06-inntektFormue/skattbarInntekt/inntektTypes";
-import {Systeminntekter, initialSysteminntekter} from "../../../skjema/06-inntektFormue/navytelser/navYtelserTypes";
 import {Studielan, initialStudielanState} from "../../../skjema/06-inntektFormue/studielan/StudielanTypes";
 import {REST_STATUS} from "./soknadsdataTypes";
-import {BoutgifterFrontend, UtbetalingerFrontend, VerdierFrontend} from "../../../generated/model";
+import {BoutgifterFrontend, FormueFrontend, UtbetalingerFrontend, VerdierFrontend} from "../../../generated/model";
 
 export enum SoknadsdataActionTypeKeys {
     OPPDATER_SOKNADSDATA_STI = "soknadsdata/OPPDATER_STI",
@@ -32,10 +31,6 @@ export enum SoknadsdataActionTypeKeys {
  * og legges på redux state state.soknadsdata.personalia.kontonummer
  */
 export enum SoknadsSti {
-    BOSITUASJON = "bosituasjon",
-    BOSTOTTE = "inntekt/bostotte",
-    BOSTOTTE_SAMTYKKE = "inntekt/bostotte/samtykke",
-    STUDIELAN = "inntekt/studielan",
     UTBETALINGER = "inntekt/utbetalinger",
     VERDIER = "inntekt/verdier",
     FORMUE = "inntekt/formue",
@@ -43,17 +38,14 @@ export enum SoknadsSti {
     BARNEUTGIFTER = "utgifter/barneutgifter",
     SIVILSTATUS = "familie/sivilstatus",
     FORSORGERPLIKT = "familie/forsorgerplikt",
-    INNTEKT_SYSTEMDATA = "inntekt/systemdata",
 }
 
 export interface Inntekt {
     skattbarinntektogforskuddstrekk: SkattbarInntektInfo;
-    bostotte: Bostotte;
     studielan: Studielan;
     utbetalinger: UtbetalingerFrontend;
-    formue: Formue;
+    formue: FormueFrontend;
     verdier: VerdierFrontend;
-    systemdata: Systeminntekter;
 }
 
 export interface SkattbarInntektInfo {
@@ -65,12 +57,10 @@ export interface SkattbarInntektInfo {
 
 export const initialInntektState: Inntekt = {
     skattbarinntektogforskuddstrekk: initialSkattbarInntektInfoState,
-    bostotte: initialBostotteState,
     studielan: initialStudielanState,
     utbetalinger: initialUtbetalingerState,
     formue: initialFormueState,
     verdier: initialVerdierState,
-    systemdata: initialSysteminntekter,
 };
 
 export interface Utgifter {
@@ -108,7 +98,7 @@ export type SoknadsdataType =
     | Barnebidrag
     | Bostotte
     | Studielan
-    | Formue
+    | FormueFrontend
     | VerdierFrontend
     | Utgifter
     | UtbetalingerFrontend

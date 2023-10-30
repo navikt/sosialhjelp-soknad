@@ -1,14 +1,6 @@
-export interface Formue {
-    brukskonto: boolean;
-    sparekonto: boolean;
-    bsu: boolean;
-    livsforsikring: boolean;
-    verdipapirer: boolean;
-    annet: boolean;
-    beskrivelseAvAnnet: string;
-}
+import {FormueFrontend} from "../../../generated/model";
 
-export const initialFormueState: Formue = {
+export const initialFormueState: FormueFrontend = {
     brukskonto: false,
     sparekonto: false,
     bsu: false,
@@ -17,13 +9,3 @@ export const initialFormueState: Formue = {
     annet: false,
     beskrivelseAvAnnet: "",
 };
-
-export enum FormueId {
-    BRUKSKONTO = "brukskonto",
-    SPAREKONTO = "sparekonto",
-    BSU = "bsu",
-    LIVSFORSIKRING = "livsforsikring",
-    VERDIPAPIRER = "verdipapirer",
-    ANNET = "annet",
-    BESKRIVELSEAVANNET = "beskrivelseAvAnnet",
-}

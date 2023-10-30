@@ -97,7 +97,7 @@ const RegistrerteBarn = () => {
                         <YesNoInput
                             legend={t("system.familie.barn.true.barn.deltbosted.sporsmal")}
                             description={
-                                <ReadMore header={"Les mer"}>
+                                <ReadMore header={t("generelt.merinfo")}>
                                     {t("system.familie.barn.true.barn.deltbosted.hjelpetekst.tekst")}
                                 </ReadMore>
                             }

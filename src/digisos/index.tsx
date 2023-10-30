@@ -42,7 +42,7 @@ const redirectFromLogin = async () => {
     return redirect(destination);
 };
 
-/** Midlertidig hack for å teste Sentry i dev */
+/** Midlertidig hack for å teste feilhåndtering i dev */
 const ExceptionThrower = () => {
     throw new Error("Test");
 };

@@ -10,7 +10,7 @@ import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
 import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs";
 import {useState} from "react";
-import {opprettSoknad} from "../../generated/soknad-ressurs/soknad-ressurs";
+import {hentXsrfCookie, opprettSoknad} from "../../generated/soknad-ressurs/soknad-ressurs";
 
 export const NySoknadInfo = () => {
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
@@ -36,6 +36,7 @@ export const NySoknadInfo = () => {
         });
         try {
             const {brukerBehandlingId} = await opprettSoknad();
+            await hentXsrfCookie(brukerBehandlingId);
             navigate(`../skjema/${brukerBehandlingId}/1`);
         } catch (e) {
             setStartSoknadError(e);

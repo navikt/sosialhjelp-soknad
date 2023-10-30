@@ -1,7 +1,9 @@
+import {JsonBostotteSak} from "../../../generated/model";
+
 export interface Bostotte {
     bekreftelse: null | boolean;
     utbetalinger: Utbetaling[];
-    saker: Sak[];
+    saker: JsonBostotteSak[];
     stotteFraHusbankenFeilet: null | boolean;
     samtykke: boolean;
     samtykkeTidspunkt: null | Date;
