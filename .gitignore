@@ -28,6 +28,3 @@ yarn-error.log*
 
 debug.log
 chromedriver.log
-
-# Sentry Config File
-.sentryclirc
