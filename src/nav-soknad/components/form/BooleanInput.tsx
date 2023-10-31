@@ -12,8 +12,10 @@ const BooleanInputRadio = ({value, label}: {value: string; label: ReactNode}) =>
 export interface BaseBooleanInputProps {
     legend: ReactNode;
     description?: ReactNode;
-    defaultValue: boolean | null | undefined;
-    onChange: (value: boolean) => void;
+    defaultValue?: boolean | null;
+    value?: boolean | null;
+    onChange: React.ChangeEventHandler<HTMLInputElement>;
+    name: string;
 }
 
 interface GenericBooleanInputProps {
@@ -27,11 +29,24 @@ export const BooleanInput = ({
     onChange,
     legend,
     description,
+    name,
+    value,
 }: BaseBooleanInputProps & GenericBooleanInputProps) => (
     <RadioGroup
         legend={legend}
         description={description}
-        onChange={(value) => onChange(value === "true")}
+        name={name}
+        onChange={(value: string) => {
+            const event = {
+                target: {
+                    name,
+                    value: value === "true",
+                    checked: value === "true",
+                },
+            } as unknown as React.ChangeEvent<HTMLInputElement>;
+            onChange(event);
+        }}
+        value={value?.toString()}
         defaultValue={typeof defaultValue === "boolean" ? defaultValue.toString() : undefined}
     >
         <BooleanInputRadio value={"true"} label={trueLabel} />

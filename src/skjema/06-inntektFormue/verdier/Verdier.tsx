@@ -93,6 +93,7 @@ export const VerdierView = () => {
     return (
         <div>
             <YesNoInput
+                name={"verdier-bekreftelse"}
                 legend={t("inntekt.eierandeler.sporsmal")}
                 description={
                     <div>
@@ -101,7 +102,7 @@ export const VerdierView = () => {
                     </div>
                 }
                 defaultValue={verdier?.bekreftelse}
-                onChange={handleClickJaNeiSpsm}
+                onChange={({target: {checked}}) => handleClickJaNeiSpsm(checked)}
             />
             {verdier?.bekreftelse && (
                 <CheckboxGroup

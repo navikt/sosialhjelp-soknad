@@ -25,7 +25,8 @@ const SkattbarInntekt = () => {
                     legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal")}
                     description={t("utbetalinger.inntekt.skattbar.samtykke_info")}
                     defaultValue={samtykke}
-                    onChange={setSamtykke}
+                    onChange={({target: {checked}}) => setSamtykke(checked)}
+                    name={"skattbar-inntekt-samtykke"}
                 />
             ) : (
                 <div className={"space-y-4"}>

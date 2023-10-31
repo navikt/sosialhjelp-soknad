@@ -47,17 +47,19 @@ const BostotteView = () => {
                 {t("inntekt.bostotte.overskrift")}
             </Heading>
             <YesNoInput
+                name={"bostotte-bekreftelse"}
                 legend={t("inntekt.bostotte.sporsmal.sporsmal")}
                 defaultValue={bekreftelse}
-                onChange={setBekreftelse}
+                onChange={({target: {checked}}) => setBekreftelse(checked)}
             />
             {bekreftelse &&
                 (!dataHentet ? (
                     <YesNoInput
+                        name={"bostotte-samtykke"}
                         legend={t("inntekt.bostotte.gi_samtykke.overskrift")}
                         description={t("inntekt.bostotte.gi_samtykke.tekst")}
                         defaultValue={bostotte?.samtykke}
-                        onChange={setSamtykke}
+                        onChange={({target: {checked}}) => setSamtykke(checked)}
                     />
                 ) : (
                     <BostotteData />

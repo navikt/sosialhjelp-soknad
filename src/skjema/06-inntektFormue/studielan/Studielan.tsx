@@ -23,8 +23,9 @@ const StudielanView = () => {
                 {t("inntekt.studielan.titel")}
             </Heading>
             <YesNoInput
+                name={"studielan-bekreftelse"}
                 legend={t("inntekt.studielan.sporsmal")}
-                onChange={(bekreftelse: boolean) => mutate({bekreftelse})}
+                onChange={({target: {checked}}) => mutate({bekreftelse: checked})}
                 defaultValue={studielan?.bekreftelse}
             />
             {studielan?.bekreftelse === true && <InformasjonTilStudent />}

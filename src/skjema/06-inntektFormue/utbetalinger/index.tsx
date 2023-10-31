@@ -96,7 +96,8 @@ export const UtbetalingerView = () => {
                     <ReadMore header={t("generelt.merinfo")}>{t("inntekt.inntekter.hjelpetekst.tekst")}</ReadMore>
                 }
                 defaultValue={utbetalinger.bekreftelse ?? null}
-                onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
+                onChange={({target: {checked}}) => handleClickJaNeiSpsm(checked)}
+                name={"utbetalinger-bekreftelse"}
             />
 
             {utbetalinger.bekreftelse && (
