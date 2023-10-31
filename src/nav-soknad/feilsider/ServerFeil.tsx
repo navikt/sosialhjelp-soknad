@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 import {useTitle} from "../../lib/hooks/useTitle";
 import {SystemError} from "@navikt/ds-icons";
 import {BodyShort, Button, Heading, Link} from "@navikt/ds-react";
@@ -21,23 +21,27 @@ export const ServerFeil = () => {
         <>
             <AppHeader />
 
-            <div className={" text-[var(--a-text-on-danger-subtle)] px-8 py-12 md:py-24"}>
-                <div className={"grid md:grid-cols-4 gap-8"}>
-                    <div className={"md:ml-auto mt-3"}>
-                        <SystemError fontSize={"96px"} className={"text-[var(--a-surface-danger)]"} />
+            <div className={"text-[var(--a-text-on-danger-subtle)] px-8 py-8 md:py-12"}>
+                <div className={"grid grid-cols-[30px_auto_repeat(2,_minmax(0,_1fr))] md:grid-cols-4 gap-8"}>
+                    <div className={"md:ml-auto md:row-span-2"}>
+                        <SystemError className={"text-[var(--a-surface-danger)] md:pr-2 h-full w-full"} />
                     </div>
-                    <div className={"col-span-3"}>
-                        <Heading level="1" size="xlarge">
-                            {t("feilside.serverfeil.beklager")}
-                        </Heading>
-                        <Heading level={"2"} size={"large"}>
-                            {t("feilside.serverfeil.teknisk.feil")}
-                        </Heading>
-                        <Heading level={"3"} size={"medium"}>
-                            {t("feilside.serverfeil.prov.igjen")}
-                        </Heading>
+                    <Heading level="1" size="xlarge" className={"col-span-3 !leading-[0.75em] !mt-auto"}>
+                        {t("feilside.serverfeil.beklager")}
+                    </Heading>
+                    <div className={"col-span-4 md:col-span-2 md:col-start-2"}>
+                        <div className={"-mb-2.5"}>
+                            <Heading level={"2"} size={"large"}>
+                                {t("feilside.serverfeil.teknisk.feil")}
+                            </Heading>
+                            <Heading level={"3"} size={"medium"}>
+                                {t("feilside.serverfeil.prov.igjen")}
+                            </Heading>
+                        </div>
+                    </div>
+                    <div className={"col-span-4 md:col-span-2 md:col-start-2"}>
                         <Button
-                            className="!mb-8 !mt-4"
+                            className="md:!mb-8 md:!mt-4 !mb-6"
                             variant="secondary"
                             onClick={() => (window.location.href = "/sosialhjelp/soknad")}
                         >
@@ -47,18 +51,20 @@ export const ServerFeil = () => {
                     </div>
                 </div>
             </div>
-            <div className={"bg-[var(--a-surface-action-subtle)] grid md:grid-cols-4 gap-8 p-8"}>
+            <div className={"bg-[var(--a-surface-action-subtle)] grid md:grid-cols-4 gap-8 p-8 grow"}>
                 <div className={"md:col-start-2 col-span-2"}>
-                    <Heading level={"3"} size={"large"} spacing>
+                    <Heading level={"3"} size={"xlarge"} spacing>
                         {t("feilside.serverfeil.nodsituasjon.tittel")}
                     </Heading>
-                    <BodyShort spacing>
-                        {t("feilside.serverfeil.dukanogsa")}{" "}
-                        <Link href={"https://www.nav.no/sosialhjelp/sok-papir"} className={"!inline"}>
-                            {t("feilside.serverfeil.soke.papir")}
-                        </Link>{" "}
-                        {t("feilside.serverfeil.kontakt.nav.kontor")}
-                    </BodyShort>
+                    <Heading level={"4"} size={"small"} spacing>
+                        <Trans
+                            t={t}
+                            i18nKey={"feilside.serverfeil.papir"}
+                            components={{
+                                lenke: <Link href="https://www.nav.no/sosialhjelp/sok-papir">{null}</Link>,
+                            }}
+                        />
+                    </Heading>
                     <BodyShort className={"whitespace-pre-line pb-3"} spacing>
                         {t("feilside.serverfeil.nodsituasjon.tekst")}
                     </BodyShort>
