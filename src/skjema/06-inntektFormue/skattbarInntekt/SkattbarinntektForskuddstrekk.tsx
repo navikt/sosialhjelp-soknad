@@ -63,7 +63,7 @@ const SkattbarinntektForskuddstrekk = ({inntektOgForskuddstrekk}: SkattbartForsk
         <div className={"border-l-4 bg-[var(--a-surface-info-subtle)] border-l-[var(--a-surface-info)] p-4 space-y-4"}>
             {!inntektOgForskuddstrekk.length && (
                 <Heading size={"xsmall"} level={"4"}>
-                    {t("utbetalinger.inntekt.skattbar.ingen")}
+                    {t("skattbar.ingen")}
                 </Heading>
             )}
             {inntektOgForskuddstrekk.map(
