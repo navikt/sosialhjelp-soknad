@@ -103,7 +103,7 @@ const RegistrerteBarn = () => {
                             }
                             defaultValue={barnet.harDeltBosted}
                             name={"deltbosted"}
-                            onChange={({target: {checked}}) => handleClickJaNeiSpsm(checked, index)}
+                            onChange={(checked) => handleClickJaNeiSpsm(checked, index)}
                         />
                     ) : (
                         <TextField

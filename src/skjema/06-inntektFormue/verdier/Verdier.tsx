@@ -102,7 +102,7 @@ export const VerdierView = () => {
                     </div>
                 }
                 defaultValue={verdier?.bekreftelse}
-                onChange={({target: {checked}}) => handleClickJaNeiSpsm(checked)}
+                onChange={(checked) => handleClickJaNeiSpsm(checked)}
             />
             {verdier?.bekreftelse && (
                 <CheckboxGroup

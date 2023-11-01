@@ -114,7 +114,7 @@ const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => {
                         <YesNoInput
                             name={"utdanning.erStudent"}
                             defaultValue={getValues("utdanning.erStudent")}
-                            onChange={({target: {checked}}) => setValue("utdanning.erStudent", checked)}
+                            onChange={(checked) => setValue("utdanning.erStudent", checked)}
                             legend={t("dinsituasjon.studerer.sporsmal")}
                         />
                         <UnmountClosed isOpened={watch("utdanning.erStudent") === true}>

@@ -1,54 +1,13 @@
 import {BodyShort, Detail, Label} from "@navikt/ds-react";
 import React, {ReactNode} from "react";
 import styled from "styled-components";
-import Dato from "../tidspunkt/Dato";
 import cx from "classnames";
-
-const SysteminfoList = styled.ul`
-    &:empty {
-        display: none;
-    }
-`;
 
 const ListItemContents = styled.div<{multiline?: boolean}>`
     p {
         display: ${(props) => (props.multiline ? "block" : "inline")};
     }
 `;
-
-/**
- * @deprecated Erstattes av Systeminfo
- */
-export const OldSingleLineElement = (props: {value?: string}) => <BodyShort size="small">: {props.value}</BodyShort>;
-
-export const SingleLineDateElement = ({value}: {value?: string}) => (
-    <BodyShort size="small">
-        : <Dato>{value ?? ""}</Dato>
-    </BodyShort>
-);
-
-/**
- * @deprecated Erstattes av Systeminfo
- */
-interface OldSysteminfoProps {
-    systeminfoMap: {key: ReactNode; value: ReactNode}[];
-    multiline?: boolean;
-}
-
-// DEPRECATED: Denne heter OldSysteminfo fordi vi er i ferd med å migrere til en nyere variant
-/**
- * @deprecated Erstattes av Systeminfo
- */
-export const OldSysteminfo = ({multiline, systeminfoMap}: OldSysteminfoProps) => (
-    <SysteminfoList>
-        {systeminfoMap.map(({key, value}, index) => (
-            <ListItemContents key={index} multiline={multiline}>
-                <Label size="small">{key}</Label>
-                {value}
-            </ListItemContents>
-        ))}
-    </SysteminfoList>
-);
 
 export const SysteminfoItem = ({
     label,

@@ -1,24 +1,54 @@
-import {Status} from "./FamilieTypes";
 import * as React from "react";
 import Underskjema from "../../../nav-soknad/components/underskjema";
-import PersonSkjema from "./PersonSkjema";
+import EktefellePersonaliaForm from "./EktefellePersonaliaForm";
 import {useTranslation} from "react-i18next";
-import {Alert, BodyShort, Heading, Radio, RadioGroup} from "@navikt/ds-react";
+import {Button, Heading, Panel, Radio, RadioGroup} from "@navikt/ds-react";
 import {useSivilstatus} from "./useSivilstatus";
 
-const Sivilstatus = () => {
+import {EktefellerPlikterForsorge} from "./EktefellePlikterForsorge";
+import {EktefellePersonaliaBruker} from "./EktefellePersonaliaBruker";
+import {Systeminfo} from "../../../nav-soknad/components/systeminfo/Systeminfo";
+
+export const Sivilstatus = () => {
     const {t} = useTranslation("skjema");
-    const {sivilstatus, setSivilstatus} = useSivilstatus();
+    const {sivilstatus, ektefelle, setSivilstatus, setEktefelle} = useSivilstatus();
+    const [editMode, setEditMode] = React.useState(false);
+    if (sivilstatus === undefined) return null;
 
     return (
         <div>
             <Heading level={"2"} size={"medium"} spacing>
                 {t("familie.sivilstatus.sporsmal")}
             </Heading>
-            <RadioGroup legend={t("system.familie.sivilstatus.sporsmal")} value={sivilstatus} onChange={setSivilstatus}>
+            <RadioGroup
+                legend={t("system.familie.sivilstatus.sporsmal")}
+                value={sivilstatus.sivilstatus}
+                onChange={(sivilstatus) => {
+                    setSivilstatus(sivilstatus);
+                    if (!ektefelle) setEditMode(true);
+                }}
+            >
                 <Radio value="gift">{t("familie.sivilstatus.gift")}</Radio>
-                <Underskjema visible={sivilstatus === Status.GIFT} arrow={true}>
-                    <PersonSkjema />
+                <Underskjema visible={sivilstatus.sivilstatus === "gift"} arrow={true}>
+                    <EktefellerPlikterForsorge />
+                    {editMode ? (
+                        <Panel className={"!bg-gray-100"}>
+                            <EktefellePersonaliaForm
+                                sivilstatus={sivilstatus}
+                                setEktefelle={async (ektefelle, borSammen) => {
+                                    await setEktefelle(ektefelle, borSammen);
+                                    setEditMode(false);
+                                }}
+                            />
+                        </Panel>
+                    ) : (
+                        <Systeminfo>
+                            <EktefellePersonaliaBruker ektefelle={ektefelle} />
+                            <div>
+                                <Button onClick={() => setEditMode(true)}>Endre</Button>
+                            </div>
+                        </Systeminfo>
+                    )}
                 </Underskjema>
                 <Radio value="ugift">{t("familie.sivilstatus.ugift")}</Radio>
                 <Radio value="samboer">{t("familie.sivilstatus.samboer")}</Radio>
@@ -26,14 +56,6 @@ const Sivilstatus = () => {
                 <Radio value="skilt">{t("familie.sivilstatus.skilt")}</Radio>
                 <Radio value="separert">{t("familie.sivilstatus.separert")}</Radio>
             </RadioGroup>
-            {sivilstatus === Status.GIFT && (
-                <Alert variant={"warning"}>
-                    <Heading level={"4"} size={"small"} spacing>
-                        {t("system.familie.sivilstatus.informasjonspanel.tittel")}
-                    </Heading>
-                    <BodyShort>{t("system.familie.sivilstatus.informasjonspanel.tekst")}</BodyShort>
-                </Alert>
-            )}
         </div>
     );
 };

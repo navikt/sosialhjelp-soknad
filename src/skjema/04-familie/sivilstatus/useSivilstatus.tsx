@@ -1,40 +1,51 @@
-import {Person, Status} from "./FamilieTypes";
-import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
-import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {updateSivilstatus, useHentSivilstatus} from "../../../generated/sivilstatus-ressurs/sivilstatus-ressurs";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
+import {useQueryClient} from "@tanstack/react-query";
+import {EktefelleFrontend, SivilstatusFrontend, SivilstatusFrontendSivilstatus} from "../../../generated/model";
+import {useState} from "react";
 
-const blankPerson: Person = {
+const blankPerson: EktefelleFrontend = {
     navn: {
         fornavn: "",
         mellomnavn: "",
         etternavn: "",
         fulltNavn: "",
     },
-    fodselsdato: null,
-    personnummer: null,
 };
 
 export const useSivilstatus = () => {
-    const {
-        soknadsdata: {familie},
-        lagre,
-        oppdater,
-    } = useSoknadsdata(SoknadsSti.SIVILSTATUS);
+    const behandlingsId = useBehandlingsId();
+    const queryClient = useQueryClient();
+    const {data: sivilstatus, queryKey, isPending} = useHentSivilstatus(behandlingsId);
+    const [usingPlaceholderEktefelle, setUsingPlaceholderEktefelle] = useState<boolean>(true);
 
-    const sivilstatus = familie?.sivilstatus?.sivilstatus ?? null;
+    const setSivilstatus = async (nySivilstatus: SivilstatusFrontendSivilstatus) => {
+        const ektefelle = sivilstatus?.ektefelle ?? {...blankPerson};
 
-    const setSivilstatus = (nySivilstatus: Status) => {
-        let sivilstatus = familie.sivilstatus;
-        if (sivilstatus.sivilstatus === nySivilstatus) return;
-
-        sivilstatus = {
-            kildeErSystem: false,
+        const oppdatert: SivilstatusFrontend = {
+            ...sivilstatus,
             sivilstatus: nySivilstatus,
-            ektefelle: nySivilstatus === Status.GIFT ? {...blankPerson} : undefined,
+            kildeErSystem: false,
+            ektefelle,
         };
 
-        oppdater(sivilstatus);
-        lagre(sivilstatus);
+        await updateSivilstatus(behandlingsId, oppdatert);
+        queryClient.setQueryData(queryKey, oppdatert);
     };
 
-    return {sivilstatus, setSivilstatus};
+    const setEktefelle = async (nyEktefelle: EktefelleFrontend, borSammenMed: boolean) => {
+        const oppdatert: SivilstatusFrontend = {
+            ...sivilstatus,
+            ektefelle: nyEktefelle,
+            borSammenMed,
+        };
+
+        await updateSivilstatus(behandlingsId, oppdatert);
+        setUsingPlaceholderEktefelle(false);
+        queryClient.setQueryData(queryKey, oppdatert);
+    };
+
+    const ektefelle = usingPlaceholderEktefelle ? undefined : sivilstatus?.ektefelle;
+
+    return {sivilstatus, ektefelle, setEktefelle, setSivilstatus, isPending};
 };

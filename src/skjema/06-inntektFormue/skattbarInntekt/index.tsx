@@ -25,7 +25,7 @@ const SkattbarInntekt = () => {
                     legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal")}
                     description={t("utbetalinger.inntekt.skattbar.samtykke_info")}
                     defaultValue={samtykke}
-                    onChange={({target: {checked}}) => setSamtykke(checked)}
+                    onChange={(checked) => setSamtykke(checked)}
                     name={"skattbar-inntekt-samtykke"}
                 />
             ) : (

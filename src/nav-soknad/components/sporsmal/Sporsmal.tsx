@@ -42,7 +42,7 @@ interface SporsmalProps {
     className?: string;
 }
 
-const Sporsmal = ({
+export const Sporsmal = ({
     className,
     id,
     children,

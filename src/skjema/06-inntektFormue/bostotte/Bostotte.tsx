@@ -50,7 +50,7 @@ const BostotteView = () => {
                 name={"bostotte-bekreftelse"}
                 legend={t("inntekt.bostotte.sporsmal.sporsmal")}
                 defaultValue={bekreftelse}
-                onChange={({target: {checked}}) => setBekreftelse(checked)}
+                onChange={(checked) => setBekreftelse(checked)}
             />
             {bekreftelse &&
                 (!dataHentet ? (
@@ -59,7 +59,7 @@ const BostotteView = () => {
                         legend={t("inntekt.bostotte.gi_samtykke.overskrift")}
                         description={t("inntekt.bostotte.gi_samtykke.tekst")}
                         defaultValue={bostotte?.samtykke}
-                        onChange={({target: {checked}}) => setSamtykke(checked)}
+                        onChange={(checked) => setSamtykke(checked)}
                     />
                 ) : (
                     <BostotteData />

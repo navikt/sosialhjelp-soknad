@@ -76,7 +76,7 @@ const bars = (lines: number): React.ReactNode[] => {
     return divs;
 };
 
-const TextPlaceholder: React.FunctionComponent<Props> = ({lines = 3, style}) => (
+export const TextPlaceholder: React.FunctionComponent<Props> = ({lines = 3, style}) => (
     <LoaderBar style={style}>{bars(lines)}</LoaderBar>
 );
 
