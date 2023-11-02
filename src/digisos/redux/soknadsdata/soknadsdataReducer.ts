@@ -7,10 +7,6 @@ import {
     initialBarneutgifterState,
     Barneutgifter,
 } from "../../../skjema/07-utgifterGjeld/barneutgifter/BarneutgifterTypes";
-import {
-    initialSkattbarInntektInfoState,
-    SkattbarInntekt,
-} from "../../../skjema/06-inntektFormue/skattbarInntekt/inntektTypes";
 import {Studielan, initialStudielanState} from "../../../skjema/06-inntektFormue/studielan/StudielanTypes";
 import {REST_STATUS} from "./soknadsdataTypes";
 import {
@@ -38,20 +34,11 @@ export enum SoknadsSti {
 }
 
 export interface Inntekt {
-    skattbarinntektogforskuddstrekk: SkattbarInntektInfo;
     studielan: Studielan;
     formue: FormueFrontend;
 }
 
-export interface SkattbarInntektInfo {
-    inntektFraSkatteetaten: SkattbarInntekt[];
-    inntektFraSkatteetatenFeilet: boolean;
-    samtykke: boolean;
-    samtykkeTidspunkt?: Date;
-}
-
 export const initialInntektState: Inntekt = {
-    skattbarinntektogforskuddstrekk: initialSkattbarInntektInfoState,
     studielan: initialStudielanState,
     formue: initialFormueState,
 };
@@ -90,8 +77,7 @@ export type SoknadsdataType =
     | Utgifter
     | UtbetalingerFrontend
     | Barneutgifter
-    | BoutgifterFrontend
-    | SkattbarInntektInfo;
+    | BoutgifterFrontend;
 
 interface SoknadsdataActionType {
     type: SoknadsdataActionTypeKeys;
