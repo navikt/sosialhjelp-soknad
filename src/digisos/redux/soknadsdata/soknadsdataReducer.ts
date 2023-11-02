@@ -1,5 +1,4 @@
 import {BosituasjonData, initialBosituasjonState} from "../../../skjema/05-bosituasjon/bosituasjonTypes";
-import {Familie, initialFamilieStatus, Sivilstatus} from "../../../skjema/04-familie/sivilstatus/FamilieTypes";
 import {initialUtdanningState, Utdanning} from "../../../skjema/03-arbeidUtdanning/utdanning/utdanningTypes";
 import {setPath} from "./soknadsdataActions";
 import {Bostotte} from "../../../skjema/06-inntektFormue/bostotte/bostotteTypes";
@@ -18,7 +17,13 @@ import {
 } from "../../../skjema/06-inntektFormue/skattbarInntekt/inntektTypes";
 import {Studielan, initialStudielanState} from "../../../skjema/06-inntektFormue/studielan/StudielanTypes";
 import {REST_STATUS} from "./soknadsdataTypes";
-import {BoutgifterFrontend, FormueFrontend, UtbetalingerFrontend, VerdierFrontend} from "../../../generated/model";
+import {
+    BoutgifterFrontend,
+    FormueFrontend,
+    SivilstatusFrontend,
+    UtbetalingerFrontend,
+    VerdierFrontend,
+} from "../../../generated/model";
 
 export enum SoknadsdataActionTypeKeys {
     OPPDATER_SOKNADSDATA_STI = "soknadsdata/OPPDATER_STI",
@@ -36,8 +41,6 @@ export enum SoknadsSti {
     FORMUE = "inntekt/formue",
     BOUTGIFTER = "utgifter/boutgifter",
     BARNEUTGIFTER = "utgifter/barneutgifter",
-    SIVILSTATUS = "familie/sivilstatus",
-    FORSORGERPLIKT = "familie/forsorgerplikt",
 }
 
 export interface Inntekt {
@@ -75,7 +78,6 @@ export const initialUtgifterState: Utgifter = {
 
 export interface Soknadsdata {
     bosituasjon: BosituasjonData;
-    familie: Familie;
     utdanning: Utdanning;
     inntekt: Inntekt;
     utgifter: Utgifter;
@@ -84,16 +86,14 @@ export interface Soknadsdata {
 
 export interface SoknadsdataActionVerdi {
     bosituasjon: BosituasjonData;
-    familie: Familie;
     utdanning: Utdanning;
     inntekt: Inntekt;
     utgifter: Utgifter;
 }
 
 export type SoknadsdataType =
-    | Familie
     | Utdanning
-    | Sivilstatus
+    | SivilstatusFrontend
     | ForsorgerPlikt
     | Barnebidrag
     | Bostotte
@@ -129,7 +129,6 @@ const initialSoknadsdataRestStatus = {
 
 export const initialSoknadsdataState: Soknadsdata = {
     bosituasjon: initialBosituasjonState,
-    familie: initialFamilieStatus,
     utdanning: initialUtdanningState,
     inntekt: initialInntektState,
     utgifter: initialUtgifterState,

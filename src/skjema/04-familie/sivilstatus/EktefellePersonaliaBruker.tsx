@@ -7,6 +7,7 @@ import {BodyShort} from "@navikt/ds-react";
 import * as React from "react";
 import LocalizedDate from "../../../components/LocalizedDate";
 import {EktefelleFrontend} from "../../../generated/model";
+import {FullName} from "../../01-personalia/FulltNavn";
 
 export const EktefellePersonaliaBruker = ({ektefelle}: {ektefelle: EktefelleFrontend | undefined}) => {
     const {t} = useTranslation("skjema");
@@ -14,17 +15,13 @@ export const EktefellePersonaliaBruker = ({ektefelle}: {ektefelle: EktefelleFron
 
     // FIXME: Handle the reverse case of this if clause
     return expectOK(({ektefelle, borSammenMed, harDiskresjonskode}) =>
-        ektefelle?.navn?.fulltNavn ? (
+        ektefelle?.navn ? (
             <>
                 <SysteminfoItem
-                    comment={
-                        <>
-                            <BodyShort spacing>{t("system.familie.sivilstatus.label")}:</BodyShort>
-                        </>
-                    }
+                    comment={<BodyShort spacing>{t("system.familie.sivilstatus.label")}:</BodyShort>}
                     label={t(`system.familie.sivilstatus.gift.ektefelle.navn`)}
                 >
-                    {ektefelle?.navn?.fulltNavn}
+                    <FullName name={ektefelle.navn} />
                 </SysteminfoItem>
                 {ektefelle?.fodselsdato && (
                     <SysteminfoItem label={t(`system.familie.sivilstatus.gift.ektefelle.fodselsdato`)}>

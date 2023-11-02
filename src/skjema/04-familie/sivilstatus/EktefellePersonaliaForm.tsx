@@ -1,7 +1,7 @@
 import * as React from "react";
 import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
 import {useTranslation} from "react-i18next";
-import {Button, Heading, TextField} from "@navikt/ds-react";
+import {Button, Heading, Panel, TextField} from "@navikt/ds-react";
 import {YesNoInput} from "../../../nav-soknad/components/form/YesNoInput";
 import {z} from "zod";
 import {format, parse} from "date-fns";
@@ -44,7 +44,6 @@ const EktefellePersonaliaForm = ({
     const {t} = useTranslation("skjema");
     const {
         register,
-        watch,
         handleSubmit,
         setValue,
         formState: {errors},
@@ -58,80 +57,78 @@ const EktefellePersonaliaForm = ({
             },
         },
     });
-    console.log(sivilstatus);
     if (!sivilstatus) return null;
     return (
-        <form
-            onSubmit={handleSubmit((sivilstatus) => {
-                console.log(sivilstatus);
-                return setEktefelle(sivilstatus.ektefelle, sivilstatus.borSammenMed);
-            }, console.error)}
-        >
-            <div className="space-y-4 pb-4">
-                <Heading size={"small"} level={"3"} spacing>
-                    {t("familie.sivilstatus.gift.ektefelle.sporsmal")}
-                </Heading>
-                <TextField
-                    maxLength={100}
-                    {...register("ektefelle.navn.fornavn")}
-                    label={t("familie.sivilstatus.gift.ektefelle.fornavn.label")}
-                    required={false}
-                />
-                <TextField
-                    maxLength={100}
-                    label={t("familie.sivilstatus.gift.ektefelle.mellomnavn.label")}
-                    {...register("ektefelle.navn.mellomnavn")}
-                    required={false}
-                />
-                <TextField
-                    className="pb-4"
-                    maxLength={100}
-                    label={t("familie.sivilstatus.gift.ektefelle.etternavn.label")}
-                    {...register("ektefelle.navn.etternavn")}
-                    required={false}
-                />
-                <TextField
-                    maxLength={8}
-                    minLength={8}
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    style={{width: "140px"}}
-                    error={
-                        errors.ektefelle?.fodselsdato?.message && t(errors.ektefelle?.fodselsdato.message.toString())
-                    }
-                    {...register("ektefelle.fodselsdato")}
-                    label={t("familie.sivilstatus.gift.ektefelle.fnr.label")}
-                    required={false}
-                />
-                <TextField
-                    maxLength={5}
-                    minLength={5}
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    style={{width: "140px"}}
-                    label={t("familie.sivilstatus.gift.ektefelle.pnr.label")}
-                    {...register("ektefelle.personnummer")}
-                    required={false}
-                />
-                <YesNoInput
-                    legend={t("familie.sivilstatus.gift.ektefelle.borsammen.sporsmal")}
-                    error={errors.borSammenMed?.message && t(errors.borSammenMed.message.toString())}
-                    name={"borSammenMed"}
-                    defaultValue={
-                        typeof sivilstatus?.borSammenMed === "boolean" ? sivilstatus?.borSammenMed : undefined
-                    }
-                    onChange={(e) => {
-                        setValue("borSammenMed", e);
-                        console.log("e is ", typeof e);
-                    }}
-                />
-                <div>{watch("borSammenMed")}</div>
-            </div>
+        <Panel className={"!bg-gray-100"}>
+            <form
+                onSubmit={handleSubmit(
+                    (sivilstatus) => setEktefelle(sivilstatus.ektefelle, sivilstatus.borSammenMed),
+                    console.error
+                )}
+            >
+                <div className="space-y-4 pb-4">
+                    <Heading size={"small"} level={"3"} spacing>
+                        {t("familie.sivilstatus.gift.ektefelle.sporsmal")}
+                    </Heading>
+                    <TextField
+                        maxLength={100}
+                        {...register("ektefelle.navn.fornavn")}
+                        label={t("familie.sivilstatus.gift.ektefelle.fornavn.label")}
+                        required={false}
+                    />
+                    <TextField
+                        maxLength={100}
+                        label={t("familie.sivilstatus.gift.ektefelle.mellomnavn.label")}
+                        {...register("ektefelle.navn.mellomnavn")}
+                        required={false}
+                    />
+                    <TextField
+                        className="pb-4"
+                        maxLength={100}
+                        label={t("familie.sivilstatus.gift.ektefelle.etternavn.label")}
+                        {...register("ektefelle.navn.etternavn")}
+                        required={false}
+                    />
+                    <TextField
+                        maxLength={8}
+                        minLength={8}
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        style={{width: "140px"}}
+                        error={
+                            errors.ektefelle?.fodselsdato?.message &&
+                            t(errors.ektefelle?.fodselsdato.message.toString())
+                        }
+                        {...register("ektefelle.fodselsdato")}
+                        label={t("familie.sivilstatus.gift.ektefelle.fnr.label")}
+                        required={false}
+                    />
+                    <TextField
+                        maxLength={5}
+                        minLength={5}
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        style={{width: "140px"}}
+                        label={t("familie.sivilstatus.gift.ektefelle.pnr.label")}
+                        {...register("ektefelle.personnummer")}
+                        required={false}
+                    />
+                    <YesNoInput
+                        legend={t("familie.sivilstatus.gift.ektefelle.borsammen.sporsmal")}
+                        error={errors.borSammenMed?.message && t(errors.borSammenMed.message.toString())}
+                        name={"borSammenMed"}
+                        defaultValue={
+                            typeof sivilstatus?.borSammenMed === "boolean" ? sivilstatus?.borSammenMed : undefined
+                        }
+                        onChange={(e) => setValue("borSammenMed", e)}
+                    />
+                </div>
 
-            <Button variant={"primary"} type={"submit"}>
-                {t("lagreEndring")}
-            </Button>
-        </form>
+                <Button variant={"primary"} type={"submit"}>
+                    {t("lagreEndring")}
+                </Button>
+            </form>
+        </Panel>
     );
 };
 

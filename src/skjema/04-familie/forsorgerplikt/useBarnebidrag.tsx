@@ -1,15 +1,23 @@
-import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
-import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
+import {
+    updateForsorgerplikt,
+    useHentForsorgerplikt,
+} from "../../../generated/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
+import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
+import {ForsorgerpliktFrontendBarnebidrag} from "../../../generated/model";
+import {useQueryClient} from "@tanstack/react-query";
 
 export const useBarnebidrag = () => {
-    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.FORSORGERPLIKT);
-    const barnebidrag = soknadsdata.familie.forsorgerplikt.barnebidrag;
+    const behandlingsId = useBehandlingsId();
+    const queryClient = useQueryClient();
+    const {data: forsorgerplikt, queryKey} = useHentForsorgerplikt(behandlingsId);
+    const barnebidrag = forsorgerplikt?.barnebidrag;
 
-    const setBarnebidrag = (verdi: string) => {
-        const forsorgerplikt = soknadsdata.familie.forsorgerplikt;
-        forsorgerplikt.barnebidrag = verdi;
-        oppdater(forsorgerplikt);
-        lagre(forsorgerplikt);
+    const setBarnebidrag = async (barnebidrag: ForsorgerpliktFrontendBarnebidrag) => {
+        if (!forsorgerplikt) return;
+        const oppdatert = {...forsorgerplikt, barnebidrag};
+        queryClient.setQueryData(queryKey, oppdatert);
+        await updateForsorgerplikt(behandlingsId, oppdatert);
+        queryClient.setQueryData(queryKey, oppdatert);
     };
 
     return {barnebidrag, setBarnebidrag};

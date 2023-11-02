@@ -1,8 +1,8 @@
-import {Navn} from "../sivilstatus/FamilieTypes";
+import {NavnFrontend} from "../../../generated/model";
 
 export interface Barn {
     barn: {
-        navn: Navn;
+        navn: NavnFrontend;
         fodselsdato: null | string;
         personnummer: null | string;
         fodselsnummer: null | string;

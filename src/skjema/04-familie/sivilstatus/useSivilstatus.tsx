@@ -9,7 +9,6 @@ const blankPerson: EktefelleFrontend = {
         fornavn: "",
         mellomnavn: "",
         etternavn: "",
-        fulltNavn: "",
     },
 };
 

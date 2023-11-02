@@ -18,10 +18,8 @@ const ForsorgerPliktView = () => {
                     <Heading size={"medium"} level={"3"} spacing>
                         {t("familierelasjon.faktum.sporsmal")}
                     </Heading>
-                    <BodyShort spacing>
-                        <Detail>{t("familierelasjon.ingen_registrerte_barn_tittel")}</Detail>
-                        {t("familierelasjon.ingen_registrerte_barn_tekst")}
-                    </BodyShort>
+                    <Detail>{t("familierelasjon.ingen_registrerte_barn_tittel")}</Detail>
+                    <BodyShort spacing>{t("familierelasjon.ingen_registrerte_barn_tekst")}</BodyShort>
                 </div>
             );
 
@@ -30,8 +28,8 @@ const ForsorgerPliktView = () => {
                 <Heading size={"medium"} level={"3"} spacing>
                     {t("familierelasjon.faktum.sporsmal")}
                 </Heading>
+                <Detail>{t("familierelasjon.ingress_folkeregisteret")}</Detail>
                 <BodyShort spacing>
-                    <Detail>{t("familierelasjon.ingress_folkeregisteret")}</Detail>
                     {t("familierelasjon.ingress_forsorger")}:{" "}
                     {t(
                         ansvar.length === 1

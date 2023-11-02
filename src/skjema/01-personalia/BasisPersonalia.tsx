@@ -6,6 +6,7 @@ import {useHentBasisPersonalia} from "../../generated/basis-personalia-ressurs/b
 import {useTranslation} from "react-i18next";
 import {formatFodselsnummer} from "@fremtind/jkl-formatters-util";
 import {Heading} from "@navikt/ds-react";
+import {FullName} from "./FulltNavn";
 
 export const BasisPersonaliaData = () => {
     const {expectOK} = useAlgebraic(useHentBasisPersonalia(useBehandlingsId()));
@@ -13,7 +14,7 @@ export const BasisPersonaliaData = () => {
     return expectOK(({navn, fodselsnummer, statsborgerskap = "Ukjent/statsløs"}) => (
         <Systeminfo>
             <SysteminfoItem comment={t("infotekst.tekst")} label={t("navn")}>
-                {navn?.fulltNavn}
+                <FullName name={navn} />
             </SysteminfoItem>
             <SysteminfoItem label={t("fnr")}>{formatFodselsnummer(fodselsnummer ?? "")}</SysteminfoItem>
             <SysteminfoItem label={t("statsborgerskap")}>{statsborgerskap}</SysteminfoItem>

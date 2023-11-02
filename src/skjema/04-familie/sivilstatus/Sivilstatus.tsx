@@ -2,7 +2,7 @@ import * as React from "react";
 import Underskjema from "../../../nav-soknad/components/underskjema";
 import EktefellePersonaliaForm from "./EktefellePersonaliaForm";
 import {useTranslation} from "react-i18next";
-import {Button, Heading, Panel, Radio, RadioGroup} from "@navikt/ds-react";
+import {Button, Heading, Radio, RadioGroup} from "@navikt/ds-react";
 import {useSivilstatus} from "./useSivilstatus";
 
 import {EktefellerPlikterForsorge} from "./EktefellePlikterForsorge";
@@ -32,15 +32,13 @@ export const Sivilstatus = () => {
                 <Underskjema visible={sivilstatus.sivilstatus === "gift"} arrow={true}>
                     <EktefellerPlikterForsorge />
                     {editMode ? (
-                        <Panel className={"!bg-gray-100"}>
-                            <EktefellePersonaliaForm
-                                sivilstatus={sivilstatus}
-                                setEktefelle={async (ektefelle, borSammen) => {
-                                    await setEktefelle(ektefelle, borSammen);
-                                    setEditMode(false);
-                                }}
-                            />
-                        </Panel>
+                        <EktefellePersonaliaForm
+                            sivilstatus={sivilstatus}
+                            setEktefelle={async (ektefelle, borSammen) => {
+                                await setEktefelle(ektefelle, borSammen);
+                                setEditMode(false);
+                            }}
+                        />
                     ) : (
                         <Systeminfo>
                             <EktefellePersonaliaBruker ektefelle={ektefelle} />
