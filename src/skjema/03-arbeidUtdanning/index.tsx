@@ -8,7 +8,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import {z} from "zod";
 import {updateArbeid, useHentArbeid} from "../../generated/arbeid-ressurs/arbeid-ressurs";
-import {ArbeidsforholdListe} from "./arbeid/ArbeidsforholdListe";
+import {ArbeidsforholdListe} from "./ArbeidsforholdListe";
 import {TranslatedError} from "../02-begrunnelse";
 import {updateUtdanning, useHentUtdanning} from "../../generated/utdanning-ressurs/utdanning-ressurs";
 import {YesNoInput} from "../../nav-soknad/components/form/YesNoInput";

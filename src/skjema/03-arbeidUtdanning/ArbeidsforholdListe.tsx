@@ -1,12 +1,12 @@
 import * as React from "react";
-import {Systeminfo, SysteminfoItem} from "../../../nav-soknad/components/systeminfo/Systeminfo";
+import {Systeminfo, SysteminfoItem} from "../../nav-soknad/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
-import {ArbeidsforholdFrontend} from "../../../generated/model";
-import {useHentArbeid} from "../../../generated/arbeid-ressurs/arbeid-ressurs";
-import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
-import {useAlgebraic} from "../../../lib/hooks/useAlgebraic";
+import {ArbeidsforholdFrontend} from "../../generated/model";
+import {useHentArbeid} from "../../generated/arbeid-ressurs/arbeid-ressurs";
+import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
+import {useAlgebraic} from "../../lib/hooks/useAlgebraic";
 import {BodyShort} from "@navikt/ds-react";
-import {LocalizedDate} from "../../../components/LocalizedDate";
+import {LocalizedDate} from "../../components/LocalizedDate";
 
 export const ArbeidsforholdListe = () => {
     const {t} = useTranslation("skjema");

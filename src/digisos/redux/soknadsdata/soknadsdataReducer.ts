@@ -1,12 +1,9 @@
 import {BosituasjonData, initialBosituasjonState} from "../../../skjema/05-bosituasjon/bosituasjonTypes";
-import {initialUtdanningState, Utdanning} from "../../../skjema/03-arbeidUtdanning/utdanning/utdanningTypes";
 import {setPath} from "./soknadsdataActions";
-import {initialBoutgifterState} from "../../../skjema/07-utgifterGjeld/boutgifter/BoutgifterTypes";
 import {
     initialBarneutgifterState,
     Barneutgifter,
 } from "../../../skjema/07-utgifterGjeld/barneutgifter/BarneutgifterTypes";
-import {Studielan, initialStudielanState} from "../../../skjema/06-inntektFormue/studielan/StudielanTypes";
 import {REST_STATUS} from "./soknadsdataTypes";
 import {BoutgifterFrontend, SivilstatusFrontend, UtbetalingerFrontend, VerdierFrontend} from "../../../generated/model";
 
@@ -21,47 +18,30 @@ export enum SoknadsdataActionTypeKeys {
  * og legges på redux state state.soknadsdata.personalia.kontonummer
  */
 export enum SoknadsSti {
-    BOUTGIFTER = "utgifter/boutgifter",
     BARNEUTGIFTER = "utgifter/barneutgifter",
 }
 
-export interface Inntekt {
-    studielan: Studielan;
-}
-
-export const initialInntektState: Inntekt = {
-    studielan: initialStudielanState,
-};
-
 export interface Utgifter {
-    boutgifter: BoutgifterFrontend;
     barneutgifter: Barneutgifter;
 }
 
 export const initialUtgifterState: Utgifter = {
-    boutgifter: initialBoutgifterState,
     barneutgifter: initialBarneutgifterState,
 };
 
 export interface Soknadsdata {
     bosituasjon: BosituasjonData;
-    utdanning: Utdanning;
-    inntekt: Inntekt;
     utgifter: Utgifter;
     restStatus: any;
 }
 
 export interface SoknadsdataActionVerdi {
     bosituasjon: BosituasjonData;
-    utdanning: Utdanning;
-    inntekt: Inntekt;
     utgifter: Utgifter;
 }
 
 export type SoknadsdataType =
-    | Utdanning
     | SivilstatusFrontend
-    | Studielan
     | VerdierFrontend
     | Utgifter
     | UtbetalingerFrontend
@@ -91,8 +71,6 @@ const initialSoknadsdataRestStatus = {
 
 export const initialSoknadsdataState: Soknadsdata = {
     bosituasjon: initialBosituasjonState,
-    utdanning: initialUtdanningState,
-    inntekt: initialInntektState,
     utgifter: initialUtgifterState,
     restStatus: initialSoknadsdataRestStatus,
 };

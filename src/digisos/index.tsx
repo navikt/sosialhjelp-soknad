@@ -20,7 +20,7 @@ import Steg3 from "../skjema/03-arbeidUtdanning";
 import Steg4 from "../skjema/04-familie";
 import Steg5 from "../skjema/05-bosituasjon";
 import {InntektFormue} from "../skjema/06-inntektFormue";
-import Steg7 from "../skjema/07-utgifterGjeld";
+import {UtgifterGjeld} from "../skjema/07-utgifterGjeld";
 import {OkonomiskeOpplysningerView} from "../skjema/08-vedlegg";
 import NyOppsummering from "../skjema/09-oppsummering/Oppsummering";
 import {ServerFeil} from "../nav-soknad/feilsider/ServerFeil";
@@ -64,7 +64,7 @@ const routes = (
             <Route path="4" element={<Steg4 />} />
             <Route path="5" element={<Steg5 />} />
             <Route path="6" element={<InntektFormue />} />
-            <Route path="7" element={<Steg7 />} />
+            <Route path="7" element={<UtgifterGjeld />} />
             <Route path="8" element={<OkonomiskeOpplysningerView />} />
             <Route path="9" element={<NyOppsummering />} />
             <Route path="ettersendelse" element={<Ettersendelse />} />
