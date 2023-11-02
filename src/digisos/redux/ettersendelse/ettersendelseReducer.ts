@@ -5,7 +5,7 @@ import {
     EttersendelseState,
     EttersendelseVedleggBackend,
 } from "./ettersendelseTypes";
-import {REST_FEIL, REST_STATUS} from "../soknadsdata/soknadsdataTypes";
+import {REST_FEIL, REST_STATUS} from "../restTypes";
 import {FilFrontend} from "../../../generated/model";
 
 const initialState: EttersendelseState = {

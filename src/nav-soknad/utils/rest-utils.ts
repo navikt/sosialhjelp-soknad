@@ -1,5 +1,5 @@
 import {basePath} from "../../configuration";
-import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
+import {REST_FEIL} from "../../digisos/redux/restTypes";
 import {redirectToLogin} from "../../lib/orval/soknad-api-axios";
 import {logWarning} from "./loggerUtils";
 import {baseURL} from "../../lib/config";

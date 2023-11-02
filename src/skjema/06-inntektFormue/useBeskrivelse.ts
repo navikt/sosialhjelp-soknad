@@ -12,25 +12,22 @@ export const useBeskrivelse = (value: string | undefined, onSave: (beskrivelse: 
     const {t} = useTranslation("skjema");
     const [beskrivelse, setBeskrivelse] = useState<string>("");
     const [error, setError] = useState<string | undefined>(undefined);
-    const validateBeskrivelseAvAnnet = (value: string) => {
+
+    useEffect(() => {
         try {
             BeskrivelseAvAnnetSchema.parse(value);
             setError(undefined);
         } catch (e) {
             setError(t(e.issues[0].message));
         }
-    };
+    }, [value, t]);
 
     useEffect(() => {
-        if (value) {
-            setBeskrivelse(value);
-            validateBeskrivelseAvAnnet(value);
-        }
-    }, [value, validateBeskrivelseAvAnnet]);
+        if (value) setBeskrivelse(value);
+    }, [value]);
 
     const onChange: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
         setBeskrivelse(event.target.value);
-        validateBeskrivelseAvAnnet(event.target.value);
     };
 
     const onBlur: React.ChangeEventHandler<HTMLTextAreaElement> = () => !error && onSave(beskrivelse);

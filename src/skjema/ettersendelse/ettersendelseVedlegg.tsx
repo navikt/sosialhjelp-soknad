@@ -12,7 +12,7 @@ import {BodyShort, Button, Heading, Loader} from "@navikt/ds-react";
 import styled from "styled-components";
 import {Delete} from "@navikt/ds-icons";
 import {useTranslation} from "react-i18next";
-import {REST_FEIL, REST_STATUS} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
+import {REST_FEIL, REST_STATUS} from "../../digisos/redux/restTypes";
 import {FilFrontend, VedleggFrontendType} from "../../generated/model";
 import {logError} from "../../nav-soknad/utils/loggerUtils";
 import {PaperclipIcon} from "@navikt/aksel-icons";

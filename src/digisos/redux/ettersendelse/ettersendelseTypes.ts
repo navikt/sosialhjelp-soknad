@@ -1,4 +1,4 @@
-import {REST_STATUS} from "../soknadsdata/soknadsdataTypes";
+import {REST_STATUS} from "../restTypes";
 import {FilFrontend, VedleggFrontendType, VedleggFrontendVedleggStatus} from "../../../generated/model";
 
 export enum EttersendelseActionTypeKeys {

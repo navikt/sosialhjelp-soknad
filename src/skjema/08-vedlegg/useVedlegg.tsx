@@ -1,6 +1,6 @@
 import {FilFrontend, VedleggFrontendVedleggStatus} from "../../generated/model";
 import {ValideringsFeilKode} from "../../digisos/redux/validering/valideringActionTypes";
-import {REST_FEIL} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
+import {REST_FEIL} from "../../digisos/redux/restTypes";
 import {useEffect, useReducer} from "react";
 import {useBehandlingsId} from "../../lib/hooks/useBehandlingsId";
 import {useTranslation} from "react-i18next";

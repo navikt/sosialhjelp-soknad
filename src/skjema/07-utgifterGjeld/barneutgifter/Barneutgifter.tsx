@@ -1,76 +1,45 @@
 import * as React from "react";
-import {SoknadsSti} from "../../../digisos/redux/soknadsdata/soknadsdataReducer";
-import Sporsmal, {LegendTittleStyle} from "../../../nav-soknad/components/sporsmal/Sporsmal";
-import {getFaktumSporsmalTekst} from "../../../nav-soknad/utils";
-import JaNeiSporsmal from "../../../nav-soknad/faktum/JaNeiSporsmal";
-import {Barneutgifter, BarneutgifterKeys} from "./BarneutgifterTypes";
-import CheckboxPanel from "../../../nav-soknad/faktum/CheckboxPanel";
 import {useTranslation} from "react-i18next";
-import {useSoknadsdata} from "../../../digisos/redux/soknadsdata/useSoknadsdata";
-
-const BarneutgifterKey = "utgifter.barn";
+import {Checkbox, CheckboxGroup} from "@navikt/ds-react";
+import {YesNoInput} from "../../../nav-soknad/components/form/YesNoInput";
+import {BarneutgifterFrontend} from "../../../generated/model";
+import {useBarneutgifter} from "./useBarneutgifter";
 
 export const BarneutgifterView = () => {
-    const {soknadsdata, lagre, oppdater} = useSoknadsdata(SoknadsSti.BARNEUTGIFTER);
-    const barneutgifter: Barneutgifter = soknadsdata.utgifter.barneutgifter;
-
+    const {barneutgifter, setBarneutgifter, setBekreftelse} = useBarneutgifter();
     const {t} = useTranslation("skjema");
 
-    const handleClickJaNeiSpsm = (verdi: boolean) => {
-        barneutgifter.bekreftelse = verdi;
-        if (!verdi) {
-            barneutgifter.fritidsaktiviteter = false;
-            barneutgifter.barnehage = false;
-            barneutgifter.sfo = false;
-            barneutgifter.tannregulering = false;
-            barneutgifter.annet = false;
-        }
-        oppdater(barneutgifter);
-        lagre(barneutgifter);
-    };
-
-    const handleClickRadio = (idToToggle: BarneutgifterKeys) => {
-        barneutgifter[idToToggle] = !barneutgifter[idToToggle];
-        oppdater(barneutgifter);
-        lagre(barneutgifter);
-    };
-
-    const renderCheckBox = (navn: BarneutgifterKeys, textKey: string) => {
-        const barneutgifterElement: boolean | null = barneutgifter[navn];
-        const isChecked: boolean = barneutgifterElement ? barneutgifterElement : false;
-
-        return (
-            <CheckboxPanel
-                id={"barneutgifter_" + navn + "_checkbox"}
-                name={navn}
-                checked={isChecked}
-                label={t(BarneutgifterKey + ".true.utgifter." + textKey)}
-                onClick={() => handleClickRadio(navn)}
-            />
-        );
-    };
-
-    if (!barneutgifter.harForsorgerplikt) return null;
+    if (!barneutgifter || !barneutgifter.harForsorgerplikt) return null;
 
     return (
-        <JaNeiSporsmal
-            tekster={getFaktumSporsmalTekst(t, BarneutgifterKey)}
-            faktumKey={BarneutgifterKey}
-            verdi={barneutgifter.bekreftelse}
-            onChange={(verdi: boolean) => handleClickJaNeiSpsm(verdi)}
-            legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-        >
-            <Sporsmal
-                tekster={getFaktumSporsmalTekst(t, BarneutgifterKey + ".true.utgifter")}
-                legendTittelStyle={LegendTittleStyle.FET_NORMAL}
-            >
-                {renderCheckBox(BarneutgifterKeys.FRITIDSAKTIVITETER, BarneutgifterKeys.FRITIDSAKTIVITETER)}
-                {renderCheckBox(BarneutgifterKeys.BARNEHAGE, BarneutgifterKeys.BARNEHAGE)}
-                {renderCheckBox(BarneutgifterKeys.SFO, BarneutgifterKeys.SFO)}
-                {renderCheckBox(BarneutgifterKeys.TANNREGULERING, BarneutgifterKeys.TANNREGULERING)}
-                {renderCheckBox(BarneutgifterKeys.ANNET, BarneutgifterKeys.ANNET)}
-            </Sporsmal>
-        </JaNeiSporsmal>
+        <div className={"space-y-2"}>
+            <YesNoInput
+                legend={t("utgifter.barn.sporsmal")}
+                description={t("utgifter.barn.infotekst.tekst")}
+                onChange={setBekreftelse}
+                name={"bekreftelse"}
+                defaultValue={barneutgifter.bekreftelse}
+            />
+            {barneutgifter.bekreftelse && (
+                <CheckboxGroup
+                    legend={t("utgifter.barn.true.utgifter.sporsmal")}
+                    onChange={(navn: (keyof Omit<BarneutgifterFrontend, "bekreftelse" | "harForsorgerplikt">)[]) =>
+                        setBarneutgifter(navn)
+                    }
+                    value={Object.keys(barneutgifter).filter(
+                        (key) => barneutgifter[key as keyof BarneutgifterFrontend]
+                    )}
+                >
+                    <Checkbox value={"fritidsaktiviteter"}>
+                        {t("utgifter.barn.true.utgifter.fritidsaktiviteter")}
+                    </Checkbox>
+                    <Checkbox value={"barnehage"}>{t("utgifter.barn.true.utgifter.barnehage")}</Checkbox>
+                    <Checkbox value={"sfo"}>{t("utgifter.barn.true.utgifter.sfo")}</Checkbox>
+                    <Checkbox value={"tannregulering"}>{t("utgifter.barn.true.utgifter.tannregulering")}</Checkbox>
+                    <Checkbox value={"annet"}>{t("utgifter.barn.true.utgifter.annet")}</Checkbox>
+                </CheckboxGroup>
+            )}
+        </div>
     );
 };
 

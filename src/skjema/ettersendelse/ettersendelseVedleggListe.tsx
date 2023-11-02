@@ -6,7 +6,7 @@ import {State} from "../../digisos/redux/reducers";
 import {EttersendelseVedleggBackend} from "../../digisos/redux/ettersendelse/ettersendelseTypes";
 import {BodyShort, Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {REST_STATUS} from "../../digisos/redux/soknadsdata/soknadsdataTypes";
+import {REST_STATUS} from "../../digisos/redux/restTypes";
 
 const EttersendelseVedleggListe = (props: {
     ettersendelseAktivert: boolean;

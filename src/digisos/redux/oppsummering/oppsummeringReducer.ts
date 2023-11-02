@@ -1,5 +1,5 @@
 import {OppsummeringActionTypeKeys, OppsummeringActionTypes} from "./oppsummeringTypes";
-import {REST_STATUS} from "../soknadsdata/soknadsdataTypes";
+import {REST_STATUS} from "../restTypes";
 
 export interface OppsummeringState {
     bekreftet?: boolean;

@@ -33,7 +33,7 @@ import {
     slettEttersendtVedleggOk,
 } from "./ettersendelseActions";
 import {logInfo, logWarning} from "../../../nav-soknad/utils/loggerUtils";
-import {REST_FEIL} from "../soknadsdata/soknadsdataTypes";
+import {REST_FEIL} from "../restTypes";
 import {FilFrontend} from "../../../generated/model";
 
 function* opprettEttersendelseSaga({brukerbehandlingId}: OpprettEttersendelseAction) {
