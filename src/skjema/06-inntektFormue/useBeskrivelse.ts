@@ -8,7 +8,7 @@ const BeskrivelseAvAnnetSchema = z.string().max(MAX_CHARS, {
     message: ValideringsFeilKode.MAX_LENGDE,
 });
 
-export const useBeskrivelse = (value?: string) => {
+export const useBeskrivelse = (value: string | undefined, onSave: (beskrivelse: string) => void) => {
     const {t} = useTranslation("skjema");
     const [beskrivelse, setBeskrivelse] = useState<string>("");
     const [error, setError] = useState<string | undefined>(undefined);
@@ -26,21 +26,23 @@ export const useBeskrivelse = (value?: string) => {
             setBeskrivelse(value);
             validateBeskrivelseAvAnnet(value);
         }
-    }, [value]);
+    }, [value, validateBeskrivelseAvAnnet]);
 
     const onChange: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
         setBeskrivelse(event.target.value);
         validateBeskrivelseAvAnnet(event.target.value);
     };
 
-    const registerAnnet = (onBlurValid: (beskrivelse: string) => void) => ({
+    const onBlur: React.ChangeEventHandler<HTMLTextAreaElement> = () => !error && onSave(beskrivelse);
+
+    const registerAnnet = {
         name: "beskrivelseAvAnnet",
         value: beskrivelse,
         onChange,
-        onBlur: () => !error && onBlurValid(beskrivelse),
+        onBlur,
         error,
         maxLength: MAX_CHARS,
-    });
+    };
 
     return {registerAnnet};
 };

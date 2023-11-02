@@ -10,7 +10,7 @@ import {useBeskrivelse} from "../useBeskrivelse";
 export const UtbetalingerView = () => {
     const {utbetalinger, setBekreftelse, setUtbetalinger, setBeskrivelseAvAnnet} = useUtbetalinger();
     const {t} = useTranslation("skjema");
-    const {registerAnnet} = useBeskrivelse(utbetalinger?.beskrivelseAvAnnet);
+    const {registerAnnet} = useBeskrivelse(utbetalinger?.beskrivelseAvAnnet, setBeskrivelseAvAnnet);
 
     if (!utbetalinger) return null;
 
@@ -39,7 +39,7 @@ export const UtbetalingerView = () => {
                     <NivaTreSkjema visible={utbetalinger.annet} size="small">
                         <Textarea
                             label={t("inntekt.inntekter.true.type.annet.true.beskrivelse.label")}
-                            {...registerAnnet(setBeskrivelseAvAnnet)}
+                            {...registerAnnet}
                         />
                     </NivaTreSkjema>
                 </CheckboxGroup>

@@ -11,7 +11,7 @@ import {useBeskrivelse} from "../useBeskrivelse";
 export const VerdierView = () => {
     const {verdier, setBekreftelse, setBeskrivelseAvAnnet, setVerdier} = useVerdier();
     const {t} = useTranslation("skjema");
-    const {registerAnnet} = useBeskrivelse(verdier?.beskrivelseAvAnnet);
+    const {registerAnnet} = useBeskrivelse(verdier?.beskrivelseAvAnnet, setBeskrivelseAvAnnet);
     if (!verdier) return null;
 
     return (
@@ -42,7 +42,7 @@ export const VerdierView = () => {
                     <NivaTreSkjema visible={verdier.annet} size="small">
                         <Textarea
                             label={t("inntekt.eierandeler.true.type.annet.true.beskrivelse.label")}
-                            {...registerAnnet(setBeskrivelseAvAnnet)}
+                            {...registerAnnet}
                         />
                     </NivaTreSkjema>
                 </CheckboxGroup>
