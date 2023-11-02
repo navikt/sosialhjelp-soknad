@@ -1,16 +1,12 @@
 import {BosituasjonData, initialBosituasjonState} from "../../../skjema/05-bosituasjon/bosituasjonTypes";
 import {initialUtdanningState, Utdanning} from "../../../skjema/03-arbeidUtdanning/utdanning/utdanningTypes";
 import {setPath} from "./soknadsdataActions";
-import {Bostotte} from "../../../skjema/06-inntektFormue/bostotte/bostotteTypes";
-import {initialUtbetalingerState} from "../../../skjema/06-inntektFormue/utbetalinger/utbetalingerTypes";
-import {initialVerdierState} from "../../../skjema/06-inntektFormue/verdier/VerdierTypes";
 import {initialFormueState} from "../../../skjema/06-inntektFormue/formue/FormueTypes";
 import {initialBoutgifterState} from "../../../skjema/07-utgifterGjeld/boutgifter/BoutgifterTypes";
 import {
     initialBarneutgifterState,
     Barneutgifter,
 } from "../../../skjema/07-utgifterGjeld/barneutgifter/BarneutgifterTypes";
-import {Barnebidrag, ForsorgerPlikt} from "../../../skjema/04-familie/forsorgerplikt/ForsorgerPliktTypes";
 import {
     initialSkattbarInntektInfoState,
     SkattbarInntekt,
@@ -36,8 +32,6 @@ export enum SoknadsdataActionTypeKeys {
  * og legges på redux state state.soknadsdata.personalia.kontonummer
  */
 export enum SoknadsSti {
-    UTBETALINGER = "inntekt/utbetalinger",
-    VERDIER = "inntekt/verdier",
     FORMUE = "inntekt/formue",
     BOUTGIFTER = "utgifter/boutgifter",
     BARNEUTGIFTER = "utgifter/barneutgifter",
@@ -46,9 +40,7 @@ export enum SoknadsSti {
 export interface Inntekt {
     skattbarinntektogforskuddstrekk: SkattbarInntektInfo;
     studielan: Studielan;
-    utbetalinger: UtbetalingerFrontend;
     formue: FormueFrontend;
-    verdier: VerdierFrontend;
 }
 
 export interface SkattbarInntektInfo {
@@ -61,9 +53,7 @@ export interface SkattbarInntektInfo {
 export const initialInntektState: Inntekt = {
     skattbarinntektogforskuddstrekk: initialSkattbarInntektInfoState,
     studielan: initialStudielanState,
-    utbetalinger: initialUtbetalingerState,
     formue: initialFormueState,
-    verdier: initialVerdierState,
 };
 
 export interface Utgifter {
@@ -94,9 +84,6 @@ export interface SoknadsdataActionVerdi {
 export type SoknadsdataType =
     | Utdanning
     | SivilstatusFrontend
-    | ForsorgerPlikt
-    | Barnebidrag
-    | Bostotte
     | Studielan
     | FormueFrontend
     | VerdierFrontend

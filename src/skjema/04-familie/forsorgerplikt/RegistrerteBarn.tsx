@@ -3,7 +3,7 @@ import {useForsorgerplikt} from "./useForsorgerplikt";
 import {BarnSkjema} from "./BarnSkjema";
 import {BarnSysteminfo} from "./BarnSysteminfo";
 
-const RegistrerteBarn = () => {
+export const RegistrerteBarn = () => {
     const {forsorgerplikt} = useForsorgerplikt();
 
     if (!forsorgerplikt) return null;
@@ -19,5 +19,3 @@ const RegistrerteBarn = () => {
         </div>
     );
 };
-
-export default RegistrerteBarn;

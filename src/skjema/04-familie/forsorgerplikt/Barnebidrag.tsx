@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import {Radio, RadioGroup} from "@navikt/ds-react";
 import {useBarnebidrag} from "./useBarnebidrag";
 
-const Barnebidrag = () => {
+export const Barnebidrag = () => {
     const {t} = useTranslation("skjema");
     const {barnebidrag, setBarnebidrag} = useBarnebidrag();
 
@@ -20,5 +20,3 @@ const Barnebidrag = () => {
         </RadioGroup>
     );
 };
-
-export default Barnebidrag;

@@ -1,6 +1,6 @@
 import * as React from "react";
-import Barnebidrag from "./Barnebidrag";
-import RegistrerteBarn from "./RegistrerteBarn";
+import {Barnebidrag} from "./Barnebidrag";
+import {RegistrerteBarn} from "./RegistrerteBarn";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/useBehandlingsId";
 import {BodyShort, Detail, Heading} from "@navikt/ds-react";
