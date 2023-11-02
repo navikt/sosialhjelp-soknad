@@ -1,7 +1,6 @@
 import {BosituasjonData, initialBosituasjonState} from "../../../skjema/05-bosituasjon/bosituasjonTypes";
 import {initialUtdanningState, Utdanning} from "../../../skjema/03-arbeidUtdanning/utdanning/utdanningTypes";
 import {setPath} from "./soknadsdataActions";
-import {initialFormueState} from "../../../skjema/06-inntektFormue/formue/FormueTypes";
 import {initialBoutgifterState} from "../../../skjema/07-utgifterGjeld/boutgifter/BoutgifterTypes";
 import {
     initialBarneutgifterState,
@@ -9,13 +8,7 @@ import {
 } from "../../../skjema/07-utgifterGjeld/barneutgifter/BarneutgifterTypes";
 import {Studielan, initialStudielanState} from "../../../skjema/06-inntektFormue/studielan/StudielanTypes";
 import {REST_STATUS} from "./soknadsdataTypes";
-import {
-    BoutgifterFrontend,
-    FormueFrontend,
-    SivilstatusFrontend,
-    UtbetalingerFrontend,
-    VerdierFrontend,
-} from "../../../generated/model";
+import {BoutgifterFrontend, SivilstatusFrontend, UtbetalingerFrontend, VerdierFrontend} from "../../../generated/model";
 
 export enum SoknadsdataActionTypeKeys {
     OPPDATER_SOKNADSDATA_STI = "soknadsdata/OPPDATER_STI",
@@ -28,19 +21,16 @@ export enum SoknadsdataActionTypeKeys {
  * og legges på redux state state.soknadsdata.personalia.kontonummer
  */
 export enum SoknadsSti {
-    FORMUE = "inntekt/formue",
     BOUTGIFTER = "utgifter/boutgifter",
     BARNEUTGIFTER = "utgifter/barneutgifter",
 }
 
 export interface Inntekt {
     studielan: Studielan;
-    formue: FormueFrontend;
 }
 
 export const initialInntektState: Inntekt = {
     studielan: initialStudielanState,
-    formue: initialFormueState,
 };
 
 export interface Utgifter {
@@ -72,7 +62,6 @@ export type SoknadsdataType =
     | Utdanning
     | SivilstatusFrontend
     | Studielan
-    | FormueFrontend
     | VerdierFrontend
     | Utgifter
     | UtbetalingerFrontend
