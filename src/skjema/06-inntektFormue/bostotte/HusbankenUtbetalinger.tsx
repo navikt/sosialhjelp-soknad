@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
 import {BodyShort, Table} from "@navikt/ds-react";
 import LocalizedDate from "../../../components/LocalizedDate";
-import {LocalizedCurrency} from "./LocalizedCurrency";
+import {LocalizedCurrency} from "../../../components/LocalizedCurrency";
 import * as React from "react";
 import {JsonOkonomiOpplysningUtbetaling} from "../../../generated/model";
 
