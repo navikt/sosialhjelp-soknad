@@ -12,7 +12,7 @@ import StegMedNavigasjon from "../../nav-soknad/components/SkjemaSteg/SkjemaSteg
 import {Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 
-const InntektFormue = () => {
+export const InntektFormue = () => {
     const {t} = useTranslation("skjema");
 
     return (
@@ -40,5 +40,3 @@ const InntektFormue = () => {
         </StegMedNavigasjon>
     );
 };
-
-export default InntektFormue;
