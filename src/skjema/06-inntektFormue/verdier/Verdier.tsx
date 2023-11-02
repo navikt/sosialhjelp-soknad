@@ -1,34 +1,18 @@
 import * as React from "react";
 import NivaTreSkjema from "../../../nav-soknad/components/nivaTreSkjema";
-import {ValideringsFeilKode} from "../../../digisos/redux/validering/valideringActionTypes";
 import {useTranslation} from "react-i18next";
 import {Checkbox, CheckboxGroup, Textarea} from "@navikt/ds-react";
 import {VerdierFrontend} from "../../../generated/model";
 import {YesNoInput} from "../../../nav-soknad/components/form/YesNoInput";
 import {DigisosReadMore} from "../formue/DigisosReadMore";
-import {z} from "zod";
 import {useVerdier} from "./useVerdier";
-
-const MAX_CHARS = 500;
-
-const BeskrivelseAvAnnetSchema = z.string().max(MAX_CHARS, {
-    message: ValideringsFeilKode.MAX_LENGDE,
-});
+import {useBeskrivelse} from "../useBeskrivelse";
 
 export const VerdierView = () => {
     const {verdier, setBekreftelse, setBeskrivelseAvAnnet, setVerdier} = useVerdier();
     const {t} = useTranslation("skjema");
-    const [beskrivelseAvAnnetError, setBeskrivelseAvAnnetError] = React.useState<string | undefined>(undefined);
-
+    const {registerAnnet} = useBeskrivelse(verdier?.beskrivelseAvAnnet);
     if (!verdier) return null;
-    const validateBeskrivelseAvAnnet = (value: string) => {
-        try {
-            BeskrivelseAvAnnetSchema.parse(value);
-            setBeskrivelseAvAnnetError(undefined);
-        } catch (e) {
-            setBeskrivelseAvAnnetError(t(e.issues[0].message));
-        }
-    };
 
     return (
         <div>
@@ -58,10 +42,7 @@ export const VerdierView = () => {
                     <NivaTreSkjema visible={verdier.annet} size="small">
                         <Textarea
                             label={t("inntekt.eierandeler.true.type.annet.true.beskrivelse.label")}
-                            onChange={(evt: any) => validateBeskrivelseAvAnnet(evt.target.value)}
-                            onBlur={(evt: any) => !beskrivelseAvAnnetError && setBeskrivelseAvAnnet(evt.target.value)}
-                            defaultValue={verdier.beskrivelseAvAnnet}
-                            error={beskrivelseAvAnnetError}
+                            {...registerAnnet(setBeskrivelseAvAnnet)}
                         />
                     </NivaTreSkjema>
                 </CheckboxGroup>
