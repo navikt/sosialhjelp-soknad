@@ -2,3 +2,4 @@
 export const ExceptionThrower = () => {
     throw new Error("Test");
 };
+export default ExceptionThrower;

@@ -13,3 +13,4 @@ export const Bosituasjon = () => (
         </div>
     </SkjemaStegLegacy>
 );
+export default Bosituasjon;

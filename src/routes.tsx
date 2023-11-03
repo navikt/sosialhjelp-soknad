@@ -9,19 +9,9 @@ import {
     useLocation,
     useNavigationType,
 } from "react-router-dom";
-import {Informasjon} from "./pages/hovedmeny";
 import {isLocalhost, isMockAlt} from "./lib/utils";
 import * as React from "react";
-import {Ettersendelse} from "./pages/ettersendelse";
-import {Personopplysninger} from "./pages/01-personalia";
-import {Begrunnelse} from "./pages/02-begrunnelse";
-import {ArbeidOgUtdanning} from "./pages/03-arbeidUtdanning";
-import {Familie} from "./pages/04-familie";
-import {Bosituasjon} from "./pages/05-bosituasjon";
-import {InntektFormue} from "./pages/06-inntektFormue";
-import {UtgifterGjeld} from "./pages/07-utgifterGjeld";
-import {OkonomiskeOpplysningerView} from "./pages/08-vedlegg";
-import {Oppsummering} from "./pages/09-oppsummering/Oppsummering";
+
 import {
     ConsoleInstrumentation,
     getWebInstrumentations,
@@ -32,9 +22,21 @@ import {
 } from "@grafana/faro-react";
 import {TracingInstrumentation} from "@grafana/faro-web-tracing";
 import config, {basePath} from "./lib/config";
-import SideIkkeFunnet from "./pages/feilsider/SideIkkeFunnet";
-import {ServerFeil} from "./pages/feilsider/ServerFeil";
-import {ExceptionThrower} from "./pages/feilsider/ExceptionThrower";
+
+const Informasjon = React.lazy(() => import("./pages/hovedmeny"));
+const SideIkkeFunnet = React.lazy(() => import("./pages/feilsider/SideIkkeFunnet"));
+const ServerFeil = React.lazy(() => import("./pages/feilsider/ServerFeil"));
+const ExceptionThrower = React.lazy(() => import("./pages/feilsider/ExceptionThrower"));
+const Personopplysninger = React.lazy(() => import("./pages/01-personalia"));
+const Begrunnelse = React.lazy(() => import("./pages/02-begrunnelse"));
+const ArbeidOgUtdanning = React.lazy(() => import("./pages/03-arbeidUtdanning"));
+const Familie = React.lazy(() => import("./pages/04-familie"));
+const Bosituasjon = React.lazy(() => import("./pages/05-bosituasjon"));
+const InntektFormue = React.lazy(() => import("./pages/06-inntektFormue"));
+const UtgifterGjeld = React.lazy(() => import("./pages/07-utgifterGjeld"));
+const OkonomiskeOpplysningerView = React.lazy(() => import("./pages/08-vedlegg"));
+const Oppsummering = React.lazy(() => import("./pages/09-oppsummering/Oppsummering"));
+const Ettersendelse = React.lazy(() => import("./pages/ettersendelse"));
 
 const redirectFromLogin = async () => {
     const url = window.location.href;

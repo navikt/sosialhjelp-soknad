@@ -90,3 +90,4 @@ export const ServerFeil = () => {
         </>
     );
 };
+export default ServerFeil;

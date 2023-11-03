@@ -39,3 +39,4 @@ export const OkonomiskeOpplysningerView = () => {
         </SkjemaSteg.Container>
     );
 };
+export default OkonomiskeOpplysningerView;

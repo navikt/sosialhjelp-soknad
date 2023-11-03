@@ -199,3 +199,4 @@ export const Oppsummering = () => {
         </SkjemaStegLegacy>
     );
 };
+export default Oppsummering;

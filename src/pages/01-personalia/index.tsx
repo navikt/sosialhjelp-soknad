@@ -53,3 +53,5 @@ export const Personopplysninger = () => {
         </SkjemaSteg.Container>
     );
 };
+
+export default Personopplysninger;

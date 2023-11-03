@@ -40,3 +40,4 @@ export const InntektFormue = () => {
         </SkjemaStegLegacy>
     );
 };
+export default InntektFormue;

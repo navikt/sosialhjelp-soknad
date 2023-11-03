@@ -153,3 +153,5 @@ export const Ettersendelse = () => {
         </div>
     );
 };
+
+export default Ettersendelse;

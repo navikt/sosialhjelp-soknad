@@ -11,3 +11,4 @@ export const UtgifterGjeld = () => (
         <Barneutgifter />
     </SkjemaStegLegacy>
 );
+export default UtgifterGjeld;

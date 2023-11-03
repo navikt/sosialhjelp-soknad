@@ -52,3 +52,4 @@ export const Informasjon = () => {
         )
     );
 };
+export default Informasjon;

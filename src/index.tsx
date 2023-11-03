@@ -22,7 +22,7 @@ import i18n, {SUPPORTED_LANGUAGES} from "./lib/i18n";
 import {logAmplitudeEvent} from "./lib/utils/amplitude";
 import {withFaroProfiler} from "@grafana/faro-react";
 import {basePath} from "./lib/config";
-
+import {ApplicationSpinner} from "./lib/components/applicationSpinner/ApplicationSpinner";
 const store = configureStore();
 
 window.onerror = logWindowError;
@@ -52,7 +52,7 @@ const App = () => {
 
     return (
         <Provider store={store}>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<ApplicationSpinner />}>
                 <QueryClientProvider client={queryClient}>
                     <RouterProvider router={router} />
                     <ReactQueryDevtools initialIsOpen={false} />

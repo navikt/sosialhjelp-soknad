@@ -13,3 +13,4 @@ export const Familie = () => (
         </div>
     </SkjemaStegLegacy>
 );
+export default Familie;

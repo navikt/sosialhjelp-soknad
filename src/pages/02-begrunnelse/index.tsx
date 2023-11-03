@@ -78,3 +78,4 @@ export const Begrunnelse = () => {
         </SkjemaSteg>
     );
 };
+export default Begrunnelse;

@@ -13,7 +13,6 @@ export const OpplysningView = ({opplysning}: {opplysning: Opplysning}) => {
 
     return (
         <div className={"rounded-md bg-[var(--a-surface-subtle)] border-[1px] border-[var(--a-border-default)] p-8"}>
-            asdfasdf
             <Heading level={"4"} size={"medium"} spacing>
                 {t(`${textKey}.sporsmal`)}
             </Heading>

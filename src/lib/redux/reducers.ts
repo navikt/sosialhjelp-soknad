@@ -14,7 +14,6 @@ const reducers = () =>
     combineReducers({
         oppsummering: OppsummeringReducer,
         ettersendelse: EttersendelseReducer,
-
         validering: valideringsReducer,
     });
 

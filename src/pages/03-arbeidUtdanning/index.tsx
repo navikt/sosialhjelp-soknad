@@ -122,3 +122,4 @@ export const ArbeidOgUtdanning = () => {
 
     return <ArbeidOgUtdanningForm data={data} />;
 };
+export default ArbeidOgUtdanning;
