@@ -3,11 +3,10 @@ import React, {useEffect} from "react";
 import {BannerEttersendelse} from "./bannerEttersendelse";
 import {AvsnittMedMargerEttersendelse} from "./avsnittMedMargerEttersendelse";
 import {EttersendelseEkspanderbart} from "./ettersendelseEkspanderbart";
-import Informasjonspanel from "../../lib/components/Informasjonspanel";
 import SoknadAlleredeSendtPrompt from "../../lib/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPrompt";
 import HotjarTriggerEttersendelse from "../../lib/components/hotjarTrigger/HotjarTriggerEttersendelse";
 import {useTitle} from "../../lib/hooks/common/useTitle";
-import {BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
+import {Alert, BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
 import {BlokkCenter} from "./BlokkCenter";
 import {NedetidPanel} from "../../lib/components/NedetidPanel";
 import {Trans, useTranslation} from "react-i18next";
@@ -94,9 +93,7 @@ export const Ettersendelse = () => {
 
                 {opprettNyEttersendelseFeilet ? (
                     <AvsnittMedMargerEttersendelse>
-                        <Informasjonspanel ikon={"hensyn"} farge="viktig">
-                            {t("ettersendelse.ikke.mulig")}
-                        </Informasjonspanel>
+                        <Alert variant={"error"}>{t("ettersendelse.ikke.mulig")}</Alert>
                     </AvsnittMedMargerEttersendelse>
                 ) : (
                     <EttersendelseEkspanderbart

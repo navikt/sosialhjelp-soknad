@@ -1,6 +1,5 @@
 import * as React from "react";
-import Informasjonspanel from "../../lib/components/Informasjonspanel";
-import {Checkbox, CheckboxGroup, Link} from "@navikt/ds-react";
+import {Checkbox, CheckboxGroup, GuidePanel, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {useBoutgifter} from "../../lib/hooks/data/useBoutgifter";
 import {BoutgifterFrontend} from "../../generated/model";
@@ -29,7 +28,7 @@ export const Boutgifter = () => {
                 <Checkbox value={"annet"}>{t("utgifter.boutgift.true.type.andreutgifter")}</Checkbox>
             </CheckboxGroup>
             {boutgifter?.skalViseInfoVedBekreftelse && boutgifter?.bekreftelse && (
-                <Informasjonspanel ikon={"ella"} farge="viktig">
+                <GuidePanel className={"!-ml-10"}>
                     <Trans
                         t={t}
                         i18nKey={"informasjon.husbanken.bostotte.v2"}
@@ -45,7 +44,7 @@ export const Boutgifter = () => {
                             ),
                         }}
                     />
-                </Informasjonspanel>
+                </GuidePanel>
             )}
         </div>
     );
