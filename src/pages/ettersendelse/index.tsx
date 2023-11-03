@@ -4,7 +4,6 @@ import {BannerEttersendelse} from "./bannerEttersendelse";
 import {AvsnittMedMargerEttersendelse} from "./avsnittMedMargerEttersendelse";
 import {EttersendelseEkspanderbart} from "./ettersendelseEkspanderbart";
 import SoknadAlleredeSendtPrompt from "../../lib/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPrompt";
-import HotjarTriggerEttersendelse from "../../lib/components/hotjarTrigger/HotjarTriggerEttersendelse";
 import {useTitle} from "../../lib/hooks/common/useTitle";
 import {Alert, BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
 import {BlokkCenter} from "./BlokkCenter";
@@ -85,11 +84,6 @@ export const Ettersendelse = () => {
                         </BodyShort>
                     </AvsnittMedMargerEttersendelse>
                 ))}
-
-                <HotjarTriggerEttersendelse
-                    opprettNyEttersendelseFeilet={opprettNyEttersendelseFeilet}
-                    originalSoknad={originalSoknad ?? undefined}
-                />
 
                 {opprettNyEttersendelseFeilet ? (
                     <AvsnittMedMargerEttersendelse>
