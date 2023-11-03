@@ -1,11 +1,7 @@
 import i18n from "i18next";
 import {initReactI18next} from "react-i18next";
 import {logWarning} from "./utils/loggerUtils";
-
-// Supported languages - add new languages here
-import skjemaNn from "../locales/nn/skjema.json";
-import skjemaNb from "../locales/nb/skjema.json";
-import skjemaEn from "../locales/en/skjema.json";
+import Backend from "i18next-http-backend";
 import {enGB, nb, nn} from "date-fns/locale";
 
 export const SUPPORTED_LANGUAGES = ["en", "nb", "nn"] as const;
@@ -32,7 +28,7 @@ export const getDateFnLocale = () => {
     return dateFnLocales[lang];
 };
 
-i18n
+i18n.use(Backend)
     // pass the i18n instance to react-i18next.
     .use(initReactI18next)
     // for all options read: https://www.i18next.com/overview/configuration-options
@@ -47,14 +43,12 @@ i18n
         ns: ["skjema"],
         defaultNS: "skjema",
         debug: window.location.hostname === "localhost",
+        backend: {
+            loadPath: `${window.location.origin}/sosialhjelp/soknad/locales/{{lng}}/{{ns}}.json`,
+        },
 
         interpolation: {
             escapeValue: false, // not needed for react as it escapes by default
-        },
-        resources: {
-            nn: {skjema: skjemaNn},
-            nb: {skjema: skjemaNb},
-            en: {skjema: skjemaEn},
         },
     });
 
