@@ -1,14 +1,7 @@
 import {Loader} from "@navikt/ds-react";
-import styled from "styled-components";
-
-const StyledApplicationSpinner = styled.div`
-    width: 100%;
-    text-align: center;
-    padding-top: 100px;
-`;
 
 export const ApplicationSpinner = () => (
-    <StyledApplicationSpinner>
-        <Loader size="2xlarge" />
-    </StyledApplicationSpinner>
+    <div className={"grow w-full flex flex-col justify-center items-center"}>
+        <Loader size="3xlarge" />
+    </div>
 );

@@ -15,7 +15,6 @@ import {RouterProvider} from "react-router-dom";
 import {router} from "./routes";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import "./lib/i18n";
-import {Loader} from "@navikt/ds-react";
 import {configureStore} from "./lib/redux/configureStore";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import i18n, {SUPPORTED_LANGUAGES} from "./lib/i18n";

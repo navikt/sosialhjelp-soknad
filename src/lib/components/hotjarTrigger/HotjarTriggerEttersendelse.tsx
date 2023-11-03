@@ -1,6 +1,6 @@
 import * as React from "react";
 import {DigisosGammelEttersendelseHotjarTrigger, SoknadEttersendelseFeilerHotjarTrigger} from "./HotjarTrigger";
-import {OrginalSoknad} from "../../../lib/redux/ettersendelse/ettersendelseTypes";
+import {OrginalSoknad} from "../../redux/ettersendelse/ettersendelseTypes";
 
 interface Props {
     opprettNyEttersendelseFeilet: boolean;
