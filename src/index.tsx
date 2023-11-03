@@ -50,14 +50,14 @@ const App = () => {
     }, []);
 
     return (
-        <Provider store={store}>
-            <Suspense fallback={<ApplicationSpinner />}>
+        <Suspense fallback={<ApplicationSpinner />}>
+            <Provider store={store}>
                 <QueryClientProvider client={queryClient}>
                     <RouterProvider router={router} />
                     <ReactQueryDevtools initialIsOpen={false} />
                 </QueryClientProvider>
-            </Suspense>
-        </Provider>
+            </Provider>
+        </Suspense>
     );
 };
 
