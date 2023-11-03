@@ -1,8 +1,8 @@
 import * as React from "react";
 import {BodyShort, Button, Modal, Heading, Alert} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../hooks/useBehandlingsId";
-import {logError} from "../../nav-soknad/utils/loggerUtils";
+import {useBehandlingsId} from "../hooks/common/useBehandlingsId";
+import {logError} from "../../lib/utils/loggerUtils";
 import {useSlettSoknad} from "../../generated/soknad-ressurs/soknad-ressurs";
 import {minSideURL} from "../config";
 import {faro} from "@grafana/faro-react";

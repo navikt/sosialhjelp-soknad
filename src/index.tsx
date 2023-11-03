@@ -3,7 +3,7 @@ import "@navikt/ds-css";
 import {Suspense, useEffect} from "react";
 import {createRoot} from "react-dom/client";
 import {Provider} from "react-redux";
-import {logWindowError} from "./nav-soknad/utils/loggerUtils";
+import {logWindowError} from "./lib/utils/loggerUtils";
 import {
     injectDecoratorClientSide,
     onLanguageSelect,
@@ -12,16 +12,16 @@ import {
     DecoratorLocale,
 } from "@navikt/nav-dekoratoren-moduler";
 import {RouterProvider} from "react-router-dom";
-import {router} from "./digisos";
+import {router} from "./routes";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import "./i18n";
+import "./lib/i18n";
 import {Loader} from "@navikt/ds-react";
-import {configureStore} from "./configureStore";
+import {configureStore} from "./lib/redux/configureStore";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
-import {basePath} from "./configuration";
-import i18n, {SUPPORTED_LANGUAGES} from "./i18n";
-import {logAmplitudeEvent} from "./nav-soknad/utils/amplitude";
+import i18n, {SUPPORTED_LANGUAGES} from "./lib/i18n";
+import {logAmplitudeEvent} from "./lib/utils/amplitude";
 import {withFaroProfiler} from "@grafana/faro-react";
+import {basePath} from "./lib/config";
 
 const store = configureStore();
 
@@ -79,3 +79,4 @@ const container = document.getElementById("root");
 const root = createRoot(container!);
 const ProfiledApp = withFaroProfiler(App);
 root.render(<ProfiledApp />);
+export {basePath} from "./lib/config";

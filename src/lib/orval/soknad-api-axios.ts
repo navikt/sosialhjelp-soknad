@@ -1,25 +1,32 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
-import {getRedirectPath} from "../../nav-soknad/utils/rest-utils";
-import {isLocalhost, isMockAlt} from "../../nav-soknad/utils";
+import {parseGotoValueFromSearchParameters} from "../utils/rest-utils";
+import {isLocalhost, isMockAlt} from "../utils";
 import {UnauthorizedMelding} from "../../generated/model";
-import {logError, logInfo, logWarning} from "../../nav-soknad/utils/loggerUtils";
-import {baseURL} from "../config";
+import {logError, logInfo, logWarning} from "../utils/loggerUtils";
+import {basePath, baseURL} from "../config";
 
 const makeLoginUrl = ({loginUrl, id}: UnauthorizedMelding) => {
     const loginURLObj = new URL(loginUrl);
     loginURLObj.searchParams.set("login_id", id);
-    loginURLObj.searchParams.set("redirect", getRedirectPath());
+    loginURLObj.searchParams.set(
+        "redirect",
+        `${window.location.origin}${basePath}/link?goto=${
+            window.location.pathname === `${basePath}/link`
+                ? parseGotoValueFromSearchParameters(window.location.search)
+                : window.location.pathname
+        }`
+    );
     return loginURLObj.toString();
 };
 
 export const redirectToLogin = async (unauthError?: UnauthorizedMelding) => {
     if (!unauthError) {
-        logError(`401-feil uten data`);
+        await logError(`401-feil uten data`);
         throw new Error(`401-feil uten data`);
     }
 
     if (new URLSearchParams(window.location.search).get("login_id") === unauthError.id) {
-        logError("login_id == id fra 401, kan indikere en redirect loop?");
+        await logError("login_id == id fra 401, kan indikere en redirect loop?");
         return;
     }
 
@@ -73,12 +80,12 @@ export const axiosInstance = <T>(
     })
         .then(({data}) => data)
         .catch(async (e) => {
-            if (!(e instanceof AxiosError)) logWarning(`non-axioserror error ${e} in axiosinstance`);
+            if (!(e instanceof AxiosError)) await logWarning(`non-axioserror error ${e} in axiosinstance`);
 
             if (isCancel(e) || options?.digisosIgnoreErrors) return new Promise<T>(() => {});
 
             if (!e.response) {
-                logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
+                await logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
                 throw e;
             }
 
@@ -98,15 +105,15 @@ export const axiosInstance = <T>(
             // Conflict -- try again
             if (status === 409) {
                 if (retry >= 10) {
-                    logError("Max retries encountered!");
+                    await logError("Max retries encountered!");
                     throw e;
                 }
-                logInfo(`Conflict resolution hack, retry #${retry}`);
+                await logInfo(`Conflict resolution hack, retry #${retry}`);
                 await delay(500);
                 return axiosInstance<T>(config, options, retry + 1);
             }
 
-            logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url}: ${status} ${data}`);
+            await logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url}: ${status} ${data}`);
             throw e;
         });
 
