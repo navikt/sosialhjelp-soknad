@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
-    <defs>
-        <path id="a_dokumenter_xcgkpl" d="M17.974 8.205a.33.33 0 0 0-.072-.108l-4-3.999A.33.33 0 0 0 13.668 4H8.333A.333.333 0 0 0 8 4.333V6H6.333A.333.333 0 0 0 6 6.333v13.334c0 .184.15.333.333.333h9.334c.184 0 .333-.15.333-.333V18h1.667c.184 0 .333-.15.333-.333V8.333a.333.333 0 0 0-.026-.128zM14 5.138L16.862 8H14V5.138zm1.333 14.195H6.667V6.667H8v11c0 .184.15.333.333.333h7v1.333zm-6.666-2V4.667h4.666v3.666c0 .184.15.334.334.334h3.666v8.666H8.667z"/>
-    </defs>
-    <g fill="none" fill-rule="evenodd">
-        <circle cx="12" cy="12" r="12" fill="#E9E7E7"/>
-        <use fill="#3E3821" fill-rule="nonzero" xlink:href="#a_dokumenter_xcgkpl"/>
-    </g>
-</svg>
