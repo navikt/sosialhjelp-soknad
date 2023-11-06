@@ -1,8 +1,8 @@
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
+import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useQueryClient} from "@tanstack/react-query";
-import {updateArbeid, useHentArbeid} from "../../generated/arbeid-ressurs/arbeid-ressurs";
-import {updateUtdanning, useHentUtdanning} from "../../generated/utdanning-ressurs/utdanning-ressurs";
-import {ArbeidOgUtdanningType} from "./index";
+import {updateArbeid, useHentArbeid} from "../../../generated/arbeid-ressurs/arbeid-ressurs";
+import {updateUtdanning, useHentUtdanning} from "../../../generated/utdanning-ressurs/utdanning-ressurs";
+import {ArbeidOgUtdanningType} from "../../../pages/03-arbeidUtdanning";
 
 export const useArbeidOgUtdanning = () => {
     const behandlingsId = useBehandlingsId();

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {ReactNode, useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import Feiloppsummering from "../validering/Feiloppsummering";
+import Feiloppsummering from "../Feiloppsummering";
 import {useTitle} from "../../hooks/common/useTitle";
 import {Heading, Link} from "@navikt/ds-react";
 import {NedetidPanel} from "../NedetidPanel";
@@ -9,7 +9,7 @@ import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepperLegacy} from "./SkjemaStegNavStepperLegacy";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapperLegacy from "./SkjemaStegNavKnapperLegacy";
-import {TimeoutBox} from "../timeoutbox/TimeoutBox";
+import {TimeoutBox} from "../../modals/TimeoutBox";
 import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";

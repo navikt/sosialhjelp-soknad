@@ -11,7 +11,7 @@ import {TranslatedError} from "../02-begrunnelse";
 import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {UnmountClosed} from "react-collapse";
 import {faro} from "@grafana/faro-react";
-import {useArbeidOgUtdanning} from "./useArbeidOgUtdanning";
+import {useArbeidOgUtdanning} from "../../lib/hooks/data/useArbeidOgUtdanning";
 
 const ArbeidOgUtdanningSchema = z.object({
     arbeid: z.object({kommentarTilArbeidsforhold: z.string().max(500, "maksLengde").nullable()}),

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {OpplastingAvVedleggModal} from "./OpplastingAvVedleggModal";
-import {LinkButton} from "../../lib/components/linkButton/LinkButton";
+import {LinkButton} from "../../lib/components/LinkButton";
 import {useTranslation} from "react-i18next";
 import {Alert, BodyShort} from "@navikt/ds-react";
 

@@ -1,9 +1,9 @@
 import * as React from "react";
-import {LinkButtonValidation} from "../linkButton/LinkButton";
+import {LinkButtonValidation} from "./LinkButton";
 import {useTranslation} from "react-i18next";
 import {Heading} from "@navikt/ds-react";
-import {Valideringsfeil} from "../../redux/validering/valideringActionTypes";
-import {scrollToElement} from "../../utils";
+import {Valideringsfeil} from "../redux/validering/valideringActionTypes";
+import {scrollToElement} from "../utils";
 
 const scrollToFaktum = (evt: React.MouseEvent<any>, faktumKey: string) => {
     evt.stopPropagation();

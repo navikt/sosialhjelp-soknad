@@ -1,9 +1,9 @@
 import * as React from "react";
 import Nedtelling from "./Nedtelling";
 import LoggetUt from "./LoggetUt";
-import useInterval from "../../../lib/hooks/common/useInterval";
-import {logoutURL} from "../../config";
-import {now} from "../../utils";
+import useInterval from "../hooks/common/useInterval";
+import {logoutURL} from "../config";
+import {now} from "../utils";
 
 const ONE_MINUTE_IN_MS = 60 * 1000;
 

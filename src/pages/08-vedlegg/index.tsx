@@ -2,7 +2,7 @@ import * as React from "react";
 import {Gruppe} from "./Gruppe";
 import {InfopanelOpplysninger} from "./InfopanelOpplysninger";
 import {UbesvarteOpplysninger} from "./UbesvarteOpplysninger";
-import {ApplicationSpinner} from "../../lib/components/applicationSpinner/ApplicationSpinner";
+import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
 import {SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import cx from "classnames";
 import {useOpplysninger} from "./useOpplysninger";

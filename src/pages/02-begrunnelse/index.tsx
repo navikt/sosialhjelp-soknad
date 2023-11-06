@@ -7,7 +7,7 @@ import {useTranslation} from "react-i18next";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useFeatureFlags} from "../../lib/featureFlags";
 import {DigisosValidationError, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
-import {useBegrunnelse} from "./useBegrunnelse";
+import {useBegrunnelse} from "../../lib/hooks/data/useBegrunnelse";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;

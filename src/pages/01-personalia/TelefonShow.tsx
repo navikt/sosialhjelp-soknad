@@ -3,7 +3,7 @@ import {useHentTelefonnummer} from "../../generated/telefonnummer-ressurs/telefo
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {TelefonShowBrukerdefinert} from "./TelefonShowBrukerdefinert";
 import {TelefonShowFraKRR} from "./TelefonShowFraKRR";
-import {LinkButton} from "../../lib/components/linkButton/LinkButton";
+import {LinkButton} from "../../lib/components/LinkButton";
 import * as React from "react";
 import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";

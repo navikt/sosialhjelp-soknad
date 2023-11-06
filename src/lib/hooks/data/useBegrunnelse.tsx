@@ -1,10 +1,10 @@
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
-import {useFeatureFlags} from "../../lib/featureFlags";
+import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useFeatureFlags} from "../../featureFlags";
 import * as React from "react";
 import {useEffect} from "react";
-import {hentBegrunnelse, updateBegrunnelse} from "../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
-import {BegrunnelseFrontend} from "../../generated/model";
-import {logAmplitudeEvent} from "../../lib/utils/amplitude";
+import {hentBegrunnelse, updateBegrunnelse} from "../../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
+import {BegrunnelseFrontend} from "../../../generated/model";
+import {logAmplitudeEvent} from "../../utils/amplitude";
 import {faro} from "@grafana/faro-react";
 
 export const useBegrunnelse = () => {

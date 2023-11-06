@@ -3,7 +3,7 @@ import React, {useEffect} from "react";
 import {BannerEttersendelse} from "./bannerEttersendelse";
 import {AvsnittMedMargerEttersendelse} from "./avsnittMedMargerEttersendelse";
 import {EttersendelseEkspanderbart} from "./ettersendelseEkspanderbart";
-import SoknadAlleredeSendtPrompt from "../../lib/components/soknadAlleredeSendtPromt/SoknadAlleredeSendtPrompt";
+import SoknadAlleredeSendtPrompt from "../../lib/modals/SoknadAlleredeSendtPrompt";
 import {useTitle} from "../../lib/hooks/common/useTitle";
 import {Alert, BodyShort, Heading, Ingress, Link} from "@navikt/ds-react";
 import {BlokkCenter} from "./BlokkCenter";

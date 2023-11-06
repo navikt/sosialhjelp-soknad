@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import {Brevkonvolutt} from "../../lib/components/svg/Brevkonvolutt";
-import {LinkButton} from "../../lib/components/linkButton/LinkButton";
+import {LinkButton} from "../../lib/components/LinkButton";
 import {BodyShort, GuidePanel, Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";

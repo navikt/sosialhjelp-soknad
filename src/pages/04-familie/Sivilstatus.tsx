@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Underskjema} from "../../lib/components/underskjema";
+import {Underskjema} from "../../lib/components/Underskjema";
 import {EktefellePersonaliaForm} from "./EktefellePersonaliaForm";
 import {useTranslation} from "react-i18next";
 import {Button, Heading, Radio, RadioGroup} from "@navikt/ds-react";

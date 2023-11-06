@@ -1,5 +1,5 @@
 import React from "react";
-import {LinkButton} from "../../lib/components/linkButton/LinkButton";
+import {LinkButton} from "../../lib/components/LinkButton";
 import {downloadAttachedFile} from "../../lib/utils/rest-utils";
 import {FilFrontend} from "../../generated/model";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";

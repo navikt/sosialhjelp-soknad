@@ -21,7 +21,7 @@ import i18n, {SUPPORTED_LANGUAGES} from "./lib/i18n";
 import {logAmplitudeEvent} from "./lib/utils/amplitude";
 import {withFaroProfiler} from "@grafana/faro-react";
 import {basePath} from "./lib/config";
-import {ApplicationSpinner} from "./lib/components/applicationSpinner/ApplicationSpinner";
+import {ApplicationSpinner} from "./lib/components/animasjoner/ApplicationSpinner";
 const store = configureStore();
 
 window.onerror = logWindowError;

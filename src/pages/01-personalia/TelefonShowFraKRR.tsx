@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
 import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import {formatTelefonnummer} from "@fremtind/jkl-formatters-util";
-import {LinkButton} from "../../lib/components/linkButton/LinkButton";
+import {LinkButton} from "../../lib/components/LinkButton";
 import * as React from "react";
 import {strip47} from "./Telefon";
 

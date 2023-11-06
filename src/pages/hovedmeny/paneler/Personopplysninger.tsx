@@ -4,7 +4,7 @@ import {Accordion, BodyLong, Heading, Link} from "@navikt/ds-react";
 import styled from "styled-components";
 import {Trans, useTranslation} from "react-i18next";
 import {useState} from "react";
-import {LinkButton} from "../../../lib/components/linkButton/LinkButton";
+import {LinkButton} from "../../../lib/components/LinkButton";
 
 const LeftAlignedButton = styled(LinkButton)`
     text-align: left;

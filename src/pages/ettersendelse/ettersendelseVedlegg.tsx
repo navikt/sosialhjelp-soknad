@@ -3,7 +3,7 @@ import React, {useState, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {downloadAttachedFile} from "../../lib/utils/rest-utils";
 
-import {LinkButton} from "../../lib/components/linkButton/LinkButton";
+import {LinkButton} from "../../lib/components/LinkButton";
 import {BodyShort, Button, Heading, Loader} from "@navikt/ds-react";
 import styled from "styled-components";
 import {Delete} from "@navikt/ds-icons";

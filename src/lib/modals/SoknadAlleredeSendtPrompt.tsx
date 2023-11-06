@@ -2,8 +2,8 @@ import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {BodyShort, Heading, Modal} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {visSoknadAlleredeSendtPrompt} from "../../../lib/redux/ettersendelse/ettersendelseActions";
-import {State} from "../../../lib/redux/reducers";
+import {visSoknadAlleredeSendtPrompt} from "../redux/ettersendelse/ettersendelseActions";
+import {State} from "../redux/reducers";
 
 const SoknadAlleredeSendtPrompt = () => {
     const dispatch = useDispatch();

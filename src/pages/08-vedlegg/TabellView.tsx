@@ -1,4 +1,4 @@
-import {LinkButton} from "../../lib/components/linkButton/LinkButton";
+import {LinkButton} from "../../lib/components/LinkButton";
 import {useOpplysning} from "./useOpplysning";
 import {OpplysningInputRad} from "./OpplysningInputRad";
 import {useTranslation} from "react-i18next";

@@ -9,7 +9,7 @@ import {Warning} from "./question/Warning";
 import {SystemDataMap} from "./question/SystemDataMap";
 import {Attachment} from "./question/Attachment";
 import {useNavigate} from "react-router";
-import {ApplicationSpinner} from "../../lib/components/applicationSpinner/ApplicationSpinner";
+import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
 import {SkjemaStegLegacy} from "../../lib/components/SkjemaSteg/SkjemaStegLegacy";
 import {digisosSkjemaConfig} from "../../lib/components/SkjemaSteg/digisosSkjema";
 import {logInfo, logWarning} from "../../lib/utils/loggerUtils";

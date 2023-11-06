@@ -5,7 +5,7 @@ import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {updateKontonummer, useHentKontonummer} from "../../generated/kontonummer-ressurs/kontonummer-ressurs";
 import {KontonrShow} from "./KontonrShow";
 import {KontonrEdit} from "./KontonrEdit";
-import {LinkButton} from "../../lib/components/linkButton/LinkButton";
+import {LinkButton} from "../../lib/components/LinkButton";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {Systeminfo} from "../../lib/components/systeminfo/Systeminfo";
 import {useDigisosMutation} from "../../lib/hooks/common/useDigisosMutation";

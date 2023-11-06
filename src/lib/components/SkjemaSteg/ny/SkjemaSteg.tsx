@@ -2,7 +2,7 @@ import * as React from "react";
 import {createContext, ReactNode, useContext, useEffect} from "react";
 import {Heading, Link} from "@navikt/ds-react";
 import {NedetidPanel} from "../../NedetidPanel";
-import {TimeoutBox} from "../../timeoutbox/TimeoutBox";
+import {TimeoutBox} from "../../../modals/TimeoutBox";
 import {useTranslation} from "react-i18next";
 import {useSkjemaNavigation} from "../useSkjemaNavigation";
 import SnakkebobleIllustrasjon from "../../svg/illustrasjoner/SnakkebobleIllustrasjon";

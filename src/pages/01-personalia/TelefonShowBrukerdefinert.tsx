@@ -3,7 +3,7 @@ import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import {formatTelefonnummer} from "@fremtind/jkl-formatters-util";
 import * as React from "react";
 import {strip47} from "./Telefon";
-import {LinkButton} from "../../lib/components/linkButton/LinkButton";
+import {LinkButton} from "../../lib/components/LinkButton";
 
 export const TelefonShowBrukerdefinert = ({
     brukerutfyltVerdi,
