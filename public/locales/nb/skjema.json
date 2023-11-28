@@ -518,6 +518,7 @@
     "inntekt.inntekter.hjelpetekst.tekst": "Har du fått utbetalt penger i form av utbytte på aksjer, fond, salg av eiendeler eller på andre måter, ønsker vi å vite om dette.",
     "inntekt.inntekter.sporsmal": "Har du de siste tre månedene fått utbetalt penger som hverken er lønn eller en ytelse fra NAV?",
     "inntekt.inntekter.tittel": "Andre inntekter",
+    "inntekt.inntekter.lesmer": "Eksempler på utbetalinger",
     "inntekt.inntekter.true": "Ja",
     "inntekt.inntekter.true.type.annen": "Annet",
     "inntekt.inntekter.true.type.annen.true.beskrivelse.label": "Beskriv",

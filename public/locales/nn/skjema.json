@@ -515,6 +515,7 @@
     "inntekt.inntekter.hjelpetekst.tekst": "Dersom du har fått utbetalt pengar i form av utbyte på aksjar, fond, sal av eigedelar eller på andre måtar, ønskjer vi å vite om dette.",
     "inntekt.inntekter.sporsmal": "Har du i løpet av dei siste tre månadene fått utbetalt pengar som verken er løn eller yting frå NAV?",
     "inntekt.inntekter.tittel": "Andre inntekter",
+    "inntekt.inntekter.lesmer": "Døme på utbetalingar",
     "inntekt.inntekter.true": "Ja",
     "inntekt.inntekter.true.type.annen": "Anna",
     "inntekt.inntekter.true.type.annen.true.beskrivelse.label": "Beskriv",

@@ -17,9 +17,11 @@ export const Utbetalinger = () => {
     return (
         <div>
             <YesNoInput
-                legend={t("inntekt.inntekter.tittel")}
+                legend={t("inntekt.inntekter.sporsmal")}
                 description={
-                    <ReadMore header={t("generelt.merinfo")}>{t("inntekt.inntekter.hjelpetekst.tekst")}</ReadMore>
+                    <ReadMore header={t("inntekt.inntekter.lesmer")}>
+                        {t("inntekt.inntekter.hjelpetekst.tekst")}
+                    </ReadMore>
                 }
                 defaultValue={utbetalinger.bekreftelse}
                 onChange={setBekreftelse}
