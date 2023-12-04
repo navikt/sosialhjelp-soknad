@@ -60,6 +60,7 @@ export const AdresseData = () => {
                 {t("soknadsmottaker.sporsmal")}
             </Heading>
             <BodyLong>{t("soknadsmottaker.hjelpetekst.tekst")}</BodyLong>
+            <BodyLong>{t("soknadsmottaker.hjelpetekst.ingress")}</BodyLong>
             <HorizontalRadioGroup
                 legend={t("soknadsmottaker.infotekst.tekst")}
                 value={uncommittedAdressevalg}
