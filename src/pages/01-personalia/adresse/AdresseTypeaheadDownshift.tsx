@@ -81,7 +81,11 @@ const Item = styled.li<{isHighlighted: boolean}>`
     background-color: ${(props) => (props.isHighlighted ? "var(--a-blue-400)" : "inherit")};
 `;
 
-export const AdresseTypeahead = (props: {
+export const AdresseTypeahead = ({
+    defaultValue,
+    onNullstill,
+    onVelgAnnenAdresse,
+}: {
     defaultValue?: string;
     onNullstill: () => void;
     onVelgAnnenAdresse: (adresse: AdresseForslag) => void;
@@ -89,9 +93,9 @@ export const AdresseTypeahead = (props: {
     const {t} = useTranslation("skjema");
     const onSelect = (adresse?: AdresseForslag) => {
         if (!adresse) {
-            props.onNullstill();
+            onNullstill();
         } else {
-            props.onVelgAnnenAdresse(adresse);
+            onVelgAnnenAdresse(adresse);
         }
     };
     return (
@@ -102,7 +106,7 @@ export const AdresseTypeahead = (props: {
 
                 return adresse ? formaterAdresseString(adresse) : "";
             }}
-            initialInputValue={props.defaultValue}
+            initialInputValue={defaultValue}
         >
             {({getLabelProps, getInputProps, getItemProps, getMenuProps, highlightedIndex, inputValue, isOpen}) => (
                 <div>
