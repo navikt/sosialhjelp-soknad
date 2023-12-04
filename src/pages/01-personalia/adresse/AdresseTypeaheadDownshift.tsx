@@ -1,4 +1,4 @@
-import {Heading, Loader, TextField} from "@navikt/ds-react";
+import {Heading, Link, Loader, TextField} from "@navikt/ds-react";
 import Downshift from "downshift";
 import {useState} from "react";
 import {useDebounce} from "react-use";
@@ -99,7 +99,12 @@ export const AdresseTypeahead = ({
                             <Heading size={"xsmall"}>{t("kontakt.system.oppholdsadresse.hvorOppholder")}</Heading>
                             {t("kontakt.system.kontaktinfo.infotekst.tekst")}
                         </div>
-                        <div>{t("kontakt.system.kontaktinfo.infotekst.ekstratekst")}</div>
+                        <div>
+                            {t("kontakt.system.kontaktinfo.infotekst.ekstratekst")}{" "}
+                            <a href="https://www.nav.no/sok-nav-kontor">
+                                {t("kontakt.system.kontaktinfo.infotekst.navsearch")}
+                            </a>
+                        </div>
                     </label>
                     <TextField {...getInputProps()} />
                     {isOpen && (
