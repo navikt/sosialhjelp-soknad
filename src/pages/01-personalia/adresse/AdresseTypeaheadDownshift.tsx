@@ -101,9 +101,9 @@ export const AdresseTypeahead = ({
                         </div>
                         <div>
                             {t("kontakt.system.kontaktinfo.infotekst.ekstratekst")}{" "}
-                            <a href="https://www.nav.no/sok-nav-kontor">
+                            <Link href="https://www.nav.no/sok-nav-kontor" target="_blank">
                                 {t("kontakt.system.kontaktinfo.infotekst.navsearch")}
-                            </a>
+                            </Link>
                         </div>
                     </label>
                     <TextField {...getInputProps()} />
