@@ -83,31 +83,15 @@ const Item = styled.li<{isHighlighted: boolean}>`
 
 export const AdresseTypeahead = ({
     defaultValue,
-    onNullstill,
-    onVelgAnnenAdresse,
+    onChange,
 }: {
     defaultValue?: string;
-    onNullstill: () => void;
-    onVelgAnnenAdresse: (adresse: AdresseForslag) => void;
+    onChange: (adresse: AdresseForslag | null | undefined) => void;
 }) => {
     const {t} = useTranslation("skjema");
-    const onSelect = (adresse?: AdresseForslag) => {
-        if (!adresse) {
-            onNullstill();
-        } else {
-            onVelgAnnenAdresse(adresse);
-        }
-    };
-    return (
-        <Downshift
-            onSelect={(adresse) => onSelect(adresse)}
-            itemToString={(adresse) => {
-                console.log(adresse, formaterAdresseString(adresse));
 
-                return adresse ? formaterAdresseString(adresse) : "";
-            }}
-            initialInputValue={defaultValue}
-        >
+    return (
+        <Downshift onSelect={onChange} itemToString={formaterAdresseString} initialInputValue={defaultValue}>
             {({getLabelProps, getInputProps, getItemProps, getMenuProps, highlightedIndex, inputValue, isOpen}) => (
                 <div>
                     <label className={"space-y-4"} {...getLabelProps()}>

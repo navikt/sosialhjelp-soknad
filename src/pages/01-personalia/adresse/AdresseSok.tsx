@@ -36,8 +36,7 @@ export const AdresseSok = ({
             <div className={"space-y-4 bg-gray-200 rounded-lg p-4 pt-3"}>
                 <AdresseTypeahead
                     defaultValue={defaultValue}
-                    onVelgAnnenAdresse={async (forslag) => onChange(adresseForslagTilAdresse(forslag))}
-                    onNullstill={async () => onChange(null)}
+                    onChange={async (adresse) => onChange(adresse ? adresseForslagTilAdresse(adresse) : null)}
                 />
             </div>
         </div>
