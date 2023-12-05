@@ -25,7 +25,8 @@ export const useSivilstatus = () => {
             ...sivilstatus,
             sivilstatus: nySivilstatus,
             kildeErSystem: false,
-            ektefelle,
+            ektefelle: nySivilstatus === "gift" ? ektefelle : undefined,
+            borSammenMed: nySivilstatus === "gift" ? sivilstatus?.borSammenMed : undefined,
         };
 
         await updateSivilstatus(behandlingsId, oppdatert);
