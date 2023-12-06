@@ -52,7 +52,7 @@
         "@babel/preset-env": "^7.23.2",
         "@babel/preset-react": "^7.22.15",
         "@faker-js/faker": "^8.2.0",
-        "@tanstack/react-query-devtools": "^5.4",
+        "@tanstack/react-query-devtools": "^5.13",
         "@testing-library/jest-dom": "^6.1.4",
         "@testing-library/react": "^14.0.0",
         "@tsconfig/create-react-app": "^2.0.1",
