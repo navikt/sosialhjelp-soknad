@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "@navikt/ds-css";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 /* We can't use "hidden" with tailwind because ye olde nav-frontend-core
    overrides it -- so we declare an alias tw-hidden which should enable
