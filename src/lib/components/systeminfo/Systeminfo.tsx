@@ -40,7 +40,7 @@ export const SysteminfoItem = ({
 export const Systeminfo = ({children, className}: {children: React.ReactNode; className?: string}) => (
     <ul
         className={cx(
-            "flex flex-col items-between gap-1 pl-3 py-3 border-l-4 bg-[var(--a-surface-info-subtle)] border-l-[var(--a-surface-info)] ",
+            "flex flex-col items-between gap-1 pl-3 py-3 border-l-4 bg-lightblue-50 border-l-surface-info",
             className
         )}
     >

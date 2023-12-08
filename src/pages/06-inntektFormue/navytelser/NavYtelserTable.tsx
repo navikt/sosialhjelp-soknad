@@ -11,7 +11,7 @@ export const NavYtelserTable = ({systeminntekter = []}: {systeminntekter?: Syste
     if (!systeminntekter.length) return <BodyShort>{t("utbetalinger.ingen.true")}</BodyShort>;
 
     return (
-        <div className={"border-l-4 bg-[var(--a-surface-info-subtle)] border-l-[var(--a-surface-info)] p-4 space-y-4"}>
+        <div className={"border-l-4 bg-lightblue-50 border-l-[var(--a-surface-info)] p-4 space-y-4"}>
             <Table>
                 <Table.Header>
                     <Table.Row>

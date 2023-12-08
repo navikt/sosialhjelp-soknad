@@ -63,7 +63,7 @@ export const SkattbarinntektForskuddstrekk = ({inntektOgForskuddstrekk}: Skattba
     if (!inntektOgForskuddstrekk) return <TextPlaceholder lines={3} />;
 
     return (
-        <div className={"border-l-4 bg-[var(--a-surface-info-subtle)] border-l-[var(--a-surface-info)] p-4 space-y-4"}>
+        <div className={"border-l-4 bg-lightblue-50 border-l-[var(--a-surface-info)] p-4 space-y-4"}>
             {!inntektOgForskuddstrekk.length && (
                 <Heading size={"xsmall"} level={"4"}>
                     {t("skattbar.ingen")}
