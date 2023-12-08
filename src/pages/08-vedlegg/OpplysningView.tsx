@@ -12,7 +12,7 @@ export const OpplysningView = ({opplysning}: {opplysning: Opplysning}) => {
     if (opplysning.slettet) return <VedleggSlettet opplysning={opplysning} />;
 
     return (
-        <div className={"rounded-md bg-[var(--a-surface-subtle)] border-[1px] border-[var(--a-border-default)] p-8"}>
+        <div className={"rounded-md bg-surface-subtle p-8"}>
             <Heading level={"4"} size={"medium"} spacing>
                 {t(`${textKey}.sporsmal`)}
             </Heading>
