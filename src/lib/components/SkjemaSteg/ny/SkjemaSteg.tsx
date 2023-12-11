@@ -16,7 +16,7 @@ import cx from "classnames";
 import {hentXsrfCookie} from "../../../../generated/soknad-ressurs/soknad-ressurs";
 import {useBehandlingsId} from "../../../hooks/common/useBehandlingsId";
 import {AppHeader} from "../../appHeader/AppHeader";
-import {logError, logWarning} from "../../../../lib/utils/loggerUtils";
+import {logError, logWarning} from "../../../utils/loggerUtils";
 import {scrollToTop} from "../../../utils";
 import {useTitle} from "../../../hooks/common/useTitle";
 
@@ -31,14 +31,21 @@ export const SkjemaStegContext = createContext<TSkjemaStegContext | null>(null);
 // all other rejections will be logged
 export class DigisosValidationError extends Error {}
 
+// Kast en DigisosValidationError, som forhindrer klienten fra å navigere
+export const inhibitNavigation = async () => {
+    throw new DigisosValidationError();
+};
+
 interface SkjemaStegProps {
     page: SkjemaPage;
     children?: ReactNode | ReactNode[];
     /**
      * Callback before navigation.
-     * To prevent navigation, throw an exception (it will be passed along as a warning to backend in the testing phase)
+     * To prevent navigation, throw an exception.
+     * If the exception is of type DigisosValidationError, nothing is logged.
+     * If another exception is thrown, the error is logged.
      */
-    onRequestNavigation?: () => Promise<void>;
+    onRequestNavigation?: () => Promise<unknown>;
 }
 
 export type SkjemaPage = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
@@ -112,8 +119,8 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
             if (onRequestNavigation !== undefined) await onRequestNavigation();
             gotoPage(page);
         } catch (e) {
-            if (!(e instanceof DigisosValidationError)) logWarning(`Nektet navigering: ${e}`);
             scrollToTop();
+            if (!(e instanceof DigisosValidationError)) await logWarning(`Nektet navigering: ${e}`);
         }
     };
 
