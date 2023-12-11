@@ -1,13 +1,14 @@
 import * as React from "react";
 import * as z from "zod";
 import {BegrunnelseFrontend} from "../../generated/model";
-import {Textarea} from "@navikt/ds-react";
+import {Alert, Textarea} from "@navikt/ds-react";
 import {FieldError, useForm} from "react-hook-form";
 import {useTranslation} from "react-i18next";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useFeatureFlags} from "../../lib/featureFlags";
-import {DigisosValidationError, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {inhibitNavigation, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useBegrunnelse} from "../../lib/hooks/data/useBegrunnelse";
+import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;
@@ -27,12 +28,13 @@ export const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) =
 
 const Feilmelding = () => {
     const {t} = useTranslation("skjema");
-    return <div>{t("skjema.navigering.feil")}</div>;
+    return <Alert variant={"error"}>{t("skjema.navigering.feil")}</Alert>;
 };
 
 export const Begrunnelse = () => {
-    const {hent, lagre, isError} = useBegrunnelse();
+    const {get: defaultValues, put, isError, isPending} = useBegrunnelse();
     const {t} = useTranslation("skjema", {keyPrefix: "begrunnelse"});
+    // TODO: Avklare denne. Er det behov lenger?
     const {begrunnelseNyTekst} = useFeatureFlags();
 
     const {
@@ -40,40 +42,38 @@ export const Begrunnelse = () => {
         handleSubmit,
         formState: {errors},
     } = useForm<BegrunnelseFrontend>({
-        defaultValues: hent,
+        defaultValues,
         resolver: zodResolver(begrunnelseSchema),
         mode: "onChange",
     });
 
-    const onRequestNavigation = async () =>
-        handleSubmit(
-            (data) => lagre(data),
-            () => new DigisosValidationError()
-        )();
-
     return (
-        <SkjemaSteg page={2} onRequestNavigation={onRequestNavigation}>
+        <SkjemaSteg page={2} onRequestNavigation={handleSubmit(put, inhibitNavigation)}>
             <SkjemaSteg.Content>
                 <SkjemaSteg.Title />
                 <SkjemaSteg.ErrorSummary errors={errors} />
-                <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>
-                    <Textarea
-                        {...register("hvaSokesOm")}
-                        id={"hvaSokesOm"}
-                        error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
-                        label={begrunnelseNyTekst ? t("hva.label") : t("hva.label.old")}
-                        description={begrunnelseNyTekst ? t("hva.description") : t("hva.description.old")}
-                    />
-                    <Textarea
-                        {...register("hvorforSoke")}
-                        id={"hvorforSoke"}
-                        label={begrunnelseNyTekst ? t("hvorfor.label") : t("hvorfor.label.old")}
-                        description={begrunnelseNyTekst ? t("hvorfor.description") : undefined}
-                        error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
-                    />
-                </form>
-                {isError && <Feilmelding />}
-                <SkjemaSteg.Buttons />
+                {isPending ? (
+                    <ApplicationSpinner />
+                ) : (
+                    <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>
+                        {isError && <Feilmelding />}
+                        <Textarea
+                            {...register("hvaSokesOm")}
+                            id={"hvaSokesOm"}
+                            error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
+                            label={begrunnelseNyTekst ? t("hva.label") : t("hva.label.old")}
+                            description={begrunnelseNyTekst ? t("hva.description") : t("hva.description.old")}
+                        />
+                        <Textarea
+                            {...register("hvorforSoke")}
+                            id={"hvorforSoke"}
+                            label={begrunnelseNyTekst ? t("hvorfor.label") : t("hvorfor.label.old")}
+                            description={begrunnelseNyTekst ? t("hvorfor.description") : undefined}
+                            error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
+                        />
+                    </form>
+                )}
+                <SkjemaSteg.Buttons loading={isPending} />
             </SkjemaSteg.Content>
         </SkjemaSteg>
     );

@@ -2,29 +2,44 @@ import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useFeatureFlags} from "../../featureFlags";
 import * as React from "react";
 import {useEffect} from "react";
-import {hentBegrunnelse, updateBegrunnelse} from "../../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
+import {
+    getHentBegrunnelseQueryOptions,
+    updateBegrunnelse,
+    useHentBegrunnelse,
+} from "../../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
 import {BegrunnelseFrontend} from "../../../generated/model";
 import {logAmplitudeEvent} from "../../utils/amplitude";
 import {faro} from "@grafana/faro-react";
+import {useQueryClient} from "@tanstack/react-query";
 
 export const useBegrunnelse = () => {
     const behandlingsId = useBehandlingsId();
+    // TODO: Avklare denne. Er det behov lenger?
     const {begrunnelseNyTekst} = useFeatureFlags();
     const [isError, setIsError] = React.useState(false);
+    const queryClient = useQueryClient();
+    const {isPending, queryKey} = useHentBegrunnelse(behandlingsId);
 
-    const hent = () => hentBegrunnelse(behandlingsId);
-    const lagre = async (data: BegrunnelseFrontend) => {
+    // Returnerer promise som resolver til dataen når den er klar.
+    // For bruk med react-hook-form defaultValues.
+    const get = (): Promise<BegrunnelseFrontend> =>
+        queryClient.ensureQueryData(getHentBegrunnelseQueryOptions(behandlingsId));
+
+    // Lagrer data på backend og oppdaterer lokal cache.
+    const put = async (begrunnelse: BegrunnelseFrontend) => {
         logAmplitudeEvent("begrunnelse fullført", {
-            hvaLengde: (Math.round((data?.hvaSokesOm?.length ?? 0) / 20) - 1) * 20,
-            hvorforLengde: (Math.round((data?.hvorforSoke?.length ?? 0) / 20) - 1) * 20,
+            hvaLengde: (Math.round((begrunnelse?.hvaSokesOm?.length ?? 0) / 20) - 1) * 20,
+            hvorforLengde: (Math.round((begrunnelse?.hvorforSoke?.length ?? 0) / 20) - 1) * 20,
             begrunnelseNyTekst,
         });
 
         try {
-            await updateBegrunnelse(behandlingsId, data);
+            queryClient.setQueryData(queryKey, begrunnelse);
+            await updateBegrunnelse(behandlingsId, begrunnelse);
         } catch (e) {
             setIsError(true);
             faro.api.pushError(e);
+            throw e;
         }
     };
 
@@ -32,9 +47,5 @@ export const useBegrunnelse = () => {
         logAmplitudeEvent("begrunnelse åpnet", {begrunnelseNyTekst});
     }, [begrunnelseNyTekst]);
 
-    return {
-        hent,
-        lagre,
-        isError,
-    };
+    return {get, put, isPending, isError};
 };
