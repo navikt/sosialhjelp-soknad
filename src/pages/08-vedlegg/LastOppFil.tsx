@@ -28,7 +28,8 @@ export const LastOppFil = ({
 
     const handleFileSelect = ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => {
         if (!files?.length) return;
-        setFilePreviews((prevFiles) => [...prevFiles, ...files]);
+        const fileList = Array.from(files || []);
+        setFilePreviews((prevFiles) => [...prevFiles, ...fileList]);
         if (vedleggElement?.current) vedleggElement.current.value = "";
     };
 
