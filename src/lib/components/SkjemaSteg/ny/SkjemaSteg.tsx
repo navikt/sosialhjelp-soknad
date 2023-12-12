@@ -27,8 +27,9 @@ type TSkjemaStegContext = {
 
 export const SkjemaStegContext = createContext<TSkjemaStegContext | null>(null);
 
-// Throw this error when rejecting navigation based on form errors;
-// all other rejections will be logged
+// This error can be thrown in requestNavigation to prevent navigation.
+// All other errors prevent navigation too; this just prevents it from
+// being logged.
 export class DigisosValidationError extends Error {}
 
 // Kast en DigisosValidationError, som forhindrer klienten fra å navigere
