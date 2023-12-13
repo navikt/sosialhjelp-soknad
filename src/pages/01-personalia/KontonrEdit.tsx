@@ -5,7 +5,7 @@ import * as React from "react";
 import {KontonummerFrontend, KontonummerInputDTO} from "../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
-import {registerWithMasks} from "@fremtind/jkl-formatters-util";
+import {formatKontonummer, registerWithMasks} from "@fremtind/jkl-formatters-util";
 
 const KontonummerRegex = new RegExp("^\\d{11}$");
 
@@ -31,8 +31,10 @@ export const KontonrEdit = ({
 }) => {
     const {t} = useTranslation("skjema");
 
-    if (defaultValues.brukerutfyltVerdi === null) {
+    if (typeof defaultValues.brukerutfyltVerdi !== "string") {
         defaultValues.brukerutfyltVerdi = "";
+    } else {
+        defaultValues.brukerutfyltVerdi = formatKontonummer(defaultValues.brukerutfyltVerdi);
     }
 
     const form = useForm<KontonummerInputDTO>({
