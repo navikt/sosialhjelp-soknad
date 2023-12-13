@@ -80,7 +80,7 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: S
             </Link>
             <AppHeader className={"w-full"} />
             <SkjemaStegNavStepperLegacy skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={gotoPage} />
-            <div className={"max-w-3xl mx-auto skjema-steg skjema-content"}>
+            <div className={"w-full max-w-3xl mx-auto"}>
                 <NedetidPanel varselType={"infoside"} />
                 <Feiloppsummering valideringsfeil={feil} visFeilliste={visValideringsfeil} />
                 <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8"}>
