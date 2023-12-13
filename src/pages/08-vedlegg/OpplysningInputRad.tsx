@@ -30,11 +30,11 @@ export const OpplysningInputRad = ({
                     key={fieldName}
                     render={({field, fieldState}) => (
                         <>
-                            <p style={{fontSize: 16}}>{t(`${textKey}.${fieldName}.label`)}</p>
                             <TextField
-                                label=""
+                                label={<span style={{fontSize: 16}}>{t(`${textKey}.${fieldName}.label`)}</span>}
                                 className={cx("pb-2")}
                                 error={fieldState.isTouched && fieldState.error?.message && t(fieldState.error.message)}
+                                autoComplete={"off"}
                                 {...field}
                                 // To avoid value === null
                                 value={field.value || ""}
