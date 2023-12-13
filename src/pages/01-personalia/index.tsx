@@ -41,7 +41,7 @@ export const Personopplysninger = () => {
                 <SkjemaSteg.Title />
                 {error && (
                     <SkjemaSteg.ErrorSummary
-                        errors={{soknadsmottaker: {message: error}} as FieldErrorsImpl<NavEnhetFrontend>}
+                        errors={{adressefelt: {message: error}} as FieldErrorsImpl<NavEnhetFrontend>}
                     />
                 )}
                 <BasisPersonalia />
