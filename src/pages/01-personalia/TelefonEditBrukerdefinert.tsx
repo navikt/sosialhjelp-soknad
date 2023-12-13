@@ -26,11 +26,11 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
                 error={error}
             />
             <div className={"space-x-2"}>
-                <Button variant="secondary" onClick={() => setTelefonnummer(null).then(() => reset())}>
-                    {t("avbryt")}
-                </Button>
                 <Button type={"submit"} data-testid="lagre-telefonnummer">
                     {t("lagreEndring")}
+                </Button>
+                <Button variant="secondary" onClick={() => setTelefonnummer(null).then(() => reset())}>
+                    {t("avbryt")}
                 </Button>
             </div>
         </form>

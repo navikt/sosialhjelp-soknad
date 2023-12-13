@@ -68,11 +68,11 @@ export const KontonrEdit = ({
             />
             <Checkbox {...register("harIkkeKonto")}>{t("kontakt.kontonummer.harikke")}</Checkbox>
             <div className={"space-x-2"}>
-                <Button variant="secondary" onClick={onCancel}>
-                    {t("avbryt")}
-                </Button>
                 <Button type={"submit"} data-testid="lagre-kontonummer">
                     {t("lagreEndring")}
+                </Button>
+                <Button variant="secondary" onClick={onCancel}>
+                    {t("avbryt")}
                 </Button>
             </div>
         </form>
