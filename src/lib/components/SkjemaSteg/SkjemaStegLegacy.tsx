@@ -74,31 +74,31 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: S
     useTitle(`${stegTittel} - ${documentTitle}`);
 
     return (
-        <div id="main-content" className="pb-4 lg:pb-40 gap-10 flex flex-col bg-digisosGronnBakgrunn">
+        <div className="pb-4 lg:pb-40 gap-10 flex flex-col bg-digisosGronnBakgrunn">
             <Link href="#main-content" className="sr-only sr-only-focusable">
                 {t("hoppTilHovedinnhold")}
             </Link>
             <AppHeader className={"w-full"} />
             <SkjemaStegNavStepperLegacy skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={gotoPage} />
-            <main id="main-content">
-                <div className={"max-w-3xl mx-auto skjema-steg skjema-content"}>
-                    <NedetidPanel varselType={"infoside"} />
-                    <Feiloppsummering valideringsfeil={feil} visFeilliste={visValideringsfeil} />
-                    <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8"}>
-                        <SkjemaStegHeading ikon={ikon} stegTittel={stegTittel} />
-                        <div className={"space-y-12 lg:space-y-24"}>{children}</div>
-                        <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
-                        <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
-                        {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && <NavEnhetInaktiv />}
-                        <SkjemaStegNavKnapperLegacy
-                            skjemaConfig={skjemaConfig}
-                            steg={skjemaConfig.steg[steg]}
-                            goToStep={gotoPage}
-                            onSend={onSend}
-                        />
-                    </div>
+            <div className={"max-w-3xl mx-auto skjema-steg skjema-content"}>
+                <NedetidPanel varselType={"infoside"} />
+                <Feiloppsummering valideringsfeil={feil} visFeilliste={visValideringsfeil} />
+                <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8"}>
+                    <SkjemaStegHeading ikon={ikon} stegTittel={stegTittel} />
+                    <main id="main-content" className={"space-y-12 lg:space-y-24"}>
+                        {children}
+                    </main>
+                    <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
+                    <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
+                    {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && <NavEnhetInaktiv />}
+                    <SkjemaStegNavKnapperLegacy
+                        skjemaConfig={skjemaConfig}
+                        steg={skjemaConfig.steg[steg]}
+                        goToStep={gotoPage}
+                        onSend={onSend}
+                    />
                 </div>
-            </main>
+            </div>
         </div>
     );
 };
