@@ -19,10 +19,10 @@ export const TelefonShow = ({onEdit}: {onEdit?: () => void}) => {
 
         if (!onEdit) return <SysteminfoItem label={"Telefonnummer"}>{t("kontakt.telefon.feilmelding")}</SysteminfoItem>;
         return (
-            <>
+            <li>
                 {t("kontakt.system.telefoninfo.ingeninfo")}
                 <LinkButton onClick={onEdit}>{t("kontakt.telefon.oppgi")}</LinkButton>
-            </>
+            </li>
         );
     });
 };
