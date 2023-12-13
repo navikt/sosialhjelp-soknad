@@ -17,26 +17,28 @@ export const TabellView = ({opplysning}: {opplysning: VedleggFrontend}) => {
 
     return (
         <form>
-            <ul>
-                {entries.map(({id}, index) => (
-                    <OpplysningInputRad
-                        key={id}
-                        textKey={textKey}
-                        index={index}
-                        control={control}
-                        fields={inputs}
-                        onDelete={index > 0 ? remove : undefined}
-                    />
-                ))}
-                {multirow && (
-                    <li className={`pt-3 pb-4`}>
-                        <LinkButton onClick={() => append({})}>
-                            <span aria-hidden={true}>+ </span>
-                            {t(`${textKey}.leggtil`)}
-                        </LinkButton>
-                    </li>
-                )}
-            </ul>
+            {entries.length > 0 && (
+                <ul>
+                    {entries.map(({id}, index) => (
+                        <OpplysningInputRad
+                            key={id}
+                            textKey={textKey}
+                            index={index}
+                            control={control}
+                            fields={inputs}
+                            onDelete={index > 0 ? remove : undefined}
+                        />
+                    ))}
+                    {multirow && (
+                        <li className={`pt-3 pb-4`}>
+                            <LinkButton onClick={() => append({})}>
+                                <span aria-hidden={true}>+ </span>
+                                {t(`${textKey}.leggtil`)}
+                            </LinkButton>
+                        </li>
+                    )}
+                </ul>
+            )}
             {i18n.exists(`${textKey}.vedlegg.sporsmal.tittel`) && (
                 <BodyShort size={"small"}>{t(`${textKey}.vedlegg.sporsmal.tittel`)}</BodyShort>
             )}
