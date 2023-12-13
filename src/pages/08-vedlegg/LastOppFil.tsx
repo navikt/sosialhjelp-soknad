@@ -53,7 +53,7 @@ export const LastOppFil = ({
                 className="last-opp-vedlegg-knapp"
             >
                 <div className={"flex gap-1 items-center"}>
-                    <PlusIcon /> {t("opplysninger.vedlegg.knapp.tekst")}
+                    <PlusIcon aria-label={""} /> {t("opplysninger.vedlegg.knapp.tekst")}
                     {visSpinner && <Loader className={"ml-1"} />}
                 </div>
             </Button>
