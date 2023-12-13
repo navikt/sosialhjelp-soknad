@@ -5,6 +5,7 @@ import * as React from "react";
 import {KontonummerFrontend, KontonummerInputDTO} from "../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
+import {registerWithMasks} from "@fremtind/jkl-formatters-util";
 
 const KontonummerRegex = new RegExp("^\\d{11}$");
 
@@ -30,6 +31,15 @@ export const KontonrEdit = ({
 }) => {
     const {t} = useTranslation("skjema");
 
+    if (defaultValues.brukerutfyltVerdi === null) {
+        defaultValues.brukerutfyltVerdi = "";
+    }
+
+    const form = useForm<KontonummerInputDTO>({
+        defaultValues: defaultValues,
+        resolver: zodResolver(KontonummerSchema),
+    });
+
     const {
         handleSubmit,
         register,
@@ -37,15 +47,14 @@ export const KontonrEdit = ({
         formState: {
             errors: {brukerutfyltVerdi: kontonummerError},
         },
-    } = useForm<KontonummerInputDTO>({
-        defaultValues: defaultValues,
-        resolver: zodResolver(KontonummerSchema),
-    });
+    } = form;
+
+    const {registerWithKontonummerMask} = registerWithMasks(form);
 
     return (
         <form onSubmit={handleSubmit(onSave)}>
             <TextField
-                {...register("brukerutfyltVerdi")}
+                {...registerWithKontonummerMask("brukerutfyltVerdi")}
                 label={t("kontakt.kontonummer.sporsmal")}
                 inputMode="numeric"
                 htmlSize={13}
