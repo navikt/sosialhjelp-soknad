@@ -76,7 +76,7 @@ Spørsmål knyttet til koden eller prosjektet kan rettes mot:
 
 ### For NAV-ansatte
 
-Interne henvendelser kan sendes via Slack i kanalen #digisos.
+Interne henvendelser kan sendes via Slack i kanalen #team_digisos.
 
 ## Hvordan komme i gang
 
