@@ -14,7 +14,8 @@ export const SkattbarInntekt = () => {
     const inntektFraSkatteetatenFeilet = data?.inntektFraSkatteetatenFeilet;
 
     if (isLoading) return <TextPlaceholder lines={3} />;
-    if (inntektFraSkatteetatenFeilet) throw new Error("Kunne ikke hente inntekt fra skatteetaten");
+    if (inntektFraSkatteetatenFeilet)
+        return <Alert variant="error">{t("utbetalinger.skattbar.kontaktproblemer")}</Alert>;
     if (samtykke && samtykkeTidspunkt === "")
         return <Alert variant="error">{t("utbetalinger.skattbar.kontaktproblemer")}</Alert>;
 
