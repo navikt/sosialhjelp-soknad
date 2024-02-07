@@ -39,20 +39,31 @@ export const serverRequest = <T>(
         credentials: determineCredentialsParameter(),
         body: body ? body : undefined,
     };
+    console.log("baseurl", baseURL);
+    console.log("urlpath", urlPath);
+    console.log("baseURL + urlPath", baseURL + urlPath);
 
     return new Promise<T>((resolve, reject) => {
         fetch(baseURL + urlPath, OPTIONS)
             .then((response: Response) => {
-                if (response.ok) resolve(toJson<T>(response));
+                //console.log("response", response);
+                if (response.ok) {
+                    resolve(toJson<T>(response));
+                    console.log("all ok");
+                }
 
                 const {status, statusText} = response;
+                console.log("status", status);
+                console.log("statusText", statusText);
 
                 if (status === 401) {
+                    console.log("401 error");
                     response.json().then((data) => redirectToLogin(data));
                     return;
                 }
 
                 if (status === 409) {
+                    console.log("409 error");
                     if (!retries) throw new DigisosLegacyRESTError(status, `Ran out of 409 retries: ${statusText}`);
 
                     setTimeout(
@@ -68,6 +79,7 @@ export const serverRequest = <T>(
                 }
 
                 if ([403, 410].includes(status)) {
+                    console.log("403 eller 410 error");
                     logWarning(`Redirecter til /informasjon i rest-utils fordi HTTP ${status}`);
                     window.location.href = `/sosialhjelp/soknad/informasjon?reason=legacy${status}`;
 
@@ -125,6 +137,8 @@ export function fetchUploadIgnoreErrors(urlPath: string, formData: FormData, met
 }
 
 export function toJson<T>(response: Response): Promise<T> {
+    console.log("is response ok?");
+    //console.log("response", response)
     if (response.status === 204) return response.text() as Promise<any>;
 
     return response.json();

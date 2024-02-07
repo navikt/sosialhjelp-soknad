@@ -72,6 +72,7 @@ export const axiosInstance = <T>(
     options?: AxiosRequestConfig & DigisosAxiosConfig,
     retry: number = 0
 ): Promise<T> => {
+    console.log("wat is upppppppp?!?!?!??!");
     const source = Axios.CancelToken.source();
     const promise: CancellablePromise<AxiosResponse> = AXIOS_INSTANCE({
         ...config,
@@ -80,11 +81,13 @@ export const axiosInstance = <T>(
     })
         .then(({data}) => data)
         .catch(async (e) => {
+            console.log("ERRORRRORROORO!?!?!??!?!?!", e);
             if (!(e instanceof AxiosError)) await logWarning(`non-axioserror error ${e} in axiosinstance`);
 
             if (isCancel(e) || options?.digisosIgnoreErrors) return new Promise<T>(() => {});
 
             if (!e.response) {
+                console.log("!e.response wwwwwwwwaaaaaaaaaaattttt");
                 await logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
                 throw e;
             }
@@ -92,18 +95,21 @@ export const axiosInstance = <T>(
             const {status, data} = e.response;
 
             if (isLoginRedirect401(e.response)) {
+                console.log("401 come ooooooonnnnn!!??!?!");
                 await redirectToLogin(e.response.data);
                 return new Promise<T>(() => {});
             }
 
             // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
             if ([403, 404, 410].includes(status)) {
+                console.log("403 404 410 wat");
                 window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
                 return new Promise<T>(() => {});
             }
 
             // Conflict -- try again
             if (status === 409) {
+                console.log("409 up here");
                 if (retry >= 10) {
                     await logError("Max retries encountered!");
                     throw e;

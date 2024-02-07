@@ -15,6 +15,7 @@ const searchForAddress = async (value: string): Promise<AdresseForslag[]> => {
         const adresser = await fetchToJson<AdresseForslag[]>(
             "informasjon/adressesok?sokestreng=" + encodeURIComponent(value)
         );
+        console.log("adresser", adresser);
         return Promise.resolve(removeDuplicatesAfterTransform(adresser, formaterAdresseString).slice(0, 8));
     } catch (err) {
         return Promise.resolve([]);
