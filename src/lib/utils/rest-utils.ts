@@ -45,27 +45,28 @@ export const serverRequest = <T>(
 
     return new Promise<T>((resolve, reject) => {
         fetch(baseURL + urlPath, OPTIONS)
-            .then((response: Response) => {
+            .then((response: Response) => response.json())
+            .then((data) => {
                 //console.log("response", response);
-                if (response.ok) {
-                    resolve(toJson<T>(response));
+                if (data.ok) {
+                    resolve(toJson<T>(data));
                     console.log("all ok");
                 }
 
-                const {status, statusText} = response;
+                const {status, statusText} = data;
                 console.log("status", status);
                 console.log("statusText", statusText);
 
                 if (status === 400) {
                     console.log("---------------------------------------");
-                    console.log("response.status", response.status);
-                    console.log("response.statusText", response.statusText);
-                    console.log("response.headers", response.headers);
-                    console.log("response.redirected", response.redirected);
-                    console.log("response.type", response.type);
-                    console.log("response.url", response.url);
-                    console.log("response.body", response.body);
-                    console.log("response.bodyUsed", response.bodyUsed);
+                    console.log("response.status", data.status);
+                    console.log("response.statusText", data.statusText);
+                    console.log("response.headers", data.headers);
+                    console.log("response.redirected", data.redirected);
+                    console.log("response.type", data.type);
+                    console.log("response.url", data.url);
+                    console.log("response.body", data.body);
+                    console.log("response.bodyUsed", data.bodyUsed);
                     console.log("---------------------------------------");
                     //console.log("400 error");
                     return;
@@ -73,7 +74,7 @@ export const serverRequest = <T>(
 
                 if (status === 401) {
                     console.log("401 error");
-                    response.json().then((data) => redirectToLogin(data));
+                    data.json().then((hey: any) => redirectToLogin(hey));
                     return;
                 }
 
@@ -101,7 +102,7 @@ export const serverRequest = <T>(
                     return;
                 }
 
-                throw new DigisosLegacyRESTError(response.status, response.statusText);
+                throw new DigisosLegacyRESTError(data.status, data.statusText);
             })
             .catch(reject);
     });
