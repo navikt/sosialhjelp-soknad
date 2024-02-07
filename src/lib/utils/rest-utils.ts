@@ -44,70 +44,66 @@ export const serverRequest = <T>(
     console.log("baseURL + urlPath", baseURL + urlPath);
 
     return new Promise<T>((resolve, reject) => {
-        try {
-            fetch(baseURL + urlPath, OPTIONS)
-                .then((response: Response) => {
-                    //console.log("response", response);
-                    if (response.ok) {
-                        resolve(toJson<T>(response));
-                        console.log("all ok");
-                    }
+        fetch(baseURL + urlPath, OPTIONS)
+            .then((response: Response) => {
+                //console.log("response", response);
+                if (response.ok) {
+                    resolve(toJson<T>(response));
+                    console.log("all ok");
+                }
 
-                    const {status, statusText} = response;
-                    console.log("status", status);
-                    console.log("statusText", statusText);
+                const {status, statusText} = response;
+                console.log("status", status);
+                console.log("statusText", statusText);
 
-                    if (status === 400) {
-                        console.log("---------------------------------------");
-                        console.log("response.status", response.status);
-                        console.log("response.statusText", response.statusText);
-                        console.log("response.headers", response.headers);
-                        console.log("response.redirected", response.redirected);
-                        console.log("response.type", response.type);
-                        console.log("response.url", response.url);
-                        console.log("response.body", response.body);
-                        console.log("response.bodyUsed", response.bodyUsed);
-                        console.log("---------------------------------------");
-                        //console.log("400 error");
-                        return;
-                    }
+                if (status === 400) {
+                    console.log("---------------------------------------");
+                    console.log("response.status", response.status);
+                    console.log("response.statusText", response.statusText);
+                    console.log("response.headers", response.headers);
+                    console.log("response.redirected", response.redirected);
+                    console.log("response.type", response.type);
+                    console.log("response.url", response.url);
+                    console.log("response.body", response.body);
+                    console.log("response.bodyUsed", response.bodyUsed);
+                    console.log("---------------------------------------");
+                    //console.log("400 error");
+                    return;
+                }
 
-                    if (status === 401) {
-                        console.log("401 error");
-                        response.json().then((data) => redirectToLogin(data));
-                        return;
-                    }
+                if (status === 401) {
+                    console.log("401 error");
+                    response.json().then((data) => redirectToLogin(data));
+                    return;
+                }
 
-                    if (status === 409) {
-                        console.log("409 error");
-                        if (!retries) throw new DigisosLegacyRESTError(status, `Ran out of 409 retries: ${statusText}`);
+                if (status === 409) {
+                    console.log("409 error");
+                    if (!retries) throw new DigisosLegacyRESTError(status, `Ran out of 409 retries: ${statusText}`);
 
-                        setTimeout(
-                            () => {
-                                serverRequest(method, urlPath, body, withAccessToken, retries - 1)
-                                    .then((data: unknown) => resolve(data as T))
-                                    .catch(reject);
-                            },
-                            100 * (7 - retries)
-                        );
+                    setTimeout(
+                        () => {
+                            serverRequest(method, urlPath, body, withAccessToken, retries - 1)
+                                .then((data: unknown) => resolve(data as T))
+                                .catch(reject);
+                        },
+                        100 * (7 - retries)
+                    );
 
-                        return;
-                    }
+                    return;
+                }
 
-                    if ([403, 410].includes(status)) {
-                        console.log("403 eller 410 error");
-                        logWarning(`Redirecter til /informasjon i rest-utils fordi HTTP ${status}`);
-                        window.location.href = `/sosialhjelp/soknad/informasjon?reason=legacy${status}`;
+                if ([403, 410].includes(status)) {
+                    console.log("403 eller 410 error");
+                    logWarning(`Redirecter til /informasjon i rest-utils fordi HTTP ${status}`);
+                    window.location.href = `/sosialhjelp/soknad/informasjon?reason=legacy${status}`;
 
-                        return;
-                    }
+                    return;
+                }
 
-                    throw new DigisosLegacyRESTError(response.status, response.statusText);
-                })
-                .catch(reject);
-        } catch (e) {
-            console.log("is actually e", e);
-        }
+                throw new DigisosLegacyRESTError(response.status, response.statusText);
+            })
+            .catch(reject);
     });
 };
 

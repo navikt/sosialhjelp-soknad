@@ -11,10 +11,13 @@ import * as React from "react";
 import {useTranslation} from "react-i18next";
 
 const searchForAddress = async (value: string): Promise<AdresseForslag[]> => {
+    const encodedInputValue = encodeURIComponent(value);
     try {
-        const adresser = await fetchToJson<AdresseForslag[]>(
-            `informasjon/adressesok?sokestreng=${encodeURIComponent(value)}`
-        );
+        const adresser = await fetchToJson<AdresseForslag[]>(`informasjon/adressesok?sokestreng=${encodedInputValue}`);
+
+        //  "informasjon/adressesok?sokestreng=" + encodeURIComponent(value)
+        //  `informasjon/adressesok?sokestreng=${encodeURIComponent(value)}`
+
         console.log("adresser", adresser);
         return Promise.resolve(removeDuplicatesAfterTransform(adresser, formaterAdresseString).slice(0, 8));
     } catch (err) {
