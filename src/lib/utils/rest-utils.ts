@@ -58,7 +58,17 @@ export const serverRequest = <T>(
                     console.log("statusText", statusText);
 
                     if (status === 400) {
-                        console.log("400 error");
+                        console.log("---------------------------------------");
+                        console.log("response.status", response.status);
+                        console.log("response.statusText", response.statusText);
+                        console.log("response.headers", response.headers);
+                        console.log("response.redirected", response.redirected);
+                        console.log("response.type", response.type);
+                        console.log("response.url", response.url);
+                        console.log("response.body", response.body);
+                        console.log("response.bodyUsed", response.bodyUsed);
+                        console.log("---------------------------------------");
+                        //console.log("400 error");
                         return;
                     }
 
