@@ -170,7 +170,7 @@ export const useVedlegg = (opplysning: Opplysning) => {
         }
     };
 
-    const upload = (file: File) => {
+    const upload = (file: Blob) => {
         resetError();
         resetSuccess();
 

@@ -6,7 +6,7 @@ import {useFeatureFlags} from "../../lib/featureFlags";
 import {ForhandsvisningVedleggModal} from "./ForhandsvisningVedleggModal";
 import {PlusIcon} from "@navikt/aksel-icons";
 
-export const isPdf = (file: File) => file.type === "application/pdf";
+export const isPdf = (file: Blob) => file.type === "application/pdf";
 
 export const LastOppFil = ({
     doUpload,
@@ -18,13 +18,13 @@ export const LastOppFil = ({
     opplysning: Opplysning;
     isDisabled: boolean;
     visSpinner: boolean;
-    doUpload: (file: File) => void;
+    doUpload: (file: Blob) => void;
     resetAlerts: () => void;
 }) => {
     const {t} = useTranslation();
     const {tilgjengeliggjorFlereFilformater} = useFeatureFlags();
     const vedleggElement = React.useRef<HTMLInputElement>(null);
-    const [filePreviews, setFilePreviews] = React.useState<File[]>([]);
+    const [filePreviews, setFilePreviews] = React.useState<Blob[]>([]);
 
     const handleFileSelect = ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => {
         if (!files?.length) return;

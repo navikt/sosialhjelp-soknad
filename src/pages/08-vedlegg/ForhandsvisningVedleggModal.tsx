@@ -5,22 +5,18 @@ import {isPdf} from "./LastOppFil";
 import {useTranslation} from "react-i18next";
 
 interface ForhandsvisningModalProps {
-    filePreviews: File[];
+    filePreviews: Blob[];
     showModal: boolean;
     onAccept: () => void;
     onClose: () => void;
     onDelete: (index: number) => void;
 }
 
-const FilePreviewDisplay = ({file}: {file: File}) =>
+const FilePreviewDisplay = ({file}: {file: Blob}) =>
     isPdf(file) ? (
-        <iframe title={`File preview ${file.name}`} src={URL.createObjectURL(file)} className={"h-full w-full my-4"} />
+        <iframe title={`File preview`} src={URL.createObjectURL(file)} className={"h-full w-full my-4"} />
     ) : (
-        <img
-            alt={`File preview ${file.name}`}
-            src={URL.createObjectURL(file)}
-            className={"w-full max-h-[450px] my-4 mx-auto"}
-        />
+        <img alt={`File preview`} src={URL.createObjectURL(file)} className={"w-full max-h-[450px] my-4 mx-auto"} />
     );
 
 // 24/23 px-tallene er satt slik for å matche høyden til X-knappen i Modal-komponenten
@@ -37,7 +33,7 @@ const FilePreviewButtons = ({onDelete, onFullscreen}: {onDelete: () => void; onF
     );
 };
 
-const FilePreview = ({file, onDelete}: {file: File; onDelete: () => void}) => {
+const FilePreview = ({file, onDelete}: {file: Blob; onDelete: () => void}) => {
     // const [fullscreen, setFullscreen] = React.useState<boolean>(false);
     //            <FilePreviewFullscreen show={fullscreen} file={file} onClose={() => setFullscreen(false)} />
     return (
