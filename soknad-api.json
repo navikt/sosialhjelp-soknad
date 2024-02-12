@@ -695,6 +695,7 @@
         "/vedlegg/konverter": {
             "post": {
                 "tags": ["file-converter-controller"],
+                "summary": "Konverterer vedlegg til PDF",
                 "operationId": "konverterVedlegg",
                 "requestBody": {
                     "content": {
@@ -712,7 +713,10 @@
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
-                    "200": {"description": "OK", "content": {"*/*": {"schema": {"type": "string", "format": "byte"}}}}
+                    "200": {
+                        "description": "Vedlegg konvertert til PDF",
+                        "content": {"application/pdf": {"schema": {"type": "string", "format": "binary"}}}
+                    }
                 }
             }
         },
