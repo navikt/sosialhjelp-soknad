@@ -3,7 +3,7 @@ import {Detail, Heading, Radio, RadioGroup, Textarea} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {DigisosValidationError, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useForm} from "react-hook-form";
-import {ArbeidFrontend, UtdanningFrontend} from "../../generated/model";
+import {ArbeidsforholdResponse, UtdanningFrontend} from "../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {ArbeidsforholdListe} from "./ArbeidsforholdListe";
@@ -22,7 +22,7 @@ const ArbeidOgUtdanningSchema = z.object({
 });
 
 export type ArbeidOgUtdanningType = {
-    arbeid: ArbeidFrontend;
+    arbeid: ArbeidsforholdResponse;
     utdanning: UtdanningFrontend;
 };
 
@@ -53,7 +53,7 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                     throw new DigisosValidationError();
                 }
             },
-            (errors) => {
+            (_) => {
                 throw new DigisosValidationError();
             }
         )();
