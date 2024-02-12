@@ -5,6 +5,7 @@ import {Opplysning} from "../../lib/opplysninger";
 import {useFeatureFlags} from "../../lib/featureFlags";
 import {ForhandsvisningVedleggModal} from "./ForhandsvisningVedleggModal";
 import {PlusIcon} from "@navikt/aksel-icons";
+import {konverterVedlegg} from "../../generated/file-converter-controller/file-converter-controller";
 
 export const isPdf = (file: Blob) => file.type === "application/pdf";
 
@@ -26,10 +27,20 @@ export const LastOppFil = ({
     const vedleggElement = React.useRef<HTMLInputElement>(null);
     const [filePreviews, setFilePreviews] = React.useState<Blob[]>([]);
 
-    const handleFileSelect = ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileSelect = async ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => {
         if (!files?.length) return;
+
         const fileList = Array.from(files || []);
-        setFilePreviews((prevFiles) => [...prevFiles, ...fileList]);
+
+        const convertedIfNecessary = await Promise.all(
+            fileList.map(async (file) => {
+                if (file.type === "application/pdf") return file as Blob;
+
+                return konverterVedlegg({file: file});
+            })
+        );
+
+        setFilePreviews((prevFiles) => [...prevFiles, ...convertedIfNecessary]);
         if (vedleggElement?.current) vedleggElement.current.value = "";
     };
 
