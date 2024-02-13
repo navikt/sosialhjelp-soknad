@@ -23,5 +23,10 @@ export default defineConfig(({command, mode}) => {
         define: {
             DIGISOS_ENV: JSON.stringify(env.REACT_APP_DIGISOS_ENV),
         },
+        optimizeDeps: {
+            esbuildOptions: {
+                target: "es2022",
+            },
+        },
     };
 });
