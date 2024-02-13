@@ -11,14 +11,12 @@ import {konverterVedlegg} from "../../generated/file-converter-controller/file-c
 export const usePDFConverter = () => {
     const [conversionPending, setConversionPending] = React.useState(false);
 
-    const convertToPDF = async (file: Blob) => {
+    const convertToPDF = (file: Blob): Promise<Blob> => {
         setConversionPending(true);
         try {
-            const blob = await konverterVedlegg({file: file});
-            return blob;
+            return konverterVedlegg({file: file});
         } catch (e) {
             throw new PdfConversionError(e);
-            return null;
         } finally {
             setConversionPending(false);
         }
