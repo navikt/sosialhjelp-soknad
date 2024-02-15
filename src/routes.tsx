@@ -77,7 +77,7 @@ export const router = createBrowserRouter(createRoutesFromElements(routes), {bas
 initializeFaro({
     url: config.faro.url,
     app: {
-        name: "frontend",
+        name: "sosialhjelp-soknad",
         version: "1.0.0",
     },
     instrumentations: [
