@@ -35,13 +35,12 @@ export const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const {deleteFile, files, upload, error, success, loading} = useVedlegg(opplysning);
 
     const handleAlleredeLastetOpp = async (event: ChangeEvent<HTMLInputElement>) => {
+        await queryClient.refetchQueries({queryKey});
+
         await updateOkonomiskOpplysning(behandlingsId, {
-            ...{...opplysning, slettet: undefined, pendingLasterOppFil: undefined},
+            ...{...opplysning, vedleggStatus: undefined, slettet: undefined, pendingLasterOppFil: undefined},
             alleredeLevert: event.target.checked,
         });
-
-        // FIXME: Don't know why this is needed, presumably race condition on back-end
-        await new Promise<void>((resolve) => setTimeout(() => resolve(), 200));
 
         await queryClient.invalidateQueries({queryKey});
     };
@@ -106,7 +105,7 @@ export const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                     "checkboks--disabled": opplysning.filer?.length,
                 })}
                 onChange={handleAlleredeLastetOpp}
-                checked={opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
+                checked={opplysning.alleredeLevert}
                 disabled={!!files.length || loading}
             >
                 {t("opplysninger.vedlegg.alleredelastetopp")}
