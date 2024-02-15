@@ -15,6 +15,8 @@ import {
 import {useQueryClient} from "@tanstack/react-query";
 import {Alert, Checkbox} from "@navikt/ds-react";
 import styled from "styled-components";
+import {UploadError} from "./UploadError";
+import {FaroErrorBoundary} from "@grafana/faro-react";
 
 const StyledAlert = styled(Alert)`
     margin-top: 1rem;
@@ -67,16 +69,21 @@ export const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
 
     return (
         <div>
-            <LastOppFil
-                opplysning={opplysning}
-                isDisabled={loading || opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
-                visSpinner={!!opplysning.pendingLasterOppFil}
-                doUpload={upload}
-                resetAlerts={() => {
-                    setShowSuccessAlert(false);
-                    setShowErrorAlert(false);
-                }}
-            />
+            <FaroErrorBoundary fallback={(error, resetError) => <UploadError error={error} resetError={resetError} />}>
+                <LastOppFil
+                    opplysning={opplysning}
+                    isDisabled={
+                        loading || opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt
+                    }
+                    visSpinner={!!opplysning.pendingLasterOppFil}
+                    doUpload={upload}
+                    resetAlerts={() => {
+                        setShowSuccessAlert(false);
+                        setShowErrorAlert(false);
+                    }}
+                />
+            </FaroErrorBoundary>
+
             {files.length > 0 && (
                 <div className="vedleggsliste">
                     {files.map((fil) => (

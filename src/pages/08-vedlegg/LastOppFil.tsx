@@ -6,8 +6,7 @@ import {useFeatureFlags} from "../../lib/featureFlags";
 import {ForhandsvisningVedleggModal} from "./ForhandsvisningVedleggModal";
 import {PlusIcon} from "@navikt/aksel-icons";
 import {usePDFConverter} from "./usePDFConverter";
-import {FaroErrorBoundary} from "@grafana/faro-react";
-import {UploadError} from "./UploadError";
+import {PdfConversionError} from "./UploadError";
 
 export const isPdf = (file: Blob) => file.type === "application/pdf";
 
@@ -28,8 +27,10 @@ export const LastOppFil = ({
     const {tilgjengeliggjorFlereFilformater} = useFeatureFlags();
     const vedleggElement = React.useRef<HTMLInputElement>(null);
     const [previewFile, setPreviewFile] = React.useState<Blob | null>(null);
-    const {conversionPending, convertToPDF} = usePDFConverter();
+    const {conversionPending, conversionError, convertToPDF} = usePDFConverter();
     const isPending = visSpinner || conversionPending;
+
+    if (conversionError) throw new PdfConversionError("conversion error", {cause: conversionError});
 
     const handleFileSelect = async ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => {
         if (!files?.length) return;
@@ -50,57 +51,45 @@ export const LastOppFil = ({
 
     return (
         <div className="pt-2">
-            <FaroErrorBoundary
-                fallback={(error, resetError) => (
-                    <UploadError
-                        error={error}
-                        resetError={() => {
-                            setPreviewFile(null);
-                            resetError();
-                        }}
-                    />
-                )}
+            <Button
+                variant="secondary"
+                id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
+                disabled={isDisabled}
+                onClick={() => {
+                    resetAlerts();
+                    vedleggElement?.current?.click();
+                }}
+                className="last-opp-vedlegg-knapp"
             >
-                <Button
-                    variant="secondary"
-                    id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
-                    disabled={isDisabled}
-                    onClick={() => {
-                        resetAlerts();
-                        vedleggElement?.current?.click();
-                    }}
-                    className="last-opp-vedlegg-knapp"
-                >
-                    <div className={"flex gap-1 items-center"}>
-                        <PlusIcon aria-label={""} /> {t("opplysninger.vedlegg.knapp.tekst")}
-                        {isPending && <Loader className={"ml-1"} />}
-                    </div>
-                </Button>
-                <input
-                    aria-hidden
-                    id={opplysning.type.replace(/\./g, "_") + "_skjult_upload_input"}
-                    ref={vedleggElement}
-                    onChange={handleFileSelect}
-                    type="file"
-                    className="hidden"
-                    tabIndex={-1}
-                    accept={
-                        window.navigator.platform.match(/iPad|iPhone|iPod/) !== null
-                            ? "*"
-                            : tilgjengeliggjorFlereFilformater
-                            ? alwaysAllowedFormats + devOnlyFormats
-                            : alwaysAllowedFormats
-                    }
+                <div className={"flex gap-1 items-center"}>
+                    <PlusIcon aria-label={""} /> {t("opplysninger.vedlegg.knapp.tekst")}
+                    {isPending && <Loader className={"ml-1"} />}
+                </div>
+            </Button>
+            <input
+                aria-hidden
+                id={opplysning.type.replace(/\./g, "_") + "_skjult_upload_input"}
+                ref={vedleggElement}
+                onChange={handleFileSelect}
+                type="file"
+                className="hidden"
+                tabIndex={-1}
+                accept={
+                    window.navigator.platform.match(/iPad|iPhone|iPod/) !== null
+                        ? "*"
+                        : tilgjengeliggjorFlereFilformater
+                        ? alwaysAllowedFormats + devOnlyFormats
+                        : alwaysAllowedFormats
+                }
+            />
+            {previewFile && (
+                <ForhandsvisningVedleggModal
+                    file={previewFile}
+                    onAccept={() => uploadFiles().then(() => setPreviewFile(null))}
+                    onClose={() => setPreviewFile(null)}
+                    onDelete={deleteFile}
                 />
-                {previewFile && (
-                    <ForhandsvisningVedleggModal
-                        file={previewFile}
-                        onAccept={() => uploadFiles().then(() => setPreviewFile(null))}
-                        onClose={() => setPreviewFile(null)}
-                        onDelete={deleteFile}
-                    />
-                )}
-            </FaroErrorBoundary>
+            )}
         </div>
     );
 };

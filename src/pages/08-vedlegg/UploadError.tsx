@@ -1,8 +1,19 @@
 import {useTranslation} from "react-i18next";
-import {PdfEncryptionError} from "./ForhandsvisningVedleggModal";
-import {PdfConversionError} from "./usePDFConverter";
 import {Alert, BodyShort, Button, Detail, Heading} from "@navikt/ds-react";
 import * as React from "react";
+
+// An error occured during the conversion of a file to PDF.
+export class PdfConversionError extends Error {}
+
+// PDF is encrypted and cannot be displayed.
+export class PdfEncryptionError extends Error {}
+
+// PDF could not be loaded.
+export class PdfLoadError extends Error {}
+
+type ErrorClassType = new (...args: any[]) => Error;
+
+const USER_ERROR_LIST: readonly ErrorClassType[] = [PdfEncryptionError] as const;
 
 export const UploadError = ({error, resetError}: {error: Error; resetError: () => void}) => {
     const {t} = useTranslation();
@@ -12,11 +23,7 @@ export const UploadError = ({error, resetError}: {error: Error; resetError: () =
      * and will be adressed. If the fault is on the user's side, that doesn't make sense.
      * @returns true if the error is caused by the user.
      */
-    const isUserError = (error: Error) => {
-        if (error instanceof PdfEncryptionError) return true;
-
-        return false;
-    };
+    const isUserError = (e: Error) => USER_ERROR_LIST.some((errorClass) => e instanceof errorClass);
 
     /** Map the error to i18next keys, either a specific error message or a general one. */
     const getErrorKey = (error: Error) => {
