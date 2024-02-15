@@ -36,8 +36,7 @@ export const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
 
     const handleAlleredeLastetOpp = async (event: ChangeEvent<HTMLInputElement>) => {
         await updateOkonomiskOpplysning(behandlingsId, {
-            gruppe: opplysning.gruppe,
-            type: opplysning.type,
+            ...{...opplysning, slettet: undefined, pendingLasterOppFil: undefined},
             alleredeLevert: event.target.checked,
         });
 
