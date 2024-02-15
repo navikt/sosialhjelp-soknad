@@ -14,13 +14,8 @@ import {
 } from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
 import {Alert, Checkbox} from "@navikt/ds-react";
-import styled from "styled-components";
 import {UploadError} from "./UploadError";
 import {FaroErrorBoundary} from "@grafana/faro-react";
-
-const StyledAlert = styled(Alert)`
-    margin-top: 1rem;
-`;
 
 export const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
@@ -99,14 +94,14 @@ export const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                 </div>
             )}
             {showSuccessAlert && (
-                <StyledAlert variant="success" className={"py-2"}>
+                <Alert variant="success" className={"py-2 mt-4"}>
                     {success}
-                </StyledAlert>
+                </Alert>
             )}
             {showErrorAlert && (
-                <StyledAlert variant="error" className={"py-2"}>
+                <Alert variant="error" className={"py-2 mt-4"}>
                     {error}
-                </StyledAlert>
+                </Alert>
             )}
             <Checkbox
                 id={opplysning.type + "_allerede_lastet_opp_checkbox"}
