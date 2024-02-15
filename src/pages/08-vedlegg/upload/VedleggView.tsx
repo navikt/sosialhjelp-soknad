@@ -9,23 +9,15 @@ import {Alert} from "@navikt/ds-react";
 import {UploadError} from "./UploadError";
 import {FaroErrorBoundary} from "@grafana/faro-react";
 import {AlreadyUploadedCheckbox} from "./AlreadyUploadedCheckbox";
+import {useTranslation} from "react-i18next";
 
 export const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
+    const {t} = useTranslation();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
     const [showErrorAlert, setShowErrorAlert] = React.useState(false);
-    const previousSuccessRef = useRef<string | null | undefined>();
     const previousErrorRef = useRef<string | null | undefined>();
 
-    const {deleteFile, files, upload, error, success, loading} = useVedlegg(opplysning);
-
-    useEffect(() => {
-        if (success && success !== previousSuccessRef.current) {
-            setShowSuccessAlert(true);
-        } else if (!success) {
-            setShowSuccessAlert(false);
-        }
-        previousSuccessRef.current = success;
-    }, [success]);
+    const {deleteFile, files, upload, error, loading} = useVedlegg(opplysning);
 
     useEffect(() => {
         if (error && error !== previousErrorRef.current) {
@@ -37,7 +29,7 @@ export const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     }, [error]);
 
     return (
-        <div>
+        <div className={"space-y-2"}>
             <FaroErrorBoundary fallback={(error, resetError) => <UploadError error={error} resetError={resetError} />}>
                 <LastOppFil
                     opplysning={opplysning}
@@ -45,7 +37,9 @@ export const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                         loading || opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt
                     }
                     visSpinner={!!opplysning.pendingLasterOppFil}
-                    doUpload={upload}
+                    doUpload={(file) => {
+                        upload(file).then(() => setShowSuccessAlert(true));
+                    }}
                     resetAlerts={() => {
                         setShowSuccessAlert(false);
                         setShowErrorAlert(false);
@@ -53,30 +47,20 @@ export const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                 />
             </FaroErrorBoundary>
 
-            {files.length > 0 && (
-                <div className="vedleggsliste">
-                    {files.map((fil) => (
-                        <OpplastetVedlegg
-                            key={fil.uuid}
-                            fil={fil}
-                            onDelete={() => {
-                                deleteFile(fil.uuid);
-                                setShowSuccessAlert(false);
-                            }}
-                        />
-                    ))}
-                </div>
-            )}
-            {showSuccessAlert && (
-                <Alert variant="success" className={"py-2 mt-4"}>
-                    {success}
-                </Alert>
-            )}
-            {showErrorAlert && (
-                <Alert variant="error" className={"py-2 mt-4"}>
-                    {error}
-                </Alert>
-            )}
+            <ul className="vedleggsliste pb-2">
+                {files.map((fil) => (
+                    <OpplastetVedlegg
+                        key={fil.uuid}
+                        fil={fil}
+                        onDelete={() => {
+                            deleteFile(fil.uuid);
+                            setShowSuccessAlert(false);
+                        }}
+                    />
+                ))}
+            </ul>
+            {showSuccessAlert && <Alert variant="success">{t("vedlegg.opplasting.suksess")}</Alert>}
+            {showErrorAlert && <Alert variant="error">{error}</Alert>}
             <AlreadyUploadedCheckbox opplysning={opplysning} disabled={!!files.length || loading} />
         </div>
     );

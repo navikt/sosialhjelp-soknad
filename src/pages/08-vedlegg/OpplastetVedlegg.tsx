@@ -11,15 +11,15 @@ export const OpplastetVedlegg = ({onDelete, fil}: {fil: FilFrontend; onDelete: (
 
     // FIXME: fil.uuid ?? "" is a nasty hack.
     return (
-        <div className="vedleggsliste__vedlegg">
+        <li className="vedleggsliste__vedlegg flex items-center mt-4">
             <span className="vedleggsliste__filnavn">
                 <LinkButton onClick={() => downloadAttachedFile(lastNedUrl)}>{fil.filNavn}</LinkButton>
             </span>
-            <span className="vedleggsliste__slett_ikon">
+            <span className="vedleggsliste__slett_ikon ml-2">
                 <LinkButton onClick={() => onDelete(fil.uuid ?? "")} aria-label={`Slett ${fil.filNavn}`}>
                     <img src={`${basePath}/statisk/bilder/ikon_trashcan.svg`} alt={""} />
                 </LinkButton>
             </span>
-        </div>
+        </li>
     );
 };
