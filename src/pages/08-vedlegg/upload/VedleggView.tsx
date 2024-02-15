@@ -1,21 +1,14 @@
 import * as React from "react";
+import {useEffect, useRef} from "react";
 import {LastOppFil} from "./LastOppFil";
 import {OpplastetVedlegg} from "../OpplastetVedlegg";
-import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId";
-import cx from "classnames";
 import {VedleggFrontendVedleggStatus} from "../../../generated/model";
 import {useVedlegg} from "./useVedlegg";
 import {Opplysning} from "../../../lib/opplysninger";
-import {ChangeEvent, useEffect, useRef} from "react";
-import {
-    updateOkonomiskOpplysning,
-    useHentOkonomiskeOpplysninger,
-} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
-import {useQueryClient} from "@tanstack/react-query";
-import {Alert, Checkbox} from "@navikt/ds-react";
+import {Alert} from "@navikt/ds-react";
 import {UploadError} from "./UploadError";
 import {FaroErrorBoundary} from "@grafana/faro-react";
+import {AlreadyUploadedCheckbox} from "./AlreadyUploadedCheckbox";
 
 export const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
@@ -23,26 +16,7 @@ export const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     const previousSuccessRef = useRef<string | null | undefined>();
     const previousErrorRef = useRef<string | null | undefined>();
 
-    const behandlingsId = useBehandlingsId();
-    const {t} = useTranslation();
-    const queryClient = useQueryClient();
-
-    const {queryKey} = useHentOkonomiskeOpplysninger(behandlingsId);
-
     const {deleteFile, files, upload, error, success, loading} = useVedlegg(opplysning);
-
-    const handleAlleredeLastetOpp = async (event: ChangeEvent<HTMLInputElement>) => {
-        await updateOkonomiskOpplysning(behandlingsId, {
-            gruppe: opplysning.gruppe,
-            type: opplysning.type,
-            alleredeLevert: event.target.checked,
-        });
-
-        // FIXME: Don't know why this is needed, presumably race condition on back-end
-        await new Promise<void>((resolve) => setTimeout(() => resolve(), 200));
-
-        await queryClient.invalidateQueries({queryKey});
-    };
 
     useEffect(() => {
         if (success && success !== previousSuccessRef.current) {
@@ -103,17 +77,7 @@ export const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                     {error}
                 </Alert>
             )}
-            <Checkbox
-                id={opplysning.type + "_allerede_lastet_opp_checkbox"}
-                className={cx("vedleggLastetOppCheckbox", {
-                    "checkboks--disabled": opplysning.filer?.length,
-                })}
-                onChange={handleAlleredeLastetOpp}
-                checked={opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
-                disabled={!!files.length || loading}
-            >
-                {t("opplysninger.vedlegg.alleredelastetopp")}
-            </Checkbox>
+            <AlreadyUploadedCheckbox opplysning={opplysning} disabled={!!files.length || loading} />
         </div>
     );
 };
