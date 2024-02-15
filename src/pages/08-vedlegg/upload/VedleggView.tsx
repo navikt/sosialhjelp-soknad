@@ -1,17 +1,17 @@
 import * as React from "react";
 import {LastOppFil} from "./LastOppFil";
-import {OpplastetVedlegg} from "./OpplastetVedlegg";
+import {OpplastetVedlegg} from "../OpplastetVedlegg";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId";
 import cx from "classnames";
-import {VedleggFrontendVedleggStatus} from "../../generated/model";
+import {VedleggFrontendVedleggStatus} from "../../../generated/model";
 import {useVedlegg} from "./useVedlegg";
-import {Opplysning} from "../../lib/opplysninger";
+import {Opplysning} from "../../../lib/opplysninger";
 import {ChangeEvent, useEffect, useRef} from "react";
 import {
     updateOkonomiskOpplysning,
     useHentOkonomiskeOpplysninger,
-} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
 import {Alert, Checkbox} from "@navikt/ds-react";
 import styled from "styled-components";

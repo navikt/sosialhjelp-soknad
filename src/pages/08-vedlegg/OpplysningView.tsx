@@ -1,5 +1,5 @@
 import {TabellView} from "./TabellView";
-import {VedleggView} from "./VedleggView";
+import {VedleggView} from "./upload/VedleggView";
 import {VedleggSlettet} from "./vedleggSlettet";
 import {useTranslation} from "react-i18next";
 import {Opplysning, opplysningSpec} from "../../lib/opplysninger";

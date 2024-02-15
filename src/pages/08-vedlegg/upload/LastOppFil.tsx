@@ -1,8 +1,8 @@
 import * as React from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {Opplysning} from "../../lib/opplysninger";
-import {useFeatureFlags} from "../../lib/featureFlags";
+import {Opplysning} from "../../../lib/opplysninger";
+import {useFeatureFlags} from "../../../lib/featureFlags";
 import {ForhandsvisningVedleggModal} from "./ForhandsvisningVedleggModal";
 import {PlusIcon} from "@navikt/aksel-icons";
 import {usePDFConverter} from "./usePDFConverter";

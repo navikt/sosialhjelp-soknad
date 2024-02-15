@@ -1,15 +1,15 @@
-import {FilFrontend, VedleggFrontendVedleggStatus} from "../../generated/model";
+import {FilFrontend, VedleggFrontendVedleggStatus} from "../../../generated/model";
 import {useEffect, useReducer} from "react";
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId";
 import {useTranslation} from "react-i18next";
-import {hentOkonomiskeOpplysninger} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
-import {logError, logInfo, logWarning} from "../../lib/utils/loggerUtils";
-import {deleteVedlegg, saveVedlegg} from "../../generated/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
-import {logAmplitudeEvent} from "../../lib/utils/amplitude";
+import {hentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {logError, logInfo, logWarning} from "../../../lib/utils/loggerUtils";
+import {deleteVedlegg, saveVedlegg} from "../../../generated/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
+import {logAmplitudeEvent} from "../../../lib/utils/amplitude";
 import {AxiosError} from "axios";
-import {Opplysning} from "../../lib/opplysninger";
-import {ValideringsFeilKode} from "../../lib/redux/validering/valideringActionTypes";
-import {REST_FEIL} from "../../lib/redux/restTypes";
+import {Opplysning} from "../../../lib/opplysninger";
+import {ValideringsFeilKode} from "../../../lib/redux/validering/valideringActionTypes";
+import {REST_FEIL} from "../../../lib/redux/restTypes";
 
 type VedleggState = {
     status: VedleggFrontendVedleggStatus;

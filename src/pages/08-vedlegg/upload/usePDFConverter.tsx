@@ -1,5 +1,5 @@
 import * as React from "react";
-import {konverterVedlegg} from "../../generated/file-converter-controller/file-converter-controller";
+import {konverterVedlegg} from "../../../generated/file-converter-controller/file-converter-controller";
 
 type UsePDFConverterResult = {
     // En konvertering er i gang.
