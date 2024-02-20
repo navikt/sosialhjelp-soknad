@@ -84,6 +84,7 @@ export const LastOppFil = ({
             />
             {previewFile && (
                 <ForhandsvisningVedleggModal
+                    opplysningType={opplysning.type}
                     file={previewFile}
                     onAccept={() => uploadFiles().then(() => setPreviewFile(null))}
                     onClose={() => setPreviewFile(null)}

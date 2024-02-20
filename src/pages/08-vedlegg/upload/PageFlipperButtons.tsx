@@ -12,7 +12,7 @@ export const PageFlipperButtons = ({
     setPageNumber: React.Dispatch<React.SetStateAction<number>>;
 }) => {
     if (numPages === undefined) return null;
-    const ICON_STYLE = "bg-gray-800/10 hover:bg-blue-100 text-5xl rounded-full";
+    const ICON_STYLE = "bg-blue-800/10 hover:bg-blue-100 text-5xl rounded-full";
 
     const navigate = (direction: "next" | "prev") => {
         if (direction === "next") {

@@ -165,7 +165,7 @@ export const useVedlegg = (opplysning: Opplysning) => {
         dispatch({type: "resetError"});
         dispatch({type: "setLoading", loading: true});
 
-        saveVedlegg(behandlingsId, opplysning.type, {file})
+        return saveVedlegg(behandlingsId, opplysning.type, {file})
             .then((file) => {
                 dispatch({type: "addFile", file});
                 logAmplitudeEvent("fil lastet opp", {opplysningType: opplysning.type});
