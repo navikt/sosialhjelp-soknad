@@ -49,8 +49,25 @@ export const ForhandsvisningVedleggModal = ({
                         "grow flex flex-col"
                     )}
                 >
-                    <FilePreviewButtons onDelete={onDelete} isFullscreen={isFullscreen} setFullscreen={setFullscreen} />
-                    <FilePreviewDisplay file={file} width={isFullscreen ? window.innerWidth - 200 : 600} />
+                    {file.type === "application/pdf" ? (
+                        <>
+                            <FilePreviewButtons
+                                onDelete={onDelete}
+                                isFullscreen={isFullscreen}
+                                setFullscreen={setFullscreen}
+                            />
+                            <FilePreviewDisplay file={file} width={isFullscreen ? window.innerWidth - 200 : 600} />
+                        </>
+                    ) : (
+                        <>
+                            <FilePreviewButtons
+                                onDelete={onDelete}
+                                isFullscreen={isFullscreen}
+                                setFullscreen={setFullscreen}
+                            />
+                            <img className={"w-full"} src={URL.createObjectURL(file)} alt={"preview"} />
+                        </>
+                    )}
                 </div>
             </Modal.Body>
             <Modal.Footer className={"!block space-y-4"}>

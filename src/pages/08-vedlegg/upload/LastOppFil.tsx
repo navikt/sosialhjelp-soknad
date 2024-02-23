@@ -8,7 +8,12 @@ import {PlusIcon} from "@navikt/aksel-icons";
 import {usePDFConverter} from "./usePDFConverter";
 import {PdfConversionError} from "./UploadError";
 
-export const isPdf = (file: Blob) => file.type === "application/pdf";
+export const SUPPORTED_WITHOUT_CONVERSION = ["image/jpeg", "image/png", "application/pdf"];
+export const SUPPORTED_WITH_CONVERSION = [
+    "text/csv",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+];
 
 export const LastOppFil = ({
     doUpload,
@@ -37,7 +42,7 @@ export const LastOppFil = ({
 
         const file = files[0];
 
-        setPreviewFile(isPdf(file) ? file : await convertToPDF(file));
+        setPreviewFile(SUPPORTED_WITHOUT_CONVERSION.includes(file.type) ? file : await convertToPDF(file));
 
         if (vedleggElement?.current) vedleggElement.current.value = "";
     };
@@ -45,9 +50,9 @@ export const LastOppFil = ({
     const uploadFiles = async () => previewFile && doUpload(previewFile);
     const deleteFile = () => setPreviewFile(null);
 
-    const alwaysAllowedFormats = "image/jpeg,image/png,application/pdf";
-    const devOnlyFormats =
-        ",text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+    const acceptTypes = tilgjengeliggjorFlereFilformater
+        ? [...SUPPORTED_WITHOUT_CONVERSION, ...SUPPORTED_WITH_CONVERSION].join(",")
+        : SUPPORTED_WITHOUT_CONVERSION.join(",");
 
     return (
         <div className="pt-2">
@@ -74,13 +79,7 @@ export const LastOppFil = ({
                 type="file"
                 className="hidden"
                 tabIndex={-1}
-                accept={
-                    window.navigator.platform.match(/iPad|iPhone|iPod/) !== null
-                        ? "*"
-                        : tilgjengeliggjorFlereFilformater
-                        ? alwaysAllowedFormats + devOnlyFormats
-                        : alwaysAllowedFormats
-                }
+                accept={window.navigator.platform.match(/iPad|iPhone|iPod/) !== null ? "*" : acceptTypes}
             />
             {previewFile && (
                 <ForhandsvisningVedleggModal
