@@ -1434,5 +1434,6 @@
     "vedlegg.forhandsvisning.avbryt": "Avbryt",
     "visSoknadAlleredeSendtPrompt.overskrift": "Søknaden er sendt",
     "visSoknadAlleredeSendtPrompt.tekst": "Det er foreløpig ikke mulig å se på den innsendte søknaden.",
-    "hoppTilHovedinnhold": "Hopp til hovedinnhold"
+    "hoppTilHovedinnhold": "Hopp til hovedinnhold",
+    "maskinportFeil": "Vi har hatt problemer med søknad om sosialhjelp i tidsrommet 28.02 kl 18:00 til 29.02 kl 09:00. Dersom du har en søknad som er påbegynt i dette tidsrommet vil du kunne oppleve problemer med å sende inn denne. Vi anbefaler å slette denne søknaden og starte en ny."
 }

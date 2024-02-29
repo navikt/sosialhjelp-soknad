@@ -3,7 +3,7 @@ import {ReactNode, useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import Feiloppsummering from "../Feiloppsummering";
 import {useTitle} from "../../hooks/common/useTitle";
-import {Heading, Link} from "@navikt/ds-react";
+import {Alert, Heading, Link} from "@navikt/ds-react";
 import {NedetidPanel} from "../NedetidPanel";
 import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepperLegacy} from "./SkjemaStegNavStepperLegacy";
@@ -79,6 +79,9 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: S
                 {t("hoppTilHovedinnhold")}
             </Link>
             <AppHeader className={"w-full"} />
+            <Alert variant={"warning"} className={"mx-auto"}>
+                {t("maskinportFeil")}
+            </Alert>
             <SkjemaStegNavStepperLegacy skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={gotoPage} />
             <div className={"w-full max-w-3xl mx-auto"}>
                 <NedetidPanel varselType={"infoside"} />
