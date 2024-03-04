@@ -19,14 +19,12 @@ export const AlreadyUploadedCheckbox = ({opplysning, disabled}: {opplysning: Opp
 
     const {queryKey} = useHentOkonomiskeOpplysninger(behandlingsId);
     const handleAlleredeLastetOpp = async (event: ChangeEvent<HTMLInputElement>) => {
+        await queryClient.refetchQueries({queryKey});
+
         await updateOkonomiskOpplysning(behandlingsId, {
-            gruppe: opplysning.gruppe,
-            type: opplysning.type,
+            ...{...opplysning, vedleggStatus: undefined, slettet: undefined, pendingLasterOppFil: undefined},
             alleredeLevert: event.target.checked,
         });
-
-        // FIXME: Don't know why this is needed, presumably race condition on back-end
-        await new Promise<void>((resolve) => setTimeout(() => resolve(), 200));
 
         await queryClient.invalidateQueries({queryKey});
     };
@@ -38,7 +36,7 @@ export const AlreadyUploadedCheckbox = ({opplysning, disabled}: {opplysning: Opp
                 "checkboks--disabled": opplysning.filer?.length,
             })}
             onChange={handleAlleredeLastetOpp}
-            checked={opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
+            checked={opplysning.alleredeLevert}
             disabled={disabled}
         >
             {t("opplysninger.vedlegg.alleredelastetopp")}
