@@ -19,11 +19,13 @@ export const AlreadyUploadedCheckbox = ({opplysning, disabled}: {opplysning: Opp
 
     const {queryKey} = useHentOkonomiskeOpplysninger(behandlingsId);
     const handleAlleredeLastetOpp = async (event: ChangeEvent<HTMLInputElement>) => {
+        const alleredeLevert = event.target.checked;
+
         await queryClient.refetchQueries({queryKey});
 
         await updateOkonomiskOpplysning(behandlingsId, {
             ...{...opplysning, vedleggStatus: undefined, slettet: undefined, pendingLasterOppFil: undefined},
-            alleredeLevert: event.target.checked,
+            alleredeLevert,
         });
 
         await queryClient.invalidateQueries({queryKey});
@@ -36,7 +38,7 @@ export const AlreadyUploadedCheckbox = ({opplysning, disabled}: {opplysning: Opp
                 "checkboks--disabled": opplysning.filer?.length,
             })}
             onChange={handleAlleredeLastetOpp}
-            checked={opplysning.alleredeLevert}
+            checked={opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
             disabled={disabled}
         >
             {t("opplysninger.vedlegg.alleredelastetopp")}
