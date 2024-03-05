@@ -1,22 +1,21 @@
-import {FilFrontend, VedleggFrontendVedleggStatus} from "../../generated/model";
+import {FilFrontend, VedleggFrontendVedleggStatus} from "../../../generated/model";
 import {useEffect, useReducer} from "react";
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
+import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId";
 import {useTranslation} from "react-i18next";
-import {hentOkonomiskeOpplysninger} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
-import {logError, logInfo, logWarning} from "../../lib/utils/loggerUtils";
-import {deleteVedlegg, saveVedlegg} from "../../generated/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
-import {logAmplitudeEvent} from "../../lib/utils/amplitude";
+import {hentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {logError, logInfo, logWarning} from "../../../lib/utils/loggerUtils";
+import {deleteVedlegg, saveVedlegg} from "../../../generated/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
+import {logAmplitudeEvent} from "../../../lib/utils/amplitude";
 import {AxiosError} from "axios";
-import {Opplysning} from "../../lib/opplysninger";
-import {ValideringsFeilKode} from "../../lib/redux/validering/valideringActionTypes";
-import {REST_FEIL} from "../../lib/redux/restTypes";
+import {Opplysning} from "../../../lib/opplysninger";
+import {ValideringsFeilKode} from "../../../lib/redux/validering/valideringActionTypes";
+import {REST_FEIL} from "../../../lib/redux/restTypes";
 
 type VedleggState = {
     status: VedleggFrontendVedleggStatus;
     loading: boolean;
     files: FilFrontend[];
     error?: string;
-    successMessage?: string;
 };
 
 const initialVedleggState: VedleggState = {
@@ -27,12 +26,11 @@ const initialVedleggState: VedleggState = {
 
 type VedleggAction =
     | {type: "deleteFile"; uuid: string}
-    | {type: "addFile"; file: FilFrontend; successMessage: string}
+    | {type: "addFile"; file: FilFrontend}
     | {type: "setError"; error: ValideringsFeilKode | REST_FEIL; variables?: object}
     | {type: "setLoading"; loading: boolean}
     | {type: "setFiles"; files: FilFrontend[]}
-    | {type: "resetError"}
-    | {type: "resetSuccess"};
+    | {type: "resetError"};
 
 const VedleggReducer = (state: VedleggState, action: VedleggAction) => {
     switch (action.type) {
@@ -59,7 +57,6 @@ const VedleggReducer = (state: VedleggState, action: VedleggAction) => {
             return {
                 ...state,
                 files: [...state.files, action.file],
-                successMessage: action.successMessage,
             };
         case "setError":
             return {
@@ -70,11 +67,6 @@ const VedleggReducer = (state: VedleggState, action: VedleggAction) => {
             return {
                 ...state,
                 error: undefined,
-            };
-        case "resetSuccess":
-            return {
-                ...state,
-                successMessage: undefined,
             };
         default:
             return state;
@@ -87,7 +79,6 @@ export const useVedlegg = (opplysning: Opplysning) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
     const error = state.error ? t(state.error) : null;
-    const success = state.successMessage;
 
     useEffect(() => {
         hentOkonomiskeOpplysninger(behandlingsId)
@@ -98,7 +89,7 @@ export const useVedlegg = (opplysning: Opplysning) => {
             .finally(() => dispatch({type: "setLoading", loading: false}));
     }, [behandlingsId, opplysning.type]);
 
-    const deleteFile = (uuid?: string) => {
+    const deleteFile = async (uuid?: string) => {
         if (!uuid) {
             logWarning("deleteFile kalt med nullish UUID!");
             return;
@@ -170,20 +161,13 @@ export const useVedlegg = (opplysning: Opplysning) => {
         }
     };
 
-    const upload = (file: File) => {
-        resetError();
-        resetSuccess();
-
+    const upload = async (file: Blob) => {
+        dispatch({type: "resetError"});
         dispatch({type: "setLoading", loading: true});
 
-        saveVedlegg(behandlingsId, opplysning.type, {file})
-            .then((resultFile) => {
-                const successMessage = t("vedlegg.opplasting.suksess");
-                dispatch({
-                    type: "addFile",
-                    file: resultFile,
-                    successMessage: successMessage,
-                });
+        return saveVedlegg(behandlingsId, opplysning.type, {file})
+            .then((file) => {
+                dispatch({type: "addFile", file});
                 logAmplitudeEvent("fil lastet opp", {opplysningType: opplysning.type});
             })
             .catch(handleError)
@@ -192,20 +176,11 @@ export const useVedlegg = (opplysning: Opplysning) => {
             });
     };
 
-    const resetError = () => {
-        dispatch({type: "resetError"});
-    };
-
-    const resetSuccess = () => {
-        dispatch({type: "resetSuccess"});
-    };
-
     return {
         upload,
         deleteFile,
         files,
         error,
-        success,
         loading,
     };
 };

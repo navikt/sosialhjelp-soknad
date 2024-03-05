@@ -1,3 +1,5 @@
+import {useLocalStorageOverrides} from "./useLocalStorageOverrides";
+
 export type FeatureFlags = {
     // Bruk ny tekst i Begrunnelse
     begrunnelseNyTekst: boolean;
@@ -13,6 +15,10 @@ export type FeatureFlags = {
 };
 
 export const useFeatureFlags = (): FeatureFlags => {
+    const {
+        flags: {testKonvertering},
+    } = useLocalStorageOverrides();
+
     if (["mock", "localhost"].includes(import.meta.env.REACT_APP_DIGISOS_ENV ?? "")) {
         return {
             begrunnelseNyTekst: true,
@@ -25,6 +31,6 @@ export const useFeatureFlags = (): FeatureFlags => {
         begrunnelseNyTekst: false,
         nyOppsummering: false,
         oppsummeringNavEnhet: false,
-        tilgjengeliggjorFlereFilformater: false,
+        tilgjengeliggjorFlereFilformater: testKonvertering || false,
     };
 };

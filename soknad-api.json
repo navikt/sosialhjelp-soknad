@@ -536,12 +536,7 @@
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/SivilstatusFrontend"}}
-                        }
-                    }
+                    "200": {"description": "OK"}
                 }
             }
         },
@@ -669,7 +664,9 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ArbeidFrontend"}}}
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/ArbeidsforholdResponse"}}
+                        }
                     }
                 }
             },
@@ -678,7 +675,7 @@
                 "operationId": "updateArbeid",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ArbeidFrontend"}}},
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ArbeidsforholdRequest"}}},
                     "required": true
                 },
                 "responses": {
@@ -686,7 +683,40 @@
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
-                    "200": {"description": "OK"}
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/ArbeidsforholdResponse"}}
+                        }
+                    }
+                }
+            }
+        },
+        "/vedlegg/konverter": {
+            "post": {
+                "tags": ["file-converter-controller"],
+                "summary": "Konverterer vedlegg til PDF",
+                "operationId": "konverterVedlegg",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": ["file"],
+                                "type": "object",
+                                "properties": {"file": {"type": "string", "format": "binary"}}
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {
+                        "description": "Vedlegg konvertert til PDF",
+                        "content": {"application/pdf": {"schema": {"type": "string", "format": "binary"}}}
+                    }
                 }
             }
         },
@@ -1738,7 +1768,8 @@
                 "properties": {
                     "fornavn": {"type": "string"},
                     "mellomnavn": {"type": "string"},
-                    "etternavn": {"type": "string"}
+                    "etternavn": {"type": "string"},
+                    "fulltNavn": {"type": "string"}
                 }
             },
             "SivilstatusFrontend": {
@@ -1756,7 +1787,6 @@
                 }
             },
             "AnsvarFrontend": {
-                "required": ["barn"],
                 "type": "object",
                 "properties": {
                     "barn": {"$ref": "#/components/schemas/BarnFrontend"},
@@ -1767,7 +1797,6 @@
                 }
             },
             "BarnFrontend": {
-                "required": ["navn"],
                 "type": "object",
                 "properties": {
                     "navn": {"$ref": "#/components/schemas/NavnFrontend"},
@@ -1811,15 +1840,9 @@
                 "type": "object",
                 "properties": {"hvaSokesOm": {"type": "string"}, "hvorforSoke": {"type": "string"}}
             },
-            "ArbeidFrontend": {
+            "ArbeidsforholdRequest": {
                 "type": "object",
-                "properties": {
-                    "arbeidsforhold": {
-                        "type": "array",
-                        "items": {"$ref": "#/components/schemas/ArbeidsforholdFrontend"}
-                    },
-                    "kommentarTilArbeidsforhold": {"type": "string"}
-                }
+                "properties": {"kommentarTilArbeidsforhold": {"type": "string"}}
             },
             "ArbeidsforholdFrontend": {
                 "type": "object",
@@ -1830,6 +1853,17 @@
                     "stillingstypeErHeltid": {"type": "boolean"},
                     "stillingsprosent": {"type": "integer", "format": "int32"},
                     "overstyrtAvBruker": {"type": "boolean"}
+                }
+            },
+            "ArbeidsforholdResponse": {
+                "required": ["arbeidsforhold"],
+                "type": "object",
+                "properties": {
+                    "arbeidsforhold": {
+                        "type": "array",
+                        "items": {"$ref": "#/components/schemas/ArbeidsforholdFrontend"}
+                    },
+                    "kommentarTilArbeidsforhold": {"type": "string"}
                 }
             },
             "BekreftelseRessurs": {
@@ -1873,7 +1907,6 @@
                 }
             },
             "BasisPersonaliaFrontend": {
-                "required": ["navn"],
                 "type": "object",
                 "properties": {
                     "navn": {"$ref": "#/components/schemas/NavnFrontend"},
