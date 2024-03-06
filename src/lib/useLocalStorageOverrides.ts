@@ -1,6 +1,9 @@
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 
-export type LocalStorageFlags = {};
+export type LocalStorageFlags = {
+    // Test konvertering av filformater, overstyrer tilgjengeliggjorFlereFilformater dersom true
+    testKonvertering?: true;
+};
 
 /**
  * Hook for bruk av feature flags fra local storage

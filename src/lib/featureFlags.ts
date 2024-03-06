@@ -15,6 +15,10 @@ export type FeatureFlags = {
 };
 
 export const useFeatureFlags = (): FeatureFlags => {
+    const {
+        flags: {testKonvertering},
+    } = useLocalStorageOverrides();
+
     if (["mock", "localhost"].includes(import.meta.env.REACT_APP_DIGISOS_ENV ?? "")) {
         return {
             begrunnelseNyTekst: true,
@@ -27,6 +31,6 @@ export const useFeatureFlags = (): FeatureFlags => {
         begrunnelseNyTekst: false,
         nyOppsummering: false,
         oppsummeringNavEnhet: false,
-        tilgjengeliggjorFlereFilformater: true,
+        tilgjengeliggjorFlereFilformater: testKonvertering || false,
     };
 };
