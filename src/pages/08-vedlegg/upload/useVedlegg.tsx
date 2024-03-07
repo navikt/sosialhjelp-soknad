@@ -161,7 +161,7 @@ export const useVedlegg = (opplysning: Opplysning) => {
         }
     };
 
-    const upload = async (file: Blob) => {
+    const upload = async (file: File) => {
         dispatch({type: "resetError"});
         dispatch({type: "setLoading", loading: true});
 

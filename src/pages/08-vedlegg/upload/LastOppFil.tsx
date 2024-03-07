@@ -15,6 +15,14 @@ export const SUPPORTED_WITH_CONVERSION = [
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 ];
 
+/**
+ * @returns filnavnet uten extension
+ **/
+const basename = (file: File): string => {
+    const idx = file.name.lastIndexOf(".");
+    return idx > 0 ? file.name.substring(0, idx) : file.name;
+};
+
 export const LastOppFil = ({
     doUpload,
     visSpinner,
@@ -25,13 +33,14 @@ export const LastOppFil = ({
     opplysning: Opplysning;
     isDisabled: boolean;
     visSpinner: boolean;
-    doUpload: (file: Blob) => void;
+    doUpload: (file: File) => void;
     resetAlerts: () => void;
 }) => {
     const {t} = useTranslation();
     const {tilgjengeliggjorFlereFilformater} = useFeatureFlags();
     const vedleggElement = React.useRef<HTMLInputElement>(null);
     const [previewFile, setPreviewFile] = React.useState<Blob | null>(null);
+    const [fileName, setFileName] = React.useState<string | null>(null);
     const {conversionPending, conversionError, convertToPDF} = usePDFConverter();
     const isPending = visSpinner || conversionPending;
 
@@ -42,12 +51,19 @@ export const LastOppFil = ({
 
         const file = files[0];
 
-        setPreviewFile(SUPPORTED_WITHOUT_CONVERSION.includes(file.type) ? file : await convertToPDF(file));
+        if (SUPPORTED_WITHOUT_CONVERSION.includes(file.type)) {
+            setPreviewFile(file);
+            setFileName(file.name);
+        } else {
+            setPreviewFile(await convertToPDF(file));
+            setFileName(`${basename(file)}.pdf`);
+        }
 
         if (vedleggElement?.current) vedleggElement.current.value = "";
     };
 
-    const uploadFiles = async () => previewFile && doUpload(previewFile);
+    const uploadFiles = async () =>
+        previewFile && fileName && doUpload(new File([previewFile], fileName, {type: previewFile.type}));
     const deleteFile = () => setPreviewFile(null);
 
     const acceptTypes = tilgjengeliggjorFlereFilformater
