@@ -22,7 +22,6 @@ import {
 } from "@grafana/faro-react";
 import {TracingInstrumentation} from "@grafana/faro-web-tracing";
 import config, {basePath} from "./lib/config";
-import {DebugPanel} from "./pages/DebugPanel";
 
 const Informasjon = React.lazy(() => import("./pages/hovedmeny"));
 const SideIkkeFunnet = React.lazy(() => import("./pages/feilsider/SideIkkeFunnet"));
@@ -51,7 +50,6 @@ const routes = (
         <Route index path={`/`} loader={() => redirect("/informasjon")} />
         <Route path={`/informasjon`} element={<Informasjon />} />
         <Route path={`/feil`} element={<ServerFeil />} />
-        <Route path={`/mellon`} element={<DebugPanel />} />
         <Route path={`/link`} loader={redirectFromLogin} />
         {!isMockAlt(window.location.origin) && !isLocalhost(window.location.origin) && (
             <Route path={`/mock-login`} loader={redirectFromLogin} />

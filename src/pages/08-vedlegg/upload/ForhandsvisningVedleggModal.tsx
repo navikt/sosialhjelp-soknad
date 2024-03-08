@@ -14,7 +14,7 @@ import {useOpplysningTekster} from "../useOpplysningTekster";
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();
 
 interface ForhandsvisningModalProps {
-    file: Blob;
+    file: File;
     opplysningType: VedleggFrontendType;
     onAccept: () => void;
     onClose: () => void;

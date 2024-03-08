@@ -7,7 +7,15 @@ type UsePDFConverterResult = {
     // Dersom en feil oppstår under konvertering, vil denne settes.
     conversionError: Error | null;
     // Sender en gitt fil til backend for konvertering til PDF.
-    convertToPDF: (file: Blob) => Promise<Blob>;
+    convertToPDF: (file: File) => Promise<File>;
+};
+
+/**
+ * @returns filnavnet uten extension
+ **/
+const basename = (file: File): string => {
+    const idx = file.name.lastIndexOf(".");
+    return idx > 0 ? file.name.substring(0, idx) : file.name;
 };
 
 /**
@@ -17,21 +25,19 @@ export const usePDFConverter = (): UsePDFConverterResult => {
     const [conversionPending, setConversionPending] = React.useState(false);
     const [conversionError, setConversionError] = React.useState<Error | null>(null);
 
-    const convertToPDF = async (file: Blob): Promise<Blob> => {
+    const convertToPDF = async (file: File): Promise<File> => {
         setConversionPending(true);
 
-        return konverterVedlegg({file: file})
-            .then((blob) => {
-                setConversionPending(false);
-                return blob;
-            })
-            .catch((e) => {
-                setConversionError(e);
-                throw e;
-            })
-            .finally(() => {
-                setConversionPending(false);
-            });
+        try {
+            const blob = await konverterVedlegg({file: file});
+            setConversionPending(false);
+            return new File([blob], `${basename(file)}.pdf`, {type: "application/pdf"});
+        } catch (e) {
+            setConversionError(e);
+            throw e;
+        } finally {
+            setConversionPending(false);
+        }
     };
 
     return {conversionPending, conversionError, convertToPDF};
