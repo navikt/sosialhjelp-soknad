@@ -9,10 +9,10 @@ import {PdfConversionError} from "./UploadError";
 
 export const SUPPORTED_WITHOUT_CONVERSION = ["image/jpeg", "image/png", "application/pdf"];
 export const SUPPORTED_WITH_CONVERSION = [
-    "text/csv",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     "application/vnd.ms-excel.sheet.binary.macroenabled.12",
+    "text/csv",
     "text/plain",
 ];
 

@@ -1,5 +1,3 @@
-import {useLocalStorageOverrides} from "./useLocalStorageOverrides";
-
 export type FeatureFlags = {
     // Bruk ny tekst i Begrunnelse
     begrunnelseNyTekst: boolean;
@@ -9,28 +7,19 @@ export type FeatureFlags = {
 
     // Ny NAV-kontor-visning i oppsummering
     oppsummeringNavEnhet: boolean;
-
-    // Tilgjengeliggjør flere filformater
-    tilgjengeliggjorFlereFilformater: boolean;
 };
 
 export const useFeatureFlags = (): FeatureFlags => {
-    const {
-        flags: {testKonvertering},
-    } = useLocalStorageOverrides();
-
     if (["mock", "localhost"].includes(import.meta.env.REACT_APP_DIGISOS_ENV ?? "")) {
         return {
             begrunnelseNyTekst: true,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
-            tilgjengeliggjorFlereFilformater: true,
         };
     }
     return {
         begrunnelseNyTekst: false,
         nyOppsummering: false,
         oppsummeringNavEnhet: false,
-        tilgjengeliggjorFlereFilformater: testKonvertering || false,
     };
 };
