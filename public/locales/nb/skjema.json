@@ -1442,5 +1442,6 @@
     "vedlegg.forhandsvisning.avbryt": "Avbryt",
     "visSoknadAlleredeSendtPrompt.overskrift": "Søknaden er sendt",
     "visSoknadAlleredeSendtPrompt.tekst": "Det er foreløpig ikke mulig å se på den innsendte søknaden.",
-    "hoppTilHovedinnhold": "Hopp til hovedinnhold"
+    "hoppTilHovedinnhold": "Hopp til hovedinnhold",
+    "nyDatamodellHurra": "Grunnet vedlikehold av digital søknad om økonomisk sosialhjelp 9. april, vil påbegynte søknader som ikke er sendt innen 9.april bli slettet."
 }
