@@ -1,8 +1,12 @@
 import * as React from "react";
-import {useNavigate, useParams} from "react-router";
 import {useEffect} from "react";
+import {useNavigate, useParams} from "react-router";
 import {opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
-import {logWarning} from "../../../lib/utils/loggerUtils";
+import {logWarning} from "../../utils/loggerUtils";
+import {updateAdresse} from "../../../generated/adresse-ressurs/adresse-ressurs";
+import {sendSoknad} from "../../../generated/soknad-actions/soknad-actions";
+import {maximizeSoknad} from "./devUtils";
+import {innsynURL} from "../../config";
 
 type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
 
@@ -12,6 +16,18 @@ export const DeveloperToolkit = () => {
     useEffect(() => {
         logWarning("Viser utviklermeny. Dette skal ikke skje i prod!");
     }, []);
+
+    const createFolkeregistrertSoknad = async () => {
+        const {brukerBehandlingId} = await opprettSoknad();
+        if (!brukerBehandlingId) throw new Error("ingen soknadId!");
+        await updateAdresse(brukerBehandlingId, {valg: "folkeregistrert"});
+        return brukerBehandlingId;
+    };
+
+    const navigateToNew = async (page: number) => {
+        const soknadId = await createFolkeregistrertSoknad();
+        navigate(`/skjema/${soknadId}/${page}`);
+    };
 
     return (
         <div className={"!mt-0 p-2 w-full bg-[black] text-[#0f0] max-lg:hidden font-mono "}>
@@ -28,11 +44,29 @@ export const DeveloperToolkit = () => {
                 <button
                     className={"text-[#0c0] hover:text-[#0f0]"}
                     onClick={async () => {
-                        const {brukerBehandlingId} = await opprettSoknad();
-                        if (brukerBehandlingId) navigate(`/skjema/${brukerBehandlingId}/1`);
+                        const soknadId = await createFolkeregistrertSoknad();
+                        await maximizeSoknad(soknadId);
+                        const {id} = await sendSoknad(soknadId);
+                        window.location.href = `http://localhost:3008/sosialhjelp/mock-alt/soknader/${id}`;
                     }}
                 >
-                    [ ny søknad ]
+                    [ lag og send maksimal søknad ]
+                </button>
+            </div>
+            <div className="flex justify-center gap-4">
+                <div>Lag søknad og hopp til side:</div>
+                {Array.from({length: 9}, (_, i) => i + 1).map((page) => (
+                    <button key={page} className={"text-[#0c0] hover:text-[#0f0]"} onClick={() => navigateToNew(page)}>
+                        {page}
+                    </button>
+                ))}
+                <button
+                    className={"text-[#0c0] hover:text-[#0f0]"}
+                    onClick={async () =>
+                        (window.location.href = `${innsynURL}${await createFolkeregistrertSoknad()}/status`)
+                    }
+                >
+                    innsyn
                 </button>
             </div>
             {behandlingsId && (
@@ -46,3 +80,5 @@ export const DeveloperToolkit = () => {
         </div>
     );
 };
+
+export default DeveloperToolkit;
