@@ -37,7 +37,7 @@ body {
 
 .top-stepper .navds-stepper__step--active > .navds-stepper__circle {
     color: white;
-    background-color: black;
+    background-color: var(--a-blue-700);
 }
 
 .top-stepper .navds-stepper__circle {
