@@ -47,7 +47,7 @@ export const DeveloperToolkit = () => {
                         const soknadId = await createFolkeregistrertSoknad();
                         await maximizeSoknad(soknadId);
                         const {id} = await sendSoknad(soknadId);
-                        window.location.href = `http://localhost:3008/sosialhjelp/mock-alt/soknader/${id}`;
+                        window.location.href = `${innsynURL}${id}/status`;
                     }}
                 >
                     [ lag og send maksimal søknad ]
@@ -74,6 +74,15 @@ export const DeveloperToolkit = () => {
                     Aktiv: {behandlingsId}
                     <button className={"text-[#0c0] hover:text-[#0f0]"} onClick={async () => navigate("../9")}>
                         [ oppsummering ]
+                    </button>
+                    <button
+                        className={"text-[#0c0] hover:text-[#0f0]"}
+                        onClick={async () => {
+                            const {id} = await sendSoknad(behandlingsId);
+                            window.location.href = `${innsynURL}${id}/status`;
+                        }}
+                    >
+                        [ send inn ]
                     </button>
                 </div>
             )}
