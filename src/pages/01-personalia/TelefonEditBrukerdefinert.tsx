@@ -4,7 +4,6 @@ import * as React from "react";
 import {useTelefonnummer} from "../../lib/hooks/data/useTelefonnummer";
 import * as libphonenumber from "libphonenumber-js";
 import {isValidNumber, parsePhoneNumber} from "libphonenumber-js";
-import "/node_modules/flag-icons/css/flag-icons.min.css";
 import {emojiFlag} from "./EmojiFlag";
 import {useForm} from "react-hook-form";
 import * as z from "zod";
