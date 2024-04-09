@@ -27,7 +27,7 @@ export const NyOppsummeringPrototypePersonalia = () => {
             <OppsummeringHeading stepNr={1}>Om deg</OppsummeringHeading>
             <Systeminfo>
                 <BasisPersonaliaData />
-                <SysteminfoItem comment={"Du har valgt:"} label={"Adresse"}>
+                <SysteminfoItem commentAbove={"Du har valgt:"} label={"Adresse"}>
                     Testverdigata 1, 1337 Sandvika
                 </SysteminfoItem>
                 <TelefonShow />

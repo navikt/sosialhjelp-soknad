@@ -14,33 +14,48 @@ export const SysteminfoItem = ({
     multiline,
     children,
     className,
-    comment,
+    commentAbove,
+    commentBelow,
 }: {
     multiline?: boolean;
-    label: ReactNode;
-    comment?: ReactNode;
+    label?: ReactNode;
     children?: ReactNode;
     className?: string;
+    commentAbove?: ReactNode;
+    commentBelow?: ReactNode;
 }) => (
     <li>
-        {comment && (
+        {commentAbove && (
             <Detail className={cx("opacity-90 pb-1")} data-testid="personalia-infotekst">
-                {comment}
+                {commentAbove}
             </Detail>
         )}
-        <ListItemContents className={cx("!leading-5 ", className)} multiline={multiline}>
-            <Label className="pr-1 after:content-[':']" size="small">
-                {label}
-            </Label>
-            <BodyShort size="small">{children}</BodyShort>
-        </ListItemContents>
+        {label && (
+            <ListItemContents className={cx("!leading-5 ", className)} multiline={multiline}>
+                <Label className="pr-1 after:content-[':']" size="small">
+                    {label}
+                </Label>
+                <BodyShort size="small">{children}</BodyShort>
+            </ListItemContents>
+        )}
+
+        {!label && (
+            <ListItemContents className={cx("!leading-5", className)} multiline={multiline}>
+                <BodyShort weight={"semibold"}>{children}</BodyShort>
+            </ListItemContents>
+        )}
+        {commentBelow && (
+            <Detail className={cx("opacity-90 pb-2 pt-4")} data-testid="personalia-infotekst">
+                {commentBelow}
+            </Detail>
+        )}
     </li>
 );
 
 export const Systeminfo = ({children, className}: {children: React.ReactNode; className?: string}) => (
     <ul
         className={cx(
-            "flex flex-col items-between gap-1 pl-3 py-3 border-l-4 bg-lightblue-50 border-l-surface-info",
+            "flex flex-col items-between gap-1 pl-3 py-3 bg-lightblue-50 border-l-surface-info rounded",
             className
         )}
     >

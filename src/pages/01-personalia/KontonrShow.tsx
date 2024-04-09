@@ -11,7 +11,7 @@ export const KontonrShowBrukerdefinert = () => {
     const {expectOK} = useAlgebraic(useHentKontonummer(useBehandlingsId()));
 
     return expectOK(({brukerutfyltVerdi}) => (
-        <SysteminfoItem comment={t("bruker")} label={t(`label`)}>
+        <SysteminfoItem commentAbove={t("bruker")} label={t(`label`)}>
             {formatKontonummer(brukerutfyltVerdi ?? "")}
         </SysteminfoItem>
     ));
@@ -22,7 +22,10 @@ export const KontonrShowSysteminfo = () => {
     const {expectOK} = useAlgebraic(useHentKontonummer(useBehandlingsId()));
 
     return expectOK(({systemverdi}) => (
-        <SysteminfoItem comment={t("kontakt.system.personalia.infotekst.tekst")} label={t(`kontakt.kontonummer.label`)}>
+        <SysteminfoItem
+            commentAbove={t("kontakt.system.personalia.infotekst.tekst")}
+            label={t(`kontakt.kontonummer.label`)}
+        >
             {formatKontonummer(systemverdi ?? "")}
         </SysteminfoItem>
     ));
@@ -35,7 +38,10 @@ export const KontonrShow = () => {
     return expectOK(({brukerdefinert, systemverdi, brukerutfyltVerdi, harIkkeKonto}) => {
         if (harIkkeKonto)
             return (
-                <SysteminfoItem comment={t("kontakt.kontonummer.bruker")} label={t(`kontakt.kontonummer.sporsmal`)}>
+                <SysteminfoItem
+                    commentAbove={t("kontakt.kontonummer.bruker")}
+                    label={t(`kontakt.kontonummer.sporsmal`)}
+                >
                     <span className={"italic"}> {t("kontakt.kontonummer.harikke.true")}</span>
                 </SysteminfoItem>
             );

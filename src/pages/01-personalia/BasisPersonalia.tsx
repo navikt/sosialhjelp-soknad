@@ -13,7 +13,7 @@ export const BasisPersonaliaData = () => {
     const {t} = useTranslation("skjema", {keyPrefix: "kontakt.system.personalia"});
     return expectOK(({navn, fodselsnummer, statsborgerskap = "Ukjent/statsløs"}) => (
         <Systeminfo>
-            <SysteminfoItem comment={t("infotekst.tekst")} label={t("navn")}>
+            <SysteminfoItem commentAbove={t("infotekst.tekst")} label={t("navn")}>
                 <FullName name={navn} />
             </SysteminfoItem>
             <SysteminfoItem label={t("fnr")}>{formatFodselsnummer(fodselsnummer ?? "")}</SysteminfoItem>
