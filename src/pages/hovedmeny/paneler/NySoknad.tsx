@@ -53,7 +53,7 @@ export const NySoknadInfo = () => {
                 <Button
                     variant="primary"
                     id="start_soknad_button"
-                    disabled={true}
+                    disabled={startSoknadPending}
                     onClick={onSokSosialhjelpButtonClick}
                 >
                     {t("skjema.knapper.start")}
