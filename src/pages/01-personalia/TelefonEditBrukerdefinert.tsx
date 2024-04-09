@@ -40,7 +40,6 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
     const {t} = useTranslation("skjema");
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = handleSubmit(async ({phoneNumber, countryCode}) => {
-        console.log(`Sender ${countryCode}${phoneNumber}`);
         if (phoneNumber && countryCode) {
             setTelefonnummer(`+${countryCode}${phoneNumber}`).then(() => onClose());
         }
