@@ -18,7 +18,7 @@ export const EktefellePersonaliaBruker = ({ektefelle}: {ektefelle: EktefelleFron
         ektefelle?.navn ? (
             <>
                 <SysteminfoItem
-                    comment={<BodyShort spacing>{t("system.familie.sivilstatus.label")}:</BodyShort>}
+                    commentAbove={<BodyShort spacing>{t("system.familie.sivilstatus.label")}:</BodyShort>}
                     label={t(`system.familie.sivilstatus.gift.ektefelle.navn`)}
                 >
                     <FullName name={ektefelle.navn} />
