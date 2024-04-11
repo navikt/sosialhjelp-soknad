@@ -84,7 +84,7 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
                     <Button type={"submit"} data-testid="lagre-telefonnummer">
                         {t("lagreEndring")}
                     </Button>
-                    <Button variant="secondary" onClick={() => setTelefonnummer(null).then(() => reset())}>
+                    <Button variant="secondary" onClick={() => onClose()}>
                         {t("avbryt")}
                     </Button>
                 </div>
