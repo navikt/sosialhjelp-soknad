@@ -14,7 +14,6 @@ import {NedetidPanel} from "../../lib/components/NedetidPanel";
 import {isLocalhost} from "../../lib/utils";
 import {DeveloperToolkit} from "../../lib/components/appHeader/DeveloperToolkit";
 import {AppHeader} from "../../lib/components/appHeader/AppHeader";
-import {Alert} from "@navikt/ds-react";
 
 export const Informasjon = () => {
     const {expectOK} = useAlgebraic(useGetSessionInfo());
