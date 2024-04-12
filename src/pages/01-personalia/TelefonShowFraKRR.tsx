@@ -3,16 +3,18 @@ import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import {formatTelefonnummer} from "@fremtind/jkl-formatters-util";
 import {LinkButton} from "../../lib/components/LinkButton";
 import * as React from "react";
-import {strip47} from "./Telefon";
 import {PencilWritingIcon} from "@navikt/aksel-icons";
+import {parsePhoneNumber} from "libphonenumber-js";
 
 export const TelefonShowFraKRR = ({systemverdi, onEdit}: {systemverdi: string; onEdit?: () => void}) => {
     const {t} = useTranslation("skjema", {keyPrefix: "kontakt.system"});
+    const telefonNummer = systemverdi && parsePhoneNumber(systemverdi);
+
     return (
         <li className={"flex flex-row place-content-between"}>
             <div className={"pl-3"}>
                 <SysteminfoItem commentBelow={t("telefoninfo.infotekst.tekst")}>
-                    {systemverdi && formatTelefonnummer(strip47(systemverdi))}
+                    {telefonNummer && telefonNummer.formatInternational()}
                 </SysteminfoItem>
             </div>
             {onEdit && (

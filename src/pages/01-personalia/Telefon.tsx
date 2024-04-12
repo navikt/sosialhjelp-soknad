@@ -6,8 +6,6 @@ import {Systeminfo} from "../../lib/components/systeminfo/Systeminfo";
 import {Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 
-export const strip47 = (phoneNumber: string) => phoneNumber.replace(/^\+47/, "");
-
 export const TelefonData = () => {
     const [editMode, setEditMode] = useState<boolean>(false);
     const {t} = useTranslation("skjema");
@@ -18,7 +16,7 @@ export const TelefonData = () => {
             </Heading>
             {editMode ? (
                 <Systeminfo>
-                    <TelefonShow onEdit={() => setEditMode(true)} />
+                    <TelefonShow />
                     <TelefonEditBrukerdefinert onClose={() => setEditMode(false)} />
                 </Systeminfo>
             ) : (
