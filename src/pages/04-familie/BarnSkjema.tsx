@@ -29,7 +29,7 @@ export const BarnSkjema = ({barnIndex}: {barnIndex: number}) => {
                         </DigisosReadMore>
                     }
                     defaultValue={ansvar.harDeltBosted}
-                    name={"deltbosted"}
+                    name={`deltbosted_barn${barnIndex}`}
                     onChange={(checked) => setHarDeltBosted(checked)}
                 />
             ) : (
