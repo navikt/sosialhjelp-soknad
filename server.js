@@ -24,10 +24,10 @@ app.use(basePath, (req, res, __) => {
         env: process.env.DEKORATOR_MILJO ?? "dev",
         filePath: `${buildPath}/index.html`,
         params: {
-        simple: true,
-        feedback: false,
-        chatbot: false,
-        shareScreen: false,
+            simple: true,
+            feedback: false,
+            chatbot: false,
+            shareScreen: false,
         },
     })
         .then((text) => res.send(text))
@@ -40,4 +40,14 @@ app.use(basePath, (req, res, __) => {
 // start express server on port 8080
 app.listen(8080, () => {
     console.log("server started on port 8080");
+});
+
+process.on("SIGTERM", () => {
+    console.log("SIGTERM signal received, shutting down");
+    process.exit(0);
+});
+
+process.on("SIGINT", () => {
+    console.log("SIGINT signal received, shutting down");
+    process.exit(0);
 });
