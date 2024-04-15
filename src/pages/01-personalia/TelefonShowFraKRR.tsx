@@ -1,6 +1,5 @@
 import {useTranslation} from "react-i18next";
 import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
-import {formatTelefonnummer} from "@fremtind/jkl-formatters-util";
 import {LinkButton} from "../../lib/components/LinkButton";
 import * as React from "react";
 import {PencilWritingIcon} from "@navikt/aksel-icons";

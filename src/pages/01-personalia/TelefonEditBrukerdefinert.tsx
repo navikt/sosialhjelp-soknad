@@ -19,17 +19,14 @@ const TelefonnummerFormSchema = z
         path: ["phoneNumber"],
     });
 
-type FormType = {
-    phoneNumber: string;
-    countryCode: string;
-};
+type TelefonnummerFormType = z.infer<typeof TelefonnummerFormSchema>;
 
 export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
     const {data, setTelefonnummer} = useTelefonnummer();
 
     const number = data?.brukerutfyltVerdi ? parsePhoneNumber(data?.brukerutfyltVerdi) : null;
 
-    const {handleSubmit, reset, register, formState} = useForm<FormType>({
+    const {handleSubmit, register, formState} = useForm<TelefonnummerFormType>({
         defaultValues: {
             phoneNumber: number?.nationalNumber,
             countryCode: number?.countryCallingCode ?? "47",
@@ -40,9 +37,9 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
     const {t} = useTranslation("skjema");
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = handleSubmit(async ({phoneNumber, countryCode}) => {
-        if (phoneNumber && countryCode) {
-            setTelefonnummer(`+${countryCode}${phoneNumber}`).then(() => onClose());
-        }
+        const digits = phoneNumber.replaceAll(/[^0-9]/g, "");
+        await setTelefonnummer(`+${countryCode}${digits}`);
+        onClose();
     });
 
     return (
@@ -64,7 +61,10 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
                                     libphonenumber.getCountryCallingCode(country),
                                 ])
                                 .map(([flagEmoji, callingCode]) => (
-                                    <option value={callingCode}>{`${flagEmoji} +${callingCode}`}</option>
+                                    <option
+                                        key={callingCode}
+                                        value={callingCode}
+                                    >{`${flagEmoji} +${callingCode}`}</option>
                                 ))}
                         </Select>
                     </div>
