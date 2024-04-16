@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Heading, Radio, RadioGroup, Textarea} from "@navikt/ds-react";
+import {Heading, Radio, RadioGroup, ReadMore, Textarea} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {DigisosValidationError, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useForm} from "react-hook-form";
@@ -94,8 +94,11 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                             defaultValue={getValues("utdanning.erStudent")}
                             onChange={(checked) => setValue("utdanning.erStudent", checked)}
                             legend={t("dinsituasjon.studerer.sporsmal")}
-                            moreInfoTittel={t("dinsituasjon.studerer.mer.info.tittel")}
-                            moreInfoForklaring={t("dinsituasjon.studerer.mer.info.forklaring")}
+                            description={
+                                <ReadMore header={t("dinsituasjon.studerer.mer.info.tittel")}>
+                                    {t("dinsituasjon.studerer.mer.info.forklaring")}
+                                </ReadMore>
+                            }
                         />
                         <UnmountClosed isOpened={watch("utdanning.erStudent") === true}>
                             <RadioGroup
