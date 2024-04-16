@@ -16,7 +16,7 @@ export const EktefellePersonaliaSystem = () => {
     return expectOK(({ektefelle, erFolkeregistrertSammen, harDiskresjonskode}) =>
         ektefelle?.navn ? (
             <>
-                <SysteminfoItem label={t("label")} comment={t("system.familie.sivilstatus")} />
+                <SysteminfoItem label={t("label")} commentAbove={t("system.familie.sivilstatus")} />
                 <SysteminfoItem label={t(`gift.ektefelle.navn`)}>
                     <FullName name={ektefelle.navn} />
                 </SysteminfoItem>
