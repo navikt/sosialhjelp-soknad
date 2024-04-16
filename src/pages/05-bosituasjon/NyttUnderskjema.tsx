@@ -8,7 +8,7 @@ const UnderskjemaArrow = styled.div`
     height: 0;
     border-style: solid;
     border-width: 0 0.75rem 0.75rem 0.75rem;
-    border-color: transparent transparent #f1f1f1 transparent;
+    border-color: transparent transparent var(--a-surface-action-subtle) transparent;
     margin: 0;
     margin-left: 1rem;
     padding: 0;
@@ -20,7 +20,7 @@ interface NyttUnderskjemaProps {
 }
 
 const UnderskjemaContainer = styled.div`
-    background-color: #f1f1f1;
+    background-color: var(--a-surface-action-subtle);
     border-radius: 8px;
     padding: 1rem;
 `;
