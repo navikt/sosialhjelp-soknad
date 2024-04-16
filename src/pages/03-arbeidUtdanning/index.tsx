@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Detail, Heading, Radio, RadioGroup, Textarea} from "@navikt/ds-react";
+import {Heading, Radio, RadioGroup, Textarea} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {DigisosValidationError, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useForm} from "react-hook-form";
@@ -65,11 +65,10 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                 <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>
                     <SkjemaSteg.ErrorSummary errors={errors} />
 
-                    <div className={"space-y-6"}>
-                        <Heading size="medium" spacing>
+                    <div>
+                        <Heading size="medium" className={"pb-2"}>
                             {t("arbeidsforhold.sporsmal")}
                         </Heading>
-                        <Detail spacing>{t("arbeidsforhold.infotekst")}</Detail>
                         <ArbeidsforholdListe />
                         <Textarea
                             {...register("arbeid.kommentarTilArbeidsforhold")}
@@ -82,6 +81,7 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                                     <TranslatedError error={errors.arbeid?.kommentarTilArbeidsforhold} />
                                 )
                             }
+                            className={"pt-6"}
                         />
                     </div>
 
@@ -89,12 +89,13 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                         <Heading size="medium" spacing>
                             {t("arbeid.dinsituasjon.studerer.undertittel")}
                         </Heading>
-
                         <YesNoInput
                             name={"utdanning.erStudent"}
                             defaultValue={getValues("utdanning.erStudent")}
                             onChange={(checked) => setValue("utdanning.erStudent", checked)}
                             legend={t("dinsituasjon.studerer.sporsmal")}
+                            moreInfoTittel={t("dinsituasjon.studerer.mer.info.tittel")}
+                            moreInfoForklaring={t("dinsituasjon.studerer.mer.info.forklaring")}
                         />
                         <UnmountClosed isOpened={watch("utdanning.erStudent") === true}>
                             <RadioGroup

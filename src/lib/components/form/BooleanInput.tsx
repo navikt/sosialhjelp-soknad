@@ -1,6 +1,6 @@
 import * as React from "react";
 import {ReactNode, Ref} from "react";
-import {Radio, RadioGroup, RadioGroupProps} from "@navikt/ds-react";
+import {Radio, RadioGroup, RadioGroupProps, ReadMore} from "@navikt/ds-react";
 
 /**
  * En <Radio> som er stylet for bruk til ja/nei/null-valg i <BooleanInput />
@@ -16,6 +16,8 @@ export type BaseBooleanInputProps = {
     defaultValue?: boolean | null;
     value?: boolean | null;
     name: string;
+    moreInfoTittel?: string;
+    moreInfoForklaring?: string;
     ref?: React.Ref<HTMLInputElement>;
 } & Pick<RadioGroupProps, "error" | "onBlur">;
 
@@ -36,6 +38,8 @@ export const BooleanInput = React.forwardRef(
             name,
             value,
             error,
+            moreInfoTittel,
+            moreInfoForklaring,
         }: BaseBooleanInputProps & GenericBooleanInputProps,
         ref: React.ForwardedRef<HTMLInputElement>
     ) => (
@@ -50,6 +54,7 @@ export const BooleanInput = React.forwardRef(
             value={value?.toString()}
             defaultValue={defaultValue?.toString()}
         >
+            {moreInfoTittel && moreInfoForklaring && <ReadMore header={moreInfoTittel}>{moreInfoForklaring}</ReadMore>}
             <BooleanInputRadio value={"true"} label={trueLabel} />
             <BooleanInputRadio value={"false"} label={falseLabel} />
         </RadioGroup>

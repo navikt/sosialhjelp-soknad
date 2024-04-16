@@ -146,6 +146,8 @@
     "dinsituasjon.studerer.false": "Nei",
     "dinsituasjon.studerer.hjelpetekst.tekst": "",
     "dinsituasjon.studerer.sporsmal": "Er du skoleelev eller student?",
+    "dinsituasjon.studerer.mer.info.tittel": "Eksempler på å være elev",
+    "dinsituasjon.studerer.mer.info.forklaring": "Her kan du svare ja hvis du går på skole eller studerer. Det kan være videregående skole, høyskole, universitet, norskopplæring, grunnskole for voksne eller voksenopplæring.",
     "dinsituasjon.studerer.true": "Ja",
     "dinsituasjon.studerer.grad.deltid": "Deltid",
     "dinsituasjon.studerer.true.grad.deltid": "Ja - Deltid",
