@@ -1,9 +1,9 @@
 import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlaceholder";
 import {SkattbarinntektForskuddstrekk} from "./SkattbarinntektForskuddstrekk";
-import {Detail, Alert, Button} from "@navikt/ds-react";
+import {Alert, Button} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useSkattData} from "../../../lib/hooks/data/useSkattData";
-import {YesNoInput} from "../../../lib/components/form/YesNoInput";
+import {BooleanInput} from "../../../lib/components/form/BooleanInput";
 
 export const SkattbarInntekt = () => {
     const {data, samtykke, samtykkeTidspunkt, isLoading, setSamtykke} = useSkattData();
@@ -21,17 +21,18 @@ export const SkattbarInntekt = () => {
 
     return (
         <>
-            {!samtykke ? (
-                <YesNoInput
-                    legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal")}
-                    description={t("utbetalinger.inntekt.skattbar.samtykke_info")}
-                    defaultValue={samtykke}
-                    onChange={(checked) => setSamtykke(checked)}
-                    name={"skattbar-inntekt-samtykke"}
-                />
-            ) : (
+            <BooleanInput
+                legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v2")}
+                defaultValue={samtykke}
+                onChange={(checked) => setSamtykke(checked)}
+                name={"skattbar-inntekt-samtykke"}
+                radioLabels={[
+                    t("utbetalinger.inntekt.skattbar.avbryt.ja"),
+                    t("utbetalinger.inntekt.skattbar.avbryt.nei"),
+                ]}
+            />
+            {samtykke && (
                 <div className={"space-y-4"}>
-                    <Detail>{t("utbetalinger.inntekt.skattbar.beskrivelse")}</Detail>
                     <SkattbarinntektForskuddstrekk inntektOgForskuddstrekk={inntektFraSkatteetaten} />
                     <Button
                         variant={"secondary"}

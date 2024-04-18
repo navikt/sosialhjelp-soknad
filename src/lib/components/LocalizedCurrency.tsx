@@ -6,10 +6,11 @@ export const LocalizedCurrency = ({value}: {value?: number}) => {
 
     if (!value) return null;
 
-    return new Intl.NumberFormat(lang, {
-        style: "currency",
+    const formattedValue = new Intl.NumberFormat(lang, {
         currency: "NOK",
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
     }).format(value);
+
+    return `${formattedValue} kr`;
 };
