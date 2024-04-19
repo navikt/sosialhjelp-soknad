@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Alert, Button, Heading} from "@navikt/ds-react";
+import {Alert, Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {YesNoInput} from "../../../lib/components/form/YesNoInput";
 import {useInntekterBostotte} from "../../../lib/hooks/data/useInntekterBostotte";
@@ -8,21 +8,13 @@ import {BostotteDataVisning} from "./BostotteDataVisning";
 
 const BostotteData = () => {
     const {t} = useTranslation("skjema");
-    const {bostotte, setSamtykke, dataHentet} = useInntekterBostotte();
+    const {bostotte, dataHentet} = useInntekterBostotte();
 
     if (!bostotte || !dataHentet) return null;
 
     return (
         <FaroErrorBoundary fallback={<Alert variant={"warning"}>{t("inntekt.bostotte.nedlasting_feilet")}</Alert>}>
             <BostotteDataVisning bostotte={bostotte} />
-            <Button
-                variant="secondary"
-                size={"small"}
-                id="ta_bort_bostotte_samtykke"
-                onClick={() => setSamtykke(false)}
-            >
-                {t("inntekt.bostotte.ta_bort_samtykke")}
-            </Button>
         </FaroErrorBoundary>
     );
 };

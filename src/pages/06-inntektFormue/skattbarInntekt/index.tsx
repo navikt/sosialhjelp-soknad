@@ -1,6 +1,6 @@
 import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlaceholder";
 import {SkattbarinntektForskuddstrekk} from "./SkattbarinntektForskuddstrekk";
-import {Alert, Button} from "@navikt/ds-react";
+import {Alert} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useSkattData} from "../../../lib/hooks/data/useSkattData";
 import {BooleanInput} from "../../../lib/components/form/BooleanInput";
@@ -34,14 +34,6 @@ export const SkattbarInntekt = () => {
             {samtykke && (
                 <div className={"space-y-4"}>
                     <SkattbarinntektForskuddstrekk inntektOgForskuddstrekk={inntektFraSkatteetaten} />
-                    <Button
-                        variant={"secondary"}
-                        size={"small"}
-                        id="ta_bort_bostotte_samtykke"
-                        onClick={() => setSamtykke(false)}
-                    >
-                        {t("utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
-                    </Button>
                 </div>
             )}
         </>
