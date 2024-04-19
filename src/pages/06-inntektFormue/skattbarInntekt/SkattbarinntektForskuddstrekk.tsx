@@ -101,7 +101,7 @@ export const SkattbarinntektForskuddstrekk = ({inntektOgForskuddstrekk}: Skattba
                         organisasjoner?.map((org) => (
                             <Table key={org.orgnr}>
                                 <Table.Header>
-                                    <Table.Row className={"border-hidden"}>
+                                    <Table.Row>
                                         <Table.HeaderCell colSpan={2}>{t("skattbar.inntekt.tittel")}</Table.HeaderCell>
                                     </Table.Row>
                                 </Table.Header>
