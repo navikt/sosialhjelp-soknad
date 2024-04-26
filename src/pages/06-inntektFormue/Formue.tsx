@@ -5,10 +5,11 @@ import {DigisosReadMore} from "../../lib/components/DigisosReadMore";
 import {useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";
 import {UnmountClosed} from "react-collapse";
 import {useFormue} from "../../lib/hooks/data/useFormue";
+import {FormueFrontend} from "../../generated/model";
 
 export const Formue = () => {
     const {formue, setFormue, setBeskrivelse} = useFormue();
-    const {registerAnnet} = useBeskrivelse(formue?.beskrivelseAvAnnet, setBeskrivelse);
+    const {registerAnnet} = useBeskrivelse(formue?.beskrivelseAvAnnet || "", setBeskrivelse);
     const {t} = useTranslation("skjema");
 
     if (!formue) return null;
@@ -18,6 +19,7 @@ export const Formue = () => {
             legend={t("inntekt.bankinnskudd.true.type.sporsmal")}
             description={<DigisosReadMore>{t("inntekt.bankinnskudd.true.type.hjelpetekst.tekst")}</DigisosReadMore>}
             onChange={setFormue}
+            value={Object.keys(formue).filter((key) => formue[key as keyof FormueFrontend])}
         >
             <Checkbox name={"brukskonto"} value={"brukskonto"}>
                 {t("inntekt.bankinnskudd.true.type.brukskonto")}

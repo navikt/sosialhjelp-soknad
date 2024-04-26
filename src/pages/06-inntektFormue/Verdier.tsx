@@ -11,7 +11,7 @@ import {useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";
 export const Verdier = () => {
     const {verdier, setBekreftelse, setBeskrivelseAvAnnet, setVerdier} = useVerdier();
     const {t} = useTranslation("skjema");
-    const {registerAnnet} = useBeskrivelse(verdier?.beskrivelseAvAnnet, setBeskrivelseAvAnnet);
+    const {registerAnnet} = useBeskrivelse(verdier?.beskrivelseAvAnnet || "", setBeskrivelseAvAnnet);
     if (!verdier) return null;
 
     return (

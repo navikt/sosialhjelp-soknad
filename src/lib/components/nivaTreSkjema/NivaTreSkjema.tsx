@@ -1,6 +1,6 @@
 import * as React from "react";
 import {UnmountClosed} from "react-collapse";
-import {logWarning} from "../../../lib/utils/loggerUtils";
+import {logWarning} from "../../utils/loggerUtils";
 
 type Sizes = "small" | "large";
 
@@ -38,6 +38,7 @@ export class NivaTreSkjema extends React.Component<Props, State> {
     render() {
         const {size, visible, children} = this.props;
         const className = size && size === "small" ? " nivaTreSkjema__small" : "";
+        console.log("children", children);
         const renderContent = () => (
             <div className={"nivaTreSkjema " + className}>
                 <div className="nivaTreSkjema__boks">
@@ -49,9 +50,11 @@ export class NivaTreSkjema extends React.Component<Props, State> {
         );
         let content = <span />;
         try {
+            console.log("wat");
             content = renderContent();
         } catch (e) {
             logWarning("Feil ved rendering av nivå tre skjema: " + e.toString());
+            console.log("wat", e);
         }
         if (this.state.animate) {
             return (
