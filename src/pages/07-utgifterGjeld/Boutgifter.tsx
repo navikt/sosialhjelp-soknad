@@ -27,8 +27,8 @@ export const Boutgifter = () => {
                 <Checkbox value={"boliglan"}>{t("utgifter.boutgift.true.type.boliglan")}</Checkbox>
                 <Checkbox value={"annet"}>{t("utgifter.boutgift.true.type.andreutgifter")}</Checkbox>
             </CheckboxGroup>
-            {boutgifter?.skalViseInfoVedBekreftelse && boutgifter?.bekreftelse && (
-                <GuidePanel className={"!-ml-10"}>
+            {!boutgifter?.skalViseInfoVedBekreftelse && boutgifter?.bekreftelse && (
+                <GuidePanel className={"!mt-6"} poster>
                     <Trans
                         t={t}
                         i18nKey={"informasjon.husbanken.bostotte.v2"}
