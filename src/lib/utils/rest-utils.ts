@@ -161,8 +161,6 @@ export function detekterInternFeilKode(feilKode: string): string {
     if (feilKode.match(/Request Entity Too Large/i)) {
         if (feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR) {
             internFeilKode = REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR;
-        } else if (feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE) {
-            internFeilKode = REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE;
         } else {
             internFeilKode = REST_FEIL.FOR_STOR_FIL;
         }
