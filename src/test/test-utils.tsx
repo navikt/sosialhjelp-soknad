@@ -3,7 +3,6 @@ import {ReactElement, Suspense} from "react";
 import {Provider} from "react-redux";
 import {applyMiddleware, compose, createStore} from "redux";
 import createSagaMiddleware from "redux-saga";
-import sagas from "../lib/redux/rootSaga";
 import * as React from "react";
 import i18n from "../lib/i18n";
 import {I18nextProvider} from "react-i18next";
@@ -14,7 +13,6 @@ function configureStore() {
 
     const middleware = applyMiddleware(saga);
     const createdStore = createStore(reducers(), compose(middleware));
-    saga.run(sagas);
     return createdStore;
 }
 

@@ -36,7 +36,6 @@ const InntektFormue = React.lazy(() => import("./pages/06-inntektFormue"));
 const UtgifterGjeld = React.lazy(() => import("./pages/07-utgifterGjeld"));
 const OkonomiskeOpplysningerView = React.lazy(() => import("./pages/08-vedlegg"));
 const Oppsummering = React.lazy(() => import("./pages/09-oppsummering/Oppsummering"));
-const Ettersendelse = React.lazy(() => import("./pages/ettersendelse"));
 
 const redirectFromLogin = async () => {
     const url = window.location.href;
@@ -65,7 +64,6 @@ const routes = (
             <Route path="7" element={<UtgifterGjeld />} />
             <Route path="8" element={<OkonomiskeOpplysningerView />} />
             <Route path="9" element={<Oppsummering />} />
-            <Route path="ettersendelse" element={<Ettersendelse />} />
             <Route element={<SideIkkeFunnet />} />
         </Route>
         <Route element={<SideIkkeFunnet />} />
