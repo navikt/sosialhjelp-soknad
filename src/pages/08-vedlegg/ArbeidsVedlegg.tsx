@@ -8,6 +8,113 @@ import styled from "styled-components";
 import {SkattbarInntektOgForskuddstrekk, Utbetaling} from "../../generated/model";
 import {LocalizedCurrency} from "../../lib/components/LocalizedCurrency";
 import {LocalizedDate} from "../../lib/components/LocalizedDate";
+import {useEffect, useRef} from "react";
+import {LastOppFil} from "./upload/LastOppFil";
+import {OpplastetVedlegg} from "./OpplastetVedlegg";
+import {VedleggFrontendVedleggStatus} from "../../generated/model";
+import {useVedlegg} from "./upload/useVedlegg";
+import {Opplysning} from "../../lib/opplysninger";
+import {UploadError} from "./upload/UploadError";
+import {FaroErrorBoundary} from "@grafana/faro-react";
+import {useOpplysningTekster} from "./useOpplysningTekster";
+import {LinkButton} from "../../lib/components/LinkButton";
+import {useOpplysning} from "./useOpplysning";
+import {OpplysningInputRad} from "./OpplysningInputRad";
+import {VedleggFrontend} from "../../generated/model";
+
+const TabellView = ({opplysning}: {opplysning: VedleggFrontend}) => {
+    const {
+        textKey,
+        multirow,
+        inputs,
+        form: {control},
+        rows: {entries, append, remove},
+    } = useOpplysning(opplysning);
+
+    const {leggTilRad} = useOpplysningTekster(opplysning.type);
+
+    return (
+        <form>
+            {entries.length > 0 && (
+                <ul>
+                    {entries.map(({id}, index) => (
+                        <OpplysningInputRad
+                            key={id}
+                            textKey={textKey}
+                            index={index}
+                            control={control}
+                            fields={inputs}
+                            onDelete={index > 0 ? remove : undefined}
+                        />
+                    ))}
+                    {multirow && (
+                        <li className={`pt-3 pb-4`}>
+                            <LinkButton onClick={() => append({})}>
+                                <span aria-hidden={true}>+ </span>
+                                {leggTilRad}
+                            </LinkButton>
+                        </li>
+                    )}
+                </ul>
+            )}
+        </form>
+    );
+};
+
+const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
+    const {t} = useTranslation();
+    const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
+    const [showErrorAlert, setShowErrorAlert] = React.useState(false);
+    const previousErrorRef = useRef<string | null | undefined>();
+    const {leggTilDokumentasjon} = useOpplysningTekster(opplysning.type);
+    const {deleteFile, files, upload, error, loading} = useVedlegg(opplysning);
+
+    useEffect(() => {
+        if (error && error !== previousErrorRef.current) {
+            setShowErrorAlert(true);
+        } else if (!error) {
+            setShowErrorAlert(false);
+        }
+        previousErrorRef.current = error;
+    }, [error]);
+
+    return (
+        <div className={"pt-6 pb-6"}>
+            <BodyShort size={"small"}>{leggTilDokumentasjon}</BodyShort>
+            <FaroErrorBoundary fallback={(error, resetError) => <UploadError error={error} resetError={resetError} />}>
+                <LastOppFil
+                    opplysning={opplysning}
+                    isDisabled={
+                        loading || opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt
+                    }
+                    visSpinner={!!opplysning.pendingLasterOppFil}
+                    doUpload={(file) => {
+                        return upload(file).then(() => setShowSuccessAlert(true));
+                    }}
+                    resetAlerts={() => {
+                        setShowSuccessAlert(false);
+                        setShowErrorAlert(false);
+                    }}
+                />
+            </FaroErrorBoundary>
+
+            <ul className="vedleggsliste pb-2">
+                {files.map((fil) => (
+                    <OpplastetVedlegg
+                        key={fil.uuid}
+                        fil={fil}
+                        onDelete={() => {
+                            deleteFile(fil.uuid);
+                            setShowSuccessAlert(false);
+                        }}
+                    />
+                ))}
+            </ul>
+            {showSuccessAlert && <Alert variant="success">{t("vedlegg.opplasting.suksess")}</Alert>}
+            {showErrorAlert && <Alert variant="error">{error}</Alert>}
+        </div>
+    );
+};
 
 const UnderskjemaArrow = styled.div`
     width: 0;
@@ -68,7 +175,7 @@ type SkattbartForskuddProps = {
 };
 
 // TODO: Vi må filtrere vekk entries der organisasjoner er null. Garantert bare rot i DTOen på backend.
-const SkattbarinntektForskuddstrekk = ({inntektOgForskuddstrekk}: SkattbartForskuddProps) => {
+const HentetFraSkatteetaten = ({inntektOgForskuddstrekk}: SkattbartForskuddProps) => {
     const {t} = useTranslation("skjema", {keyPrefix: "utbetalinger.inntekt"});
 
     if (!inntektOgForskuddstrekk) return <TextPlaceholder lines={3} />;
@@ -109,7 +216,7 @@ const SkattbarinntektForskuddstrekk = ({inntektOgForskuddstrekk}: SkattbartForsk
     );
 };
 
-export const HentFraSkatteetaten = () => {
+export const ArbeidsVedlegg = ({opplysning}: {opplysning: Opplysning}) => {
     const {t} = useTranslation();
 
     const {data, samtykke, samtykkeTidspunkt, isLoading, setSamtykke} = useSkattData();
@@ -129,6 +236,9 @@ export const HentFraSkatteetaten = () => {
 
             {!samtykke && (
                 <>
+                    <BodyShort className={"pb-2"}>
+                        {t("utbetalinger.inntekt.skattbar.hent.info.skatteetaten")}
+                    </BodyShort>
                     <Button
                         variant="secondary"
                         className="last-opp-vedlegg-knapp"
@@ -139,17 +249,25 @@ export const HentFraSkatteetaten = () => {
                             {t("utbetalinger.inntekt.skattbar.gi_samtykke")}
                         </div>
                     </Button>
+                    <VedleggView opplysning={opplysning} />
+                    <TabellView opplysning={opplysning} />
                 </>
             )}
 
             {samtykke && (
                 <>
-                    <SkattbarinntektForskuddstrekk inntektOgForskuddstrekk={inntektFraSkatteetaten} />
+                    <HentetFraSkatteetaten inntektOgForskuddstrekk={inntektFraSkatteetaten} />
                     <Link onClick={() => setSamtykke(false)}>
                         <div className={"flex gap-1 items-center"}>
                             <MinusIcon aria-label={""} /> {t("utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
                         </div>
                     </Link>
+                    {!inntektFraSkatteetaten?.length && (
+                        <>
+                            <VedleggView opplysning={opplysning} />
+                            <TabellView opplysning={opplysning} />
+                        </>
+                    )}
                 </>
             )}
         </div>

@@ -4,7 +4,7 @@ import {VedleggSlettet} from "./vedleggSlettet";
 import {Opplysning} from "../../lib/opplysninger";
 import {BodyShort, Heading} from "@navikt/ds-react";
 import {useOpplysningTekster} from "./useOpplysningTekster";
-import {HentFraSkatteetaten} from "./HentFraSkatteetaten";
+import {ArbeidsVedlegg} from "./ArbeidsVedlegg";
 
 export const OpplysningView = ({opplysning}: {opplysning: Opplysning}) => {
     const {sporsmal, undertekst} = useOpplysningTekster(opplysning.type);
@@ -19,9 +19,7 @@ export const OpplysningView = ({opplysning}: {opplysning: Opplysning}) => {
                         <Heading level={"4"} size={"medium"} spacing>
                             {sporsmal}
                         </Heading>
-                        <HentFraSkatteetaten />
-                        <VedleggView opplysning={opplysning} />
-                        <TabellView opplysning={opplysning} />
+                        <ArbeidsVedlegg opplysning={opplysning} />
                     </div>
                 </div>
             )}
@@ -32,8 +30,8 @@ export const OpplysningView = ({opplysning}: {opplysning: Opplysning}) => {
                             {sporsmal}
                         </Heading>
                         <BodyShort spacing>{undertekst}</BodyShort>
-                        <TabellView opplysning={opplysning} />
                         <VedleggView opplysning={opplysning} />
+                        <TabellView opplysning={opplysning} />
                     </div>
                 </div>
             )}
