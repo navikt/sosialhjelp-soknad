@@ -4,6 +4,7 @@ import {VedleggSlettet} from "./vedleggSlettet";
 import {Opplysning} from "../../lib/opplysninger";
 import {BodyShort, Heading} from "@navikt/ds-react";
 import {useOpplysningTekster} from "./useOpplysningTekster";
+import {HentFraSkatteetaten} from "./HentFraSkatteetaten";
 
 export const OpplysningView = ({opplysning}: {opplysning: Opplysning}) => {
     const {sporsmal, undertekst} = useOpplysningTekster(opplysning.type);
@@ -11,13 +12,31 @@ export const OpplysningView = ({opplysning}: {opplysning: Opplysning}) => {
     if (opplysning.slettet) return <VedleggSlettet opplysning={opplysning} />;
 
     return (
-        <div className={"rounded-md bg-surface-subtle p-8"}>
-            <Heading level={"4"} size={"medium"} spacing>
-                {sporsmal}
-            </Heading>
-            <BodyShort spacing>{undertekst}</BodyShort>
-            <TabellView opplysning={opplysning} />
-            <VedleggView opplysning={opplysning} />
-        </div>
+        <>
+            {opplysning.type === "lonnslipp|arbeid" && (
+                <div>
+                    <div className={"rounded-md bg-surface-action-subtle p-8"}>
+                        <Heading level={"4"} size={"medium"} spacing>
+                            {sporsmal}
+                        </Heading>
+                        <HentFraSkatteetaten />
+                        <VedleggView opplysning={opplysning} />
+                        <TabellView opplysning={opplysning} />
+                    </div>
+                </div>
+            )}
+            {opplysning.type !== "lonnslipp|arbeid" && (
+                <div>
+                    <div className={"rounded-md bg-surface-action-subtle p-8"}>
+                        <Heading level={"4"} size={"medium"} spacing>
+                            {sporsmal}
+                        </Heading>
+                        <BodyShort spacing>{undertekst}</BodyShort>
+                        <TabellView opplysning={opplysning} />
+                        <VedleggView opplysning={opplysning} />
+                    </div>
+                </div>
+            )}
+        </>
     );
 };

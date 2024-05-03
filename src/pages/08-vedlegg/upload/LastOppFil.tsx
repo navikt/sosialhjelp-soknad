@@ -62,6 +62,7 @@ export const LastOppFil = ({
                     vedleggElement?.current?.click();
                 }}
                 className="last-opp-vedlegg-knapp"
+                style={{backgroundColor: "var(--a-surface-default)"}}
             >
                 <div className={"flex gap-1 items-center"}>
                     <PlusIcon aria-label={""} /> {t("opplysninger.vedlegg.knapp.tekst")}
