@@ -34,7 +34,7 @@ const getLenkeSti = ({orgnr, tom}: Organisasjon): string => {
     return url.toString();
 };
 */
-const UtbetalingsListe = ({utbetalinger}: {utbetalinger?: Utbetaling[]}) => {
+export const UtbetalingsListe = ({utbetalinger}: {utbetalinger?: Utbetaling[]}) => {
     const {t} = useTranslation("skjema", {keyPrefix: "utbetalinger.inntekt.skattbar"});
 
     return (

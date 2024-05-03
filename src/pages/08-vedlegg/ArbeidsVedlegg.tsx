@@ -5,8 +5,7 @@ import {useSkattData} from "../../lib/hooks/data/useSkattData";
 import {MinusIcon} from "@navikt/aksel-icons";
 import * as React from "react";
 import styled from "styled-components";
-import {SkattbarInntektOgForskuddstrekk, Utbetaling} from "../../generated/model";
-import {LocalizedCurrency} from "../../lib/components/LocalizedCurrency";
+import {SkattbarInntektOgForskuddstrekk} from "../../generated/model";
 import {LocalizedDate} from "../../lib/components/LocalizedDate";
 import {useEffect, useRef} from "react";
 import {LastOppFil} from "./upload/LastOppFil";
@@ -21,6 +20,7 @@ import {LinkButton} from "../../lib/components/LinkButton";
 import {useOpplysning} from "./useOpplysning";
 import {OpplysningInputRad} from "./OpplysningInputRad";
 import {VedleggFrontend} from "../../generated/model";
+import {UtbetalingsListe} from "../06-inntektFormue/skattbarInntekt/SkattbarinntektForskuddstrekk";
 
 const TabellView = ({opplysning}: {opplysning: VedleggFrontend}) => {
     const {
@@ -126,49 +126,6 @@ const UnderskjemaArrow = styled.div`
     margin-left: 1rem;
     padding: 0;
 `;
-
-const UtbetalingsListe = ({utbetalinger}: {utbetalinger?: Utbetaling[]}) => {
-    const {t} = useTranslation("skjema", {keyPrefix: "utbetalinger.inntekt.skattbar"});
-
-    return (
-        <>
-            {utbetalinger?.map(({brutto, forskuddstrekk: trekk}, index) => (
-                <React.Fragment key={`utbetaling-${index}`}>
-                    {brutto && (
-                        <Table.Row shadeOnHover={false}>
-                            <Table.HeaderCell>
-                                <BodyShort>{t("bruttoinntekt")}:</BodyShort>
-                            </Table.HeaderCell>
-                            <Table.DataCell align={"right"}>
-                                <LocalizedCurrency value={brutto} />
-                            </Table.DataCell>
-                        </Table.Row>
-                    )}
-                    {trekk && (
-                        <Table.Row shadeOnHover={false}>
-                            <Table.HeaderCell>
-                                <BodyShort>{t("forskuddstrekk")}:</BodyShort>
-                            </Table.HeaderCell>
-                            <Table.DataCell align={"right"}>
-                                <LocalizedCurrency value={trekk} />
-                            </Table.DataCell>
-                        </Table.Row>
-                    )}
-                    {brutto && trekk && (
-                        <Table.Row shadeOnHover={false}>
-                            <Table.HeaderCell>
-                                <BodyShort>{t("nettoinntekt")}:</BodyShort>
-                            </Table.HeaderCell>
-                            <Table.DataCell align={"right"}>
-                                <LocalizedCurrency value={brutto - trekk} />
-                            </Table.DataCell>
-                        </Table.Row>
-                    )}
-                </React.Fragment>
-            ))}
-        </>
-    );
-};
 
 type SkattbartForskuddProps = {
     inntektOgForskuddstrekk?: SkattbarInntektOgForskuddstrekk[];
