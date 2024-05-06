@@ -42,8 +42,8 @@ export const AntallPersoner = () => {
             defaultValue={bosituasjon?.antallPersoner}
             onBlur={async (event) => {
                 try {
-                    dispatch({type: "clearValideringsfeil", faktumKey: FAKTUM_KEY_ANTALL});
                     await setBosituasjon({antallPersoner: validerAntallPersoner(event.target.value)});
+                    dispatch({type: "clearValideringsfeil", faktumKey: FAKTUM_KEY_ANTALL});
                 } catch (_e) {
                     dispatch({
                         type: "setValideringsfeil",

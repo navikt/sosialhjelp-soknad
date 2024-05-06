@@ -7,7 +7,7 @@
         "@amplitude/analytics-browser": "^2.3.3",
         "@fremtind/jkl-formatters-util": "^5.0.23",
         "@fremtind/jkl-validators-util": "^3.0.0",
-        "@grafana/faro-react": "^1.2.3",
+        "@grafana/faro-react": "^1.7.1",
         "@hookform/error-message": "^2.0.1",
         "@hookform/resolvers": "^3.3.2",
         "@navikt/aksel-icons": "^5.9.2",
@@ -124,11 +124,7 @@
             "last 1 safari version"
         ]
     },
-    "overrides": {
-        "react-scripts": {
-            "@svgr/webpack": "6.5.1"
-        }
-    },
+    "overrides": {    },
     "lint-staged": {
         "*.{less,css,md}": "prettier --write",
         "*.{ts,tsx}": [

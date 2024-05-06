@@ -16,6 +16,7 @@ export const useSkjemaNavigation = (steg: number) => {
         } else {
             if (feil.length) {
                 dispatch({type: "visValideringsfeilPanel"});
+                return;
             } else {
                 dispatch({type: "clearAllValideringsfeil"});
                 logAmplitudeEvent("skjemasteg fullført", {steg});
