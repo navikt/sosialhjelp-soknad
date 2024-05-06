@@ -46,15 +46,15 @@ const redirectFromLogin = async () => {
 
 const routes = (
     <Route errorElement={<SideIkkeFunnet />}>
-        <Route index path={`/`} loader={() => redirect("/informasjon")} />
-        <Route path={`/informasjon`} element={<Informasjon />} />
-        <Route path={`/feil`} element={<ServerFeil />} />
-        <Route path={`/link`} loader={redirectFromLogin} />
+        <Route index path={`/`} element={<Informasjon />} />
+        <Route index path={`informasjon`} element={<Informasjon />} />
+        <Route path={`feil`} element={<ServerFeil />} />
+        <Route path={`link`} loader={redirectFromLogin} />
         {!isMockAlt(window.location.origin) && !isLocalhost(window.location.origin) && (
-            <Route path={`/mock-login`} loader={redirectFromLogin} />
+            <Route path={`mock-login`} loader={redirectFromLogin} />
         )}
-        <Route path={`/kastException`} element={<ExceptionThrower />} />
-        <Route path={"/skjema/:behandlingsId/*"}>
+        <Route path={`kastException`} element={<ExceptionThrower />} />
+        <Route path={"skjema/:behandlingsId/*"}>
             <Route index path="1" element={<Personopplysninger />} />
             <Route path="2" element={<Begrunnelse />} />
             <Route path="3" element={<ArbeidOgUtdanning />} />
@@ -66,7 +66,6 @@ const routes = (
             <Route path="9" element={<Oppsummering />} />
             <Route element={<SideIkkeFunnet />} />
         </Route>
-        <Route element={<SideIkkeFunnet />} />
     </Route>
 );
 
@@ -92,9 +91,7 @@ initializeFaro({
             router: {
                 version: ReactRouterVersion.V6,
                 dependencies: {
-                    // TODO: This should be fixed as soon as v.1.7.2 is out the door. Remove this hack then.
-                    createRoutesFromChildren:
-                        createRoutesFromChildren as unknown as ReactRouterV6CreateRoutesFromChildren,
+                    createRoutesFromChildren,
                     matchRoutes,
                     Routes,
                     useLocation,
