@@ -1,7 +1,6 @@
 import {
     createBrowserRouter,
     createRoutesFromChildren,
-    createRoutesFromElements,
     matchRoutes,
     redirect,
     Route,
@@ -18,6 +17,7 @@ import {
     initializeFaro,
     LogLevel,
     ReactIntegration,
+    ReactRouterV6CreateRoutesFromChildren,
     ReactRouterVersion,
 } from "@grafana/faro-react";
 import {TracingInstrumentation} from "@grafana/faro-web-tracing";
@@ -70,7 +70,7 @@ const routes = (
     </Route>
 );
 
-export const router = createBrowserRouter(createRoutesFromElements(routes), {basename: basePath});
+export const router = createBrowserRouter(createRoutesFromChildren(routes), {basename: basePath});
 
 initializeFaro({
     url: config.faro.url,
@@ -92,7 +92,9 @@ initializeFaro({
             router: {
                 version: ReactRouterVersion.V6,
                 dependencies: {
-                    createRoutesFromChildren,
+                    // TODO: This should be fixed as soon as v.1.7.2 is out the door. Remove this hack then.
+                    createRoutesFromChildren:
+                        createRoutesFromChildren as unknown as ReactRouterV6CreateRoutesFromChildren,
                     matchRoutes,
                     Routes,
                     useLocation,
