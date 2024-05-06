@@ -30,8 +30,8 @@ export const OpplysningView = ({opplysning}: {opplysning: Opplysning}) => {
                             {sporsmal}
                         </Heading>
                         <BodyShort spacing>{undertekst}</BodyShort>
-                        <VedleggView opplysning={opplysning} />
                         <TabellView opplysning={opplysning} />
+                        <VedleggView opplysning={opplysning} />
                     </div>
                 </div>
             )}
