@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
 import {z} from "zod";
 import {useTranslation} from "react-i18next";
-import {ValideringsFeilKode} from "../../redux/validering/valideringActionTypes";
+
+import {ValideringsFeilKode} from "../../validering";
 const MAX_CHARS = 500;
 
 const BeskrivelseAvAnnetSchema = z.string().max(MAX_CHARS, {

@@ -1,6 +1,5 @@
 import * as React from "react";
-import {ReactNode, useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {ReactNode, useContext, useEffect, useState} from "react";
 import Feiloppsummering from "../Feiloppsummering";
 import {useTitle} from "../../hooks/common/useTitle";
 import {Heading, Link} from "@navikt/ds-react";
@@ -13,13 +12,13 @@ import {TimeoutBox} from "../../modals/TimeoutBox";
 import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
-import {NavEnhetInaktiv} from "../../.././pages/01-personalia/adresse/NavEnhet";
+import {NavEnhetInaktiv} from "../../../pages/01-personalia/adresse/NavEnhet";
 import {useBehandlingsId} from "../../hooks/common/useBehandlingsId";
 import {hentXsrfCookie} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {t} from "i18next";
-import {State} from "../../redux/reducers";
 import {AppHeader} from "../appHeader/AppHeader";
 import {scrollToTop} from "../../utils";
+import {ValideringsContext} from "../../../index";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
@@ -40,23 +39,22 @@ export const useSkjemaConfig = (skjemaConfig: SkjemaConfig, steg: DigisosSkjemaS
     };
 };
 
-function SkjemaStegHeading(props: {ikon: ReactNode; stegTittel: string}) {
-    return (
-        <div className={"text-center mb-12 lg:mb-24"}>
-            <div className="mx-auto w-fit mb-2">{props.ikon}</div>
-            <div className="skjema-steg__tittel" tabIndex={-1}>
-                <Heading size={"large"}>{props.stegTittel}</Heading>
-            </div>
+const SkjemaStegHeading = ({ikon, stegTittel}: {ikon: ReactNode; stegTittel: string}) => (
+    <div className={"text-center mb-12 lg:mb-24"}>
+        <div className="mx-auto w-fit mb-2">{ikon}</div>
+        <div className="skjema-steg__tittel" tabIndex={-1}>
+            <Heading size={"large"}>{stegTittel}</Heading>
         </div>
-    );
-}
+    </div>
+);
 
 export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: StegMedNavigasjonProps) => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
     const {data: nedetid} = useHentNedetidInformasjon();
+
     const {
-        validering: {feil, visValideringsfeil},
-    } = useSelector((state: State) => state);
+        state: {feil, visValideringsfeil},
+    } = useContext(ValideringsContext);
 
     const {stegTittel, documentTitle, aktivtSteg} = useSkjemaConfig(skjemaConfig, steg);
     const {gotoPage} = useSkjemaNavigation(aktivtSteg.id);

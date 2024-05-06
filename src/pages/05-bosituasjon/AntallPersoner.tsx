@@ -1,12 +1,11 @@
 import * as React from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useContext} from "react";
 import {getFeil} from "../../lib/utils/enhancedComponentUtils";
 import {useBosituasjon} from "../../lib/hooks/data/useBosituasjon";
 import {useTranslation} from "react-i18next";
 import {TextField} from "@navikt/ds-react";
-import {ValideringsFeilKode} from "../../lib/redux/validering/valideringActionTypes";
-import {State} from "../../lib/redux/reducers";
-import {clearValideringsfeil, setValideringsfeil} from "../../lib/redux/validering/valideringActions";
+import {ValideringsContext} from "../../index";
+import {ValideringsFeilKode} from "../../lib/validering";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 
@@ -24,21 +23,12 @@ export const AntallPersoner = () => {
     const {bosituasjon, setBosituasjon} = useBosituasjon();
     const {t} = useTranslation("skjema");
 
-    const dispatch = useDispatch();
+    const {
+        state: {feil},
+        dispatch,
+    } = useContext(ValideringsContext);
 
-    const validationErrors = useSelector((state: State) => state.validering.feil);
-    const errorMessage = getFeil(validationErrors, t, FAKTUM_KEY_ANTALL, undefined);
-
-    const validateAndStore = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        try {
-            const antallPersoner = validerAntallPersoner(event.target.value);
-            dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL));
-            await setBosituasjon({antallPersoner});
-        } catch (_e) {
-            dispatch(setValideringsfeil(ValideringsFeilKode.ER_TALL, FAKTUM_KEY_ANTALL));
-            return;
-        }
-    };
+    const errorMessage = getFeil(feil, t, FAKTUM_KEY_ANTALL, undefined);
 
     return (
         <TextField
@@ -50,8 +40,23 @@ export const AntallPersoner = () => {
             maxLength={2}
             htmlSize={5}
             defaultValue={bosituasjon?.antallPersoner}
-            onBlur={validateAndStore}
-            onChange={() => dispatch(clearValideringsfeil(FAKTUM_KEY_ANTALL))}
+            onBlur={async (event) => {
+                try {
+                    dispatch({type: "clearValideringsfeil", faktumKey: FAKTUM_KEY_ANTALL});
+                    await setBosituasjon({antallPersoner: validerAntallPersoner(event.target.value)});
+                } catch (_e) {
+                    dispatch({
+                        type: "setValideringsfeil",
+                        valideringsfeil: {faktumKey: FAKTUM_KEY_ANTALL, feilkode: ValideringsFeilKode.ER_TALL},
+                    });
+                }
+            }}
+            onChange={() =>
+                dispatch({
+                    type: "clearValideringsfeil",
+                    faktumKey: FAKTUM_KEY_ANTALL,
+                })
+            }
             error={errorMessage && t(errorMessage)}
         />
     );

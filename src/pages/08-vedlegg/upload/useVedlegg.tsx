@@ -8,8 +8,8 @@ import {deleteVedlegg, saveVedlegg} from "../../../generated/opplastet-vedlegg-r
 import {logAmplitudeEvent} from "../../../lib/utils/amplitude";
 import {AxiosError} from "axios";
 import {Opplysning} from "../../../lib/opplysninger";
-import {ValideringsFeilKode} from "../../../lib/redux/validering/valideringActionTypes";
-import {REST_FEIL} from "../../../lib/redux/restTypes";
+import {REST_FEIL} from "../../../lib/utils/rest-utils";
+import {ValideringsFeilKode} from "../../../lib/validering";
 
 type VedleggState = {
     status: VedleggFrontendVedleggStatus;

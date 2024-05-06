@@ -9,7 +9,8 @@ import {isValidDate} from "@navikt/ds-react/esm/date/utils";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {EktefelleFrontend, SivilstatusFrontend} from "../../generated/model";
-import {ValideringsFeilKode} from "../../lib/redux/validering/valideringActionTypes";
+
+import {ValideringsFeilKode} from "../../lib/validering";
 
 const SivilstatusSchema = z.object({
     ektefelle: z.object({
