@@ -1,6 +1,6 @@
 import * as React from "react";
 import {createContext, ReactNode, useContext, useEffect} from "react";
-import {Heading, Link} from "@navikt/ds-react";
+import {Alert, Heading, Link} from "@navikt/ds-react";
 import {NedetidPanel} from "../../NedetidPanel";
 import {TimeoutBox} from "../../../modals/TimeoutBox";
 import {useTranslation} from "react-i18next";
@@ -133,6 +133,9 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
                 </Link>
                 <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
                 <AppHeader className={"w-full"} />
+                <Alert variant={"warning"} style={{justifyContent: "center"}}>
+                    {t("varslings.planlagt.vedlikehold")}
+                </Alert>
                 <SkjemaStegStepper />
                 <main id={"main-content"} className={"max-w-3xl mx-auto w-full"}>
                     <NedetidPanel varselType={"infoside"} />
