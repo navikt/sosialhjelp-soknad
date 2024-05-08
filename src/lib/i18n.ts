@@ -8,8 +8,14 @@ import {logAmplitudeEvent} from "./utils/amplitude";
 import {basePath} from "./config";
 
 export const SUPPORTED_LANGUAGES = ["en", "nb", "nn"] as const;
-
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
+
+const dateFnLocales: Record<SupportedLanguage, Locale> = {
+    en: enGB,
+    nn: nn,
+    nb: nb,
+};
+
 export const isSupportedLanguage = (lang: string): lang is SupportedLanguage =>
     SUPPORTED_LANGUAGES.includes(lang as SupportedLanguage);
 
@@ -20,15 +26,15 @@ const storedLanguage = localStorage.getItem("language");
  * Logs a warning if the language is not supported, and falls back to "nb".
  */
 export const getDateFnLocale = () => {
-    const lang = i18n.language;
+    const {language} = i18n;
 
     // Ensure that the current language is supported
-    if (!isSupportedLanguage(lang)) {
-        logWarning(`getDateFnLocale: Unsupported language "${lang}", falling back to "nb"`);
+    if (!isSupportedLanguage(language)) {
+        logWarning(`getDateFnLocale: Unsupported language "${language}", falling back to "nb"`);
         return nb;
     }
 
-    return dateFnLocales[lang];
+    return dateFnLocales[language];
 };
 
 i18n.use(Backend)
@@ -56,18 +62,15 @@ i18n.use(Backend)
     });
 
 export default i18n;
-const dateFnLocales: Record<SupportedLanguage, Locale> = {
-    en: enGB,
-    nn: nn,
-    nb: nb,
-};
-export const handleLanguageSelect = ({locale}: {locale: DecoratorLocale}) => {
+
+const handleLanguageSelect = ({locale}: {locale: DecoratorLocale}) => {
     i18n.changeLanguage(locale);
     setParams({language: locale});
     localStorage.setItem("digisos-language", locale);
 
     logAmplitudeEvent("Valgt språk", {language: locale});
 };
+
 export const i18nSetLangFromLocalStorage = () => {
     const storedLanguage = localStorage.getItem("digisos-language");
     setAvailableLanguages(
