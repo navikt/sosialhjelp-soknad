@@ -45,10 +45,9 @@ const routes = (
         <Route
             path={`link`}
             loader={async () => {
-                const goto = new URLSearchParams(window.location.search).get("goto") ?? "";
-                const url = removePrefix(goto, basePath);
-                if (!goto || !url.length) return redirect("/");
-                return redirect(url);
+                const goto = new URLSearchParams(window.location.search).get("goto");
+                const url = removePrefix(goto ?? "", basePath);
+                return redirect(url.length ? url : "/");
             }}
         />
         <Route path={`kastException`} element={<ExceptionThrower />} />
