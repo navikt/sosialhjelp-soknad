@@ -8,7 +8,6 @@ import {
     useLocation,
     useNavigationType,
 } from "react-router-dom";
-import {isLocalhost, isMockAlt} from "./lib/utils";
 import * as React from "react";
 
 import {
@@ -36,24 +35,20 @@ const UtgifterGjeld = React.lazy(() => import("./pages/07-utgifterGjeld"));
 const OkonomiskeOpplysningerView = React.lazy(() => import("./pages/08-vedlegg"));
 const Oppsummering = React.lazy(() => import("./pages/09-oppsummering/Oppsummering"));
 
-const redirectFromLogin = async () => {
-    const url = window.location.href;
-    const match = url.match(/goto=\/sosialhjelp\/soknad(.+?)(&login_id.*$|$)/);
-    const destination = match?.[1] ? match[1] : "/informasjon";
-    return redirect(destination);
-};
-
 const routes = (
     <Route errorElement={<SideIkkeFunnet />}>
         <Route index path={`/`} element={<Informasjon />} />
-        <Route index path={`informasjon`} element={<Informasjon />} />
+        <Route path={`informasjon`} loader={() => redirect("/")} />
         <Route path={`feil`} element={<ServerFeil />} />
-        <Route path={`link`} loader={redirectFromLogin} />
-        {!isMockAlt(window.location.origin) && !isLocalhost(window.location.origin) && (
-            <Route path={`mock-login`} loader={redirectFromLogin} />
-        )}
+        <Route
+            path={`link`}
+            loader={async () => {
+                const goto = new URLSearchParams(window.location.search).get("goto");
+                return redirect(goto?.startsWith("/sosialhjelp/soknad") ? goto.split("?")[0] : "/");
+            }}
+        />
         <Route path={`kastException`} element={<ExceptionThrower />} />
-        <Route path={"skjema/:behandlingsId/*"}>
+        <Route path={"skjema/:behandlingsId"}>
             <Route index path="1" element={<Personopplysninger />} />
             <Route path="2" element={<Begrunnelse />} />
             <Route path="3" element={<ArbeidOgUtdanning />} />

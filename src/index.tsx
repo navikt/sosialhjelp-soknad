@@ -49,4 +49,3 @@ const container = document.getElementById("root");
 const root = createRoot(container!);
 const ProfiledApp = withFaroProfiler(App);
 root.render(<ProfiledApp />);
-export {basePath} from "./lib/config";

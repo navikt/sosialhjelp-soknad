@@ -5,7 +5,7 @@ import Backend from "i18next-http-backend";
 import {enGB, nb, nn} from "date-fns/locale";
 import {DecoratorLocale, onLanguageSelect, setAvailableLanguages, setParams} from "@navikt/nav-dekoratoren-moduler";
 import {logAmplitudeEvent} from "./utils/amplitude";
-import {basePath} from "./config";
+import {basePath as url} from "./config";
 
 export const SUPPORTED_LANGUAGES = ["en", "nb", "nn"] as const;
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
@@ -72,15 +72,9 @@ const handleLanguageSelect = ({locale}: {locale: DecoratorLocale}) => {
 };
 
 export const i18nSetLangFromLocalStorage = () => {
-    const storedLanguage = localStorage.getItem("digisos-language");
-    setAvailableLanguages(
-        SUPPORTED_LANGUAGES.map((locale) => ({
-            locale,
-            url: basePath,
-            handleInApp: true,
-        }))
-    );
+    setAvailableLanguages(SUPPORTED_LANGUAGES.map((locale) => ({locale, url, handleInApp: true})));
 
+    const storedLanguage = localStorage.getItem("digisos-language");
     if (storedLanguage) {
         i18n.changeLanguage(storedLanguage);
         setParams({language: storedLanguage as DecoratorLocale});
