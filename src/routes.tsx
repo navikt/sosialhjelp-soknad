@@ -35,16 +35,20 @@ const UtgifterGjeld = React.lazy(() => import("./pages/07-utgifterGjeld"));
 const OkonomiskeOpplysningerView = React.lazy(() => import("./pages/08-vedlegg"));
 const Oppsummering = React.lazy(() => import("./pages/09-oppsummering/Oppsummering"));
 
+const removePrefix = (str: string, prefix: string) => (str.startsWith(prefix) ? str.substring(prefix.length) : str);
+
 const routes = (
     <Route errorElement={<SideIkkeFunnet />}>
         <Route index path={`/`} element={<Informasjon />} />
-        <Route path={`informasjon`} loader={() => redirect("/")} />
+        <Route path={`informasjon`} loader={() => redirect("/", 301)} />
         <Route path={`feil`} element={<ServerFeil />} />
         <Route
             path={`link`}
             loader={async () => {
-                const goto = new URLSearchParams(window.location.search).get("goto");
-                return redirect(goto?.startsWith("/sosialhjelp/soknad") ? goto.split("?")[0] : "/");
+                const goto = new URLSearchParams(window.location.search).get("goto") ?? "";
+                const url = removePrefix(goto, basePath);
+                if (!goto || !url.length) return redirect("/");
+                return redirect(url);
             }}
         />
         <Route path={`kastException`} element={<ExceptionThrower />} />
