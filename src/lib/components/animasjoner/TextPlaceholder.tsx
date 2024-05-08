@@ -27,17 +27,6 @@ const LoaderBar = styled.div`
         }
     }
 
-    /* Safari 4.0 - 8.0 */
-    @-webkit-keyframes bar {
-        0%,
-        100% {
-            background-color: #e9e7e7;
-        }
-        50% {
-            background-color: #dfdeda;
-        }
-    }
-
     /* Standard syntax */
     @keyframes bar {
         0%,
@@ -49,11 +38,6 @@ const LoaderBar = styled.div`
         }
     }
 `;
-
-interface Props {
-    lines?: number;
-    style?: object;
-}
 
 const bars = (lines: number): React.ReactNode[] => {
     let barNumber = 0;
@@ -76,6 +60,7 @@ const bars = (lines: number): React.ReactNode[] => {
     return divs;
 };
 
-export const TextPlaceholder: React.FunctionComponent<Props> = ({lines = 3, style}) => (
-    <LoaderBar style={style}>{bars(lines)}</LoaderBar>
-);
+export const TextPlaceholder: React.FunctionComponent<{
+    lines?: number;
+    style?: object;
+}> = ({lines = 3, style}) => <LoaderBar style={style}>{bars(lines)}</LoaderBar>;

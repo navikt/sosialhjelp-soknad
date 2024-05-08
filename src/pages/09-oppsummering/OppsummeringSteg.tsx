@@ -5,7 +5,6 @@ import React, {ReactNode} from "react";
 import {Steg} from "../../generated/model";
 import {useTranslation} from "react-i18next";
 import {Link as ReactRouterLink} from "react-router-dom";
-import styled from "styled-components";
 
 export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
     const behandlingsId = useBehandlingsId();
@@ -18,10 +17,7 @@ export const EditAnswerLink = (props: {steg: number; questionId: string}) => {
         </Link>
     );
 };
-const EditAnswer = styled.div`
-    display: flex;
-    justify-content: flex-end;
-`;
+
 export const OppsummeringSteg = ({steg: {stegNr, tittel}, children}: {steg: Steg; children: ReactNode}) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
@@ -31,11 +27,11 @@ export const OppsummeringSteg = ({steg: {stegNr, tittel}, children}: {steg: Steg
             <Accordion.Item>
                 <Accordion.Header>{t(tittel)}</Accordion.Header>
                 <Accordion.Content>
-                    <EditAnswer>
+                    <div className={"flex justify-end"}>
                         <ReactRouterLink className="navds-link" to={`/skjema/${behandlingsId}/${stegNr}`}>
                             {t("oppsummering.gatilbake")}
                         </ReactRouterLink>
-                    </EditAnswer>
+                    </div>
                     {children}
                 </Accordion.Content>
             </Accordion.Item>

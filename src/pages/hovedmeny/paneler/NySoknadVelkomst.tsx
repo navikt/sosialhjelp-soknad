@@ -3,7 +3,6 @@ import * as React from "react";
 import {Trans, useTranslation} from "react-i18next";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {logAmplitudeEvent} from "../../../lib/utils/amplitude";
-import {EllaBlunk} from "../../../lib/components/animasjoner/EllaBlunk";
 
 export const NySoknadVelkomst = () => {
     const {data: sessionInfo} = useGetSessionInfo();
@@ -19,10 +18,10 @@ export const NySoknadVelkomst = () => {
 
     return (
         <div className={"p-8 lg:py-12 lg:px-24"}>
-            <GuidePanel className={"!-ml-10 pb-8"} illustration={<EllaBlunk />}>
+            <GuidePanel className={"!-ml-10 pb-8"}>
                 {sessionInfo?.fornavn?.length && (
                     <Heading level={"3"} size={"small"} spacing>
-                        {t("informasjon.hilsen.hei", {fornavn: sessionInfo?.fornavn!})}
+                        {t("informasjon.hilsen.hei", {fornavn: sessionInfo.fornavn})}
                     </Heading>
                 )}
                 <BodyShort>{t("informasjon.hilsen.tittel")}</BodyShort>
