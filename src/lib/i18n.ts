@@ -3,6 +3,9 @@ import {initReactI18next} from "react-i18next";
 import {logWarning} from "./utils/loggerUtils";
 import Backend from "i18next-http-backend";
 import {enGB, nb, nn} from "date-fns/locale";
+import {DecoratorLocale, onLanguageSelect, setAvailableLanguages, setParams} from "@navikt/nav-dekoratoren-moduler";
+import {logAmplitudeEvent} from "./utils/amplitude";
+import {basePath} from "./config";
 
 export const SUPPORTED_LANGUAGES = ["en", "nb", "nn"] as const;
 
@@ -57,4 +60,28 @@ const dateFnLocales: Record<SupportedLanguage, Locale> = {
     en: enGB,
     nn: nn,
     nb: nb,
+};
+export const handleLanguageSelect = ({locale}: {locale: DecoratorLocale}) => {
+    i18n.changeLanguage(locale);
+    setParams({language: locale});
+    localStorage.setItem("digisos-language", locale);
+
+    logAmplitudeEvent("Valgt språk", {language: locale});
+};
+export const i18nSetLangFromLocalStorage = () => {
+    const storedLanguage = localStorage.getItem("digisos-language");
+    setAvailableLanguages(
+        SUPPORTED_LANGUAGES.map((locale) => ({
+            locale,
+            url: basePath,
+            handleInApp: true,
+        }))
+    );
+
+    if (storedLanguage) {
+        i18n.changeLanguage(storedLanguage);
+        setParams({language: storedLanguage as DecoratorLocale});
+    }
+
+    onLanguageSelect(handleLanguageSelect);
 };
