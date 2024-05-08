@@ -10,7 +10,7 @@ export const TelefonData = () => {
     const [editMode, setEditMode] = useState<boolean>(false);
     const {t} = useTranslation("skjema");
     return (
-        <div className={"space-y-2"}>
+        <div className={"space-y-2 !mt-12"}>
             <Heading size={"small"} level={"3"}>
                 {t("kontakt.telefon.sporsmal")}
             </Heading>

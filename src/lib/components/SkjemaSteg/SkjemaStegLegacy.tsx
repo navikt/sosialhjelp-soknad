@@ -13,7 +13,7 @@ import {TimeoutBox} from "../../modals/TimeoutBox";
 import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
-import {NavEnhetInaktiv} from "../../.././pages/01-personalia/adresse/NavEnhet";
+import {NavEnhetInaktiv} from "../../../pages/01-personalia/adresse/NavEnhet";
 import {useBehandlingsId} from "../../hooks/common/useBehandlingsId";
 import {hentXsrfCookie} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {t} from "i18next";
@@ -42,7 +42,7 @@ export const useSkjemaConfig = (skjemaConfig: SkjemaConfig, steg: DigisosSkjemaS
 
 function SkjemaStegHeading(props: {ikon: ReactNode; stegTittel: string}) {
     return (
-        <div className={"text-center mb-12 lg:mb-24"}>
+        <div className={"text-center !mb-12"}>
             <div className="mx-auto w-fit mb-2">{props.ikon}</div>
             <div className="skjema-steg__tittel" tabIndex={-1}>
                 <Heading size={"large"}>{props.stegTittel}</Heading>

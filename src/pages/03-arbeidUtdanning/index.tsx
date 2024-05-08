@@ -85,7 +85,7 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                         />
                     </div>
 
-                    <div>
+                    <div className={"!mt-12"}>
                         <Heading size="medium" spacing>
                             {t("arbeid.dinsituasjon.studerer.undertittel")}
                         </Heading>

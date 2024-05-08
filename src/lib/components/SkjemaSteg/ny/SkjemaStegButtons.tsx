@@ -4,9 +4,9 @@ import {useTranslation} from "react-i18next";
 import {SkjemaStegContext} from "./SkjemaSteg";
 import {AvbrytSoknadModal} from "../../../modals/AvbrytSoknadModal";
 import {useContext, useState} from "react";
-import {NavEnhetInaktiv} from "../../../.././pages/01-personalia/adresse/NavEnhet";
+import {NavEnhetInaktiv} from "../../../../pages/01-personalia/adresse/NavEnhet";
 import {minSideURL} from "../../../config";
-import {logError} from "../../../../lib/utils/loggerUtils";
+import {logError} from "../../../utils/loggerUtils";
 
 interface SkjemaStegNavigasjonProps {
     loading?: boolean;
@@ -26,7 +26,7 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
     const {page, requestNavigation} = context;
 
     return (
-        <div className={"space-y-8 lg:space-y-16 pt-2 md:pt-5 lg:pt-10 pb-8 lg:pb-16"}>
+        <div className={"space-y-5 !mt-16 pb-8 lg:pb-16"}>
             {page !== 9 && <NavEnhetInaktiv />}
             <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
             <div className="space-x-3">

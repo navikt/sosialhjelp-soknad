@@ -18,7 +18,7 @@ export const Kontonr = () => {
     const {mutate} = useDigisosMutation(useHentKontonummer, updateKontonummer);
 
     return expectOK((data) => (
-        <div className={"space-y-2"}>
+        <div className={"space-y-2 !mt-12"}>
             <Heading size={"small"} level={"3"}>
                 {t("kontonummer.sporsmal")}
             </Heading>
