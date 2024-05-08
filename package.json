@@ -124,7 +124,6 @@
             "last 1 safari version"
         ]
     },
-    "overrides": {    },
     "lint-staged": {
         "*.{less,css,md}": "prettier --write",
         "*.{ts,tsx}": [
