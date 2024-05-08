@@ -4,8 +4,8 @@ import {getFeil} from "../../lib/utils/enhancedComponentUtils";
 import {useBosituasjon} from "../../lib/hooks/data/useBosituasjon";
 import {useTranslation} from "react-i18next";
 import {TextField} from "@navikt/ds-react";
-import {ValideringsContext} from "../../index";
 import {ValideringsFeilKode} from "../../lib/validering";
+import {ValideringsContext} from "../../lib/valideringContextProvider";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
 

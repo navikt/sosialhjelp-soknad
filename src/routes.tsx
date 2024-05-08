@@ -17,7 +17,6 @@ import {
     initializeFaro,
     LogLevel,
     ReactIntegration,
-    ReactRouterV6CreateRoutesFromChildren,
     ReactRouterVersion,
 } from "@grafana/faro-react";
 import {TracingInstrumentation} from "@grafana/faro-web-tracing";

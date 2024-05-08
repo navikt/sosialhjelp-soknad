@@ -1,14 +1,14 @@
 import "./index.css";
 import "@navikt/ds-css";
-import {createContext, Dispatch, Suspense, useEffect, useReducer} from "react";
+import {Suspense, useEffect} from "react";
 import {createRoot} from "react-dom/client";
 import {logWindowError} from "./lib/utils/loggerUtils";
 import {
+    DecoratorLocale,
     injectDecoratorClientSide,
     onLanguageSelect,
     setAvailableLanguages,
     setParams,
-    DecoratorLocale,
 } from "@navikt/nav-dekoratoren-moduler";
 import {RouterProvider} from "react-router-dom";
 import {router} from "./routes";
@@ -21,24 +21,17 @@ import {logAmplitudeEvent} from "./lib/utils/amplitude";
 import {withFaroProfiler} from "@grafana/faro-react";
 import {basePath} from "./lib/config";
 import {ApplicationSpinner} from "./lib/components/animasjoner/ApplicationSpinner";
-import {initialValideringState, ValideringActionTypes, valideringsReducer, ValideringState} from "./lib/validering";
+import {ValideringsContextProvider} from "./lib/valideringContextProvider";
 
 window.onerror = logWindowError;
 const queryClient = new QueryClient();
 
-/**
- * Kopiert inn fra Redux for kompatibilitet, iom. at resten av Redux er fjernet.
- * Bør på sikt erstattes med validering per side.
- */
-export const ValideringsContext = createContext<{state: ValideringState; dispatch: Dispatch<ValideringActionTypes>}>({
-    state: initialValideringState,
-    dispatch: () => {},
-});
 const App = () => {
     useEffect(() => {
         setAvailableLanguages(
             SUPPORTED_LANGUAGES.map((locale) => ({locale: locale, url: basePath, handleInApp: true}))
         );
+
         const handleLanguageSelect = (language: {locale: DecoratorLocale}) => {
             i18n.changeLanguage(language.locale);
             setParams({language: language.locale});
@@ -56,16 +49,14 @@ const App = () => {
         onLanguageSelect(handleLanguageSelect);
     }, []);
 
-    const [state, dispatch] = useReducer(valideringsReducer, initialValideringState);
-
     return (
         <Suspense fallback={<ApplicationSpinner />}>
-            <ValideringsContext.Provider value={{state, dispatch}}>
+            <ValideringsContextProvider>
                 <QueryClientProvider client={queryClient}>
                     <RouterProvider router={router} />
                     <ReactQueryDevtools initialIsOpen={false} />
                 </QueryClientProvider>
-            </ValideringsContext.Provider>
+            </ValideringsContextProvider>
         </Suspense>
     );
 };

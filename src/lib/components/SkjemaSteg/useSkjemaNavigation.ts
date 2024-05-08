@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router";
 import {logAmplitudeEvent} from "../../utils/amplitude";
-import {ValideringsContext} from "../../../index";
 import {useContext} from "react";
+import {ValideringsContext} from "../../valideringContextProvider";
 
 export const useSkjemaNavigation = (steg: number) => {
     const {

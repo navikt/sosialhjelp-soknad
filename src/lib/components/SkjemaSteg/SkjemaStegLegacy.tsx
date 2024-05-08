@@ -18,7 +18,8 @@ import {hentXsrfCookie} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {t} from "i18next";
 import {AppHeader} from "../appHeader/AppHeader";
 import {scrollToTop} from "../../utils";
-import {ValideringsContext} from "../../../index";
+
+import {ValideringsContext} from "../../valideringContextProvider";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
