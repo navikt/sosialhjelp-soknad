@@ -6,7 +6,7 @@ export const BehandlingAvPersonopplysningerModal = ({open, onClose}: {open: bool
     const {t} = useTranslation("skjema");
 
     return (
-        <Modal open={open} onClose={onClose}>
+        <Modal open={open} onClose={onClose} aria-label={t("informasjon.tekster.personopplysninger.tittel")}>
             <Modal.Header />
             <Modal.Body>
                 <div
