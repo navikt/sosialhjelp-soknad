@@ -41,7 +41,7 @@ export const Sivilstatus = () => {
                         />
                     ) : (
                         <Systeminfo>
-                            <EktefellePersonaliaBruker ektefelle={ektefelle} />
+                            <EktefellePersonaliaBruker />
                             <div>
                                 <Button onClick={() => setEditMode(true)}>Endre</Button>
                             </div>

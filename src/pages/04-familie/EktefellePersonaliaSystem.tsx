@@ -13,7 +13,7 @@ export const EktefellePersonaliaSystem = () => {
     const {expectOK} = useAlgebraic(useHentSivilstatus(useBehandlingsId()));
 
     // FIXME: Handle the reverse case of this if clause
-    return expectOK(({ektefelle, erFolkeregistrertSammen, harDiskresjonskode}) =>
+    return expectOK(({ektefelle, erFolkeregistrertSammen}) =>
         ektefelle?.navn ? (
             <>
                 <SysteminfoItem label={t("sivilstatus.label")} comment={t("sivilstatus")} />
