@@ -1,4 +1,3 @@
-import {useTranslation} from "react-i18next";
 import {useQueryClient} from "@tanstack/react-query";
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {
@@ -9,8 +8,6 @@ import {isValid} from "date-fns";
 import {formatTidspunkt} from "../../utils";
 
 export const useSkattData = () => {
-    const {t} = useTranslation("skjema");
-
     const queryClient = useQueryClient();
     const behandlingsId = useBehandlingsId();
 
@@ -22,8 +19,8 @@ export const useSkattData = () => {
 
     const samtykke = data?.samtykke ?? null;
 
-    const samtykkeTimestamp = new Date(data?.samtykkeTidspunkt!);
-    const samtykkeTidspunkt = isValid(samtykkeTimestamp) ? formatTidspunkt(samtykkeTimestamp, t) : "";
+    const samtykkeTimestamp = new Date(data?.samtykkeTidspunkt ?? "");
+    const samtykkeTidspunkt = isValid(samtykkeTimestamp) ? formatTidspunkt(samtykkeTimestamp) : "";
 
     return {data, samtykke, samtykkeTidspunkt, isLoading, setSamtykke};
 };
