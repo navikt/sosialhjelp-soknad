@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import viteTsconfigPaths from "vite-tsconfig-paths";
 import eslint from "vite-plugin-eslint";
 
-export default defineConfig(({command, mode}) => {
+export default defineConfig(({ mode}) => {
     const env = loadEnv(mode, process.cwd(), "REACT_APP_");
     return {
         // depending on your application, base can also be "/"
