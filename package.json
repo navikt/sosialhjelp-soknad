@@ -28,6 +28,7 @@
         "dotenv": "^16.4.5",
         "downshift": "^9.0.4",
         "express": "^4.19.2",
+        "globals": "^15.2.0",
         "i18next": "^23.11.3",
         "i18next-browser-languagedetector": "^7.2.1",
         "i18next-http-backend": "^2.5.1",
