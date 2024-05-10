@@ -1,6 +1,4 @@
-import * as React from "react";
-
-const BoligIllustrasjon = () => (
+export const HusIllustrasjon = () => (
     <svg
         width="100"
         height="100"
@@ -11,7 +9,7 @@ const BoligIllustrasjon = () => (
         className="kun_desktop"
         pointerEvents="none"
     >
-        <title>Bolig</title>
+        <title>Hus</title>
         <circle cx="32" cy="32" r="32" fill="#D4E6D8" />
         <path
             fillRule="evenodd"
@@ -22,8 +20,8 @@ const BoligIllustrasjon = () => (
         <path
             fillRule="evenodd"
             clipRule="evenodd"
-            d="M20.3333 28.82V46H28.5V35.5H35.5V46H43.6667V28.82L32 18L20.3333 28.82Z"
-            fill="#FFFCF6"
+            d="M20.3334 28.82V46H28.5V35.5H35.5V46H43.6667V28.82L32 18L20.3334 28.82Z"
+            fill="#86A28A"
         />
         <path
             fillRule="evenodd"
@@ -34,5 +32,3 @@ const BoligIllustrasjon = () => (
         <path d="M35 45.5H29V36H35V45.5Z" fill="#8C4300" stroke="#56300E" />
     </svg>
 );
-
-export default BoligIllustrasjon;

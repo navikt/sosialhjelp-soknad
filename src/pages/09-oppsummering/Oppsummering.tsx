@@ -29,6 +29,7 @@ import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {useHentBegrunnelse} from "../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
 import {basePath, innsynURL} from "../../lib/config";
 import {faro} from "@grafana/faro-react";
+import {SjekkelisteIllustrasjon} from "../../lib/components/svg/illustrasjoner/SjekkelisteIllustrasjon";
 
 const NyOppsummeringPrototypeBegrunnelse = () => {
     const {expectOK} = useAlgebraic(useHentBegrunnelse(useBehandlingsId()));
@@ -61,6 +62,7 @@ const INTL_KEYS_MAP: Record<string, string> = {
     "dinsituasjon.studerer.true.grad.heltid": "dinsituasjon.studerer.grad.heltid",
 };
 const mapChangedIntlKeys = (intlKey: string): string => INTL_KEYS_MAP?.[intlKey] ?? intlKey;
+
 export const Oppsummering = () => {
     const {oppsummeringNavEnhet} = useFeatureFlags();
     const [bekreftet, setBekreftet] = useState<boolean>(false);
@@ -136,7 +138,12 @@ export const Oppsummering = () => {
     const kunLegacySteg = (steg: Steg) => !nyOppsummering || ![1, 2].includes(steg.stegNr);
 
     return (
-        <SkjemaStegLegacy skjemaConfig={digisosSkjemaConfig} steg={"oppsummering"} onSend={sendInnSoknad}>
+        <SkjemaStegLegacy
+            skjemaConfig={digisosSkjemaConfig}
+            steg={"oppsummering"}
+            onSend={sendInnSoknad}
+            ikon={<SjekkelisteIllustrasjon />}
+        >
             <div>
                 {nyOppsummering && (
                     <>

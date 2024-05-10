@@ -8,10 +8,9 @@ import {useSkjemaNavigation} from "../useSkjemaNavigation";
 import SnakkebobleIllustrasjon from "../../svg/illustrasjoner/SnakkebobleIllustrasjon";
 import {SkjemaStegButtons} from "./SkjemaStegButtons";
 import {SkjemaStegStepper} from "./SkjemaStegStepper";
-import William from "../../svg/illustrasjoner/William";
 import {SkjemaStegErrorSummary} from "./SkjemaStegErrorSummary";
-import Koffert from "../../svg/illustrasjoner/Koffert";
-import SkjemaIllustrasjon from "../../svg/illustrasjoner/SkjemaIllustrasjon";
+import StresskoffertIllustrasjon from "../../svg/illustrasjoner/StresskoffertIllustrasjon";
+import DokumentIllustrasjon from "../../svg/illustrasjoner/DokumentIllustrasjon";
 import cx from "classnames";
 import {hentXsrfCookie} from "../../../../generated/soknad-ressurs/soknad-ressurs";
 import {useBehandlingsId} from "../../../hooks/common/useBehandlingsId";
@@ -19,6 +18,8 @@ import {AppHeader} from "../../appHeader/AppHeader";
 import {logError, logWarning} from "../../../utils/loggerUtils";
 import {scrollToTop} from "../../../utils";
 import {useTitle} from "../../../hooks/common/useTitle";
+import {HusIllustrasjon} from "../../svg/illustrasjoner/HusIllustrasjon";
+import {MynterIllustrasjon} from "../../svg/illustrasjoner/MynterIllustrasjon";
 
 type TSkjemaStegContext = {
     page: SkjemaPage;
@@ -52,14 +53,14 @@ interface SkjemaStegProps {
 export type SkjemaPage = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 export const SkjemaHeadings: Record<SkjemaPage, {tittel: string; ikon: ReactNode}> = {
-    1: {tittel: "kontakt.tittel", ikon: <William />},
-    2: {tittel: "begrunnelsebolk.tittel", ikon: <SnakkebobleIllustrasjon />},
-    3: {tittel: "arbeidbolk.tittel", ikon: <Koffert />},
+    1: {tittel: "kontakt.tittel", ikon: <HusIllustrasjon />},
+    2: {tittel: "begrunnelsebolk.tittel", ikon: <MynterIllustrasjon />},
+    3: {tittel: "arbeidbolk.tittel", ikon: <StresskoffertIllustrasjon />},
     4: {tittel: "familiebolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     5: {tittel: "bosituasjonbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     6: {tittel: "inntektbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     7: {tittel: "utgifterbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
-    8: {tittel: "opplysningerbolk.tittel", ikon: <SkjemaIllustrasjon />},
+    8: {tittel: "opplysningerbolk.tittel", ikon: <DokumentIllustrasjon />},
     9: {tittel: "oppsummering.tittel", ikon: <SnakkebobleIllustrasjon />},
 };
 
