@@ -1,5 +1,4 @@
 import * as React from "react";
-import {NivaTreSkjema} from "../../lib/components/nivaTreSkjema/NivaTreSkjema";
 import {useTranslation} from "react-i18next";
 import {Checkbox, CheckboxGroup, Textarea} from "@navikt/ds-react";
 import {VerdierFrontend} from "../../generated/model";
@@ -7,6 +6,7 @@ import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {DigisosReadMore} from "../../lib/components/DigisosReadMore";
 import {useVerdier} from "../../lib/hooks/data/useVerdier";
 import {useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";
+import {UnmountClosed} from "react-collapse";
 
 export const Verdier = () => {
     const {verdier, setBekreftelse, setBeskrivelseAvAnnet, setVerdier} = useVerdier();
@@ -39,12 +39,12 @@ export const Verdier = () => {
                     <Checkbox value={"kjoretoy"}>{t("inntekt.eierandeler.true.type.kjoretoy")}</Checkbox>
                     <Checkbox value={"fritidseiendom"}>{t("inntekt.eierandeler.true.type.fritidseiendom")}</Checkbox>
                     <Checkbox value={"annet"}>{t("inntekt.eierandeler.true.type.annet")}</Checkbox>
-                    <NivaTreSkjema visible={verdier.annet} size="small">
+                    <UnmountClosed isOpened={verdier.annet}>
                         <Textarea
                             label={t("inntekt.eierandeler.true.type.annet.true.beskrivelse.label")}
                             {...registerAnnet}
                         />
-                    </NivaTreSkjema>
+                    </UnmountClosed>
                 </CheckboxGroup>
             )}
         </div>

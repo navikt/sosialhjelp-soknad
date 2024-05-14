@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
 COPY node_modules/ node_modules/
-COPY server.js server.js
+COPY server.mjs server.mjs
 COPY build build/
 
-CMD ["node", "./server.js"]
+CMD ["node", "./server.mjs"]

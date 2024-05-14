@@ -36,8 +36,8 @@ const PabegyntSoknad = ({
     return (
         <li>
             <LinkPanel
-                href={`soknad/skjema/${behandlingsId}/1`}
-                onClick={(event) => onPabegyntSoknadClick(event, `soknad/skjema/${behandlingsId}/1`)}
+                href={`skjema/${behandlingsId}/1`}
+                onClick={(event) => onPabegyntSoknadClick(event, `skjema/${behandlingsId}/1`)}
                 border
                 className={"!p-4 group !text-[#222] hover:!text-[#000]"}
             >

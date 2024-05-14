@@ -1,13 +1,6 @@
 import {BodyShort, Detail, Label} from "@navikt/ds-react";
 import React, {ReactNode} from "react";
-import styled from "styled-components";
 import cx from "classnames";
-
-const ListItemContents = styled.div<{multiline?: boolean}>`
-    p {
-        display: ${(props) => (props.multiline ? "block" : "inline")};
-    }
-`;
 
 export const SysteminfoItem = ({
     label,
@@ -28,12 +21,14 @@ export const SysteminfoItem = ({
                 {comment}
             </Detail>
         )}
-        <ListItemContents className={cx("!leading-5 ", className)} multiline={multiline}>
-            <Label className="pr-1 after:content-[':']" size="small">
+        <div className={cx("!leading-5 ", className)}>
+            <Label className={cx("pr-1 after:content-[':']", {inline: !multiline})} size="small">
                 {label}
             </Label>
-            <BodyShort size="small">{children}</BodyShort>
-        </ListItemContents>
+            <BodyShort className={cx({inline: !multiline})} size="small">
+                {children}
+            </BodyShort>
+        </div>
     </li>
 );
 

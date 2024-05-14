@@ -3,17 +3,19 @@ import * as React from "react";
 import {Button, Heading, Modal} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 
-interface NedtellingProps {
+const Nedtelling = ({
+    onContinueClick,
+    utloggingsUrl,
+    open,
+}: {
     onContinueClick: () => void;
     utloggingsUrl: string;
     open: boolean;
-}
-
-const Nedtelling = ({onContinueClick, utloggingsUrl, open}: NedtellingProps) => {
+}) => {
     const {t} = useTranslation();
 
     return (
-        <Modal open={open}>
+        <Modal open={open} onClose={() => {}} aria-label={t("timeout.overskrift")}>
             <Modal.Header closeButton={false}>
                 <Heading size={"large"} level={"2"}>
                     {t("timeout.overskrift")}

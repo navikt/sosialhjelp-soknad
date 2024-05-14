@@ -12,7 +12,7 @@ const LoggetUt = ({onLoginAgainClick, open}: LoggetUtProps) => {
     const {t} = useTranslation();
 
     return (
-        <Modal open={open}>
+        <Modal open={open} onClose={() => {}} aria-label={t("timeout.overskrift")}>
             <Modal.Header closeButton={false}>
                 <Heading size={"large"} level={"2"}>
                     {t("timeout.overskrift")}

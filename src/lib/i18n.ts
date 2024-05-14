@@ -2,7 +2,7 @@ import i18n from "i18next";
 import {initReactI18next} from "react-i18next";
 import {logWarning} from "./utils/loggerUtils";
 import Backend from "i18next-http-backend";
-import {enGB, nb, nn} from "date-fns/locale";
+import {enGB, Locale, nb, nn} from "date-fns/locale";
 import {DecoratorLocale, onLanguageSelect, setAvailableLanguages, setParams} from "@navikt/nav-dekoratoren-moduler";
 import {logAmplitudeEvent} from "./utils/amplitude";
 import {basePath as url} from "./config";

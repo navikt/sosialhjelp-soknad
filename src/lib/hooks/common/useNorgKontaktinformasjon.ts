@@ -152,7 +152,7 @@ const enhet: NorgEnhetsinformasjon = {
     orgNrTilKommunaltNavKontor: "874778702",
 };
 
-export const useNorgKontaktinformasjon = (enhetsNr?: string) => {
+export const useNorgKontaktinformasjon = (_enhetsNr?: string) => {
     return {
         data: {kontakt, enhet},
         loading: false,

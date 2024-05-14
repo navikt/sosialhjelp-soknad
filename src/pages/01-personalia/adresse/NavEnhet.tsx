@@ -76,40 +76,38 @@ export const NyNavEnhet = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
                 <br />
                 Din søknad blir behandlet av:
             </Heading>
-            {data.kontakt.publikumsmottak.map(
-                ({besoeksadresse: {gatenavn, husnummer, husbokstav, postnummer, poststed}, aapningstider}) => (
-                    <div className={"flex gap-3 pb-2"}>
-                        <div className="basis-1/2 py-1">
-                            <img alt="testbilde" src={"/sosialhjelp/soknad/navKontorBildeEksempel.png"} />
-                        </div>
-                        <div className={"space-y-2 py-2"}>
-                            <Heading size={"xsmall"}>{data.enhet.navn}</Heading>
+            {data.kontakt.publikumsmottak.map(({besoeksadresse: {gatenavn, husnummer, husbokstav}, aapningstider}) => (
+                <div className={"flex gap-3 pb-2"}>
+                    <div className="basis-1/2 py-1">
+                        <img alt="testbilde" src={"/sosialhjelp/soknad/navKontorBildeEksempel.png"} />
+                    </div>
+                    <div className={"space-y-2 py-2"}>
+                        <Heading size={"xsmall"}>{data.enhet.navn}</Heading>
 
-                            <div className={"h-adr"}>
-                                <span className="p-street-address">
-                                    {gatenavn} {husnummer}
-                                    {husbokstav ? ` ${husbokstav}` : ""}
-                                </span>
-                                , <span className="p-locality">{kommunenavn}</span>
-                            </div>
-                            <div>Telefon: {formatTelefonnummer(data.kontakt.telefonnummer)}</div>
-                            <div className={""}>
-                                <div>Besøkstider:</div>
-                                <table>
-                                    {aapningstider.map(({dag, fra, til}) => (
-                                        <tr className={"leading-5"}>
-                                            <th className={"font-normal text-left pr-1"}>{dag}: </th>
-                                            <td>
-                                                {fra}-{til}
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </table>
-                            </div>
+                        <div className={"h-adr"}>
+                            <span className="p-street-address">
+                                {gatenavn} {husnummer}
+                                {husbokstav ? ` ${husbokstav}` : ""}
+                            </span>
+                            , <span className="p-locality">{kommunenavn}</span>
+                        </div>
+                        <div>Telefon: {formatTelefonnummer(data.kontakt.telefonnummer)}</div>
+                        <div className={""}>
+                            <div>Besøkstider:</div>
+                            <table>
+                                {aapningstider.map(({dag, fra, til}) => (
+                                    <tr className={"leading-5"}>
+                                        <th className={"font-normal text-left pr-1"}>{dag}: </th>
+                                        <td>
+                                            {fra}-{til}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </table>
                         </div>
                     </div>
-                )
-            )}
+                </div>
+            ))}
         </div>
     );
 };

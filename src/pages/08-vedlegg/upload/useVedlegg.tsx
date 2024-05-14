@@ -41,16 +41,14 @@ const VedleggReducer = (state: VedleggState, action: VedleggAction) => {
                 status: action.files.length ? state.status : VedleggFrontendVedleggStatus.VedleggKreves,
             };
         case "deleteFile":
-            const files = state.files.filter((file) => file.uuid !== action.uuid);
-            const newState = {
+            return {
                 ...state,
-                files,
-                status: files.length ? state.status : VedleggFrontendVedleggStatus.VedleggKreves,
+                files: state.files.filter((file) => file.uuid !== action.uuid),
+                status: state.files.filter((file) => file.uuid !== action.uuid).length
+                    ? state.status
+                    : VedleggFrontendVedleggStatus.VedleggKreves,
+                error: state.error === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR ? undefined : state.error,
             };
-
-            if (state.error === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR) newState.error = undefined;
-
-            return newState;
         case "setLoading":
             return {...state, loading: action.loading};
         case "addFile":
@@ -111,7 +109,7 @@ export const useVedlegg = (opplysning: Opplysning) => {
     const handleError = (reason: any) => {
         if (!(reason instanceof AxiosError) || !reason.response) return;
 
-        let errorId = extractErrorIdFromResponse(reason.response);
+        const errorId = extractErrorIdFromResponse(reason.response);
 
         if (errorId && errorId !== REST_FEIL.KRYPTERT_FIL && errorId !== REST_FEIL.SIGNERT_FIL) {
             logInfo(`Last opp vedlegg feilet: ${reason.response.status} - error id: ${errorId}`);

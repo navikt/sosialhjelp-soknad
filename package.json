@@ -28,6 +28,7 @@
         "dotenv": "^16.4.5",
         "downshift": "^9.0.4",
         "express": "^4.19.2",
+        "globals": "^15.2.0",
         "i18next": "^23.11.3",
         "i18next-browser-languagedetector": "^7.2.1",
         "i18next-http-backend": "^2.5.1",
@@ -50,6 +51,7 @@
     "devDependencies": {
         "@babel/preset-env": "^7.24.5",
         "@babel/preset-react": "^7.24.1",
+        "@eslint/js": "^9.2.0",
         "@faker-js/faker": "^8.4.1",
         "@tanstack/react-query-devtools": "^5.35",
         "@testing-library/jest-dom": "^6.4.5",
@@ -86,6 +88,7 @@
         "tailwindcss": "^3.4.3",
         "ts-jest": "^29.1.2",
         "typescript": "^5.4.5",
+        "typescript-eslint": "^7.8.0",
         "vite-plugin-eslint": "^1.8.1",
         "vite-plugin-static-copy": "^1.0.4"
     },
@@ -105,12 +108,9 @@
         "prepare": "husky install",
         "fetch-api": "curl -o ./soknad-api.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs && prettier --write soknad-api.json",
         "orval": "rm -rf ./src/generated & orval --prettier",
-        "lint": "lint-staged",
+        "lint": "eslint",
         "cypress:open": "cypress open",
         "cypress:run": "cypress run"
-    },
-    "eslintConfig": {
-        "extends": "react-app"
     },
     "browserslist": {
         "production": [
