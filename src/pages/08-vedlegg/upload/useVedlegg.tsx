@@ -8,8 +8,8 @@ import {deleteVedlegg, saveVedlegg} from "../../../generated/opplastet-vedlegg-r
 import {logAmplitudeEvent} from "../../../lib/utils/amplitude";
 import {AxiosError} from "axios";
 import {Opplysning} from "../../../lib/opplysninger";
-import {ValideringsFeilKode} from "../../../lib/redux/validering/valideringActionTypes";
-import {REST_FEIL} from "../../../lib/redux/restTypes";
+import {REST_FEIL} from "../../../lib/utils/rest-utils";
+import {ValideringsFeilKode} from "../../../lib/validering";
 
 type VedleggState = {
     status: VedleggFrontendVedleggStatus;
@@ -165,7 +165,7 @@ export const useVedlegg = (opplysning: Opplysning) => {
         dispatch({type: "resetError"});
         dispatch({type: "setLoading", loading: true});
 
-        return saveVedlegg(behandlingsId, opplysning.type, {file})
+        return saveVedlegg(behandlingsId, encodeURI(opplysning.type), {file})
             .then((file) => {
                 dispatch({type: "addFile", file});
                 logAmplitudeEvent("fil lastet opp", {opplysningType: opplysning.type});

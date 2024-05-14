@@ -3,11 +3,10 @@ import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../generated/nedetid-ressurs/nedetid-ressurs";
 
-type NetetidPanelType = "infoside" | "ettersendelse" | "avbryt";
+type NetetidPanelType = "infoside" | "avbryt";
 
 const NedetidPanelMessageID: Record<NetetidPanelType, string> = {
     infoside: "nedetid.alertstripe.infoside",
-    ettersendelse: "nedetid.alertstripe.ettersendelse",
     avbryt: "nedetid.alertstripe.avbryt",
 };
 
