@@ -27,7 +27,7 @@ runs:
       shell: bash
 
     - name: 'Build npm artifact'
-      uses: navikt/sosialhjelp-ci/actions/build-npm@v2-beta
+      uses: navikt/sosialhjelp-ci/actions/build-npm@main
       env:
         REACT_APP_RELEASE: ${{ steps.final-tag.outputs.tag }}
       with:
@@ -47,7 +47,7 @@ runs:
         allowUpdates: true
 
     - name: 'Build and Push Docker Image'
-      uses: navikt/sosialhjelp-ci/actions/build-and-push-docker-image@v2-beta
+      uses: navikt/sosialhjelp-ci/actions/build-and-push-docker-image@main
       with:
         artifact-version: ${{ steps.final-tag.outputs.tag }}
         image-name: ${{ env.DOCKER_IMAGE }}
