@@ -18,7 +18,7 @@ runs:
 
     - name: 'Create artifact version'
       id: artifact-version
-      uses: navikt/sosialhjelp-ci/actions/create-artifact-version@v2
+      uses: navikt/sosialhjelp-ci/actions/create-artifact-version@main
 
     - name: 'Tag with prefix'
       id: final-tag
