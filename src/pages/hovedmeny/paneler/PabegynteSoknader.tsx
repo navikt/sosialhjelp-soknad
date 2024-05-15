@@ -23,21 +23,18 @@ const PabegyntSoknad = ({
     antallPabegynteSoknader: number;
 }) => {
     const {t} = useTranslation("skjema");
-    const lastUpdate = new Date(sistOppdatert);
-    const expiryDate = addDays(lastUpdate, DAYS_BEFORE_DELETION);
-    const onPabegyntSoknadClick = (event: React.SyntheticEvent, href: string) => {
-        event.preventDefault();
-        logAmplitudeEvent("Klikk på påbegynt søknad", {
-            antallPabegynteSoknader,
-        });
-        window.location.href = href;
-    };
+    const expiryDate = addDays(new Date(sistOppdatert), DAYS_BEFORE_DELETION);
+    const href = `/sosialhjelp/soknad/skjema/${behandlingsId}/1`;
 
     return (
         <li>
             <LinkPanel
-                href={`/sosialhjelp/soknad/skjema/${behandlingsId}/1`}
-                onClick={(event) => onPabegyntSoknadClick(event, `/sosialhjelp/soknad/skjema/${behandlingsId}/1`)}
+                href={href}
+                onClick={async (e) => {
+                    e.preventDefault();
+                    await logAmplitudeEvent("Klikk på påbegynt søknad", {antallPabegynteSoknader});
+                    window.location.href = href;
+                }}
                 border
                 className={"!p-4 group !text-[#222] hover:!text-[#000]"}
             >
