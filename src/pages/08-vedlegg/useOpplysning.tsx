@@ -9,7 +9,8 @@ import {VedleggFrontend} from "../../generated/model";
 import {useDebounce} from "react-use";
 import {belopTekstfeltPreprocessor} from "./belopTekstfeltPreprocessor";
 import deepEqual from "deep-equal";
-import {ValideringsFeilKode} from "../../lib/redux/validering/valideringActionTypes";
+
+import {ValideringsFeilKode} from "../../lib/validering";
 
 const zodBelopTekstfeltSchema = z.preprocess(
     belopTekstfeltPreprocessor,

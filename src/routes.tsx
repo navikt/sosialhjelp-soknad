@@ -1,7 +1,6 @@
 import {
     createBrowserRouter,
     createRoutesFromChildren,
-    createRoutesFromElements,
     matchRoutes,
     redirect,
     Route,
@@ -9,7 +8,6 @@ import {
     useLocation,
     useNavigationType,
 } from "react-router-dom";
-import {isLocalhost, isMockAlt} from "./lib/utils";
 import * as React from "react";
 
 import {
@@ -36,26 +34,24 @@ const InntektFormue = React.lazy(() => import("./pages/06-inntektFormue"));
 const UtgifterGjeld = React.lazy(() => import("./pages/07-utgifterGjeld"));
 const OkonomiskeOpplysningerView = React.lazy(() => import("./pages/08-vedlegg"));
 const Oppsummering = React.lazy(() => import("./pages/09-oppsummering/Oppsummering"));
-const Ettersendelse = React.lazy(() => import("./pages/ettersendelse"));
 
-const redirectFromLogin = async () => {
-    const url = window.location.href;
-    const match = url.match(/goto=\/sosialhjelp\/soknad(.+?)(&login_id.*$|$)/);
-    const destination = match?.[1] ? match[1] : "/informasjon";
-    return redirect(destination);
-};
+const removePrefix = (str: string, prefix: string) => (str.startsWith(prefix) ? str.substring(prefix.length) : str);
 
 const routes = (
     <Route errorElement={<SideIkkeFunnet />}>
-        <Route index path={`/`} loader={() => redirect("/informasjon")} />
-        <Route path={`/informasjon`} element={<Informasjon />} />
-        <Route path={`/feil`} element={<ServerFeil />} />
-        <Route path={`/link`} loader={redirectFromLogin} />
-        {!isMockAlt(window.location.origin) && !isLocalhost(window.location.origin) && (
-            <Route path={`/mock-login`} loader={redirectFromLogin} />
-        )}
-        <Route path={`/kastException`} element={<ExceptionThrower />} />
-        <Route path={"/skjema/:behandlingsId/*"}>
+        <Route index path={`/`} element={<Informasjon />} />
+        <Route path={`informasjon`} loader={() => redirect("/", 301)} />
+        <Route path={`feil`} element={<ServerFeil />} />
+        <Route
+            path={`link`}
+            loader={async () => {
+                const goto = new URLSearchParams(window.location.search).get("goto");
+                const url = removePrefix(goto ?? "", basePath);
+                return redirect(url.length ? url : "/");
+            }}
+        />
+        <Route path={`kastException`} element={<ExceptionThrower />} />
+        <Route path={"skjema/:behandlingsId"}>
             <Route index path="1" element={<Personopplysninger />} />
             <Route path="2" element={<Begrunnelse />} />
             <Route path="3" element={<ArbeidOgUtdanning />} />
@@ -65,14 +61,12 @@ const routes = (
             <Route path="7" element={<UtgifterGjeld />} />
             <Route path="8" element={<OkonomiskeOpplysningerView />} />
             <Route path="9" element={<Oppsummering />} />
-            <Route path="ettersendelse" element={<Ettersendelse />} />
             <Route element={<SideIkkeFunnet />} />
         </Route>
-        <Route element={<SideIkkeFunnet />} />
     </Route>
 );
 
-export const router = createBrowserRouter(createRoutesFromElements(routes), {basename: basePath});
+export const router = createBrowserRouter(createRoutesFromChildren(routes), {basename: basePath});
 
 initializeFaro({
     url: config.faro.url,

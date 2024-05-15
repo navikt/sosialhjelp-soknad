@@ -10,7 +10,6 @@ import {getDateFnLocale} from "../../../lib/i18n";
 import {useAlgebraic} from "../../../lib/hooks/common/useAlgebraic";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlaceholder";
-import {basePath} from "../../../lib/config";
 
 export const DAYS_BEFORE_DELETION = 14;
 
@@ -37,8 +36,8 @@ const PabegyntSoknad = ({
     return (
         <li>
             <LinkPanel
-                href={`${basePath}/skjema/${behandlingsId}/1`}
-                onClick={(event) => onPabegyntSoknadClick(event, `${basePath}/skjema/${behandlingsId}/1`)}
+                href={`/sosialhjelp/soknad/skjema/${behandlingsId}/1`}
+                onClick={(event) => onPabegyntSoknadClick(event, `/sosialhjelp/soknad/skjema/${behandlingsId}/1`)}
                 border
                 className={"!p-4 group !text-[#222] hover:!text-[#000]"}
             >

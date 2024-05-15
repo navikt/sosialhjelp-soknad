@@ -40,8 +40,9 @@ export const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
                         loading || opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt
                     }
                     visSpinner={!!opplysning.pendingLasterOppFil}
-                    doUpload={(file) => {
-                        upload(file).then(() => setShowSuccessAlert(true));
+                    doUpload={async (file) => {
+                        await upload(file);
+                        setShowSuccessAlert(true);
                     }}
                     resetAlerts={() => {
                         setShowSuccessAlert(false);

@@ -17,7 +17,7 @@ import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useTranslation} from "react-i18next";
 import {NavEnhetInaktiv, NyNavEnhet} from "../01-personalia/adresse/NavEnhet";
 import {useGetOppsummering} from "../../generated/oppsummering-ressurs/oppsummering-ressurs";
-import {SendTilUrlFrontendSendtTil, Steg} from "../../generated/model";
+import {Steg} from "../../generated/model";
 import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
 import {erAktiv} from "../../lib/navEnhetStatus";
 import {logAmplitudeEvent} from "../../lib/utils/amplitude";
@@ -27,7 +27,7 @@ import {OppsummeringSteg} from "./OppsummeringSteg";
 import {OppsummeringHeading, NyOppsummeringPrototypePersonalia} from "./oppsummeringer/personalia";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {useHentBegrunnelse} from "../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
-import {basePath, innsynURL} from "../../lib/config";
+import {innsynURL} from "../../lib/config";
 import {faro} from "@grafana/faro-react";
 import {SjekkelisteIllustrasjon} from "../../lib/components/svg/illustrasjoner/SjekkelisteIllustrasjon";
 
@@ -119,14 +119,8 @@ export const Oppsummering = () => {
         if (adresseValg) logInfo("klikk--" + adresseValg);
 
         try {
-            const {id, sendtTil} = await sendSoknad(behandlingsId);
-
-            const redirectUrl: Record<SendTilUrlFrontendSendtTil, string> = {
-                FIKS_DIGISOS_API: `${innsynURL}${id}/status`,
-                SVARUT: `${basePath}/skjema/${id}/ettersendelse`,
-            };
-
-            window.location.href = redirectUrl[sendtTil];
+            const {id} = await sendSoknad(behandlingsId);
+            window.location.href = `${innsynURL}${id}/status`;
         } catch (e) {
             faro.api.pushError(e);
             setIsError(true);

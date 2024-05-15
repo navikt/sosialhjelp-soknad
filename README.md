@@ -86,7 +86,7 @@ Interne henvendelser kan sendes via Slack i kanalen #team_digisos.
 
 Dette prosjektet bruker formatering av kode med prettier.
 Det er lagt inn automatisk formatering av kode med en pre-commit hook.
-Detaljer rundt dette ligger i `package.json`. Konfigurasjon av prettier ligger i `.prettierrc.js`.
+Detaljer rundt dette ligger i `package.json`. Konfigurasjon av prettier ligger i `.prettierrc.mjs`.
 
 Dersom du i tillegg ønsker å sette opp formatering av kode i IntelliJ slik at koden blir formatert før du committer kan det gjøres slik:
 

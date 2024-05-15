@@ -23,7 +23,7 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
 
     // FIXME: Hardkodet norsk
     return (
-        <Modal open={open} onClose={onClose}>
+        <Modal open={open} onClose={onClose} aria-label={t("avbryt.overskrift")}>
             <Modal.Header>
                 <Heading level="1" size="large" spacing>
                     {t("avbryt.overskrift")}

@@ -41,7 +41,7 @@ export const useForsorgerplikt = () => {
     useEffect(() => {
         forsorgerplikt?.ansvar
             ?.filter(({erFolkeregistrertSammen}) => !erFolkeregistrertSammen)
-            .forEach((barnet) => {
+            .forEach((_) => {
                 logAmplitudeEvent("sporsmal ikke vist", {
                     sporsmal: "Har barnet delt bosted?",
                 });

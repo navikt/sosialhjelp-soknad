@@ -1,6 +1,9 @@
-const express = require("express");
-const {injectDecoratorServerSide} = require("@navikt/nav-dekoratoren-moduler/ssr");
-const path = require("path");
+import express from "express";
+import {injectDecoratorServerSide} from "@navikt/nav-dekoratoren-moduler/ssr/index.js";
+import path from "path";
+import {fileURLToPath} from "node:url";
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename);
 
 // This value is duplicated in src/config because imports are weird
 const basePath = "/sosialhjelp/soknad";

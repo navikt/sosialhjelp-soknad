@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 
-module.exports = {
+import navDs from "@navikt/ds-tailwind";
+
+export default {
     content: ["./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
         extend: {
@@ -14,5 +16,5 @@ module.exports = {
             },
         },
     },
-    presets: [require("@navikt/ds-tailwind")],
+    presets: [navDs],
 };

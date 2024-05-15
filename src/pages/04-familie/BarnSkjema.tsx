@@ -5,7 +5,8 @@ import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {useAnsvar} from "../../lib/hooks/data/useAnsvar";
 import {z} from "zod";
-import {ValideringsFeilKode} from "../../lib/redux/validering/valideringActionTypes";
+
+import {ValideringsFeilKode} from "../../lib/validering";
 
 const SamvaersgradSchema = z.coerce
     .number({invalid_type_error: ValideringsFeilKode.ER_TALL})

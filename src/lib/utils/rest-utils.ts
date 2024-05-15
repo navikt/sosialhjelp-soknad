@@ -1,7 +1,6 @@
 import {redirectToLogin} from "../orval/soknad-api-axios";
 import {logWarning} from "./loggerUtils";
 import {baseURL} from "../config";
-import {REST_FEIL} from "../redux/restTypes";
 
 export const determineCredentialsParameter = () =>
     import.meta.env.REACT_APP_DIGISOS_ENV === "localhost" ? "include" : "same-origin";
@@ -21,10 +20,6 @@ const getHeaders = () =>
         "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
         accept: "application/json, text/plain, */*",
     });
-
-export enum HttpStatus {
-    UNAUTHORIZED = "unauthorized",
-}
 
 export const serverRequest = <T>(
     method: HTTPMethod,
@@ -83,47 +78,6 @@ export const serverRequest = <T>(
 export const fetchToJson = <T>(urlPath: string, withAccessToken?: boolean) =>
     serverRequest<T>("GET", urlPath, "", withAccessToken);
 
-export const fetchPut = (urlPath: string, body: string, withAccessToken?: boolean) =>
-    serverRequest("PUT", urlPath, body, withAccessToken);
-
-export const fetchPost = <T>(urlPath: string, body: string, withAccessToken?: boolean) =>
-    serverRequest<T>("POST", urlPath, body, withAccessToken);
-
-export function fetchDelete(urlPath: string) {
-    const OPTIONS: RequestInit = {
-        headers: getHeaders(),
-        method: "DELETE",
-        credentials: determineCredentialsParameter(),
-    };
-    return fetch(baseURL + urlPath, OPTIONS).then((response: Response) => {
-        if (response.status === 401) response.json().then((data) => redirectToLogin(data));
-        if (!response.ok) throw new DigisosLegacyRESTError(response.status, response.statusText);
-        return response.text();
-    });
-}
-
-const generateUploadOptions = (formData: FormData, method: string): RequestInit => ({
-    headers: new Headers({
-        "X-XSRF-TOKEN": getCookie("XSRF-TOKEN-SOKNAD-API"),
-        accept: "application/json, text/plain, */*",
-    }),
-    method: method,
-    credentials: determineCredentialsParameter(),
-    body: formData,
-});
-
-export function fetchUpload<T>(urlPath: string, formData: FormData) {
-    return fetch(baseURL + urlPath, generateUploadOptions(formData, "POST")).then((response) => {
-        if (response.status === 401) response.json().then((data) => redirectToLogin(data));
-        if (!response.ok) throw new DigisosLegacyRESTError(response.status, response.statusText);
-        return toJson<T>(response);
-    });
-}
-
-export function fetchUploadIgnoreErrors(urlPath: string, formData: FormData, method: string) {
-    return fetch(baseURL + urlPath, generateUploadOptions(formData, method)).then(toJson);
-}
-
 export function toJson<T>(response: Response): Promise<T> {
     if (response.status === 204) return response.text() as Promise<any>;
 
@@ -140,35 +94,14 @@ export class DigisosLegacyRESTError extends Error {
     }
 }
 
-export function getCookie(name: string) {
-    const value = "; " + document.cookie;
-    const parts = value.split("; " + name + "=");
-    if (parts.length === 2) {
-        const partsPopped: string | undefined = parts.pop();
-        if (partsPopped) {
-            const partsPoppedSplitAndShift = partsPopped.split(";").shift();
-            return partsPoppedSplitAndShift ? partsPoppedSplitAndShift : "null";
-        } else {
-            return "null";
-        }
-    } else {
-        return "null";
-    }
-}
+export const getCookie = (name: string) =>
+    Object.fromEntries(document.cookie.split(";").map((cookie) => cookie.trim().split("=")))[name] || null;
 
-export function detekterInternFeilKode(feilKode: string): string {
-    let internFeilKode = feilKode;
-    if (feilKode.match(/Request Entity Too Large/i)) {
-        if (feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR) {
-            internFeilKode = REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR;
-        } else if (feilKode === REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE) {
-            internFeilKode = REST_FEIL.SAMLET_VEDLEGG_STORRELSE_FOR_STOR_ETTERSENDELSE;
-        } else {
-            internFeilKode = REST_FEIL.FOR_STOR_FIL;
-        }
-    }
-
-    if (feilKode.match(/Unsupp?orted Media Type/i)) internFeilKode = REST_FEIL.FEIL_FILTYPE;
-
-    return internFeilKode;
+export enum REST_FEIL {
+    SAMLET_VEDLEGG_STORRELSE_FOR_STOR = "vedlegg.opplasting.feil.samletStorrelseForStor",
+    FEIL_FILTYPE = "vedlegg.opplasting.feil.filType",
+    KRYPTERT_FIL = "opplasting.feilmelding.pdf.kryptert",
+    SIGNERT_FIL = "opplasting.feilmelding.pdf.signert",
+    DUPLIKAT_FIL = "opplasting.feilmelding.duplikat",
+    KONVERTERING_FEILET = "opplasting.feilmelding.konvertering",
 }

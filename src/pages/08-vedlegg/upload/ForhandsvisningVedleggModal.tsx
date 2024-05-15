@@ -33,7 +33,13 @@ export const ForhandsvisningVedleggModal = ({
     const {leggTilDokumentasjon} = useOpplysningTekster(opplysningType);
 
     return (
-        <Modal open={true} onClose={onClose} closeOnBackdropClick={false} className={"bg-gray-800/80"}>
+        <Modal
+            open={true}
+            onClose={onClose}
+            closeOnBackdropClick={false}
+            className={"bg-gray-800/80"}
+            aria-label={leggTilDokumentasjon ?? ""}
+        >
             <Modal.Header>
                 <Heading level={"2"} size={"medium"}>
                     {leggTilDokumentasjon}

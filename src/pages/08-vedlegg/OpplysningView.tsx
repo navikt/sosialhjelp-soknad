@@ -1,6 +1,5 @@
 import {TabellView} from "./TabellView";
 import {VedleggView} from "./upload/VedleggView";
-import {VedleggSlettet} from "./vedleggSlettet";
 import {Opplysning} from "../../lib/opplysninger";
 import {BodyShort, Heading} from "@navikt/ds-react";
 import {useOpplysningTekster} from "./useOpplysningTekster";
@@ -8,8 +7,6 @@ import {ArbeidsVedlegg} from "./ArbeidsVedlegg";
 
 export const OpplysningView = ({opplysning}: {opplysning: Opplysning}) => {
     const {sporsmal, undertekst} = useOpplysningTekster(opplysning.type);
-
-    if (opplysning.slettet) return <VedleggSlettet opplysning={opplysning} />;
 
     return (
         <>

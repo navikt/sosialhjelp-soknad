@@ -25,7 +25,7 @@ const FormatAsType = ({type, children}: {type: SvarType; children: string}) => {
         case "DATO":
             return <LocalizedDate date={children} />;
         case "TIDSPUNKT":
-            return formatTidspunkt(children, t);
+            return formatTidspunkt(children);
     }
 };
 
