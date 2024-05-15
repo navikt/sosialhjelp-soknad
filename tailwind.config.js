@@ -9,6 +9,9 @@ module.exports = {
                 digisosGronnMork: "#38a161",
                 digisosGronnBakgrunn: "#D4E6D8",
             },
+            screens: {
+                xs: "480px", // for å matche DS "mobile" breakpoint
+            },
         },
     },
     presets: [require("@navikt/ds-tailwind")],
