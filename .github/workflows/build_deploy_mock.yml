@@ -44,7 +44,7 @@ jobs:
           echo "IMAGE_TAG=${{ env.DOCKER_IMAGE }}:${{ needs.build-image.outputs.docker-tag }}" >> $GITHUB_ENV
 
       - name: Deploy til dev
-        uses: nais/deploy/actions/deploy@v1
+        uses: nais/deploy/actions/deploy@v2
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: nais/mock.yaml
