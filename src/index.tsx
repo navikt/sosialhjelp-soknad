@@ -20,9 +20,6 @@ const queryClient = new QueryClient();
 const App = () => {
     useEffect(i18nSetLangFromLocalStorage, []);
 
-
-    
-
     return (
         <Suspense fallback={<ApplicationSpinner />}>
             <ValideringsContextProvider>
@@ -32,7 +29,6 @@ const App = () => {
                 </QueryClientProvider>
             </ValideringsContextProvider>
         </Suspense>
-
     );
 };
 
