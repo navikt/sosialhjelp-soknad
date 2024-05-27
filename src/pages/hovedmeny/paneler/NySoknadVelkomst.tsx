@@ -70,10 +70,6 @@ export const NySoknadVelkomst = () => {
                     }}
                 />
             </BodyLong>
-            <Heading level="2" size="small" className={"pt-10"}>
-                {t("informasjon.svarpasoknad.undertittel")}
-            </Heading>
-            <BodyLong>{t("informasjon.svarpasoknad.tekst")}</BodyLong>
         </div>
     );
 };
