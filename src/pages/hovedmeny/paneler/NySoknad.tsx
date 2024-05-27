@@ -49,7 +49,7 @@ export const NySoknadInfo = () => {
             <Personopplysninger />
             <NedetidPanel varselType={"infoside"} />
             {startSoknadError && <Alert variant="error">{t("applikasjon.opprettsoknadfeilet")}</Alert>}
-            <div className={"pt-16 text-center"}>
+            <div className={"pt-10 text-center"}>
                 <Button
                     variant="primary"
                     id="start_soknad_button"
