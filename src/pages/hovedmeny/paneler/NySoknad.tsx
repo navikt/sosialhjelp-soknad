@@ -1,6 +1,5 @@
 import {Alert, Button, ExpansionCard, Heading, Loader} from "@navikt/ds-react";
 import * as React from "react";
-import {Personopplysninger} from "./Personopplysninger";
 import {FillForms} from "@navikt/ds-icons";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
 import {useNavigate} from "react-router";
@@ -46,10 +45,9 @@ export const NySoknadInfo = () => {
     return (
         <>
             <NySoknadVelkomst />
-            <Personopplysninger />
             <NedetidPanel varselType={"infoside"} />
             {startSoknadError && <Alert variant="error">{t("applikasjon.opprettsoknadfeilet")}</Alert>}
-            <div className={"pt-10 text-center"}>
+            <div className={"text-center"}>
                 <Button
                     variant="primary"
                     id="start_soknad_button"
