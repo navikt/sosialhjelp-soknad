@@ -26,19 +26,18 @@ export const NySoknadVelkomst = () => {
                 )}
                 <BodyShort>{t("informasjon.hilsen.tittel")}</BodyShort>
             </GuidePanel>
-            <Heading level="2" size="small" spacing>
+            <Heading level="2" size="small">
                 {t("informasjon.start.undertittel")}
             </Heading>
-            <BodyLong spacing>{t("informasjon.start.tekst_del1")}</BodyLong>
-            <BodyLong spacing>{t("informasjon.start.tekst_del2")}</BodyLong>
-            <BodyLong spacing>
+            <BodyLong className={"pb-4"}>{t("informasjon.start.tekst_del1")}</BodyLong>
+            <BodyLong className={"pb-4"}>
                 <Trans
                     t={t}
-                    i18nKey={"informasjon.start.tekst_del3"}
+                    i18nKey={"informasjon.start.tekst_del2"}
                     components={{
                         lenke: (
                             <a
-                                href="https://www.nav.no/okonomisk-sosialhjelp#soknad"
+                                href="https://www.nav.no/okonomisk-sosialhjelp#sok"
                                 target="_blank"
                                 rel="noreferrer"
                                 onClick={logLinkClicked}
@@ -49,17 +48,19 @@ export const NySoknadVelkomst = () => {
                     }}
                 />
             </BodyLong>
-            <Heading level="2" size="small" spacing>
-                {t("informasjon.svarpasoknad.undertittel")}
-            </Heading>
-            <BodyLong spacing>{t("informasjon.svarpasoknad.tekst")}</BodyLong>
-            <Heading level="2" size="small" spacing>
+            <BodyLong>{t("informasjon.start.tekst_del3")}</BodyLong>
+            <Heading level="2" size="small" className={"pt-10"}>
                 {t("informasjon.nodsituasjon.undertittel")}
             </Heading>
-            <BodyLong spacing>
+            <BodyLong>{t("informasjon.nodsituasjon.tekst")}</BodyLong>
+            <Heading level="2" size="small" className={"pt-10"}>
+                {t("informasjon.innhenting.undertittel")}
+            </Heading>
+            <BodyLong className={"pb-4"}>{t("informasjon.innhenting.tekst_del1")}</BodyLong>
+            <BodyLong>
                 <Trans
                     t={t}
-                    i18nKey={"informasjon.nodsituasjon.tekst"}
+                    i18nKey={"informasjon.innhenting.tekst_del2"}
                     components={{
                         lenke: (
                             <a href="https://www.nav.no/sok-nav-kontor" target="_blank" rel="noreferrer">
