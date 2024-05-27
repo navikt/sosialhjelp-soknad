@@ -17,7 +17,7 @@ export const NySoknadVelkomst = () => {
     };
 
     return (
-        <div className={"p-81 lg:py-12 lg:px-24"}>
+        <div className={"p-8 lg:py-12 lg:px-24"}>
             <GuidePanel className={"!-ml-10 pb-8"}>
                 {sessionInfo?.fornavn?.length && (
                     <Heading level={"3"} size={"small"} spacing>
