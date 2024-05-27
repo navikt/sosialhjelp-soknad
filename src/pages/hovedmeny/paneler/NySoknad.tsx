@@ -77,7 +77,6 @@ export const NySoknadPanel = () => {
             <ExpansionCard.Header className={"!border-0 [&>button]:my-auto"}>
                 <div className={"flex items-center gap-6 h-full"}>
                     <NySoknadIkon />
-                    asdasdasdasdasd
                     <Heading level={"2"} size={"small"}>
                         {t("applikasjon.start.ny.soknad")}
                     </Heading>
