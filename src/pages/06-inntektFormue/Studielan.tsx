@@ -20,7 +20,7 @@ export const Studielan = () => {
     return expectOK((studielan) => (
         <div className="space-y-4">
             <Heading size="medium" level="2">
-                {t("inntekt.studielan.titel")}
+                {t("inntekt.studielan.tittel")}
             </Heading>
             <YesNoInput
                 name={"studielan-bekreftelse"}
