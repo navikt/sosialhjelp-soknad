@@ -8,7 +8,7 @@ import {useFormue} from "../../lib/hooks/data/useFormue";
 
 export const Formue = () => {
     const {formue, setFormue, setBeskrivelse} = useFormue();
-    const {registerAnnet} = useBeskrivelse(formue?.beskrivelseAvAnnet, setBeskrivelse);
+    const {registerAnnet} = useBeskrivelse(formue?.beskrivelseAvAnnet || "", setBeskrivelse);
     const {t} = useTranslation("skjema");
 
     if (!formue) return null;
