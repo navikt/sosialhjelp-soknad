@@ -18,7 +18,7 @@
         "@navikt/fnrvalidator": "^2.0.7",
         "@navikt/nav-dekoratoren-moduler": "^2.1.6",
         "@swan-io/boxed": "^2.3.0",
-        "@tanstack/react-query": "^5.36",
+        "@tanstack/react-query": "^5.40",
         "@types/react-collapse": "^5.0.4",
         "@vitejs/plugin-react": "^4.2.1",
         "axios": "^1.6.8",
