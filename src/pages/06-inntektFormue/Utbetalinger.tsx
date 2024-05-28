@@ -10,7 +10,7 @@ import {UnmountClosed} from "react-collapse";
 export const Utbetalinger = () => {
     const {utbetalinger, setBekreftelse, setUtbetalinger, setBeskrivelseAvAnnet} = useUtbetalinger();
     const {t} = useTranslation("skjema");
-    const {registerAnnet} = useBeskrivelse(utbetalinger?.beskrivelseAvAnnet, setBeskrivelseAvAnnet);
+    const {registerAnnet} = useBeskrivelse(utbetalinger?.beskrivelseAvAnnet || "", setBeskrivelseAvAnnet);
 
     if (!utbetalinger) return null;
 
