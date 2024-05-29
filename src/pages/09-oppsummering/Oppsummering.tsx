@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Alert, ConfirmationPanel, Heading, Label} from "@navikt/ds-react";
+import {Alert, Heading, Label} from "@navikt/ds-react";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import {ListOfValues} from "./question/ListOfValues";
 import {OppsummeringSporsmal} from "./question/OppsummeringSporsmal";
@@ -66,8 +66,6 @@ const mapChangedIntlKeys = (intlKey: string): string => INTL_KEYS_MAP?.[intlKey]
 export const Oppsummering = () => {
     const {logEvent} = useAmplitude();
     const {oppsummeringNavEnhet} = useFeatureFlags();
-    const [bekreftet, setBekreftet] = useState<boolean>(false);
-    const [bekreftetFeil, setBekreftetFeil] = useState<string | null>(null);
     const behandlingsId = useBehandlingsId();
     const {nyOppsummering} = useFeatureFlags();
 
@@ -111,11 +109,6 @@ export const Oppsummering = () => {
     const adresseValg = useHentAdresser(behandlingsId).data?.valg;
 
     const sendInnSoknad = async () => {
-        if (!bekreftet) {
-            setBekreftetFeil("oppsummering.feilmelding.bekreftmangler");
-            return;
-        }
-
         logEvent("skjema fullført", getAttributesForSkjemaFullfortEvent());
         if (adresseValg) logInfo("klikk--" + adresseValg);
 
@@ -180,15 +173,6 @@ export const Oppsummering = () => {
                 ))}
 
                 {oppsummeringNavEnhet ? <NyNavEnhet navEnhet={adresser?.navEnhet} /> : <SoknadsmottakerInfoPanel />}
-
-                <ConfirmationPanel
-                    label={t("soknadsosialhjelp.oppsummering.harLestSamtykker")}
-                    checked={bekreftet}
-                    onChange={(e) => setBekreftet(e.target.checked)}
-                    error={bekreftetFeil && t(bekreftetFeil)}
-                >
-                    {t("soknadsosialhjelp.oppsummering.bekreftOpplysninger")}
-                </ConfirmationPanel>
 
                 {isError && (
                     <Alert role="alert" variant="error" style={{marginTop: "1rem"}}>
