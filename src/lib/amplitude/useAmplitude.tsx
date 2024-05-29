@@ -9,10 +9,10 @@ export const useAmplitude = () => {
     const worker = useContext(AmplitudeContext);
 
     /** Logger en hendelse til Amplitude via en worker thread */
-    const log = (eventName: string, eventData?: Record<string, unknown>) => {
+    const logEvent = (eventName: string, eventData?: Record<string, unknown>) => {
         if (!worker) return;
         worker.postMessage({eventName, eventData});
     };
 
-    return {log};
+    return {logEvent};
 };

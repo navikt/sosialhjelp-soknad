@@ -7,11 +7,12 @@ import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
-import {logAmplitudeEvent} from "../../../lib/utils/amplitude";
 import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {NedetidPanel} from "../../../lib/components/NedetidPanel";
+import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const NySoknadInfo = () => {
+    const {logEvent} = useAmplitude();
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
     const [startSoknadError, setStartSoknadError] = useState<Error | null>(null);
 
@@ -26,7 +27,7 @@ export const NySoknadInfo = () => {
     const onSokSosialhjelpButtonClick = async (event: React.SyntheticEvent) => {
         setStartSoknadPending(true);
         event.preventDefault();
-        logAmplitudeEvent("skjema startet", {
+        logEvent("skjema startet", {
             antallNyligInnsendteSoknader,
             antallPabegynteSoknader,
             enableModalV2: true,

@@ -22,13 +22,14 @@ const PabegyntSoknad = ({
     sistOppdatert: string;
     antallPabegynteSoknader: number;
 }) => {
+    const {logEvent} = useAmplitude();
     const {t} = useTranslation("skjema");
     const expiryDate = addDays(new Date(sistOppdatert), DAYS_BEFORE_DELETION);
     return (
         <li>
             <LinkPanel
                 href={`/sosialhjelp/soknad/skjema/${behandlingsId}/1`}
-                onClick={() => useAmplitude().log("Klikk på påbegynt søknad", {antallPabegynteSoknader})}
+                onClick={() => logEvent("Klikk på påbegynt søknad", {antallPabegynteSoknader})}
                 border
                 className={"!p-4 group !text-[#222] hover:!text-[#000]"}
             >

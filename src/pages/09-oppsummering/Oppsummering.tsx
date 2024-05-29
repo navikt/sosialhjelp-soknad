@@ -20,7 +20,6 @@ import {useGetOppsummering} from "../../generated/oppsummering-ressurs/oppsummer
 import {Steg} from "../../generated/model";
 import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
 import {erAktiv} from "../../lib/navEnhetStatus";
-import {logAmplitudeEvent} from "../../lib/utils/amplitude";
 import {sendSoknad} from "../../generated/soknad-actions/soknad-actions";
 import {useFeatureFlags} from "../../lib/featureFlags";
 import {OppsummeringSteg} from "./OppsummeringSteg";
@@ -30,6 +29,7 @@ import {useHentBegrunnelse} from "../../generated/begrunnelse-ressurs/begrunnels
 import {innsynURL} from "../../lib/config";
 import {faro} from "@grafana/faro-react";
 import {SjekkelisteIllustrasjon} from "../../lib/components/svg/illustrasjoner/SjekkelisteIllustrasjon";
+import {useAmplitude} from "../../lib/amplitude/useAmplitude";
 
 const NyOppsummeringPrototypeBegrunnelse = () => {
     const {expectOK} = useAlgebraic(useHentBegrunnelse(useBehandlingsId()));
@@ -64,6 +64,7 @@ const INTL_KEYS_MAP: Record<string, string> = {
 const mapChangedIntlKeys = (intlKey: string): string => INTL_KEYS_MAP?.[intlKey] ?? intlKey;
 
 export const Oppsummering = () => {
+    const {logEvent} = useAmplitude();
     const {oppsummeringNavEnhet} = useFeatureFlags();
     const [bekreftet, setBekreftet] = useState<boolean>(false);
     const [bekreftetFeil, setBekreftetFeil] = useState<string | null>(null);
@@ -115,7 +116,7 @@ export const Oppsummering = () => {
             return;
         }
 
-        logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent());
+        logEvent("skjema fullført", getAttributesForSkjemaFullfortEvent());
         if (adresseValg) logInfo("klikk--" + adresseValg);
 
         try {

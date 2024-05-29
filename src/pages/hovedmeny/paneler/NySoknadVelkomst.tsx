@@ -2,19 +2,12 @@ import {BodyLong, BodyShort, GuidePanel, Heading} from "@navikt/ds-react";
 import * as React from "react";
 import {Trans, useTranslation} from "react-i18next";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
-import {logAmplitudeEvent} from "../../../lib/utils/amplitude";
+import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const NySoknadVelkomst = () => {
+    const {logEvent} = useAmplitude();
     const {data: sessionInfo} = useGetSessionInfo();
     const {t} = useTranslation("skjema");
-
-    const logLinkClicked = () => {
-        logAmplitudeEvent("navigere", {
-            lenkeTekst: "opplysninger du kan bli bedt om å levere",
-            destinasjon: "https://www.nav.no/okonomisk-sosialhjelp#soknad",
-            antallNyligInnsendteSoknader: sessionInfo?.numRecentlySent ?? 0,
-        });
-    };
 
     return (
         <div className={"p-8 lg:py-12 lg:px-24"}>
@@ -41,7 +34,13 @@ export const NySoknadVelkomst = () => {
                                 href="https://www.nav.no/okonomisk-sosialhjelp#soknad"
                                 target="_blank"
                                 rel="noreferrer"
-                                onClick={logLinkClicked}
+                                onClick={() => {
+                                    logEvent("navigere", {
+                                        lenkeTekst: "opplysninger du kan bli bedt om å levere",
+                                        destinasjon: "https://www.nav.no/okonomisk-sosialhjelp#soknad",
+                                        antallNyligInnsendteSoknader: sessionInfo?.numRecentlySent ?? 0,
+                                    });
+                                }}
                             >
                                 {null}
                             </a>

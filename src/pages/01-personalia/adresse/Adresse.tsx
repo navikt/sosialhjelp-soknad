@@ -17,9 +17,10 @@ import cx from "classnames";
 import {useTranslation} from "react-i18next";
 import {HorizontalRadioGroup} from "../../../lib/components/form/HorizontalRadioGroup";
 import {useQueryClient} from "@tanstack/react-query";
-import {logAmplitudeEvent} from "../../../lib/utils/amplitude";
+import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const AdresseData = () => {
+    const {logEvent} = useAmplitude();
     const queryClient = useQueryClient();
     const behandlingsId = useBehandlingsId();
     const {expectOK, data} = useAlgebraic(useHentAdresser(behandlingsId));
@@ -68,7 +69,7 @@ export const AdresseData = () => {
                 onChange={async (valg) => {
                     setUncommittedAdressevalg(valg);
                     if (valg !== "soknad") await setAdresser(adresser, valg);
-                    logAmplitudeEvent("adresseValg", {addresseValgt: valg});
+                    logEvent("adresseValg", {addresseValgt: valg});
                 }}
             >
                 <Radio

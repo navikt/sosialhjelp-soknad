@@ -5,11 +5,11 @@ import {useTranslation} from "react-i18next";
 import {hentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {logError, logInfo, logWarning} from "../../../lib/utils/loggerUtils";
 import {deleteVedlegg, saveVedlegg} from "../../../generated/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
-import {logAmplitudeEvent} from "../../../lib/utils/amplitude";
 import {AxiosError} from "axios";
 import {Opplysning} from "../../../lib/opplysninger";
 import {REST_FEIL} from "../../../lib/utils/rest-utils";
 import {ValideringsFeilKode} from "../../../lib/validering";
+import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 type VedleggState = {
     status: VedleggFrontendVedleggStatus;
@@ -72,6 +72,7 @@ const VedleggReducer = (state: VedleggState, action: VedleggAction) => {
 };
 
 export const useVedlegg = (opplysning: Opplysning) => {
+    const {logEvent} = useAmplitude();
     const [state, dispatch] = useReducer(VedleggReducer, initialVedleggState);
     const {files, loading} = state;
     const behandlingsId = useBehandlingsId();
@@ -166,7 +167,7 @@ export const useVedlegg = (opplysning: Opplysning) => {
         return saveVedlegg(behandlingsId, encodeURI(opplysning.type), {file})
             .then((file) => {
                 dispatch({type: "addFile", file});
-                logAmplitudeEvent("fil lastet opp", {opplysningType: opplysning.type});
+                logEvent("fil lastet opp", {opplysningType: opplysning.type});
             })
             .catch(handleError)
             .finally(() => {

@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router";
-import {logAmplitudeEvent} from "../../utils/amplitude";
 import {useContext} from "react";
 import {ValideringsContext} from "../../valideringContextProvider";
+import {useAmplitude} from "../../amplitude/useAmplitude";
 
 export const useSkjemaNavigation = (steg: number) => {
     const {
@@ -9,6 +9,7 @@ export const useSkjemaNavigation = (steg: number) => {
         dispatch,
     } = useContext(ValideringsContext);
     const navigate = useNavigate();
+    const {logEvent} = useAmplitude();
 
     const gotoPage = (newPage: number) => {
         if (newPage < steg) {
@@ -19,7 +20,7 @@ export const useSkjemaNavigation = (steg: number) => {
                 return;
             } else {
                 dispatch({type: "clearAllValideringsfeil"});
-                logAmplitudeEvent("skjemasteg fullført", {steg});
+                logEvent("skjemasteg fullført", {steg});
             }
         }
 
