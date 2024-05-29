@@ -33,7 +33,7 @@ export const getDateFnLocale = () => {
     // Ensure that the current language is supported
     if (!isSupportedLanguage(language)) {
         logWarning(`getDateFnLocale: Unsupported language "${language}", falling back to ${fallbackLng}`);
-        return fallbackLng;
+        return dateFnLocales[fallbackLng];
     }
 
     return dateFnLocales[language];
