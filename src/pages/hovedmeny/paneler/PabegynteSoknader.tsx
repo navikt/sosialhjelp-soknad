@@ -39,8 +39,7 @@ const PabegyntSoknad = ({
                     }
                 >
                     <Label style={{marginRight: "1rem"}}>
-                        {t("applikasjon.paabegynt.soknad.sist.oppdatert")}
-                        <LocalizedDate date={sistOppdatert} />
+                        {t("applikasjon.paabegynt.soknad.sist.oppdatert")} <LocalizedDate date={sistOppdatert} />
                     </Label>
                     <BodyShort className={"!active:no-underline"}>
                         {t("applikasjon.paabegynt.soknad.slettes")}{" "}
