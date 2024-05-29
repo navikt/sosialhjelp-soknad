@@ -5,6 +5,7 @@ import tseslint from "typescript-eslint";
 import globals from "globals";
 
 export default tseslint.config(
+    // server.mjs er Node-serveren vår, så andre regler gjelder for den.
     {
         files: ["server.mjs"],
         languageOptions: {
@@ -13,7 +14,7 @@ export default tseslint.config(
             },
         }
     },
-    {ignores: ['build/', 'src/generated/']},
+    {ignores: ['build/**/*', 'src/generated/**/*']},
     eslint.configs.recommended,
     ...
         tseslint.configs.recommended, {
