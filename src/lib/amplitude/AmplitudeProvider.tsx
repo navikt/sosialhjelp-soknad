@@ -20,7 +20,11 @@ export const AmplitudeProvider = ({children}: {children: ReactNode}) => {
             return;
         }
 
-        setWorker(new Worker(workerUrl, {type: "module"}));
+        try {
+            setWorker(new Worker(workerUrl, {type: "module"}));
+        } catch (e) {
+            logWarning(`Failed to create worker for amplitude metrics: ${e}`).then();
+        }
 
         return () => worker?.terminate();
     }, []);
