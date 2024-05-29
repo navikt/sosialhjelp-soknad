@@ -60,8 +60,9 @@ const log = async (message: string, level: LoggLevel) => {
         level,
     };
 
-    if (import.meta.env.REACT_APP_DIGISOS_ENV !== "prod-sbs") logLocally(navLogEntry);
-    logToServer(navLogEntry);
+    if (import.meta.env.REACT_APP_DIGISOS_ENV !== "prod-sbs") {
+        logLocally(navLogEntry);
+    } else await logToServer(navLogEntry);
 };
 
 const logToServer = async (navLogEntry: Logg) => {

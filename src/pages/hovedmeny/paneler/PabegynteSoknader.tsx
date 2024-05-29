@@ -4,12 +4,12 @@ import React from "react";
 import {addDays, formatDistance} from "date-fns";
 import {useTranslation} from "react-i18next";
 import cx from "classnames";
-import {logAmplitudeEvent} from "../../../lib/utils/amplitude";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate";
 import {getDateFnLocale} from "../../../lib/i18n";
 import {useAlgebraic} from "../../../lib/hooks/common/useAlgebraic";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlaceholder";
+import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const DAYS_BEFORE_DELETION = 14;
 
@@ -24,17 +24,11 @@ const PabegyntSoknad = ({
 }) => {
     const {t} = useTranslation("skjema");
     const expiryDate = addDays(new Date(sistOppdatert), DAYS_BEFORE_DELETION);
-    const href = `/sosialhjelp/soknad/skjema/${behandlingsId}/1`;
-
     return (
         <li>
             <LinkPanel
-                href={href}
-                onClick={async (e) => {
-                    e.preventDefault();
-                    await logAmplitudeEvent("Klikk på påbegynt søknad", {antallPabegynteSoknader});
-                    window.location.href = href;
-                }}
+                href={`/sosialhjelp/soknad/skjema/${behandlingsId}/1`}
+                onClick={() => useAmplitude().log("Klikk på påbegynt søknad", {antallPabegynteSoknader})}
                 border
                 className={"!p-4 group !text-[#222] hover:!text-[#000]"}
             >
@@ -44,11 +38,15 @@ const PabegyntSoknad = ({
                     }
                 >
                     <Label style={{marginRight: "1rem"}}>
-                        {t("applikasjon.paabegynt.soknad.sist.oppdatert")} <LocalizedDate date={sistOppdatert} />
+                        {t("applikasjon.paabegynt.soknad.sist.oppdatert")}
+                        <LocalizedDate date={sistOppdatert} />
                     </Label>
                     <BodyShort className={"!active:no-underline"}>
                         {t("applikasjon.paabegynt.soknad.slettes")}{" "}
-                        {formatDistance(expiryDate, new Date(), {locale: getDateFnLocale(), addSuffix: true})}
+                        {formatDistance(expiryDate, new Date(), {
+                            locale: getDateFnLocale(),
+                            addSuffix: true,
+                        })}
                     </BodyShort>
                 </LinkPanel.Title>
             </LinkPanel>
