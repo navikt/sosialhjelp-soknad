@@ -11,7 +11,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 
 const TelefonnummerFormSchema = z
     .object({
-        phoneNumber: z.string().min(1, "kontakt.telefon.feil.tom"),
+        phoneNumber: z.string().min(1, "kontakt.telefon.feil.tom").max(11, "kontakt.telefon.feil.maxLength"),
         countryCode: z.string(),
     })
     .refine(({phoneNumber, countryCode}) => isValidNumber(`+${countryCode}${phoneNumber}`), {
@@ -70,8 +70,8 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
                     </div>
                     <TextField
                         {...register("phoneNumber")}
-                        maxLength={17}
-                        htmlSize={17}
+                        maxLength={12}
+                        htmlSize={12}
                         type={"tel"}
                         className={"inline"}
                         autoComplete={"tel-national"}

@@ -578,6 +578,7 @@
     "kontakt.telefon.tittel":"New telephone number",
     "kontakt.telefon.beskrivelse": "To make it easier to contact you, we require your telephone number.",
     "kontakt.telefon.feil.tom": "You must enter a telephone number",
+    "kontakt.telefon.feil.maxLength": "Sorry, phone number must be 11 digits or less.",
     "kontakt.telefon.feil.ugyldig": "Phone number is not valid",
     "kontakt.telefon.infotekst.tekst": "The telephone number you provide here can be used to contact you regarding your application.",
     "kontakt.telefon.label": "Telephone number",
