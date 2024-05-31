@@ -12,7 +12,7 @@ export const Barneutgifter = () => {
     if (!barneutgifter || !barneutgifter.harForsorgerplikt) return null;
 
     return (
-        <div className={"space-y-2"}>
+        <div className={"space-y-2 !mt-12"}>
             <YesNoInput
                 legend={t("utgifter.barn.sporsmal")}
                 description={t("utgifter.barn.infotekst.tekst")}

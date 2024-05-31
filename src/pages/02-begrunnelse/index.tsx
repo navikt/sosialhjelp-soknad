@@ -55,7 +55,7 @@ export const Begrunnelse = () => {
                 {isPending ? (
                     <ApplicationSpinner />
                 ) : (
-                    <form className={"space-y-12 lg:space-y-24 !mt-12"} onSubmit={(e) => e.preventDefault()}>
+                    <form className={"space-y-12 lg:space-y-16 !mt-12 pb-3"} onSubmit={(e) => e.preventDefault()}>
                         {isError && <Feilmelding />}
                         <Textarea
                             {...register("hvaSokesOm")}

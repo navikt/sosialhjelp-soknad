@@ -27,9 +27,8 @@ export const ForsorgerPlikt = () => {
                 <Heading size={"medium"} level={"3"} spacing>
                     {t("familierelasjon.faktum.sporsmal")}
                 </Heading>
-                <Detail>{t("familierelasjon.ingress_folkeregisteret")}</Detail>
-                <BodyShort spacing>
-                    {t("familierelasjon.ingress_forsorger")}:{" "}
+                <BodyShort>
+                    {t("familierelasjon.ingress_folkeregisteret")} {t("familierelasjon.ingress_forsorger")}:{" "}
                     {t(
                         ansvar.length === 1
                             ? "familierelasjon.ingress_antallBarn.entall"

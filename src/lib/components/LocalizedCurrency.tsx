@@ -8,8 +8,8 @@ export const LocalizedCurrency = ({value}: {value?: number}) => {
 
     const formattedValue = new Intl.NumberFormat(lang, {
         currency: "NOK",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
     }).format(value);
 
     return `${formattedValue} kr`;

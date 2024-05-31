@@ -9,7 +9,7 @@ export const InfopanelOpplysninger = () => {
     const {t} = useTranslation("skjema");
 
     return (
-        <GuidePanel poster>
+        <GuidePanel poster className={"!pt-6"}>
             <BodyShort spacing>{t("opplysninger.informasjon.avsnitt1")}</BodyShort>
             <BodyShort spacing>{t("opplysninger.informasjon.avsnitt2")}</BodyShort>
             <LinkButton type="button" onClick={() => setModalOpen(true)}>

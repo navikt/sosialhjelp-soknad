@@ -105,6 +105,7 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                                 legend={t("dinsituasjon.studerer.grad.sporsmal")}
                                 defaultValue={getValues("utdanning.studengradErHeltid")?.toString() ?? null}
                                 onChange={(value: string) => setValue("utdanning.studengradErHeltid", value === "true")}
+                                className={"!mt-6"}
                             >
                                 <Radio value={"true"}>{t("dinsituasjon.studerer.grad.heltid")}</Radio>
                                 <Radio value={"false"}>{t("dinsituasjon.studerer.grad.deltid")}</Radio>

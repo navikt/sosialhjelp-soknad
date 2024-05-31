@@ -28,18 +28,18 @@ export const InntektFormue = () => {
             <Bostotte />
 
             <Studielan />
-            <div>
+            <div className={"space-y-4 !mt-12"}>
                 <Heading size="medium" level="2" spacing>
                     {t("inntekt.inntekter.tittel")}
                 </Heading>
                 <Utbetalinger />
             </div>
 
-            <div>
+            <div className={"space-y-4 !mt-12"}>
                 <Heading size={"medium"}>{t("opplysninger.formue.bank.undertittel")}</Heading>
                 <Formue />
             </div>
-            <div>
+            <div className={"space-y-4 !mt-12"}>
                 <Heading size={"medium"}>{t("opplysninger.formue.annen.undertittel")}</Heading>
                 <Verdier />
             </div>

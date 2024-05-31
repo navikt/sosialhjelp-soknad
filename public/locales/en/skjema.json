@@ -668,7 +668,7 @@
     "opplysninger.arbeid.jobb.slettet": "We have deleted the attachment relating to wages as it is no longer relevant.",
     "opplysninger.arbeid.jobb.sporsmal": "How much do you receive in wages?",
     "opplysninger.arbeid.jobb.undertekst": "State wages for all work situations",
-    "opplysninger.arbeid.jobb.leggtil": "Add paycheck",
+    "opplysninger.arbeid.jobb.leggtil": "Enter paycheck amount (optional)",
     "opplysninger.arbeid.jobb.vedlegg.sporsmal.tittel": "Upload wage slip (last month)",
     "opplysninger.arbeid.sporsmal": "Work and education",
     "opplysninger.arbeid.student.belop.label": "Amount last month",
