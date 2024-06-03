@@ -2,10 +2,11 @@ import * as React from "react";
 import {BodyShort, Button, Modal, Heading, Alert} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../hooks/common/useBehandlingsId";
-import {logError} from "../../lib/utils/loggerUtils";
+import {logError} from "../utils/loggerUtils";
 import {useSlettSoknad} from "../../generated/soknad-ressurs/soknad-ressurs";
 import {minSideURL} from "../config";
 import {faro} from "@grafana/faro-react";
+import {TrashIcon} from "@navikt/aksel-icons";
 export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () => void}) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
@@ -34,8 +35,11 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
                 {isError && <Alert variant={"error"}>Beklager, en feil oppstod ved sletting.</Alert>}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" disabled={isLoading} onClick={deleteAndRedirect}>
-                    {t("avbryt.slett")}
+                <Button variant="danger" disabled={isLoading} onClick={deleteAndRedirect}>
+                    <div className={"flex gap-2"}>
+                        <TrashIcon />
+                        {t("avbryt.slett")}
+                    </div>
                 </Button>
                 <Button
                     variant="primary"

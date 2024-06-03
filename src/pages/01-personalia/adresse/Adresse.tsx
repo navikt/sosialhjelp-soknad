@@ -56,7 +56,7 @@ export const AdresseData = () => {
     };
 
     return expectOK((adresser) => (
-        <div className={"space-y-2 !mt-12"} id={"adressefelt"}>
+        <div className={"space-y-2"} id={"adressefelt"}>
             <Heading size={"small"} level={"3"}>
                 {t("soknadsmottaker.sporsmal")}
             </Heading>

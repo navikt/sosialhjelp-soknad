@@ -21,7 +21,7 @@ export const Gruppe = ({gruppeKey, opplysninger}: {gruppeKey: VedleggGruppe; opp
 
     return (
         <Panel className={"!px-0"} style={{display: "grid", gap: "1rem"}}>
-            <Heading level={"3"} size={"xlarge"} className={"pb-4 pt-1"}>
+            <Heading level={"3"} size={"xlarge"} className={"pb-6"}>
                 {t(`${Gruppetittel[gruppeKey]}.sporsmal`)}
             </Heading>
 

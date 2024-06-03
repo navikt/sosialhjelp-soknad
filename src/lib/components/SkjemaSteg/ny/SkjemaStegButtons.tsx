@@ -26,7 +26,7 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
     const {page, requestNavigation} = context;
 
     return (
-        <div className={"space-y-5 !mt-16 pb-8 lg:pb-16"}>
+        <div className={"space-y-8 lg:space-y-16 pt-2 md:pt-5 lg:pt-10 pb-8 lg:pb-16"}>
             {page !== 9 && <NavEnhetInaktiv />}
             <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
             <div className="space-x-3">

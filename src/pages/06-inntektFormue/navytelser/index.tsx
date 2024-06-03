@@ -21,7 +21,7 @@ export const NavYtelser = () => {
     if (isError) return <Alert variant={"warning"}>{t("utbetalinger.kontaktproblemer")}</Alert>;
 
     return (
-        <div className={"space-y-4 !mt-12"}>
+        <div className={"space-y-4"}>
             <Heading size="medium" level="2" spacing>
                 {t("navytelser.sporsmal")}
             </Heading>

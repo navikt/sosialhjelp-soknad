@@ -24,7 +24,7 @@ export const Bostotte = () => {
     const {bekreftelse, dataHentet, setBekreftelse, setSamtykke} = useInntekterBostotte();
 
     return (
-        <div className={"space-y-4 !mt-12"}>
+        <div className={"space-y-4"}>
             <Heading size="medium" level="2">
                 {t("inntekt.bostotte.overskrift")}
             </Heading>

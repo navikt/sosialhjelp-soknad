@@ -6,7 +6,7 @@ export const EktefellerPlikterForsorge = () => {
     const {t} = useTranslation("skjema");
 
     return (
-        <GuidePanel className={"xs:!-ml-10 mb-6"}>
+        <GuidePanel poster className={"mb-6"}>
             <Heading level={"4"} size={"small"} spacing>
                 {t("system.familie.sivilstatus.informasjonspanel.tittel")}
             </Heading>

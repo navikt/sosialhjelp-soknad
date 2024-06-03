@@ -65,8 +65,8 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                 <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>
                     <SkjemaSteg.ErrorSummary errors={errors} />
 
-                    <div>
-                        <Heading size="medium" className={"pb-2"}>
+                    <div className={"space-y-6"}>
+                        <Heading size="medium" spacing>
                             {t("arbeidsforhold.sporsmal")}
                         </Heading>
                         <ArbeidsforholdListe />
@@ -81,11 +81,10 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                                     <TranslatedError error={errors.arbeid?.kommentarTilArbeidsforhold} />
                                 )
                             }
-                            className={"pt-6"}
                         />
                     </div>
 
-                    <div className={"!mt-12"}>
+                    <div>
                         <Heading size="medium" spacing>
                             {t("arbeid.dinsituasjon.studerer.undertittel")}
                         </Heading>
@@ -105,7 +104,6 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                                 legend={t("dinsituasjon.studerer.grad.sporsmal")}
                                 defaultValue={getValues("utdanning.studengradErHeltid")?.toString() ?? null}
                                 onChange={(value: string) => setValue("utdanning.studengradErHeltid", value === "true")}
-                                className={"!mt-6"}
                             >
                                 <Radio value={"true"}>{t("dinsituasjon.studerer.grad.heltid")}</Radio>
                                 <Radio value={"false"}>{t("dinsituasjon.studerer.grad.deltid")}</Radio>

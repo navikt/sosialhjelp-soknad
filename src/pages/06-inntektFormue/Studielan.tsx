@@ -18,7 +18,7 @@ export const Studielan = () => {
     if (!studielan?.skalVises) return null;
 
     return expectOK((studielan) => (
-        <div className="space-y-4 !mt-12">
+        <div className="space-y-4">
             <Heading size="medium" level="2">
                 {t("inntekt.studielan.tittel")}
             </Heading>

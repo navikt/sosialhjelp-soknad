@@ -27,7 +27,7 @@ export const BasisPersonaliaData = () => {
 export const BasisPersonalia = () => {
     const {t} = useTranslation("skjema");
     return (
-        <div className={"space-y-2 !mt-12"}>
+        <div className={"space-y-2"}>
             <Heading level={"3"} size={"small"}>
                 {t("kontakt.system.personalia.sporsmal")}
             </Heading>
