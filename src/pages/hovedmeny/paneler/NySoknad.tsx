@@ -69,10 +69,10 @@ const NySoknadIkon = () => (
     </div>
 );
 
-export const NySoknadPanel = () => {
+export const NySoknadPanel = ({defaultOpen}: {defaultOpen?: boolean}) => {
     const {t} = useTranslation("skjema");
     return (
-        <ExpansionCard aria-label={t("applikasjon.start.ny.soknad")}>
+        <ExpansionCard aria-label={t("applikasjon.start.ny.soknad")} defaultOpen={defaultOpen}>
             <ExpansionCard.Header className={"!border-0 [&>button]:my-auto"}>
                 <div className={"flex items-center gap-6 h-full"}>
                     <NySoknadIkon />
