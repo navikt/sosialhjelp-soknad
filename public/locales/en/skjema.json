@@ -224,6 +224,7 @@
     "familierelasjon.ingen_registrerte_barn": "<p> We have obtained the following information from the National Population Register: </p> <p> <b>You have no registered children under 18 years of age.</b> </p>",
     "familierelasjon.ingen_registrerte_barn_tekst": "You have no registered children under 18 years of age.",
     "familierelasjon.ingen_registrerte_barn_tittel": "We have obtained the following information from the National Population Register:",
+    "familierelasjon.hentet_fra_folkeregisteret": "(Retrieved from the National Population Register)",
     "familierelasjon.ingress": "<p> We have obtained the following information from the National Population Register: </p> <p> <b>We have registered that you are a provider for:</b> {{antallBarn}} children under 18 years of age </p>",
     "familierelasjon.ingress_antallBarn.entall": "{{antallBarn}} child under 18 years of age",
     "familierelasjon.ingress_antallBarn": "{{antallBarn}} children under 18 years of age",

@@ -224,6 +224,7 @@
     "familierelasjon.ingen_registrerte_barn": "<p> Vi har henta følgjande opplysningar frå Folkeregisteret: </p> <p> <b>Du har ingen registrerte barn under 18 år.</b> </p>",
     "familierelasjon.ingen_registrerte_barn_tekst": "Du har ingen registrerte barn under 18 år.",
     "familierelasjon.ingen_registrerte_barn_tittel": "Vi har henta følgjande opplysningar frå Folkeregisteret:",
+    "familierelasjon.hentet_fra_folkeregisteret": "(Henta frå Folkeregisteret)",
     "familierelasjon.ingress": "<p> Vi har henta følgjande opplysningar frå Folkeregisteret: </p> <p> <b>Vi har registrert at du har forsørgjaransvar for:</b> {{antallBarn}} barn under 18 år </p>",
     "familierelasjon.ingress_antallBarn": "{{antallBarn}} barn under 18 år",
     "familierelasjon.ingress_folkeregisteret": "Vi har henta følgjande opplysningar frå Folkeregisteret:",
