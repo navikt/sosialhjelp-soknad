@@ -4,7 +4,6 @@ import {useTranslation} from "react-i18next";
 import {useSkattData} from "../../lib/hooks/data/useSkattData";
 import {MinusIcon} from "@navikt/aksel-icons";
 import * as React from "react";
-import styled from "styled-components";
 import {SkattbarInntektOgForskuddstrekk} from "../../generated/model";
 import {LocalizedDate} from "../../lib/components/LocalizedDate";
 import {useEffect, useRef} from "react";
@@ -116,17 +115,6 @@ const VedleggView = ({opplysning}: {opplysning: Opplysning}) => {
     );
 };
 
-const UnderskjemaArrow = styled.div`
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 0.75rem 0.75rem 0.75rem;
-    border-color: transparent transparent var(--a-lightblue-50) transparent;
-    margin: 0;
-    margin-left: 1rem;
-    padding: 0;
-`;
-
 type SkattbartForskuddProps = {
     inntektOgForskuddstrekk?: SkattbarInntektOgForskuddstrekk[];
 };
@@ -139,34 +127,32 @@ const HentetFraSkatteetaten = ({inntektOgForskuddstrekk}: SkattbartForskuddProps
 
     return (
         <div>
-            <UnderskjemaArrow />
             <div className={"bg-lightblue-50 border-l-[var(--a-surface-info)] p-4 space-y-4 rounded-md"}>
                 {!inntektOgForskuddstrekk.length && (
                     <Heading size={"xsmall"} level={"4"}>
                         {t("skattbar.ingen")}
                     </Heading>
                 )}
-                {inntektOgForskuddstrekk.map(
-                    ({organisasjoner}) =>
-                        organisasjoner?.map((org) => (
-                            <Table key={org.orgnr}>
-                                <Table.Header>
-                                    <Table.Row>
-                                        <Table.HeaderCell colSpan={2}>{t("skattbar.inntekt.tittel")}</Table.HeaderCell>
-                                    </Table.Row>
-                                </Table.Header>
-                                <Table.Body>
-                                    <UtbetalingsListe utbetalinger={org.utbetalinger} />
-                                    <BodyShort size={"small"} className={"pt-4"}>
-                                        {org.organisasjonsnavn}
-                                    </BodyShort>
-                                    <BodyShort size={"small"}>
-                                        {t("fra")} <LocalizedDate date={org.fom} /> {t("til")}{" "}
-                                        <LocalizedDate date={org.tom} />
-                                    </BodyShort>
-                                </Table.Body>
-                            </Table>
-                        ))
+                {inntektOgForskuddstrekk.map(({organisasjoner}) =>
+                    organisasjoner?.map((org) => (
+                        <Table key={org.orgnr}>
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell colSpan={2}>{t("skattbar.inntekt.tittel")}</Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
+                            <Table.Body>
+                                <UtbetalingsListe utbetalinger={org.utbetalinger} />
+                                <BodyShort size={"small"} className={"pt-4"}>
+                                    {org.organisasjonsnavn}
+                                </BodyShort>
+                                <BodyShort size={"small"}>
+                                    {t("fra")} <LocalizedDate date={org.fom} /> {t("til")}{" "}
+                                    <LocalizedDate date={org.tom} />
+                                </BodyShort>
+                            </Table.Body>
+                        </Table>
+                    ))
                 )}
             </div>
         </div>
