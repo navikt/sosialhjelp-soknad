@@ -1,8 +1,9 @@
-import {BodyLong, BodyShort, GuidePanel, Heading} from "@navikt/ds-react";
+import {BodyLong, Heading} from "@navikt/ds-react";
 import * as React from "react";
 import {Trans, useTranslation} from "react-i18next";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
+import StartNySoknadIllustrasjon from "../../../lib/components/svg/illustrasjoner/StartNySoknadIllustrasjon";
 
 export const NySoknadVelkomst = () => {
     const {logEvent} = useAmplitude();
@@ -10,15 +11,10 @@ export const NySoknadVelkomst = () => {
     const {t} = useTranslation("skjema");
 
     return (
-        <div className={"p-8 lg:py-12 lg:px-24"}>
-            <GuidePanel className={"!-ml-10 pb-8"}>
-                {sessionInfo?.fornavn?.length && (
-                    <Heading level={"3"} size={"small"} spacing>
-                        {t("informasjon.hilsen.hei", {fornavn: sessionInfo.fornavn})}
-                    </Heading>
-                )}
-                <BodyShort>{t("informasjon.hilsen.tittel")}</BodyShort>
-            </GuidePanel>
+        <div className={"p-8 lg:py-12 lg:px-24 flex flex-col"}>
+            <div className={"flex flex-col items-center mb-12"}>
+                <StartNySoknadIllustrasjon />
+            </div>
             <Heading level="2" size="small">
                 {t("informasjon.start.undertittel")}
             </Heading>
