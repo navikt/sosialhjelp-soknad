@@ -14,13 +14,8 @@ export const AdresseVisning = ({adresse}: {adresse?: AdresseFrontend}) => {
         const {gatenavn, husnummer, husbokstav, postnummer, poststed} = gateadresse;
         return (
             <Detaljeliste>
-                <li className="detaljeliste__element">
-                    {gatenavn} {husnummer}
-                    {husbokstav}
-                </li>
-                <li className="detaljeliste__element">
-                    {postnummer} {poststed}
-                </li>
+                {gatenavn} {husnummer}
+                {husbokstav}, {postnummer} {poststed}
             </Detaljeliste>
         );
     } else if (matrikkeladresse) {

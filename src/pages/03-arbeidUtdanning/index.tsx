@@ -73,7 +73,6 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                         <Textarea
                             {...register("arbeid.kommentarTilArbeidsforhold")}
                             id={"arbeid.kommentarTilArbeidsforhold"}
-                            placeholder={t("arbeidsforhold.kommentar.placeholder")}
                             description={t("opplysninger.arbeidsituasjon.kommentarer.description")}
                             label={t("opplysninger.arbeidsituasjon.kommentarer.label")}
                             error={
@@ -81,9 +80,9 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                                     <TranslatedError error={errors.arbeid?.kommentarTilArbeidsforhold} />
                                 )
                             }
+                            className={"!mt-8"}
                         />
                     </div>
-
                     <div>
                         <Heading size="medium" spacing>
                             {t("arbeid.dinsituasjon.studerer.undertittel")}
