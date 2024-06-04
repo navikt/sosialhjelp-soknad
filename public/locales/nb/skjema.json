@@ -1049,7 +1049,7 @@
     "soknadinnsending.sidetittel.avbryt": "Avbryt søknad - www.nav.no",
     "soknadsmottaker.enhetsnavn.label": "NAV-kontor",
     "soknadsmottaker.hjelpetekst.tekst": "Du må oppgi adressen der du bor for at søknaden skal bli sendt til riktig NAV-kontor.",
-    "soknadsmottaker.hjelpetekst.ingress": "Hvis du oppholder deg på institusjon (sykehus, psykiatri, rusbehandling, barnevern, fengsel eller krisesenter), skal du oppgi adressen du hadde før du kom til institusjonen.",
+    "soknadsmottaker.hjelpetekst.ingress": "Hvis du oppholder deg på institusjon (F.eks, sykehus, psykiatri, rusbehandling, fengsel eller krisesenter), skal du oppgi adressen du hadde før du kom til institusjonen.",
     "soknadsmottaker.infotekst.tekst": "Oppgi adressen der du bor (obligatorisk)",
     "soknadsmottaker.kommunenavn.label": "Kommune",
     "soknadsmottaker.sporsmal": "Adresse og NAV-kontor",

@@ -63,7 +63,7 @@ export const AdresseData = () => {
             <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.tekst")}</BodyLong>
             <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.ingress")}</BodyLong>
             <HorizontalRadioGroup
-                legend={t("soknadsmottaker.infotekst.tekst")}
+                legend={""}
                 value={uncommittedAdressevalg}
                 className={"!mb-4"}
                 onChange={async (valg) => {
