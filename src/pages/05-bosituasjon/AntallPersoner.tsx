@@ -32,6 +32,7 @@ export const AntallPersoner = () => {
 
     return (
         <TextField
+            className={"mb-12 lg:mb-24"}
             description={t("bosituasjon.antallpersoner.label")}
             label={t("bosituasjon.antallpersoner.sporsmal")}
             id={FAKTUM_KEY_ANTALL}

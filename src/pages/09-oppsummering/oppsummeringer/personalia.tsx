@@ -1,4 +1,4 @@
-import {Heading} from "@navikt/ds-react";
+import {BodyShort, Heading} from "@navikt/ds-react";
 import {BasisPersonaliaData} from "../../01-personalia/BasisPersonalia";
 import {TelefonShow} from "../../01-personalia/TelefonShow";
 import React, {ReactNode} from "react";
@@ -27,9 +27,8 @@ export const NyOppsummeringPrototypePersonalia = () => {
             <OppsummeringHeading stepNr={1}>Om deg</OppsummeringHeading>
             <Systeminfo>
                 <BasisPersonaliaData />
-                <SysteminfoItem commentAbove={"Du har valgt:"} label={"Adresse"}>
-                    Testverdigata 1, 1337 Sandvika
-                </SysteminfoItem>
+                <BodyShort className={"pb-3"}>Du har valgt:</BodyShort>
+                <SysteminfoItem label={"Adresse"}>Testverdigata 1, 1337 Sandvika</SysteminfoItem>
                 <TelefonShow />
                 <KontonrShow />
             </Systeminfo>

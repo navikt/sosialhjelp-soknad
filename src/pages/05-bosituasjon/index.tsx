@@ -7,7 +7,7 @@ import {SkjemaStegLegacy} from "../../lib/components/SkjemaSteg/SkjemaStegLegacy
 
 export const Bosituasjon = () => (
     <SkjemaStegLegacy skjemaConfig={digisosSkjemaConfig} steg={"bosituasjonbolk"} ikon={<BoligIllustrasjon />}>
-        <div className={"space-y-20"}>
+        <div>
             <Botype />
             <AntallPersoner />
         </div>

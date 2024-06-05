@@ -1,4 +1,4 @@
-import {BodyShort, Detail, Label} from "@navikt/ds-react";
+import {BodyShort, Label} from "@navikt/ds-react";
 import React, {ReactNode} from "react";
 import styled from "styled-components";
 import cx from "classnames";
@@ -14,22 +14,13 @@ export const SysteminfoItem = ({
     multiline,
     children,
     className,
-    commentAbove,
-    commentBelow,
 }: {
     multiline?: boolean;
     label?: ReactNode;
     children?: ReactNode;
     className?: string;
-    commentAbove?: ReactNode;
-    commentBelow?: ReactNode;
 }) => (
     <li>
-        {commentAbove && (
-            <Detail className={cx("opacity-90 pb-1")} data-testid="personalia-infotekst">
-                {commentAbove}
-            </Detail>
-        )}
         {label && (
             <ListItemContents className={cx("!leading-5 ", className)} multiline={multiline}>
                 <Label className="pr-1 after:content-[':']" size="small">
@@ -43,11 +34,6 @@ export const SysteminfoItem = ({
             <ListItemContents className={cx("!leading-5", className)} multiline={multiline}>
                 <BodyShort weight={"semibold"}>{children}</BodyShort>
             </ListItemContents>
-        )}
-        {commentBelow && (
-            <Detail className={cx("opacity-90 pb-2 pt-4")} data-testid="personalia-infotekst">
-                {commentBelow}
-            </Detail>
         )}
     </li>
 );

@@ -26,10 +26,10 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
     const {page, requestNavigation} = context;
 
     return (
-        <div className={"space-y-8 lg:space-y-16 pt-2 md:pt-5 lg:pt-10 pb-8 lg:pb-16"}>
+        <div>
             {page !== 9 && <NavEnhetInaktiv />}
             <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
-            <div className="space-x-3">
+            <div className={"!mt-12 md:!mt-16 lg:!mt-24 !mb-8 lg:!mb-16"}>
                 <Button
                     variant="secondary"
                     id="gaa_tilbake_button"
@@ -49,7 +49,7 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
                     {loading && <Loader className={"ml-2"} />}
                 </Button>
             </div>
-            <div>
+            <div className={"pb-8 lg:pb-16"}>
                 <Button variant="tertiary" onClick={() => (window.location.href = minSideURL)}>
                     {t("avbryt.fortsettsenere")}
                 </Button>

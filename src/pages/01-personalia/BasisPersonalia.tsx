@@ -5,7 +5,7 @@ import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {useHentBasisPersonalia} from "../../generated/basis-personalia-ressurs/basis-personalia-ressurs";
 import {useTranslation} from "react-i18next";
 import {formatFodselsnummer} from "@fremtind/jkl-formatters-util";
-import {Heading} from "@navikt/ds-react";
+import {BodyShort, Heading} from "@navikt/ds-react";
 import {FullName} from "./FulltNavn";
 
 export const BasisPersonaliaData = () => {
@@ -17,9 +17,8 @@ export const BasisPersonaliaData = () => {
                 <FullName name={navn} />
             </SysteminfoItem>
             <SysteminfoItem label={t("fnr")}>{formatFodselsnummer(fodselsnummer ?? "")}</SysteminfoItem>
-            <SysteminfoItem commentBelow={t("infotekst.tekst")} label={t("statsborgerskap")}>
-                {statsborgerskap}
-            </SysteminfoItem>
+            <SysteminfoItem label={t("statsborgerskap")}>{statsborgerskap}</SysteminfoItem>
+            <BodyShort className={"pt-3"}>{t("infotekst.tekst")}</BodyShort>
         </Systeminfo>
     ));
 };

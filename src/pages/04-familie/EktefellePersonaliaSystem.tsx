@@ -17,7 +17,7 @@ export const EktefellePersonaliaSystem = () => {
     return expectOK(({ektefelle, erFolkeregistrertSammen}) =>
         ektefelle?.navn ? (
             <>
-                <BodyShort size="small">{t("sivilstatus.label")} </BodyShort>
+                <BodyShort className={"pb-3"}>{t("sivilstatus.label")} </BodyShort>
                 <SysteminfoItem label={t(`sivilstatus.gift.ektefelle.navn`)}>
                     <FullName name={ektefelle.navn} />
                 </SysteminfoItem>
@@ -26,9 +26,10 @@ export const EktefellePersonaliaSystem = () => {
                         <LocalizedDate date={ektefelle.fodselsdato} />
                     </SysteminfoItem>
                 )}
-                <SysteminfoItem commentBelow={t("sivilstatus")} label={t(`sivilstatus.gift.ektefelle.folkereg`)}>
+                <SysteminfoItem label={t(`sivilstatus.gift.ektefelle.folkereg`)}>
                     <LocalizedYesNo value={erFolkeregistrertSammen} />
                 </SysteminfoItem>
+                <BodyShort className={"pt-3"}>{t("sivilstatus")}</BodyShort>
             </>
         ) : null
     );

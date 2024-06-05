@@ -30,7 +30,7 @@ export const OpplastetVedlegg = ({onDelete, fil}: {fil: FilFrontend; onDelete: (
                 aria-label={`Slett ${fil.filNavn}`}
             >
                 <div className={"flex items-center gap-2"}>
-                    <TrashIcon />
+                    <TrashIcon height={25} width={25} />
                 </div>
             </Button>
         </li>

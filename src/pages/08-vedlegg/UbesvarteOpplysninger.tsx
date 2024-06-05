@@ -9,7 +9,7 @@ export const UbesvarteOpplysninger = () => {
     const {t} = useTranslation("skjema");
 
     return (
-        <GuidePanel poster>
+        <GuidePanel poster className={"!mb-12"}>
             <BodyShort spacing>{t("opplysninger.ikkebesvart.avsnitt1")}</BodyShort>
             <BodyShort spacing>{t("opplysninger.ikkebesvart.avsnitt2")}</BodyShort>
             <LinkButton type="button" onClick={() => setModalOpen(true)}>

@@ -36,7 +36,7 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="danger" disabled={isLoading} onClick={deleteAndRedirect}>
-                    <div className={"flex gap-2"}>
+                    <div className={"flex items-center gap-2"}>
                         <TrashIcon />
                         {t("avbryt.slett")}
                     </div>

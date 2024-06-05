@@ -31,16 +31,14 @@ const ArbeidsforholdDetalj = ({arbeidsforhold}: {arbeidsforhold: ArbeidsforholdF
 
     return (
         <Systeminfo>
-            <BodyShort className={"pb-3"} size="small">
-                {t("infotekst_del1")}
-            </BodyShort>
+            <BodyShort className={"pb-3"}>{t("infotekst_del1")}</BodyShort>
             <SysteminfoItem label={t("arbeidsgivernavn.label")}>{arbeidsgivernavn}</SysteminfoItem>
             <SysteminfoItem label={t("fom.label")}>
                 <LocalizedDate date={fom} />
             </SysteminfoItem>
             {tom?.length && <SysteminfoItem label={t("tom.label")}>{tom}</SysteminfoItem>}
             <SysteminfoItem label={t("stillingsprosent.label")}>{stillingsprosent} %</SysteminfoItem>
-            <BodyShort>{t("infotekst_del2")}</BodyShort>
+            <BodyShort className={"pt-3"}>{t("infotekst_del2")}</BodyShort>
         </Systeminfo>
     );
 };
