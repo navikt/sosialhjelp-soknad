@@ -36,9 +36,6 @@ export const OpplastingAvVedleggModal = ({open, onClose}: {open: boolean; onClos
                     {t("opplysninger.informasjon.modal.bolk4.tittel")}
                 </Heading>
                 <BodyLong spacing>{t("opplysninger.informasjon.modal.bolk4.avsnitt1")}</BodyLong>
-                <ul>
-     
-                </ul>
             </Modal.Body>
         </StyledModal>
     );
