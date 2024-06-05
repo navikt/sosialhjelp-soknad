@@ -1,5 +1,5 @@
 import * as React from "react";
-import {OpplysningView} from "./OpplysningView";
+import {Dokumentasjon} from "./Dokumentasjon";
 import {useTranslation} from "react-i18next";
 import {Heading, Panel} from "@navikt/ds-react";
 import {Opplysning, VedleggGruppe} from "../../lib/opplysninger";
@@ -26,7 +26,7 @@ export const Gruppe = ({gruppeKey, opplysninger}: {gruppeKey: VedleggGruppe; opp
             </Heading>
 
             {opplysninger.map((opplysning) => (
-                <OpplysningView key={opplysning.type} opplysning={opplysning} />
+                <Dokumentasjon key={opplysning.type} opplysning={opplysning} />
             ))}
         </Panel>
     );

@@ -1,5 +1,5 @@
-import {VedleggFrontendType} from "../../generated/model";
-import {opplysningSpec} from "../../lib/opplysninger";
+import {VedleggFrontendType} from "../../../../generated/model";
+import {opplysningSpec} from "../../../../lib/opplysninger";
 import {useTranslation} from "react-i18next";
 
 export type OpplysningSpecTekster = {

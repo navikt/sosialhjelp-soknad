@@ -1,9 +1,9 @@
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
-import {useHentOkonomiskeOpplysninger} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
-import {VedleggFrontends} from "../../generated/model";
-import {Opplysning, opplysningSpec, vedleggGrupper} from "../../lib/opplysninger";
+import {useBehandlingsId} from "../../../../lib/hooks/common/useBehandlingsId";
+import {useHentOkonomiskeOpplysninger} from "../../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {VedleggFrontends} from "../../../../generated/model";
+import {Opplysning, opplysningSpec, vedleggGrupper} from "../../../../lib/opplysninger";
 import {useMemo} from "react";
-import {logError} from "../../lib/utils/loggerUtils";
+import {logError} from "../../../../lib/utils/loggerUtils";
 
 export const flettOgSorter = ({okonomiskeOpplysninger, slettedeVedlegg}: VedleggFrontends): Opplysning[] => {
     const current = okonomiskeOpplysninger?.map((opplysning): Opplysning => ({...opplysning}));

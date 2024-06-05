@@ -9,9 +9,25 @@
                 "operationId": "hentBoutgifter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -28,9 +44,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -42,9 +74,25 @@
                 "operationId": "hentBarneutgifter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -63,9 +111,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -77,9 +141,25 @@
                 "operationId": "hentUtdanning",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -96,9 +176,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -110,9 +206,25 @@
                 "operationId": "hentTelefonnummer",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -131,9 +243,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -150,9 +278,25 @@
                 "operationId": "getNavEnheter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -174,9 +318,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -188,9 +348,25 @@
                 "operationId": "hentKontonummer",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -207,9 +383,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -224,9 +416,25 @@
                 "operationId": "hentAdresser",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -243,9 +451,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -264,9 +488,25 @@
                 "operationId": "hentOkonomiskeOpplysninger",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -283,9 +523,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -297,9 +553,25 @@
                 "operationId": "hentVerdier",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -316,9 +588,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -330,9 +618,25 @@
                 "operationId": "hentUtbetalinger",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -351,9 +655,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -365,9 +685,25 @@
                 "operationId": "hentStudielanBekreftelse",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -384,9 +720,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -401,9 +753,25 @@
                 "operationId": "hentSkattbareInntekter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -424,9 +792,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -443,9 +827,25 @@
                 "operationId": "hentFormue",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -462,9 +862,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -476,9 +892,25 @@
                 "operationId": "hentBostotte",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -498,9 +930,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -512,9 +960,25 @@
                 "operationId": "hentSivilstatus",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -533,9 +997,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -547,9 +1027,25 @@
                 "operationId": "hentForsorgerplikt",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -570,9 +1066,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -584,9 +1096,25 @@
                 "operationId": "hentBosituasjon",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -605,9 +1133,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -624,9 +1168,25 @@
                 "operationId": "hentBegrunnelse",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -645,9 +1205,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -659,9 +1235,25 @@
                 "operationId": "hentArbeid",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -680,9 +1272,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -701,9 +1309,25 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -731,9 +1355,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -750,9 +1390,25 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -771,9 +1427,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -790,9 +1462,25 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -820,9 +1508,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -839,9 +1543,25 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -860,9 +1580,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -879,9 +1615,25 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -900,9 +1652,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -919,9 +1687,25 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -940,9 +1724,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -959,9 +1759,25 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -980,9 +1796,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -999,9 +1831,25 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1020,9 +1868,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1039,9 +1903,25 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1060,9 +1940,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1088,9 +1984,25 @@
                     }
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "Vedlegg konvertert til PDF",
@@ -1116,9 +2028,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -1131,9 +2059,25 @@
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "requestBody": {"content": {"application/json": {"schema": {"type": "boolean"}}}, "required": true},
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 },
@@ -1150,9 +2094,25 @@
                 ],
                 "requestBody": {"content": {"application/json": {"schema": {"type": "boolean"}}}, "required": true},
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -1167,9 +2127,25 @@
                     {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1183,9 +2159,25 @@
                 "tags": ["soknad-ressurs"],
                 "operationId": "opprettSoknad",
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1206,9 +2198,25 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1222,9 +2230,25 @@
                 "tags": ["soknad-lifecycle-controller"],
                 "operationId": "createSoknad",
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1237,13 +2261,13 @@
                 }
             }
         },
-        "/opplastetVedlegg/{behandlingsId}/{type}": {
+        "/opplastetVedlegg/{behandlingsId}/{dokumentasjonType}": {
             "post": {
                 "tags": ["opplastet-vedlegg-ressurs"],
-                "operationId": "saveVedlegg",
+                "operationId": "uploadDokument",
                 "parameters": [
                     {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
-                    {"name": "type", "in": "path", "required": true, "schema": {"type": "string"}}
+                    {"name": "dokumentasjonType", "in": "path", "required": true, "schema": {"type": "string"}}
                 ],
                 "requestBody": {
                     "content": {
@@ -1257,13 +2281,29 @@
                     }
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "200": {
                         "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FilFrontend"}}}
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DokumentUpload"}}}
                     }
                 }
             }
@@ -1277,9 +2317,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -1296,9 +2352,25 @@
                     "required": true
                 },
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
@@ -1310,9 +2382,25 @@
                 "operationId": "hentXsrfCookie",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
@@ -1324,9 +2412,25 @@
                 "operationId": "getValgtNavEnhet",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1341,9 +2445,25 @@
                 "operationId": "hentBasisPersonalia",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1360,9 +2480,25 @@
                 "operationId": "getOppsummering",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1377,9 +2513,25 @@
                 "operationId": "hentSystemregistrerteInntekter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1399,9 +2551,25 @@
                     {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1426,52 +2594,99 @@
                     {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
             }
         },
-        "/soknad/{soknadId}/familie": {
+        "/soknad/{soknadId}/personalia/basisPersonalia": {
             "get": {
-                "tags": ["familie-controller"],
-                "operationId": "getFamilie",
+                "tags": ["basis-personalia-controller"],
+                "operationId": "getBasisPersonalia",
                 "parameters": [
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "200": {
                         "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FamilieDto"}}}
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PersonaliaDto"}}}
                     }
                 }
             }
         },
-        "/opplastetVedlegg/{behandlingsId}/{vedleggId}/fil": {
+        "/opplastetVedlegg/{behandlingsId}/{dokumentId}/fil": {
             "get": {
                 "tags": ["opplastet-vedlegg-ressurs"],
-                "summary": "Henter et gitt vedlegg",
-                "operationId": "getVedleggFil",
+                "summary": "Hent innhold i dokument",
+                "operationId": "getDokument",
                 "parameters": [
                     {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
-                    {"name": "vedleggId", "in": "path", "required": true, "schema": {"type": "string"}}
+                    {"name": "dokumentId", "in": "path", "required": true, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
-                    "200": {
-                        "description": "Filen ble funnet og returneres",
-                        "content": {"application/octet-stream": {"schema": {"type": "string", "format": "binary"}}}
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "404": {"description": "Filen ble ikke funnet"}
+                    "200": {
+                        "description": "Dokumentets innhold sendes til klienten",
+                        "content": {"application/octet-stream": {"schema": {"type": "string", "format": "binary"}}}
+                    }
                 }
             }
         },
@@ -1480,9 +2695,25 @@
                 "tags": ["nedetid-ressurs"],
                 "operationId": "hentNedetidInformasjon",
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1496,9 +2727,25 @@
                 "tags": ["mine-saker-metadata-ressurs"],
                 "operationId": "ping",
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "string"}}}}
                 }
@@ -1509,9 +2756,25 @@
                 "tags": ["mine-saker-metadata-ressurs"],
                 "operationId": "hentInnsendteSoknaderForBruker",
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1529,9 +2792,25 @@
                 "tags": ["internal-ressurs"],
                 "operationId": "getSelftest",
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1545,9 +2824,25 @@
                 "tags": ["internal-ressurs"],
                 "operationId": "isAlive",
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK", "content": {"text/plain": {"schema": {"type": "string"}}}}
                 }
@@ -1558,9 +2853,25 @@
                 "tags": ["informasjon-ressurs"],
                 "operationId": "getSessionInfo",
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1575,9 +2886,25 @@
                 "operationId": "adresseSok",
                 "parameters": [{"name": "sokestreng", "in": "query", "required": false, "schema": {"type": "string"}}],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1595,9 +2922,25 @@
                 "tags": ["feature-toggle-ressurs"],
                 "operationId": "featureToggles",
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1615,9 +2958,25 @@
                 "tags": ["ditt-nav-metadata-ressurs"],
                 "operationId": "hentPabegynteSoknaderForBrukerSomErLest",
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1635,9 +2994,25 @@
                 "tags": ["ditt-nav-metadata-ressurs"],
                 "operationId": "hentPabegynteSoknaderForBruker",
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1659,9 +3034,25 @@
                     {"name": "Referer", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -1681,26 +3072,58 @@
                     {"name": "Referer", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
             }
         },
-        "/opplastetVedlegg/{behandlingsId}/{vedleggId}": {
+        "/opplastetVedlegg/{behandlingsId}/{dokumentId}": {
             "delete": {
                 "tags": ["opplastet-vedlegg-ressurs"],
-                "operationId": "deleteVedlegg",
+                "operationId": "deleteDokument",
                 "parameters": [
                     {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
-                    {"name": "vedleggId", "in": "path", "required": true, "schema": {"type": "string"}}
+                    {"name": "dokumentId", "in": "path", "required": true, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -1709,10 +3132,47 @@
     },
     "components": {
         "schemas": {
-            "UnauthorizedMelding": {
-                "required": ["id", "loginUrl", "message"],
+            "SoknadApiError": {
+                "required": ["error", "responseType"],
                 "type": "object",
-                "properties": {"id": {"type": "string"}, "message": {"type": "string"}, "loginUrl": {"type": "string"}}
+                "properties": {
+                    "error": {
+                        "type": "string",
+                        "enum": [
+                            "InnsendingMidlertidigUtilgjengelig",
+                            "InnsendingIkkeAktivert",
+                            "InnsendingUtilgjengelig",
+                            "PlanlagtNedetid",
+                            "PdfGenereringFeilet",
+                            "NotFound",
+                            "DokumentUploadDuplicateFilename",
+                            "DokumentKonverteringFeilet",
+                            "UgyldigInput",
+                            "GeneralError",
+                            "Forbidden",
+                            "SoknadAlleredeSendt",
+                            "DokumentUploadError",
+                            "DokumentUploadTooLarge",
+                            "DokumentUploadUnsupportedMediaType",
+                            "DokumentUploadFileEncrypted",
+                            "DokumentUploadPossibleVirus",
+                            "SoknadUpdateConflict",
+                            "PdlKallFeilet"
+                        ]
+                    },
+                    "responseType": {"type": "string"},
+                    "message": {"type": "string"},
+                    "id": {"type": "string"}
+                },
+                "discriminator": {
+                    "propertyName": "responseType",
+                    "mapping": {"SoknadApiError": "#/components/schemas/SoknadApiError"}
+                }
+            },
+            "UnauthorizedMelding": {
+                "required": ["loginUrl"],
+                "type": "object",
+                "properties": {"loginUrl": {"type": "string", "format": "uri"}}
             },
             "BoutgifterFrontend": {
                 "required": [
@@ -1860,9 +3320,10 @@
                 "type": "object",
                 "properties": {"adresse": {"type": "array", "items": {"type": "string"}}}
             },
-            "FilFrontend": {
+            "DokumentUpload": {
+                "required": ["dokumentId", "filename"],
                 "type": "object",
-                "properties": {"filNavn": {"type": "string"}, "uuid": {"type": "string"}},
+                "properties": {"filename": {"type": "string"}, "dokumentId": {"type": "string"}},
                 "readOnly": true
             },
             "VedleggFrontend": {
@@ -1932,7 +3393,11 @@
                         "type": "boolean",
                         "description": "Vedlegg er levert inn utenom denne søknaden (f. eks. levert til NAV-kontor)"
                     },
-                    "filer": {"type": "array", "readOnly": true, "items": {"$ref": "#/components/schemas/FilFrontend"}}
+                    "filer": {
+                        "type": "array",
+                        "readOnly": true,
+                        "items": {"$ref": "#/components/schemas/DokumentUpload"}
+                    }
                 }
             },
             "VedleggRadFrontend": {
@@ -2291,7 +3756,7 @@
                 "properties": {
                     "sivilstatus": {
                         "type": "string",
-                        "enum": ["GIFT", "UGIFT", "SAMBOER", "ENKE", "SKILT", "SEPARERT"]
+                        "enum": ["GIFT", "UGIFT", "SAMBOER", "ENKE", "SKILT", "SEPARERT", "TOM"]
                     },
                     "ektefelle": {"$ref": "#/components/schemas/EktefelleInput"}
                 }
@@ -2312,7 +3777,7 @@
                 "properties": {
                     "sivilstatus": {
                         "type": "string",
-                        "enum": ["GIFT", "UGIFT", "SAMBOER", "ENKE", "SKILT", "SEPARERT"]
+                        "enum": ["GIFT", "UGIFT", "SAMBOER", "ENKE", "SKILT", "SEPARERT", "TOM"]
                     },
                     "ektefelle": {"$ref": "#/components/schemas/EktefelleDto"}
                 }
@@ -2657,7 +4122,6 @@
                 }
             },
             "SysteminntektFrontend": {
-                "required": ["belop", "inntektType", "utbetalingsdato"],
                 "type": "object",
                 "properties": {
                     "inntektType": {"type": "string"},
@@ -2666,7 +4130,6 @@
                 }
             },
             "SysteminntekterFrontend": {
-                "required": ["systeminntekter", "utbetalingerFraNavFeilet"],
                 "type": "object",
                 "properties": {
                     "systeminntekter": {
@@ -2676,18 +4139,22 @@
                     "utbetalingerFraNavFeilet": {"type": "boolean"}
                 }
             },
-            "FamilieDto": {
-                "required": ["ansvar"],
+            "NavnDto": {
+                "required": ["etternavn", "fornavn"],
                 "type": "object",
                 "properties": {
-                    "harForsorgerplikt": {"type": "boolean"},
-                    "barnebidrag": {"type": "string", "enum": ["BETALER", "MOTTAR", "BEGGE", "INGEN"]},
-                    "sivilstatus": {
-                        "type": "string",
-                        "enum": ["GIFT", "UGIFT", "SAMBOER", "ENKE", "SKILT", "SEPARERT"]
-                    },
-                    "ansvar": {"type": "array", "items": {"$ref": "#/components/schemas/BarnDto"}},
-                    "ektefelle": {"$ref": "#/components/schemas/EktefelleDto"}
+                    "fornavn": {"type": "string"},
+                    "mellomnavn": {"type": "string"},
+                    "etternavn": {"type": "string"}
+                }
+            },
+            "PersonaliaDto": {
+                "required": ["navn"],
+                "type": "object",
+                "properties": {
+                    "navn": {"$ref": "#/components/schemas/NavnDto"},
+                    "statsborgerskap": {"type": "string"},
+                    "nordiskBorger": {"type": "boolean"}
                 }
             },
             "NedetidFrontend": {
@@ -2745,7 +4212,7 @@
                 "description": "Påbegynte men ikke innleverte søknader"
             },
             "SessionResponse": {
-                "required": ["daysBeforeDeletion", "numRecentlySent", "open", "userBlocked"],
+                "required": ["daysBeforeDeletion", "maxUploadSizeBytes", "numRecentlySent", "open", "userBlocked"],
                 "type": "object",
                 "properties": {
                     "userBlocked": {
@@ -2767,6 +4234,11 @@
                         "type": "integer",
                         "description": "Antall nylig innsendte søknader",
                         "format": "int32"
+                    },
+                    "maxUploadSizeBytes": {
+                        "type": "integer",
+                        "description": "Max file upload size, in bytes",
+                        "format": "int64"
                     }
                 },
                 "description": "Informasjon om brukerøkt"

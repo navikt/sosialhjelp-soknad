@@ -1,10 +1,10 @@
 import {LinkButton} from "../../lib/components/LinkButton";
-import {useOpplysning} from "./useOpplysning";
+import {useOpplysning} from "./lib/hooks/useOpplysning";
 import {OpplysningInputRad} from "./OpplysningInputRad";
 import {VedleggFrontend} from "../../generated/model";
-import {useOpplysningTekster} from "./useOpplysningTekster";
+import {useOpplysningTekster} from "./lib/hooks/useOpplysningTekster";
 
-export const TabellView = ({opplysning}: {opplysning: VedleggFrontend}) => {
+export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) => {
     const {
         textKey,
         multirow,

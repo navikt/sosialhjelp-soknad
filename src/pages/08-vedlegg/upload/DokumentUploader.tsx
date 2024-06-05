@@ -4,29 +4,29 @@ import {useTranslation} from "react-i18next";
 import {Opplysning} from "../../../lib/opplysninger";
 import {ForhandsvisningVedleggModal} from "./ForhandsvisningVedleggModal";
 import {PlusIcon} from "@navikt/aksel-icons";
-import {usePDFConverter} from "./usePDFConverter";
+import {usePDFConverter} from "../lib/hooks/usePDFConverter";
 import {PdfConversionError} from "./UploadError";
 
 export const SUPPORTED_WITHOUT_CONVERSION = ["image/jpeg", "image/png", "application/pdf"];
 export const SUPPORTED_WITH_CONVERSION = [
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.dokument",
     "application/vnd.ms-excel.sheet.binary.macroenabled.12",
     "text/csv",
     "text/plain",
 ];
 
-export const LastOppFil = ({
+export const DokumentUploader = ({
     doUpload,
     visSpinner,
-    isDisabled,
+    isLoading,
     opplysning,
     resetAlerts,
 }: {
     opplysning: Opplysning;
-    isDisabled: boolean;
+    isLoading: boolean;
     visSpinner: boolean;
-    doUpload: (file: File) => Promise<void>;
+    doUpload: (document: File) => Promise<void>;
     resetAlerts: () => void;
 }) => {
     const {t} = useTranslation();
@@ -55,14 +55,12 @@ export const LastOppFil = ({
         <div className="pt-2">
             <Button
                 variant="secondary"
-                id={opplysning.type.replace(/\./g, "_") + "_lastopp_knapp"}
-                disabled={isDisabled}
+                disabled={isLoading}
                 onClick={() => {
                     resetAlerts();
                     vedleggElement?.current?.click();
                 }}
-                className="last-opp-vedlegg-knapp"
-                style={{backgroundColor: "var(--a-surface-default)"}}
+                className="last-opp-vedlegg-knapp !bg-[var(--a-surface-default)]"
             >
                 <div className={"flex gap-1 items-center"}>
                     <PlusIcon aria-label={""} /> {t("opplysninger.vedlegg.knapp.tekst")}
@@ -71,7 +69,6 @@ export const LastOppFil = ({
             </Button>
             <input
                 aria-hidden
-                id={opplysning.type.replace(/\./g, "_") + "_skjult_upload_input"}
                 ref={vedleggElement}
                 onChange={handleFileSelect}
                 type="file"
@@ -85,8 +82,9 @@ export const LastOppFil = ({
                     file={previewFile}
                     onAccept={async () => {
                         if (!previewFile) return;
-                        await doUpload(previewFile);
+                        const upload = previewFile;
                         setPreviewFile(null);
+                        await doUpload(upload);
                     }}
                     onClose={() => setPreviewFile(null)}
                     onDelete={() => setPreviewFile(null)}

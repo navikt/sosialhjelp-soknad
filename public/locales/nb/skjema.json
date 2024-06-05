@@ -1308,7 +1308,7 @@
     "vedlegg.nedbetalingsplan.avdraglaan.tittel": "Nedbetalingsplan",
     "vedlegg.netbetalingsplan.avdraglaan.tittel": "Nedbetalingsplan",
     "vedlegg.oppholdstillatel.oppholdstillatel.tittel": "Registreringsbevis eller oppholdstillatelse",
-    "vedlegg.opplasting.feil.forStor": "Opplastingen feilet. Total filstørrelse kan ikke overstige 10MB.",
+    "vedlegg.opplasting.feil.forStor": "Opplastingen feilet. Total filstørrelse kan ikke overstige {{maxUploadSize}}.",
     "vedlegg.opplasting.feil.filType": "Opplastingen feilet. Støtter kun JPEG, PNG og PDF filer",
     "vedlegg.opplasting.feil.generell": "Opplastingen feilet. Vennligst prøv igjen.",
     "vedlegg.opplasting.feil.infotekst": "Opplasting av vedlegget feilet. Vennligst prøv igjen eller send vedlegget senere.",

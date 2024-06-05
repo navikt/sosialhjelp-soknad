@@ -1,5 +1,5 @@
 import {Control, Controller} from "react-hook-form";
-import {VedleggRadFrontendForm} from "./useOpplysning";
+import {VedleggRadFrontendForm} from "./lib/hooks/useOpplysning";
 import {useTranslation} from "react-i18next";
 import {TextField} from "@navikt/ds-react";
 import {OpplysningInputType} from "../../lib/opplysninger";
