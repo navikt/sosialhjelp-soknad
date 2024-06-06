@@ -21,7 +21,7 @@ export const Dokumenter = ({opplysning}: {opplysning: Opplysning}) => {
 
     return (
         <div className={"space-y-2"}>
-            <BodyShort size={"small"}>
+            <BodyShort size={"small"} className={"!mt-6"}>
                 {leggTilDokumentasjon} (maks {humanizeFilesize(maxUploadSize)})
             </BodyShort>
 

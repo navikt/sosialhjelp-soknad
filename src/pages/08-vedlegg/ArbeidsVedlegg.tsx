@@ -31,7 +31,7 @@ export const ArbeidsVedlegg = ({opplysning}: {opplysning: Opplysning}) => {
                 <>
                     <HentetFraSkatteetaten inntektOgForskuddstrekk={inntektFraSkatteetaten} />
                     <Link onClick={() => setSamtykke(false)}>
-                        <div className={"flex gap-1 items-center"}>
+                        <div className={"flex gap-1 items-center !mt-6"}>
                             <MinusIcon aria-label={""} /> {t("utbetalinger.inntekt.skattbar.ta_bort_samtykke")}
                         </div>
                     </Link>
