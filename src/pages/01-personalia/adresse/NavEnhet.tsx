@@ -20,7 +20,7 @@ export const NavEnhetInaktiv = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
                     values={{kommuneNavn: navEnhet.kommunenavn ?? "Din"}}
                     components={{
                         lenke: (
-                            <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                            <Link href="https://www.nav.no/start/okonomisk-sosialhjelp" target="_blank">
                                 {null}
                             </Link>
                         ),
@@ -38,7 +38,7 @@ export const NavEnhetInaktiv = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
                     values={{kommuneNavn: navEnhet?.kommunenavn ?? "Din"}}
                     components={{
                         lenke: (
-                            <Link href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">
+                            <Link href="https://www.nav.no/start/okonomisk-sosialhjelp" target="_blank">
                                 {null}
                             </Link>
                         ),
