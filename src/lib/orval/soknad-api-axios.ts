@@ -5,9 +5,8 @@ import {UnauthorizedMelding} from "../../generated/model";
 import {logError, logInfo, logWarning} from "../utils/loggerUtils";
 import {basePath, baseURL} from "../config";
 
-const makeLoginUrl = ({loginUrl, id}: UnauthorizedMelding) => {
+const makeLoginUrl = ({loginUrl}: UnauthorizedMelding) => {
     const loginURLObj = new URL(loginUrl);
-    loginURLObj.searchParams.set("login_id", id);
     loginURLObj.searchParams.set(
         "redirect",
         `${window.location.origin}${basePath}/link?goto=${
@@ -23,11 +22,6 @@ export const redirectToLogin = async (unauthError?: UnauthorizedMelding) => {
     if (!unauthError) {
         await logError(`401-feil uten data`);
         throw new Error(`401-feil uten data`);
-    }
-
-    if (new URLSearchParams(window.location.search).get("login_id") === unauthError.id) {
-        await logError("login_id == id fra 401, kan indikere en redirect loop?");
-        return;
     }
 
     window.location.href = makeLoginUrl(unauthError);
@@ -86,6 +80,7 @@ export const axiosInstance = <T>(
 
             if (!e.response) {
                 await logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
+                console.warn(e);
                 throw e;
             }
 

@@ -6,18 +6,9 @@ import {useTranslation} from "react-i18next";
 import {TextField} from "@navikt/ds-react";
 import {ValideringsFeilKode} from "../../lib/validering";
 import {ValideringsContext} from "../../lib/valideringContextProvider";
+import {validerAntallPersoner} from "./lib/validerAntallPersoner";
 
 const FAKTUM_KEY_ANTALL = "bosituasjon.antallpersoner";
-
-// Parse og validér antall personer.
-// Returnerer en tallstreng ved et gyldig heltall, undefined ved tom streng, ellers exception.
-export const validerAntallPersoner = (formValue: string) => {
-    if (!formValue.length) return undefined;
-
-    const antallPersoner = parseInt(formValue);
-    if (isNaN(antallPersoner)) throw new Error(ValideringsFeilKode.ER_TALL);
-    return antallPersoner;
-};
 
 export const AntallPersoner = () => {
     const {bosituasjon, setBosituasjon} = useBosituasjon();
@@ -52,12 +43,7 @@ export const AntallPersoner = () => {
                     });
                 }
             }}
-            onChange={() =>
-                dispatch({
-                    type: "clearValideringsfeil",
-                    faktumKey: FAKTUM_KEY_ANTALL,
-                })
-            }
+            onChange={() => dispatch({type: "clearValideringsfeil", faktumKey: FAKTUM_KEY_ANTALL})}
             error={errorMessage && t(errorMessage)}
         />
     );

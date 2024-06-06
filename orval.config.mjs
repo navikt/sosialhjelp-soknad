@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     "soknad-api": {
         input: "./soknad-api.json",
         output: {

@@ -9,7 +9,7 @@ import "react-pdf/dist/Page/TextLayer.css";
 import {FilePreviewButtons} from "./FilePreviewButtons";
 import {FilePreviewDisplay} from "./FilePreviewDisplay";
 import {VedleggFrontendType} from "../../../generated/model";
-import {useOpplysningTekster} from "../useOpplysningTekster";
+import {useOpplysningTekster} from "../lib/hooks/useOpplysningTekster";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();
 

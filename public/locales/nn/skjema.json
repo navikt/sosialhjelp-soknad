@@ -1302,7 +1302,7 @@
     "vedlegg.nedbetalingsplan.avdraglaan.tittel": "Nedbetalingsplan",
     "vedlegg.netbetalingsplan.avdraglaan.tittel": "Nedbetalingsplan",
     "vedlegg.oppholdstillatel.oppholdstillatel.tittel": "Registreringsbevis eller opphaldsløyve",
-    "vedlegg.opplasting.feil.forStor": "Opplastinga var mislukka. Filene kan ikkje vere meir enn 10 MB til saman",
+    "vedlegg.opplasting.feil.forStor": "Opplastinga var mislukka. Fila kan ikkje vere større enn {{maxUploadSize}}",
     "vedlegg.opplasting.feil.filType": "Opplastinga var mislukka. Berre JPEG, PNG, og PDF filer er tillatne.",
     "vedlegg.opplasting.feil.generell": "Opplastinga var mislukka. Prøv igjen.",
     "vedlegg.opplasting.feil.infotekst": "Vedlegget kunne ikkje lastast opp. Prøv igjen eller send vedlegget seinare.",

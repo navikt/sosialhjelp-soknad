@@ -1,11 +1,11 @@
-import {TabellView} from "./TabellView";
-import {VedleggView} from "./upload/VedleggView";
+import {DokumentasjonRader} from "./DokumentasjonRader";
+import {Dokumenter} from "./upload/Dokumenter";
 import {Opplysning} from "../../lib/opplysninger";
 import {BodyShort, Heading} from "@navikt/ds-react";
-import {useOpplysningTekster} from "./useOpplysningTekster";
+import {useOpplysningTekster} from "./lib/hooks/useOpplysningTekster";
 import {ArbeidsVedlegg} from "./ArbeidsVedlegg";
 
-export const OpplysningView = ({opplysning}: {opplysning: Opplysning}) => {
+export const Dokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
     const {sporsmal, undertekst} = useOpplysningTekster(opplysning.type);
 
     return (
@@ -27,8 +27,8 @@ export const OpplysningView = ({opplysning}: {opplysning: Opplysning}) => {
                             {sporsmal}
                         </Heading>
                         <BodyShort spacing>{undertekst}</BodyShort>
-                        <TabellView opplysning={opplysning} />
-                        <VedleggView opplysning={opplysning} />
+                        <DokumentasjonRader opplysning={opplysning} />
+                        <Dokumenter opplysning={opplysning} />
                     </div>
                 </div>
             )}
