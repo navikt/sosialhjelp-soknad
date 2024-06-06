@@ -2,8 +2,8 @@ import {describe, it, expect} from "vitest";
 import {humanizeFilesize} from "./humanizeFilesize";
 
 describe("humanizeFilesize", () => {
-    it('should return "0 bytes" when input is undefined', () => {
-        expect(humanizeFilesize(undefined)).toBe("0 bytes");
+    it("should return empty string when input is null", () => {
+        expect(humanizeFilesize(null)).toBe("");
     });
 
     it('should return "0 bytes" when input is 0', () => {
