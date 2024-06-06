@@ -9,7 +9,7 @@
         "@fremtind/jkl-validators-util": "^3.0.0",
         "@grafana/faro-react": "^1.7.2",
         "@hookform/error-message": "^2.0.1",
-        "@hookform/resolvers": "^3.3.4",
+        "@hookform/resolvers": "^3.6.0",
         "@navikt/aksel-icons": "^6.8.0",
         "@navikt/ds-css": "^6.8.0",
         "@navikt/ds-icons": "^3.4.3",
