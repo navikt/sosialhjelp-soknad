@@ -13,7 +13,7 @@ export const Dokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
             {opplysning.type === "lonnslipp|arbeid" && (
                 <div>
                     <div className={"rounded-md bg-surface-action-subtle p-8"}>
-                        <Heading level={"4"} size={"medium"} spacing>
+                        <Heading level={"4"} size={"small"} spacing>
                             {sporsmal}
                         </Heading>
                         <ArbeidsVedlegg opplysning={opplysning} />
@@ -23,7 +23,7 @@ export const Dokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
             {opplysning.type !== "lonnslipp|arbeid" && (
                 <div>
                     <div className={"rounded-md bg-surface-action-subtle p-8"}>
-                        <Heading level={"4"} size={"medium"} spacing>
+                        <Heading level={"4"} size={"small"} spacing>
                             {sporsmal}
                         </Heading>
                         <BodyShort spacing>{undertekst}</BodyShort>
