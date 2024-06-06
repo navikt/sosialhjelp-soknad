@@ -27,7 +27,7 @@ export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep, onSend}: Sk
     return (
         <>
             <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
-            <div className={"!mt-12 md:!mt-16 lg:!mt-24 !mb-8 lg:!mb-16"}>
+            <div className={"!mt-12 md:!mt-16 lg:!mt-24 !mb-8 lg:!mb-16 space-x-3"}>
                 <Button
                     variant="secondary"
                     id="gaa_tilbake_button"
