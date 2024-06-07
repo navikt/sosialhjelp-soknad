@@ -8,7 +8,6 @@ import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepperLegacy} from "./SkjemaStegNavStepperLegacy";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapperLegacy from "./SkjemaStegNavKnapperLegacy";
-import {TimeoutBox} from "../../modals/TimeoutBox";
 import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
@@ -87,7 +86,6 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: S
                     <main id="main-content" className={"space-y-12 lg:space-y-24"}>
                         {children}
                     </main>
-                    <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
                     <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
                     {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && <NavEnhetInaktiv />}
                     <SkjemaStegNavKnapperLegacy
