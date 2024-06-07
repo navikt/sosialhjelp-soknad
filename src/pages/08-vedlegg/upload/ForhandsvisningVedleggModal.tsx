@@ -26,7 +26,7 @@ export const ForhandsvisningVedleggModal = ({
     file,
     onAccept,
     onClose,
-    onDelete,
+    //onDelete,
 }: ForhandsvisningModalProps) => {
     const [isFullscreen, setFullscreen] = useState<boolean>(false);
     const {t} = useTranslation();
@@ -58,7 +58,7 @@ export const ForhandsvisningVedleggModal = ({
                     {file.type === "application/pdf" ? (
                         <>
                             <FilePreviewButtons
-                                onDelete={onDelete}
+                                //onDelete={onDelete}
                                 isFullscreen={isFullscreen}
                                 setFullscreen={setFullscreen}
                             />
@@ -67,7 +67,7 @@ export const ForhandsvisningVedleggModal = ({
                     ) : (
                         <>
                             <FilePreviewButtons
-                                onDelete={onDelete}
+                                //onDelete={onDelete}
                                 isFullscreen={isFullscreen}
                                 setFullscreen={setFullscreen}
                             />

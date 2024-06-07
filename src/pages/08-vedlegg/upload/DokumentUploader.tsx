@@ -87,7 +87,9 @@ export const DokumentUploader = ({
                         await doUpload(upload);
                     }}
                     onClose={() => setPreviewFile(null)}
-                    onDelete={() => setPreviewFile(null)}
+                    onDelete={() => {
+                        setPreviewFile(null);
+                    }}
                 />
             )}
         </div>

@@ -1326,7 +1326,7 @@
     "vedlegg.forhandsvisning.opplast": "Last opp document",
     "vedlegg.forhandsvisning.avbryt": "Avbryt",
     "vedlegg.sletteModal": {
-        "tittel": "Er du sikker på at du vil slette filen?",
+        "tittel": "Er du sikker på at du vil fjerne filen?",
         "avbryt": "Avbryt",
         "slett": "Slett dokument"
     },
