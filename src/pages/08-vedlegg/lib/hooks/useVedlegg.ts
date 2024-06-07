@@ -11,7 +11,7 @@ import {isSoknadApiError} from "../isSoknadApiError";
 import {useGetSessionInfo} from "../../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {useDeleteDokument} from "../../../../generated/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
 import {humanizeFilesize} from "../humanizeFilesize";
-import {axiosInstance} from "../../../../lib/orval/soknad-api-axios";
+import {axiosInstance} from "../../../../lib/orval/axiosInstance";
 import {REST_FEIL} from "../../../../lib/enums/restFeil";
 
 // When new backend has been deployed, this can be removed.

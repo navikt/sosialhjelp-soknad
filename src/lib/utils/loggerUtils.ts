@@ -1,4 +1,4 @@
-import {axiosInstance} from "../orval/soknad-api-axios";
+import {axiosInstance} from "../orval/axiosInstance";
 // Om du ikke får bygget med orval, kommenter denne midlertidig ut og prøv igjen.
 import {Logg, LoggLevel} from "../../generated/model";
 

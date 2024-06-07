@@ -3,7 +3,7 @@ import {isLocalhost, isMockAlt} from "../utils";
 import {UnauthorizedMelding} from "../../generated/model";
 import {logError, logInfo, logWarning} from "../utils/loggerUtils";
 import {baseURL} from "../config";
-import {redirectToLogin} from "./auth/redirectToLogin";
+import {buildLoginUrl} from "./auth/buildLoginUrl";
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL,
@@ -65,7 +65,7 @@ export const axiosInstance = <T>(
             const {status, data} = e.response;
 
             if (isLoginRedirect401(e.response)) {
-                await redirectToLogin(e.response.data);
+                window.location.href = await buildLoginUrl(e.response.data, window.location);
                 return new Promise<T>(() => {});
             }
 

@@ -1,11 +1,14 @@
 import {UnauthorizedMelding} from "../../../generated/model";
 import {basePath} from "../../config";
+import {logError} from "../../utils/loggerUtils";
 
-import {parseGotoValueFromSearchParameters} from "./parseGotoValueFromSearchParameters";
-
-export const buildLoginUrl = ({loginUrl}: UnauthorizedMelding, {origin, pathname, search}: Location) => {
-    const loginURLObj = new URL(loginUrl);
-    const nextHop = pathname === `${basePath}/link` ? parseGotoValueFromSearchParameters(search) : pathname;
+export const buildLoginUrl = async (unauthError: UnauthorizedMelding, {origin, pathname, search}: Location) => {
+    if (!unauthError) {
+        await logError(`401-feil uten data`);
+        throw new Error(`401-feil uten data`);
+    }
+    const loginURLObj = new URL(unauthError.loginUrl);
+    const nextHop = pathname === `${basePath}/link` ? new URLSearchParams(search).get("goto") : pathname;
     loginURLObj.searchParams.set("redirect", `${origin}${basePath}/link?goto=${nextHop}`);
     return loginURLObj.toString();
 };
