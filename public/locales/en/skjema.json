@@ -1367,7 +1367,7 @@
     "vedlegg.sletteModal": {
         "tittel": "Are you sure you want to delete the file?",
         "avbryt": "Cancel",
-        "slett": "Delete document"
+        "slett": "Delete file"
     },
     "hoppTilHovedinnhold": "Go to main content."
 }
