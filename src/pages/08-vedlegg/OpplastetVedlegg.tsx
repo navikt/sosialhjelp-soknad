@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import {LinkButton} from "../../lib/components/LinkButton";
-import {downloadAttachedFile} from "../../lib/utils/rest-utils";
 import {DokumentUpload} from "../../generated/model";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {TrashIcon} from "@navikt/aksel-icons";
 import {Button} from "@navikt/ds-react";
 import {BekreftSlettDokumentModal} from "../../lib/modals/BekreftSlettDokumentModal";
+import {baseURL} from "../../lib/config";
 
 export const OpplastetVedlegg = ({
     onDelete,
@@ -27,7 +27,7 @@ export const OpplastetVedlegg = ({
                     setShowConfirmDelete(false);
                 }}
             />
-            <LinkButton onClick={() => downloadAttachedFile(lastNedUrl)}>{filename}</LinkButton>
+            <LinkButton onClick={() => window.open(baseURL + lastNedUrl)}>{filename}</LinkButton>
             <Button
                 size={"small"}
                 variant={"tertiary"}

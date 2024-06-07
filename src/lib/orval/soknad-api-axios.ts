@@ -1,33 +1,11 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
-import {parseGotoValueFromSearchParameters} from "../utils/rest-utils";
 import {isLocalhost, isMockAlt} from "../utils";
 import {UnauthorizedMelding} from "../../generated/model";
 import {logError, logInfo, logWarning} from "../utils/loggerUtils";
-import {basePath, baseURL} from "../config";
+import {baseURL} from "../config";
+import {redirectToLogin} from "./auth/redirectToLogin";
 
-const makeLoginUrl = ({loginUrl}: UnauthorizedMelding) => {
-    const loginURLObj = new URL(loginUrl);
-    loginURLObj.searchParams.set(
-        "redirect",
-        `${window.location.origin}${basePath}/link?goto=${
-            window.location.pathname === `${basePath}/link`
-                ? parseGotoValueFromSearchParameters(window.location.search)
-                : window.location.pathname
-        }`
-    );
-    return loginURLObj.toString();
-};
-
-export const redirectToLogin = async (unauthError?: UnauthorizedMelding) => {
-    if (!unauthError) {
-        await logError(`401-feil uten data`);
-        throw new Error(`401-feil uten data`);
-    }
-
-    window.location.href = makeLoginUrl(unauthError);
-};
-
-export const AXIOS_INSTANCE = Axios.create({
+const AXIOS_INSTANCE = Axios.create({
     baseURL,
     xsrfCookieName: "XSRF-TOKEN-SOKNAD-API",
     xsrfHeaderName: "X-XSRF-TOKEN",

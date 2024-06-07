@@ -1,5 +1,5 @@
-export * from "./animationUtils";
-export * from "./intlUtils";
+export * from "./scrollToTop";
+export * from "./formatTidspunkt";
 
 // Fanger ikke opp www-q*.dev.nav.no
 export const mockMiljoer = ["sosialhjelp-soknad-mock.dev.nav.no", "digisos.ekstern.dev.nav.no"];

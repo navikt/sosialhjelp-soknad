@@ -4,7 +4,6 @@ import {useBehandlingsId} from "../../../../lib/hooks/common/useBehandlingsId";
 import {useTranslation} from "react-i18next";
 import {useHentOkonomiskeOpplysninger} from "../../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 
-import {REST_FEIL} from "../../../../lib/utils/rest-utils";
 import {useAmplitude} from "../../../../lib/amplitude/useAmplitude";
 import {DocumentListReducer, initialDocumentListState} from "../DocumentListReducer";
 import {DigisosApiErrorMap} from "../DigisosApiErrorMap";
@@ -13,6 +12,7 @@ import {useGetSessionInfo} from "../../../../generated/informasjon-ressurs/infor
 import {useDeleteDokument} from "../../../../generated/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
 import {humanizeFilesize} from "../humanizeFilesize";
 import {axiosInstance} from "../../../../lib/orval/soknad-api-axios";
+import {REST_FEIL} from "../../../../lib/enums/restFeil";
 
 // When new backend has been deployed, this can be removed.
 const TEN_MEGABYTE_COMPAT_FALLBACK = 10 * 1024 * 1024;
