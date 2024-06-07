@@ -44,7 +44,9 @@ export const Dokumenter = ({opplysning}: {opplysning: Opplysning}) => {
                     <OpplastetVedlegg key={fil.dokumentId} dokument={fil} onDelete={deleteDocument} />
                 ))}
             </ul>
-            {showSuccessAlert && <Alert variant="success">{t("vedlegg.opplasting.suksess")}</Alert>}
+            {showSuccessAlert && documents.length > 0 && (
+                <Alert variant="success">{t("vedlegg.opplasting.suksess")}</Alert>
+            )}
             {error && <Alert variant="error">{error}</Alert>}
             <AlreadyUploadedCheckbox opplysning={opplysning} disabled={!!documents.length || isPending} />
         </div>

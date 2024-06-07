@@ -16,10 +16,7 @@ export const BekreftSlettDokumentModal = ({open, onSelect}: {open: boolean; onSe
             </Modal.Header>
             <Modal.Footer>
                 <Button variant="primary" onClick={() => onSelect(true)}>
-                    <div className={"flex gap-2"}>
-                        <TrashIcon />
-                        {t("slett")}
-                    </div>
+                    <div className={"flex gap-2"}>{t("slett")}</div>
                 </Button>
                 <Button variant="secondary" onClick={() => onSelect(false)}>
                     {t("avbryt")}
