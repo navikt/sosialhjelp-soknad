@@ -1,5 +1,5 @@
-import {parseGotoValueFromSearchParameters} from "./rest-utils";
 import {expect, test} from "vitest";
+import {parseGotoValueFromSearchParameters} from "./parseGotoValueFromSearchParameters";
 
 test("that parseGotoValueFromSearchParameters returns expected value", () => {
     expect(parseGotoValueFromSearchParameters("")).toEqual(undefined);
