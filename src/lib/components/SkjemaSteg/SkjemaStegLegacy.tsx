@@ -8,7 +8,7 @@ import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepperLegacy} from "./SkjemaStegNavStepperLegacy";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapperLegacy from "./SkjemaStegNavKnapperLegacy";
-import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
+import {AvbrytSoknadModal} from "../../components/modals/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
 import {NavEnhetInaktiv} from "../../../pages/01-personalia/adresse/NavEnhet";

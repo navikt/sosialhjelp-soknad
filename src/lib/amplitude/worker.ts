@@ -1,5 +1,5 @@
 import {logAmplitudeEvent} from "@navikt/nav-dekoratoren-moduler";
-import {logWarning} from "../utils/loggerUtils";
+import {logWarning} from "../log/loggerUtils";
 
 type AmplitudePayload = {
     eventName: string;

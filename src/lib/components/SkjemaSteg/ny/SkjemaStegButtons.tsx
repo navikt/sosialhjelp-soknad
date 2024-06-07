@@ -2,11 +2,11 @@ import * as React from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {SkjemaStegContext} from "./SkjemaSteg";
-import {AvbrytSoknadModal} from "../../../modals/AvbrytSoknadModal";
 import {useContext, useState} from "react";
 import {NavEnhetInaktiv} from "../../../../pages/01-personalia/adresse/NavEnhet";
 import {minSideURL} from "../../../config";
-import {logError} from "../../../utils/loggerUtils";
+import {logError} from "../../../log/loggerUtils";
+import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 
 interface SkjemaStegNavigasjonProps {
     loading?: boolean;

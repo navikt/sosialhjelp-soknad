@@ -14,7 +14,7 @@ import cx from "classnames";
 import {hentXsrfCookie} from "../../../../generated/soknad-ressurs/soknad-ressurs";
 import {useBehandlingsId} from "../../../hooks/common/useBehandlingsId";
 import {AppHeader} from "../../appHeader/AppHeader";
-import {logError, logWarning} from "../../../utils/loggerUtils";
+import {logError, logWarning} from "../../../log/loggerUtils";
 import {scrollToTop} from "../../../utils";
 import {useTitle} from "../../../hooks/common/useTitle";
 import {HusIllustrasjon} from "../../svg/illustrasjoner/HusIllustrasjon";

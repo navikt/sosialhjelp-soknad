@@ -1,7 +1,7 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
 import {isLocalhost, isMockAlt} from "../utils";
 import {UnauthorizedMelding} from "../../generated/model";
-import {logError, logInfo, logWarning} from "../utils/loggerUtils";
+import {logError, logInfo, logWarning} from "../log/loggerUtils";
 import {baseURL} from "../config";
 import {buildRedirectUrl} from "./auth/buildRedirectUrl";
 

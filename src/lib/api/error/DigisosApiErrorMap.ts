@@ -1,6 +1,6 @@
-import {ValideringsFeilKode} from "../../../lib/validering";
+import {ValideringsFeilKode} from "../../validering";
 import {SoknadApiErrorError} from "../../../generated/model";
-import {REST_FEIL} from "../../../lib/enums/restFeil";
+import {REST_FEIL} from "./restFeil";
 
 /**
  * Oversikt mellom FeilmeldingFeilType fra backend og språknøkkel på frontend.

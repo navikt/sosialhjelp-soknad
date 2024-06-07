@@ -1,5 +1,5 @@
 import {useParams} from "react-router";
-import {logError} from "../../../lib/utils/loggerUtils";
+import {logError} from "../../log/loggerUtils";
 
 type SoknadUrlParams = Record<"behandlingsId", string | undefined>;
 

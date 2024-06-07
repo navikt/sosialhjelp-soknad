@@ -5,7 +5,7 @@ import {UbesvarteOpplysninger} from "./UbesvarteOpplysninger";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
 import {SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import cx from "classnames";
-import {useOpplysninger} from "./lib/hooks/useOpplysninger";
+import {useOpplysninger} from "../../lib/hooks/dokumentasjon/useOpplysninger";
 
 export const OkonomiskeOpplysningerView = () => {
     const {bekreftet, isLoading, sorterte, grupper} = useOpplysninger();

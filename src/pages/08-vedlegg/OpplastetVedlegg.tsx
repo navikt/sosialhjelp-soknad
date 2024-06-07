@@ -4,8 +4,8 @@ import {DokumentUpload} from "../../generated/model";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {TrashIcon} from "@navikt/aksel-icons";
 import {Button} from "@navikt/ds-react";
-import {BekreftSlettDokumentModal} from "../../lib/modals/BekreftSlettDokumentModal";
 import {baseURL} from "../../lib/config";
+import {BekreftSlettDokumentModal} from "../../lib/components/modals/BekreftSlettDokumentModal";
 
 export const OpplastetVedlegg = ({
     onDelete,

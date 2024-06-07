@@ -1,8 +1,8 @@
 import {LinkButton} from "../../lib/components/LinkButton";
-import {useOpplysning} from "./lib/hooks/useOpplysning";
 import {OpplysningInputRad} from "./OpplysningInputRad";
 import {VedleggFrontend} from "../../generated/model";
-import {useOpplysningTekster} from "./lib/hooks/useOpplysningTekster";
+import {useOpplysning} from "../../lib/hooks/dokumentasjon/useOpplysning";
+import {useOpplysningTekster} from "../../lib/hooks/dokumentasjon/useOpplysningTekster";
 
 export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) => {
     const {

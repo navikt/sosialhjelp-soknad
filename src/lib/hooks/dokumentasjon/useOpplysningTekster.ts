@@ -1,6 +1,6 @@
-import {VedleggFrontendType} from "../../../../generated/model";
-import {opplysningSpec} from "../../../../lib/opplysninger";
 import {useTranslation} from "react-i18next";
+import {VedleggFrontendType} from "../../../generated/model";
+import {opplysningSpec} from "../../opplysninger";
 
 export type OpplysningSpecTekster = {
     sporsmal: string;

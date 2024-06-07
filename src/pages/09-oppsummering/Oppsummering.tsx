@@ -12,7 +12,7 @@ import {useNavigate} from "react-router";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
 import {SkjemaStegLegacy} from "../../lib/components/SkjemaSteg/SkjemaStegLegacy";
 import {digisosSkjemaConfig} from "../../lib/components/SkjemaSteg/digisosSkjema";
-import {logInfo, logWarning} from "../../lib/utils/loggerUtils";
+import {logInfo, logWarning} from "../../lib/log/loggerUtils";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useTranslation} from "react-i18next";
 import {NavEnhetInaktiv, NyNavEnhet} from "../01-personalia/adresse/NavEnhet";

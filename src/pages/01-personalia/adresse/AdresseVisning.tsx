@@ -2,7 +2,7 @@ import Detaljeliste, {DetaljelisteElement} from "../../../lib/components/detalje
 import * as React from "react";
 import {AdresseFrontend} from "../../../generated/model";
 import {useTranslation} from "react-i18next";
-import {logError} from "../../../lib/utils/loggerUtils";
+import {logError} from "../../../lib/log/loggerUtils";
 
 export const AdresseVisning = ({adresse}: {adresse?: AdresseFrontend}) => {
     const {t} = useTranslation();
