@@ -1308,7 +1308,7 @@
     "vedlegg.opplasting.feil.infotekst": "Vedlegget kunne ikkje lastast opp. Prøv igjen eller send vedlegget seinare.",
     "vedlegg.opplasting.feil.muligVirus": "Opplastinga blei stoppa av antivirus-programmet. Du kan prøve på nytt med ei anna fil.",
     "vedlegg.opplasting.feil.samletStorrelseForStor": "Du har lasta opp {{antall}} vedlegg som til saman er på over 150 MB. Det er diverre ikkje mogleg å laste opp fleire vedlegg, men du kan framleis ettersende vedlegga du manglar, etter at søknaden er send.",
-    "vedlegg.opplasting.suksess": "Vedlegg er lasta opp",
+    "vedlegg.opplasting.suksess": "Dokumentasjon er lasta opp",
     "vedlegg.oppsummering.ikkelastetopp": "Ikkje lasta opp",
     "vedlegg.oppsummering.tittel": "Vedlegg",
     "vedlegg.salgsoppgjor.eiendom.tittel": "Opplysningar om salsoppgjer",
@@ -1323,7 +1323,7 @@
     "vedlegg.forhandsvisning.fullskjerm": "Fullskjerm",
     "vedlegg.forhandsvisning.fullskjerm.lukk": "Lukk fullskjerm",
     "vedlegg.forhandsvisning.slett": "Slett",
-    "vedlegg.forhandsvisning.opplast": "Last opp vedlegg",
+    "vedlegg.forhandsvisning.opplast": "Last opp document",
     "vedlegg.forhandsvisning.avbryt": "Avbryt",
     "vedlegg.sletteModal": {
         "tittel": "Er du sikker på at du vil slette filen?",

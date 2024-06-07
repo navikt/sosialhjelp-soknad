@@ -1362,7 +1362,7 @@
     "vedlegg.forhandsvisning.fullskjerm": "Full screen",
     "vedlegg.forhandsvisning.fullskjerm.lukk": "End full screen",
     "vedlegg.forhandsvisning.slett": "Delete",
-    "vedlegg.forhandsvisning.opplast": "Upload attachment",
+    "vedlegg.forhandsvisning.opplast": "Upload document",
     "vedlegg.forhandsvisning.avbryt": "Cancel",
     "vedlegg.sletteModal": {
         "tittel": "Are you sure you want to delete the file?",
