@@ -44,6 +44,7 @@ if (import.meta.env.REACT_APP_DIGISOS_ENV === "localhost") {
             feedback: false,
             chatbot: false,
             shareScreen: false,
+            logoutWarning: true,
         },
     });
 }
