@@ -1365,7 +1365,7 @@
     "vedlegg.forhandsvisning.opplast": "Upload document",
     "vedlegg.forhandsvisning.avbryt": "Cancel",
     "vedlegg.sletteModal": {
-        "tittel": "Are you sure you want to remove the file?",
+        "tittel": "Are you sure you want to delete the file?",
         "avbryt": "Cancel",
         "slett": "Delete document"
     },
