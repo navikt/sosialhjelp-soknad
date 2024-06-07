@@ -18,8 +18,10 @@ export const TelefonShowBrukerdefinert = ({
 
     return (
         <li className={"flex flex-row place-content-between"}>
-            <SysteminfoItem>{telefonNummer && telefonNummer.formatInternational()}</SysteminfoItem>
-            <BodyShort className={"pt-3"}>{t("telefoninfo.infotekst.tekst")}</BodyShort>
+            <div className={"pl-3"}>
+                <SysteminfoItem>{telefonNummer && telefonNummer.formatInternational()}</SysteminfoItem>
+                <BodyShort className={"pt-3"}>{t("telefoninfo.infotekst.tekst")}</BodyShort>
+            </div>
             {onEdit && (
                 <div className={"flex flex-row items-center navds-link pr-3"}>
                     <PencilWritingIcon />
