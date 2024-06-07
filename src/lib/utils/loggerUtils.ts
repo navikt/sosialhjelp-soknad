@@ -1,6 +1,19 @@
-import {axiosInstance} from "../orval/axiosInstance";
-// Om du ikke får bygget med orval, kommenter denne midlertidig ut og prøv igjen.
-import {Logg, LoggLevel} from "../../generated/model";
+import {axiosInstance} from "../api/axiosInstance";
+
+/**
+ * OBS: Disse er duplisert fra generert kode fordi orval ellers klaget på en sirkulær avhengighet.
+ */
+interface Logg {
+    columnNumber?: string;
+    jsFileUrl?: string;
+    level: LoggLevel;
+    lineNumber?: string;
+    message?: string;
+    url?: string;
+    userAgent?: string;
+}
+type LoggLevel = (typeof LoggLevel)[keyof typeof LoggLevel];
+const LoggLevel = {ERROR: "ERROR", WARN: "WARN", INFO: "INFO"} as const;
 
 export const logWindowError: typeof window.onerror = (message, jsFileUrl, lineNumber, columnNumber) => {
     logToServer({
