@@ -1,10 +1,10 @@
 import {useTranslation} from "react-i18next";
-import {BodyShort, Button, Select, TextField} from "@navikt/ds-react";
+import {BodyShort, Button, /* Select,*/ TextField} from "@navikt/ds-react";
 import * as React from "react";
 import {useTelefonnummer} from "../../lib/hooks/data/useTelefonnummer";
-import * as libphonenumber from "libphonenumber-js";
+//import * as libphonenumber from "libphonenumber-js";
 import {isValidNumber, parsePhoneNumber} from "libphonenumber-js";
-import {emojiFlag} from "./EmojiFlag";
+//import {emojiFlag} from "./EmojiFlag";
 import {useForm} from "react-hook-form";
 import * as z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -41,37 +41,46 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
         await setTelefonnummer(`+${countryCode}${digits}`);
         onClose();
     });
+    //TODO: LEGG TILBAKE ETTER AVKLARING FRA TIETO-EVRY
+    /**
+     *                <div className={"flex gap-2 pb-2"}>
+     *                     <div>
+     *                         <Select
+     *                             hideLabel={true}
+     *                             label={t("kontakt.telefon.landskode")}
+     *                             {...register("countryCode")}
+     *                             error={formState.errors.countryCode && t(formState.errors.phoneNumber!.message!)}
+     *                         >
+     *                             {libphonenumber
+     *                                 .getCountries()
+     *                                 .map((country) => [
+     *                                     emojiFlag(country.toString()),
+     *                                     libphonenumber.getCountryCallingCode(country),
+     *                                 ])
+     *                                 .map(([flagEmoji, callingCode]) => (
+     *                                     <option
+     *                                         key={callingCode}
+     *                                         value={callingCode}
+     *                                     >{`${flagEmoji} +${callingCode}`}</option>
+     *                                 ))}
+     *                         </Select>
+     *                     </div>
+     *                   </div>
+     *
+     *
+     *
+     *
+     */
 
     return (
         <form onSubmit={onSubmit} className={"space-y-4 pl-3 pt-2"}>
             <div>
                 <BodyShort weight={"semibold"}>{t("kontakt.telefon.tittel")}</BodyShort>
                 <div className={"flex gap-2 pb-2"}>
-                    <div>
-                        <Select
-                            hideLabel={true}
-                            label={t("kontakt.telefon.landskode")}
-                            {...register("countryCode")}
-                            error={formState.errors.countryCode && t(formState.errors.phoneNumber!.message!)}
-                        >
-                            {libphonenumber
-                                .getCountries()
-                                .map((country) => [
-                                    emojiFlag(country.toString()),
-                                    libphonenumber.getCountryCallingCode(country),
-                                ])
-                                .map(([flagEmoji, callingCode]) => (
-                                    <option
-                                        key={callingCode}
-                                        value={callingCode}
-                                    >{`${flagEmoji} +${callingCode}`}</option>
-                                ))}
-                        </Select>
-                    </div>
                     <TextField
                         {...register("phoneNumber")}
-                        maxLength={12}
-                        htmlSize={12}
+                        maxLength={11}
+                        htmlSize={11}
                         type={"tel"}
                         className={"inline"}
                         autoComplete={"tel-national"}
