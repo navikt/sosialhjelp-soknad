@@ -1,6 +1,6 @@
 import {getDateFnLocale} from "../i18n";
 import {format, isValid} from "date-fns";
-import {logWarning} from "./loggerUtils";
+import {logWarning} from "../log/loggerUtils";
 
 // Eksempel: "2019-08-01T12:12:12.123123Z" => "1. august 2019 klokken 12:12"
 export function formatTidspunkt(isoDate: string | Date) {

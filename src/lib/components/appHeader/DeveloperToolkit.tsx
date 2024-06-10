@@ -2,7 +2,7 @@ import * as React from "react";
 import {useNavigate, useParams} from "react-router";
 import {useEffect} from "react";
 import {opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
-import {logWarning} from "../../../lib/utils/loggerUtils";
+import {logWarning} from "../../log/loggerUtils";
 
 type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
 

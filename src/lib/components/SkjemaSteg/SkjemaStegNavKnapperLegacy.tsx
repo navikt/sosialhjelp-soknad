@@ -1,10 +1,10 @@
 import * as React from "react";
 import {Button, Loader} from "@navikt/ds-react";
-import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {SkjemaConfig, SkjemaSteg} from "./digisosSkjema";
 import {useState} from "react";
 import {minSideURL} from "../../config";
+import {AvbrytSoknadModal} from "../modals/AvbrytSoknadModal";
 
 interface SkjemaStegNavigasjonProps {
     skjemaConfig: SkjemaConfig;

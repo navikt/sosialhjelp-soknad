@@ -2,7 +2,6 @@ import * as React from "react";
 import {createContext, ReactNode, useContext, useEffect} from "react";
 import {Heading, Link} from "@navikt/ds-react";
 import {NedetidPanel} from "../../NedetidPanel";
-import {TimeoutBox} from "../../../modals/TimeoutBox";
 import {useTranslation} from "react-i18next";
 import {useSkjemaNavigation} from "../useSkjemaNavigation";
 import SnakkebobleIllustrasjon from "../../svg/illustrasjoner/SnakkebobleIllustrasjon";
@@ -15,7 +14,7 @@ import cx from "classnames";
 import {hentXsrfCookie} from "../../../../generated/soknad-ressurs/soknad-ressurs";
 import {useBehandlingsId} from "../../../hooks/common/useBehandlingsId";
 import {AppHeader} from "../../appHeader/AppHeader";
-import {logError, logWarning} from "../../../utils/loggerUtils";
+import {logError, logWarning} from "../../../log/loggerUtils";
 import {scrollToTop} from "../../../utils";
 import {useTitle} from "../../../hooks/common/useTitle";
 import {HusIllustrasjon} from "../../svg/illustrasjoner/HusIllustrasjon";
@@ -132,7 +131,6 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
                 <Link href="#main-content" className="sr-only sr-only-focusable">
                     {t("hoppTilHovedinnhold")}
                 </Link>
-                <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
                 <AppHeader className={"w-full"} />
                 <SkjemaStegStepper />
                 <main id={"main-content"} className={"max-w-3xl mx-auto w-full"}>

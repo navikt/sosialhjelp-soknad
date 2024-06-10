@@ -2,7 +2,6 @@ import "./index.css";
 import "@navikt/ds-css";
 import {Suspense} from "react";
 import {createRoot} from "react-dom/client";
-import {logWindowError} from "./lib/utils/loggerUtils";
 import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
 import {RouterProvider} from "react-router-dom";
 import {router} from "./routes";
@@ -13,6 +12,7 @@ import {withFaroProfiler} from "@grafana/faro-react";
 import {ApplicationSpinner} from "./lib/components/animasjoner/ApplicationSpinner";
 import {ValideringsContextProvider} from "./lib/valideringContextProvider";
 import {AmplitudeProvider} from "./lib/amplitude/AmplitudeProvider";
+import {logWindowError} from "./lib/log/logWindowError";
 
 window.onerror = logWindowError;
 
@@ -44,6 +44,7 @@ if (import.meta.env.REACT_APP_DIGISOS_ENV === "localhost") {
             feedback: false,
             chatbot: false,
             shareScreen: false,
+            logoutWarning: true,
         },
     });
 }

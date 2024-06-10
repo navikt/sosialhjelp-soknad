@@ -1,33 +1,11 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
-import {parseGotoValueFromSearchParameters} from "../utils/rest-utils";
 import {isLocalhost, isMockAlt} from "../utils";
 import {UnauthorizedMelding} from "../../generated/model";
-import {logError, logInfo, logWarning} from "../utils/loggerUtils";
-import {basePath, baseURL} from "../config";
+import {logError, logInfo, logWarning} from "../log/loggerUtils";
+import {baseURL} from "../config";
+import {buildRedirectUrl} from "./auth/buildRedirectUrl";
 
-const makeLoginUrl = ({loginUrl}: UnauthorizedMelding) => {
-    const loginURLObj = new URL(loginUrl);
-    loginURLObj.searchParams.set(
-        "redirect",
-        `${window.location.origin}${basePath}/link?goto=${
-            window.location.pathname === `${basePath}/link`
-                ? parseGotoValueFromSearchParameters(window.location.search)
-                : window.location.pathname
-        }`
-    );
-    return loginURLObj.toString();
-};
-
-export const redirectToLogin = async (unauthError?: UnauthorizedMelding) => {
-    if (!unauthError) {
-        await logError(`401-feil uten data`);
-        throw new Error(`401-feil uten data`);
-    }
-
-    window.location.href = makeLoginUrl(unauthError);
-};
-
-export const AXIOS_INSTANCE = Axios.create({
+const AXIOS_INSTANCE = Axios.create({
     baseURL,
     xsrfCookieName: "XSRF-TOKEN-SOKNAD-API",
     xsrfHeaderName: "X-XSRF-TOKEN",
@@ -46,8 +24,6 @@ export type DigisosAxiosConfig = {
     // (Useful to prevent packet storms from calls to the logger failing)
     digisosIgnoreErrors?: boolean;
 };
-
-const isLoginRedirect401 = (r: any): r is AxiosResponse<UnauthorizedMelding | undefined, any> => r?.status === 401;
 
 /**
  * Digisos Axios client
@@ -86,8 +62,11 @@ export const axiosInstance = <T>(
 
             const {status, data} = e.response;
 
-            if (isLoginRedirect401(e.response)) {
-                await redirectToLogin(e.response.data);
+            if (status === 401) {
+                const {loginUrl} = data as UnauthorizedMelding;
+                const loginPage = new URL(loginUrl);
+                loginPage.searchParams.set("redirect", buildRedirectUrl(window.location));
+                window.location.assign(loginPage);
                 return new Promise<T>(() => {});
             }
 

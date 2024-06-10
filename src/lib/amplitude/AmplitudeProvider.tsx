@@ -1,5 +1,5 @@
 import {ReactNode, useEffect, useState} from "react";
-import {logWarning} from "../utils/loggerUtils";
+import {logWarning} from "../log/loggerUtils";
 import workerUrl from "./worker?worker&url";
 import {AmplitudeContext} from "./AmplitudeContext";
 

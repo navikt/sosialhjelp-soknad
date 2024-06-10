@@ -2,8 +2,8 @@ import {DokumentasjonRader} from "./DokumentasjonRader";
 import {Dokumenter} from "./upload/Dokumenter";
 import {Opplysning} from "../../lib/opplysninger";
 import {BodyShort, Heading} from "@navikt/ds-react";
-import {useOpplysningTekster} from "./lib/hooks/useOpplysningTekster";
 import {ArbeidsVedlegg} from "./ArbeidsVedlegg";
+import {useOpplysningTekster} from "../../lib/hooks/dokumentasjon/useOpplysningTekster";
 
 export const Dokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
     const {sporsmal, undertekst} = useOpplysningTekster(opplysning.type);

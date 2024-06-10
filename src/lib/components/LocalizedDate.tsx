@@ -1,5 +1,5 @@
 import {format, isValid} from "date-fns";
-import {logWarning} from "../utils/loggerUtils";
+import {logWarning} from "../log/loggerUtils";
 import {getDateFnLocale} from "../i18n";
 
 /**

@@ -1,6 +1,6 @@
 import i18n from "i18next";
 import {initReactI18next} from "react-i18next";
-import {logWarning} from "./utils/loggerUtils";
+import {logWarning} from "./log/loggerUtils";
 import Backend from "i18next-http-backend";
 import {enGB, Locale, nb, nn} from "date-fns/locale";
 import {DecoratorLocale, onLanguageSelect, setAvailableLanguages, setParams} from "@navikt/nav-dekoratoren-moduler";

@@ -4,8 +4,8 @@ import {useTranslation} from "react-i18next";
 import {Opplysning} from "../../../lib/opplysninger";
 import {ForhandsvisningVedleggModal} from "./ForhandsvisningVedleggModal";
 import {PlusIcon} from "@navikt/aksel-icons";
-import {usePDFConverter} from "../lib/hooks/usePDFConverter";
 import {PdfConversionError} from "./UploadError";
+import {usePDFConverter} from "../../../lib/hooks/dokumentasjon/usePDFConverter";
 
 export const SUPPORTED_WITHOUT_CONVERSION = ["image/jpeg", "image/png", "application/pdf"];
 export const SUPPORTED_WITH_CONVERSION = [

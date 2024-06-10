@@ -9,7 +9,7 @@ import {useEffect} from "react";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs";
 import {useTitle} from "../../lib/hooks/common/useTitle";
-import {logInfo} from "../../lib/utils/loggerUtils";
+import {logInfo} from "../../lib/log/loggerUtils";
 import {NedetidPanel} from "../../lib/components/NedetidPanel";
 import {isLocalhost} from "../../lib/utils";
 import {DeveloperToolkit} from "../../lib/components/appHeader/DeveloperToolkit";

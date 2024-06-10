@@ -1,9 +1,9 @@
-import {useBehandlingsId} from "../../../../lib/hooks/common/useBehandlingsId";
-import {useHentOkonomiskeOpplysninger} from "../../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
-import {VedleggFrontends} from "../../../../generated/model";
-import {Opplysning, opplysningSpec, vedleggGrupper} from "../../../../lib/opplysninger";
 import {useMemo} from "react";
-import {logError} from "../../../../lib/utils/loggerUtils";
+import {VedleggFrontends} from "../../../generated/model";
+import {Opplysning, opplysningSpec, vedleggGrupper} from "../../opplysninger";
+import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useHentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {logError} from "../../log/loggerUtils";
 
 export const flettOgSorter = ({okonomiskeOpplysninger, slettedeVedlegg}: VedleggFrontends): Opplysning[] => {
     const current = okonomiskeOpplysninger?.map((opplysning): Opplysning => ({...opplysning}));
@@ -16,10 +16,7 @@ export const flettOgSorter = ({okonomiskeOpplysninger, slettedeVedlegg}: Vedlegg
 export const useOpplysninger = () => {
     const behandlingsId = useBehandlingsId();
 
-    const {data, isLoading, error} = useHentOkonomiskeOpplysninger<VedleggFrontends | VedleggFrontends>(
-        behandlingsId,
-        {}
-    );
+    const {data, isLoading, error} = useHentOkonomiskeOpplysninger(behandlingsId, {});
 
     if (error) {
         logError(`Feil ved HentOkonomiskeOpplysninger: ${error}`);

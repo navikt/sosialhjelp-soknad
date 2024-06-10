@@ -1,12 +1,13 @@
 import * as React from "react";
 import {BodyShort, Button, Modal, Heading, Alert} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../hooks/common/useBehandlingsId";
-import {logError} from "../utils/loggerUtils";
-import {useSlettSoknad} from "../../generated/soknad-ressurs/soknad-ressurs";
-import {minSideURL} from "../config";
 import {faro} from "@grafana/faro-react";
 import {TrashIcon} from "@navikt/aksel-icons";
+import {useBehandlingsId} from "../../hooks/common/useBehandlingsId";
+import {useSlettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
+import {minSideURL} from "../../config";
+import {logError} from "../../log/loggerUtils";
+
 export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () => void}) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();

@@ -1,6 +1,5 @@
 import * as React from "react";
 import {useContext} from "react";
-import {getFeil} from "../../lib/utils/enhancedComponentUtils";
 import {useBosituasjon} from "../../lib/hooks/data/useBosituasjon";
 import {useTranslation} from "react-i18next";
 import {TextField} from "@navikt/ds-react";
@@ -19,7 +18,7 @@ export const AntallPersoner = () => {
         dispatch,
     } = useContext(ValideringsContext);
 
-    const errorMessage = getFeil(feil, t, FAKTUM_KEY_ANTALL, undefined);
+    const valideringsfeil = feil?.find((f) => f.faktumKey === FAKTUM_KEY_ANTALL);
 
     return (
         <TextField
@@ -44,7 +43,7 @@ export const AntallPersoner = () => {
                 }
             }}
             onChange={() => dispatch({type: "clearValideringsfeil", faktumKey: FAKTUM_KEY_ANTALL})}
-            error={errorMessage && t(errorMessage)}
+            error={valideringsfeil && t(valideringsfeil.feilkode)}
         />
     );
 };

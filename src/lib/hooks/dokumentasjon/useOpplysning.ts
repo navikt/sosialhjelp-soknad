@@ -1,16 +1,15 @@
 import {useFieldArray, useForm} from "react-hook-form";
 import {z} from "zod";
-import {opplysningSpec} from "../../../../lib/opplysninger";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useEffect, useState} from "react";
-import {useUpdateOkonomiskOpplysning} from "../../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
-import {useBehandlingsId} from "../../../../lib/hooks/common/useBehandlingsId";
-import {VedleggFrontend} from "../../../../generated/model";
 import {useDebounce} from "react-use";
-import {belopTekstfeltPreprocessor} from "../../belopTekstfeltPreprocessor";
 import deepEqual from "deep-equal";
-
-import {ValideringsFeilKode} from "../../../../lib/validering";
+import {belopTekstfeltPreprocessor} from "../../../pages/08-vedlegg/belopTekstfeltPreprocessor";
+import {ValideringsFeilKode} from "../../validering";
+import {VedleggFrontend} from "../../../generated/model";
+import {opplysningSpec} from "../../opplysninger";
+import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useUpdateOkonomiskOpplysning} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 
 const zodBelopTekstfeltSchema = z.preprocess(
     belopTekstfeltPreprocessor,
@@ -74,7 +73,7 @@ export const useOpplysning = (opplysning: VedleggFrontend) => {
 
             mutate({
                 behandlingsId,
-                data: {...opplysning, rader},
+                data: {...opplysning, filer: [...(opplysning.filer ?? [])], rader},
             });
         },
         DEBOUNCE_DELAY_MS,
