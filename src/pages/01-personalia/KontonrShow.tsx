@@ -72,6 +72,11 @@ export const KontonrShow = ({onEdit}: {onEdit?: () => void}) => {
 
         if (systemverdi) return <KontonrShowSysteminfo onEdit={onEdit} />;
 
-        return <div>{t("kontakt.kontonummer.ingeninfo")}</div>;
+        return (
+            <li>
+                {t("kontakt.kontonummer.ingeninfo")} <br />
+                {onEdit && <LinkButton onClick={onEdit}>{t("kontakt.kontonummer.oppgi")}</LinkButton>}
+            </li>
+        );
     });
 };
