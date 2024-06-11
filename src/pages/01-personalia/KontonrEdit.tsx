@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {Button, Checkbox, TextField} from "@navikt/ds-react";
+import {BodyShort, Button, Checkbox, TextField} from "@navikt/ds-react";
 import * as React from "react";
 import {KontonummerFrontend, KontonummerInputDTO} from "../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -55,11 +55,13 @@ export const KontonrEdit = ({
 
     return (
         <form onSubmit={handleSubmit(onSave)} className={"space-y-4 pl-3 pt-2"}>
+            <BodyShort weight={"semibold"}>{t("kontakt.kontonummer.label")}</BodyShort>
+            <BodyShort size={"small"}>{t("kontakt.kontonummer.description")}</BodyShort>
             <TextField
                 {...registerWithKontonummerMask("brukerutfyltVerdi")}
                 label={t("kontakt.kontonummer.label")}
-                description={t("kontakt.kontonummer.description")}
                 inputMode="numeric"
+                hideLabel={true}
                 htmlSize={13}
                 autoComplete="off"
                 disabled={watch("harIkkeKonto") === true}
