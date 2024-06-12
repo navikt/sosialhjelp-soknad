@@ -581,7 +581,7 @@
     "kontakt.telefon.landskode":"Landskode",
     "kontakt.telefon.telefonnummerFelt":"Telefonnummer felt",
     "kontakt.telefon.beskrivelse": "For at vi enkelt skal kunne komme i kontakt med def trenger vi ditt telefonnummer",
-    "kontakt.telefon.oppgi": "Oppgi et telefonnummer",
+    "kontakt.telefon.oppgi": "Oppgi telefonnummer",
     "kontakt.telefon.feil.tom": "Telefonnummer må fylles ut",
     "kontakt.telefon.feil.maxLength": "Beklager, telefonnummer kan ikke være lenger enn 11 siffer.",
     "kontakt.telefon.feil.ugyldig": "Ikke gyldig telefonnummer",

@@ -586,6 +586,7 @@
     "kontakt.telefon.landskode":"Country code",
     "kontakt.telefon.telefonnummerFelt":"Telephone number field",
     "kontakt.telefon.beskrivelse": "To make it easier to contact you, we require your telephone number.",
+    "kontakt.telefon.oppgi": "Enter phone number",
     "kontakt.telefon.feil.tom": "You must enter a telephone number",
     "kontakt.telefon.feil.maxLength": "Sorry, phone number must be 11 digits or less.",
     "kontakt.telefon.feil.ugyldig": "Phone number is not valid",

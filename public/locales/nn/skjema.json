@@ -585,6 +585,7 @@
     "kontakt.telefon.landskode":"Landskode",
     "kontakt.telefon.telefonnummerFelt":"Telefonnummer felt",
     "kontakt.telefon.beskrivelse": "For at vi enkelt skal kunne kome i kontakt med deg, må vi ha telefonnummeret ditt",
+    "kontakt.telefon.oppgi": "Oppgi telefonnummer",
     "kontakt.telefon.feil.tom": "Legg inn telefonnummer",
     "kontakt.telefon.feil.maxLength": "Beklager, telefonnummer kan ikkje vera lenger enn 11 siffer.",
     "kontakt.telefon.feil.ugyldig": "Telefonnummer er ugyldig",
