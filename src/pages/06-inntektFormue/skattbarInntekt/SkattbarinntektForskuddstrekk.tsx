@@ -96,27 +96,28 @@ export const SkattbarinntektForskuddstrekk = ({inntektOgForskuddstrekk}: Skattba
                         {t("skattbar.ingen")}
                     </Heading>
                 )}
-                {inntektOgForskuddstrekk.map(
-                    ({organisasjoner}) =>
-                        organisasjoner?.map((org) => (
-                            <Table key={org.orgnr}>
-                                <Table.Header>
-                                    <Table.Row>
-                                        <Table.HeaderCell colSpan={2}>{t("skattbar.inntekt.tittel")}</Table.HeaderCell>
-                                    </Table.Row>
-                                </Table.Header>
-                                <Table.Body>
-                                    <UtbetalingsListe utbetalinger={org.utbetalinger} />
-                                    <BodyShort size={"small"} className={"pt-4"}>
-                                        {org.organisasjonsnavn}
-                                    </BodyShort>
-                                    <BodyShort size={"small"}>
-                                        {t("fra")} <LocalizedDate date={org.fom} /> {t("til")}{" "}
-                                        <LocalizedDate date={org.tom} />
-                                    </BodyShort>
-                                </Table.Body>
-                            </Table>
-                        ))
+                {inntektOgForskuddstrekk.map(({organisasjoner}) =>
+                    organisasjoner?.map((org) => (
+                        <Table key={org.orgnr}>
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell className={"!border-hidden"} colSpan={2}>
+                                        {t("skattbar.inntekt.tittel")}
+                                    </Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
+                            <Table.Body>
+                                <UtbetalingsListe utbetalinger={org.utbetalinger} />
+                                <BodyShort size={"small"} className={"pt-4"}>
+                                    {org.organisasjonsnavn}
+                                </BodyShort>
+                                <BodyShort size={"small"}>
+                                    {t("fra")} <LocalizedDate date={org.fom} /> {t("til")}{" "}
+                                    <LocalizedDate date={org.tom} />
+                                </BodyShort>
+                            </Table.Body>
+                        </Table>
+                    ))
                 )}
             </div>
         </div>
