@@ -521,7 +521,7 @@
     "kontakt.kontonummer.infotekst.tekst": "The account number you provide here will only be used for payments of financial assistance.",
     "kontakt.kontonummer.ingeninfo": "No information about bank account.",
     "kontakt.kontonummer.label": "New account number (11 digits)",
-    "kontakt.kontonummer.description": "The account number you enter here will only be used for payment of financial social assistance and will not be updated on My Page",
+    "kontakt.kontonummer.description": "The account number you enter here will only be used for payment of financial social assistance, and will not be updated on My Page",
     "kontakt.kontonummer.kontonummerFelt": "Account number field",
     "kontakt.kontonummer.sporsmal": "Account number for the application",
     "kontakt.kontonummer.oppgi": "Enter account number",
