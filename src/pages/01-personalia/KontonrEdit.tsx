@@ -54,7 +54,7 @@ export const KontonrEdit = ({
     const {registerWithKontonummerMask} = registerWithMasks(form);
 
     return (
-        <form onSubmit={handleSubmit(onSave)} className={"space-y-4 pl-3 pt-2"}>
+        <form onSubmit={handleSubmit(onSave)} className={"space-y-4 pt-2"}>
             <BodyShort weight={"semibold"}>{t("kontakt.kontonummer.label")}</BodyShort>
             <BodyShort size={"small"}>{t("kontakt.kontonummer.description")}</BodyShort>
             <TextField

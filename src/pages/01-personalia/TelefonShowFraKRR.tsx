@@ -12,7 +12,7 @@ export const TelefonShowFraKRR = ({systemverdi, onEdit}: {systemverdi: string; o
 
     return (
         <li className={"flex flex-row place-content-between"}>
-            <div className={"pl-3"}>
+            <div>
                 <SysteminfoItem>{telefonNummer && telefonNummer.formatInternational()}</SysteminfoItem>
                 <BodyShort className={"pt-3"}>{t("telefoninfo.infotekst.tekst")}</BodyShort>
             </div>

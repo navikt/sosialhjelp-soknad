@@ -73,7 +73,7 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
      */
 
     return (
-        <form onSubmit={onSubmit} className={"space-y-4 pl-3 pt-2"}>
+        <form onSubmit={onSubmit} className={"space-y-4 pt-2"}>
             <BodyShort weight={"semibold"}>{t("kontakt.telefon.tittel")}</BodyShort>
             <BodyShort size={"small"}>{t("kontakt.telefon.description")}</BodyShort>
             <div className={"flex gap-2 pb-2"}>

@@ -4,7 +4,6 @@ import * as React from "react";
 import {LinkButton} from "../../lib/components/LinkButton";
 import {PencilWritingIcon} from "@navikt/aksel-icons";
 import {parsePhoneNumber} from "libphonenumber-js";
-import {BodyShort} from "@navikt/ds-react";
 
 export const TelefonShowBrukerdefinert = ({
     brukerutfyltVerdi,
@@ -18,9 +17,8 @@ export const TelefonShowBrukerdefinert = ({
 
     return (
         <li className={"flex flex-row place-content-between"}>
-            <div className={"pl-3"}>
+            <div>
                 <SysteminfoItem>{telefonNummer && telefonNummer.formatInternational()}</SysteminfoItem>
-                <BodyShort className={"pt-3"}>{t("telefoninfo.infotekst.tekst")}</BodyShort>
             </div>
             {onEdit && (
                 <div className={"flex flex-row items-center navds-link pr-3"}>

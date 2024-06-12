@@ -7,6 +7,7 @@ import {LinkButton} from "../../lib/components/LinkButton";
 import * as React from "react";
 import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
+import {PencilWritingIcon} from "@navikt/aksel-icons";
 
 export const TelefonShow = ({onEdit}: {onEdit?: () => void}) => {
     const {expectOK} = useAlgebraic(useHentTelefonnummer(useBehandlingsId()));
@@ -21,7 +22,14 @@ export const TelefonShow = ({onEdit}: {onEdit?: () => void}) => {
         return (
             <li>
                 {t("kontakt.system.telefoninfo.ingeninfo")} <br />
-                {onEdit && <LinkButton onClick={onEdit}>{t("kontakt.telefon.oppgi")}</LinkButton>}
+                <div className={"flex flex-row items-center navds-link"}>
+                    {onEdit && (
+                        <>
+                            <PencilWritingIcon />
+                            <LinkButton onClick={onEdit}>{t("kontakt.telefon.oppgi")}</LinkButton>
+                        </>
+                    )}
+                </div>
             </li>
         );
     });

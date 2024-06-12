@@ -15,8 +15,7 @@ export const KontonrShowBrukerdefinert = ({onEdit}: {onEdit?: () => void}) => {
 
     return expectOK(({brukerutfyltVerdi}) => (
         <li className={"flex flex-row place-content-between"}>
-            <div className={"pl-3"}>
-                <BodyShort className={"pb-3"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
+            <div>
                 <SysteminfoItem>{formatKontonummer(brukerutfyltVerdi ?? "")}</SysteminfoItem>
             </div>
             {onEdit && (
@@ -36,7 +35,7 @@ export const KontonrShowSysteminfo = ({onEdit}: {onEdit?: () => void}) => {
 
     return expectOK(({systemverdi}) => (
         <li className={"flex flex-row place-content-between"}>
-            <div className={"pl-3"}>
+            <div>
                 <SysteminfoItem>{formatKontonummer(systemverdi ?? "")}</SysteminfoItem>
                 <BodyShort className={"pt-3"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
             </div>
@@ -75,7 +74,14 @@ export const KontonrShow = ({onEdit}: {onEdit?: () => void}) => {
         return (
             <li>
                 {t("kontakt.kontonummer.ingeninfo")} <br />
-                {onEdit && <LinkButton onClick={onEdit}>{t("kontakt.kontonummer.oppgi")}</LinkButton>}
+                <div className={"flex flex-row items-center navds-link"}>
+                    {onEdit && (
+                        <>
+                            <PencilWritingIcon />
+                            <LinkButton onClick={onEdit}>{t("kontakt.kontonummer.oppgi")}</LinkButton>
+                        </>
+                    )}
+                </div>
             </li>
         );
     });
