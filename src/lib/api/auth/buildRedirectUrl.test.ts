@@ -34,7 +34,7 @@ describe("buildRedirectUrl", () => {
             };
 
             const result = buildRedirectUrl(locationFragment);
-            expect(result).toBe("https://example.com/sosialhjelp/soknadlink");
+            expect(result).toBe("https://example.com/sosialhjelp/soknad/link");
         });
     });
 
