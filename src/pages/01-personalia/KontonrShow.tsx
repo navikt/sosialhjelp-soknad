@@ -10,7 +10,7 @@ import {PencilWritingIcon} from "@navikt/aksel-icons";
 import {BodyShort} from "@navikt/ds-react";
 
 export const KontonrShowBrukerdefinert = ({onEdit}: {onEdit?: () => void}) => {
-    const {t} = useTranslation("skjema", {keyPrefix: ""});
+    const {t} = useTranslation("skjema");
     const {expectOK} = useAlgebraic(useHentKontonummer(useBehandlingsId()));
 
     return expectOK(({brukerutfyltVerdi}) => (
@@ -30,7 +30,7 @@ export const KontonrShowBrukerdefinert = ({onEdit}: {onEdit?: () => void}) => {
     ));
 };
 export const KontonrShowSysteminfo = ({onEdit}: {onEdit?: () => void}) => {
-    const {t} = useTranslation("skjema", {keyPrefix: ""});
+    const {t} = useTranslation("skjema");
     const {expectOK} = useAlgebraic(useHentKontonummer(useBehandlingsId()));
 
     return expectOK(({systemverdi}) => (
@@ -52,7 +52,7 @@ export const KontonrShowSysteminfo = ({onEdit}: {onEdit?: () => void}) => {
 };
 
 export const KontonrShow = ({onEdit}: {onEdit?: () => void}) => {
-    const {t} = useTranslation("skjema", {keyPrefix: ""});
+    const {t} = useTranslation("skjema");
 
     const {expectOK} = useAlgebraic(useHentKontonummer(useBehandlingsId()));
 
