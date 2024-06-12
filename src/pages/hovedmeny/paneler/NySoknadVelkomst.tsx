@@ -63,7 +63,11 @@ export const NySoknadVelkomst = () => {
                     i18nKey={"informasjon.innhenting.tekst_del2"}
                     components={{
                         lenke: (
-                            <a href="https://www.nav.no/sok-nav-kontor" target="_blank" rel="noreferrer">
+                            <a
+                                href="https://www.nav.no/personopplysninger-sosialhjelp"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
                                 {null}
                             </a>
                         ),
