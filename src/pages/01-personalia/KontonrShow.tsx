@@ -37,7 +37,7 @@ export const KontonrShowSysteminfo = ({onEdit}: {onEdit?: () => void}) => {
         <li className={"flex flex-row place-content-between"}>
             <div>
                 <SysteminfoItem>{formatKontonummer(systemverdi ?? "")}</SysteminfoItem>
-                <BodyShort className={"pt-3"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
+                <BodyShort className={"pt-2"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
             </div>
             {onEdit && (
                 <div className={"flex flex-row items-center navds-link pr-3"}>
