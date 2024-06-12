@@ -18,9 +18,10 @@ export const useSkattData = () => {
     };
 
     const samtykke = data?.samtykke ?? null;
-
     const samtykkeTimestamp = new Date(data?.samtykkeTidspunkt ?? "");
     const samtykkeTidspunkt = isValid(samtykkeTimestamp) ? formatTidspunkt(samtykkeTimestamp) : "";
+    const inntekt = data?.inntektFraSkatteetaten;
+    const isError = !!data?.inntektFraSkatteetatenFeilet || (samtykke && samtykkeTidspunkt === "");
 
-    return {data, samtykke, samtykkeTidspunkt, isLoading, setSamtykke};
+    return {inntekt, isError, samtykke, samtykkeTidspunkt, isLoading, setSamtykke};
 };
