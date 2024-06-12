@@ -17,7 +17,7 @@ export const NavYtelserTable = ({systeminntekter = []}: {systeminntekter?: Syste
                     <Table.Row>
                         <Table.HeaderCell>{t("utbetalinger.utbetaling.erutbetalt.label")}</Table.HeaderCell>
                         <Table.HeaderCell>{t("utbetalinger.utbetaling.type.label")}</Table.HeaderCell>
-                        <Table.HeaderCell align={"left"}>{t("inntekt.bostotte.utbetaling.belop")}</Table.HeaderCell>
+                        <Table.HeaderCell>{t("utbetalinger.utbetaling.belop.label")}</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>

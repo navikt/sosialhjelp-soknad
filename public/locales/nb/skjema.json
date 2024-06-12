@@ -1190,6 +1190,7 @@
     "utbetalinger.sporsmal": "Ytelser som er utbetalt siste måned",
     "utbetalinger.utbetaling.andretrekk.label": "Andre trekk",
     "utbetalinger.utbetaling.arbeidsgivernavn.label": "Arbeidsgivernavn",
+    "utbetalinger.utbetaling.belop.label": "Beløp",
     "utbetalinger.utbetaling.brutto.label": "Beløp (brutto)",
     "utbetalinger.utbetaling.erutbetalt.label": "Utbetalt",
     "utbetalinger.utbetaling.erutbetalt.title": "Ytelser fra NAV",

@@ -1192,6 +1192,7 @@
     "utbetalinger.sporsmal": "Benefits paid last month",
     "utbetalinger.utbetaling.andretrekk.label": "Other deductions",
     "utbetalinger.utbetaling.arbeidsgivernavn.label": "Name of employer",
+    "utbetalinger.utbetaling.belop.label": "Amount",
     "utbetalinger.utbetaling.brutto.label": "Amount (gross)",
     "utbetalinger.utbetaling.erutbetalt.label": "Paid out",
     "utbetalinger.utbetaling.erutbetalt.title": "Benefits from NAV",
