@@ -94,15 +94,8 @@
         "vite-plugin-static-copy": "^1.0.4",
         "vitest": "^1.6.0"
     },
-    "jest": {
-        "globalSetup": "./src/test/loadDotenv.ts",
-        "preset": "ts-jest",
-        "transformIgnorePatterns": [
-            "node_modules/(?!axios)/"
-        ]
-    },
     "scripts": {
-        "start": "vite start",
+        "preview": "REACT_APP_DIGISOS_ENV vite preview --port 3000",
         "build": "vite build",
         "build:css": "echo brukes ikke lenger",
         "dev": "vite dev",
