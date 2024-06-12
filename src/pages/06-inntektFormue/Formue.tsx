@@ -16,31 +16,31 @@ export const Formue = () => {
 
     return (
         <CheckboxGroup
-            legend={t("inntekt.bankinnskudd.true.type.sporsmal")}
-            description={<DigisosReadMore>{t("inntekt.bankinnskudd.true.type.hjelpetekst.tekst")}</DigisosReadMore>}
+            legend={t("formue.type.sporsmal")}
+            description={<DigisosReadMore>{t("formue.type.hjelpetekst.tekst")}</DigisosReadMore>}
             onChange={setFormue}
             value={Object.keys(formue).filter((key) => formue[key as keyof FormueFrontend])}
         >
             <Checkbox name={"brukskonto"} value={"brukskonto"}>
-                {t("inntekt.bankinnskudd.true.type.brukskonto")}
+                {t("formue.type.brukskonto")}
             </Checkbox>
             <Checkbox name={"sparekonto"} value={"sparekonto"}>
-                {t("inntekt.bankinnskudd.true.type.sparekonto")}
+                {t("formue.type.sparekonto")}
             </Checkbox>
             <Checkbox name={"bsu"} value={"bsu"}>
-                {t("inntekt.bankinnskudd.true.type.bsu")}
+                {t("formue.type.bsu")}
             </Checkbox>
             <Checkbox name={"livsforsikring"} value={"livsforsikring"}>
-                {t("inntekt.bankinnskudd.true.type.livsforsikring")}
+                {t("formue.type.livsforsikring")}
             </Checkbox>
             <Checkbox name={"verdipapirer"} value={"verdipapirer"}>
-                {t("inntekt.bankinnskudd.true.type.verdipapirer")}
+                {t("formue.type.verdipapirer")}
             </Checkbox>
             <Checkbox name={"annet"} value={"annet"}>
-                {t("inntekt.bankinnskudd.true.type.annet")}
+                {t("formue.type.annet")}
             </Checkbox>
             <UnmountClosed isOpened={formue?.annet}>
-                <Textarea {...registerAnnet} label={t("inntekt.bankinnskudd.true.type.annet.true.beskrivelse.label")} />
+                <Textarea {...registerAnnet} label={t("formue.annetLabel")} />
             </UnmountClosed>
         </CheckboxGroup>
     );
