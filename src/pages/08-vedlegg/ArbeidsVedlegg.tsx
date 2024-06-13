@@ -39,7 +39,7 @@ export const ArbeidsVedlegg = ({opplysning}: {opplysning: Opplysning}) => {
                     <BodyShort className={"pb-2"}>
                         {t("utbetalinger.inntekt.skattbar.hent.info.skatteetaten")}
                     </BodyShort>
-                    <Button variant="secondary" onClick={() => setSamtykke(true)} className={"bg-surface-default"}>
+                    <Button variant="secondary" onClick={() => setSamtykke(true)} className={"!bg-surface-default"}>
                         {t("utbetalinger.inntekt.skattbar.gi_samtykke")}
                     </Button>
                     <Dokumenter opplysning={opplysning} />
