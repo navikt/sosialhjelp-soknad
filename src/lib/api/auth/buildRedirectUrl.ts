@@ -7,11 +7,15 @@ export interface LocationFragment {
 }
 
 export const buildRedirectUrl = ({origin, pathname, search}: LocationFragment) => {
-    const redirectUrl = new URL(`${origin}${pathname}`);
+    const redirectUrl = new URL(`${origin}${linkPagePath}`);
 
     // Hvis vi er på /link og har en goto-parameter, bevarer vi den.
     const goto = new URLSearchParams(search).get("goto");
-    if (pathname === linkPagePath && goto) redirectUrl.searchParams.set("goto", goto);
+    if (pathname === linkPagePath && goto) {
+        redirectUrl.searchParams.set("goto", goto);
+    } else {
+        redirectUrl.searchParams.set("goto", `${pathname}${search}`);
+    }
 
     return redirectUrl.toString();
 };
