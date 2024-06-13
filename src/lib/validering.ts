@@ -1,12 +1,10 @@
-import {DigisosLanguageKey} from "./i18n";
-
 export type ValideringActionTypes =
     | {type: "visValideringsfeilPanel"}
     | {type: "setValideringsfeil"; valideringsfeil: Valideringsfeil}
     | {type: "clearValideringsfeil"; faktumKey: string}
     | {type: "clearAllValideringsfeil"};
 
-export const ValideringsFeilKode: Record<string, DigisosLanguageKey> = {
+export const ValideringsFeilKode: Record<string, string> = {
     FIL_EKSISTERER_IKKE: "validering.filEksistererIkke",
     MAX_LENGDE: "validering.maksLengde",
     ER_TALL: "validering.erTall",
@@ -18,7 +16,7 @@ export type ValideringsFeilKode = keyof typeof ValideringsFeilKode;
 
 export type Valideringsfeil = {
     faktumKey: string;
-    feilkode: DigisosLanguageKey;
+    feilkode: string;
 };
 
 export interface ValideringState {

@@ -160,7 +160,6 @@ export const Oppsummering = () => {
                                                 felter={sporsmal.felt?.filter((felt) => felt.type === "CHECKBOX")}
                                             />
                                             <Attachment
-                                                behandlingsId={behandlingsId}
                                                 felter={sporsmal.felt?.filter((felt) => felt.type === "VEDLEGG")}
                                             />
                                             <FreeText felter={sporsmal.felt?.filter((felt) => felt.type === "TEKST")} />

@@ -1,7 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {useContext} from "react";
 import {ValideringsContext} from "../../valideringContextProvider";
-import {DigisosLanguageKey} from "../../i18n";
 
 import {ValidationArea} from "../../ValidationArea";
 
@@ -14,7 +13,7 @@ export const useValidering = (faktumKey: ValidationArea) => {
 
     const errorMessage = error ? (t(error.feilkode) as string) : undefined;
 
-    const setError = (feilkode: DigisosLanguageKey | null) => {
+    const setError = (feilkode: string | null) => {
         if (feilkode)
             dispatch({
                 type: "setValideringsfeil",
