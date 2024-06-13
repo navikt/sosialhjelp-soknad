@@ -21,11 +21,7 @@ export const SkattbarInntekt = () => {
                 onChange={setSamtykke}
                 name={"skattbar-inntekt-samtykke"}
             />
-            {samtykke && (
-                <div className={"space-y-4"}>
-                    <SkattbarinntektForskuddstrekk inntektOgForskuddstrekk={inntekt} />
-                </div>
-            )}
+            {samtykke && <SkattbarinntektForskuddstrekk inntektOgForskuddstrekk={inntekt} />}
         </>
     );
 };
