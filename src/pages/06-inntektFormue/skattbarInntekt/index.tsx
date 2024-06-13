@@ -1,17 +1,15 @@
-import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlaceholder";
-import {SkattbarinntektForskuddstrekk} from "./SkattbarinntektForskuddstrekk";
-import {Alert} from "@navikt/ds-react";
+import {Skatteetaten} from "./Skatteetaten";
 import {useTranslation} from "react-i18next";
-import {useSkattData} from "../../../lib/hooks/data/useSkattData";
+import {useSkatteetatenData} from "../../../lib/hooks/data/useSkatteetatenData";
 import {YesNoInput} from "../../../lib/components/form/YesNoInput";
+import * as React from "react";
+import {UnderskjemaArrow} from "./UnderskjemaArrow";
 
 export const SkattbarInntekt = () => {
-    const {inntekt, isError, samtykke, isLoading, setSamtykke} = useSkattData();
+    const {samtykke, setSamtykke} = useSkatteetatenData();
     const {t} = useTranslation("skjema");
 
     // TODO DIGISOS-1175: Håndter flere måneder med skattbar inntekt
-    if (isLoading) return <TextPlaceholder lines={3} />;
-    if (isError) return <Alert variant="error">{t("utbetalinger.skattbar.kontaktproblemer")}</Alert>;
 
     return (
         <>
@@ -21,7 +19,14 @@ export const SkattbarInntekt = () => {
                 onChange={setSamtykke}
                 name={"skattbar-inntekt-samtykke"}
             />
-            {samtykke && <SkattbarinntektForskuddstrekk inntektOgForskuddstrekk={inntekt} />}
+            {samtykke && (
+                <div>
+                    <UnderskjemaArrow />
+                    <div className={"bg-lightblue-50 border-l-[var(--a-surface-info)] p-4 space-y-4 rounded-md"}>
+                        <Skatteetaten />
+                    </div>
+                </div>
+            )}
         </>
     );
 };

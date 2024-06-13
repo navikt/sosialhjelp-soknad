@@ -3,47 +3,44 @@ import {SkattbarInntektOgForskuddstrekk} from "../../generated/model";
 import {useTranslation} from "react-i18next";
 import {TextPlaceholder} from "../../lib/components/animasjoner/TextPlaceholder";
 import {BodyShort, Heading, Table} from "@navikt/ds-react";
-import {UtbetalingsListe} from "../06-inntektFormue/skattbarInntekt/SkattbarinntektForskuddstrekk";
 import {LocalizedDate} from "../../lib/components/LocalizedDate";
 import * as React from "react";
+import {SkatteetatenUtbetalingView} from "../06-inntektFormue/skattbarInntekt/SkatteetatenUtbetalingView";
 
-export const HentetFraSkatteetaten = ({
-    inntektOgForskuddstrekk,
-}: {
-    inntektOgForskuddstrekk?: SkattbarInntektOgForskuddstrekk[];
-}) => {
-    const {t} = useTranslation("skjema", {keyPrefix: "utbetalinger.inntekt"});
+export const HentetFraSkatteetaten = ({inntekt}: {inntekt?: SkattbarInntektOgForskuddstrekk[]}) => {
+    const {t} = useTranslation("skjema");
 
-    if (!inntektOgForskuddstrekk) return <TextPlaceholder lines={3} />;
+    if (!inntekt) return <TextPlaceholder lines={3} />;
 
     return (
         <div>
             <div className={"bg-lightblue-50 border-l-[var(--a-surface-info)] p-4 space-y-4 rounded-md"}>
-                {!inntektOgForskuddstrekk.length && (
+                {!inntekt.length ? (
                     <Heading size={"xsmall"} level={"4"}>
-                        {t("skattbar.ingen")}
+                        {t("utbetalinger.inntekt.skattbar.ingen")}
                     </Heading>
-                )}
-                {inntektOgForskuddstrekk.map(({organisasjoner}) =>
-                    organisasjoner?.map((org) => (
-                        <Table key={org.orgnr}>
-                            <Table.Header>
-                                <Table.Row>
-                                    <Table.HeaderCell colSpan={2}>{t("skattbar.inntekt.tittel")}</Table.HeaderCell>
-                                </Table.Row>
-                            </Table.Header>
-                            <Table.Body>
-                                <UtbetalingsListe utbetalinger={org.utbetalinger} />
-                                <BodyShort size={"small"} className={"pt-4"}>
-                                    {org.organisasjonsnavn}
-                                </BodyShort>
-                                <BodyShort size={"small"}>
-                                    {t("fra")} <LocalizedDate date={org.fom} /> {t("til")}{" "}
-                                    <LocalizedDate date={org.tom} />
-                                </BodyShort>
-                            </Table.Body>
-                        </Table>
-                    ))
+                ) : (
+                    inntekt.map(({organisasjoner}) =>
+                        organisasjoner?.map(({fom, organisasjonsnavn, orgnr, tom, utbetalinger}) => (
+                            <Table key={orgnr}>
+                                <Table.Header>
+                                    <Table.Row>
+                                        <Table.HeaderCell colSpan={2}>{t("skattbar.inntekt.tittel")}</Table.HeaderCell>
+                                    </Table.Row>
+                                </Table.Header>
+                                <Table.Body>
+                                    {utbetalinger?.map((u, i) => <SkatteetatenUtbetalingView utbetaling={u} key={i} />)}
+                                    <BodyShort size={"small"} className={"pt-4"}>
+                                        {organisasjonsnavn}
+                                    </BodyShort>
+                                    <BodyShort size={"small"}>
+                                        {t("utbetalinger.inntekt.fra")} <LocalizedDate date={fom} />{" "}
+                                        {t("utbetalinger.inntekt.til")} <LocalizedDate date={tom} />
+                                    </BodyShort>
+                                </Table.Body>
+                            </Table>
+                        ))
+                    )
                 )}
             </div>
         </div>
