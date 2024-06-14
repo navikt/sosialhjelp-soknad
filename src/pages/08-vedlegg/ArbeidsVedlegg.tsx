@@ -19,6 +19,7 @@ export const ArbeidsVedlegg = ({opplysning}: {opplysning: Opplysning}) => {
 
     return (
         <div>
+            <BodyShort className={"pb-6"}>{t("opplysninger.arbeid.jobb.undertekst")}</BodyShort>
             {!samtykke ? (
                 <>
                     <BodyShort className={"pb-2"}>
