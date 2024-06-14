@@ -3,10 +3,10 @@ import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {SkjemaStegContext} from "./SkjemaSteg";
 import {useContext, useState} from "react";
-import {NavEnhetInaktiv} from "../../../../pages/01-personalia/adresse/NavEnhet";
 import {minSideURL} from "../../../config";
 import {logError} from "../../../log/loggerUtils";
 import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
+import {NavEnhetInaktiv} from "../../../../pages/01-personalia/adresse/NavEnhetInaktiv";
 
 interface SkjemaStegNavigasjonProps {
     loading?: boolean;

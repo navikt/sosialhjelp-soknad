@@ -6,8 +6,8 @@ import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
 import {erAktiv} from "../../lib/navEnhetStatus";
-import {NavEnhetInaktiv} from "../01-personalia/adresse/NavEnhet";
 import {BehandlingAvPersonopplysningerModal} from "../hovedmeny/paneler/BehandlingAvPersonopplysningerModal";
+import {NavEnhetInaktiv} from "../01-personalia/adresse/NavEnhetInaktiv";
 
 export const SoknadsmottakerInfoPanel = () => {
     const {expectOK} = useAlgebraic(useHentAdresser(useBehandlingsId()));

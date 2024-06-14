@@ -11,7 +11,6 @@ import SkjemaStegNavKnapperLegacy from "./SkjemaStegNavKnapperLegacy";
 import {AvbrytSoknadModal} from "../../components/modals/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
-import {NavEnhetInaktiv} from "../../../pages/01-personalia/adresse/NavEnhet";
 import {useBehandlingsId} from "../../hooks/common/useBehandlingsId";
 import {hentXsrfCookie} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {t} from "i18next";
@@ -19,6 +18,7 @@ import {AppHeader} from "../appHeader/AppHeader";
 import {scrollToTop} from "../../utils";
 
 import {ValideringsContext} from "../../valideringContextProvider";
+import {NavEnhetInaktiv} from "../../../pages/01-personalia/adresse/NavEnhetInaktiv";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
