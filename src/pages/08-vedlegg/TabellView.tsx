@@ -16,7 +16,7 @@ export const TabellView = ({opplysning}: {opplysning: VedleggFrontend}) => {
     const {leggTilRad} = useOpplysningTekster(opplysning.type);
 
     return (
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
             {entries.length > 0 && (
                 <ul>
                     {entries.map(({id}, index) => (
