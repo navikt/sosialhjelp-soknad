@@ -18,6 +18,8 @@ export const SkattbarInntekt = () => {
                 defaultValue={samtykke}
                 onChange={setSamtykke}
                 name={"skattbar-inntekt-samtykke"}
+                trueLabel={t("utbetalinger.inntekt.skattbar.avbryt.ja")}
+                falseLabel={t("utbetalinger.inntekt.skattbar.avbryt.nei")}
             />
             {samtykke && (
                 <div>
