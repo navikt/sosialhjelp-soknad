@@ -19,7 +19,7 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
     //TODO: dette på grunn av det kan skap forvirringer for søkeren på grunn av kor uoversiktlig det kan bli
 
     return (
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
             {entries.length > 0 && (
                 <ul>
                     {entries.map(({id}, index) => (
