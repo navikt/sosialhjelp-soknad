@@ -28,7 +28,7 @@ export const useOpplysningTekster = (opplysningType: VedleggFrontendType): Opply
 
     const sporsmal = t(`${textKey}.sporsmal`);
     const undertekst = i18n.exists(`${textKey}.undertekst`) ? t(`${textKey}.undertekst`) : undefined;
-    const leggTilRad = t(`${textKey}.leggtil`);
+    const leggTilRad = numRows === "flere" ? t(`${textKey}.leggtil`) : undefined;
     const leggTilDokumentasjon = i18n.exists(`${textKey}.vedlegg.sporsmal.tittel`)
         ? t(`${textKey}.vedlegg.sporsmal.tittel`)
         : undefined;
