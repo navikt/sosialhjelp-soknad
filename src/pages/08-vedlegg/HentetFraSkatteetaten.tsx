@@ -7,42 +7,43 @@ import {LocalizedDate} from "../../lib/components/LocalizedDate";
 import * as React from "react";
 import {SkatteetatenUtbetalingView} from "../06-inntektFormue/skattbarInntekt/SkatteetatenUtbetalingView";
 
-export const HentetFraSkatteetaten = ({inntekt}: {inntekt?: SkattbarInntektOgForskuddstrekk[]}) => {
+export const HentetFraSkatteetaten = ({inntekt}: {inntekt: SkattbarInntektOgForskuddstrekk[] | undefined}) => {
     const {t} = useTranslation("skjema");
 
-    if (!inntekt) return <TextPlaceholder lines={3} />;
-
     return (
-        <div>
-            <div className={"bg-lightblue-50 border-l-[var(--a-surface-info)] p-4 space-y-4 rounded-md"}>
-                {!inntekt.length ? (
-                    <Heading size={"xsmall"} level={"4"}>
-                        {t("utbetalinger.inntekt.skattbar.ingen")}
-                    </Heading>
-                ) : (
-                    inntekt.map(({organisasjoner}) =>
-                        organisasjoner?.map(({fom, organisasjonsnavn, orgnr, tom, utbetalinger}) => (
-                            <Table key={orgnr}>
-                                <Table.Header>
-                                    <Table.Row>
-                                        <Table.HeaderCell colSpan={2}>{t("skattbar.inntekt.tittel")}</Table.HeaderCell>
-                                    </Table.Row>
-                                </Table.Header>
-                                <Table.Body>
-                                    {utbetalinger?.map((u, i) => <SkatteetatenUtbetalingView utbetaling={u} key={i} />)}
-                                    <BodyShort size={"small"} className={"pt-4"}>
-                                        {organisasjonsnavn}
-                                    </BodyShort>
-                                    <BodyShort size={"small"}>
-                                        {t("utbetalinger.inntekt.fra")} <LocalizedDate date={fom} />{" "}
-                                        {t("utbetalinger.inntekt.til")} <LocalizedDate date={tom} />
-                                    </BodyShort>
-                                </Table.Body>
-                            </Table>
-                        ))
-                    )
-                )}
-            </div>
+        <div className={"bg-lightblue-50 border-l-[var(--a-surface-info)] p-4 space-y-4 rounded-md"}>
+            {!inntekt ? (
+                <TextPlaceholder lines={3} />
+            ) : !inntekt.length ? (
+                <Heading size={"xsmall"} level={"4"}>
+                    {t("utbetalinger.inntekt.skattbar.ingen")}
+                </Heading>
+            ) : (
+                inntekt.map(({organisasjoner}) =>
+                    organisasjoner?.map(({fom, organisasjonsnavn, orgnr, tom, utbetalinger}) => (
+                        <Table key={orgnr}>
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell colSpan={2}>
+                                        {t("utbetalinger.inntekt.skattbar.inntekt.tittel")}
+                                    </Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
+                            <Table.Body>
+                                {utbetalinger?.map((u, i) => <SkatteetatenUtbetalingView utbetaling={u} key={i} />)}
+                                <BodyShort size={"small"} className={"pt-4"}>
+                                    {organisasjonsnavn}
+                                </BodyShort>
+                                <BodyShort size={"small"}>
+                                    {t("utbetalinger.inntekt.fra")}
+                                    <LocalizedDate date={fom} /> {t("utbetalinger.inntekt.til")}{" "}
+                                    <LocalizedDate date={tom} />
+                                </BodyShort>
+                            </Table.Body>
+                        </Table>
+                    ))
+                )
+            )}
         </div>
     );
 };
