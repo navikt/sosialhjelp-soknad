@@ -1,19 +1,9 @@
-import {VedleggFrontend, VedleggFrontendType} from "../generated/model";
+import {VedleggFrontend, VedleggFrontendGruppe, VedleggFrontendType} from "../generated/model";
 
 export type Opplysning = VedleggFrontend & {
     slettet?: boolean;
     pendingLasterOppFil?: boolean;
 };
-export type VedleggGruppe =
-    | "statsborgerskap"
-    | "arbeid"
-    | "familie"
-    | "bosituasjon"
-    | "inntekt"
-    | "utgifter"
-    | "generelle vedlegg"
-    | "andre utgifter"
-    | "ukjent";
 
 export type OpplysningInputType = "beskrivelse" | "belop" | "brutto" | "netto" | "avdrag" | "renter";
 
@@ -225,7 +215,7 @@ export const opplysningSpec: Record<VedleggFrontendType, OpplysningSpec> = {
     },
 };
 
-export const vedleggGrupper: VedleggGruppe[] = [
+export const vedleggGrupper: VedleggFrontendGruppe[] = [
     "statsborgerskap",
     "arbeid",
     "familie",
