@@ -11,14 +11,13 @@ import {SkjemaStegErrorSummary} from "./SkjemaStegErrorSummary";
 import StresskoffertIllustrasjon from "../../svg/illustrasjoner/StresskoffertIllustrasjon";
 import DokumentIllustrasjon from "../../svg/illustrasjoner/DokumentIllustrasjon";
 import cx from "classnames";
-import {hentXsrfCookie} from "../../../../generated/soknad-ressurs/soknad-ressurs";
-import {useBehandlingsId} from "../../../hooks/common/useBehandlingsId";
 import {AppHeader} from "../../appHeader/AppHeader";
 import {logError, logWarning} from "../../../log/loggerUtils";
 import {scrollToTop} from "../../../utils";
 import {useTitle} from "../../../hooks/common/useTitle";
 import {HusIllustrasjon} from "../../svg/illustrasjoner/HusIllustrasjon";
 import {MynterIllustrasjon} from "../../svg/illustrasjoner/MynterIllustrasjon";
+import {RequireXsrfCookie} from "./RequireXsrfCookie";
 
 type TSkjemaStegContext = {
     page: SkjemaPage;
@@ -103,12 +102,6 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
         scrollToTop();
     }, []);
 
-    const behandlingsId = useBehandlingsId();
-    // Midlertidig hack for å forhindre XSRF-feil
-    useEffect(() => {
-        hentXsrfCookie(behandlingsId).then();
-    }, [behandlingsId]);
-
     const {t} = useTranslation("skjema");
 
     useTitle(`${t(SkjemaHeadings[page].tittel)} - ${t("applikasjon.sidetittel")}`);
@@ -126,19 +119,21 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
     };
 
     return (
-        <SkjemaStegContext.Provider value={{page, requestNavigation}}>
-            <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn flex gap-10 items-center flex-col">
-                <Link href="#main-content" className="sr-only sr-only-focusable">
-                    {t("hoppTilHovedinnhold")}
-                </Link>
-                <AppHeader className={"w-full"} />
-                <SkjemaStegStepper />
-                <main id={"main-content"} className={"max-w-3xl mx-auto w-full"}>
-                    <NedetidPanel varselType={"infoside"} />
-                    {children}
-                </main>
-            </div>
-        </SkjemaStegContext.Provider>
+        <RequireXsrfCookie>
+            <SkjemaStegContext.Provider value={{page, requestNavigation}}>
+                <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn flex gap-10 items-center flex-col">
+                    <Link href="#main-content" className="sr-only sr-only-focusable">
+                        {t("hoppTilHovedinnhold")}
+                    </Link>
+                    <AppHeader className={"w-full"} />
+                    <SkjemaStegStepper />
+                    <main id={"main-content"} className={"max-w-3xl mx-auto w-full"}>
+                        <NedetidPanel varselType={"infoside"} />
+                        {children}
+                    </main>
+                </div>
+            </SkjemaStegContext.Provider>
+        </RequireXsrfCookie>
     );
 };
 
