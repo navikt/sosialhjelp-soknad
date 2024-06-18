@@ -4,6 +4,7 @@ import {Opplysning, opplysningSpec, vedleggGrupper} from "../../opplysninger";
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useHentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {logError} from "../../log/loggerUtils";
+import {useSkatteetatenData} from "../data/useSkatteetatenData";
 
 export const flettOgSorter = ({okonomiskeOpplysninger, slettedeVedlegg}: VedleggFrontends): Opplysning[] => {
     const current = okonomiskeOpplysninger?.map((opplysning): Opplysning => ({...opplysning}));
@@ -17,6 +18,7 @@ export const useOpplysninger = () => {
     const behandlingsId = useBehandlingsId();
 
     const {data, isLoading, error} = useHentOkonomiskeOpplysninger(behandlingsId, {});
+    const {samtykke} = useSkatteetatenData();
 
     if (error) {
         logError(`Feil ved HentOkonomiskeOpplysninger: ${error}`);
@@ -30,9 +32,8 @@ export const useOpplysninger = () => {
     // For å jobbe rundt at dokumentasjonskravet for arbeid|lonnsslipp forsvinner når samtykke er true,
     // som fører til at arbeid-gruppa blir tom og dermed forsvinner. Men vi har hardkodet at dersom
     // skatteetaten-samtykke er innvilget, skal vi vise det panelet i kontekst av arbeid-gruppa.
-    const grupperMedSuperstyggHack = grupper.includes("arbeid")
-        ? grupper
-        : (["arbeid", ...grupper] as VedleggFrontendGruppe[]);
+    const grupperMedSuperstyggHack =
+        !grupper.includes("arbeid") && !samtykke ? grupper : (["arbeid", ...grupper] as VedleggFrontendGruppe[]);
 
     return {
         data,
