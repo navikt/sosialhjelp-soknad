@@ -2,8 +2,8 @@ import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "ax
 import {isLocalhost, isMockAlt} from "../utils";
 import {UnauthorizedMelding} from "../../generated/model";
 import {logError, logInfo, logWarning} from "../log/loggerUtils";
-import {baseURL} from "../config";
-import {buildRedirectUrl} from "./auth/buildRedirectUrl";
+import {baseURL, linkPagePath} from "../config";
+import {buildGotoSearchParameter} from "./auth/buildGotoSearchParameter";
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL,
@@ -65,7 +65,8 @@ export const axiosInstance = <T>(
             if (status === 401) {
                 const {loginUrl} = data as UnauthorizedMelding;
                 const loginPage = new URL(loginUrl);
-                loginPage.searchParams.set("redirect", buildRedirectUrl(window.location));
+                const redirectUrl = `${origin}${linkPagePath}?${buildGotoSearchParameter(window.location)}`;
+                loginPage.searchParams.set("redirect", redirectUrl);
                 window.location.assign(loginPage);
                 return new Promise<T>(() => {});
             }

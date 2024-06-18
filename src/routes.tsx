@@ -20,6 +20,7 @@ import {
 } from "@grafana/faro-react";
 import {TracingInstrumentation} from "@grafana/faro-web-tracing";
 import config, {basePath} from "./lib/config";
+import {redirectToGotoSearchParameter} from "./lib/api/auth/redirectToGotoSearchParameter";
 
 const Informasjon = React.lazy(() => import("./pages/hovedmeny"));
 const SideIkkeFunnet = React.lazy(() => import("./pages/feilsider/SideIkkeFunnet"));
@@ -35,21 +36,12 @@ const UtgifterGjeld = React.lazy(() => import("./pages/07-utgifterGjeld"));
 const OkonomiskeOpplysningerView = React.lazy(() => import("./pages/08-vedlegg"));
 const Oppsummering = React.lazy(() => import("./pages/09-oppsummering/Oppsummering"));
 
-const removePrefix = (str: string, prefix: string) => (str.startsWith(prefix) ? str.substring(prefix.length) : str);
-
 const routes = (
     <Route errorElement={<SideIkkeFunnet />}>
         <Route index path={`/`} element={<Informasjon />} />
         <Route path={`informasjon`} loader={() => redirect("/", 301)} />
         <Route path={`feil`} element={<ServerFeil />} />
-        <Route
-            path={`link`}
-            loader={async () => {
-                const goto = new URLSearchParams(window.location.search).get("goto");
-                const url = removePrefix(goto ?? "", basePath);
-                return redirect(url.length ? url : "/");
-            }}
-        />
+        <Route path={`link`} loader={redirectToGotoSearchParameter} />
         <Route path={`kastException`} element={<ExceptionThrower />} />
         <Route path={"skjema/:behandlingsId"}>
             <Route index path="1" element={<Personopplysninger />} />
