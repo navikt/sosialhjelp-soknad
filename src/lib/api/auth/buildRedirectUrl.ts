@@ -13,12 +13,9 @@ export const buildRedirectUrl = ({origin, pathname, search}: LocationFragment) =
     const goto = new URLSearchParams(search).get("goto");
     if (pathname === linkPagePath && goto) {
         redirectUrl.searchParams.set("goto", goto);
+    } else {
+        redirectUrl.searchParams.set("goto", `${pathname}${search}`);
     }
 
-    /** tester om dette fikser q0
-     else {
-     redirectUrl.searchParams.set("goto", `${pathname}${search}`);
-     }
-     */
     return redirectUrl.toString();
 };
