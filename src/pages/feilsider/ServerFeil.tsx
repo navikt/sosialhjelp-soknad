@@ -6,7 +6,7 @@ import {BodyShort, Button, Heading, Link} from "@navikt/ds-react";
 import {useLocation} from "react-router-dom";
 import {useMemo} from "react";
 import {AppHeader} from "../../lib/components/appHeader/AppHeader";
-import {logError} from "../../lib/utils/loggerUtils";
+import {logError} from "../../lib/log/loggerUtils";
 
 const useQuery = ({search}: Pick<Location, "search">) => useMemo(() => new URLSearchParams(search), [search]);
 

@@ -1,13 +1,17 @@
 import i18n from "i18next";
 import {initReactI18next} from "react-i18next";
-import {logWarning} from "./utils/loggerUtils";
+import {logWarning} from "./log/loggerUtils";
 import Backend from "i18next-http-backend";
 import {enGB, Locale, nb, nn} from "date-fns/locale";
 import {DecoratorLocale, onLanguageSelect, setAvailableLanguages, setParams} from "@navikt/nav-dekoratoren-moduler";
-import {logAmplitudeEvent} from "./utils/amplitude";
 import {basePath as url} from "./config";
+import {useAmplitude} from "./amplitude/useAmplitude";
+import {useEffect} from "react";
 
 export const SUPPORTED_LANGUAGES = ["en", "nb", "nn"] as const;
+const DIGISOS_LANGUAGE = "digisos-language";
+const fallbackLng = "nb";
+
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
 const dateFnLocales: Record<SupportedLanguage, Locale> = {
@@ -19,8 +23,6 @@ const dateFnLocales: Record<SupportedLanguage, Locale> = {
 export const isSupportedLanguage = (lang: string): lang is SupportedLanguage =>
     SUPPORTED_LANGUAGES.includes(lang as SupportedLanguage);
 
-const storedLanguage = localStorage.getItem("language");
-
 /**
  * Returns the date-fns locale object for the current i18next language
  * Logs a warning if the language is not supported, and falls back to "nb".
@@ -30,8 +32,8 @@ export const getDateFnLocale = () => {
 
     // Ensure that the current language is supported
     if (!isSupportedLanguage(language)) {
-        logWarning(`getDateFnLocale: Unsupported language "${language}", falling back to "nb"`);
-        return nb;
+        logWarning(`getDateFnLocale: Unsupported language "${language}", falling back to ${fallbackLng}`);
+        return dateFnLocales[fallbackLng];
     }
 
     return dateFnLocales[language];
@@ -47,8 +49,7 @@ i18n.use(Backend)
         // and not string | null. Might be irrelevant at some future point.
         // See also src/@types/i18next.d.ts
         returnNull: false,
-        lng: storedLanguage || "nb",
-        fallbackLng: "nb",
+        fallbackLng,
         ns: ["skjema"],
         defaultNS: "skjema",
         debug: window.location.hostname === "localhost",
@@ -63,22 +64,38 @@ i18n.use(Backend)
 
 export default i18n;
 
-const handleLanguageSelect = ({locale}: {locale: DecoratorLocale}) => {
-    i18n.changeLanguage(locale);
-    setParams({language: locale});
-    localStorage.setItem("digisos-language", locale);
-
-    logAmplitudeEvent("Valgt språk", {language: locale});
-};
-
-export const i18nSetLangFromLocalStorage = () => {
-    setAvailableLanguages(SUPPORTED_LANGUAGES.map((locale) => ({locale, url, handleInApp: true})));
-
-    const storedLanguage = localStorage.getItem("digisos-language");
-    if (storedLanguage) {
-        i18n.changeLanguage(storedLanguage);
-        setParams({language: storedLanguage as DecoratorLocale});
+/** Sets language for i18next, nav-dekorator, and localStorage */
+const setLanguage = async (language: string) => {
+    if (!isSupportedLanguage(language)) {
+        localStorage.removeItem(DIGISOS_LANGUAGE);
+        await setLanguage(fallbackLng);
+        return;
     }
 
-    onLanguageSelect(handleLanguageSelect);
+    await i18n.changeLanguage(language);
+    await setParams({language: language as DecoratorLocale});
+    localStorage.setItem(DIGISOS_LANGUAGE, language);
+};
+
+export const useLocalStorageLangSelector = () => {
+    const {logEvent} = useAmplitude();
+
+    useEffect(() => {
+        setAvailableLanguages(
+            SUPPORTED_LANGUAGES.map((locale) => ({
+                locale,
+                url,
+                handleInApp: true,
+            }))
+        ).then();
+
+        const storedLanguage = localStorage.getItem(DIGISOS_LANGUAGE);
+
+        if (storedLanguage) setLanguage(storedLanguage).then();
+    }, []);
+
+    onLanguageSelect(async ({locale}: {locale: DecoratorLocale}) => {
+        await setLanguage(locale);
+        logEvent("Valgt språk", {language: locale});
+    });
 };

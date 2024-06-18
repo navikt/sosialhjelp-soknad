@@ -31,6 +31,7 @@ app.use(basePath, (req, res, __) => {
             feedback: false,
             chatbot: false,
             shareScreen: false,
+            logoutWarning: true,
         },
     })
         .then((text) => res.send(text))

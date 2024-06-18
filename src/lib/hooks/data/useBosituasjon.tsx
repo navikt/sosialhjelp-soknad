@@ -1,6 +1,6 @@
 import {useHentBosituasjon, useUpdateBosituasjon} from "../../../generated/bosituasjon-ressurs/bosituasjon-ressurs";
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {BosituasjonFrontend} from "../../../generated/model";
+import {BosituasjonFrontend, BosituasjonFrontendBotype} from "../../../generated/model";
 import {useQueryClient} from "@tanstack/react-query";
 
 export const useBosituasjon = () => {
@@ -15,9 +15,15 @@ export const useBosituasjon = () => {
         queryClient.setQueryData(queryKey, data);
     };
 
+    const setBotype = (botype: BosituasjonFrontendBotype) => setBosituasjon({botype});
+    const {botype, antallPersoner} = bosituasjon || {};
+
     return {
         bosituasjon,
+        botype,
+        antallPersoner,
         setBosituasjon,
+        setBotype,
         isLoading,
         isError,
     };

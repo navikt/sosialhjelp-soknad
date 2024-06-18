@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import {SkjemaHeadings, SkjemaStegContext} from "./SkjemaSteg";
 import {Stepper} from "@navikt/ds-react";
 import {useContext} from "react";
-import {logError} from "../../../../lib/utils/loggerUtils";
+import {logError} from "../../../log/loggerUtils";
 
 export const SkjemaStegStepper = () => {
     const {t} = useTranslation("skjema");

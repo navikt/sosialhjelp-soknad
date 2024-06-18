@@ -7,6 +7,7 @@ import * as React from "react";
 import {LocalizedDate} from "../../lib/components/LocalizedDate";
 import {FullName} from "../01-personalia/FulltNavn";
 import {LocalizedYesNo} from "../../lib/components/LocalizedYesNo";
+import {BodyShort} from "@navikt/ds-react";
 
 export const EktefellePersonaliaSystem = () => {
     const {t} = useTranslation("skjema", {keyPrefix: "system.familie"});
@@ -16,7 +17,7 @@ export const EktefellePersonaliaSystem = () => {
     return expectOK(({ektefelle, erFolkeregistrertSammen}) =>
         ektefelle?.navn ? (
             <>
-                <SysteminfoItem label={t("sivilstatus.label")} comment={t("sivilstatus")} />
+                <BodyShort className={"pb-3"}>{t("sivilstatus.label")} </BodyShort>
                 <SysteminfoItem label={t(`sivilstatus.gift.ektefelle.navn`)}>
                     <FullName name={ektefelle.navn} />
                 </SysteminfoItem>
@@ -28,6 +29,7 @@ export const EktefellePersonaliaSystem = () => {
                 <SysteminfoItem label={t(`sivilstatus.gift.ektefelle.folkereg`)}>
                     <LocalizedYesNo value={erFolkeregistrertSammen} />
                 </SysteminfoItem>
+                <BodyShort className={"pt-3"}>{t("sivilstatus")}</BodyShort>
             </>
         ) : null
     );

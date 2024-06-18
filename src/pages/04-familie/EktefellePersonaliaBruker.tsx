@@ -16,10 +16,8 @@ export const EktefellePersonaliaBruker = () => {
     return expectOK(({ektefelle, borSammenMed}) =>
         ektefelle?.navn ? (
             <>
-                <SysteminfoItem
-                    comment={<BodyShort spacing>{t("system.familie.sivilstatus.label")}:</BodyShort>}
-                    label={t(`system.familie.sivilstatus.gift.ektefelle.navn`)}
-                >
+                <BodyShort className={"pb-3"}>{t("system.familie.sivilstatus.label")}</BodyShort>
+                <SysteminfoItem label={t(`system.familie.sivilstatus.gift.ektefelle.navn`)}>
                     <FullName name={ektefelle.navn} />
                 </SysteminfoItem>
                 {ektefelle?.fodselsdato && (

@@ -4,17 +4,19 @@ export type ValideringActionTypes =
     | {type: "clearValideringsfeil"; faktumKey: string}
     | {type: "clearAllValideringsfeil"};
 
-export enum ValideringsFeilKode {
-    FIL_EKSISTERER_IKKE = "validering.filEksistererIkke",
-    MAX_LENGDE = "validering.maksLengde",
-    ER_TALL = "validering.erTall",
-    ER_FDATO = "validering.erFdato",
-    ER_SAMVAERSGRAD = "validering.erSamvaersgrad",
-}
+export const ValideringsFeilKode: Record<string, string> = {
+    FIL_EKSISTERER_IKKE: "validering.filEksistererIkke",
+    MAX_LENGDE: "validering.maksLengde",
+    ER_TALL: "validering.erTall",
+    ER_FDATO: "validering.erFdato",
+    ER_SAMVAERSGRAD: "validering.erSamvaersgrad",
+};
+
+export type ValideringsFeilKode = keyof typeof ValideringsFeilKode;
 
 export type Valideringsfeil = {
     faktumKey: string;
-    feilkode: ValideringsFeilKode;
+    feilkode: string;
 };
 
 export interface ValideringState {

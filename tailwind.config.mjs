@@ -11,6 +11,9 @@ export default {
                 digisosGronnMork: "#38a161",
                 digisosGronnBakgrunn: "#D4E6D8",
             },
+            screens: {
+                xs: "480px", // for å matche DS "mobile" breakpoint
+            },
         },
     },
     presets: [navDs],

@@ -10,7 +10,7 @@ export const RegistrerteBarn = () => {
     if (!forsorgerplikt) return null;
 
     return (
-        <div>
+        <div className={"space-y-24"}>
             {forsorgerplikt?.ansvar?.map((ansvar, index: number) => (
                 <React.Fragment key={index}>
                     <BarnSysteminfo barnIndex={index} />

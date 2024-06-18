@@ -3,10 +3,8 @@ import {useState} from "react";
 import {TelefonEditBrukerdefinert} from "./TelefonEditBrukerdefinert";
 import {TelefonShow} from "./TelefonShow";
 import {Systeminfo} from "../../lib/components/systeminfo/Systeminfo";
-import {BodyShort, Heading} from "@navikt/ds-react";
+import {Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-
-export const strip47 = (phoneNumber: string) => phoneNumber.replace(/^\+47/, "");
 
 export const TelefonData = () => {
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -16,9 +14,11 @@ export const TelefonData = () => {
             <Heading size={"small"} level={"3"}>
                 {t("kontakt.telefon.sporsmal")}
             </Heading>
-            <BodyShort>{t("kontakt.telefon.infotekst.tekst")}</BodyShort>
             {editMode ? (
-                <TelefonEditBrukerdefinert onClose={() => setEditMode(false)} />
+                <Systeminfo>
+                    <TelefonShow />
+                    <TelefonEditBrukerdefinert onClose={() => setEditMode(false)} />
+                </Systeminfo>
             ) : (
                 <Systeminfo>
                     <TelefonShow onEdit={() => setEditMode(true)} />

@@ -8,12 +8,14 @@ import {
     useHentBegrunnelse,
 } from "../../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
 import {BegrunnelseFrontend} from "../../../generated/model";
-import {logAmplitudeEvent} from "../../utils/amplitude";
 import {faro} from "@grafana/faro-react";
 import {useQueryClient} from "@tanstack/react-query";
+import {useAmplitude} from "../../amplitude/useAmplitude";
 
 export const useBegrunnelse = () => {
     const behandlingsId = useBehandlingsId();
+    const {logEvent} = useAmplitude();
+
     // TODO: Avklare denne. Er det behov lenger?
     const {begrunnelseNyTekst} = useFeatureFlags();
     const [isError, setIsError] = React.useState(false);
@@ -27,7 +29,7 @@ export const useBegrunnelse = () => {
 
     // Lagrer data på backend og oppdaterer lokal cache.
     const put = async (begrunnelse: BegrunnelseFrontend) => {
-        logAmplitudeEvent("begrunnelse fullført", {
+        logEvent("begrunnelse fullført", {
             hvaLengde: (Math.round((begrunnelse?.hvaSokesOm?.length ?? 0) / 20) - 1) * 20,
             hvorforLengde: (Math.round((begrunnelse?.hvorforSoke?.length ?? 0) / 20) - 1) * 20,
             begrunnelseNyTekst,
@@ -44,7 +46,7 @@ export const useBegrunnelse = () => {
     };
 
     useEffect(() => {
-        logAmplitudeEvent("begrunnelse åpnet", {begrunnelseNyTekst});
+        logEvent("begrunnelse åpnet", {begrunnelseNyTekst});
     }, [begrunnelseNyTekst]);
 
     return {get, put, isPending, isError};

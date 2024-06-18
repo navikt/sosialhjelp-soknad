@@ -9,7 +9,7 @@ import "react-pdf/dist/Page/TextLayer.css";
 import {FilePreviewButtons} from "./FilePreviewButtons";
 import {FilePreviewDisplay} from "./FilePreviewDisplay";
 import {VedleggFrontendType} from "../../../generated/model";
-import {useOpplysningTekster} from "../useOpplysningTekster";
+import {useOpplysningTekster} from "../../../lib/hooks/dokumentasjon/useOpplysningTekster";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();
 
@@ -26,7 +26,7 @@ export const ForhandsvisningVedleggModal = ({
     file,
     onAccept,
     onClose,
-    onDelete,
+    //onDelete,
 }: ForhandsvisningModalProps) => {
     const [isFullscreen, setFullscreen] = useState<boolean>(false);
     const {t} = useTranslation();
@@ -58,7 +58,7 @@ export const ForhandsvisningVedleggModal = ({
                     {file.type === "application/pdf" ? (
                         <>
                             <FilePreviewButtons
-                                onDelete={onDelete}
+                                //onDelete={onDelete}
                                 isFullscreen={isFullscreen}
                                 setFullscreen={setFullscreen}
                             />
@@ -67,7 +67,7 @@ export const ForhandsvisningVedleggModal = ({
                     ) : (
                         <>
                             <FilePreviewButtons
-                                onDelete={onDelete}
+                                //onDelete={onDelete}
                                 isFullscreen={isFullscreen}
                                 setFullscreen={setFullscreen}
                             />

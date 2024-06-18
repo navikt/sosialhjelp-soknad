@@ -3,75 +3,43 @@ import Downshift from "downshift";
 import {useState} from "react";
 import {useDebounce} from "react-use";
 import styled from "styled-components";
-import {fetchToJson} from "../../../lib/utils/rest-utils";
 
-import {formaterAdresseString, removeDuplicatesAfterTransform} from "./AdresseUtils";
+import {formaterAdresseString} from "./AdresseUtils";
 import {AdresseForslag} from "../../../generated/model";
 import * as React from "react";
 import {useTranslation} from "react-i18next";
+import {useAdresseSok} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
+import {UseQueryResult} from "@tanstack/react-query";
 
-const searchForAddress = async (value: string): Promise<AdresseForslag[]> => {
-    try {
-        const adresser = await fetchToJson<AdresseForslag[]>("informasjon/adressesok?sokestreng=" + encodeURI(value));
-        return Promise.resolve(removeDuplicatesAfterTransform(adresser, formaterAdresseString).slice(0, 8));
-    } catch (err) {
-        return Promise.resolve([]);
-    }
-};
+type AdresseSokChildProps = Pick<UseQueryResult<AdresseForslag[]>, "isPending" | "data">;
 
 interface FetchAddressProps {
     searchvalue: string | null;
-    children(state: {isLoading: boolean; isError: boolean; result: AdresseForslag[]}): JSX.Element;
+    isOpen: boolean;
+    children(state: AdresseSokChildProps): JSX.Element;
 }
 
 const DEBOUNCE_TIMEOUT_MS = 400;
 
-const FetchAddress = (props: FetchAddressProps) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [result, setResult] = useState<AdresseForslag[]>([]);
+const FetchAddress = ({children, searchvalue, isOpen}: FetchAddressProps) => {
+    const [sokestreng, setSokestreng] = useState<string>("");
+    const queryTooShort = (sokestreng?.length ?? 0) < 3;
+    const {data, isPending, isError} = useAdresseSok({sokestreng}, {query: {enabled: !queryTooShort}});
+    useDebounce(() => setSokestreng(searchvalue ?? ""), DEBOUNCE_TIMEOUT_MS, [searchvalue]);
 
-    useDebounce(
-        () => {
-            setIsLoading(true);
-            setIsError(false);
-            setResult([]);
-            searchForAddress(props.searchvalue ?? "")
-                .then((res) => {
-                    setResult(res);
-                    setIsLoading(false);
-                })
-                .catch(() => {
-                    setIsLoading(false);
-                    setIsError(true);
-                    setResult([]);
-                });
-        },
-        DEBOUNCE_TIMEOUT_MS,
-        [props.searchvalue]
-    );
-
-    return props.children({isLoading, isError, result});
+    if (!isOpen) return null;
+    if (isError) return <div>Vi beklager, en feil har oppstått</div>;
+    return children({isPending: isPending && !queryTooShort, data});
 };
 
 const SelectMenu = styled.ul`
-    position: absolute;
+    position: relative;
     z-index: 3;
-
-    margin-top: 0;
-
-    box-sizing: border-box;
-    width: 25rem;
     border: 1px solid var(--a-border-default);
     border-radius: var(--a-spacing-2);
     background-color: var(--a-surface-default);
-
-    list-style: none;
     padding: 0.5rem 0;
-
-    @media only screen and (max-width: 565px) {
-        width: 100%;
-    }
+    width: 100%;
 `;
 
 const Item = styled.li<{isHighlighted: boolean}>`
@@ -81,65 +49,60 @@ const Item = styled.li<{isHighlighted: boolean}>`
     background-color: ${(props) => (props.isHighlighted ? "var(--a-blue-400)" : "inherit")};
 `;
 
+const AdressesokHeading = () => {
+    const {t} = useTranslation("skjema");
+    return (
+        <>
+            <div>
+                <Heading size={"xsmall"}>{t("kontakt.system.oppholdsadresse.hvorOppholder")}</Heading>
+                {t("kontakt.system.kontaktinfo.infotekst.tekst")}
+            </div>
+            <div>
+                {t("kontakt.system.kontaktinfo.infotekst.ekstratekst")}{" "}
+                <Link href="https://www.nav.no/sok-nav-kontor" target="_blank">
+                    {t("kontakt.system.kontaktinfo.infotekst.navsearch")}
+                </Link>
+            </div>
+        </>
+    );
+};
+
 export const AdresseTypeahead = ({
     defaultValue,
     onChange,
 }: {
     defaultValue?: string;
     onChange: (adresse: AdresseForslag | null | undefined) => void;
-}) => {
-    const {t} = useTranslation("skjema");
-
-    return (
-        <Downshift onSelect={onChange} itemToString={formaterAdresseString} initialInputValue={defaultValue}>
-            {({getLabelProps, getInputProps, getItemProps, getMenuProps, highlightedIndex, inputValue, isOpen}) => (
-                <div>
-                    <label className={"space-y-4"} {...getLabelProps()}>
-                        <div>
-                            <Heading size={"xsmall"}>{t("kontakt.system.oppholdsadresse.hvorOppholder")}</Heading>
-                            {t("kontakt.system.kontaktinfo.infotekst.tekst")}
-                        </div>
-                        <div>
-                            {t("kontakt.system.kontaktinfo.infotekst.ekstratekst")}{" "}
-                            <Link href="https://www.nav.no/sok-nav-kontor" target="_blank">
-                                {t("kontakt.system.kontaktinfo.infotekst.navsearch")}
-                            </Link>
-                        </div>
-                    </label>
-                    <TextField {...getInputProps()} />
-                    {isOpen && (
-                        <FetchAddress searchvalue={inputValue}>
-                            {({isLoading, isError, result}) => (
-                                <>
-                                    {isLoading && (
-                                        <SelectMenu>
-                                            <Item isHighlighted={false}>
-                                                <Loader />
-                                            </Item>
-                                        </SelectMenu>
-                                    )}
-                                    {isError && <p>Det har oppstått en feil :(</p>}
-                                    {result.length > 0 && (
-                                        <SelectMenu {...getMenuProps()}>
-                                            {result.map((adresse: AdresseForslag, index: number) => {
-                                                return (
-                                                    <Item
-                                                        isHighlighted={index === highlightedIndex}
-                                                        key={formaterAdresseString(adresse)}
-                                                        {...getItemProps({item: adresse, index})}
-                                                    >
-                                                        {formaterAdresseString(adresse)}
-                                                    </Item>
-                                                );
-                                            })}
-                                        </SelectMenu>
-                                    )}
-                                </>
+}) => (
+    <Downshift onSelect={onChange} itemToString={formaterAdresseString} initialInputValue={defaultValue}>
+        {({getLabelProps, getInputProps, getItemProps, getMenuProps, highlightedIndex, inputValue, isOpen}) => (
+            <div>
+                <label className={"space-y-4"} {...getLabelProps()}>
+                    <AdressesokHeading />
+                </label>
+                <TextField {...getInputProps()} />
+                <FetchAddress isOpen={isOpen} searchvalue={inputValue}>
+                    {({isPending, data}) => (
+                        <SelectMenu {...getMenuProps()}>
+                            {isPending ? (
+                                <Item isHighlighted={false}>
+                                    <Loader />
+                                </Item>
+                            ) : (
+                                data?.map((item, index: number) => (
+                                    <Item
+                                        isHighlighted={index === highlightedIndex}
+                                        key={index}
+                                        {...getItemProps({item, index})}
+                                    >
+                                        {formaterAdresseString(item)}
+                                    </Item>
+                                ))
                             )}
-                        </FetchAddress>
+                        </SelectMenu>
                     )}
-                </div>
-            )}
-        </Downshift>
-    );
-};
+                </FetchAddress>
+            </div>
+        )}
+    </Downshift>
+);

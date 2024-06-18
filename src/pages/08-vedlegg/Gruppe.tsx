@@ -1,10 +1,13 @@
 import * as React from "react";
-import {OpplysningView} from "./OpplysningView";
+import {Dokumentasjon} from "./Dokumentasjon";
 import {useTranslation} from "react-i18next";
 import {Heading, Panel} from "@navikt/ds-react";
-import {Opplysning, VedleggGruppe} from "../../lib/opplysninger";
+import {Opplysning} from "../../lib/opplysninger";
+import {VedleggFrontendGruppe} from "../../generated/model";
+import {useSkatteetatenData} from "../../lib/hooks/data/useSkatteetatenData";
+import {SkatteetatenDokumentasjon} from "./SkatteetatenDokumentasjon";
 
-const Gruppetittel: Record<VedleggGruppe, string> = {
+const Gruppetittel: Record<VedleggFrontendGruppe, string> = {
     statsborgerskap: "opplysninger.statsborgerskap",
     arbeid: "opplysninger.arbeid",
     familie: "opplysninger.familiesituasjon",
@@ -13,20 +16,26 @@ const Gruppetittel: Record<VedleggGruppe, string> = {
     utgifter: "opplysninger.utgifter",
     "generelle vedlegg": "opplysninger.generell",
     "andre utgifter": "opplysninger.ekstrainfo",
-    ukjent: "opplysninger.ukjent",
 };
-export const Gruppe = ({gruppeKey, opplysninger}: {gruppeKey: VedleggGruppe; opplysninger: Opplysning[]}) => {
+
+export const Gruppe = ({gruppeKey, opplysninger}: {gruppeKey: VedleggFrontendGruppe; opplysninger: Opplysning[]}) => {
     const {t} = useTranslation();
-    if (!opplysninger.length) return null;
+    const {samtykke} = useSkatteetatenData();
+
+    const visSkatteHack = gruppeKey === "arbeid" && samtykke;
+
+    if (!opplysninger.length && !visSkatteHack) return null;
 
     return (
         <Panel className={"!px-0"} style={{display: "grid", gap: "1rem"}}>
-            <Heading level={"3"} size={"xlarge"} className={"pb-6"}>
+            <Heading level={"3"} size={"medium"} className={"pb-6"}>
                 {t(`${Gruppetittel[gruppeKey]}.sporsmal`)}
             </Heading>
 
+            {visSkatteHack && <SkatteetatenDokumentasjon />}
+
             {opplysninger.map((opplysning) => (
-                <OpplysningView key={opplysning.type} opplysning={opplysning} />
+                <Dokumentasjon key={opplysning.type} opplysning={opplysning} />
             ))}
         </Panel>
     );

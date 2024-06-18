@@ -17,9 +17,10 @@ import cx from "classnames";
 import {useTranslation} from "react-i18next";
 import {HorizontalRadioGroup} from "../../../lib/components/form/HorizontalRadioGroup";
 import {useQueryClient} from "@tanstack/react-query";
-import {logAmplitudeEvent} from "../../../lib/utils/amplitude";
+import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const AdresseData = () => {
+    const {logEvent} = useAmplitude();
     const queryClient = useQueryClient();
     const behandlingsId = useBehandlingsId();
     const {expectOK, data} = useAlgebraic(useHentAdresser(behandlingsId));
@@ -59,16 +60,16 @@ export const AdresseData = () => {
             <Heading size={"small"} level={"3"}>
                 {t("soknadsmottaker.sporsmal")}
             </Heading>
-            <BodyLong>{t("soknadsmottaker.hjelpetekst.tekst")}</BodyLong>
-            <BodyLong>{t("soknadsmottaker.hjelpetekst.ingress")}</BodyLong>
+            <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.tekst")}</BodyLong>
+            <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.ingress")}</BodyLong>
             <HorizontalRadioGroup
-                legend={t("soknadsmottaker.infotekst.tekst")}
+                legend={""}
                 value={uncommittedAdressevalg}
                 className={"!mb-4"}
                 onChange={async (valg) => {
                     setUncommittedAdressevalg(valg);
                     if (valg !== "soknad") await setAdresser(adresser, valg);
-                    logAmplitudeEvent("adresseValg", {addresseValgt: valg});
+                    logEvent("adresseValg", {addresseValgt: valg});
                 }}
             >
                 <Radio

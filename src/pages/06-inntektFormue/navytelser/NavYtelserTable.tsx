@@ -11,23 +11,27 @@ export const NavYtelserTable = ({systeminntekter = []}: {systeminntekter?: Syste
     if (!systeminntekter.length) return <BodyShort>{t("utbetalinger.ingen.true")}</BodyShort>;
 
     return (
-        <div className={"border-l-4 bg-lightblue-50 border-l-[var(--a-surface-info)] p-4 space-y-4"}>
-            <Table>
+        <div className={"bg-lightblue-50 border-l-[var(--a-surface-info)] p-4 space-y-4 rounded-md"}>
+            <Table className={"border-hidden"}>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell>{t("utbetalinger.utbetaling.erutbetalt.label")}</Table.HeaderCell>
                         <Table.HeaderCell>{t("utbetalinger.utbetaling.type.label")}</Table.HeaderCell>
-                        <Table.HeaderCell align={"right"}>{t("inntekt.bostotte.utbetaling.belop")}</Table.HeaderCell>
+                        <Table.HeaderCell>{t("utbetalinger.utbetaling.belop.label")}</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
                     {systeminntekter.map((utbetaling, index) => (
-                        <Table.Row key={index}>
+                        <Table.Row
+                            key={index}
+                            shadeOnHover={false}
+                            className={index === systeminntekter.length - 1 ? "" : "border-b border-blue-200"}
+                        >
                             <Table.DataCell>
                                 <LocalizedDate date={utbetaling.utbetalingsdato} />
                             </Table.DataCell>
                             <Table.DataCell>{utbetaling.inntektType}</Table.DataCell>
-                            <Table.DataCell align={"right"}>
+                            <Table.DataCell align={"left"}>
                                 <LocalizedCurrency value={utbetaling.belop} />
                             </Table.DataCell>
                         </Table.Row>

@@ -1,9 +1,9 @@
 import {useTranslation} from "react-i18next";
 import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
-import {formatTelefonnummer} from "@fremtind/jkl-formatters-util";
 import * as React from "react";
-import {strip47} from "./Telefon";
 import {LinkButton} from "../../lib/components/LinkButton";
+import {PencilWritingIcon} from "@navikt/aksel-icons";
+import {parsePhoneNumber} from "libphonenumber-js";
 
 export const TelefonShowBrukerdefinert = ({
     brukerutfyltVerdi,
@@ -13,12 +13,21 @@ export const TelefonShowBrukerdefinert = ({
     onEdit?: () => void;
 }) => {
     const {t} = useTranslation("skjema", {keyPrefix: "kontakt.system"});
+    const telefonNummer = brukerutfyltVerdi && parsePhoneNumber(brukerutfyltVerdi);
+
     return (
-        <li>
-            <SysteminfoItem comment={t("telefon.oppgitt")} label={t("telefon.label")}>
-                {brukerutfyltVerdi && formatTelefonnummer(strip47(brukerutfyltVerdi))}
-            </SysteminfoItem>
-            {onEdit && <LinkButton onClick={onEdit}>{t("telefon.endre")}</LinkButton>}
+        <li className={"flex flex-row place-content-between"}>
+            <div>
+                <SysteminfoItem>{telefonNummer && telefonNummer.formatInternational()}</SysteminfoItem>
+            </div>
+            {onEdit && (
+                <div className={"flex flex-row items-center navds-link pr-3"}>
+                    <PencilWritingIcon />
+                    <LinkButton onClick={onEdit} data-testid="telefon-endreknapp">
+                        {t("telefon.endreknapp.label")}
+                    </LinkButton>
+                </div>
+            )}
         </li>
     );
 };

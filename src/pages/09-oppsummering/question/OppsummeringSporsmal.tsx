@@ -1,28 +1,18 @@
+import {Sporsmal} from "../../../generated/model";
+import {useTranslation} from "react-i18next";
+import {Label} from "@navikt/ds-react";
+import {mapChangedIntlKeys} from "../mapChangedIntlKeys";
+import {Warning} from "./Warning";
+import {SporsmalFelt} from "../SporsmalFelt";
 import React from "react";
-import styled from "styled-components";
-import {Heading} from "@navikt/ds-react";
-import {EditAnswerLink} from "../OppsummeringSteg";
 
-const StyledQuestion = styled.div`
-    margin-bottom: 2rem;
-`;
-
-const HeadingWithEditLink = styled.div`
-    display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-`;
-
-export const OppsummeringSporsmal = (props: {title: string; questionId?: string; children: any}) => {
+export const OppsummeringSporsmal = ({sporsmal}: {sporsmal: Sporsmal}) => {
+    const {t} = useTranslation();
     return (
-        <StyledQuestion>
-            <HeadingWithEditLink>
-                <Heading level="3" size="small" spacing>
-                    {props.title}
-                </Heading>
-                {props.questionId && <EditAnswerLink steg={1} questionId={props.questionId} />}
-            </HeadingWithEditLink>
-            {props.children}
-        </StyledQuestion>
+        <div>
+            {sporsmal.tittel && <Label spacing>{t(mapChangedIntlKeys(sporsmal.tittel))}</Label>}
+            {!sporsmal.erUtfylt && <Warning />}
+            <SporsmalFelt felt={sporsmal.felt} />
+        </div>
     );
 };

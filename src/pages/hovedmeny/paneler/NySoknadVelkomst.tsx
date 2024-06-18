@@ -1,31 +1,20 @@
-import {BodyLong, BodyShort, GuidePanel, Heading} from "@navikt/ds-react";
+import {BodyLong, Heading} from "@navikt/ds-react";
 import * as React from "react";
 import {Trans, useTranslation} from "react-i18next";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
-import {logAmplitudeEvent} from "../../../lib/utils/amplitude";
+import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
+import StartNySoknadIllustrasjon from "../../../lib/components/svg/illustrasjoner/StartNySoknadIllustrasjon";
 
 export const NySoknadVelkomst = () => {
+    const {logEvent} = useAmplitude();
     const {data: sessionInfo} = useGetSessionInfo();
     const {t} = useTranslation("skjema");
 
-    const logLinkClicked = () => {
-        logAmplitudeEvent("navigere", {
-            lenkeTekst: "opplysninger du kan bli bedt om å levere",
-            destinasjon: "https://www.nav.no/okonomisk-sosialhjelp#soknad",
-            antallNyligInnsendteSoknader: sessionInfo?.numRecentlySent ?? 0,
-        });
-    };
-
     return (
-        <div className={"p-8 lg:py-12 lg:px-24"}>
-            <GuidePanel className={"!-ml-10 pb-8"}>
-                {sessionInfo?.fornavn?.length && (
-                    <Heading level={"3"} size={"small"} spacing>
-                        {t("informasjon.hilsen.hei", {fornavn: sessionInfo.fornavn})}
-                    </Heading>
-                )}
-                <BodyShort>{t("informasjon.hilsen.tittel")}</BodyShort>
-            </GuidePanel>
+        <div className={"p-8 lg:py-12 lg:px-24 flex flex-col"}>
+            <div className={"flex flex-col items-center mb-12"}>
+                <StartNySoknadIllustrasjon />
+            </div>
             <Heading level="2" size="small">
                 {t("informasjon.start.undertittel")}
             </Heading>
@@ -40,7 +29,13 @@ export const NySoknadVelkomst = () => {
                                 href="https://www.nav.no/okonomisk-sosialhjelp#sok"
                                 target="_blank"
                                 rel="noreferrer"
-                                onClick={logLinkClicked}
+                                onClick={() => {
+                                    logEvent("navigere", {
+                                        lenkeTekst: "opplysninger du kan bli bedt om å levere",
+                                        destinasjon: "https://www.nav.no/okonomisk-sosialhjelp#soknad",
+                                        antallNyligInnsendteSoknader: sessionInfo?.numRecentlySent ?? 0,
+                                    });
+                                }}
                             >
                                 {null}
                             </a>

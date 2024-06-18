@@ -7,6 +7,7 @@ import {DigisosReadMore} from "../../lib/components/DigisosReadMore";
 import {useVerdier} from "../../lib/hooks/data/useVerdier";
 import {useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";
 import {UnmountClosed} from "react-collapse";
+import {NyttUnderskjema} from "../05-bosituasjon/NyttUnderskjema";
 
 export const Verdier = () => {
     const {verdier, setBekreftelse, setBeskrivelseAvAnnet, setVerdier} = useVerdier();
@@ -29,23 +30,27 @@ export const Verdier = () => {
                 onChange={setBekreftelse}
             />
             {verdier?.bekreftelse && (
-                <CheckboxGroup
-                    legend={t("inntekt.eierandeler.true.type.sporsmal")}
-                    onChange={(navn: (keyof VerdierFrontend)[]) => setVerdier(navn)}
-                    value={Object.keys(verdier).filter((key) => verdier[key as keyof VerdierFrontend])}
-                >
-                    <Checkbox value={"bolig"}>{t("inntekt.eierandeler.true.type.bolig")} </Checkbox>
-                    <Checkbox value={"campingvogn"}>{t("inntekt.eierandeler.true.type.campingvogn")}</Checkbox>
-                    <Checkbox value={"kjoretoy"}>{t("inntekt.eierandeler.true.type.kjoretoy")}</Checkbox>
-                    <Checkbox value={"fritidseiendom"}>{t("inntekt.eierandeler.true.type.fritidseiendom")}</Checkbox>
-                    <Checkbox value={"annet"}>{t("inntekt.eierandeler.true.type.annet")}</Checkbox>
-                    <UnmountClosed isOpened={verdier.annet}>
-                        <Textarea
-                            label={t("inntekt.eierandeler.true.type.annet.true.beskrivelse.label")}
-                            {...registerAnnet}
-                        />
-                    </UnmountClosed>
-                </CheckboxGroup>
+                <NyttUnderskjema>
+                    <CheckboxGroup
+                        legend={t("inntekt.eierandeler.true.type.sporsmal")}
+                        onChange={(navn: (keyof VerdierFrontend)[]) => setVerdier(navn)}
+                        value={Object.keys(verdier).filter((key) => verdier[key as keyof VerdierFrontend])}
+                    >
+                        <Checkbox value={"bolig"}>{t("inntekt.eierandeler.true.type.bolig")} </Checkbox>
+                        <Checkbox value={"campingvogn"}>{t("inntekt.eierandeler.true.type.campingvogn")}</Checkbox>
+                        <Checkbox value={"kjoretoy"}>{t("inntekt.eierandeler.true.type.kjoretoy")}</Checkbox>
+                        <Checkbox value={"fritidseiendom"}>
+                            {t("inntekt.eierandeler.true.type.fritidseiendom")}
+                        </Checkbox>
+                        <Checkbox value={"annet"}>{t("inntekt.eierandeler.true.type.annet")}</Checkbox>
+                        <UnmountClosed isOpened={verdier.annet}>
+                            <Textarea
+                                label={t("inntekt.eierandeler.true.type.annet.true.beskrivelse.label")}
+                                {...registerAnnet}
+                            />
+                        </UnmountClosed>
+                    </CheckboxGroup>
+                </NyttUnderskjema>
             )}
         </div>
     );

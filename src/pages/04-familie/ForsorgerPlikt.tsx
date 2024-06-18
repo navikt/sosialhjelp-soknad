@@ -2,7 +2,7 @@ import * as React from "react";
 import {RegistrerteBarn} from "./RegistrerteBarn";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
-import {BodyShort, Detail, Heading} from "@navikt/ds-react";
+import {BodyShort, Heading} from "@navikt/ds-react";
 import {useHentForsorgerplikt} from "../../generated/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 
@@ -17,8 +17,10 @@ export const ForsorgerPlikt = () => {
                     <Heading size={"medium"} level={"3"} spacing>
                         {t("familierelasjon.faktum.sporsmal")}
                     </Heading>
-                    <Detail>{t("familierelasjon.ingen_registrerte_barn_tittel")}</Detail>
-                    <BodyShort spacing>{t("familierelasjon.ingen_registrerte_barn_tekst")}</BodyShort>
+                    <BodyShort spacing>
+                        {t("familierelasjon.ingen_registrerte_barn_tekst")} <br />
+                        {t("familierelasjon.hentet_fra_folkeregisteret")} <br />
+                    </BodyShort>
                 </div>
             );
 
@@ -27,15 +29,16 @@ export const ForsorgerPlikt = () => {
                 <Heading size={"medium"} level={"3"} spacing>
                     {t("familierelasjon.faktum.sporsmal")}
                 </Heading>
-                <Detail>{t("familierelasjon.ingress_folkeregisteret")}</Detail>
-                <BodyShort spacing>
-                    {t("familierelasjon.ingress_forsorger")}:{" "}
+                <BodyShort>
+                    {t("familierelasjon.ingress_forsorger")} <br />
                     {t(
                         ansvar.length === 1
                             ? "familierelasjon.ingress_antallBarn.entall"
                             : "familierelasjon.ingress_antallBarn",
                         {antallBarn: ansvar.length}
                     )}
+                    <br />
+                    {t("familierelasjon.hentet_fra_folkeregisteret")} <br />
                 </BodyShort>
                 <RegistrerteBarn />
             </div>

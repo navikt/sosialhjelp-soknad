@@ -7,7 +7,7 @@ import {SkjemaStegLegacy} from "../../lib/components/SkjemaSteg/SkjemaStegLegacy
 
 export const Familie = () => (
     <SkjemaStegLegacy skjemaConfig={digisosSkjemaConfig} steg={"familiebolk"} ikon={<FamilieIllustrasjon />}>
-        <div className={"space-y-20"}>
+        <div>
             <DinSivilstatus />
             <ForsorgerPlikt />
         </div>

@@ -1,10 +1,10 @@
 import {Control, Controller} from "react-hook-form";
-import {VedleggRadFrontendForm} from "./useOpplysning";
 import {useTranslation} from "react-i18next";
 import {TextField} from "@navikt/ds-react";
 import {OpplysningInputType} from "../../lib/opplysninger";
 import {LinkButton} from "../../lib/components/LinkButton";
 import cx from "classnames";
+import {VedleggRadFrontendForm} from "../../lib/hooks/dokumentasjon/useOpplysning";
 
 export const OpplysningInputRad = ({
     fields,
@@ -31,7 +31,11 @@ export const OpplysningInputRad = ({
                     render={({field, fieldState}) => (
                         <>
                             <TextField
-                                label={<span style={{fontSize: 16}}>{t(`${textKey}.${fieldName}.label`)}</span>}
+                                label={
+                                    <span style={{fontSize: 16, fontWeight: "normal"}}>
+                                        {t(`${textKey}.${fieldName}.label`)}
+                                    </span>
+                                }
                                 className={cx("pb-2")}
                                 error={fieldState.isTouched && fieldState.error?.message && t(fieldState.error.message)}
                                 autoComplete={"off"}
