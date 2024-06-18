@@ -3,7 +3,7 @@ import {isLocalhost, isMockAlt} from "../utils";
 import {UnauthorizedMelding} from "../../generated/model";
 import {logError, logInfo, logWarning} from "../log/loggerUtils";
 import {baseURL} from "../config";
-import {buildLoginUrl} from "./auth/buildLoginUrl";
+import {buildRedirectUrl} from "./auth/buildRedirectUrl";
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL,
@@ -24,8 +24,6 @@ export type DigisosAxiosConfig = {
     // (Useful to prevent packet storms from calls to the logger failing)
     digisosIgnoreErrors?: boolean;
 };
-
-const isLoginRedirect401 = (r: any): r is AxiosResponse<UnauthorizedMelding | undefined, any> => r?.status === 401;
 
 /**
  * Digisos Axios client
@@ -64,8 +62,11 @@ export const axiosInstance = <T>(
 
             const {status, data} = e.response;
 
-            if (isLoginRedirect401(e.response)) {
-                window.location.href = await buildLoginUrl(e.response.data, window.location);
+            if (status === 401) {
+                const {loginUrl} = data as UnauthorizedMelding;
+                const loginPage = new URL(loginUrl);
+                loginPage.searchParams.set("redirect", buildRedirectUrl(window.location));
+                window.location.assign(loginPage);
                 return new Promise<T>(() => {});
             }
 
