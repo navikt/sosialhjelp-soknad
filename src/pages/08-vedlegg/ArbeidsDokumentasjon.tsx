@@ -9,6 +9,9 @@ import {DokumentasjonRader} from "./DokumentasjonRader";
 
 export const ArbeidsDokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
     const {t} = useTranslation();
+    // FIXME: Midlertidig workaround fordi denne bruker tekststrenger både fra skjema og dokumentasjon.
+    const {t: tDok} = useTranslation("dokumentasjon");
+
     const {isError, isPending, setSamtykke} = useSkatteetatenData();
 
     if (isPending) return <TextPlaceholder lines={3} />;
@@ -16,7 +19,7 @@ export const ArbeidsDokumentasjon = ({opplysning}: {opplysning: Opplysning}) => 
 
     return (
         <div>
-            <BodyShort className={"pb-6"}>{t("opplysninger.arbeid.jobb.undertekst")}</BodyShort>
+            <BodyShort className={"pb-6"}>{tDok("lonnslipp|arbeid.undertekst")}</BodyShort>
             <BodyShort className={"pb-2"}>{t("utbetalinger.inntekt.skattbar.hent.info.skatteetaten")}</BodyShort>
             <Button variant="secondary" onClick={() => setSamtykke(true)} className={"!bg-surface-default"}>
                 {t("utbetalinger.inntekt.skattbar.gi_samtykke")}

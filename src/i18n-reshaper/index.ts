@@ -23,8 +23,8 @@ LANGUAGES.forEach(async (language) => {
         dokumentasjon,
         `./src/locales/${language}/dokumentasjon.ts`,
         "dokumentasjon",
-        "Record<VedleggFrontendType, DokumentStrenger>",
-        `import {VedleggFrontendType} from "../../generated/model";\nimport {DokumentStrenger} from "../types";`
+        "Record<VedleggFrontendType, DokumentasjonTexts>",
+        `import {VedleggFrontendType} from "../../generated/model";\nimport {DokumentasjonTexts} from "../types";`
     );
 
     // Fjern nøkler som ikke lenger er i bruk
