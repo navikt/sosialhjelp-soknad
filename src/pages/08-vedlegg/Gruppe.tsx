@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Dokumentasjon} from "./Dokumentasjon";
 import {useTranslation} from "react-i18next";
-import {Heading, Panel} from "@navikt/ds-react";
+import {Heading} from "@navikt/ds-react";
 import {Opplysning} from "../../lib/opplysninger";
 import {VedleggFrontendGruppe} from "../../generated/model";
 import {useSkatteetatenData} from "../../lib/hooks/data/useSkatteetatenData";
@@ -27,7 +27,7 @@ export const Gruppe = ({gruppeKey, opplysninger}: {gruppeKey: VedleggFrontendGru
     if (!opplysninger.length && !visSkatteHack) return null;
 
     return (
-        <Panel className={"!px-0"} style={{display: "grid", gap: "1rem"}}>
+        <div className={"grid gap-4 py-4"}>
             <Heading level={"3"} size={"medium"} className={"pb-6"}>
                 {t(`${Gruppetittel[gruppeKey]}.sporsmal`)}
             </Heading>
@@ -37,6 +37,6 @@ export const Gruppe = ({gruppeKey, opplysninger}: {gruppeKey: VedleggFrontendGru
             {opplysninger.map((opplysning) => (
                 <Dokumentasjon key={opplysning.type} opplysning={opplysning} />
             ))}
-        </Panel>
+        </div>
     );
 };
