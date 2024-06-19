@@ -13,7 +13,7 @@ export const OkonomiskeOpplysningerView = () => {
     if (isLoading) return <ApplicationSpinner />;
 
     const firstGroup = grupper[0];
-    const middleGroups = grupper.slice(1, grupper.length - 1);
+    const middleGroups = grupper.slice(2, grupper.length - 1);
     const lastGroup = grupper[grupper.length - 1];
 
     return (
