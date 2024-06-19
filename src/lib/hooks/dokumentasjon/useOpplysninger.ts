@@ -33,6 +33,7 @@ export const useOpplysninger = () => {
     // som fører til at arbeid-gruppa blir tom og dermed forsvinner. Men vi har hardkodet at dersom
     // skatteetaten-samtykke er innvilget, skal vi vise det panelet i kontekst av arbeid-gruppa.
     const grupperMedSuperstyggHack =
+        //grupper.includes("arbeid") ? grupper : (["arbeid", ...grupper] as VedleggFrontendGruppe[]);
         !grupper.includes("arbeid") && !samtykke ? grupper : (["arbeid", ...grupper] as VedleggFrontendGruppe[]);
 
     return {
