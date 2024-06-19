@@ -31,7 +31,7 @@ export const ForsorgerPlikt = () => {
                 </Heading>
                 <BodyShort>
                     {t("familierelasjon.ingress_forsorger")} <br />
-                    {t("familierelasjon.ingress_antallBarn", {count: ansvar.length})}
+                    {t("familierelasjon.ingress.antallBarn", {count: ansvar.length})}
                     <br />
                     {t("familierelasjon.hentet_fra_folkeregisteret")} <br />
                 </BodyShort>

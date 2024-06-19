@@ -427,10 +427,10 @@ export const skjema = {
             "<p> Vi har henta følgjande opplysningar frå Folkeregisteret: </p> <p> <b>Du har ingen registrerte barn under 18 år.</b> </p>",
         ingen_registrerte_barn_tekst: "Du har ingen registrerte barn under 18 år.",
         ingen_registrerte_barn_tittel: "Vi har henta følgjande opplysningar frå Folkeregisteret:",
-        ingress:
-            "<p> Vi har henta følgjande opplysningar frå Folkeregisteret: </p> <p> <b>Vi har registrert at du har forsørgjaransvar for:</b> {{antallBarn}} barn under 18 år </p>",
-        ingress_antallBarn_one: "{{antallBarn}} barn under 18 år",
-        ingress_antallBarn_some: "{{antallBarn}} barn under 18 år",
+        ingress: {
+            antallBarn_one: "{{antallBarn}} barn under 18 år",
+            antallBarn_other: "{{antallBarn}} barn under 18 år",
+        },
         ingress_folkeregisteret: "Vi har henta følgjande opplysningar frå Folkeregisteret:",
         ingress_forsorger: "Vi har registrert at du har forsørgjaransvar for:",
         samme_folkeregistrerte_adresse: "Har same folkeregistrerte adresse som deg",
@@ -1876,35 +1876,18 @@ export const skjema = {
                 tekst: "Til dømes barnehage, SFO eller fritidsaktivitetar.",
             },
             sporsmal: "Har du utgifter til barn?",
-            true: {
-                utgifter: {
-                    annenBarneutgift: {
-                        true: {
-                            beskrivelse: {
-                                label: "Beskriv",
-                            },
-                        },
-                        stringValue: "Anna",
-                    },
-                    annet: {
-                        true: {
-                            beskrivelse: {
-                                label: "Beskriv",
-                            },
-                        },
-                        stringValue: "Anna",
-                    },
-                    barnFritidsaktiviteter: "Fritidsaktivitetar",
-                    barnTannregulering: "Tannregulering",
-                    barnehage: "Barnehage",
-                    fritidsaktivitet: "Fritidsaktivitetar",
-                    fritidsaktiviteter: "Fritidsaktivitetar",
-                    helse: "Helse",
-                    sfo: "SFO (skulefritidsordning)",
-                    sporsmal: "Kva utgifter dreier det seg om?",
-                    tannbehandling: "Tannregulering",
-                    tannregulering: "Tannregulering",
-                },
+            typer: {
+                annet: "Anna",
+                barnFritidsaktiviteter: "Fritidsaktivitetar",
+                barnTannregulering: "Tannregulering",
+                barnehage: "Barnehage",
+                fritidsaktivitet: "Fritidsaktivitetar",
+                fritidsaktiviteter: "Fritidsaktivitetar",
+                helse: "Helse",
+                sfo: "SFO (skulefritidsordning)",
+                sporsmal: "Kva utgifter dreier det seg om?",
+                tannbehandling: "Tannregulering",
+                tannregulering: "Tannregulering",
             },
         },
         boutgift: {

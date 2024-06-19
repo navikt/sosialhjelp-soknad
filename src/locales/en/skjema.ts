@@ -432,10 +432,10 @@ export const skjema = {
         ingen_registrerte_barn_tekst: "You have no registered children under 18 years of age.",
         ingen_registrerte_barn_tittel:
             "We have obtained the following information from the National Population Register:",
-        ingress:
-            "<p> We have obtained the following information from the National Population Register: </p> <p> <b>We have registered that you are a provider for:</b> {{antallBarn}} children under 18 years of age </p>",
-        ingress_antallBarn_one: "{{count}} child under 18 years of age",
-        ingress_antallBarn_some: "{{count}} children under 18 years of age",
+        ingress: {
+            antallBarn_one: "{{count}} child under 18 years of age",
+            antallBarn_other: "{{count}} children under 18 years of age",
+        },
         ingress_folkeregisteret: "We have obtained the following information from the National Population Register:",
         ingress_forsorger: "We have registered that you are responsible as a provider for:",
         samme_folkeregistrerte_adresse: "Has/have the same registered address as you",
@@ -1886,35 +1886,18 @@ export const skjema = {
                 tekst: "For example kindergarten, after-school club or recreational activities",
             },
             sporsmal: "Do you have expenses for children?",
-            true: {
-                utgifter: {
-                    annenBarneutgift: {
-                        true: {
-                            beskrivelse: {
-                                label: "Describe",
-                            },
-                        },
-                        stringValue: "Other",
-                    },
-                    annet: {
-                        true: {
-                            beskrivelse: {
-                                label: "Describe",
-                            },
-                        },
-                        stringValue: "Other",
-                    },
-                    barnFritidsaktiviteter: "Recreational activities",
-                    barnTannregulering: "Orthodontic treatment",
-                    barnehage: "Kindergarten",
-                    fritidsaktivitet: "Recreational activities",
-                    fritidsaktiviteter: "Recreational activities",
-                    helse: "Health",
-                    sfo: "After-school club",
-                    sporsmal: "What type of expense is it?",
-                    tannbehandling: "Orthodontic treatment",
-                    tannregulering: "Orthodontic treatment",
-                },
+            typer: {
+                annet: "Other",
+                barnFritidsaktiviteter: "Recreational activities",
+                barnTannregulering: "Orthodontic treatment",
+                barnehage: "Kindergarten",
+                fritidsaktivitet: "Recreational activities",
+                fritidsaktiviteter: "Recreational activities",
+                helse: "Health",
+                sfo: "After-school club",
+                sporsmal: "What type of expense is it?",
+                tannbehandling: "Orthodontic treatment",
+                tannregulering: "Orthodontic treatment",
             },
         },
         boutgift: {

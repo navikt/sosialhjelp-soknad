@@ -16,6 +16,7 @@ const OBSOLETE_KEYS = [
     "kontakt.system.personalia.statsborgerskap.sporsmal",
     "opplysninger.ekstrainfo.utgifter.beskrivelse.pattern",
     "applikasjon.sidetittel.kortnavn",
+    "utgifter.barn.typer.annet.true.beskrivelse.label",
 ] as (keyof FlatLanguageFile)[];
 
 export const deleteObsoleteKeys = (original: FlatLanguageFile): FlatLanguageFile => {
