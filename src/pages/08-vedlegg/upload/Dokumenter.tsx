@@ -7,7 +7,6 @@ import {UploadError} from "./UploadError";
 import {FaroErrorBoundary} from "@grafana/faro-react";
 import {AlreadyUploadedCheckbox} from "./AlreadyUploadedCheckbox";
 import {useTranslation} from "react-i18next";
-import {humanizeFilesize} from "../lib/humanizeFilesize";
 import {useOpplysningTekster} from "../../../lib/hooks/dokumentasjon/useOpplysningTekster";
 import {useVedlegg} from "../../../lib/hooks/dokumentasjon/useVedlegg";
 
@@ -15,14 +14,12 @@ export const Dokumenter = ({opplysning}: {opplysning: Opplysning}) => {
     const {t} = useTranslation();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
     const {leggTilDokumentasjon} = useOpplysningTekster(opplysning.type);
-    const {deleteDocument, documents, uploadDocument, error, isPending, maxUploadSize, currentUpload} = useVedlegg(
-        opplysning.type
-    );
+    const {deleteDocument, documents, uploadDocument, error, isPending, currentUpload} = useVedlegg(opplysning.type);
 
     return (
         <div className={"space-y-2"}>
             <BodyShort size={"small"} className={"!mt-6"}>
-                {leggTilDokumentasjon} (maks {humanizeFilesize(maxUploadSize)})
+                {leggTilDokumentasjon}
             </BodyShort>
 
             <FaroErrorBoundary fallback={(error, resetError) => <UploadError error={error} resetError={resetError} />}>
