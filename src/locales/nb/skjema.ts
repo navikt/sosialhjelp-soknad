@@ -417,10 +417,8 @@ export const skjema = {
         ingen_registrerte_barn_tittel: "Vi har hentet følgende opplysninger fra Folkeregisteret:",
         ingress:
             "<p>\n    Vi har hentet følgende opplysninger fra Folkeregisteret:\n</p>\n<p>\n    <b>Vi har registrert at du har forsørgeransvar for:</b> {{antallBarn}} barn under 18 år\n</p>",
-        ingress_antallBarn: {
-            entall: "{{antallBarn}} barn under 18 år",
-            stringValue: "{{antallBarn}} barn under 18 år",
-        },
+        ingress_antallBarn_one: "{{count}} barn under 18 år",
+        ingress_antallBarn_some: "{{count}} barn under 18 år",
         ingress_folkeregisteret: "Vi har hentet følgende opplysninger fra Folkeregisteret:",
         ingress_forsorger: "Vi har registrert at du har forsørgeransvar for:",
         samme_folkeregistrerte_adresse: "Har samme folkeregistrerte adresse som deg",

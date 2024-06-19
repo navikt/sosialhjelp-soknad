@@ -434,10 +434,8 @@ export const skjema = {
             "We have obtained the following information from the National Population Register:",
         ingress:
             "<p> We have obtained the following information from the National Population Register: </p> <p> <b>We have registered that you are a provider for:</b> {{antallBarn}} children under 18 years of age </p>",
-        ingress_antallBarn: {
-            entall: "{{antallBarn}} child under 18 years of age",
-            stringValue: "{{antallBarn}} children under 18 years of age",
-        },
+        ingress_antallBarn_one: "{{count}} child under 18 years of age",
+        ingress_antallBarn_some: "{{count}} children under 18 years of age",
         ingress_folkeregisteret: "We have obtained the following information from the National Population Register:",
         ingress_forsorger: "We have registered that you are responsible as a provider for:",
         samme_folkeregistrerte_adresse: "Has/have the same registered address as you",

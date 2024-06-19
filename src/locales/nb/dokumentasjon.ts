@@ -1,6 +1,6 @@
 import {VedleggFrontendType} from "../../generated/model";
-import {DokumentStrenger} from "../types";
-export const dokumentasjon: Record<VedleggFrontendType, DokumentStrenger> = {
+import {DokumentasjonTexts} from "../types";
+export const dokumentasjon: Record<VedleggFrontendType, DokumentasjonTexts> = {
     "lonnslipp|arbeid": {
         brutto: {
             label: "Lønn før skatt siste måned",
