@@ -17,7 +17,7 @@ export type OpplysningSpecTekster = {
  */
 export const useOpplysningTekster = (opplysningType: VedleggFrontendType): OpplysningSpecTekster => {
     const {textKey, numRows} = opplysningSpec[opplysningType];
-    const {t, i18n} = useTranslation();
+    const {t, i18n} = useTranslation("dokumentasjon");
 
     const sanityCheck = () => {
         if (!i18n.exists(`${textKey}.sporsmal`)) throw new Error(`Missing translation for ${textKey}.sporsmal`);
@@ -26,11 +26,11 @@ export const useOpplysningTekster = (opplysningType: VedleggFrontendType): Opply
             throw new Error(`Missing translation for ${textKey}.leggtil`);
     };
 
-    const sporsmal = t(`${textKey}.sporsmal`);
-    const undertekst = i18n.exists(`${textKey}.undertekst`) ? t(`${textKey}.undertekst`) : undefined;
-    const leggTilRad = numRows === "flere" ? t(`${textKey}.leggtil`) : undefined;
-    const leggTilDokumentasjon = i18n.exists(`${textKey}.vedlegg.sporsmal.tittel`)
-        ? t(`${textKey}.vedlegg.sporsmal.tittel`)
+    const sporsmal = t(`${opplysningType}.sporsmal` as const);
+    const undertekst = i18n.exists(`${opplysningType}.undertekst`) ? t(`${opplysningType}.undertekst`) : undefined;
+    const leggTilRad = numRows === "flere" ? t(`${opplysningType}.leggtil`) : undefined;
+    const leggTilDokumentasjon = i18n.exists(`${opplysningType}.dokumentBeskrivelse`)
+        ? t(`${opplysningType}.dokumentBeskrivelse`)
         : undefined;
 
     sanityCheck();
