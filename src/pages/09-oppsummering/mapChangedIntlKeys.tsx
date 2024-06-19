@@ -4,6 +4,7 @@ const INTL_KEYS_MAP: Record<string, string> = {
     "dinsituasjon.studerer.true.grad.sporsmal": "dinsituasjon.studerer.grad.sporsmal",
     "dinsituasjon.studerer.true.grad.deltid": "dinsituasjon.studerer.grad.deltid",
     "dinsituasjon.studerer.true.grad.heltid": "dinsituasjon.studerer.grad.heltid",
+    "arbeidsforhold.infotekst": "arbeidsforhold.infotekst_del1",
 };
 
 // Midlertidig hack for å fortsatt bruke gamle oppsummering inntil brukertest av ny
