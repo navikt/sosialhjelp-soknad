@@ -1,8 +1,8 @@
 import {describe, it, expect} from "vitest";
 import {linkPagePath} from "../../config";
-import {buildGotoSearchParameter} from "./buildGotoSearchParameter";
+import {getGotoParameter} from "./getGotoParameter";
 
-describe("buildGotoSearchParameter", () => {
+describe("getGotoParameter", () => {
     const testCases = [
         {
             description: 'should set the "goto" parameter to the pathname when not on a redirect page',
@@ -29,12 +29,17 @@ describe("buildGotoSearchParameter", () => {
         {
             description: "should handle pathname with special characters",
             location: {pathname: "/some/path with spaces", search: ""},
-            expectedGoto: "/some/path%20with%20spaces",
+            expectedGoto: "/some/path with spaces",
         },
         {
             description: "should handle search params with special characters",
             location: {pathname: linkPagePath, search: "?goto=/path/with%20special%20characters"},
-            expectedGoto: "/path/with%20special%20characters",
+            expectedGoto: "/path/with special characters",
+        },
+        {
+            description: "should double-decode the goto parameter for loginApi bug compatibility",
+            location: {pathname: linkPagePath, search: "?goto=%2Fpath%2Fwith%2520special%2520characters"},
+            expectedGoto: "/path/with special characters",
         },
         {
             description: "should handle empty pathname",
@@ -60,11 +65,8 @@ describe("buildGotoSearchParameter", () => {
 
     testCases.forEach(({description, location, expectedGoto}) => {
         it(description, () => {
-            const result = buildGotoSearchParameter(location);
-            const params = new URLSearchParams(result);
-
-            expect(params.get("goto")).toBe(decodeURIComponent(expectedGoto)); // Ensure correct decoding
-            expect(Array.from(params.entries()).length).toBe(1); // Ensure only the "goto" parameter is present
+            const result = getGotoParameter(location);
+            expect(result).toBe(expectedGoto); // Ensure correct decoding
         });
     });
 });
