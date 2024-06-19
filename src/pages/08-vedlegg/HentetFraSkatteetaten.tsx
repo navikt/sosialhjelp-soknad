@@ -35,9 +35,8 @@ export const HentetFraSkatteetaten = ({inntekt}: {inntekt: SkattbarInntektOgFors
                                     {organisasjonsnavn}
                                 </BodyShort>
                                 <BodyShort size={"small"}>
-                                    {t("utbetalinger.inntekt.fra")}
-                                    <LocalizedDate date={fom} /> {t("utbetalinger.inntekt.til")}{" "}
-                                    <LocalizedDate date={tom} />
+                                    {t("utbetalinger.inntekt.fra")} <LocalizedDate date={fom} />{" "}
+                                    {t("utbetalinger.inntekt.til")} <LocalizedDate date={tom} />
                                 </BodyShort>
                             </Table.Body>
                         </Table>
