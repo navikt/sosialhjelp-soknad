@@ -12,6 +12,8 @@ type SoknadConfig = {
     };
 };
 
+export const ENABLE_DEBUG_I18N = false;
+
 const isValidDigisosEnvironment = (miljo: unknown): miljo is SoknadMiljo =>
     SoknadMiljoTypes.includes(miljo as SoknadMiljo);
 
