@@ -104,7 +104,7 @@
         "prepare": "husky",
         "fetch-api": "curl -o ./soknad-api.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs && prettier --write soknad-api.json",
         "orval": "rm -rf ./src/generated & orval --prettier",
-        "refactorLanguageFiles": "bun run src/i18n-reshaper/index.ts",
+        "refactorLanguageFiles": "bun run src/i18n-reshaper/index.ts && prettier --write src/locales",
         "lint": "eslint",
         "cypress:open": "cypress open",
         "cypress:run": "cypress run"
