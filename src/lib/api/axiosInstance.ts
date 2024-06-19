@@ -65,10 +65,8 @@ export const axiosInstance = <T>(
             }
 
             if (isLoginError(response)) {
-                const loginUrl = new URL(response.data.loginUrl);
-                const redirect = `${origin}${linkPagePath}?goto=${getGotoParameter(window.location)}`;
-                loginUrl.searchParams.set("redirect", redirect);
-                window.location.assign(loginUrl);
+                const redirect = `?redirect=${origin}${linkPagePath}?goto=${getGotoParameter(window.location)}`;
+                window.location.assign(response.data.loginUrl + redirect);
                 return neverResolves();
             }
 
