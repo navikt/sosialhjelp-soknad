@@ -2182,11 +2182,7 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {"type": "object", "additionalProperties": {"type": "string"}}
-                            }
-                        }
+                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StartSoknadResponse"}}}
                     }
                 }
             }
@@ -4002,6 +3998,11 @@
                 "required": ["id", "sendtTil"],
                 "type": "object",
                 "properties": {"sendtTil": {"type": "string", "enum": ["FIKS_DIGISOS_API"]}, "id": {"type": "string"}}
+            },
+            "StartSoknadResponse": {
+                "required": ["brukerBehandlingId", "useKortSoknad"],
+                "type": "object",
+                "properties": {"brukerBehandlingId": {"type": "string"}, "useKortSoknad": {"type": "boolean"}}
             },
             "SoknadSendtDto": {
                 "required": ["soknadId", "tidspunkt"],
