@@ -18,7 +18,37 @@ import {
     updateOkonomiskOpplysning,
 } from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {opplysningSpec} from "../../opplysninger";
-import {VedleggRadFrontend} from "../../../generated/model";
+import {VedleggFrontend, VedleggRadFrontend} from "../../../generated/model";
+
+// Jeg har rappet disse fra Orval-boilerplate-kode for å få tilgang til ReadOnly<T> under her.
+
+type IsAny<T> = 0 extends 1 & T ? true : false;
+type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
+// eslint-disable-next-line @typescript-eslint/ban-types
+type isBuiltin = Primitive | Function | Date | Error | RegExp;
+type Primitive = string | number | boolean | bigint | symbol | undefined | null;
+type NonReadonly<T> =
+    T extends Exclude<isBuiltin, Error>
+        ? T
+        : T extends Map<infer Key, infer Value>
+          ? Map<NonReadonly<Key>, NonReadonly<Value>>
+          : T extends ReadonlyMap<infer Key, infer Value>
+            ? Map<NonReadonly<Key>, NonReadonly<Value>>
+            : T extends WeakMap<infer Key, infer Value>
+              ? WeakMap<NonReadonly<Key>, NonReadonly<Value>>
+              : T extends Set<infer Values>
+                ? Set<NonReadonly<Values>>
+                : T extends ReadonlySet<infer Values>
+                  ? Set<NonReadonly<Values>>
+                  : T extends WeakSet<infer Values>
+                    ? WeakSet<NonReadonly<Values>>
+                    : T extends Promise<infer Value>
+                      ? Promise<NonReadonly<Value>>
+                      : T extends object
+                        ? {-readonly [Key in keyof T]: NonReadonly<T[Key]>}
+                        : IsUnknown<T> extends true
+                          ? unknown
+                          : T;
 
 const generateChecksum = (str1: string, str2: string): string =>
     (Array.from(str1 + str2).reduce((sum, char) => sum + char.charCodeAt(0), 0) % 1e6).toString().padStart(6, "9");
@@ -126,7 +156,7 @@ export const maximizeSoknad = async (soknadId: string) => {
             opplysning.rader = duplicateItems(opplysning.rader, rowCountFromString(opplysning.type));
 
         opplysning.rader = opplysning.rader?.map((rad, rowNum) => {
-            return Object.entries(rad).reduce((acc, [key, value]) => {
+            return Object.entries(rad).reduce((acc, [key, _value]) => {
                 const testValue = key === "beskrivelse" ? opplysning.type : generateChecksum(opplysning.type, key);
                 return {...acc, [key]: `${testValue}${rowNum}`};
             }, {} as VedleggRadFrontend);
@@ -135,6 +165,8 @@ export const maximizeSoknad = async (soknadId: string) => {
 
     console.log(opplysninger.okonomiskeOpplysninger);
     await Promise.all(
-        opplysninger.okonomiskeOpplysninger!.map((opplysning) => updateOkonomiskOpplysning(soknadId, opplysning))
+        opplysninger.okonomiskeOpplysninger!.map((opplysning) =>
+            updateOkonomiskOpplysning(soknadId, opplysning as NonReadonly<VedleggFrontend>)
+        )
     );
 };

@@ -46,6 +46,16 @@ export const DeveloperToolkit = () => {
                     onClick={async () => {
                         const soknadId = await createFolkeregistrertSoknad();
                         await maximizeSoknad(soknadId);
+                        navigate(`/skjema/${soknadId}/8`);
+                    }}
+                >
+                    [ lag maksimal søknad ]
+                </button>
+                <button
+                    className={"text-[#0c0] hover:text-[#0f0]"}
+                    onClick={async () => {
+                        const soknadId = await createFolkeregistrertSoknad();
+                        await maximizeSoknad(soknadId);
                         const {id} = await sendSoknad(soknadId);
                         window.location.href = `${innsynURL}${id}/status`;
                     }}
