@@ -14,17 +14,21 @@ import {DigisosLanguageKey} from "../../lib/i18n";
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;
 
+const feilmeldinger: Record<string, DigisosLanguageKey> = {
+    maksLengde: "validering.maksLengde",
+} as const;
+
 const begrunnelseSchema = z.object({
-    hvaSokesOm: z.string().max(MAX_LEN_HVA, "maksLengde"),
-    hvorforSoke: z.string().max(MAX_LEN_HVORFOR, "maksLengde"),
+    hvaSokesOm: z.string().max(MAX_LEN_HVA, feilmeldinger.maksLengde),
+    hvorforSoke: z.string().max(MAX_LEN_HVORFOR, feilmeldinger.maksLengde),
 });
 
 export const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) => {
-    const {t} = useTranslation("skjema", {keyPrefix: "validering"});
+    const {t} = useTranslation("skjema");
 
     if (!error?.message) return null;
 
-    return <>{t(error.message as DigisosLanguageKey<"skjema", "validering">)}</>;
+    return <>{t(error.message as DigisosLanguageKey)}</>;
 };
 
 const Feilmelding = () => {

@@ -27,18 +27,18 @@ export const ArbeidsforholdListe = () => {
 
 const ArbeidsforholdDetalj = ({arbeidsforhold}: {arbeidsforhold: ArbeidsforholdFrontend}) => {
     const {arbeidsgivernavn, stillingsprosent, fom, tom} = arbeidsforhold;
-    const {t} = useTranslation("skjema", {keyPrefix: "arbeidsforhold"});
+    const {t} = useTranslation("skjema");
 
     return (
         <Systeminfo>
-            <BodyShort className={"pb-3"}>{t("infotekst_del1")}</BodyShort>
-            <SysteminfoItem label={t("arbeidsgivernavn.label")}>{arbeidsgivernavn}</SysteminfoItem>
-            <SysteminfoItem label={t("fom.label")}>
+            <BodyShort className={"pb-3"}>{t("arbeidsforhold.infotekst_del1")}</BodyShort>
+            <SysteminfoItem label={t("arbeidsforhold.arbeidsgivernavn.label")}>{arbeidsgivernavn}</SysteminfoItem>
+            <SysteminfoItem label={t("arbeidsforhold.fom.label")}>
                 <LocalizedDate date={fom} />
             </SysteminfoItem>
-            {tom?.length && <SysteminfoItem label={t("tom.label")}>{tom}</SysteminfoItem>}
-            <SysteminfoItem label={t("stillingsprosent.label")}>{stillingsprosent} %</SysteminfoItem>
-            <BodyShort className={"pt-3"}>{t("infotekst_del2")}</BodyShort>
+            {tom?.length && <SysteminfoItem label={t("arbeidsforhold.tom.label")}>{tom}</SysteminfoItem>}
+            <SysteminfoItem label={t("arbeidsforhold.stillingsprosent.label")}>{stillingsprosent} %</SysteminfoItem>
+            <BodyShort className={"pt-3"}>{t("arbeidsforhold.infotekst_del2")}</BodyShort>
         </Systeminfo>
     );
 };

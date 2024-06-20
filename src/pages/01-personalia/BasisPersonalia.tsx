@@ -10,15 +10,17 @@ import {FullName} from "./FulltNavn";
 
 export const BasisPersonaliaData = () => {
     const {expectOK} = useAlgebraic(useHentBasisPersonalia(useBehandlingsId()));
-    const {t} = useTranslation("skjema", {keyPrefix: "kontakt.system.personalia"});
+    const {t} = useTranslation("skjema");
     return expectOK(({navn, fodselsnummer, statsborgerskap = "Ukjent/statsløs"}) => (
         <Systeminfo>
-            <SysteminfoItem label={t("navn")}>
+            <SysteminfoItem label={t("kontakt.system.personalia.navn")}>
                 <FullName name={navn} />
             </SysteminfoItem>
-            <SysteminfoItem label={t("fnr")}>{formatFodselsnummer(fodselsnummer ?? "")}</SysteminfoItem>
-            <SysteminfoItem label={t("statsborgerskap")}>{statsborgerskap}</SysteminfoItem>
-            <BodyShort className={"pt-3"}>{t("infotekst.tekst")}</BodyShort>
+            <SysteminfoItem label={t("kontakt.system.personalia.fnr")}>
+                {formatFodselsnummer(fodselsnummer ?? "")}
+            </SysteminfoItem>
+            <SysteminfoItem label={t("kontakt.system.personalia.statsborgerskap")}>{statsborgerskap}</SysteminfoItem>
+            <BodyShort className={"pt-3"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
         </Systeminfo>
     ));
 };
