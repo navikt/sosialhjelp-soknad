@@ -8,17 +8,8 @@ const formaterAdresseString = (sokTreff: AdresseForslag | null | undefined) => {
 
 const formaterSoknadsadresse = (soknadAdresse?: GateadresseFrontend | null) => {
     if (!soknadAdresse) return "";
-
     const {gatenavn, husnummer, husbokstav, postnummer, poststed} = soknadAdresse;
-
     return `${gatenavn} ${husnummer}${husbokstav ? ` ${husbokstav}` : ""}, ${postnummer} ${poststed}`;
 };
 
-const removeDuplicatesAfterTransform = (myArray: any[], transform: (item: any) => any) => {
-    const propArray = myArray.map((elem) => transform(elem));
-    return myArray.filter((obj, pos) => {
-        return propArray.indexOf(propArray[pos]) === pos;
-    });
-};
-
-export {formaterAdresseString, removeDuplicatesAfterTransform, formaterSoknadsadresse};
+export {formaterAdresseString, formaterSoknadsadresse};

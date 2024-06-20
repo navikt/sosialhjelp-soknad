@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as z from "zod";
 import {BegrunnelseFrontend} from "../../generated/model";
-import {Alert, Textarea} from "@navikt/ds-react";
+import {Alert, BodyShort, Textarea} from "@navikt/ds-react";
 import {FieldError, useForm} from "react-hook-form";
 import {useTranslation} from "react-i18next";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -62,14 +62,22 @@ export const Begrunnelse = () => {
                             id={"hvaSokesOm"}
                             error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
                             label={begrunnelseNyTekst ? t("hva.label") : t("hva.label.old")}
-                            description={begrunnelseNyTekst ? t("hva.description") : t("hva.description.old")}
+                            description={
+                                begrunnelseNyTekst ? (
+                                    <BodyShort>{t("hva.description")}</BodyShort>
+                                ) : (
+                                    <BodyShort>{t("hva.description.old")}</BodyShort>
+                                )
+                            }
                         />
                         <Textarea
                             {...register("hvorforSoke")}
                             id={"hvorforSoke"}
-                            label={begrunnelseNyTekst ? t("hvorfor.label") : t("hvorfor.label.old")}
-                            description={begrunnelseNyTekst ? t("hvorfor.description") : undefined}
                             error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
+                            label={begrunnelseNyTekst ? t("hvorfor.label") : t("hvorfor.label.old")}
+                            description={
+                                begrunnelseNyTekst ? <BodyShort>{t("hvorfor.description")}</BodyShort> : undefined
+                            }
                         />
                     </form>
                 )}

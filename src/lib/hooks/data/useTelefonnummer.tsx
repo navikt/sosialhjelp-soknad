@@ -15,7 +15,7 @@ export const useTelefonnummer = () => {
             queryKey,
             await updateTelefonnummer(behandlingsId, {
                 brukerdefinert: !!brukerutfyltVerdi?.length,
-                brukerutfyltVerdi: brukerutfyltVerdi?.length ? `+47${brukerutfyltVerdi}` : null,
+                brukerutfyltVerdi: brukerutfyltVerdi?.length ? `${brukerutfyltVerdi}` : null,
             })
         );
 

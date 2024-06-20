@@ -1,4 +1,4 @@
-import {logError} from "../../lib/utils/loggerUtils";
+import {logError} from "../../lib/log/loggerUtils";
 
 /**
  * React form hook preprocessor for tekstfelt beløp.

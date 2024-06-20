@@ -1,34 +1,15 @@
 import {UnmountClosed} from "react-collapse";
-import styled from "styled-components";
 import * as React from "react";
 
 // Liten pil opp for å sette skjemaet i kontekst med forrige
-const UnderskjemaArrow = styled.div`
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 0.75rem 0.75rem 0.75rem;
-    border-color: transparent transparent #f1f1f1 transparent;
-    margin: 0;
-    margin-left: 1rem;
-    padding: 0;
-`;
-
-interface NyttUnderskjemaProps {
-    hidden?: boolean;
-    children: React.ReactNode;
-}
-
-const UnderskjemaContainer = styled.div`
-    background-color: #f1f1f1;
-    border-radius: 8px;
-    padding: 1rem;
-`;
+const UnderskjemaArrow = () => (
+    <div className="w-0 h-0 border-[.75rem] border-t-0 border-transparent border-b-[var(--a-surface-action-subtle)] ml-4" />
+);
 
 // Jeg får ikke refaktorert Underskjema enda; for mye kode som skal refaktoreres avhenger av den.
-export const NyttUnderskjema = ({hidden, children}: NyttUnderskjemaProps) => (
+export const NyttUnderskjema = ({hidden, children}: {hidden?: boolean; children: React.ReactNode}) => (
     <UnmountClosed isOpened={!hidden}>
         <UnderskjemaArrow />
-        <UnderskjemaContainer>{children}</UnderskjemaContainer>
+        <div className={"bg-[var(--a-surface-action-subtle)] rounded-lg p-4 shadow-lg"}>{children}</div>
     </UnmountClosed>
 );

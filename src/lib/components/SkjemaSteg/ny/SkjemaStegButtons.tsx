@@ -2,11 +2,11 @@ import * as React from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {SkjemaStegContext} from "./SkjemaSteg";
-import {AvbrytSoknadModal} from "../../../modals/AvbrytSoknadModal";
 import {useContext, useState} from "react";
-import {NavEnhetInaktiv} from "../../../.././pages/01-personalia/adresse/NavEnhet";
 import {minSideURL} from "../../../config";
-import {logError} from "../../../../lib/utils/loggerUtils";
+import {logError} from "../../../log/loggerUtils";
+import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
+import {NavEnhetInaktiv} from "../../../../pages/01-personalia/adresse/NavEnhetInaktiv";
 
 interface SkjemaStegNavigasjonProps {
     loading?: boolean;
@@ -26,10 +26,10 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
     const {page, requestNavigation} = context;
 
     return (
-        <div className={"space-y-8 lg:space-y-16 pt-2 md:pt-5 lg:pt-10 pb-8 lg:pb-16"}>
+        <div>
             {page !== 9 && <NavEnhetInaktiv />}
             <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
-            <div className="space-x-3">
+            <div className={"!mt-12 md:!mt-16 lg:!mt-24 !mb-8 lg:!mb-16 space-x-3"}>
                 <Button
                     variant="secondary"
                     id="gaa_tilbake_button"
@@ -49,7 +49,7 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
                     {loading && <Loader className={"ml-2"} />}
                 </Button>
             </div>
-            <div>
+            <div className={"pb-8 lg:pb-16"}>
                 <Button variant="tertiary" onClick={() => (window.location.href = minSideURL)}>
                     {t("avbryt.fortsettsenere")}
                 </Button>

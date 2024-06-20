@@ -5,7 +5,8 @@ import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {useAnsvar} from "../../lib/hooks/data/useAnsvar";
 import {z} from "zod";
-import {ValideringsFeilKode} from "../../lib/redux/validering/valideringActionTypes";
+
+import {ValideringsFeilKode} from "../../lib/validering";
 
 const SamvaersgradSchema = z.coerce
     .number({invalid_type_error: ValideringsFeilKode.ER_TALL})
@@ -19,7 +20,7 @@ export const BarnSkjema = ({barnIndex}: {barnIndex: number}) => {
     if (!ansvar) return null;
 
     return (
-        <div>
+        <div className={"!mt-16 !mb-16"}>
             {ansvar.erFolkeregistrertSammen ? (
                 <YesNoInput
                     legend={t("system.familie.barn.true.barn.deltbosted.sporsmal")}
@@ -29,7 +30,7 @@ export const BarnSkjema = ({barnIndex}: {barnIndex: number}) => {
                         </DigisosReadMore>
                     }
                     defaultValue={ansvar.harDeltBosted}
-                    name={"deltbosted"}
+                    name={`deltbosted_barn${barnIndex}`}
                     onChange={(checked) => setHarDeltBosted(checked)}
                 />
             ) : (

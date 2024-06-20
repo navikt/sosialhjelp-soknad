@@ -36,7 +36,7 @@ export const HusbankenSaker = ({saker}: {saker: MonkeypatchedJsonBostotteSak[]})
             </Table.Header>
             <Table.Body>
                 {saker.map((sak, index) => (
-                    <Table.Row key={index}>
+                    <Table.Row key={index} shadeOnHover={false}>
                         <Table.DataCell colSpan={2}>{format(new Date(sak.dato!), "LLLL yyyy")}</Table.DataCell>
                         <Table.DataCell>{t(getSakStatus(sak.vedtaksstatus!, sak.status))}</Table.DataCell>
                     </Table.Row>

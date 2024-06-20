@@ -1,7 +1,7 @@
 import * as React from "react";
 import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlaceholder";
-import {Alert, Detail, Heading, Link} from "@navikt/ds-react";
-import {Trans, useTranslation} from "react-i18next";
+import {Alert, Heading} from "@navikt/ds-react";
+import {useTranslation} from "react-i18next";
 import {NavYtelserTable} from "./NavYtelserTable";
 import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId";
 import {useHentSystemregistrerteInntekter} from "../../../generated/systemregistrert-inntekt-ressurs/systemregistrert-inntekt-ressurs";
@@ -26,19 +26,6 @@ export const NavYtelser = () => {
                 {t("navytelser.sporsmal")}
             </Heading>
             <NavYtelserTable systeminntekter={systeminntekter} />
-            <Detail>
-                <Trans
-                    t={t}
-                    i18nKey={"utbetalinger.infotekst.tekst.v2"}
-                    components={{
-                        lenke: (
-                            <Link href={t("utbetalinger.infotekst.tekst.url")} target="_blank">
-                                {null}
-                            </Link>
-                        ),
-                    }}
-                />
-            </Detail>
         </div>
     );
 };

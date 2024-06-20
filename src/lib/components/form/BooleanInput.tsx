@@ -16,6 +16,8 @@ export type BaseBooleanInputProps = {
     defaultValue?: boolean | null;
     value?: boolean | null;
     name: string;
+    trueLabel?: string;
+    falseLabel?: string;
     ref?: React.Ref<HTMLInputElement>;
 } & Pick<RadioGroupProps, "error" | "onBlur">;
 
@@ -27,7 +29,7 @@ interface GenericBooleanInputProps {
 export const BooleanInput = React.forwardRef(
     (
         {
-            radioLabels: [trueLabel, falseLabel],
+            radioLabels: [defaultTrueLabel, defaultFalseLabel],
             defaultValue,
             onChange,
             onBlur,
@@ -36,6 +38,8 @@ export const BooleanInput = React.forwardRef(
             name,
             value,
             error,
+            trueLabel,
+            falseLabel,
         }: BaseBooleanInputProps & GenericBooleanInputProps,
         ref: React.ForwardedRef<HTMLInputElement>
     ) => (
@@ -50,8 +54,8 @@ export const BooleanInput = React.forwardRef(
             value={value?.toString()}
             defaultValue={defaultValue?.toString()}
         >
-            <BooleanInputRadio value={"true"} label={trueLabel} />
-            <BooleanInputRadio value={"false"} label={falseLabel} />
+            <BooleanInputRadio value={"true"} label={trueLabel ? trueLabel : defaultTrueLabel} />
+            <BooleanInputRadio value={"false"} label={falseLabel ? falseLabel : defaultFalseLabel} />
         </RadioGroup>
     )
 );

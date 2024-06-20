@@ -4,12 +4,12 @@ import {useTranslation} from "react-i18next";
 import {Button, Heading, Panel, TextField} from "@navikt/ds-react";
 import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {z} from "zod";
-import {format, parse} from "date-fns";
-import {isValidDate} from "@navikt/ds-react/esm/date/utils";
+import {format, isValid, parse} from "date-fns";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {EktefelleFrontend, SivilstatusFrontend} from "../../generated/model";
-import {ValideringsFeilKode} from "../../lib/redux/validering/valideringActionTypes";
+
+import {ValideringsFeilKode} from "../../lib/validering";
 
 const SivilstatusSchema = z.object({
     ektefelle: z.object({
@@ -22,7 +22,7 @@ const SivilstatusSchema = z.object({
             .string()
             .optional()
             .transform((str) => (str?.length ? parse(str, "ddMMyyyy", 0) : undefined))
-            .refine((date) => (date ? isValidDate(date) : true), ValideringsFeilKode.ER_FDATO)
+            .refine((date) => (date ? isValid(date) : true), ValideringsFeilKode.ER_FDATO)
             .transform((date) => date && format(date, "yyyy-MM-dd")),
         personnummer: z.string().optional(),
     }),
@@ -32,7 +32,7 @@ const SivilstatusSchema = z.object({
 // Transforms dato from yyyy-MM-dd to ddMMYYYY
 const reformatEktefelleDato = (fodselsdato: string) => {
     const parsed = parse(fodselsdato, "yyyy-MM-dd", new Date());
-    return isValidDate(parsed) ? format(parsed, "ddMMyyyy") : "";
+    return isValid(parsed) ? format(parsed, "ddMMyyyy") : "";
 };
 
 export const EktefellePersonaliaForm = ({

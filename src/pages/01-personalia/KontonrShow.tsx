@@ -5,45 +5,84 @@ import {useTranslation} from "react-i18next";
 import * as React from "react";
 import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import {formatKontonummer} from "@fremtind/jkl-formatters-util";
+import {LinkButton} from "../../lib/components/LinkButton";
+import {PencilWritingIcon} from "@navikt/aksel-icons";
+import {BodyShort} from "@navikt/ds-react";
 
-export const KontonrShowBrukerdefinert = () => {
-    const {t} = useTranslation("skjema", {keyPrefix: "kontakt.kontonummer"});
+export const KontonrShowBrukerdefinert = ({onEdit}: {onEdit?: () => void}) => {
+    const {t} = useTranslation("skjema");
     const {expectOK} = useAlgebraic(useHentKontonummer(useBehandlingsId()));
 
     return expectOK(({brukerutfyltVerdi}) => (
-        <SysteminfoItem comment={t("bruker")} label={t(`label`)}>
-            {formatKontonummer(brukerutfyltVerdi ?? "")}
-        </SysteminfoItem>
+        <li className={"flex flex-row place-content-between"}>
+            <div>
+                <SysteminfoItem>{formatKontonummer(brukerutfyltVerdi ?? "")}</SysteminfoItem>
+            </div>
+            {onEdit && (
+                <div className={"flex flex-row items-center navds-link pr-3"}>
+                    <PencilWritingIcon />
+                    <LinkButton onClick={onEdit} data-testid="kontonummer-endreknapp">
+                        {t("kontakt.system.kontonummer.endreknapp.label")}
+                    </LinkButton>
+                </div>
+            )}
+        </li>
     ));
 };
-
-export const KontonrShowSysteminfo = () => {
-    const {t} = useTranslation("skjema", {keyPrefix: ""});
+export const KontonrShowSysteminfo = ({onEdit}: {onEdit?: () => void}) => {
+    const {t} = useTranslation("skjema");
     const {expectOK} = useAlgebraic(useHentKontonummer(useBehandlingsId()));
 
     return expectOK(({systemverdi}) => (
-        <SysteminfoItem comment={t("kontakt.system.personalia.infotekst.tekst")} label={t(`kontakt.kontonummer.label`)}>
-            {formatKontonummer(systemverdi ?? "")}
-        </SysteminfoItem>
+        <li className={"flex flex-row place-content-between"}>
+            <div>
+                <SysteminfoItem>{formatKontonummer(systemverdi ?? "")}</SysteminfoItem>
+                <BodyShort className={"pt-2"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
+            </div>
+            {onEdit && (
+                <div className={"flex flex-row items-center navds-link pr-3"}>
+                    <PencilWritingIcon />
+                    <LinkButton onClick={onEdit} data-testid="kontonummer-endreknapp">
+                        {t("kontakt.system.kontonummer.endreknapp.label")}
+                    </LinkButton>
+                </div>
+            )}
+        </li>
     ));
 };
-export const KontonrShow = () => {
-    const {t} = useTranslation("skjema", {keyPrefix: ""});
+
+export const KontonrShow = ({onEdit}: {onEdit?: () => void}) => {
+    const {t} = useTranslation("skjema");
 
     const {expectOK} = useAlgebraic(useHentKontonummer(useBehandlingsId()));
 
     return expectOK(({brukerdefinert, systemverdi, brukerutfyltVerdi, harIkkeKonto}) => {
         if (harIkkeKonto)
             return (
-                <SysteminfoItem comment={t("kontakt.kontonummer.bruker")} label={t(`kontakt.kontonummer.sporsmal`)}>
-                    <span className={"italic"}> {t("kontakt.kontonummer.harikke.true")}</span>
-                </SysteminfoItem>
+                <>
+                    <BodyShort className={"pb-3"}>{t("kontakt.kontonummer.bruker")}</BodyShort>
+                    <SysteminfoItem label={t(`kontakt.kontonummer.sporsmal`)}>
+                        <span className={"italic"}> {t("kontakt.kontonummer.harikke.true")}</span>
+                    </SysteminfoItem>
+                </>
             );
 
-        if (brukerdefinert && brukerutfyltVerdi) return <KontonrShowBrukerdefinert />;
+        if (brukerdefinert && brukerutfyltVerdi) return <KontonrShowBrukerdefinert onEdit={onEdit} />;
 
-        if (systemverdi) return <KontonrShowSysteminfo />;
+        if (systemverdi) return <KontonrShowSysteminfo onEdit={onEdit} />;
 
-        return <div>{t("kontakt.kontonummer.ingeninfo")}</div>;
+        return (
+            <li>
+                {t("kontakt.kontonummer.ingeninfo")} <br />
+                <div className={"flex flex-row items-center navds-link"}>
+                    {onEdit && (
+                        <>
+                            <PencilWritingIcon />
+                            <LinkButton onClick={onEdit}>{t("kontakt.kontonummer.oppgi")}</LinkButton>
+                        </>
+                    )}
+                </div>
+            </li>
+        );
     });
 };

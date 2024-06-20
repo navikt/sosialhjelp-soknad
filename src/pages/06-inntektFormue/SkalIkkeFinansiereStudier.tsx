@@ -6,7 +6,7 @@ export const SkalIkkeFinansiereStudier = () => {
     const {t} = useTranslation("skjema");
 
     return (
-        <GuidePanel className={"!-ml-10"}>
+        <GuidePanel>
             <Heading level={"3"} size={"small"} spacing>
                 {t("informasjon.student.studielan.tittel")}
             </Heading>

@@ -1,17 +1,17 @@
 import {Alert, Button, ExpansionCard, Heading, Loader} from "@navikt/ds-react";
 import * as React from "react";
-import {Personopplysninger} from "./Personopplysninger";
 import {FillForms} from "@navikt/ds-icons";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
 import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
-import {logAmplitudeEvent} from "../../../lib/utils/amplitude";
 import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {NedetidPanel} from "../../../lib/components/NedetidPanel";
+import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const NySoknadInfo = () => {
+    const {logEvent} = useAmplitude();
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
     const [startSoknadError, setStartSoknadError] = useState<Error | null>(null);
 
@@ -26,7 +26,7 @@ export const NySoknadInfo = () => {
     const onSokSosialhjelpButtonClick = async (event: React.SyntheticEvent) => {
         setStartSoknadPending(true);
         event.preventDefault();
-        logAmplitudeEvent("skjema startet", {
+        logEvent("skjema startet", {
             antallNyligInnsendteSoknader,
             antallPabegynteSoknader,
             enableModalV2: true,
@@ -46,10 +46,9 @@ export const NySoknadInfo = () => {
     return (
         <>
             <NySoknadVelkomst />
-            <Personopplysninger />
             <NedetidPanel varselType={"infoside"} />
             {startSoknadError && <Alert variant="error">{t("applikasjon.opprettsoknadfeilet")}</Alert>}
-            <div className={"pt-16 text-center"}>
+            <div className={"text-center"}>
                 <Button
                     variant="primary"
                     id="start_soknad_button"
@@ -70,10 +69,10 @@ const NySoknadIkon = () => (
     </div>
 );
 
-export const NySoknadPanel = () => {
+export const NySoknadPanel = ({defaultOpen}: {defaultOpen?: boolean}) => {
     const {t} = useTranslation("skjema");
     return (
-        <ExpansionCard aria-label={t("applikasjon.start.ny.soknad")}>
+        <ExpansionCard aria-label={t("applikasjon.start.ny.soknad")} defaultOpen={defaultOpen}>
             <ExpansionCard.Header className={"!border-0 [&>button]:my-auto"}>
                 <div className={"flex items-center gap-6 h-full"}>
                     <NySoknadIkon />

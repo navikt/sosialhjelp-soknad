@@ -4,10 +4,11 @@ import {
     updateForsorgerplikt,
     useHentForsorgerplikt,
 } from "../../../generated/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
-import {logAmplitudeEvent} from "../../../lib/utils/amplitude";
 import {useEffect} from "react";
+import {useAmplitude} from "../../amplitude/useAmplitude";
 
 export const useForsorgerplikt = () => {
+    const {logEvent} = useAmplitude();
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
     const {data: forsorgerplikt, isPending, queryKey} = useHentForsorgerplikt(behandlingsId);
@@ -19,7 +20,7 @@ export const useForsorgerplikt = () => {
 
         if (harDeltBosted !== undefined) {
             oppdatert.ansvar[barnIndex].harDeltBosted = harDeltBosted;
-            logAmplitudeEvent("svart på sporsmal", {
+            logEvent("svart på sporsmal", {
                 sporsmal: "Har barnet delt bosted?",
                 verdi: harDeltBosted ? "Ja" : "Nei",
             });
@@ -28,7 +29,7 @@ export const useForsorgerplikt = () => {
         if (samvaersgrad !== undefined) {
             oppdatert.ansvar[barnIndex].samvarsgrad = samvaersgrad;
 
-            logAmplitudeEvent("svart på sporsmal", {
+            logEvent("svart på sporsmal", {
                 sporsmal: "Hvor mye tid tilbringer du sammen med barnet?",
                 verdi: samvaersgrad.toString(),
             });
@@ -41,8 +42,8 @@ export const useForsorgerplikt = () => {
     useEffect(() => {
         forsorgerplikt?.ansvar
             ?.filter(({erFolkeregistrertSammen}) => !erFolkeregistrertSammen)
-            .forEach((barnet) => {
-                logAmplitudeEvent("sporsmal ikke vist", {
+            .forEach((_) => {
+                logEvent("sporsmal ikke vist", {
                     sporsmal: "Har barnet delt bosted?",
                 });
             });

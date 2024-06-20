@@ -1,5 +1,5 @@
 import {AxiosError, isAxiosError} from "axios";
-import {logError} from "../../../lib/utils/loggerUtils";
+import {logError} from "../../log/loggerUtils";
 
 export const handleAxiosError = (error: AxiosError) => {
     if (!error.response) {

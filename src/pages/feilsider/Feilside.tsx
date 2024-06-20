@@ -13,7 +13,7 @@ export interface FeilsideProps {
     children: React.ReactNode;
     visKnapp?: boolean;
     knappTekst?: string;
-    onClick?: (event: React.MouseEvent<any>) => void;
+    onClick?: (event: React.MouseEvent) => void;
 }
 
 const Feilside = ({

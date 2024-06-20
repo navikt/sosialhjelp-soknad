@@ -21,7 +21,7 @@ export const FilePreviewThumbs = ({
             <div>
                 <ChevronLeftIcon
                     className={"text-4xl cursor-pointer"}
-                    onMouseDown={(e) => {
+                    onMouseDown={(_e) => {
                         setIntervalId((intervalId) => {
                             if (intervalId) clearInterval(intervalId);
                             return setInterval(() => {
@@ -57,7 +57,7 @@ export const FilePreviewThumbs = ({
             <div>
                 <ChevronRightIcon
                     className={"text-4xl cursor-pointer"}
-                    onMouseDown={(e) => {
+                    onMouseDown={(_e) => {
                         setIntervalId((intervalId) => {
                             if (intervalId) clearInterval(intervalId);
                             return setInterval(() => {

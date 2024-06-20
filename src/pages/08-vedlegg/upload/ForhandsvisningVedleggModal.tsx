@@ -9,9 +9,9 @@ import "react-pdf/dist/Page/TextLayer.css";
 import {FilePreviewButtons} from "./FilePreviewButtons";
 import {FilePreviewDisplay} from "./FilePreviewDisplay";
 import {VedleggFrontendType} from "../../../generated/model";
-import {useOpplysningTekster} from "../useOpplysningTekster";
+import {useOpplysningTekster} from "../../../lib/hooks/dokumentasjon/useOpplysningTekster";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 
 interface ForhandsvisningModalProps {
     file: File;
@@ -26,14 +26,20 @@ export const ForhandsvisningVedleggModal = ({
     file,
     onAccept,
     onClose,
-    onDelete,
+    //onDelete,
 }: ForhandsvisningModalProps) => {
     const [isFullscreen, setFullscreen] = useState<boolean>(false);
     const {t} = useTranslation();
     const {leggTilDokumentasjon} = useOpplysningTekster(opplysningType);
 
     return (
-        <Modal open={true} onClose={onClose} closeOnBackdropClick={false} className={"bg-gray-800/80"}>
+        <Modal
+            open={true}
+            onClose={onClose}
+            closeOnBackdropClick={false}
+            className={"bg-gray-800/80"}
+            aria-label={leggTilDokumentasjon ?? ""}
+        >
             <Modal.Header>
                 <Heading level={"2"} size={"medium"}>
                     {leggTilDokumentasjon}
@@ -52,7 +58,7 @@ export const ForhandsvisningVedleggModal = ({
                     {file.type === "application/pdf" ? (
                         <>
                             <FilePreviewButtons
-                                onDelete={onDelete}
+                                //onDelete={onDelete}
                                 isFullscreen={isFullscreen}
                                 setFullscreen={setFullscreen}
                             />
@@ -61,7 +67,7 @@ export const ForhandsvisningVedleggModal = ({
                     ) : (
                         <>
                             <FilePreviewButtons
-                                onDelete={onDelete}
+                                //onDelete={onDelete}
                                 isFullscreen={isFullscreen}
                                 setFullscreen={setFullscreen}
                             />

@@ -24,7 +24,13 @@ export const AlreadyUploadedCheckbox = ({opplysning, disabled}: {opplysning: Opp
         await queryClient.refetchQueries({queryKey});
 
         await updateOkonomiskOpplysning(behandlingsId, {
-            ...{...opplysning, vedleggStatus: undefined, slettet: undefined, pendingLasterOppFil: undefined},
+            ...{
+                ...opplysning,
+                filer: [...(opplysning.filer ?? [])],
+                vedleggStatus: undefined,
+                slettet: undefined,
+                pendingLasterOppFil: undefined,
+            },
             alleredeLevert,
         });
 

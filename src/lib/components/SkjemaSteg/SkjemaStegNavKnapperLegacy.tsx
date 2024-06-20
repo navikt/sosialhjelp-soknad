@@ -1,10 +1,10 @@
 import * as React from "react";
 import {Button, Loader} from "@navikt/ds-react";
-import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {SkjemaConfig, SkjemaSteg} from "./digisosSkjema";
 import {useState} from "react";
 import {minSideURL} from "../../config";
+import {AvbrytSoknadModal} from "../modals/AvbrytSoknadModal";
 
 interface SkjemaStegNavigasjonProps {
     skjemaConfig: SkjemaConfig;
@@ -27,52 +27,50 @@ export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep, onSend}: Sk
     return (
         <>
             <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
-            <div className={"space-y-8 lg:space-y-16 pt-2 md:pt-5 lg:pt-10 pb-8 lg:pb-16"}>
-                <div className="space-x-3">
+            <div className={"!mt-12 md:!mt-16 lg:!mt-24 !mb-8 lg:!mb-16 space-x-3"}>
+                <Button
+                    variant="secondary"
+                    id="gaa_tilbake_button"
+                    onClick={() => goToStep(steg.id - 1)}
+                    disabled={backwardInhibited}
+                >
+                    {t("skjema.knapper.forrige")}
+                    {loading && <Loader />}
+                </Button>
+                {steg.type === "skjema" ? (
                     <Button
-                        variant="secondary"
-                        id="gaa_tilbake_button"
-                        onClick={() => goToStep(steg.id - 1)}
-                        disabled={backwardInhibited}
+                        variant="primary"
+                        id="gaa_videre_button"
+                        onClick={() => goToStep(steg.id + 1)}
+                        disabled={forwardInhibited}
                     >
-                        {t("skjema.knapper.forrige")}
+                        {t("skjema.knapper.neste")}
                         {loading && <Loader />}
                     </Button>
-                    {steg.type === "skjema" ? (
-                        <Button
-                            variant="primary"
-                            id="gaa_videre_button"
-                            onClick={() => goToStep(steg.id + 1)}
-                            disabled={forwardInhibited}
-                        >
-                            {t("skjema.knapper.neste")}
-                            {loading && <Loader />}
-                        </Button>
-                    ) : (
-                        <Button
-                            variant="primary"
-                            id="send_button"
-                            onClick={async () => {
-                                if (!onSend) return;
-                                setSendSoknadPending(true);
-                                await onSend();
-                                setSendSoknadPending(false);
-                            }}
-                            disabled={sendSoknadPending || forwardInhibited}
-                        >
-                            {t("skjema.knapper.send")}
-                            {sendSoknadPending && <Loader className={"ml-2 h-[1em]"} />}
-                        </Button>
-                    )}
-                </div>
-                <div>
-                    <Button variant="tertiary" onClick={() => (window.location.href = minSideURL)}>
-                        {t("avbryt.fortsettsenere")}
+                ) : (
+                    <Button
+                        variant="primary"
+                        id="send_button"
+                        onClick={async () => {
+                            if (!onSend) return;
+                            setSendSoknadPending(true);
+                            await onSend();
+                            setSendSoknadPending(false);
+                        }}
+                        disabled={sendSoknadPending || forwardInhibited}
+                    >
+                        {t("skjema.knapper.send")}
+                        {sendSoknadPending && <Loader className={"ml-2 h-[1em]"} />}
                     </Button>
-                    <Button variant="tertiary" onClick={() => setAvbrytModalOpen(true)}>
-                        {t("avbryt.slett")}
-                    </Button>
-                </div>
+                )}
+            </div>
+            <div className={"pb-8 lg:pb-16"}>
+                <Button variant="tertiary" onClick={() => (window.location.href = minSideURL)}>
+                    {t("avbryt.fortsettsenere")}
+                </Button>
+                <Button variant="tertiary" onClick={() => setAvbrytModalOpen(true)}>
+                    {t("avbryt.slett")}
+                </Button>
             </div>
         </>
     );

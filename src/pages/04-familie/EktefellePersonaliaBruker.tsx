@@ -6,21 +6,18 @@ import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import {BodyShort} from "@navikt/ds-react";
 import * as React from "react";
 import {LocalizedDate} from "../../lib/components/LocalizedDate";
-import {EktefelleFrontend} from "../../generated/model";
 import {FullName} from "../01-personalia/FulltNavn";
 
-export const EktefellePersonaliaBruker = ({ektefelle}: {ektefelle: EktefelleFrontend | undefined}) => {
+export const EktefellePersonaliaBruker = () => {
     const {t} = useTranslation("skjema");
     const {expectOK} = useAlgebraic(useHentSivilstatus(useBehandlingsId()));
 
     // FIXME: Handle the reverse case of this if clause
-    return expectOK(({ektefelle, borSammenMed, harDiskresjonskode}) =>
+    return expectOK(({ektefelle, borSammenMed}) =>
         ektefelle?.navn ? (
             <>
-                <SysteminfoItem
-                    comment={<BodyShort spacing>{t("system.familie.sivilstatus.label")}:</BodyShort>}
-                    label={t(`system.familie.sivilstatus.gift.ektefelle.navn`)}
-                >
+                <BodyShort className={"pb-3"}>{t("system.familie.sivilstatus.label")}</BodyShort>
+                <SysteminfoItem label={t(`system.familie.sivilstatus.gift.ektefelle.navn`)}>
                     <FullName name={ektefelle.navn} />
                 </SysteminfoItem>
                 {ektefelle?.fodselsdato && (

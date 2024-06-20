@@ -1,6 +1,5 @@
 import * as React from "react";
-import {ReactNode, useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {ReactNode, useContext, useEffect, useState} from "react";
 import Feiloppsummering from "../Feiloppsummering";
 import {useTitle} from "../../hooks/common/useTitle";
 import {Heading, Link} from "@navikt/ds-react";
@@ -9,17 +8,16 @@ import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepperLegacy} from "./SkjemaStegNavStepperLegacy";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapperLegacy from "./SkjemaStegNavKnapperLegacy";
-import {TimeoutBox} from "../../modals/TimeoutBox";
-import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
+import {AvbrytSoknadModal} from "../../components/modals/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
-import {NavEnhetInaktiv} from "../../.././pages/01-personalia/adresse/NavEnhet";
-import {useBehandlingsId} from "../../hooks/common/useBehandlingsId";
-import {hentXsrfCookie} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {t} from "i18next";
-import {State} from "../../redux/reducers";
 import {AppHeader} from "../appHeader/AppHeader";
 import {scrollToTop} from "../../utils";
+
+import {ValideringsContext} from "../../valideringContextProvider";
+import {NavEnhetInaktiv} from "../../../pages/01-personalia/adresse/NavEnhetInaktiv";
+import {RequireXsrfCookie} from "./ny/RequireXsrfCookie";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
@@ -40,32 +38,25 @@ export const useSkjemaConfig = (skjemaConfig: SkjemaConfig, steg: DigisosSkjemaS
     };
 };
 
-function SkjemaStegHeading(props: {ikon: ReactNode; stegTittel: string}) {
-    return (
-        <div className={"text-center mb-12 lg:mb-24"}>
-            <div className="mx-auto w-fit mb-2">{props.ikon}</div>
-            <div className="skjema-steg__tittel" tabIndex={-1}>
-                <Heading size={"large"}>{props.stegTittel}</Heading>
-            </div>
+const SkjemaStegHeading = ({ikon, stegTittel}: {ikon: ReactNode; stegTittel: string}) => (
+    <div className={"text-center mb-12 lg:mb-24"}>
+        <div className="mx-auto w-fit mb-2">{ikon}</div>
+        <div className="skjema-steg__tittel" tabIndex={-1}>
+            <Heading size={"large"}>{stegTittel}</Heading>
         </div>
-    );
-}
+    </div>
+);
 
 export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: StegMedNavigasjonProps) => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
     const {data: nedetid} = useHentNedetidInformasjon();
+
     const {
-        validering: {feil, visValideringsfeil},
-    } = useSelector((state: State) => state);
+        state: {feil, visValideringsfeil},
+    } = useContext(ValideringsContext);
 
     const {stegTittel, documentTitle, aktivtSteg} = useSkjemaConfig(skjemaConfig, steg);
     const {gotoPage} = useSkjemaNavigation(aktivtSteg.id);
-
-    const behandlingsId = useBehandlingsId();
-    // Midlertidig hack for å forhindre XSRF-feil
-    useEffect(() => {
-        hentXsrfCookie(behandlingsId).then();
-    }, [behandlingsId]);
 
     useEffect(() => {
         scrollToTop();
@@ -74,31 +65,32 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: S
     useTitle(`${stegTittel} - ${documentTitle}`);
 
     return (
-        <div className="pb-4 lg:pb-40 gap-10 flex flex-col bg-digisosGronnBakgrunn">
-            <Link href="#main-content" className="sr-only sr-only-focusable">
-                {t("hoppTilHovedinnhold")}
-            </Link>
-            <AppHeader className={"w-full"} />
-            <SkjemaStegNavStepperLegacy skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={gotoPage} />
-            <div className={"w-full max-w-3xl mx-auto"}>
-                <NedetidPanel varselType={"infoside"} />
-                <Feiloppsummering valideringsfeil={feil} visFeilliste={visValideringsfeil} />
-                <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8"}>
-                    <SkjemaStegHeading ikon={ikon} stegTittel={stegTittel} />
-                    <main id="main-content" className={"space-y-12 lg:space-y-24"}>
-                        {children}
-                    </main>
-                    <TimeoutBox sessionDurationInMinutes={30} showWarningerAfterMinutes={25} />
-                    <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
-                    {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && <NavEnhetInaktiv />}
-                    <SkjemaStegNavKnapperLegacy
-                        skjemaConfig={skjemaConfig}
-                        steg={skjemaConfig.steg[steg]}
-                        goToStep={gotoPage}
-                        onSend={onSend}
-                    />
+        <RequireXsrfCookie>
+            <div className="pb-4 lg:pb-40 gap-10 flex flex-col bg-digisosGronnBakgrunn">
+                <Link href="#main-content" className="sr-only sr-only-focusable">
+                    {t("hoppTilHovedinnhold")}
+                </Link>
+                <AppHeader className={"w-full"} />
+                <SkjemaStegNavStepperLegacy skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={gotoPage} />
+                <div className={"w-full max-w-3xl mx-auto"}>
+                    <NedetidPanel varselType={"infoside"} />
+                    {visValideringsfeil && <Feiloppsummering valideringsfeil={feil} />}
+                    <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8"}>
+                        <SkjemaStegHeading ikon={ikon} stegTittel={stegTittel} />
+                        <main id="main-content" className={"space-y-12 lg:space-y-24"}>
+                            {children}
+                        </main>
+                        <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
+                        {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && <NavEnhetInaktiv />}
+                        <SkjemaStegNavKnapperLegacy
+                            skjemaConfig={skjemaConfig}
+                            steg={skjemaConfig.steg[steg]}
+                            goToStep={gotoPage}
+                            onSend={onSend}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
+        </RequireXsrfCookie>
     );
 };

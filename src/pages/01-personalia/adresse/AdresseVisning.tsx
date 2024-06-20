@@ -2,7 +2,7 @@ import Detaljeliste, {DetaljelisteElement} from "../../../lib/components/detalje
 import * as React from "react";
 import {AdresseFrontend} from "../../../generated/model";
 import {useTranslation} from "react-i18next";
-import {logError} from "../../../lib/utils/loggerUtils";
+import {logError} from "../../../lib/log/loggerUtils";
 
 export const AdresseVisning = ({adresse}: {adresse?: AdresseFrontend}) => {
     const {t} = useTranslation();
@@ -14,13 +14,8 @@ export const AdresseVisning = ({adresse}: {adresse?: AdresseFrontend}) => {
         const {gatenavn, husnummer, husbokstav, postnummer, poststed} = gateadresse;
         return (
             <Detaljeliste>
-                <li className="detaljeliste__element">
-                    {gatenavn} {husnummer}
-                    {husbokstav}
-                </li>
-                <li className="detaljeliste__element">
-                    {postnummer} {poststed}
-                </li>
+                {gatenavn} {husnummer}
+                {husbokstav}, {postnummer} {poststed}
             </Detaljeliste>
         );
     } else if (matrikkeladresse) {

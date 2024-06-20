@@ -7,27 +7,29 @@ import * as React from "react";
 import {LocalizedDate} from "../../lib/components/LocalizedDate";
 import {FullName} from "../01-personalia/FulltNavn";
 import {LocalizedYesNo} from "../../lib/components/LocalizedYesNo";
+import {BodyShort} from "@navikt/ds-react";
 
 export const EktefellePersonaliaSystem = () => {
-    const {t} = useTranslation("skjema", {keyPrefix: "system.familie.sivilstatus"});
+    const {t} = useTranslation("skjema", {keyPrefix: "system.familie"});
     const {expectOK} = useAlgebraic(useHentSivilstatus(useBehandlingsId()));
 
     // FIXME: Handle the reverse case of this if clause
-    return expectOK(({ektefelle, erFolkeregistrertSammen, harDiskresjonskode}) =>
+    return expectOK(({ektefelle, erFolkeregistrertSammen}) =>
         ektefelle?.navn ? (
             <>
-                <SysteminfoItem label={t("label")} comment={t("system.familie.sivilstatus")} />
-                <SysteminfoItem label={t(`gift.ektefelle.navn`)}>
+                <BodyShort className={"pb-3"}>{t("sivilstatus.label")} </BodyShort>
+                <SysteminfoItem label={t(`sivilstatus.gift.ektefelle.navn`)}>
                     <FullName name={ektefelle.navn} />
                 </SysteminfoItem>
                 {ektefelle?.fodselsdato && (
-                    <SysteminfoItem label={t(`gift.ektefelle.fodselsdato`)}>
+                    <SysteminfoItem label={t(`sivilstatus.gift.ektefelle.fodselsdato`)}>
                         <LocalizedDate date={ektefelle.fodselsdato} />
                     </SysteminfoItem>
                 )}
-                <SysteminfoItem label={t(`gift.ektefelle.folkereg`)}>
+                <SysteminfoItem label={t(`sivilstatus.gift.ektefelle.folkereg`)}>
                     <LocalizedYesNo value={erFolkeregistrertSammen} />
                 </SysteminfoItem>
+                <BodyShort className={"pt-3"}>{t("sivilstatus")}</BodyShort>
             </>
         ) : null
     );

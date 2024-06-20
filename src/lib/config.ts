@@ -67,6 +67,7 @@ export const baseURL = config.baseURL;
 export const innsynURL = config.innsynURL;
 export const minSideURL = config.minSideURL;
 export const logoutURL = config.logoutURL;
-// Note: This value is duplicated in server.js because the imports are weird
+// Note: This value is duplicated in server.mjs because the imports are weird
 export const basePath = "/sosialhjelp/soknad" as const;
+export const linkPagePath = "/sosialhjelp/soknad/link" as const;
 export default config;
