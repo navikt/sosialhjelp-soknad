@@ -16,14 +16,15 @@ export type OpplysningSpecTekster = {
  * @param opplysningType
  */
 export const useOpplysningTekster = (opplysningType: VedleggFrontendType): OpplysningSpecTekster => {
-    const {textKey, numRows} = opplysningSpec[opplysningType];
+    const {numRows} = opplysningSpec[opplysningType];
     const {t, i18n} = useTranslation("dokumentasjon");
 
     const sanityCheck = () => {
-        if (!i18n.exists(`${textKey}.sporsmal`)) throw new Error(`Missing translation for ${textKey}.sporsmal`);
+        if (!i18n.exists(`dokumentasjon:${opplysningType}.sporsmal`))
+            throw new Error(`Missing translation for ${opplysningType}.sporsmal`);
 
-        if (!i18n.exists(`${textKey}.leggtil`) && numRows === "flere")
-            throw new Error(`Missing translation for ${textKey}.leggtil`);
+        if (!i18n.exists(`dokumentasjon:${opplysningType}.leggtil`) && numRows === "flere")
+            throw new Error(`Missing translation for ${opplysningType}.leggtil`);
     };
 
     const sporsmal = t(`${opplysningType}.sporsmal` as const);
