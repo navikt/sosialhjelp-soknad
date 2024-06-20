@@ -588,7 +588,7 @@
     "kontakt.telefon.beskrivelse": "To make it easier to contact you, we require your telephone number.",
     "kontakt.telefon.oppgi": "Enter phone number",
     "kontakt.telefon.feil.tom": "You must enter a telephone number",
-    "kontakt.telefon.feil.maxLength": "Sorry, phone number must be 11 digits or less.",
+    "kontakt.telefon.feil.maxLength": "Sorry, phone number cannot be longer than 8 digits.",
     "kontakt.telefon.feil.ugyldig": "Phone number is not valid",
     "kontakt.telefon.infotekst.tekst": "The telephone number you provide here can be used to contact you regarding your application.",
     "kontakt.telefon.label": "Telephone number",
