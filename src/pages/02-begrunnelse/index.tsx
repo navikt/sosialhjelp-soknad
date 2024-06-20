@@ -9,6 +9,7 @@ import {useFeatureFlags} from "../../lib/featureFlags";
 import {inhibitNavigation, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useBegrunnelse} from "../../lib/hooks/data/useBegrunnelse";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
+import {DigisosLanguageKey} from "../../lib/i18n";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;
@@ -23,7 +24,7 @@ export const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) =
 
     if (!error?.message) return null;
 
-    return <>{t(error.message)}</>;
+    return <>{t(error.message as DigisosLanguageKey<"skjema", "validering">)}</>;
 };
 
 const Feilmelding = () => {
@@ -33,7 +34,7 @@ const Feilmelding = () => {
 
 export const Begrunnelse = () => {
     const {get: defaultValues, put, isError, isPending} = useBegrunnelse();
-    const {t} = useTranslation("skjema", {keyPrefix: "begrunnelse"});
+    const {t} = useTranslation("skjema");
     // TODO: Avklare denne. Er det behov lenger?
     const {begrunnelseNyTekst} = useFeatureFlags();
 
@@ -61,12 +62,16 @@ export const Begrunnelse = () => {
                             {...register("hvaSokesOm")}
                             id={"hvaSokesOm"}
                             error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
-                            label={begrunnelseNyTekst ? t("hva.label") : t("hva.label.old")}
+                            label={
+                                begrunnelseNyTekst
+                                    ? t("begrunnelse.hva.label.stringValue")
+                                    : t("begrunnelse.hva.label.old")
+                            }
                             description={
                                 begrunnelseNyTekst ? (
-                                    <BodyShort>{t("hva.description")}</BodyShort>
+                                    <BodyShort>{t("begrunnelse.hva.description.stringValue")}</BodyShort>
                                 ) : (
-                                    <BodyShort>{t("hva.description.old")}</BodyShort>
+                                    <BodyShort>{t("begrunnelse.hva.description.old")}</BodyShort>
                                 )
                             }
                         />
@@ -74,9 +79,15 @@ export const Begrunnelse = () => {
                             {...register("hvorforSoke")}
                             id={"hvorforSoke"}
                             error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
-                            label={begrunnelseNyTekst ? t("hvorfor.label") : t("hvorfor.label.old")}
+                            label={
+                                begrunnelseNyTekst
+                                    ? t("begrunnelse.hvorfor.label.stringValue")
+                                    : t("begrunnelse.hvorfor.label.old")
+                            }
                             description={
-                                begrunnelseNyTekst ? <BodyShort>{t("hvorfor.description")}</BodyShort> : undefined
+                                begrunnelseNyTekst ? (
+                                    <BodyShort>{t("begrunnelse.hvorfor.description")}</BodyShort>
+                                ) : undefined
                             }
                         />
                     </form>

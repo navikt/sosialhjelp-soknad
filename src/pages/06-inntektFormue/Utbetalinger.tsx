@@ -43,7 +43,7 @@ export const Utbetalinger = () => {
                         <Checkbox value={"forsikring"}>
                             {t("inntekt.inntekter.true.type.forsikringsutbetalinger")}
                         </Checkbox>
-                        <Checkbox value={"annet"}>{t("inntekt.inntekter.true.type.annet")}</Checkbox>
+                        <Checkbox value={"annet"}>{t("inntekt.inntekter.true.type.annet.stringValue")}</Checkbox>
                         <UnmountClosed isOpened={utbetalinger.annet}>
                             <Textarea
                                 label={t("inntekt.inntekter.true.type.annet.true.beskrivelse.label")}

@@ -180,37 +180,38 @@ export const skjema = {
     },
     begrunnelse: {
         hva: {
-            description: 'Eksempel på tekst: "Jeg søker om penger til mat, husleie og strøm."',
-            label: "Hva søker du om?",
+            description: {
+                old: "For eksempel penger til/utgifter for å leve og husleie",
+                stringValue: 'Eksempel på tekst: "Jeg søker om penger til mat, husleie og strøm."',
+            },
+            label: {
+                old: "Skriv med stikkord hva du søker om",
+                stringValue: "Hva søker du om?",
+            },
         },
         hvorfor: {
             description:
                 'Eksempel på tekst: "Jeg er arbeidssøker og har ikke penger til å kjøpe mat eller betale husleie."',
-            label: "Fortell oss kort om situasjonen din",
+            label: {
+                old: "Gi en kort begrunnelse for søknaden",
+                stringValue: "Fortell oss kort om situasjonen din",
+            },
         },
     },
     begrunnelsebolk: {
         tittel: "Behov",
     },
     bosituasjon: {
-        annet: {
-            botype: {
-                familie: "Bor hos familie",
-                fengsel: "Fengsel",
-                foreldre: "Bor hos foreldre",
-                institusjon: "Institusjon (sykehus, psykiatri eller rusbehandling)",
-                krisesenter: "Krisesenter",
-                sporsmal: "Vil du utdype?",
-                venner: "Bor hos venner",
-            },
-            true: {
-                botype: {
-                    familie: "Bor hos familie",
-                    venner: "Bor hos venner",
-                },
-            },
-            stringValue: "Annen bosituasjon",
+        annenBotype: {
+            familie: "Bor hos familie",
+            fengsel: "Fengsel",
+            foreldre: "Bor hos foreldre",
+            institusjon: "Institusjon (sykehus, psykiatri eller rusbehandling)",
+            krisesenter: "Krisesenter",
+            sporsmal: "Vil du utdype?",
+            venner: "Bor hos venner",
         },
+        annet: "Annen bosituasjon",
         antallpersoner: {
             label: "Antall. Ikke tell med deg selv.",
             sporsmal: "Hvor mange personer bor du sammen med?",

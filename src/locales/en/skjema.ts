@@ -199,36 +199,37 @@ export const skjema = {
     },
     begrunnelse: {
         hva: {
-            description: 'Example of text: "I am applying for support for food, rent and electricity."',
-            label: "What are you applying for?",
+            description: {
+                old: "For example, money for living expenses and rent",
+                stringValue: 'Example of text: "I am applying for support for food, rent and electricity."',
+            },
+            label: {
+                old: "Using key words, state what you are applying for",
+                stringValue: "What are you applying for?",
+            },
         },
         hvorfor: {
             description: 'Example of text: "I am a jobseeker and do not have money to purchase food or to pay rent."',
-            label: "Tell us briefly about your situation",
+            label: {
+                old: "Give a brief reason for the application",
+                stringValue: "Tell us briefly about your situation",
+            },
         },
     },
     begrunnelsebolk: {
         tittel: "Your needs",
     },
     bosituasjon: {
-        annet: {
-            botype: {
-                familie: "With family",
-                fengsel: "Prison",
-                foreldre: "With parents",
-                institusjon: "Institution (hospital, psychiatric or substance abuse treatment)",
-                krisesenter: "Crisis centre",
-                sporsmal: "Do you wish to provide more details?",
-                venner: "With friends",
-            },
-            true: {
-                botype: {
-                    familie: "Living with family",
-                    venner: "Living with friends",
-                },
-            },
-            stringValue: "Other living situation",
+        annenBotype: {
+            familie: "With family",
+            fengsel: "Prison",
+            foreldre: "With parents",
+            institusjon: "Institution (hospital, psychiatric or substance abuse treatment)",
+            krisesenter: "Crisis centre",
+            sporsmal: "Do you wish to provide more details?",
+            venner: "With friends",
         },
+        annet: "Other living situation",
         antallpersoner: {
             label: "Number. Not including yourself.",
             sporsmal: "How many people do you live with?",

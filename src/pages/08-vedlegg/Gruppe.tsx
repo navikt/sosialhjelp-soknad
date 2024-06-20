@@ -6,17 +6,18 @@ import {Opplysning} from "../../lib/opplysninger";
 import {VedleggFrontendGruppe} from "../../generated/model";
 import {useSkatteetatenData} from "../../lib/hooks/data/useSkatteetatenData";
 import {SkatteetatenDokumentasjon} from "./SkatteetatenDokumentasjon";
+import {DigisosLanguageKey} from "../../lib/i18n";
 
-const Gruppetittel: Record<VedleggFrontendGruppe, string> = {
-    statsborgerskap: "opplysninger.statsborgerskap",
-    arbeid: "opplysninger.arbeid",
-    familie: "opplysninger.familiesituasjon",
-    bosituasjon: "opplysninger.bosituasjon",
-    inntekt: "opplysninger.inntekt",
-    utgifter: "opplysninger.utgifter",
-    "generelle vedlegg": "opplysninger.generell",
-    "andre utgifter": "opplysninger.ekstrainfo",
-};
+const Gruppetittel: Record<VedleggFrontendGruppe, DigisosLanguageKey> = {
+    statsborgerskap: "opplysninger.statsborgerskap.sporsmal",
+    arbeid: "opplysninger.arbeid.sporsmal",
+    familie: "opplysninger.familiesituasjon.sporsmal",
+    bosituasjon: "opplysninger.bosituasjon.sporsmal",
+    inntekt: "opplysninger.inntekt.sporsmal",
+    utgifter: "opplysninger.utgifter.sporsmal",
+    "generelle vedlegg": "opplysninger.generell.sporsmal",
+    "andre utgifter": "opplysninger.ekstrainfo.sporsmal",
+} as const;
 
 export const Gruppe = ({gruppeKey, opplysninger}: {gruppeKey: VedleggFrontendGruppe; opplysninger: Opplysning[]}) => {
     const {t} = useTranslation();
@@ -29,7 +30,7 @@ export const Gruppe = ({gruppeKey, opplysninger}: {gruppeKey: VedleggFrontendGru
     return (
         <div className={"grid gap-4 py-4"}>
             <Heading level={"3"} size={"medium"} className={"pb-6"}>
-                {t(`${Gruppetittel[gruppeKey]}.sporsmal`)}
+                {t(`${Gruppetittel[gruppeKey]}`)}
             </Heading>
 
             {visSkatteHack && <SkatteetatenDokumentasjon />}

@@ -1,4 +1,4 @@
-import {VedleggFrontend, VedleggFrontendGruppe, VedleggFrontendType} from "../generated/model";
+import {type VedleggFrontend, VedleggFrontendGruppe, VedleggFrontendType} from "../generated/model";
 
 export type Opplysning = VedleggFrontend & {
     slettet?: boolean;

@@ -62,7 +62,7 @@ const PabegynteSoknaderCount = ({className}: {className?: string}) => {
         open.length ? (
             <span className={cx("opacity-70 font-normal", className)}>
                 {open.length === 1
-                    ? `1 ${t("applikasjon.paabegynt.soknad")}`
+                    ? `1 ${t("applikasjon.paabegynt.soknad.stringValue")}`
                     : `${open.length} ${t("applikasjon.paabegynt.soknad.flertall")}`}
             </span>
         ) : null

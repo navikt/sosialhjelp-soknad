@@ -198,37 +198,38 @@ export const skjema = {
     },
     begrunnelse: {
         hva: {
-            description: 'Døme på tekst: "Eg søkjer om pengar til mat, husleige og straum."',
-            label: "Kva søkjer du om?",
+            description: {
+                old: "Til dømes pengar til/utgifter husleige og for å leve",
+                stringValue: 'Døme på tekst: "Eg søkjer om pengar til mat, husleige og straum."',
+            },
+            label: {
+                old: "Skriv i stikkordsform kva du søkjer om",
+                stringValue: "Kva søkjer du om?",
+            },
         },
         hvorfor: {
             description:
                 'Døme på tekst: "Eg er arbeidssøkjar og har ikkje pengar til å kjøpe mat eller betale husleige."',
-            label: "Fortel oss kort om situasjonen din",
+            label: {
+                old: "Grunngi kort søknaden",
+                stringValue: "Fortel oss kort om situasjonen din",
+            },
         },
     },
     begrunnelsebolk: {
         tittel: "Behov",
     },
     bosituasjon: {
-        annet: {
-            botype: {
-                familie: "Bur hos familie",
-                fengsel: "Fengsel",
-                foreldre: "Bur hos foreldra",
-                institusjon: "Institusjon (sjukehus, psykiatri eller rusbehandling)",
-                krisesenter: "Krisesenter",
-                sporsmal: "Vil du utdjupe?",
-                venner: "Bur hos vennar",
-            },
-            true: {
-                botype: {
-                    familie: "Bur hos familie",
-                    venner: "Bur hos vennar",
-                },
-            },
-            stringValue: "Annan busituasjon",
+        annenBotype: {
+            familie: "Bur hos familie",
+            fengsel: "Fengsel",
+            foreldre: "Bur hos foreldra",
+            institusjon: "Institusjon (sjukehus, psykiatri eller rusbehandling)",
+            krisesenter: "Krisesenter",
+            sporsmal: "Vil du utdjupe?",
+            venner: "Bur hos vennar",
         },
+        annet: "Annan busituasjon",
         antallpersoner: {
             label: "Tal",
             sporsmal: "Kor mange personar bur du saman med?",

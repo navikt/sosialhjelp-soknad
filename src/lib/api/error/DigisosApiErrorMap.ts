@@ -1,6 +1,7 @@
 import {ValideringsFeilKode} from "../../validering";
 import {SoknadApiErrorError} from "../../../generated/model";
 import {REST_FEIL} from "./restFeil";
+import {DigisosLanguageKey} from "../../i18n";
 
 /**
  * Oversikt mellom FeilmeldingFeilType fra backend og språknøkkel på frontend.
@@ -8,7 +9,7 @@ import {REST_FEIL} from "./restFeil";
  * Alle andre er håndtert med GENERELL_FEIL.
  * Dersom axiosInstance skal bruke denne, bør den utvides med flere feil.
  */
-export const DigisosApiErrorMap: Record<SoknadApiErrorError, ValideringsFeilKode | REST_FEIL> = {
+export const DigisosApiErrorMap: Record<SoknadApiErrorError, DigisosLanguageKey> = {
     Forbidden: REST_FEIL.GENERELL_FEIL,
     GeneralError: REST_FEIL.GENERELL_FEIL,
     InnsendingIkkeAktivert: REST_FEIL.GENERELL_FEIL,

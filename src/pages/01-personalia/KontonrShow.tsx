@@ -60,7 +60,7 @@ export const KontonrShow = ({onEdit}: {onEdit?: () => void}) => {
         if (harIkkeKonto)
             return (
                 <>
-                    <BodyShort className={"pb-3"}>{t("kontakt.kontonummer.bruker")}</BodyShort>
+                    <BodyShort className={"pb-3"}>{t("kontakt.kontonummer.bruker.stringValue")}</BodyShort>
                     <SysteminfoItem label={t(`kontakt.kontonummer.sporsmal`)}>
                         <span className={"italic"}> {t("kontakt.kontonummer.harikke.true")}</span>
                     </SysteminfoItem>

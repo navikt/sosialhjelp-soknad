@@ -5,10 +5,6 @@ const OBSOLETE_KEYS = [
     "utbetalinger.inntekt.skattbar.gi_samtykke.true",
     "utbetalinger.inntekt.skattbar.gi_samtykke.false",
     "avbryt",
-    "begrunnelse.hva.description.old",
-    "begrunnelse.hva.label.old",
-    "begrunnelse.hvorfor.description.old",
-    "begrunnelse.hvorfor.label.old",
     "inntekt.bostotte.husbanken.mottaker",
     "inntekt.bostotte.husbanken.status",
     "inntekt.bostotte.husbanken.vedtaksstatus",
@@ -17,6 +13,8 @@ const OBSOLETE_KEYS = [
     "opplysninger.ekstrainfo.utgifter.beskrivelse.pattern",
     "applikasjon.sidetittel.kortnavn",
     "utgifter.barn.typer.annet.true.beskrivelse.label",
+    "bosituasjon.annet.true.botype.familie",
+    "bosituasjon.annet.true.botype.venner",
 ] as (keyof FlatLanguageFile)[];
 
 export const deleteObsoleteKeys = (original: FlatLanguageFile): FlatLanguageFile => {

@@ -22,14 +22,14 @@ export const EktefellePersonaliaSystem = () => {
                     <FullName name={ektefelle.navn} />
                 </SysteminfoItem>
                 {ektefelle?.fodselsdato && (
-                    <SysteminfoItem label={t(`sivilstatus.gift.ektefelle.fodselsdato`)}>
+                    <SysteminfoItem label={t(`sivilstatus.gift.ektefelle.fodselsdato.stringValue`)}>
                         <LocalizedDate date={ektefelle.fodselsdato} />
                     </SysteminfoItem>
                 )}
                 <SysteminfoItem label={t(`sivilstatus.gift.ektefelle.folkereg`)}>
                     <LocalizedYesNo value={erFolkeregistrertSammen} />
                 </SysteminfoItem>
-                <BodyShort className={"pt-3"}>{t("sivilstatus")}</BodyShort>
+                <BodyShort className={"pt-3"}>{t("sivilstatus.stringValue")}</BodyShort>
             </>
         ) : null
     );

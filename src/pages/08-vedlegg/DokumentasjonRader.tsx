@@ -6,7 +6,6 @@ import {useOpplysningTekster} from "../../lib/hooks/dokumentasjon/useOpplysningT
 
 export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) => {
     const {
-        textKey,
         multirow,
         inputs,
         form: {control},
@@ -25,7 +24,7 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
                     {entries.map(({id}, index) => (
                         <OpplysningInputRad
                             key={id}
-                            textKey={textKey}
+                            textKey={opplysning.type}
                             index={index}
                             control={control}
                             fields={inputs}

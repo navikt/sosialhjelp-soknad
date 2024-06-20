@@ -6,6 +6,7 @@ import {KontonummerFrontend, KontonummerInputDTO} from "../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {formatKontonummer, registerWithMasks} from "@fremtind/jkl-formatters-util";
+import {DigisosLanguageKey} from "../../lib/i18n";
 
 const KontonummerRegex = new RegExp("^\\d{11}$");
 
@@ -69,15 +70,15 @@ export const KontonrEdit = ({
                 disabled={watch("harIkkeKonto") === true}
                 required={false}
                 maxLength={13}
-                error={kontonummerError?.message && t(kontonummerError.message)}
+                error={kontonummerError?.message && t(kontonummerError.message as DigisosLanguageKey)}
             />
-            <Checkbox {...register("harIkkeKonto")}>{t("kontakt.kontonummer.harikke")}</Checkbox>
+            <Checkbox {...register("harIkkeKonto")}>{t("kontakt.kontonummer.harikke.stringValue")}</Checkbox>
             <div className={"space-x-2"}>
                 <Button type={"submit"} data-testid="lagre-kontonummer">
                     {t("lagreEndring")}
                 </Button>
                 <Button variant="secondary" onClick={onCancel}>
-                    {t("avbryt")}
+                    {t("avbryt.avbryt")}
                 </Button>
             </div>
         </form>

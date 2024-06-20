@@ -79,7 +79,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
         setError(null);
 
         if (maxUploadSize != null && file.size > maxUploadSize) {
-            setError(t(REST_FEIL.FOR_STOR, {maxUploadSize: humanizeFilesize(maxUploadSize)}));
+            setError(t("vedlegg.opplasting.feil.forStor", {maxUploadSize: humanizeFilesize(maxUploadSize)}));
 
             return Promise.reject(new Error("for stor"));
         }

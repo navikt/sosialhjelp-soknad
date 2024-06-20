@@ -3,6 +3,7 @@ import {useContext} from "react";
 import {ValideringsContext} from "../../valideringContextProvider";
 
 import {ValidationArea} from "../../ValidationArea";
+import {DigisosLanguageKey} from "../../i18n";
 
 export const useValidering = (faktumKey: ValidationArea) => {
     const {t} = useTranslation("skjema");
@@ -13,7 +14,7 @@ export const useValidering = (faktumKey: ValidationArea) => {
 
     const errorMessage = error ? (t(error.feilkode) as string) : undefined;
 
-    const setError = (feilkode: string | null) => {
+    const setError = (feilkode: DigisosLanguageKey | null) => {
         if (feilkode)
             dispatch({
                 type: "setValideringsfeil",

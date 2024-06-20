@@ -1,12 +1,12 @@
 import dot from "dot-object";
-import {readOriginalFile} from "./lib/readOriginalFile.ts";
-import {orderObjectByKeys} from "./lib/orderObjectByKeys.ts";
-import {solveStringObjectDuplication} from "./lib/solveStringObjectDuplication.ts";
-import {stringifyNumericKeys} from "./lib/stringifyNumericKeys.ts";
-import {deleteObsoleteRootKeys} from "./lib/deleteObsoleteRootKeys.ts";
-import {saveTypescriptObject} from "./lib/saveTypescriptObject.ts";
-import {moveDokumentasjonKeys} from "./lib/moveDokumentasjonKeys.ts";
-import {deleteObsoleteKeys} from "./lib/deleteObsoleteKeys.ts";
+import {readOriginalFile} from "./lib/readOriginalFile";
+import {orderObjectByKeys} from "./lib/orderObjectByKeys";
+import {solveStringObjectDuplication} from "./lib/solveStringObjectDuplication";
+import {stringifyNumericKeys} from "./lib/stringifyNumericKeys";
+import {deleteObsoleteRootKeys} from "./lib/deleteObsoleteRootKeys";
+import {saveTypescriptObject} from "./lib/saveTypescriptObject";
+import {moveDokumentasjonKeys} from "./lib/moveDokumentasjonKeys";
+import {deleteObsoleteKeys} from "./lib/deleteObsoleteKeys";
 
 const LANGUAGES = ["nb", "en", "nn"] as const;
 

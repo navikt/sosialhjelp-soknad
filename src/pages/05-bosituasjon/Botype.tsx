@@ -26,15 +26,15 @@ export const Botype = () => {
             </RadioGroup>
             <NyttUnderskjema hidden={!erAnnet()}>
                 <RadioGroup
-                    legend={t("bosituasjon.annet.botype.sporsmal")}
+                    legend={t("bosituasjon.annenBotype.sporsmal")}
                     onChange={(botype) => setBosituasjon({botype})}
                 >
-                    <Radio value={"foreldre"}>{t("bosituasjon.annet.botype.foreldre")}</Radio>
-                    <Radio value={"familie"}>{t("bosituasjon.annet.botype.familie")}</Radio>
-                    <Radio value={"venner"}>{t("bosituasjon.annet.botype.venner")}</Radio>
-                    <Radio value={"institusjon"}>{t("bosituasjon.annet.botype.institusjon")}</Radio>
-                    <Radio value={"fengsel"}>{t("bosituasjon.annet.botype.fengsel")}</Radio>
-                    <Radio value={"krisesenter"}>{t("bosituasjon.annet.botype.krisesenter")}</Radio>
+                    <Radio value={"foreldre"}>{t("bosituasjon.annenBotype.foreldre")}</Radio>
+                    <Radio value={"familie"}>{t("bosituasjon.annenBotype.familie")}</Radio>
+                    <Radio value={"venner"}>{t("bosituasjon.annenBotype.venner")}</Radio>
+                    <Radio value={"institusjon"}>{t("bosituasjon.annenBotype.institusjon")}</Radio>
+                    <Radio value={"fengsel"}>{t("bosituasjon.annenBotype.fengsel")}</Radio>
+                    <Radio value={"krisesenter"}>{t("bosituasjon.annenBotype.krisesenter")}</Radio>
                 </RadioGroup>
             </NyttUnderskjema>
         </div>
