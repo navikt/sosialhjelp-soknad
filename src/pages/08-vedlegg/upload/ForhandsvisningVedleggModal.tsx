@@ -11,7 +11,7 @@ import {FilePreviewDisplay} from "./FilePreviewDisplay";
 import {VedleggFrontendType} from "../../../generated/model";
 import {useOpplysningTekster} from "../../../lib/hooks/dokumentasjon/useOpplysningTekster";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 
 interface ForhandsvisningModalProps {
     file: File;

@@ -1,9 +1,9 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
 import {isLocalhost, isMockAlt} from "../utils";
-import {UnauthorizedMelding} from "../../generated/model";
 import {logError, logInfo, logWarning} from "../log/loggerUtils";
 import {baseURL, linkPagePath} from "../config";
-import {buildGotoSearchParameter} from "./auth/buildGotoSearchParameter";
+import {isLoginError} from "./error/isLoginError";
+import {getGotoParameter} from "./auth/getGotoParameter";
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL,
@@ -24,6 +24,8 @@ export type DigisosAxiosConfig = {
     // (Useful to prevent packet storms from calls to the logger failing)
     digisosIgnoreErrors?: boolean;
 };
+
+const neverResolves = <T>() => new Promise<T>(() => {});
 
 /**
  * Digisos Axios client
@@ -52,29 +54,28 @@ export const axiosInstance = <T>(
         .catch(async (e) => {
             if (!(e instanceof AxiosError)) await logWarning(`non-axioserror error ${e} in axiosinstance`);
 
-            if (isCancel(e) || options?.digisosIgnoreErrors) return new Promise<T>(() => {});
+            if (isCancel(e) || options?.digisosIgnoreErrors) return neverResolves();
 
-            if (!e.response) {
+            const {response} = e;
+
+            if (!response) {
                 await logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
                 console.warn(e);
                 throw e;
             }
 
-            const {status, data} = e.response;
-
-            if (status === 401) {
-                const {loginUrl} = data as UnauthorizedMelding;
-                const loginPage = new URL(loginUrl);
-                const redirectUrl = `${origin}${linkPagePath}?${buildGotoSearchParameter(window.location)}`;
-                loginPage.searchParams.set("redirect", redirectUrl);
-                window.location.assign(loginPage);
-                return new Promise<T>(() => {});
+            if (isLoginError(response)) {
+                const redirect = `?redirect=${origin}${linkPagePath}?goto=${getGotoParameter(window.location)}`;
+                window.location.assign(response.data.loginUrl + redirect);
+                return neverResolves();
             }
+
+            const {status, data} = response;
 
             // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
             if ([403, 404, 410].includes(status)) {
                 window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
-                return new Promise<T>(() => {});
+                return neverResolves();
             }
 
             // Conflict -- try again
