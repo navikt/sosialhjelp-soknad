@@ -43,17 +43,22 @@ const routes = (
         <Route path={`feil`} element={<ServerFeil />} />
         <Route path={`link`} loader={redirectToGotoSearchParameter} />
         <Route path={`kastException`} element={<ExceptionThrower />} />
-        <Route path={"skjema/:behandlingsId"}>
-            <Route index path="1" element={<Personopplysninger />} />
-            <Route path="2" element={<Begrunnelse />} />
-            <Route path="3" element={<ArbeidOgUtdanning />} />
-            <Route path="4" element={<Familie />} />
-            <Route path="5" element={<Bosituasjon />} />
-            <Route path="6" element={<InntektFormue />} />
-            <Route path="7" element={<UtgifterGjeld />} />
-            <Route path="8" element={<OkonomiskeOpplysningerView />} />
-            <Route path="9" element={<Oppsummering />} />
-            <Route element={<SideIkkeFunnet />} />
+        <Route path={"skjema"}>
+            <Route path="kort/:behandlingsId">
+                <Route index path="1" element={<Personopplysninger />} />
+            </Route>
+            <Route path=":behandlingsId">
+                <Route index path="1" element={<Personopplysninger />} />
+                <Route path="2" element={<Begrunnelse />} />
+                <Route path="3" element={<ArbeidOgUtdanning />} />
+                <Route path="4" element={<Familie />} />
+                <Route path="5" element={<Bosituasjon />} />
+                <Route path="6" element={<InntektFormue />} />
+                <Route path="7" element={<UtgifterGjeld />} />
+                <Route path="8" element={<OkonomiskeOpplysningerView />} />
+                <Route path="9" element={<Oppsummering />} />
+                <Route element={<SideIkkeFunnet />} />
+            </Route>
         </Route>
     </Route>
 );

@@ -34,9 +34,14 @@ export const NySoknadInfo = () => {
             language: localStorage.getItem("digisos-language"),
         });
         try {
-            const {brukerBehandlingId} = await opprettSoknad();
+            const {brukerBehandlingId, useKortSoknad} = await opprettSoknad();
             await hentXsrfCookie(brukerBehandlingId);
-            navigate(`../skjema/${brukerBehandlingId}/1`);
+            // TODO: Få info om kort eller lang søknad i responsen og evaluer her
+            if (useKortSoknad) {
+                navigate(`../skjema/kort/${brukerBehandlingId}/1`);
+            } else {
+                navigate(`../skjema/${brukerBehandlingId}/1`);
+            }
         } catch (e) {
             setStartSoknadError(e);
             setStartSoknadPending(false);
