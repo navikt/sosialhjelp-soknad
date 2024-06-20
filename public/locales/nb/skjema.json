@@ -582,7 +582,7 @@
     "kontakt.telefon.beskrivelse": "For at vi enkelt skal kunne komme i kontakt med def trenger vi ditt telefonnummer",
     "kontakt.telefon.oppgi": "Oppgi telefonnummer",
     "kontakt.telefon.feil.tom": "Telefonnummer må fylles ut",
-    "kontakt.telefon.feil.maxLength": "Beklager, telefonnummer kan ikke være lenger enn 11 siffer.",
+    "kontakt.telefon.feil.maxLength": "Beklager, telefonnummer kan ikke være lenger enn 8 siffer.",
     "kontakt.telefon.feil.ugyldig": "Ikke gyldig telefonnummer",
     "kontakt.telefon.infotekst.tekst": "Telefonnummeret du oppgir her kan bli brukt til å ta kontakt med deg om søknaden.",
     "kontakt.telefon.label": "Telefonnummer",

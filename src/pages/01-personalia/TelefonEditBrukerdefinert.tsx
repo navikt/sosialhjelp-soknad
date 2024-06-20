@@ -1,10 +1,10 @@
 import {useTranslation} from "react-i18next";
-import {BodyShort, Button, Select, TextField} from "@navikt/ds-react";
+import {BodyShort, Button, /*Select,*/ TextField} from "@navikt/ds-react";
 import * as React from "react";
 import {useTelefonnummer} from "../../lib/hooks/data/useTelefonnummer";
-import * as libphonenumber from "libphonenumber-js";
+//import * as libphonenumber from "libphonenumber-js";
 import {isValidNumber, parsePhoneNumber} from "libphonenumber-js";
-import {emojiFlag} from "./EmojiFlag";
+//import {emojiFlag} from "./EmojiFlag";
 import {useForm} from "react-hook-form";
 import * as z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -12,11 +12,11 @@ import {DigisosLanguageKey} from "../../lib/i18n";
 
 const TelefonnummerFormSchema = z
     .object({
-        phoneNumber: z.string().min(1, "kontakt.telefon.feil.tom").max(12, "kontakt.telefon.feil.maxLength"),
+        phoneNumber: z.string().min(1, "kontakt.telefon.feil.tom").max(11, "kontakt.telefon.feil.maxLength"),
         countryCode: z.string(),
     })
     .refine(({phoneNumber, countryCode}) => isValidNumber(`+${countryCode}${phoneNumber}`), {
-        message: "kontakt.telefon.feil.ugyldig",
+        message: "kontakt.telefon.feil.maxLength",
         path: ["phoneNumber"],
     });
 
@@ -43,6 +43,37 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
         onClose();
     });
 
+    //TODO: LEGG TILBAKE ETTER AVKLARING
+    /**
+     *                <div className={"flex gap-2 pb-2"}>
+     *                     <div>
+     *                         <Select
+     *                             hideLabel={true}
+     *                             label={t("kontakt.telefon.landskode")}
+     *                             {...register("countryCode")}
+     *                             error={formState.errors.countryCode && t(formState.errors.phoneNumber!.message!)}
+     *                         >
+     *                             {libphonenumber
+     *                                 .getCountries()
+     *                                 .map((country) => [
+     *                                     emojiFlag(country.toString()),
+     *                                     libphonenumber.getCountryCallingCode(country),
+     *                                 ])
+     *                                 .map(([flagEmoji, callingCode]) => (
+     *                                     <option
+     *                                         key={callingCode}
+     *                                         value={callingCode}
+     *                                     >{`${flagEmoji} +${callingCode}`}</option>
+     *                                 ))}
+     *                         </Select>
+     *                     </div>
+     *                   </div>
+     *
+     *
+     *
+     *
+     */
+
     return (
         <form onSubmit={onSubmit} className={"space-y-4 pt-8"}>
             <BodyShort weight={"semibold"}>{t("kontakt.telefon.tittel")}</BodyShort>
@@ -50,27 +81,6 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
                 {t("kontakt.telefon.description")}
             </BodyShort>
             <div className={"flex gap-2 pb-2"}>
-                <div>
-                    <Select
-                        hideLabel={true}
-                        label={t("kontakt.telefon.landskode")}
-                        {...register("countryCode")}
-                        error={
-                            formState.errors.countryCode &&
-                            t(formState.errors.phoneNumber!.message! as DigisosLanguageKey)
-                        }
-                    >
-                        {libphonenumber
-                            .getCountries()
-                            .map((country) => [
-                                emojiFlag(country.toString()),
-                                libphonenumber.getCountryCallingCode(country),
-                            ])
-                            .map(([flagEmoji, callingCode]) => (
-                                <option key={callingCode} value={callingCode}>{`${flagEmoji} +${callingCode}`}</option>
-                            ))}
-                    </Select>
-                </div>
                 <TextField
                     {...register("phoneNumber")}
                     maxLength={12}
