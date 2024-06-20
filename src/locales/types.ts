@@ -28,33 +28,6 @@ type DokumentasjonTextFields = {
     dokumentInfo?: string;
 };
 
+export type DokumentasjonAntallRader = "ingen" | "en" | "flere";
+
 export type DokumentasjonTexts = DokumentasjonRadTypes & DokumentasjonRadObsoleteTypes & DokumentasjonTextFields;
-
-/*
-Ny versjon for bruk med typesikker i18n
-
-export const ensureMandatoryStringsPresent = (
-    opplysningType: VedleggFrontendType,
-    dokumentTekster: DokumentasjonTexts
-) => {
-    const {numRows} = opplysningSpec[opplysningType];
-
-    if (!dokumentTekster.sporsmal) throw new Error(`Missing translation for ${opplysningType}.sporsmal`);
-
-    if (!dokumentTekster.dokumentBeskrivelse)
-        throw new Error(`Missing translation for ${opplysningType}.dokumentBeskrivelse`);
-
-    if (numRows === "flere" && !dokumentTekster.leggtil)
-        throw new Error(`Missing translation for ${opplysningType}.leggtil`);
-};
-
-export const useOpplysningTekster = (opplysningType: VedleggFrontendType): DokumentasjonTexts => {
-    const {t} = useTranslation("dokumentasjon");
-
-    const dokumentTekster = t(opplysningType, {returnObjects: true}) as DokumentStrenger;
-    ensureMandatoryStringsPresent(opplysningType, dokumentTekster);
-
-    return dokumentTekster;
-};
-
- */

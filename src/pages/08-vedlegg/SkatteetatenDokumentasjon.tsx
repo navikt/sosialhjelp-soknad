@@ -1,6 +1,6 @@
 import {useSkatteetatenData} from "../../lib/hooks/data/useSkatteetatenData";
 import {useTranslation} from "react-i18next";
-import {useOpplysningTekster} from "../../lib/hooks/dokumentasjon/useOpplysningTekster";
+import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokumentasjonTekster";
 import {Heading, Link} from "@navikt/ds-react";
 import {HentetFraSkatteetaten} from "./HentetFraSkatteetaten";
 import {MinusIcon} from "@navikt/aksel-icons";
@@ -9,7 +9,7 @@ import * as React from "react";
 export const SkatteetatenDokumentasjon = () => {
     const {inntekt, setSamtykke} = useSkatteetatenData();
     const {t} = useTranslation();
-    const {sporsmal} = useOpplysningTekster("lonnslipp|arbeid");
+    const {sporsmal} = useDokumentasjonTekster("lonnslipp|arbeid");
 
     return (
         <div className={"rounded-md bg-surface-action-subtle p-8"}>

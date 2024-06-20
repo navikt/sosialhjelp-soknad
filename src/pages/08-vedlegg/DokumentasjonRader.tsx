@@ -2,7 +2,7 @@ import {LinkButton} from "../../lib/components/LinkButton";
 import {OpplysningInputRad} from "./OpplysningInputRad";
 import {VedleggFrontend} from "../../generated/model";
 import {useOpplysning} from "../../lib/hooks/dokumentasjon/useOpplysning";
-import {useOpplysningTekster} from "../../lib/hooks/dokumentasjon/useOpplysningTekster";
+import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokumentasjonTekster";
 
 export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) => {
     const {
@@ -12,7 +12,7 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
         rows: {entries, append, remove},
     } = useOpplysning(opplysning);
 
-    const {leggTilRad} = useOpplysningTekster(opplysning.type);
+    const {leggtil} = useDokumentasjonTekster(opplysning.type);
 
     //TODO: multirow knappen skjules for lonnslipp|arbeid
     //TODO: dette på grunn av det kan skap forvirringer for søkeren på grunn av kor uoversiktlig det kan bli
@@ -35,7 +35,7 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
                         <li className={`pt-3 pb-4`}>
                             <LinkButton onClick={() => append({})}>
                                 <span aria-hidden={true}>+ </span>
-                                {leggTilRad}
+                                {leggtil}
                             </LinkButton>
                         </li>
                     )}

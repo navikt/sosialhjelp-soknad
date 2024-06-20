@@ -3,10 +3,10 @@ import {Dokumenter} from "./upload/Dokumenter";
 import {Opplysning} from "../../lib/opplysninger";
 import {BodyShort, Heading} from "@navikt/ds-react";
 import {ArbeidsDokumentasjon} from "./ArbeidsDokumentasjon";
-import {useOpplysningTekster} from "../../lib/hooks/dokumentasjon/useOpplysningTekster";
+import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokumentasjonTekster";
 
 export const Dokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
-    const {sporsmal, undertekst} = useOpplysningTekster(opplysning.type);
+    const {sporsmal, undertekst} = useDokumentasjonTekster(opplysning.type);
 
     return (
         <div className={"rounded-md bg-surface-action-subtle p-8"}>
