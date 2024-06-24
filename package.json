@@ -7,7 +7,7 @@
         "@amplitude/analytics-browser": "^2.9.0",
         "@fremtind/jkl-formatters-util": "^5.1.9",
         "@fremtind/jkl-validators-util": "^3.0.0",
-        "@grafana/faro-react": "^1.7.3",
+        "@grafana/faro-react": "^1.8.0",
         "@hookform/error-message": "^2.0.1",
         "@hookform/resolvers": "^3.6.0",
         "@navikt/aksel-icons": "^6.11.0",
