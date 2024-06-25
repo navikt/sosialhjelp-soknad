@@ -7,6 +7,7 @@ import {minSideURL} from "../../../config";
 import {logError} from "../../../log/loggerUtils";
 import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {NavEnhetInaktiv} from "../../../../pages/01-personalia/adresse/NavEnhetInaktiv";
+import {useAmplitude} from "../../../amplitude/useAmplitude";
 
 interface SkjemaStegNavigasjonProps {
     loading?: boolean;
@@ -14,6 +15,8 @@ interface SkjemaStegNavigasjonProps {
 
 export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
+
+    const {logEvent} = useAmplitude();
 
     const {t} = useTranslation("skjema");
     const context = useContext(SkjemaStegContext);
@@ -50,7 +53,13 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
                 </Button>
             </div>
             <div className={"pb-8 lg:pb-16"}>
-                <Button variant="tertiary" onClick={() => (window.location.href = minSideURL)}>
+                <Button
+                    variant="tertiary"
+                    onClick={() => {
+                        logEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"});
+                        window.location.href = minSideURL;
+                    }}
+                >
                     {t("avbryt.fortsettsenere")}
                 </Button>
                 <Button variant="tertiary" onClick={() => setAvbrytModalOpen(true)}>
