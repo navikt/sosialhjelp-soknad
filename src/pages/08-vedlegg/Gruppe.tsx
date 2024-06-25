@@ -5,7 +5,6 @@ import {Heading, Panel} from "@navikt/ds-react";
 import {Opplysning} from "../../lib/opplysninger";
 import {VedleggFrontendGruppe} from "../../generated/model";
 import {useSkatteetatenData} from "../../lib/hooks/data/useSkatteetatenData";
-import {SkatteetatenDokumentasjon} from "./SkatteetatenDokumentasjon";
 
 const Gruppetittel: Record<VedleggFrontendGruppe, string> = {
     statsborgerskap: "opplysninger.statsborgerskap",
@@ -31,8 +30,6 @@ export const Gruppe = ({gruppeKey, opplysninger}: {gruppeKey: VedleggFrontendGru
             <Heading level={"3"} size={"medium"} className={"pb-6"}>
                 {t(`${Gruppetittel[gruppeKey]}.sporsmal`)}
             </Heading>
-
-            {visSkatteHack && <SkatteetatenDokumentasjon />}
 
             {opplysninger.map((opplysning) => (
                 <Dokumentasjon key={opplysning.type} opplysning={opplysning} />
