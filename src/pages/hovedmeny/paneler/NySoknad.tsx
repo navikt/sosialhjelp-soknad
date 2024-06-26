@@ -4,7 +4,7 @@ import {FillForms} from "@navikt/ds-icons";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
 import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
-import {useState} from "react";
+import {MouseEventHandler, useState} from "react";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {NedetidPanel} from "../../../lib/components/NedetidPanel";
@@ -23,16 +23,13 @@ export const NySoknadInfo = () => {
     const navigate = useNavigate();
     const {t} = useTranslation("skjema");
 
-    const onSokSosialhjelpButtonClick = async (event: React.SyntheticEvent) => {
-        setStartSoknadPending(true);
+    const onSokSosialhjelpButtonClick: MouseEventHandler<HTMLButtonElement> = async (event) => {
         event.preventDefault();
-        logEvent("skjema startet", {
-            antallNyligInnsendteSoknader,
-            antallPabegynteSoknader,
-            enableModalV2: true,
-            erProdsatt: true,
-            language: localStorage.getItem("digisos-language"),
-        });
+        setStartSoknadPending(true);
+
+        const language = localStorage.getItem("digisos-language");
+        logEvent("skjema startet", {antallNyligInnsendteSoknader, antallPabegynteSoknader, language});
+
         try {
             const {brukerBehandlingId, useKortSoknad} = await opprettSoknad();
             await hentXsrfCookie(brukerBehandlingId);
