@@ -4,7 +4,6 @@ import {useTranslation} from "react-i18next";
 import {Heading, Panel} from "@navikt/ds-react";
 import {Opplysning} from "../../lib/opplysninger";
 import {VedleggFrontendGruppe} from "../../generated/model";
-import {useSkatteetatenData} from "../../lib/hooks/data/useSkatteetatenData";
 
 const Gruppetittel: Record<VedleggFrontendGruppe, string> = {
     statsborgerskap: "opplysninger.statsborgerskap",
@@ -19,11 +18,6 @@ const Gruppetittel: Record<VedleggFrontendGruppe, string> = {
 
 export const Gruppe = ({gruppeKey, opplysninger}: {gruppeKey: VedleggFrontendGruppe; opplysninger: Opplysning[]}) => {
     const {t} = useTranslation();
-    const {samtykke} = useSkatteetatenData();
-
-    const visSkatteHack = gruppeKey === "arbeid" && samtykke;
-
-    if (!opplysninger.length && !visSkatteHack) return null;
 
     return (
         <Panel className={"!px-0"} style={{display: "grid", gap: "1rem"}}>

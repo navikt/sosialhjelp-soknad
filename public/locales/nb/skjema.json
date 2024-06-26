@@ -1183,7 +1183,7 @@
     "utbetalinger.inntekt.skattbar.tittel": "Skattbar inntekt",
     "utbetalinger.inntekt.skattbar.undertittel": "Innrapportert skattbar inntekt til Skatteetaten",
     "utbetalinger.inntekt.skattbar.avbryt.ja": "Ja, hent for meg",
-    "utbetalinger.inntekt.skattbar.avbryt.nei": "Nei, jeg vil laste opp selv",
+    "utbetalinger.inntekt.skattbar.avbryt.nei": "Nei, ikke hent for meg",
     "utbetalinger.kontaktproblemer": "På grunn av systemfeil klarte vi ikke å hente inn informasjon om ytelser fra NAV.",
     "utbetalinger.skattbar.kontaktproblemer": "Vi fikk ikke kontakt med Skatteetaten. Du kan prøve igjen om noen minutter eller laste opp opplysningene selv på det siste steget i søknaden",
     "utbetalinger.skattbar.kontaktproblemer.oppsummering": "Vi fikk ikke hentet opplysninger fra Skatteetaten",
