@@ -32,7 +32,7 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
                             onDelete={index > 0 ? remove : undefined}
                         />
                     ))}
-                    {multirow && opplysning.type !== "lonnslipp|arbeid" && (
+                    {multirow && (
                         <li className={`pt-3 pb-4`}>
                             <LinkButton onClick={() => append({})}>
                                 <span aria-hidden={true}>+ </span>
