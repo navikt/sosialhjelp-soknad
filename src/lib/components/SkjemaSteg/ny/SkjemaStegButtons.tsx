@@ -7,7 +7,8 @@ import {minSideURL} from "../../../config";
 import {logError} from "../../../log/loggerUtils";
 import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {NavEnhetInaktiv} from "../../../../pages/01-personalia/adresse/NavEnhetInaktiv";
-import {useAmplitude} from "../../../amplitude/useAmplitude";
+import {logAmplitudeEvent} from "../../../amplitude/Amplitude";
+//import {useAmplitude} from "../../../amplitude/useAmplitude";
 
 interface SkjemaStegNavigasjonProps {
     loading?: boolean;
@@ -16,7 +17,7 @@ interface SkjemaStegNavigasjonProps {
 export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
 
-    const {logEvent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
 
     const {t} = useTranslation("skjema");
     const context = useContext(SkjemaStegContext);
@@ -56,7 +57,9 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
                 <Button
                     variant="tertiary"
                     onClick={() => {
-                        logEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"});
+                        logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"}).catch((e) =>
+                            console.error("this is an error: ", e)
+                        );
                         window.location.href = minSideURL;
                     }}
                 >

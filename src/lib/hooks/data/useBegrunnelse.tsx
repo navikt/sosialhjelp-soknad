@@ -10,11 +10,12 @@ import {
 import {BegrunnelseFrontend} from "../../../generated/model";
 import {faro} from "@grafana/faro-react";
 import {useQueryClient} from "@tanstack/react-query";
-import {useAmplitude} from "../../amplitude/useAmplitude";
+import {logAmplitudeEvent} from "../../amplitude/Amplitude";
+//import {useAmplitude} from "../../amplitude/useAmplitude";
 
 export const useBegrunnelse = () => {
     const behandlingsId = useBehandlingsId();
-    const {logEvent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
 
     // TODO: Avklare denne. Er det behov lenger?
     const {begrunnelseNyTekst} = useFeatureFlags();
@@ -29,7 +30,7 @@ export const useBegrunnelse = () => {
 
     // Lagrer data på backend og oppdaterer lokal cache.
     const put = async (begrunnelse: BegrunnelseFrontend) => {
-        logEvent("begrunnelse fullført", {
+        logAmplitudeEvent("begrunnelse fullført", {
             hvaLengde: (Math.round((begrunnelse?.hvaSokesOm?.length ?? 0) / 20) - 1) * 20,
             hvorforLengde: (Math.round((begrunnelse?.hvorforSoke?.length ?? 0) / 20) - 1) * 20,
             begrunnelseNyTekst,
@@ -46,7 +47,9 @@ export const useBegrunnelse = () => {
     };
 
     useEffect(() => {
-        logEvent("begrunnelse åpnet", {begrunnelseNyTekst});
+        logAmplitudeEvent("begrunnelse åpnet", {begrunnelseNyTekst}).catch((e) =>
+            console.error("this is an error: ", e)
+        );
     }, [begrunnelseNyTekst]);
 
     return {get, put, isPending, isError};

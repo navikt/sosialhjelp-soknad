@@ -2,11 +2,12 @@ import {BodyLong, Heading} from "@navikt/ds-react";
 import * as React from "react";
 import {Trans, useTranslation} from "react-i18next";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
-import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
+//import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 import StartNySoknadIllustrasjon from "../../../lib/components/svg/illustrasjoner/StartNySoknadIllustrasjon";
+import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 
 export const NySoknadVelkomst = () => {
-    const {logEvent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
     const {data: sessionInfo} = useGetSessionInfo();
     const {t} = useTranslation("skjema");
 
@@ -30,11 +31,11 @@ export const NySoknadVelkomst = () => {
                                 target="_blank"
                                 rel="noreferrer"
                                 onClick={() => {
-                                    logEvent("navigere", {
+                                    logAmplitudeEvent("navigere", {
                                         lenkeTekst: "opplysninger du kan bli bedt om å levere",
                                         destinasjon: "https://www.nav.no/okonomisk-sosialhjelp#soknad",
                                         antallNyligInnsendteSoknader: sessionInfo?.numRecentlySent ?? 0,
-                                    });
+                                    }).catch((e) => console.error("this is an error: ", e));
                                 }}
                             >
                                 {null}

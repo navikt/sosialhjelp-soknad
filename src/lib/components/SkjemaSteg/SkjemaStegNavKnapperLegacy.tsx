@@ -5,7 +5,8 @@ import {SkjemaConfig, SkjemaSteg} from "./digisosSkjema";
 import {useState} from "react";
 import {minSideURL} from "../../config";
 import {AvbrytSoknadModal} from "../modals/AvbrytSoknadModal";
-import {useAmplitude} from "../../amplitude/useAmplitude";
+import {logAmplitudeEvent} from "../../amplitude/Amplitude";
+//import {useAmplitude} from "../../amplitude/useAmplitude";
 
 interface SkjemaStegNavigasjonProps {
     skjemaConfig: SkjemaConfig;
@@ -20,7 +21,7 @@ export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep, onSend}: Sk
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
     const [sendSoknadPending, setSendSoknadPending] = useState<boolean>(false);
 
-    const {logEvent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
 
     const {t} = useTranslation("skjema");
 
@@ -71,7 +72,9 @@ export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep, onSend}: Sk
                 <Button
                     variant="tertiary"
                     onClick={() => {
-                        logEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"});
+                        logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"}).catch((e) =>
+                            console.error("this is an error: ", e)
+                        );
                         window.location.href = minSideURL;
                     }}
                 >

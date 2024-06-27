@@ -7,14 +7,15 @@ import {useBehandlingsId} from "../../hooks/common/useBehandlingsId";
 import {useSlettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {minSideURL} from "../../config";
 import {logError} from "../../log/loggerUtils";
-import {useAmplitude} from "../../amplitude/useAmplitude";
+import {logAmplitudeEvent} from "../../amplitude/Amplitude";
+//import {useAmplitude} from "../../amplitude/useAmplitude";
 
 export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () => void}) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
     const {mutate, isPending: isLoading, isError} = useSlettSoknad();
 
-    const {logEvent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
 
     const deleteAndRedirect = async () => {
         try {
@@ -48,7 +49,9 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
                 <Button
                     variant="primary"
                     onClick={() => {
-                        logEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"});
+                        logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"}).catch((e) =>
+                            console.error("this is an error: ", e)
+                        );
                         window.location.href = "/sosialhjelp/soknad/informasjon?reason=soknadDeleteModal";
                     }}
                 >

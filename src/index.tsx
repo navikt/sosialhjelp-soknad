@@ -11,7 +11,7 @@ import {useLocalStorageLangSelector} from "./lib/i18n";
 import {withFaroProfiler} from "@grafana/faro-react";
 import {ApplicationSpinner} from "./lib/components/animasjoner/ApplicationSpinner";
 import {ValideringsContextProvider} from "./lib/valideringContextProvider";
-import {AmplitudeProvider} from "./lib/amplitude/AmplitudeProvider";
+//import {AmplitudeProvider} from "./lib/amplitude/AmplitudeProvider";
 import {logWindowError} from "./lib/log/logWindowError";
 
 window.onerror = logWindowError;
@@ -23,14 +23,12 @@ const App = () => {
 
     return (
         <Suspense fallback={<ApplicationSpinner />}>
-            <AmplitudeProvider>
-                <ValideringsContextProvider>
-                    <QueryClientProvider client={queryClient}>
-                        <RouterProvider router={router} />
-                        <ReactQueryDevtools initialIsOpen={false} />
-                    </QueryClientProvider>
-                </ValideringsContextProvider>
-            </AmplitudeProvider>
+            <ValideringsContextProvider>
+                <QueryClientProvider client={queryClient}>
+                    <RouterProvider router={router} />
+                    <ReactQueryDevtools initialIsOpen={false} />
+                </QueryClientProvider>
+            </ValideringsContextProvider>
         </Suspense>
     );
 };
