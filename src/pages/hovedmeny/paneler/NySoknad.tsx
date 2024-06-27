@@ -9,6 +9,7 @@ import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informas
 import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {NedetidPanel} from "../../../lib/components/NedetidPanel";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
+import {logWarning} from "../../../lib/log/loggerUtils";
 //import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const NySoknadInfo = () => {
@@ -30,7 +31,7 @@ export const NySoknadInfo = () => {
 
         const language = localStorage.getItem("digisos-language");
         logAmplitudeEvent("skjema startet", {antallNyligInnsendteSoknader, antallPabegynteSoknader, language}).catch(
-            (e) => console.error("this is an error: ", e)
+            (e) => logWarning(`Amplitude error: ${e}`)
         );
 
         try {

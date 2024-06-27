@@ -12,6 +12,7 @@ import {SjekkelisteIllustrasjon} from "../../lib/components/svg/illustrasjoner/S
 import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullfortEvent";
 import {useSendSoknad} from "./useSendSoknad";
 import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude";
+import {logWarning} from "../../lib/log/loggerUtils";
 
 export const Oppsummering = () => {
     //const {logEvent} = useAmplitude();
@@ -28,7 +29,7 @@ export const Oppsummering = () => {
             steg={"oppsummering"}
             onSend={async () => {
                 logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering)).catch((e) =>
-                    console.error("this is an error: ", e)
+                    logWarning(`Amplitude error: ${e}`)
                 );
                 await sendSoknad();
             }}

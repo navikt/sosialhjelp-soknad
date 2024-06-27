@@ -2,6 +2,7 @@ import {useNavigate} from "react-router";
 import {useContext} from "react";
 import {ValideringsContext} from "../../valideringContextProvider";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
+import {logWarning} from "../../log/loggerUtils";
 //import {useAmplitude} from "../../amplitude/useAmplitude";
 
 export const useSkjemaNavigation = (steg: number) => {
@@ -21,7 +22,7 @@ export const useSkjemaNavigation = (steg: number) => {
                 return;
             } else {
                 dispatch({type: "clearAllValideringsfeil"});
-                logAmplitudeEvent("skjemasteg fullført", {steg}).catch((e) => console.error("this is an error: ", e));
+                logAmplitudeEvent("skjemasteg fullført", {steg}).catch((e) => logWarning(`Amplitude error: ${e}`));
             }
         }
 

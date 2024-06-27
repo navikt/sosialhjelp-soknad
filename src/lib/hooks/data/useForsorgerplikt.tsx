@@ -6,6 +6,7 @@ import {
 } from "../../../generated/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
 import {useEffect} from "react";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
+import {logWarning} from "../../log/loggerUtils";
 //import {useAmplitude} from "../../amplitude/useAmplitude";
 
 export const useForsorgerplikt = () => {
@@ -24,7 +25,7 @@ export const useForsorgerplikt = () => {
             logAmplitudeEvent("svart på sporsmal", {
                 sporsmal: "Har barnet delt bosted?",
                 verdi: harDeltBosted ? "Ja" : "Nei",
-            });
+            }).catch((e) => logWarning(`Amplitude error: ${e}`));
         }
 
         if (samvaersgrad !== undefined) {
@@ -33,7 +34,7 @@ export const useForsorgerplikt = () => {
             logAmplitudeEvent("svart på sporsmal", {
                 sporsmal: "Hvor mye tid tilbringer du sammen med barnet?",
                 verdi: samvaersgrad.toString(),
-            });
+            }).catch((e) => logWarning(`Amplitude error: ${e}`));
         }
 
         await updateForsorgerplikt(behandlingsId, oppdatert);
@@ -46,7 +47,7 @@ export const useForsorgerplikt = () => {
             .forEach((_) => {
                 logAmplitudeEvent("sporsmal ikke vist", {
                     sporsmal: "Har barnet delt bosted?",
-                }).catch((e) => console.error("this is an error: ", e));
+                }).catch((e) => logWarning(`Amplitude error: ${e}`));
             });
     }, [forsorgerplikt]);
 

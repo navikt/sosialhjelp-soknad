@@ -6,7 +6,7 @@ import {TrashIcon} from "@navikt/aksel-icons";
 import {useBehandlingsId} from "../../hooks/common/useBehandlingsId";
 import {useSlettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {minSideURL} from "../../config";
-import {logError} from "../../log/loggerUtils";
+import {logError, logWarning} from "../../log/loggerUtils";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 //import {useAmplitude} from "../../amplitude/useAmplitude";
 
@@ -50,7 +50,7 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
                     variant="primary"
                     onClick={() => {
                         logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"}).catch((e) =>
-                            console.error("this is an error: ", e)
+                            logWarning(`Amplitude error: ${e}`)
                         );
                         window.location.href = "/sosialhjelp/soknad/informasjon?reason=soknadDeleteModal";
                     }}

@@ -6,6 +6,7 @@ import {useState} from "react";
 import {minSideURL} from "../../config";
 import {AvbrytSoknadModal} from "../modals/AvbrytSoknadModal";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
+import {logWarning} from "../../log/loggerUtils";
 //import {useAmplitude} from "../../amplitude/useAmplitude";
 
 interface SkjemaStegNavigasjonProps {
@@ -73,7 +74,7 @@ export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep, onSend}: Sk
                     variant="tertiary"
                     onClick={() => {
                         logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"}).catch((e) =>
-                            console.error("this is an error: ", e)
+                            logWarning(`Amplitude error: ${e}`)
                         );
                         window.location.href = minSideURL;
                     }}

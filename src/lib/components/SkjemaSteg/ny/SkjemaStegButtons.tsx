@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import {SkjemaStegContext} from "./SkjemaSteg";
 import {useContext, useState} from "react";
 import {minSideURL} from "../../../config";
-import {logError} from "../../../log/loggerUtils";
+import {logError, logWarning} from "../../../log/loggerUtils";
 import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {NavEnhetInaktiv} from "../../../../pages/01-personalia/adresse/NavEnhetInaktiv";
 import {logAmplitudeEvent} from "../../../amplitude/Amplitude";
@@ -58,7 +58,7 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
                     variant="tertiary"
                     onClick={() => {
                         logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"}).catch((e) =>
-                            console.error("this is an error: ", e)
+                            logWarning(`Amplitude error: ${e}`)
                         );
                         window.location.href = minSideURL;
                     }}

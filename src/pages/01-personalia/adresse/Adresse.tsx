@@ -18,6 +18,7 @@ import {useTranslation} from "react-i18next";
 import {HorizontalRadioGroup} from "../../../lib/components/form/HorizontalRadioGroup";
 import {useQueryClient} from "@tanstack/react-query";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
+import {logWarning} from "../../../lib/log/loggerUtils";
 //import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const AdresseData = () => {
@@ -71,7 +72,7 @@ export const AdresseData = () => {
                     setUncommittedAdressevalg(valg);
                     if (valg !== "soknad") await setAdresser(adresser, valg);
                     logAmplitudeEvent("adresseValg", {addresseValgt: valg}).catch((e) =>
-                        console.error("this is an error: ", e)
+                        logWarning(`Amplitude error: ${e}`)
                     );
                 }}
             >

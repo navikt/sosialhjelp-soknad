@@ -10,6 +10,7 @@ import {useAlgebraic} from "../../../lib/hooks/common/useAlgebraic";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlaceholder";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
+import {logWarning} from "../../../lib/log/loggerUtils";
 //import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const DAYS_BEFORE_DELETION = 14;
@@ -32,7 +33,7 @@ const PabegyntSoknad = ({
                 href={`/sosialhjelp/soknad/skjema/${behandlingsId}/1`}
                 onClick={() =>
                     logAmplitudeEvent("Klikk på påbegynt søknad", {antallPabegynteSoknader}).catch((e) =>
-                        console.error("this is an error: ", e)
+                        logWarning(`Amplitude error: ${e}`)
                     )
                 }
                 border
