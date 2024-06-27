@@ -5,10 +5,12 @@ import {
     useHentForsorgerplikt,
 } from "../../../generated/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
 import {useEffect} from "react";
-import {useAmplitude} from "../../amplitude/useAmplitude";
+import {logAmplitudeEvent} from "../../amplitude/Amplitude";
+import {logWarning} from "../../log/loggerUtils";
+//import {useAmplitude} from "../../amplitude/useAmplitude";
 
 export const useForsorgerplikt = () => {
-    const {logEvent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
     const {data: forsorgerplikt, isPending, queryKey} = useHentForsorgerplikt(behandlingsId);
@@ -20,19 +22,19 @@ export const useForsorgerplikt = () => {
 
         if (harDeltBosted !== undefined) {
             oppdatert.ansvar[barnIndex].harDeltBosted = harDeltBosted;
-            logEvent("svart på sporsmal", {
+            logAmplitudeEvent("svart på sporsmal", {
                 sporsmal: "Har barnet delt bosted?",
                 verdi: harDeltBosted ? "Ja" : "Nei",
-            });
+            }).catch((e) => logWarning(`Amplitude error: ${e}`));
         }
 
         if (samvaersgrad !== undefined) {
             oppdatert.ansvar[barnIndex].samvarsgrad = samvaersgrad;
 
-            logEvent("svart på sporsmal", {
+            logAmplitudeEvent("svart på sporsmal", {
                 sporsmal: "Hvor mye tid tilbringer du sammen med barnet?",
                 verdi: samvaersgrad.toString(),
-            });
+            }).catch((e) => logWarning(`Amplitude error: ${e}`));
         }
 
         await updateForsorgerplikt(behandlingsId, oppdatert);
@@ -43,9 +45,9 @@ export const useForsorgerplikt = () => {
         forsorgerplikt?.ansvar
             ?.filter(({erFolkeregistrertSammen}) => !erFolkeregistrertSammen)
             .forEach((_) => {
-                logEvent("sporsmal ikke vist", {
+                logAmplitudeEvent("sporsmal ikke vist", {
                     sporsmal: "Har barnet delt bosted?",
-                });
+                }).catch((e) => logWarning(`Amplitude error: ${e}`));
             });
     }, [forsorgerplikt]);
 

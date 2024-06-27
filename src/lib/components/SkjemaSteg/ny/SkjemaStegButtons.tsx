@@ -4,9 +4,11 @@ import {useTranslation} from "react-i18next";
 import {SkjemaStegContext} from "./SkjemaSteg";
 import {useContext, useState} from "react";
 import {minSideURL} from "../../../config";
-import {logError} from "../../../log/loggerUtils";
+import {logError, logWarning} from "../../../log/loggerUtils";
 import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {NavEnhetInaktiv} from "../../../../pages/01-personalia/adresse/NavEnhetInaktiv";
+import {logAmplitudeEvent} from "../../../amplitude/Amplitude";
+//import {useAmplitude} from "../../../amplitude/useAmplitude";
 
 interface SkjemaStegNavigasjonProps {
     loading?: boolean;
@@ -14,6 +16,8 @@ interface SkjemaStegNavigasjonProps {
 
 export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
+
+    //const {logEvent} = useAmplitude();
 
     const {t} = useTranslation("skjema");
     const context = useContext(SkjemaStegContext);
@@ -50,7 +54,15 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
                 </Button>
             </div>
             <div className={"pb-8 lg:pb-16"}>
-                <Button variant="tertiary" onClick={() => (window.location.href = minSideURL)}>
+                <Button
+                    variant="tertiary"
+                    onClick={() => {
+                        logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"}).catch((e) =>
+                            logWarning(`Amplitude error: ${e}`)
+                        );
+                        window.location.href = minSideURL;
+                    }}
+                >
                     {t("avbryt.fortsettsenere")}
                 </Button>
                 <Button variant="tertiary" onClick={() => setAvbrytModalOpen(true)}>

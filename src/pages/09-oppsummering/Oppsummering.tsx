@@ -8,12 +8,14 @@ import {useTranslation} from "react-i18next";
 import {useGetOppsummering} from "../../generated/oppsummering-ressurs/oppsummering-ressurs";
 import {OppsummeringSteg} from "./OppsummeringSteg";
 import {SjekkelisteIllustrasjon} from "../../lib/components/svg/illustrasjoner/SjekkelisteIllustrasjon";
-import {useAmplitude} from "../../lib/amplitude/useAmplitude";
+//import {useAmplitude} from "../../lib/amplitude/useAmplitude";
 import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullfortEvent";
 import {useSendSoknad} from "./useSendSoknad";
+import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude";
+import {logWarning} from "../../lib/log/loggerUtils";
 
 export const Oppsummering = () => {
-    const {logEvent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
     const {t} = useTranslation("skjema");
     const behandlingsId = useBehandlingsId();
     const {sendSoknad, isError} = useSendSoknad(behandlingsId);
@@ -26,7 +28,9 @@ export const Oppsummering = () => {
             skjemaConfig={digisosSkjemaConfig}
             steg={"oppsummering"}
             onSend={async () => {
-                logEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
+                logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering)).catch((e) =>
+                    logWarning(`Amplitude error: ${e}`)
+                );
                 await sendSoknad();
             }}
             ikon={<SjekkelisteIllustrasjon />}

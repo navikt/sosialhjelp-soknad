@@ -5,8 +5,9 @@ import Backend from "i18next-http-backend";
 import {enGB, Locale, nb, nn} from "date-fns/locale";
 import {DecoratorLocale, onLanguageSelect, setAvailableLanguages, setParams} from "@navikt/nav-dekoratoren-moduler";
 import {basePath as url} from "./config";
-import {useAmplitude} from "./amplitude/useAmplitude";
+//import {useAmplitude} from "./amplitude/useAmplitude";
 import {useEffect} from "react";
+import {logAmplitudeEvent} from "./amplitude/Amplitude";
 
 export const SUPPORTED_LANGUAGES = ["en", "nb", "nn"] as const;
 const DIGISOS_LANGUAGE = "digisos-language";
@@ -78,7 +79,7 @@ const setLanguage = async (language: string) => {
 };
 
 export const useLocalStorageLangSelector = () => {
-    const {logEvent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
 
     useEffect(() => {
         setAvailableLanguages(
@@ -96,6 +97,6 @@ export const useLocalStorageLangSelector = () => {
 
     onLanguageSelect(async ({locale}: {locale: DecoratorLocale}) => {
         await setLanguage(locale);
-        logEvent("Valgt språk", {language: locale});
+        logAmplitudeEvent("Valgt språk", {language: locale}).catch((e) => logWarning(`Amplitude error: ${e}`));
     });
 };

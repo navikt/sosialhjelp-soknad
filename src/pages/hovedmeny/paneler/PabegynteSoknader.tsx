@@ -9,7 +9,9 @@ import {getDateFnLocale} from "../../../lib/i18n";
 import {useAlgebraic} from "../../../lib/hooks/common/useAlgebraic";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlaceholder";
-import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
+import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
+import {logWarning} from "../../../lib/log/loggerUtils";
+//import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const DAYS_BEFORE_DELETION = 14;
 
@@ -22,14 +24,18 @@ const PabegyntSoknad = ({
     sistOppdatert: string;
     antallPabegynteSoknader: number;
 }) => {
-    const {logEvent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
     const {t} = useTranslation("skjema");
     const expiryDate = addDays(new Date(sistOppdatert), DAYS_BEFORE_DELETION);
     return (
         <li>
             <LinkPanel
                 href={`/sosialhjelp/soknad/skjema/${behandlingsId}/1`}
-                onClick={() => logEvent("Klikk på påbegynt søknad", {antallPabegynteSoknader})}
+                onClick={() =>
+                    logAmplitudeEvent("Klikk på påbegynt søknad", {antallPabegynteSoknader}).catch((e) =>
+                        logWarning(`Amplitude error: ${e}`)
+                    )
+                }
                 border
                 className={"!p-4 group !text-[#222] hover:!text-[#000]"}
             >

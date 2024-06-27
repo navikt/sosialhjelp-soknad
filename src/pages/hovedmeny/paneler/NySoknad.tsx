@@ -8,10 +8,12 @@ import {MouseEventHandler, useState} from "react";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {NedetidPanel} from "../../../lib/components/NedetidPanel";
-import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
+import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
+import {logWarning} from "../../../lib/log/loggerUtils";
+//import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const NySoknadInfo = () => {
-    const {logEvent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
     const [startSoknadError, setStartSoknadError] = useState<Error | null>(null);
 
@@ -28,7 +30,9 @@ export const NySoknadInfo = () => {
         setStartSoknadPending(true);
 
         const language = localStorage.getItem("digisos-language");
-        logEvent("skjema startet", {antallNyligInnsendteSoknader, antallPabegynteSoknader, language});
+        logAmplitudeEvent("skjema startet", {antallNyligInnsendteSoknader, antallPabegynteSoknader, language}).catch(
+            (e) => logWarning(`Amplitude error: ${e}`)
+        );
 
         try {
             const {brukerBehandlingId, useKortSoknad} = await opprettSoknad();

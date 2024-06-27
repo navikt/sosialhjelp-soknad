@@ -5,6 +5,9 @@ import {SkjemaConfig, SkjemaSteg} from "./digisosSkjema";
 import {useState} from "react";
 import {minSideURL} from "../../config";
 import {AvbrytSoknadModal} from "../modals/AvbrytSoknadModal";
+import {logAmplitudeEvent} from "../../amplitude/Amplitude";
+import {logWarning} from "../../log/loggerUtils";
+//import {useAmplitude} from "../../amplitude/useAmplitude";
 
 interface SkjemaStegNavigasjonProps {
     skjemaConfig: SkjemaConfig;
@@ -18,6 +21,8 @@ interface SkjemaStegNavigasjonProps {
 export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep, onSend}: SkjemaStegNavigasjonProps) => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
     const [sendSoknadPending, setSendSoknadPending] = useState<boolean>(false);
+
+    //const {logEvent} = useAmplitude();
 
     const {t} = useTranslation("skjema");
 
@@ -65,7 +70,15 @@ export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep, onSend}: Sk
                 )}
             </div>
             <div className={"pb-8 lg:pb-16"}>
-                <Button variant="tertiary" onClick={() => (window.location.href = minSideURL)}>
+                <Button
+                    variant="tertiary"
+                    onClick={() => {
+                        logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"}).catch((e) =>
+                            logWarning(`Amplitude error: ${e}`)
+                        );
+                        window.location.href = minSideURL;
+                    }}
+                >
                     {t("avbryt.fortsettsenere")}
                 </Button>
                 <Button variant="tertiary" onClick={() => setAvbrytModalOpen(true)}>

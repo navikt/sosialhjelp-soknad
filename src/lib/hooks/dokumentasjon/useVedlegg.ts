@@ -1,7 +1,7 @@
 // When new backend has been deployed, this can be removed.
 import {DokumentUpload, VedleggFrontendType} from "../../../generated/model";
 import {useEffect, useReducer, useState} from "react";
-import {useAmplitude} from "../../amplitude/useAmplitude";
+//import {useAmplitude} from "../../amplitude/useAmplitude";
 import {DocumentListReducer, initialDocumentListState} from "../../../pages/08-vedlegg/lib/DocumentListReducer";
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useTranslation} from "react-i18next";
@@ -13,6 +13,8 @@ import {useHentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opply
 import {useDeleteDokument} from "../../../generated/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
 import {humanizeFilesize} from "../../../pages/08-vedlegg/lib/humanizeFilesize";
 import {axiosInstance} from "../../api/axiosInstance";
+import {logAmplitudeEvent} from "../../amplitude/Amplitude";
+import {logWarning} from "../../log/loggerUtils";
 
 const TEN_MEGABYTE_COMPAT_FALLBACK = 10 * 1024 * 1024;
 
@@ -20,7 +22,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
     const [error, setError] = useState<string | null>(null);
     const [maxUploadSize, setMaxUploadSize] = useState<number | null>(null);
     const [uploadPercent, setUploadPercent] = useState<number | null>(null);
-    const {logEvent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
     const [{documents}, dispatch] = useReducer(DocumentListReducer, initialDocumentListState(dokumentasjonType));
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
@@ -64,7 +66,9 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
                 onError: handleApiError,
                 onSuccess: () => {
                     dispatch({type: "remove", dokumentId});
-                    logEvent("dokument slettet", {opplysningType: dokumentasjonType});
+                    logAmplitudeEvent("dokument slettet", {opplysningType: dokumentasjonType}).catch((e) =>
+                        logWarning(`Amplitude error: ${e}`)
+                    );
                 },
             }
         );
@@ -101,7 +105,9 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
 
             setUploadPercent(null);
             dispatch({type: "insert", dokument});
-            logEvent("dokument lastet opp", {opplysningType: dokumentasjonType});
+            logAmplitudeEvent("dokument lastet opp", {opplysningType: dokumentasjonType}).catch((e) =>
+                logWarning(`Amplitude error: ${e}`)
+            );
         } catch (e) {
             handleApiError(e);
         } finally {
