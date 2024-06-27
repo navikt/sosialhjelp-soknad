@@ -16,7 +16,7 @@ export const KontonrShowBrukerdefinert = ({onEdit}: {onEdit?: () => void}) => {
     return expectOK(({brukerutfyltVerdi}) => (
         <li className={"flex flex-row place-content-between"}>
             <div>
-                <SysteminfoItem>{formatKontonummer(brukerutfyltVerdi ?? "")}</SysteminfoItem>
+                <SysteminfoItem as="div">{formatKontonummer(brukerutfyltVerdi ?? "")}</SysteminfoItem>
             </div>
             {onEdit && (
                 <div className={"flex flex-row items-center navds-link pr-3"}>
@@ -36,7 +36,7 @@ export const KontonrShowSysteminfo = ({onEdit}: {onEdit?: () => void}) => {
     return expectOK(({systemverdi}) => (
         <li className={"flex flex-row place-content-between"}>
             <div>
-                <SysteminfoItem>{formatKontonummer(systemverdi ?? "")}</SysteminfoItem>
+                <SysteminfoItem as="div">{formatKontonummer(systemverdi ?? "")}</SysteminfoItem>
                 <BodyShort className={"pt-2"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
             </div>
             {onEdit && (
@@ -61,7 +61,7 @@ export const KontonrShow = ({onEdit}: {onEdit?: () => void}) => {
             return (
                 <>
                     <BodyShort className={"pb-3"}>{t("kontakt.kontonummer.bruker")}</BodyShort>
-                    <SysteminfoItem label={t(`kontakt.kontonummer.sporsmal`)}>
+                    <SysteminfoItem as="div" label={t(`kontakt.kontonummer.sporsmal`)}>
                         <span className={"italic"}> {t("kontakt.kontonummer.harikke.true")}</span>
                     </SysteminfoItem>
                 </>
