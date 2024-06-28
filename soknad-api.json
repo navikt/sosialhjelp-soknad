@@ -2182,7 +2182,9 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StartSoknadResponse"}}}
+                        "content": {
+                            "application/json": {"schema": {"$ref": "#/components/schemas/StartSoknadResponse"}}
+                        }
                     }
                 }
             }
@@ -3052,6 +3054,43 @@
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
                     "200": {"description": "OK"}
+                }
+            }
+        },
+        "/soknader/{behandlingsId}/isKort": {
+            "get": {
+                "tags": ["soknad-ressurs"],
+                "operationId": "isKortSoknad",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {"type": "boolean"}
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -4205,11 +4244,12 @@
                 }
             },
             "PabegyntSoknad": {
-                "required": ["behandlingsId", "sistOppdatert"],
+                "required": ["behandlingsId", "sistOppdatert", "isKort"],
                 "type": "object",
                 "properties": {
                     "sistOppdatert": {"type": "string", "format": "date-time"},
-                    "behandlingsId": {"type": "string"}
+                    "behandlingsId": {"type": "string"},
+                    "isKort": {"type": "boolean"}
                 },
                 "description": "Påbegynte men ikke innleverte søknader"
             },

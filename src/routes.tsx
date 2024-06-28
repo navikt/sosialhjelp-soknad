@@ -2,6 +2,8 @@ import {
     createBrowserRouter,
     createRoutesFromChildren,
     matchRoutes,
+    Navigate,
+    Outlet,
     redirect,
     Route,
     Routes,
@@ -21,6 +23,7 @@ import {
 import {TracingInstrumentation} from "@grafana/faro-web-tracing";
 import config, {basePath} from "./lib/config";
 import {redirectToGotoSearchParameter} from "./lib/api/auth/redirectToGotoSearchParameter";
+import useIsKort from "./lib/hooks/data/useIsKort";
 
 const Informasjon = React.lazy(() => import("./pages/hovedmeny"));
 const SideIkkeFunnet = React.lazy(() => import("./pages/feilsider/SideIkkeFunnet"));
@@ -36,6 +39,17 @@ const UtgifterGjeld = React.lazy(() => import("./pages/07-utgifterGjeld"));
 const OkonomiskeOpplysningerView = React.lazy(() => import("./pages/08-vedlegg"));
 const Oppsummering = React.lazy(() => import("./pages/09-oppsummering/Oppsummering"));
 
+const RedirectFromKort = () => {
+    const {data: isKortSoknad, isError} = useIsKort();
+
+    const location = useLocation();
+
+    if (isError || (location.pathname?.includes("/kort") && !isKortSoknad)) {
+        return <Navigate to={`${location.pathname.replace("/kort", "")}`} replace></Navigate>;
+    }
+    return <Outlet />;
+};
+
 const routes = (
     <Route errorElement={<SideIkkeFunnet />}>
         <Route index path={`/`} element={<Informasjon />} />
@@ -45,7 +59,9 @@ const routes = (
         <Route path={`kastException`} element={<ExceptionThrower />} />
         <Route path={"skjema"}>
             <Route path="kort/:behandlingsId">
-                <Route index path="1" element={<Personopplysninger />} />
+                <Route element={<RedirectFromKort />}>
+                    <Route index path="1" element={<Personopplysninger />} />
+                </Route>
             </Route>
             <Route path=":behandlingsId">
                 <Route index path="1" element={<Personopplysninger />} />
@@ -65,33 +81,35 @@ const routes = (
 
 export const router = createBrowserRouter(createRoutesFromChildren(routes), {basename: basePath});
 
-initializeFaro({
-    url: config.faro.url,
-    app: {
-        name: "sosialhjelp-soknad",
-        version: "1.0.0",
-    },
-    instrumentations: [
-        // Load the default Web instrumentations
-        ...getWebInstrumentations(),
+if (process.env.NODE_ENV !== "development") {
+    initializeFaro({
+        url: config.faro.url,
+        app: {
+            name: "sosialhjelp-soknad",
+            version: "1.0.0",
+        },
+        instrumentations: [
+            // Load the default Web instrumentations
+            ...getWebInstrumentations(),
 
-        // Tracing Instrumentation is needed if you want to use the React Profiler
-        new TracingInstrumentation(),
+            // Tracing Instrumentation is needed if you want to use the React Profiler
+            new TracingInstrumentation(),
 
-        new ConsoleInstrumentation({disabledLevels: [LogLevel.TRACE]}),
+            new ConsoleInstrumentation({disabledLevels: [LogLevel.TRACE]}),
 
-        new ReactIntegration({
-            // Only needed if you want to use the React Router instrumentation
-            router: {
-                version: ReactRouterVersion.V6,
-                dependencies: {
-                    createRoutesFromChildren,
-                    matchRoutes,
-                    Routes,
-                    useLocation,
-                    useNavigationType,
+            new ReactIntegration({
+                // Only needed if you want to use the React Router instrumentation
+                router: {
+                    version: ReactRouterVersion.V6,
+                    dependencies: {
+                        createRoutesFromChildren,
+                        matchRoutes,
+                        Routes,
+                        useLocation,
+                        useNavigationType,
+                    },
                 },
-            },
-        }),
-    ],
-});
+            }),
+        ],
+    });
+}

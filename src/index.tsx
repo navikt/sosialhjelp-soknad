@@ -49,5 +49,5 @@ if (import.meta.env.REACT_APP_DIGISOS_ENV === "localhost") {
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
-const ProfiledApp = withFaroProfiler(App);
+const ProfiledApp = process.env.NODE_ENV === "development" ? App : withFaroProfiler(App);
 root.render(<ProfiledApp />);
