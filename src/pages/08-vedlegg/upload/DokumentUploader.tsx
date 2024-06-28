@@ -6,6 +6,7 @@ import {ForhandsvisningVedleggModal} from "./ForhandsvisningVedleggModal";
 import {PlusIcon} from "@navikt/aksel-icons";
 import {PdfConversionError} from "./UploadError";
 import {usePDFConverter} from "../../../lib/hooks/dokumentasjon/usePDFConverter";
+import {useOpplysningTekster} from "../../../lib/hooks/dokumentasjon/useOpplysningTekster";
 
 export const SUPPORTED_WITHOUT_CONVERSION = ["image/jpeg", "image/png", "application/pdf"];
 export const SUPPORTED_WITH_CONVERSION = [
@@ -36,6 +37,7 @@ export const DokumentUploader = ({
     const isPending = visSpinner || conversionPending;
 
     if (conversionError) throw new PdfConversionError("conversion error", {cause: conversionError});
+    const {leggTilDokumentasjon} = useOpplysningTekster(opplysning.type);
 
     const handleFileSelect = async ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => {
         if (!files?.length) return;
@@ -78,7 +80,7 @@ export const DokumentUploader = ({
             />
             {previewFile && (
                 <ForhandsvisningVedleggModal
-                    opplysningType={opplysning.type}
+                    header={leggTilDokumentasjon}
                     file={previewFile}
                     onAccept={async () => {
                         if (!previewFile) return;
