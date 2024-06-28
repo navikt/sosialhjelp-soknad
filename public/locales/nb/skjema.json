@@ -1339,5 +1339,7 @@
         "avbryt": "Avbryt",
         "slett": "Slett fil"
     },
-    "hoppTilHovedinnhold": "Hopp til hovedinnhold"
+    "hoppTilHovedinnhold": "Hopp til hovedinnhold",
+    "begrunnelse.kort.behov.dokumentasjon.tittel": "Dokumentasjon",
+    "begrunnelse.kort.behov.dokumentasjon.beskrivelse": "Her kan du laste opp faktura, kvittering eller kostnadsoverslag for det du søker om penger til. Du kan ta bilder/skjermbilder."
 }
