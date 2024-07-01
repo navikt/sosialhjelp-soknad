@@ -23,14 +23,14 @@ export const SkatteetatenOrganisasjon = ({
             </Table.Header>
             <Table.Body>
                 {utbetalinger?.map((u, i) => <SkatteetatenUtbetalingView utbetaling={u} key={i} />)}
-                <BodyShort size={"small"} className={"pt-4"}>
-                    {organisasjonsnavn}
-                </BodyShort>
-                <BodyShort size={"small"}>
-                    {t("utbetalinger.inntekt.fra")} <LocalizedDate date={fom} /> {t("utbetalinger.inntekt.til")}{" "}
-                    <LocalizedDate date={tom} />
-                </BodyShort>
             </Table.Body>
+            <BodyShort size={"small"} className={"pt-4"}>
+                {organisasjonsnavn}
+            </BodyShort>
+            <BodyShort size={"small"}>
+                {t("utbetalinger.inntekt.fra")} <LocalizedDate date={fom} /> {t("utbetalinger.inntekt.til")}{" "}
+                <LocalizedDate date={tom} />
+            </BodyShort>
         </Table>
     );
 };
