@@ -3,13 +3,14 @@ import {useTranslation} from "react-i18next";
 import {Table} from "@navikt/ds-react";
 import {format} from "date-fns";
 import * as React from "react";
+import {DigisosLanguageKey} from "../../../lib/i18n";
 
 // Denne blir forenklet til String et eller annet sted upstream...
 type HusbankenStatus = "UNDER_BEHANDLING" | "VEDTATT";
 export type MonkeypatchedJsonBostotteSak = Omit<JsonBostotteSak, "status"> & {status: HusbankenStatus};
 
 // Utleder språknøkkel for vedtaksstatus
-const getSakStatus = (vedtaksstatus: JsonBostotteSakVedtaksstatus, status: HusbankenStatus): string => {
+const getSakStatus = (vedtaksstatus: JsonBostotteSakVedtaksstatus, status: HusbankenStatus): DigisosLanguageKey => {
     if (status === "UNDER_BEHANDLING") return "inntekt.bostotte.husbanken.status.under_behandling";
     if (status !== "VEDTATT") throw new Error(`Ukjent status: ${status}`);
 

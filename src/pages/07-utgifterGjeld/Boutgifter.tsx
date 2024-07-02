@@ -25,7 +25,7 @@ export const Boutgifter = () => {
                 <Checkbox value={"kommunalAvgift"}>{t("utgifter.boutgift.true.type.kommunalAvgift")}</Checkbox>
                 <Checkbox value={"oppvarming"}>{t("utgifter.boutgift.true.type.oppvarming")}</Checkbox>
                 <Checkbox value={"boliglan"}>{t("utgifter.boutgift.true.type.boliglan")}</Checkbox>
-                <Checkbox value={"annet"}>{t("utgifter.boutgift.true.type.andreutgifter")}</Checkbox>
+                <Checkbox value={"annet"}>{t("utgifter.boutgift.true.type.andreutgifter.stringValue")}</Checkbox>
             </CheckboxGroup>
             {!boutgifter?.skalViseInfoVedBekreftelse && boutgifter?.bekreftelse && (
                 <GuidePanel poster>

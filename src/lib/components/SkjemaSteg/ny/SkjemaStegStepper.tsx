@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useTranslation} from "react-i18next";
-import {SkjemaHeadings, SkjemaStegContext} from "./SkjemaSteg";
+import {SkjemaStegContext, SkjemaTittel} from "./SkjemaSteg";
 import {Stepper} from "@navikt/ds-react";
 import {useContext} from "react";
 import {logError} from "../../../log/loggerUtils";
@@ -27,7 +27,7 @@ export const SkjemaStegStepper = () => {
             >
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((key) => (
                     <Stepper.Step aria-label={`steg ${key}`} key={key} as="button">
-                        {t(SkjemaHeadings[page].tittel)}
+                        {t(SkjemaTittel[page])}
                     </Stepper.Step>
                 ))}
             </Stepper>

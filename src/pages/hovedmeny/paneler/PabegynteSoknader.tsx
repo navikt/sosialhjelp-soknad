@@ -9,9 +9,7 @@ import {getDateFnLocale} from "../../../lib/i18n";
 import {useAlgebraic} from "../../../lib/hooks/common/useAlgebraic";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlaceholder";
-import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
-import {logWarning} from "../../../lib/log/loggerUtils";
-//import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
+import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const DAYS_BEFORE_DELETION = 14;
 
@@ -24,18 +22,14 @@ const PabegyntSoknad = ({
     sistOppdatert: string;
     antallPabegynteSoknader: number;
 }) => {
-    //const {logEvent} = useAmplitude();
+    const {logEvent} = useAmplitude();
     const {t} = useTranslation("skjema");
     const expiryDate = addDays(new Date(sistOppdatert), DAYS_BEFORE_DELETION);
     return (
         <li>
             <LinkPanel
                 href={`/sosialhjelp/soknad/skjema/${behandlingsId}/1`}
-                onClick={() =>
-                    logAmplitudeEvent("Klikk på påbegynt søknad", {antallPabegynteSoknader}).catch((e) =>
-                        logWarning(`Amplitude error: ${e}`)
-                    )
-                }
+                onClick={() => logEvent("Klikk på påbegynt søknad", {antallPabegynteSoknader})}
                 border
                 className={"!p-4 group !text-[#222] hover:!text-[#000]"}
             >
@@ -68,7 +62,7 @@ const PabegynteSoknaderCount = ({className}: {className?: string}) => {
         open.length ? (
             <span className={cx("opacity-70 font-normal", className)}>
                 {open.length === 1
-                    ? `1 ${t("applikasjon.paabegynt.soknad")}`
+                    ? `1 ${t("applikasjon.paabegynt.soknad.stringValue")}`
                     : `${open.length} ${t("applikasjon.paabegynt.soknad.flertall")}`}
             </span>
         ) : null

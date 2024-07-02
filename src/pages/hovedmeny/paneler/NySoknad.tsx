@@ -4,16 +4,14 @@ import {FillForms} from "@navikt/ds-icons";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
 import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
-import {MouseEventHandler, useState} from "react";
+import {useState} from "react";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {NedetidPanel} from "../../../lib/components/NedetidPanel";
-import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
-import {logWarning} from "../../../lib/log/loggerUtils";
-//import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
+import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const NySoknadInfo = () => {
-    //const {logEvent} = useAmplitude();
+    const {logEvent} = useAmplitude();
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
     const [startSoknadError, setStartSoknadError] = useState<Error | null>(null);
 
@@ -25,15 +23,16 @@ export const NySoknadInfo = () => {
     const navigate = useNavigate();
     const {t} = useTranslation("skjema");
 
-    const onSokSosialhjelpButtonClick: MouseEventHandler<HTMLButtonElement> = async (event) => {
-        event.preventDefault();
+    const onSokSosialhjelpButtonClick = async (event: React.SyntheticEvent) => {
         setStartSoknadPending(true);
-
-        const language = localStorage.getItem("digisos-language");
-        logAmplitudeEvent("skjema startet", {antallNyligInnsendteSoknader, antallPabegynteSoknader, language}).catch(
-            (e) => logWarning(`Amplitude error: ${e}`)
-        );
-
+        event.preventDefault();
+        logEvent("skjema startet", {
+            antallNyligInnsendteSoknader,
+            antallPabegynteSoknader,
+            enableModalV2: true,
+            erProdsatt: true,
+            language: localStorage.getItem("digisos-language"),
+        });
         try {
             const {brukerBehandlingId, useKortSoknad} = await opprettSoknad();
             await hentXsrfCookie(brukerBehandlingId);

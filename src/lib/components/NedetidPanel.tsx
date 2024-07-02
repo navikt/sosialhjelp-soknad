@@ -5,11 +5,6 @@ import {useHentNedetidInformasjon} from "../../generated/nedetid-ressurs/nedetid
 
 type NetetidPanelType = "infoside" | "avbryt";
 
-const NedetidPanelMessageID: Record<NetetidPanelType, string> = {
-    infoside: "nedetid.alertstripe.infoside",
-    avbryt: "nedetid.alertstripe.avbryt",
-};
-
 // Vis nedetid-varsel om det er satt
 export const NedetidPanel = ({varselType}: {varselType: NetetidPanelType}) => {
     const {data: nedetid} = useHentNedetidInformasjon();
@@ -19,7 +14,7 @@ export const NedetidPanel = ({varselType}: {varselType: NetetidPanelType}) => {
 
     const {isNedetid, isPlanlagtNedetid, nedetidStartText, nedetidSluttText} = nedetid;
 
-    const messageId = NedetidPanelMessageID[varselType];
+    const messageId = varselType === "infoside" ? "nedetid.alertstripe.infoside" : "nedetid.alertstripe.avbryt";
 
     if (isNedetid)
         return (

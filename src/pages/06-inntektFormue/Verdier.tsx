@@ -42,7 +42,7 @@ export const Verdier = () => {
                         <Checkbox value={"fritidseiendom"}>
                             {t("inntekt.eierandeler.true.type.fritidseiendom")}
                         </Checkbox>
-                        <Checkbox value={"annet"}>{t("inntekt.eierandeler.true.type.annet")}</Checkbox>
+                        <Checkbox value={"annet"}>{t("inntekt.eierandeler.true.type.annet.stringValue")}</Checkbox>
                         <UnmountClosed isOpened={verdier.annet}>
                             <Textarea
                                 label={t("inntekt.eierandeler.true.type.annet.true.beskrivelse.label")}

@@ -1,4 +1,5 @@
-import {VedleggFrontend, VedleggFrontendGruppe, VedleggFrontendType} from "../generated/model";
+import {type VedleggFrontend, VedleggFrontendGruppe, VedleggFrontendType} from "../generated/model";
+import {DokumentasjonAntallRader} from "../locales/types";
 
 export type Opplysning = VedleggFrontend & {
     slettet?: boolean;
@@ -8,7 +9,7 @@ export type Opplysning = VedleggFrontend & {
 export type OpplysningInputType = "beskrivelse" | "belop" | "brutto" | "netto" | "avdrag" | "renter";
 
 export type OpplysningSpec = {
-    numRows: "ingen" | "en" | "flere";
+    numRows: DokumentasjonAntallRader;
     inputs: OpplysningInputType[];
     textKey: string;
     sortKey: number;

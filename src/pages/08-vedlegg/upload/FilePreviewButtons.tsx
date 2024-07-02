@@ -47,7 +47,7 @@ export const FilePreviewButtons = ({
             <Button variant="tertiary" onClick={() => setFullscreen(true)}>
                 <div className={"flex items-center gap-2"}>
                     <FullscreenEnter />
-                    {t("vedlegg.forhandsvisning.fullskjerm")}
+                    {t("vedlegg.forhandsvisning.fullskjerm.stringValue")}
                 </div>
             </Button>
         </div>

@@ -13,7 +13,7 @@ export const SkalIkkeFinansiereStudier = () => {
             <BodyShort spacing>
                 <Trans
                     t={t}
-                    i18nKey={"informasjon.student.studielan.1.v2"}
+                    i18nKey={"informasjon.student.studielan.number1.v2"}
                     components={{
                         lenke: (
                             <Link
@@ -27,7 +27,7 @@ export const SkalIkkeFinansiereStudier = () => {
                     }}
                 />
             </BodyShort>
-            <BodyShort spacing>{t("informasjon.student.studielan.2")}</BodyShort>
+            <BodyShort spacing>{t("informasjon.student.studielan.number2")}</BodyShort>
         </GuidePanel>
     );
 };

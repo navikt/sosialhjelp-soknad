@@ -18,6 +18,7 @@ import {useTitle} from "../../../hooks/common/useTitle";
 import {HusIllustrasjon} from "../../svg/illustrasjoner/HusIllustrasjon";
 import {MynterIllustrasjon} from "../../svg/illustrasjoner/MynterIllustrasjon";
 import {RequireXsrfCookie} from "./RequireXsrfCookie";
+import {DigisosLanguageKey} from "../../../i18n";
 
 type TSkjemaStegContext = {
     page: SkjemaPage;
@@ -60,7 +61,19 @@ export const SkjemaHeadings: Record<SkjemaPage, {tittel: string; ikon: ReactNode
     7: {tittel: "utgifterbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     8: {tittel: "opplysningerbolk.tittel", ikon: <DokumentIllustrasjon />},
     9: {tittel: "oppsummering.tittel", ikon: <SnakkebobleIllustrasjon />},
-};
+} as const;
+
+export const SkjemaTittel: Record<SkjemaPage, DigisosLanguageKey> = {
+    1: "kontakt.tittel",
+    2: "begrunnelsebolk.tittel",
+    3: "arbeidbolk.tittel",
+    4: "familiebolk.tittel",
+    5: "bosituasjonbolk.tittel",
+    6: "inntektbolk.tittel",
+    7: "utgifterbolk.tittel",
+    8: "opplysningerbolk.tittel",
+    9: "oppsummering.tittel",
+} as const;
 
 const SkjemaTitle = ({className}: {className?: string}) => {
     const {t} = useTranslation("skjema");
@@ -77,7 +90,7 @@ const SkjemaTitle = ({className}: {className?: string}) => {
         <div tabIndex={-1} className={cx("text-center mb-12 lg:mb-24", className)}>
             <div className="mx-auto w-fit mb-2">{SkjemaHeadings[page].ikon}</div>
             <Heading level={"2"} size={"large"} data-testid={page === 2 ? "skjemasteg-heading" : null}>
-                {t(SkjemaHeadings[page].tittel)}
+                {t(SkjemaTittel[page])}
             </Heading>
         </div>
     );
@@ -104,7 +117,7 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
 
     const {t} = useTranslation("skjema");
 
-    useTitle(`${t(SkjemaHeadings[page].tittel)} - ${t("applikasjon.sidetittel")}`);
+    useTitle(`${t(SkjemaTittel[page])} - ${t("applikasjon.sidetittel")}`);
 
     const {gotoPage} = useSkjemaNavigation(page);
 

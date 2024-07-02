@@ -1,3 +1,5 @@
+import {DigisosLanguageKey} from "../../i18n";
+
 export type SkjemaStegType = "skjema" | "oppsummering";
 
 export interface SkjemaSteg {
@@ -7,7 +9,7 @@ export interface SkjemaSteg {
 
 export interface SkjemaConfig {
     steg: Record<DigisosSkjemaStegKey, SkjemaSteg>;
-    tittelId: string;
+    tittelId: DigisosLanguageKey;
     skjemanavn: string;
 }
 

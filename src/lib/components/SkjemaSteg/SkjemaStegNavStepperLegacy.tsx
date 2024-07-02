@@ -2,6 +2,7 @@ import {Stepper} from "@navikt/ds-react";
 import * as React from "react";
 import {DigisosSkjemaStegKey, SkjemaConfig, SkjemaSteg} from "./digisosSkjema";
 import {useTranslation} from "react-i18next";
+import {DigisosLanguageKey} from "../../i18n";
 
 export const SkjemaStegNavStepperLegacy = ({
     skjemaConfig,
@@ -28,7 +29,7 @@ export const SkjemaStegNavStepperLegacy = ({
                     .filter(([_, s]) => s.type === "skjema")
                     .map(([key, _]) => (
                         <Stepper.Step aria-label={`steg ${key}`} key={key} as="button">
-                            {t(`${key}.tittel`)}
+                            {t(`${key}.tittel` as DigisosLanguageKey)}
                         </Stepper.Step>
                     ))}
             </Stepper>
