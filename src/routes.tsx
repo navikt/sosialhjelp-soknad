@@ -65,6 +65,7 @@ const routes = (
                     <Route index path="1" element={<Personopplysninger />} />
                     <Route path="2" element={<Behov />} />
                     <Route path="3" element={<Situasjonsendring />} />
+                    <Route path="4" element={<Oppsummering />} />
                 </Route>
             </Route>
             <Route path=":behandlingsId">
