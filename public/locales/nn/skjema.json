@@ -1332,12 +1332,14 @@
     "vedlegg.forhandsvisning.fullskjerm": "Fullskjerm",
     "vedlegg.forhandsvisning.fullskjerm.lukk": "Lukk fullskjerm",
     "vedlegg.forhandsvisning.slett": "Slett",
-    "vedlegg.forhandsvisning.opplast": "Last opp document",
+    "vedlegg.forhandsvisning.opplast": "Last opp dokument",
     "vedlegg.forhandsvisning.avbryt": "Avbryt",
     "vedlegg.sletteModal": {
         "tittel": "Er du sikker på at du vil slette filen?",
         "avbryt": "Avbryt",
         "slett": "Slett fil"
     },
-    "hoppTilHovedinnhold": "Gå til hovudinnhaldet"
+    "hoppTilHovedinnhold": "Gå til hovudinnhaldet",
+    "begrunnelse.kort.behov.dokumentasjon.tittel": "Dokumentasjon",
+    "begrunnelse.kort.behov.dokumentasjon.beskrivelse": "Her kan du laste opp faktura, kvittering eller kostnadsoverslag for det du søkjer om pengar til. Du kan ta bilete/skjermbilete"
 }

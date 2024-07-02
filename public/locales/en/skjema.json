@@ -1377,5 +1377,7 @@
         "avbryt": "Cancel",
         "slett": "Delete file"
     },
-    "hoppTilHovedinnhold": "Go to main content."
+    "hoppTilHovedinnhold": "Go to main content.",
+    "begrunnelse.kort.behov.dokumentasjon.tittel": "Documentation",
+    "begrunnelse.kort.behov.dokumentasjon.beskrivelse": "Here you can upload an invoice, receipt or cost estimate for what you are applying for money for. You can take pictures/screenshots."
 }
