@@ -24,7 +24,7 @@ export const Skatteetaten = () => {
     return (
         <>
             {inntekt.map(({organisasjoner}) =>
-                organisasjoner?.map((o) => <SkatteetatenOrganisasjon organisasjon={o} />)
+                organisasjoner?.map((o) => <SkatteetatenOrganisasjon key={o.orgnr} organisasjon={o} />)
             )}
         </>
     );
