@@ -5,8 +5,9 @@ import Backend from "i18next-http-backend";
 import {enGB, Locale, nb, nn} from "date-fns/locale";
 import {DecoratorLocale, onLanguageSelect, setAvailableLanguages, setParams} from "@navikt/nav-dekoratoren-moduler";
 import {basePath as url, ENABLE_DEBUG_I18N} from "./config";
-import {useAmplitude} from "./amplitude/useAmplitude";
+//import {useAmplitude} from "./amplitude/useAmplitude";
 import {useEffect} from "react";
+import {logAmplitudeEvent} from "./amplitude/Amplitude";
 
 import skjemaNb from "../locales/nb/skjema";
 import skjemaNn from "../locales/nn/skjema";
@@ -99,7 +100,7 @@ const setLanguage = async (language: string) => {
 };
 
 export const useLocalStorageLangSelector = () => {
-    const {logEvent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
 
     useEffect(() => {
         setAvailableLanguages(
@@ -117,6 +118,6 @@ export const useLocalStorageLangSelector = () => {
 
     onLanguageSelect(async ({locale}: {locale: DecoratorLocale}) => {
         await setLanguage(locale);
-        logEvent("Valgt språk", {language: locale});
+        logAmplitudeEvent("Valgt språk", {language: locale}).catch((e) => logWarning(`Amplitude error: ${e}`));
     });
 };
