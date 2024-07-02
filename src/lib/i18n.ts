@@ -118,6 +118,6 @@ export const useLocalStorageLangSelector = () => {
 
     onLanguageSelect(async ({locale}: {locale: DecoratorLocale}) => {
         await setLanguage(locale);
-        logAmplitudeEvent("Valgt språk", {language: locale}).catch((e) => logWarning(`Amplitude error: ${e}`));
+        await logAmplitudeEvent("Valgt språk", {language: locale});
     });
 };
