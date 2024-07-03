@@ -33,6 +33,7 @@ const Personopplysninger = React.lazy(() => import("./pages/01-personalia"));
 const Begrunnelse = React.lazy(() => import("./pages/02-begrunnelse"));
 const Behov = React.lazy(() => import("./pages/kort/02-behov"));
 const ArbeidOgUtdanning = React.lazy(() => import("./pages/03-arbeidUtdanning"));
+const Situasjonsendring = React.lazy(() => import("./pages/kort/03-situasjon"));
 const Familie = React.lazy(() => import("./pages/04-familie"));
 const Bosituasjon = React.lazy(() => import("./pages/05-bosituasjon"));
 const InntektFormue = React.lazy(() => import("./pages/06-inntektFormue"));
@@ -63,6 +64,7 @@ const routes = (
                 <Route element={<RedirectFromKort />}>
                     <Route index path="1" element={<Personopplysninger />} />
                     <Route path="2" element={<Behov />} />
+                    <Route path="3" element={<Situasjonsendring />} />
                 </Route>
             </Route>
             <Route path=":behandlingsId">

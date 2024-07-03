@@ -68,7 +68,7 @@ export const SkjemaHeadings: Record<SkjemaPage, {tittel: string; ikon: ReactNode
 export const KortSkjemaHeadings: Record<KortSkjemaPage, {tittel: string; ikon: ReactNode}> = {
     1: {tittel: "kontakt.tittel", ikon: <HusIllustrasjon />},
     2: {tittel: "begrunnelsebolk.tittel", ikon: <MynterIllustrasjon />},
-    3: {tittel: "arbeidbolk.tittel", ikon: <StresskoffertIllustrasjon />},
+    3: {tittel: "situasjon.kort.tittel", ikon: <StresskoffertIllustrasjon />},
     4: {tittel: "oppsummering.tittel", ikon: <SnakkebobleIllustrasjon />},
 };
 
