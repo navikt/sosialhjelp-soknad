@@ -1,7 +1,6 @@
 // When new backend has been deployed, this can be removed.
 import {DokumentUpload, VedleggFrontendType} from "../../../generated/model";
 import {useEffect, useReducer, useState} from "react";
-//import {useAmplitude} from "../../amplitude/useAmplitude";
 import {DocumentListReducer, initialDocumentListState} from "../../../pages/08-vedlegg/lib/DocumentListReducer";
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useTranslation} from "react-i18next";
@@ -22,7 +21,6 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
     const [error, setError] = useState<string | null>(null);
     const [maxUploadSize, setMaxUploadSize] = useState<number | null>(null);
     const [uploadPercent, setUploadPercent] = useState<number | null>(null);
-    //const {logEvent} = useAmplitude();
     const [{documents}, dispatch] = useReducer(DocumentListReducer, initialDocumentListState(dokumentasjonType));
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();

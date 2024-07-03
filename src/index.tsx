@@ -11,7 +11,6 @@ import {useLocalStorageLangSelector} from "./lib/i18n";
 import {withFaroProfiler} from "@grafana/faro-react";
 import {ApplicationSpinner} from "./lib/components/animasjoner/ApplicationSpinner";
 import {ValideringsContextProvider} from "./lib/valideringContextProvider";
-//import {AmplitudeProvider} from "./lib/amplitude/AmplitudeProvider";
 import {logWindowError} from "./lib/log/logWindowError";
 
 window.onerror = logWindowError;
@@ -49,5 +48,5 @@ if (import.meta.env.REACT_APP_DIGISOS_ENV === "localhost") {
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
-const ProfiledApp = process.env.NODE_ENV === "development" ? App : withFaroProfiler(App);
+const ProfiledApp = withFaroProfiler(App);
 root.render(<ProfiledApp />);
