@@ -1,5 +1,5 @@
 import {BodyShort, Label} from "@navikt/ds-react";
-import React, {ReactNode} from "react";
+import React, {ElementType, ReactNode} from "react";
 import styled from "styled-components";
 import cx from "classnames";
 
@@ -14,13 +14,15 @@ export const SysteminfoItem = ({
     multiline,
     children,
     className,
+    as: Cmp = "li",
 }: {
     multiline?: boolean;
     label?: ReactNode;
     children?: ReactNode;
     className?: string;
+    as?: ElementType;
 }) => (
-    <li>
+    <Cmp>
         {label && (
             <ListItemContents className={cx("!leading-5 ", className)} multiline={multiline}>
                 <Label className="pr-1 after:content-[':']" size="small">
@@ -35,7 +37,7 @@ export const SysteminfoItem = ({
                 <BodyShort weight={"semibold"}>{children}</BodyShort>
             </ListItemContents>
         )}
-    </li>
+    </Cmp>
 );
 
 export const Systeminfo = ({children, className}: {children: React.ReactNode; className?: string}) => (
