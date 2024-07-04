@@ -11,9 +11,8 @@ import {deleteObsoleteKeys} from "./lib/deleteObsoleteKeys";
 const LANGUAGES = ["nb", "en", "nn"] as const;
 
 LANGUAGES.forEach(async (language) => {
-    const originalFile = stringifyNumericKeys(
-        await readOriginalFile(`../../../public/locales/${language}/skjema.json`)
-    );
+    const originalFileBytes = await readOriginalFile(`../../../public/locales/${language}/skjema.json`);
+    const originalFile = stringifyNumericKeys(originalFileBytes);
 
     const dedupedAndSortedFile = solveStringObjectDuplication(orderObjectByKeys(deleteObsoleteKeys(originalFile)));
 

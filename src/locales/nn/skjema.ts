@@ -215,6 +215,15 @@ export const skjema = {
                 stringValue: "Fortel oss kort om situasjonen din",
             },
         },
+        kort: {
+            behov: {
+                dokumentasjon: {
+                    beskrivelse:
+                        "Her kan du laste opp faktura, kvittering eller kostnadsoverslag for det du søkjer om pengar til. Du kan ta bilete/skjermbilete",
+                    tittel: "Dokumentasjon",
+                },
+            },
+        },
     },
     begrunnelsebolk: {
         tittel: "Behov",
@@ -1041,7 +1050,7 @@ export const skjema = {
             description:
                 "Telefonnummeret du oppgir her kan bli brukt til å kontakte deg i samband med søknaden, oppdateres ikkje på Mi Side",
             feil: {
-                maxLength: "Beklager, telefonnummer kan ikkje vera lenger enn 11 siffer.",
+                maxLength: "Beklager, telefonnummer kan ikkje vera lenger enn 8 siffer.",
                 tom: "Legg inn telefonnummer",
                 ugyldig: "Telefonnummer er ugyldig",
             },
@@ -1552,6 +1561,23 @@ export const skjema = {
         aldriLagret: "Søknaden er ikkje lagra",
         lagret: "Sist lagra",
     },
+    situasjon: {
+        kort: {
+            dokumentasjon: {
+                description:
+                    "Her kan du lasta opp dokumentasjon på kva som har endra seg i situasjonen din. Du kan legge ved bilete/skjermbilete",
+                title: "Dokumentasjon",
+            },
+            endring: {
+                legend: "Har inntektene eller utgiftene dine endra seg sidan du søkte sist?",
+            },
+            hvaErEndret: {
+                description: 'Døme: "Eg har fått bostønad og har difor høgare inntekt."',
+                label: "Kva har endra seg i situasjonen din?",
+            },
+            tittel: "Din situasjon",
+        },
+    },
     skjema: {
         feilmelding: {
             antall: {
@@ -1796,7 +1822,7 @@ export const skjema = {
             skattbar: {
                 avbryt: {
                     ja: "Ja, hent for meg",
-                    nei: "Nei, eg vil laste opp sjølv",
+                    nei: "Nei, ikkje hent for meg",
                 },
                 beskrivelse: "Du har henta informasjon om inntekta di frå Skatteetaten.",
                 bruttoinntekt: "Inntekt før skatt",
@@ -2060,7 +2086,7 @@ export const skjema = {
                 stringValue: "Fullskjerm",
             },
             info: "Sørg for at dokumenta er leselege og viser rett informasjon",
-            opplast: "Last opp document",
+            opplast: "Last opp dokument",
             slett: "Slett",
             tilbake: {
                 mobil: "Tilbake",

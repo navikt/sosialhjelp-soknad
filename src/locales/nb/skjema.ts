@@ -197,6 +197,15 @@ export const skjema = {
                 stringValue: "Fortell oss kort om situasjonen din",
             },
         },
+        kort: {
+            behov: {
+                dokumentasjon: {
+                    beskrivelse:
+                        "Her kan du laste opp faktura, kvittering eller kostnadsoverslag for det du søker om penger til. Du kan ta bilder/skjermbilder.",
+                    tittel: "Dokumentasjon",
+                },
+            },
+        },
     },
     begrunnelsebolk: {
         tittel: "Behov",
@@ -1028,7 +1037,7 @@ export const skjema = {
             description:
                 "Telefonnummeret du oppgir her kan bli brukt til å ta kontakt med deg om søknaden, og oppdateres ikke på Min Side",
             feil: {
-                maxLength: "Beklager, telefonnummer kan ikke være lenger enn 11 siffer.",
+                maxLength: "Beklager, telefonnummer kan ikke være lenger enn 8 siffer.",
                 tom: "Telefonnummer må fylles ut",
                 ugyldig: "Ikke gyldig telefonnummer",
             },
@@ -1535,6 +1544,23 @@ export const skjema = {
         aldriLagret: "Søknaden er ikke blitt lagret",
         lagret: "Sist lagret",
     },
+    situasjon: {
+        kort: {
+            dokumentasjon: {
+                description:
+                    "Her kan du laste opp dokumentasjon på hva som har endret seg i din situasjon. Du kan legge ved bilder/skjermbilder.",
+                title: "Dokumentasjon",
+            },
+            endring: {
+                legend: "Har dine inntekter eller utgifter endret seg siden du søkte sist?",
+            },
+            hvaErEndret: {
+                description: 'Eksempel: "Jeg har fått bostøtte og har derfor høyere inntekt."',
+                label: "Hva har endret seg i situasjonen din?",
+            },
+            tittel: "Din situasjon",
+        },
+    },
     skjema: {
         feilmelding: {
             antall: {
@@ -1786,7 +1812,7 @@ export const skjema = {
             skattbar: {
                 avbryt: {
                     ja: "Ja, hent for meg",
-                    nei: "Nei, jeg vil laste opp selv",
+                    nei: "Nei, ikke hent for meg",
                 },
                 beskrivelse: "Du har hentet informasjon om inntekten din fra Skatteetaten.",
                 bruttoinntekt: "Inntekt før skatt",

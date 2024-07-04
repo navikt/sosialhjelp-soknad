@@ -215,6 +215,15 @@ export const skjema = {
                 stringValue: "Tell us briefly about your situation",
             },
         },
+        kort: {
+            behov: {
+                dokumentasjon: {
+                    beskrivelse:
+                        "Here you can upload an invoice, receipt or cost estimate for what you are applying for money for. You can take pictures/screenshots.",
+                    tittel: "Documentation",
+                },
+            },
+        },
     },
     begrunnelsebolk: {
         tittel: "Your needs",
@@ -1048,7 +1057,7 @@ export const skjema = {
             beskrivelse: "To make it easier to contact you, we require your telephone number.",
             description: "The phone number you enter here will not be updated on My Page",
             feil: {
-                maxLength: "Sorry, phone number must be 11 digits or less.",
+                maxLength: "Sorry, phone number cannot be longer than 8 digits.",
                 tom: "You must enter a telephone number",
                 ugyldig: "Phone number is not valid",
             },
@@ -1560,6 +1569,23 @@ export const skjema = {
         aldriLagret: "The application has not been saved",
         lagret: "Last saved",
     },
+    situasjon: {
+        kort: {
+            dokumentasjon: {
+                description:
+                    "Here you can upload documentation of what has changed in your situation. You can attach images/screenshots.",
+                title: "Documentation",
+            },
+            endring: {
+                legend: "Have your income or expenses changed since you last applied?,",
+            },
+            hvaErEndret: {
+                description: "Example: I have gotten housing allowance and therefore have a higher income",
+                label: "What has changed in your situation?",
+            },
+            tittel: "Your situation",
+        },
+    },
     skjema: {
         feilmelding: {
             antall: {
@@ -1805,8 +1831,8 @@ export const skjema = {
             fra: "From",
             skattbar: {
                 avbryt: {
-                    ja: "Ja, hent for meg",
-                    nei: "Nei, jeg vil laste opp selv",
+                    ja: "Yes, retrieve it for me.",
+                    nei: "No, do not retrieve it for me",
                 },
                 beskrivelse: "You have obtained information about your income from the Tax Administration.",
                 bruttoinntekt: "Income before tax",

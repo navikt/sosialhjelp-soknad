@@ -8,11 +8,12 @@ import {logError, logWarning} from "../../../log/loggerUtils";
 import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {NavEnhetInaktiv} from "../../../../pages/01-personalia/adresse/NavEnhetInaktiv";
 import {logAmplitudeEvent} from "../../../amplitude/Amplitude";
+import {DigisosLanguageKey} from "../../../i18n";
 
 interface SkjemaStegNavigasjonProps {
     loading?: boolean;
     onConfirm?: () => Promise<void>;
-    confirmTextKey?: string;
+    confirmTextKey?: DigisosLanguageKey;
 }
 
 export const SkjemaStegButtons = ({
