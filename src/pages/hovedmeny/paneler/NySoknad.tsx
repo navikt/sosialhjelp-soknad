@@ -1,4 +1,4 @@
-import {Alert, Button, ExpansionCard, Heading, Loader} from "@navikt/ds-react";
+import {Alert, Button, ExpansionCard, Heading, Loader, Radio, RadioGroup} from "@navikt/ds-react";
 import * as React from "react";
 import {FillForms} from "@navikt/ds-icons";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
@@ -8,13 +8,13 @@ import {useState} from "react";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {NedetidPanel} from "../../../lib/components/NedetidPanel";
-//import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
+import {useFeatureFlags} from "../../../lib/featureFlags";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 
 export const NySoknadInfo = () => {
-    //const {logEvent} = useAmplitude();
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
     const [startSoknadError, setStartSoknadError] = useState<Error | null>(null);
+    const [soknadstype, setSoknadstype] = useState<"kort" | "standard" | undefined>();
 
     const {data: sessionInfo} = useGetSessionInfo();
 
@@ -35,7 +35,7 @@ export const NySoknadInfo = () => {
             language: localStorage.getItem("digisos-language"),
         });
         try {
-            const {brukerBehandlingId, useKortSoknad} = await opprettSoknad();
+            const {brukerBehandlingId, useKortSoknad} = await opprettSoknad({soknadstype});
             await hentXsrfCookie(brukerBehandlingId);
             // TODO: Få info om kort eller lang søknad i responsen og evaluer her
             if (useKortSoknad) {
@@ -55,6 +55,7 @@ export const NySoknadInfo = () => {
             <NedetidPanel varselType={"infoside"} />
             {startSoknadError && <Alert variant="error">{t("applikasjon.opprettsoknadfeilet")}</Alert>}
             <div className={"text-center"}>
+                <SoknadstypeValg valg={soknadstype} setValg={setSoknadstype} />
                 <Button
                     variant="primary"
                     id="start_soknad_button"
@@ -66,6 +67,24 @@ export const NySoknadInfo = () => {
                 </Button>
             </div>
         </>
+    );
+};
+
+interface SoknadstypeValgProps {
+    valg: "kort" | "standard" | undefined;
+    setValg: (valg: "kort" | "standard") => void;
+}
+
+const SoknadstypeValg = ({valg, setValg}: SoknadstypeValgProps) => {
+    const {soknadstypeValg} = useFeatureFlags();
+    if (!soknadstypeValg) {
+        return null;
+    }
+    return (
+        <RadioGroup legend={"Velg søknadstype"} value={valg} onChange={(value) => setValg(value)}>
+            <Radio value={"standard"}>Standard</Radio>
+            <Radio value={"kort"}>Kort</Radio>
+        </RadioGroup>
     );
 };
 

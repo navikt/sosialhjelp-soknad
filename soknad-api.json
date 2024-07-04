@@ -2302,7 +2302,13 @@
                 "tags": ["soknad-ressurs"],
                 "operationId": "opprettSoknad",
                 "parameters": [
-                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
+                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}},
+                    {
+                        "name": "soknadstype",
+                        "in": "query",
+                        "required": false,
+                        "schema": {"type": "string", "enum": ["kort", "standard"]}
+                    }
                 ],
                 "responses": {
                     "413": {

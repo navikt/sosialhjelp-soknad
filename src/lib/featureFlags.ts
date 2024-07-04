@@ -7,6 +7,9 @@ export type FeatureFlags = {
 
     // Ny NAV-kontor-visning i oppsummering
     oppsummeringNavEnhet: boolean;
+
+    // Vis valg for søknadstype ved opprettelse
+    soknadstypeValg: boolean;
 };
 
 export const useFeatureFlags = (): FeatureFlags => {
@@ -15,11 +18,21 @@ export const useFeatureFlags = (): FeatureFlags => {
             begrunnelseNyTekst: true,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
+            soknadstypeValg: true,
+        };
+    }
+    if (import.meta.env.REACT_APP_DIGISOS_ENV === "dev-sbs") {
+        return {
+            begrunnelseNyTekst: false,
+            nyOppsummering: false,
+            oppsummeringNavEnhet: false,
+            soknadstypeValg: true,
         };
     }
     return {
         begrunnelseNyTekst: false,
         nyOppsummering: false,
         oppsummeringNavEnhet: false,
+        soknadstypeValg: false,
     };
 };
