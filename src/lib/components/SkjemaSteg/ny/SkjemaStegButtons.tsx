@@ -4,15 +4,22 @@ import {useTranslation} from "react-i18next";
 import {SkjemaStegContext} from "./SkjemaSteg";
 import {useContext, useState} from "react";
 import {minSideURL} from "../../../config";
-import {logError} from "../../../log/loggerUtils";
+import {logError, logWarning} from "../../../log/loggerUtils";
 import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {NavEnhetInaktiv} from "../../../../pages/01-personalia/adresse/NavEnhetInaktiv";
+import {logAmplitudeEvent} from "../../../amplitude/Amplitude";
 
 interface SkjemaStegNavigasjonProps {
     loading?: boolean;
+    onConfirm?: () => Promise<void>;
+    confirmTextKey?: string;
 }
 
-export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
+export const SkjemaStegButtons = ({
+    loading,
+    onConfirm,
+    confirmTextKey = "skjema.knapper.neste",
+}: SkjemaStegNavigasjonProps) => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
 
     const {t} = useTranslation("skjema");
@@ -33,7 +40,9 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
                 <Button
                     variant="secondary"
                     id="gaa_tilbake_button"
-                    onClick={async () => await requestNavigation(page - 1)}
+                    onClick={async () => {
+                        await requestNavigation(page - 1);
+                    }}
                     disabled={loading || page <= 1}
                 >
                     {t("skjema.knapper.forrige")}
@@ -42,15 +51,28 @@ export const SkjemaStegButtons = ({loading}: SkjemaStegNavigasjonProps) => {
                 <Button
                     variant="primary"
                     id="gaa_videre_button"
-                    onClick={async () => await requestNavigation(page + 1)}
+                    onClick={() => {
+                        if (onConfirm) {
+                            return onConfirm();
+                        }
+                        return requestNavigation(page + 1);
+                    }}
                     disabled={loading}
                 >
-                    {t("skjema.knapper.neste")}
+                    {t(confirmTextKey)}
                     {loading && <Loader className={"ml-2"} />}
                 </Button>
             </div>
             <div className={"pb-8 lg:pb-16"}>
-                <Button variant="tertiary" onClick={() => (window.location.href = minSideURL)}>
+                <Button
+                    variant="tertiary"
+                    onClick={() => {
+                        logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"}).catch((e) =>
+                            logWarning(`Amplitude error: ${e}`)
+                        );
+                        window.location.href = minSideURL;
+                    }}
+                >
                     {t("avbryt.fortsettsenere")}
                 </Button>
                 <Button variant="tertiary" onClick={() => setAvbrytModalOpen(true)}>

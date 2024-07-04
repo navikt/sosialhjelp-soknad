@@ -1335,5 +1335,13 @@
         "avbryt": "Avbryt",
         "slett": "Slett fil"
     },
-    "hoppTilHovedinnhold": "Hopp til hovedinnhold"
+    "hoppTilHovedinnhold": "Hopp til hovedinnhold",
+    "begrunnelse.kort.behov.dokumentasjon.tittel": "Dokumentasjon",
+    "begrunnelse.kort.behov.dokumentasjon.beskrivelse": "Her kan du laste opp faktura, kvittering eller kostnadsoverslag for det du søker om penger til. Du kan ta bilder/skjermbilder.",
+    "situasjon.kort.tittel": "Din situasjon",
+    "situasjon.kort.endring.legend": "Har dine inntekter eller utgifter endret seg siden du søkte sist?",
+    "situasjon.kort.hvaErEndret.label": "Hva har endret seg i situasjonen din?",
+    "situasjon.kort.hvaErEndret.description": "Eksempel: \"Jeg har fått bostøtte og har derfor høyere inntekt.\"",
+    "situasjon.kort.dokumentasjon.title": "Dokumentasjon",
+    "situasjon.kort.dokumentasjon.description": "Her kan du laste opp dokumentasjon på hva som har endret seg i din situasjon. Du kan legge ved bilder/skjermbilder."
 }

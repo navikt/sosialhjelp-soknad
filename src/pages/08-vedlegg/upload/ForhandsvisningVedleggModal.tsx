@@ -8,21 +8,19 @@ import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import {FilePreviewButtons} from "./FilePreviewButtons";
 import {FilePreviewDisplay} from "./FilePreviewDisplay";
-import {VedleggFrontendType} from "../../../generated/model";
-import {useDokumentasjonTekster} from "../../../lib/hooks/dokumentasjon/useDokumentasjonTekster";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 
 interface ForhandsvisningModalProps {
     file: File;
-    opplysningType: VedleggFrontendType;
+    header: string | undefined;
     onAccept: () => void;
     onClose: () => void;
     onDelete: () => void;
 }
 
 export const ForhandsvisningVedleggModal = ({
-    opplysningType,
+    header,
     file,
     onAccept,
     onClose,
@@ -30,7 +28,6 @@ export const ForhandsvisningVedleggModal = ({
 }: ForhandsvisningModalProps) => {
     const [isFullscreen, setFullscreen] = useState<boolean>(false);
     const {t} = useTranslation();
-    const {dokumentBeskrivelse} = useDokumentasjonTekster(opplysningType);
 
     return (
         <Modal
@@ -38,11 +35,11 @@ export const ForhandsvisningVedleggModal = ({
             onClose={onClose}
             closeOnBackdropClick={false}
             className={"bg-gray-800/80"}
-            aria-label={dokumentBeskrivelse ?? ""}
+            aria-label={header ?? ""}
         >
             <Modal.Header>
                 <Heading level={"2"} size={"medium"}>
-                    {dokumentBeskrivelse}
+                    {header}
                 </Heading>
             </Modal.Header>
             <Modal.Body className={cx({"fixed inset-0 w-full !p-0": isFullscreen}, "flex flex-col items-center")}>

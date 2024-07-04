@@ -14,7 +14,7 @@ export const SkjemaStegStepper = () => {
         return null;
     }
 
-    const {page, requestNavigation} = context;
+    const {page, requestNavigation, kort} = context;
 
     return (
         <div className={"max-w-md w-full mx-auto"}>
@@ -25,7 +25,7 @@ export const SkjemaStegStepper = () => {
                 orientation={"horizontal"}
                 onStepChange={(s: number) => requestNavigation(s)}
             >
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((key) => (
+                {[...Array(kort ? 3 : 8).keys()].map((key) => (
                     <Stepper.Step aria-label={`steg ${key}`} key={key} as="button">
                         {t(SkjemaTittel[page])}
                     </Stepper.Step>

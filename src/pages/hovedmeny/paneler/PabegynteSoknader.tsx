@@ -10,27 +10,31 @@ import {useAlgebraic} from "../../../lib/hooks/common/useAlgebraic";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlaceholder";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
-// import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
+import {logWarning} from "../../../lib/log/loggerUtils";
+//import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const DAYS_BEFORE_DELETION = 14;
 
-const PabegyntSoknad = ({
-    behandlingsId,
-    sistOppdatert,
-    antallPabegynteSoknader,
-}: {
+interface Props {
     behandlingsId: string;
     sistOppdatert: string;
     antallPabegynteSoknader: number;
-}) => {
-    // const {logEvent} = useAmplitude();
+    isKort: boolean;
+}
+
+const PabegyntSoknad = ({behandlingsId, sistOppdatert, antallPabegynteSoknader, isKort}: Props) => {
+    //const {logEvent} = useAmplitude();
     const {t} = useTranslation("skjema");
     const expiryDate = addDays(new Date(sistOppdatert), DAYS_BEFORE_DELETION);
     return (
         <li>
             <LinkPanel
-                href={`/sosialhjelp/soknad/skjema/${behandlingsId}/1`}
-                onClick={() => logAmplitudeEvent("Klikk på påbegynt søknad", {antallPabegynteSoknader})}
+                href={`/sosialhjelp/soknad/skjema${isKort ? "/kort" : ""}/${behandlingsId}/1`}
+                onClick={() =>
+                    logAmplitudeEvent("Klikk på påbegynt søknad", {antallPabegynteSoknader}).catch((e) =>
+                        logWarning(`Amplitude error: ${e}`)
+                    )
+                }
                 border
                 className={"!p-4 group !text-[#222] hover:!text-[#000]"}
             >
@@ -63,7 +67,7 @@ const PabegynteSoknaderCount = ({className}: {className?: string}) => {
         open.length ? (
             <span className={cx("opacity-70 font-normal", className)}>
                 {open.length === 1
-                    ? `1 ${t("applikasjon.paabegynt.soknad.stringValue")}`
+                    ? `1 ${t("applikasjon.paabegynt.soknad")}`
                     : `${open.length} ${t("applikasjon.paabegynt.soknad.flertall")}`}
             </span>
         ) : null
@@ -104,11 +108,12 @@ export const PabegynteSoknaderPanel = () => {
                     })}
                 </BodyShort>
                 <ul className={"space-y-4"}>
-                    {openSoknader?.map(({behandlingsId, sistOppdatert}) => (
+                    {openSoknader?.map(({behandlingsId, sistOppdatert, isKort}) => (
                         <PabegyntSoknad
                             key={behandlingsId}
                             behandlingsId={behandlingsId}
                             sistOppdatert={sistOppdatert}
+                            isKort={isKort}
                             antallPabegynteSoknader={openSoknader.length}
                         />
                     ))}

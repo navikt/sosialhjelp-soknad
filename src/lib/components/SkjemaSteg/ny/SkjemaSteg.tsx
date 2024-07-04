@@ -18,10 +18,11 @@ import {useTitle} from "../../../hooks/common/useTitle";
 import {HusIllustrasjon} from "../../svg/illustrasjoner/HusIllustrasjon";
 import {MynterIllustrasjon} from "../../svg/illustrasjoner/MynterIllustrasjon";
 import {RequireXsrfCookie} from "./RequireXsrfCookie";
-import {DigisosLanguageKey} from "../../../i18n";
+import {useLocation} from "react-router-dom";
 
 type TSkjemaStegContext = {
-    page: SkjemaPage;
+    page: SkjemaPage | KortSkjemaPage;
+    kort: boolean;
     requestNavigation: (toPage: number) => Promise<void>;
 };
 
@@ -50,6 +51,7 @@ interface SkjemaStegProps {
 }
 
 export type SkjemaPage = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+export type KortSkjemaPage = 1 | 2 | 3 | 4;
 
 export const SkjemaHeadings: Record<SkjemaPage, {tittel: string; ikon: ReactNode}> = {
     1: {tittel: "kontakt.tittel", ikon: <HusIllustrasjon />},
@@ -61,19 +63,14 @@ export const SkjemaHeadings: Record<SkjemaPage, {tittel: string; ikon: ReactNode
     7: {tittel: "utgifterbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
     8: {tittel: "opplysningerbolk.tittel", ikon: <DokumentIllustrasjon />},
     9: {tittel: "oppsummering.tittel", ikon: <SnakkebobleIllustrasjon />},
-} as const;
+};
 
-export const SkjemaTittel: Record<SkjemaPage, DigisosLanguageKey> = {
-    1: "kontakt.tittel",
-    2: "begrunnelsebolk.tittel",
-    3: "arbeidbolk.tittel",
-    4: "familiebolk.tittel",
-    5: "bosituasjonbolk.tittel",
-    6: "inntektbolk.tittel",
-    7: "utgifterbolk.tittel",
-    8: "opplysningerbolk.tittel",
-    9: "oppsummering.tittel",
-} as const;
+export const KortSkjemaHeadings: Record<KortSkjemaPage, {tittel: string; ikon: ReactNode}> = {
+    1: {tittel: "kontakt.tittel", ikon: <HusIllustrasjon />},
+    2: {tittel: "begrunnelsebolk.tittel", ikon: <MynterIllustrasjon />},
+    3: {tittel: "situasjon.kort.tittel", ikon: <StresskoffertIllustrasjon />},
+    4: {tittel: "oppsummering.tittel", ikon: <SnakkebobleIllustrasjon />},
+};
 
 const SkjemaTitle = ({className}: {className?: string}) => {
     const {t} = useTranslation("skjema");
@@ -86,11 +83,12 @@ const SkjemaTitle = ({className}: {className?: string}) => {
 
     const {page} = context;
 
+    const skjemaHeading = context.kort ? KortSkjemaHeadings[page as KortSkjemaPage] : SkjemaHeadings[page];
     return (
         <div tabIndex={-1} className={cx("text-center mb-12 lg:mb-24", className)}>
-            <div className="mx-auto w-fit mb-2">{SkjemaHeadings[page].ikon}</div>
+            <div className="mx-auto w-fit mb-2">{skjemaHeading.ikon}</div>
             <Heading level={"2"} size={"large"} data-testid={page === 2 ? "skjemasteg-heading" : null}>
-                {t(SkjemaTittel[page])}
+                {t(skjemaHeading.tittel)}
             </Heading>
         </div>
     );
@@ -117,7 +115,11 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
 
     const {t} = useTranslation("skjema");
 
-    useTitle(`${t(SkjemaTittel[page])} - ${t("applikasjon.sidetittel")}`);
+    const location = useLocation();
+
+    const isKortSoknad = location.pathname.includes("/kort");
+
+    useTitle(`${t(SkjemaHeadings[page].tittel)} - ${t("applikasjon.sidetittel")}`);
 
     const {gotoPage} = useSkjemaNavigation(page);
 
@@ -133,7 +135,7 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
 
     return (
         <RequireXsrfCookie>
-            <SkjemaStegContext.Provider value={{page, requestNavigation}}>
+            <SkjemaStegContext.Provider value={{page, requestNavigation, kort: !!isKortSoknad}}>
                 <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn flex gap-10 items-center flex-col">
                     <Link href="#main-content" className="sr-only sr-only-focusable">
                         {t("hoppTilHovedinnhold")}
