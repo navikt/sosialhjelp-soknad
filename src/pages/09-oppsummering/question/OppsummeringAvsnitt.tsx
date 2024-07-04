@@ -15,7 +15,7 @@ export const OppsummeringAvsnitt = ({avsnitt: {tittel, sporsmal}}: {avsnitt: Avs
                     {t(tittel as DigisosLanguageKey)}
                 </Heading>
             </div>
-            {sporsmal?.map((sporsmal) => <OppsummeringSporsmal sporsmal={sporsmal} key={sporsmal.tittel} />)}
+            {sporsmal?.map((sporsmal, i) => <OppsummeringSporsmal sporsmal={sporsmal} key={i} />)}
         </div>
     );
 };

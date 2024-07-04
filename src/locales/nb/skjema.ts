@@ -67,7 +67,10 @@ export const skjema = {
                 stringValue: "påbegynt søknad",
             },
         },
-        sidetittel: "Søknad om økonomisk sosialhjelp",
+        sidetittel: {
+            kortnavn: "Søknad",
+            stringValue: "Søknad om økonomisk sosialhjelp",
+        },
         start: {
             ny: {
                 soknad: "Start en ny søknad",
@@ -180,22 +183,16 @@ export const skjema = {
     },
     begrunnelse: {
         hva: {
-            description: {
-                old: "For eksempel penger til/utgifter for å leve og husleie",
-                stringValue: 'Eksempel på tekst: "Jeg søker om penger til mat, husleie og strøm."',
-            },
-            label: {
-                old: "Skriv med stikkord hva du søker om",
-                stringValue: "Hva søker du om?",
-            },
+            description: 'Eksempel på tekst: "Jeg søker om penger til mat, husleie og strøm."',
+            descriptionOld: "For eksempel penger til/utgifter for å leve og husleie",
+            label: "Hva søker du om?",
+            labelOld: "Skriv med stikkord hva du søker om",
         },
         hvorfor: {
             description:
                 'Eksempel på tekst: "Jeg er arbeidssøker og har ikke penger til å kjøpe mat eller betale husleie."',
-            label: {
-                old: "Gi en kort begrunnelse for søknaden",
-                stringValue: "Fortell oss kort om situasjonen din",
-            },
+            label: "Fortell oss kort om situasjonen din",
+            labelOld: "Gi en kort begrunnelse for søknaden",
         },
         kort: {
             behov: {
@@ -768,6 +765,7 @@ export const skjema = {
             sak: {
                 dato: "Dato",
                 status: "Status",
+                stringValue: "Sak",
             },
             sakerIkkefunnet: "Du har ingen registrerte saker hos Husbanken den siste måneden.",
             sporsmal: {
@@ -1733,10 +1731,7 @@ export const skjema = {
                         etternavn: {
                             label: "Etternavn",
                         },
-                        fodselsdato: {
-                            label: "Fødselsdato (ddmmåååå)",
-                            stringValue: "Fødselsdato",
-                        },
+                        fodselsdato: "Fødselsdato",
                         folkereg: "Har samme folkeregistrerte adresse som deg",
                         folkeregistrertsammen: {
                             sporsmal: "Folkeregistrert på samme adresse som ektefelle",

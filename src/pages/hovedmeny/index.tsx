@@ -16,7 +16,7 @@ import {AppHeader} from "../../lib/components/appHeader/AppHeader";
 export const Informasjon = () => {
     const {expectOK} = useAlgebraic(useGetSessionInfo());
     const {t} = useTranslation();
-    useTitle(t("applikasjon.sidetittel"));
+    useTitle(t("applikasjon.sidetittel.stringValue"));
     const [searchParams, setSearchParams] = useSearchParams();
 
     // Tanken her er at reason-parameteret i fremtiden vil kunne brukes for

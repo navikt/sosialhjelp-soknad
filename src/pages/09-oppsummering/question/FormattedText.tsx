@@ -1,20 +1,17 @@
 import {BodyShort} from "@navikt/ds-react";
 import {formatTidspunkt} from "../../../lib/utils";
-import {useTranslation} from "react-i18next";
 import {SvarType} from "../../../generated/model";
-import {logWarning} from "../../../lib/log/loggerUtils";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate";
-import {DigisosLanguageKey} from "../../../lib/i18n";
-
-const validSvarTypes = new Set(Object.values(SvarType));
+import {logError} from "../../../lib/log/loggerUtils";
+import {useBackendTranslation} from "./useBackendTranslationResult";
 
 const FormatAsType = ({type, children}: {type: SvarType; children: string}) => {
-    const {t} = useTranslation("skjema");
+    const {tBackend} = useBackendTranslation();
 
-    if (!children) return "";
+    if (!children) return null;
 
-    if (!validSvarTypes.has(type)) {
-        logWarning("Ugyldig SvarType i FormattedTextValue");
+    if (!Object.values(SvarType).includes(type)) {
+        logError("Ugyldig SvarType i FormattedTextValue");
         return children;
     }
 
@@ -22,7 +19,7 @@ const FormatAsType = ({type, children}: {type: SvarType; children: string}) => {
         case "TEKST":
             return children;
         case "LOCALE_TEKST":
-            return t(children as DigisosLanguageKey);
+            return tBackend(children);
         case "DATO":
             return <LocalizedDate date={children} />;
         case "TIDSPUNKT":
@@ -30,15 +27,21 @@ const FormatAsType = ({type, children}: {type: SvarType; children: string}) => {
     }
 };
 
-interface FormattedTextProps {
+export const FormattedText = ({
+    type,
+    value,
+    labelBackendKey,
+}: {
     type: SvarType;
     value: string;
-    label?: string;
-}
+    labelBackendKey?: string;
+}) => {
+    const {tBackend} = useBackendTranslation();
 
-export const FormattedText = ({type, value, label}: FormattedTextProps) => (
-    <BodyShort>
-        {label && <span className={"pr-1 after:content-[':']"}>{label}</span>}
-        <FormatAsType type={type}>{value}</FormatAsType>
-    </BodyShort>
-);
+    return (
+        <BodyShort>
+            {labelBackendKey && <span className={"pr-1 after:content-[':']"}>{tBackend(labelBackendKey)}</span>}
+            <FormatAsType type={type}>{value}</FormatAsType>
+        </BodyShort>
+    );
+};

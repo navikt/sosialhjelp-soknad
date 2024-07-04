@@ -120,7 +120,7 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
 
     const isKortSoknad = location.pathname.includes("/kort");
 
-    useTitle(`${t(SkjemaHeadings[page].tittel)} - ${t("applikasjon.sidetittel")}`);
+    useTitle(`${t(SkjemaHeadings[page].tittel)} - ${t("applikasjon.sidetittel.stringValue")}`);
 
     const {gotoPage} = useSkjemaNavigation(page);
 

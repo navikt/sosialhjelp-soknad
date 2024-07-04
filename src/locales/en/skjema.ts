@@ -86,7 +86,10 @@ export const skjema = {
                 stringValue: "application started",
             },
         },
-        sidetittel: "Application for financial assistance",
+        sidetittel: {
+            kortnavn: "Application",
+            stringValue: "Application for financial assistance",
+        },
         start: {
             ny: {
                 soknad: "Start a new application",
@@ -199,21 +202,15 @@ export const skjema = {
     },
     begrunnelse: {
         hva: {
-            description: {
-                old: "For example, money for living expenses and rent",
-                stringValue: 'Example of text: "I am applying for support for food, rent and electricity."',
-            },
-            label: {
-                old: "Using key words, state what you are applying for",
-                stringValue: "What are you applying for?",
-            },
+            description: 'Example of text: "I am applying for support for food, rent and electricity."',
+            descriptionOld: "For example, money for living expenses and rent",
+            label: "What are you applying for?",
+            labelOld: "Using key words, state what you are applying for",
         },
         hvorfor: {
             description: 'Example of text: "I am a jobseeker and do not have money to purchase food or to pay rent."',
-            label: {
-                old: "Give a brief reason for the application",
-                stringValue: "Tell us briefly about your situation",
-            },
+            label: "Tell us briefly about your situation",
+            labelOld: "Give a brief reason for the application",
         },
         kort: {
             behov: {
@@ -786,6 +783,7 @@ export const skjema = {
             sak: {
                 dato: "Date",
                 status: "Status",
+                stringValue: "Case",
             },
             sakerIkkefunnet: "You have no cases registered with Husbanken for the last month.",
             sporsmal: {
@@ -1753,10 +1751,7 @@ export const skjema = {
                         etternavn: {
                             label: "Surname",
                         },
-                        fodselsdato: {
-                            label: "Date of birth (ddmmyyyy)",
-                            stringValue: "Date of birth",
-                        },
+                        fodselsdato: "Date of birth",
                         folkereg: "Has/have the same registered address as you",
                         folkeregistrertsammen: {
                             sporsmal: "Registered at the same address as spouse in the National Population Register",

@@ -66,16 +66,12 @@ export const Begrunnelse = () => {
                             {...register("hvaSokesOm")}
                             id={"hvaSokesOm"}
                             error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
-                            label={
-                                begrunnelseNyTekst
-                                    ? t("begrunnelse.hva.label.stringValue")
-                                    : t("begrunnelse.hva.label.old")
-                            }
+                            label={begrunnelseNyTekst ? t("begrunnelse.hva.label") : t("begrunnelse.hva.labelOld")}
                             description={
                                 begrunnelseNyTekst ? (
-                                    <BodyShort>{t("begrunnelse.hva.description.stringValue")}</BodyShort>
+                                    <BodyShort>{t("begrunnelse.hva.description")}</BodyShort>
                                 ) : (
-                                    <BodyShort>{t("begrunnelse.hva.description.old")}</BodyShort>
+                                    <BodyShort>{t("begrunnelse.hva.descriptionOld")}</BodyShort>
                                 )
                             }
                         />
@@ -84,9 +80,7 @@ export const Begrunnelse = () => {
                             id={"hvorforSoke"}
                             error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
                             label={
-                                begrunnelseNyTekst
-                                    ? t("begrunnelse.hvorfor.label.stringValue")
-                                    : t("begrunnelse.hvorfor.label.old")
+                                begrunnelseNyTekst ? t("begrunnelse.hvorfor.label") : t("begrunnelse.hvorfor.labelOld")
                             }
                             description={
                                 begrunnelseNyTekst ? (
