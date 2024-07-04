@@ -1,4 +1,4 @@
-import {Alert, Button, ExpansionCard, Heading, Loader, Radio, RadioGroup} from "@navikt/ds-react";
+import {Alert, Box, Button, ExpansionCard, Heading, Loader, Radio, RadioGroup} from "@navikt/ds-react";
 import * as React from "react";
 import {FillForms} from "@navikt/ds-icons";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
@@ -81,10 +81,14 @@ const SoknadstypeValg = ({valg, setValg}: SoknadstypeValgProps) => {
         return null;
     }
     return (
-        <RadioGroup legend={"Velg søknadstype"} value={valg} onChange={(value) => setValg(value)}>
-            <Radio value={"standard"}>Standard</Radio>
-            <Radio value={"kort"}>Kort</Radio>
-        </RadioGroup>
+        <Box className={"flex justify-center mb-8"}>
+            <RadioGroup legend={"Velg søknadstype"} value={valg} onChange={(value) => setValg(value)}>
+                <div className="bg-lightblue-50 p-2 rounded-md">
+                    <Radio value={"standard"}>Standard</Radio>
+                    <Radio value={"kort"}>Kort</Radio>
+                </div>
+            </RadioGroup>
+        </Box>
     );
 };
 
