@@ -5,6 +5,8 @@ import {OpplysningInputType} from "../../lib/opplysninger";
 import {LinkButton} from "../../lib/components/LinkButton";
 import cx from "classnames";
 import {VedleggRadFrontendForm} from "../../lib/hooks/dokumentasjon/useOpplysning";
+import {VedleggFrontendType} from "../../generated/model";
+import {DigisosLanguageKey} from "../../lib/i18n";
 
 export const OpplysningInputRad = ({
     fields,
@@ -17,11 +19,12 @@ export const OpplysningInputRad = ({
     fields: OpplysningInputType[];
     index: number;
     control: Control<VedleggRadFrontendForm>;
-    textKey: string;
+    textKey: VedleggFrontendType;
     onDelete?: (index: number) => void;
     className?: string;
 }) => {
     const {t} = useTranslation();
+    const {t: tDok} = useTranslation("dokumentasjon");
 
     return (
         <li className={className}>
@@ -33,11 +36,19 @@ export const OpplysningInputRad = ({
                             <TextField
                                 label={
                                     <span style={{fontSize: 16, fontWeight: "normal"}}>
-                                        {t(`${textKey}.${fieldName}.label`)}
+                                        {
+                                            tDok(
+                                                `${textKey}.${fieldName}.label` as DigisosLanguageKey<"dokumentasjon">
+                                            ) as string
+                                        }
                                     </span>
                                 }
                                 className={cx("pb-2")}
-                                error={fieldState.isTouched && fieldState.error?.message && t(fieldState.error.message)}
+                                error={
+                                    fieldState.isTouched &&
+                                    fieldState.error?.message &&
+                                    t(fieldState.error.message as DigisosLanguageKey)
+                                }
                                 autoComplete={"off"}
                                 {...field}
                                 // To avoid value === null

@@ -12,7 +12,7 @@ export const TelefonShowBrukerdefinert = ({
     brukerutfyltVerdi?: string;
     onEdit?: () => void;
 }) => {
-    const {t} = useTranslation("skjema", {keyPrefix: "kontakt.system"});
+    const {t} = useTranslation("skjema");
     const telefonNummer = brukerutfyltVerdi && parsePhoneNumber(brukerutfyltVerdi);
 
     return (
@@ -24,7 +24,7 @@ export const TelefonShowBrukerdefinert = ({
                 <div className={"flex flex-row items-center navds-link pr-3"}>
                     <PencilWritingIcon />
                     <LinkButton onClick={onEdit} data-testid="telefon-endreknapp">
-                        {t("telefon.endreknapp.label")}
+                        {t("kontakt.system.telefon.endreknapp.label")}
                     </LinkButton>
                 </div>
             )}

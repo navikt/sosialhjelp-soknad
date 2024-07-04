@@ -28,7 +28,7 @@ export const Sivilstatus = () => {
                     if (!ektefelle) setEditMode(true);
                 }}
             >
-                <Radio value="gift">{t("familie.sivilstatus.gift")}</Radio>
+                <Radio value="gift">{t("familie.sivilstatus.gift.stringValue")}</Radio>
                 <Underskjema visible={sivilstatus.sivilstatus === "gift"} arrow={true}>
                     <EktefellerPlikterForsorge />
                     {editMode ? (

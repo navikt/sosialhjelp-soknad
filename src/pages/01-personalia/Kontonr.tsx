@@ -14,13 +14,13 @@ export const Kontonr = () => {
     const behandlingsId = useBehandlingsId();
     const [editMode, setEditMode] = useState<boolean>(false);
     const {expectOK} = useAlgebraic(useHentKontonummer(behandlingsId));
-    const {t} = useTranslation("skjema", {keyPrefix: "kontakt"});
+    const {t} = useTranslation("skjema");
     const {mutate} = useDigisosMutation(useHentKontonummer, updateKontonummer);
 
     return expectOK((data) => (
         <div className={"space-y-2"}>
             <Heading size={"small"} level={"3"}>
-                {t("kontonummer.sporsmal")}
+                {t("kontakt.kontonummer.sporsmal")}
             </Heading>
             {editMode ? (
                 <Systeminfo>

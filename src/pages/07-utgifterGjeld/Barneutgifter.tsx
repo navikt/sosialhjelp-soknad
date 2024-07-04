@@ -5,6 +5,8 @@ import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {BarneutgifterFrontend} from "../../generated/model";
 import {useBarneutgifter} from "../../lib/hooks/data/useBarneutgifter";
 
+const UTGIFTSTYPER = ["fritidsaktiviteter", "barnehage", "sfo", "tannregulering", "annet"] as const;
+
 export const Barneutgifter = () => {
     const {barneutgifter, setBarneutgifter, setBekreftelse} = useBarneutgifter();
     const {t} = useTranslation("skjema");
@@ -22,7 +24,7 @@ export const Barneutgifter = () => {
             />
             {barneutgifter.bekreftelse && (
                 <CheckboxGroup
-                    legend={t("utgifter.barn.true.utgifter.sporsmal")}
+                    legend={t("utgifter.barn.typer.sporsmal")}
                     onChange={(navn: (keyof Omit<BarneutgifterFrontend, "bekreftelse" | "harForsorgerplikt">)[]) =>
                         setBarneutgifter(navn)
                     }
@@ -30,13 +32,11 @@ export const Barneutgifter = () => {
                         (key) => barneutgifter[key as keyof BarneutgifterFrontend]
                     )}
                 >
-                    <Checkbox value={"fritidsaktiviteter"}>
-                        {t("utgifter.barn.true.utgifter.fritidsaktiviteter")}
-                    </Checkbox>
-                    <Checkbox value={"barnehage"}>{t("utgifter.barn.true.utgifter.barnehage")}</Checkbox>
-                    <Checkbox value={"sfo"}>{t("utgifter.barn.true.utgifter.sfo")}</Checkbox>
-                    <Checkbox value={"tannregulering"}>{t("utgifter.barn.true.utgifter.tannregulering")}</Checkbox>
-                    <Checkbox value={"annet"}>{t("utgifter.barn.true.utgifter.annet")}</Checkbox>
+                    {UTGIFTSTYPER.map((utgift) => (
+                        <Checkbox key={utgift} value={utgift}>
+                            {t(`utgifter.barn.typer.${utgift}`)}
+                        </Checkbox>
+                    ))}
                 </CheckboxGroup>
             )}
         </div>

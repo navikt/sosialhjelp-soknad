@@ -5,6 +5,7 @@ import {Steg} from "../../generated/model";
 import {useTranslation} from "react-i18next";
 import {Link as ReactRouterLink, useLocation} from "react-router-dom";
 import {OppsummeringAvsnitt} from "./question/OppsummeringAvsnitt";
+import {DigisosLanguageKey} from "../../lib/i18n";
 
 export const OppsummeringSteg = ({steg: {stegNr, tittel, avsnitt}}: {steg: Steg}) => {
     const behandlingsId = useBehandlingsId();
@@ -16,7 +17,7 @@ export const OppsummeringSteg = ({steg: {stegNr, tittel, avsnitt}}: {steg: Steg}
     return (
         <Accordion>
             <Accordion.Item>
-                <Accordion.Header>{t(tittel)}</Accordion.Header>
+                <Accordion.Header>{t(tittel as DigisosLanguageKey)}</Accordion.Header>
                 <Accordion.Content>
                     <div className={"flex justify-end"}>
                         <ReactRouterLink

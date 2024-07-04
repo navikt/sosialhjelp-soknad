@@ -5,7 +5,6 @@ import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informas
 //import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 import StartNySoknadIllustrasjon from "../../../lib/components/svg/illustrasjoner/StartNySoknadIllustrasjon";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
-import {logWarning} from "../../../lib/log/loggerUtils";
 
 export const NySoknadVelkomst = () => {
     //const {logEvent} = useAmplitude();
@@ -31,12 +30,12 @@ export const NySoknadVelkomst = () => {
                                 href="https://www.nav.no/okonomisk-sosialhjelp#sok"
                                 target="_blank"
                                 rel="noreferrer"
-                                onClick={() => {
-                                    logAmplitudeEvent("navigere", {
+                                onClick={async () => {
+                                    await logAmplitudeEvent("navigere", {
                                         lenkeTekst: "opplysninger du kan bli bedt om å levere",
                                         destinasjon: "https://www.nav.no/okonomisk-sosialhjelp#soknad",
                                         antallNyligInnsendteSoknader: sessionInfo?.numRecentlySent ?? 0,
-                                    }).catch((e) => logWarning(`Amplitude error: ${e}`));
+                                    });
                                 }}
                             >
                                 {null}

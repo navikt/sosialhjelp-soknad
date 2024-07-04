@@ -3,15 +3,8 @@ import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../generated/nedetid-ressurs/nedetid-ressurs";
 
-type NetetidPanelType = "infoside" | "avbryt";
-
-const NedetidPanelMessageID: Record<NetetidPanelType, string> = {
-    infoside: "nedetid.alertstripe.infoside",
-    avbryt: "nedetid.alertstripe.avbryt",
-};
-
 // Vis nedetid-varsel om det er satt
-export const NedetidPanel = ({varselType}: {varselType: NetetidPanelType}) => {
+export const NedetidPanel = ({varselType}: {varselType: "infoside" | "avbryt"}) => {
     const {data: nedetid} = useHentNedetidInformasjon();
     const {t} = useTranslation();
 
@@ -19,12 +12,12 @@ export const NedetidPanel = ({varselType}: {varselType: NetetidPanelType}) => {
 
     const {isNedetid, isPlanlagtNedetid, nedetidStartText, nedetidSluttText} = nedetid;
 
-    const messageId = NedetidPanelMessageID[varselType];
+    const messageId = varselType === "infoside" ? "nedetid.alertstripe.infoside" : "nedetid.alertstripe.avbryt";
 
     if (isNedetid)
         return (
-            <Alert variant="error" style={{justifyContent: "center"}}>
-                {t(messageId, {
+            <Alert variant="error" className={"justify-center"}>
+                {t(messageId, "", {
                     nedetidstart: nedetidStartText,
                     nedetidslutt: nedetidSluttText,
                 })}
@@ -33,8 +26,8 @@ export const NedetidPanel = ({varselType}: {varselType: NetetidPanelType}) => {
 
     if (isPlanlagtNedetid)
         return (
-            <Alert variant="info" style={{justifyContent: "center"}}>
-                {t(messageId, {
+            <Alert variant="info" className={"justify-center"}>
+                {t(messageId, "", {
                     nedetidstart: nedetidStartText,
                     nedetidslutt: nedetidSluttText,
                 })}

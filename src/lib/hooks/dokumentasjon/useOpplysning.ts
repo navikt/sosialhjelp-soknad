@@ -73,7 +73,7 @@ export const useOpplysning = (opplysning: VedleggFrontend) => {
 
             mutate({
                 behandlingsId,
-                data: {...opplysning, filer: [...(opplysning.filer ?? [])], rader},
+                data: {...opplysning, rader},
             });
         },
         DEBOUNCE_DELAY_MS,

@@ -11,7 +11,6 @@ import {BegrunnelseFrontend} from "../../../generated/model";
 import {faro} from "@grafana/faro-react";
 import {useQueryClient} from "@tanstack/react-query";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
-import {logWarning} from "../../log/loggerUtils";
 //import {useAmplitude} from "../../amplitude/useAmplitude";
 
 export const useBegrunnelse = () => {
@@ -31,11 +30,11 @@ export const useBegrunnelse = () => {
 
     // Lagrer data på backend og oppdaterer lokal cache.
     const put = async (begrunnelse: BegrunnelseFrontend) => {
-        logAmplitudeEvent("begrunnelse fullført", {
+        await logAmplitudeEvent("begrunnelse fullført", {
             hvaLengde: (Math.round((begrunnelse?.hvaSokesOm?.length ?? 0) / 20) - 1) * 20,
             hvorforLengde: (Math.round((begrunnelse?.hvorforSoke?.length ?? 0) / 20) - 1) * 20,
             begrunnelseNyTekst,
-        }).catch((e) => logWarning(`Amplitude error: ${e}`));
+        });
 
         try {
             queryClient.setQueryData(queryKey, begrunnelse);
@@ -48,7 +47,7 @@ export const useBegrunnelse = () => {
     };
 
     useEffect(() => {
-        logAmplitudeEvent("begrunnelse åpnet", {begrunnelseNyTekst}).catch((e) => logWarning(`Amplitude error: ${e}`));
+        logAmplitudeEvent("begrunnelse åpnet", {begrunnelseNyTekst});
     }, [begrunnelseNyTekst]);
 
     return {get, put, isPending, isError};

@@ -14,7 +14,7 @@ import {faro} from "@grafana/faro-react";
 import {useArbeidOgUtdanning} from "../../lib/hooks/data/useArbeidOgUtdanning";
 
 const ArbeidOgUtdanningSchema = z.object({
-    arbeid: z.object({kommentarTilArbeidsforhold: z.string().max(500, "maksLengde").nullable()}),
+    arbeid: z.object({kommentarTilArbeidsforhold: z.string().max(500, "validering.maksLengde").nullable()}),
     utdanning: z.object({
         erStudent: z.boolean().nullable().optional(),
         studengradErHeltid: z.boolean().nullable().optional(),

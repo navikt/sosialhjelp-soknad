@@ -9,19 +9,20 @@ import {ApplicationSpinner} from "../../../lib/components/animasjoner/Applicatio
 import {Alert, BodyShort, Textarea} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox";
+import {DigisosLanguageKey} from "../../../lib/i18n";
 
 const MAX_LEN_HVA = 500;
 
 const behovSchema = z.object({
-    hvaSokesOm: z.string().max(MAX_LEN_HVA, "maksLengde"),
+    hvaSokesOm: z.string().max(MAX_LEN_HVA, "validering.maksLengde"),
 });
 
 const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) => {
-    const {t} = useTranslation("skjema", {keyPrefix: "validering"});
+    const {t} = useTranslation("skjema");
 
     if (!error?.message) return null;
 
-    return <>{t(error.message)}</>;
+    return <>{t(error.message as DigisosLanguageKey)}</>;
 };
 
 const Feilmelding = () => {
@@ -30,7 +31,7 @@ const Feilmelding = () => {
 };
 
 const Behov = (): React.JSX.Element => {
-    const {t} = useTranslation("skjema", {keyPrefix: "begrunnelse"});
+    const {t} = useTranslation("skjema");
     const {get: defaultValues, put, isPending, isError} = useBegrunnelse();
 
     const {
@@ -42,6 +43,7 @@ const Behov = (): React.JSX.Element => {
         resolver: zodResolver(behovSchema),
         mode: "onChange",
     });
+
     return (
         <SkjemaSteg page={2} onRequestNavigation={handleSubmit(put, inhibitNavigation)}>
             <SkjemaSteg.Content>
@@ -56,12 +58,12 @@ const Behov = (): React.JSX.Element => {
                             {...register("hvaSokesOm")}
                             id={"hvaSokesOm"}
                             error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
-                            label={t("hva.label")}
-                            description={<BodyShort>{t("hva.description")}</BodyShort>}
+                            label={t("begrunnelse.hva.label.stringValue")}
+                            description={<BodyShort>{t("begrunnelse.hva.description.stringValue")}</BodyShort>}
                         />
                         <FileUploadBox
-                            sporsmal={t("kort.behov.dokumentasjon.tittel")}
-                            undertekst={t("kort.behov.dokumentasjon.beskrivelse")}
+                            sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+                            undertekst={t("begrunnelse.kort.behov.dokumentasjon.beskrivelse")}
                         />
                     </form>
                 )}

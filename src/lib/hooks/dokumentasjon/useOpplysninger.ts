@@ -30,7 +30,7 @@ export const useOpplysninger = () => {
     return {
         data,
         isLoading,
-        grupper: grupper,
+        grupper,
         sorterte,
         bekreftet: data?.isOkonomiskeOpplysningerBekreftet ?? undefined,
     };

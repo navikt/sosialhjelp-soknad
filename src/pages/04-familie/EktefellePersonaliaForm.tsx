@@ -10,6 +10,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {EktefelleFrontend, SivilstatusFrontend} from "../../generated/model";
 
 import {ValideringsFeilKode} from "../../lib/validering";
+import {DigisosLanguageKey} from "../../lib/i18n";
 
 const SivilstatusSchema = z.object({
     ektefelle: z.object({
@@ -98,7 +99,7 @@ export const EktefellePersonaliaForm = ({
                         style={{width: "140px"}}
                         error={
                             errors.ektefelle?.fodselsdato?.message &&
-                            t(errors.ektefelle?.fodselsdato.message.toString())
+                            t(errors.ektefelle?.fodselsdato.message.toString() as DigisosLanguageKey)
                         }
                         {...register("ektefelle.fodselsdato")}
                         label={t("familie.sivilstatus.gift.ektefelle.fnr.label")}
@@ -116,7 +117,10 @@ export const EktefellePersonaliaForm = ({
                     />
                     <YesNoInput
                         legend={t("familie.sivilstatus.gift.ektefelle.borsammen.sporsmal")}
-                        error={errors.borSammenMed?.message && t(errors.borSammenMed.message.toString())}
+                        error={
+                            errors.borSammenMed?.message &&
+                            t(errors.borSammenMed.message.toString() as DigisosLanguageKey)
+                        }
                         name={"borSammenMed"}
                         defaultValue={
                             typeof sivilstatus?.borSammenMed === "boolean" ? sivilstatus?.borSammenMed : undefined

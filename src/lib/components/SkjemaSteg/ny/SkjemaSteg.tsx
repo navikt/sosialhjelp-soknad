@@ -19,6 +19,7 @@ import {HusIllustrasjon} from "../../svg/illustrasjoner/HusIllustrasjon";
 import {MynterIllustrasjon} from "../../svg/illustrasjoner/MynterIllustrasjon";
 import {RequireXsrfCookie} from "./RequireXsrfCookie";
 import {useLocation} from "react-router-dom";
+import {DigisosLanguageKey} from "../../../i18n";
 
 type TSkjemaStegContext = {
     page: SkjemaPage | KortSkjemaPage;
@@ -53,7 +54,7 @@ interface SkjemaStegProps {
 export type SkjemaPage = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 export type KortSkjemaPage = 1 | 2 | 3 | 4;
 
-export const SkjemaHeadings: Record<SkjemaPage, {tittel: string; ikon: ReactNode}> = {
+export const SkjemaHeadings: Record<SkjemaPage, {tittel: DigisosLanguageKey; ikon: ReactNode}> = {
     1: {tittel: "kontakt.tittel", ikon: <HusIllustrasjon />},
     2: {tittel: "begrunnelsebolk.tittel", ikon: <MynterIllustrasjon />},
     3: {tittel: "arbeidbolk.tittel", ikon: <StresskoffertIllustrasjon />},
@@ -65,7 +66,7 @@ export const SkjemaHeadings: Record<SkjemaPage, {tittel: string; ikon: ReactNode
     9: {tittel: "oppsummering.tittel", ikon: <SnakkebobleIllustrasjon />},
 };
 
-export const KortSkjemaHeadings: Record<KortSkjemaPage, {tittel: string; ikon: ReactNode}> = {
+export const KortSkjemaHeadings: Record<KortSkjemaPage, {tittel: DigisosLanguageKey; ikon: ReactNode}> = {
     1: {tittel: "kontakt.tittel", ikon: <HusIllustrasjon />},
     2: {tittel: "begrunnelsebolk.tittel", ikon: <MynterIllustrasjon />},
     3: {tittel: "situasjon.kort.tittel", ikon: <StresskoffertIllustrasjon />},

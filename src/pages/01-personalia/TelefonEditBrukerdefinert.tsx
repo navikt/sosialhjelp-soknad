@@ -8,6 +8,7 @@ import {isValidNumber, parsePhoneNumber} from "libphonenumber-js";
 import {useForm} from "react-hook-form";
 import * as z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {DigisosLanguageKey} from "../../lib/i18n";
 
 const TelefonnummerFormSchema = z
     .object({
@@ -89,7 +90,9 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
                     autoComplete={"tel-national"}
                     label={t("kontakt.telefon.telefonnummerFelt")}
                     hideLabel={true}
-                    error={formState.errors.phoneNumber && t(formState.errors.phoneNumber!.message!)}
+                    error={
+                        formState.errors.phoneNumber && t(formState.errors.phoneNumber!.message! as DigisosLanguageKey)
+                    }
                 />
             </div>
             <div className={"space-x-2"}>
@@ -97,7 +100,7 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
                     {t("lagreEndring")}
                 </Button>
                 <Button variant="secondary" onClick={() => onClose()}>
-                    {t("avbryt")}
+                    {t("avbryt.avbryt")}
                 </Button>
             </div>
         </form>

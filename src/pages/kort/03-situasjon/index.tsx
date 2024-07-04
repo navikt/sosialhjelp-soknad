@@ -11,18 +11,19 @@ import {useTranslation} from "react-i18next";
 import * as z from "zod";
 import {SkattbarInntekt} from "../../06-inntektFormue/skattbarInntekt";
 import {YesNoInput} from "../../../lib/components/form/YesNoInput";
+import {DigisosLanguageKey} from "../../../lib/i18n";
 
 const situasjonsendringSchema = z.object({
-    hvaErEndret: z.string().max(500, "maksLengde"),
+    hvaErEndret: z.string().max(500, "validering.maksLengde"),
     endring: z.boolean(),
 });
 
 const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) => {
-    const {t} = useTranslation("skjema", {keyPrefix: "validering"});
+    const {t} = useTranslation("skjema");
 
     if (!error?.message) return null;
 
-    return <>{t(error.message)}</>;
+    return <>{t(error.message as DigisosLanguageKey)}</>;
 };
 
 const Feilmelding = () => {

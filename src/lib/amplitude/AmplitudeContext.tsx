@@ -1,3 +1,3 @@
-//import {createContext} from "react";
+import {createContext} from "react";
 
-//export const AmplitudeContext = createContext<Worker | null>(null);
+export const AmplitudeContext = createContext<Worker | null>(null);
