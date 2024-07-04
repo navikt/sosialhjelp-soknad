@@ -1,4 +1,6 @@
-module.exports = {
+import {defineConfig} from "orval";
+
+export default defineConfig({
     "soknad-api": {
         input: "./soknad-api.json",
         output: {
@@ -20,4 +22,4 @@ module.exports = {
             afterAllFilesWrite: "prettier --write",
         },
     },
-};
+});
