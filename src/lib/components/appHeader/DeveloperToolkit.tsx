@@ -30,7 +30,7 @@ export const DeveloperToolkit = () => {
     };
 
     return (
-        <div className={"!mt-0 p-2 w-full bg-[black] text-[#0f0] max-lg:hidden font-mono "}>
+        <div className={"!mt-0 p-2 w-full bg-[black] text-sm text-[#0f0] max-lg:hidden font-mono "}>
             <div className="flex justify-center gap-4">
                 <div>Utviklermeny:</div>
                 <button
