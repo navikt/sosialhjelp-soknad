@@ -21,7 +21,7 @@ import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 //import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const AdresseData = () => {
-    //const {logevent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
     const queryClient = useQueryClient();
     const behandlingsId = useBehandlingsId();
     const {expectOK, data} = useAlgebraic(useHentAdresser(behandlingsId));

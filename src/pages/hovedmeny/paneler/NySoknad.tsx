@@ -12,7 +12,7 @@ import {NedetidPanel} from "../../../lib/components/NedetidPanel";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 
 export const NySoknadInfo = () => {
-    //const {logevent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
     const [startSoknadError, setStartSoknadError] = useState<Error | null>(null);
 

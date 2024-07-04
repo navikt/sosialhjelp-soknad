@@ -9,7 +9,7 @@ import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 //import {useAmplitude} from "../../amplitude/useAmplitude";
 
 export const useForsorgerplikt = () => {
-    //const {logevent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
     const {data: forsorgerplikt, isPending, queryKey} = useHentForsorgerplikt(behandlingsId);

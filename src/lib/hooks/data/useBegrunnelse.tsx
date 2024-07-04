@@ -15,7 +15,7 @@ import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 
 export const useBegrunnelse = () => {
     const behandlingsId = useBehandlingsId();
-    //const {logevent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
 
     // TODO: Avklare denne. Er det behov lenger?
     const {begrunnelseNyTekst} = useFeatureFlags();

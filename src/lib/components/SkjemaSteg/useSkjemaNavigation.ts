@@ -10,7 +10,7 @@ export const useSkjemaNavigation = (steg: number) => {
         dispatch,
     } = useContext(ValideringsContext);
     const navigate = useNavigate();
-    //const {logevent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
 
     const gotoPage = (newPage: number) => {
         if (newPage < steg) {

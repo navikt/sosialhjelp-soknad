@@ -7,7 +7,7 @@ import StartNySoknadIllustrasjon from "../../../lib/components/svg/illustrasjone
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 
 export const NySoknadVelkomst = () => {
-    //const {logevent} = useAmplitude();
+    //const {logEvent} = useAmplitude();
     const {data: sessionInfo} = useGetSessionInfo();
     const {t} = useTranslation("skjema");
 
