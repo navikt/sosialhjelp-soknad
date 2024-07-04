@@ -9,16 +9,11 @@ export const SkjemaStegErrorSummary = ({errors}: {errors?: FieldErrors}) => {
 
     return (
         <ErrorSummary heading={t("validering.tittel")}>
-            {Object.entries(errors).map(([key, value], index) => {
-                const errorMessage = value?.message?.toString();
-                if (!errorMessage) return null;
-                const translated = t(errorMessage as DigisosLanguageKey);
-                return (
-                    <ErrorSummary.Item key={index} href={`#${key}`}>
-                        {translated}
-                    </ErrorSummary.Item>
-                );
-            })}
+            {Object.entries(errors).map(([key, value], index) => (
+                <ErrorSummary.Item key={index} href={`#${key}`}>
+                    {t(value?.message?.toString() as DigisosLanguageKey)}
+                </ErrorSummary.Item>
+            ))}
         </ErrorSummary>
     );
 };

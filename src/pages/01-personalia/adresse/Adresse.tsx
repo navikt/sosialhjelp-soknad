@@ -67,10 +67,10 @@ export const AdresseData = () => {
                 legend={""}
                 value={uncommittedAdressevalg}
                 className={"!mb-4"}
-                onChange={async (valg) => {
-                    setUncommittedAdressevalg(valg);
-                    if (valg !== "soknad") await setAdresser(adresser, valg);
-                    await logAmplitudeEvent("adresseValg", {addresseValgt: valg});
+                onChange={async (addresseValgt) => {
+                    setUncommittedAdressevalg(addresseValgt);
+                    if (addresseValgt !== "soknad") await setAdresser(adresser, addresseValgt);
+                    await logAmplitudeEvent("adresseValg", {addresseValgt});
                 }}
             >
                 <Radio

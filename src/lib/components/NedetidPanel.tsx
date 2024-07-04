@@ -2,8 +2,14 @@ import {Alert} from "@navikt/ds-react";
 import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../generated/nedetid-ressurs/nedetid-ressurs";
+import {DigisosLanguageKey} from "../i18n";
 
 type NetetidPanelType = "infoside" | "avbryt";
+
+const NedetidPanelMessageID: Record<NetetidPanelType, DigisosLanguageKey> = {
+    infoside: "nedetid.alertstripe.infoside",
+    avbryt: "nedetid.alertstripe.avbryt",
+} as const;
 
 // Vis nedetid-varsel om det er satt
 export const NedetidPanel = ({varselType}: {varselType: NetetidPanelType}) => {
@@ -14,12 +20,12 @@ export const NedetidPanel = ({varselType}: {varselType: NetetidPanelType}) => {
 
     const {isNedetid, isPlanlagtNedetid, nedetidStartText, nedetidSluttText} = nedetid;
 
-    const messageId = varselType === "infoside" ? "nedetid.alertstripe.infoside" : "nedetid.alertstripe.avbryt";
+    const messageId = NedetidPanelMessageID[varselType];
 
     if (isNedetid)
         return (
             <Alert variant="error" style={{justifyContent: "center"}}>
-                {t(messageId, {
+                {t(messageId, "", {
                     nedetidstart: nedetidStartText,
                     nedetidslutt: nedetidSluttText,
                 })}
@@ -29,7 +35,7 @@ export const NedetidPanel = ({varselType}: {varselType: NetetidPanelType}) => {
     if (isPlanlagtNedetid)
         return (
             <Alert variant="info" style={{justifyContent: "center"}}>
-                {t(messageId, {
+                {t(messageId, "", {
                     nedetidstart: nedetidStartText,
                     nedetidslutt: nedetidSluttText,
                 })}

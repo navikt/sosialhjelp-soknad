@@ -4,8 +4,6 @@ import {useTranslation} from "react-i18next";
 import {Heading} from "@navikt/ds-react";
 import {Opplysning} from "../../lib/opplysninger";
 import {VedleggFrontendGruppe} from "../../generated/model";
-import {useSkatteetatenData} from "../../lib/hooks/data/useSkatteetatenData";
-import {SkatteetatenDokumentasjon} from "./SkatteetatenDokumentasjon";
 import {DigisosLanguageKey} from "../../lib/i18n";
 
 const Gruppetittel: Record<VedleggFrontendGruppe, DigisosLanguageKey> = {
@@ -21,19 +19,12 @@ const Gruppetittel: Record<VedleggFrontendGruppe, DigisosLanguageKey> = {
 
 export const Gruppe = ({gruppeKey, opplysninger}: {gruppeKey: VedleggFrontendGruppe; opplysninger: Opplysning[]}) => {
     const {t} = useTranslation();
-    const {samtykke} = useSkatteetatenData();
-
-    const visSkatteHack = gruppeKey === "arbeid" && samtykke;
-
-    if (!opplysninger.length && !visSkatteHack) return null;
 
     return (
         <div className={"grid gap-4 py-4"}>
             <Heading level={"3"} size={"medium"} className={"pb-6"}>
                 {t(`${Gruppetittel[gruppeKey]}`)}
             </Heading>
-
-            {visSkatteHack && <SkatteetatenDokumentasjon />}
 
             {opplysninger.map((opplysning) => (
                 <Dokumentasjon key={opplysning.type} opplysning={opplysning} />
