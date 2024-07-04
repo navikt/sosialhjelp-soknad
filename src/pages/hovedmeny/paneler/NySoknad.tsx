@@ -1,4 +1,4 @@
-import {Alert, Button, ExpansionCard, Heading, Loader} from "@navikt/ds-react";
+import {Alert, Button, ExpansionCard, Heading, Loader, Radio, RadioGroup} from "@navikt/ds-react";
 import * as React from "react";
 import {FillForms} from "@navikt/ds-icons";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
@@ -10,12 +10,12 @@ import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/s
 import {NedetidPanel} from "../../../lib/components/NedetidPanel";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 import {logWarning} from "../../../lib/log/loggerUtils";
-//import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
+import {useFeatureFlags} from "../../../lib/featureFlags";
 
 export const NySoknadInfo = () => {
-    //const {logEvent} = useAmplitude();
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
     const [startSoknadError, setStartSoknadError] = useState<Error | null>(null);
+    const [soknadstype, setSoknadstype] = useState<"Kort" | "Standard" | null>(null);
 
     const {data: sessionInfo} = useGetSessionInfo();
 
@@ -35,7 +35,7 @@ export const NySoknadInfo = () => {
         );
 
         try {
-            const {brukerBehandlingId, useKortSoknad} = await opprettSoknad();
+            const {brukerBehandlingId, useKortSoknad} = await opprettSoknad({soknadstype});
             await hentXsrfCookie(brukerBehandlingId);
             // TODO: Få info om kort eller lang søknad i responsen og evaluer her
             if (useKortSoknad) {
@@ -55,6 +55,7 @@ export const NySoknadInfo = () => {
             <NedetidPanel varselType={"infoside"} />
             {startSoknadError && <Alert variant="error">{t("applikasjon.opprettsoknadfeilet")}</Alert>}
             <div className={"text-center"}>
+                <SoknadstypeValg valg={soknadstype} setValg={setSoknadstype} />
                 <Button
                     variant="primary"
                     id="start_soknad_button"
@@ -66,6 +67,24 @@ export const NySoknadInfo = () => {
                 </Button>
             </div>
         </>
+    );
+};
+
+interface SoknadstypeValgProps {
+    valg: "Kort" | "Standard" | null;
+    setValg: (valg: "Kort" | "Standard") => void;
+}
+
+const SoknadstypeValg = ({valg, setValg}: SoknadstypeValgProps) => {
+    const {soknadstypeValg} = useFeatureFlags();
+    if (!soknadstypeValg) {
+        return null;
+    }
+    return (
+        <RadioGroup legend={"Velg søknadstype"} value={valg} onChange={(value) => setValg(value)}>
+            <Radio value={"Standard"}>Standard</Radio>
+            <Radio value={"Kort"}>Kort</Radio>
+        </RadioGroup>
     );
 };
 
