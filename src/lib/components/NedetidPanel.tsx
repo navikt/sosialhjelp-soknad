@@ -16,7 +16,7 @@ export const NedetidPanel = ({varselType}: {varselType: "infoside" | "avbryt"}) 
 
     if (isNedetid)
         return (
-            <Alert variant="error" className={"content-center"}>
+            <Alert variant="error" className={"justify-center"}>
                 {t(messageId, "", {
                     nedetidstart: nedetidStartText,
                     nedetidslutt: nedetidSluttText,
@@ -26,7 +26,7 @@ export const NedetidPanel = ({varselType}: {varselType: "infoside" | "avbryt"}) 
 
     if (isPlanlagtNedetid)
         return (
-            <Alert variant="info" className={"content-center"}>
+            <Alert variant="info" className={"justify-center"}>
                 {t(messageId, "", {
                     nedetidstart: nedetidStartText,
                     nedetidslutt: nedetidSluttText,
