@@ -18,10 +18,10 @@ import {useTranslation} from "react-i18next";
 import {HorizontalRadioGroup} from "../../../lib/components/form/HorizontalRadioGroup";
 import {useQueryClient} from "@tanstack/react-query";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
-// import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
+//import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 
 export const AdresseData = () => {
-    // const {logEvent} = useAmplitude();
+    //const {logevent} = useAmplitude();
     const queryClient = useQueryClient();
     const behandlingsId = useBehandlingsId();
     const {expectOK, data} = useAlgebraic(useHentAdresser(behandlingsId));

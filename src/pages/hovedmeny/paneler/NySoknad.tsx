@@ -8,11 +8,11 @@ import {useState} from "react";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {NedetidPanel} from "../../../lib/components/NedetidPanel";
-// import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
+//import {useAmplitude} from "../../../lib/amplitude/useAmplitude";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 
 export const NySoknadInfo = () => {
-    // const {logEvent} = useAmplitude();
+    //const {logevent} = useAmplitude();
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
     const [startSoknadError, setStartSoknadError] = useState<Error | null>(null);
 

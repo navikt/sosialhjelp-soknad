@@ -11,11 +11,11 @@ import {BegrunnelseFrontend} from "../../../generated/model";
 import {faro} from "@grafana/faro-react";
 import {useQueryClient} from "@tanstack/react-query";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
-// import {useAmplitude} from "../../amplitude/useAmplitude";
+//import {useAmplitude} from "../../amplitude/useAmplitude";
 
 export const useBegrunnelse = () => {
     const behandlingsId = useBehandlingsId();
-    // const {logEvent} = useAmplitude();
+    //const {logevent} = useAmplitude();
 
     // TODO: Avklare denne. Er det behov lenger?
     const {begrunnelseNyTekst} = useFeatureFlags();
