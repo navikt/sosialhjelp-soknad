@@ -17,9 +17,9 @@ export const Oppsummering = () => {
     const behandlingsId = useBehandlingsId();
     const {sendSoknad, isError} = useSendSoknad(behandlingsId);
     const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId);
+    const location = useLocation();
 
     if (isLoading) return <ApplicationSpinner />;
-    const location = useLocation();
     const isKortSoknad = location.pathname.includes("/kort");
 
     return (
