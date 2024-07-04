@@ -14,8 +14,8 @@ import {YesNoInput} from "../../../lib/components/form/YesNoInput";
 import {DigisosLanguageKey} from "../../../lib/i18n";
 
 const situasjonsendringSchema = z.object({
-    hvaErEndret: z.string().max(500, "validering.maksLengde"),
-    endring: z.boolean(),
+    hvaErEndret: z.string().max(500, "validering.maksLengde").nullable(),
+    endring: z.boolean().nullable(),
 });
 
 const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) => {
