@@ -2303,12 +2303,7 @@
                 "operationId": "opprettSoknad",
                 "parameters": [
                     {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}},
-                    {
-                        "name": "soknadstype",
-                        "in": "query",
-                        "required": false,
-                        "schema": {"type": "string", "enum": ["kort", "standard"]}
-                    }
+                    {"name": "soknadstype", "in": "query", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
                     "413": {
@@ -3550,7 +3545,9 @@
                             "samvarsavtale|barn",
                             "skattemelding|skattemelding",
                             "sluttoppgjor|arbeid",
-                            "student|vedtak"
+                            "student|vedtak",
+                            "kort|behov",
+                            "kort|situasjonsendring"
                         ]
                     },
                     "gruppe": {

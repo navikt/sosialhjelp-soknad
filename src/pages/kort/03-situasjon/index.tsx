@@ -12,6 +12,7 @@ import * as z from "zod";
 import {SkattbarInntekt} from "../../06-inntektFormue/skattbarInntekt";
 import {YesNoInput} from "../../../lib/components/form/YesNoInput";
 import {DigisosLanguageKey} from "../../../lib/i18n";
+import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
 
 const situasjonsendringSchema = z.object({
     hvaErEndret: z.string().max(500, "validering.maksLengde").nullable(),
@@ -50,6 +51,7 @@ const DinSituasjon = (): React.JSX.Element => {
         resolver: zodResolver(situasjonsendringSchema),
         mode: "onChange",
     });
+    const isEndring = watch("endring");
     return (
         <SkjemaSteg page={3} onRequestNavigation={handleSubmit(onSubmit, inhibitNavigation)}>
             <SkjemaSteg.Content>
@@ -68,6 +70,7 @@ const DinSituasjon = (): React.JSX.Element => {
                                 return (
                                     <YesNoInput
                                         {...field}
+                                        onBlur={handleSubmit(onSubmit)}
                                         legend={t("kort.endring.legend")}
                                         onChange={(bool) => field.onChange(bool)}
                                         name="harNoeEndretSeg"
@@ -76,7 +79,7 @@ const DinSituasjon = (): React.JSX.Element => {
                             }}
                         />
 
-                        {watch("endring") && (
+                        {isEndring && (
                             <Textarea
                                 {...register("hvaErEndret")}
                                 id={"hvaErEndret"}
@@ -87,11 +90,17 @@ const DinSituasjon = (): React.JSX.Element => {
                         )}
                     </form>
                 )}
-                <SkattbarInntekt />
-                <FileUploadBox
-                    sporsmal={t("kort.dokumentasjon.title")}
-                    undertekst={t("kort.dokumentasjon.description")}
-                />
+                {isEndring && (
+                    <>
+                        <SkattbarInntekt />
+                        <Bostotte />
+                        <FileUploadBox
+                            sporsmal={t("kort.dokumentasjon.title")}
+                            undertekst={t("kort.dokumentasjon.description")}
+                            dokumentasjonType={"kort|situasjonsendring"}
+                        />
+                    </>
+                )}
                 <SkjemaSteg.Buttons loading={isPending} />
             </SkjemaSteg.Content>
         </SkjemaSteg>
