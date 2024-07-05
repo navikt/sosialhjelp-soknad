@@ -70,6 +70,7 @@ const DinSituasjon = (): React.JSX.Element => {
                                 return (
                                     <YesNoInput
                                         {...field}
+                                        onBlur={handleSubmit(onSubmit)}
                                         legend={t("kort.endring.legend")}
                                         onChange={(bool) => field.onChange(bool)}
                                         name="harNoeEndretSeg"
