@@ -58,8 +58,8 @@ const Behov = (): React.JSX.Element => {
                             {...register("hvaSokesOm")}
                             id={"hvaSokesOm"}
                             error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
-                            label={t("begrunnelse.hva.label.stringValue")}
-                            description={<BodyShort>{t("begrunnelse.hva.description.stringValue")}</BodyShort>}
+                            label={t("begrunnelse.hva.label")}
+                            description={<BodyShort>{t("begrunnelse.hva.description")}</BodyShort>}
                         />
                         <FileUploadBox
                             sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}

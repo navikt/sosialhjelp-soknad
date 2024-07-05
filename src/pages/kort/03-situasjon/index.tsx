@@ -12,6 +12,7 @@ import * as z from "zod";
 import {SkattbarInntekt} from "../../06-inntektFormue/skattbarInntekt";
 import {YesNoInput} from "../../../lib/components/form/YesNoInput";
 import {DigisosLanguageKey} from "../../../lib/i18n";
+import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
 
 const situasjonsendringSchema = z.object({
     hvaErEndret: z.string().max(500, "validering.maksLengde").nullable(),
@@ -88,6 +89,7 @@ const DinSituasjon = (): React.JSX.Element => {
                     </form>
                 )}
                 <SkattbarInntekt />
+                <Bostotte />
                 <FileUploadBox
                     sporsmal={t("kort.dokumentasjon.title")}
                     undertekst={t("kort.dokumentasjon.description")}
