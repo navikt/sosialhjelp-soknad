@@ -1547,10 +1547,11 @@ export const skjema = {
             dokumentasjon: {
                 description:
                     "Her kan du laste opp dokumentasjon på hva som har endret seg i din situasjon. Du kan legge ved bilder/skjermbilder.",
-                title: "Dokumentasjon",
+                title: "Dokumentasjon av endringen",
             },
             endring: {
-                legend: "Har dine inntekter eller utgifter endret seg siden du søkte sist?",
+                description: "For eksempel inntekter, utgifter, familiesituasjon eller bosituasjon.",
+                legend: "Har noe i situasjonen din endret seg siden du søkte sist?",
             },
             hvaErEndret: {
                 description: 'Eksempel: "Jeg har fått bostøtte og har derfor høyere inntekt."',

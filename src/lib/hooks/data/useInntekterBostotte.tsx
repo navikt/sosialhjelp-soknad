@@ -2,7 +2,7 @@ import {useBehandlingsId} from "../common/useBehandlingsId";
 import {updateBostotte, updateSamtykke1, useHentBostotte} from "../../../generated/bostotte-ressurs/bostotte-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
 
-export const useInntekterBostotte = () => {
+export const useInntekterBostotte = (skipFirstStep?: boolean) => {
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
     const {data: bostotte, queryKey} = useHentBostotte(behandlingsId);
@@ -29,6 +29,9 @@ export const useInntekterBostotte = () => {
         await updateBostotte(behandlingsId, oppdatert);
         await queryClient.invalidateQueries({queryKey});
     };
+    if (skipFirstStep) {
+        setBekreftelse(true);
+    }
 
     const bekreftelse = bostotte?.bekreftelse;
 

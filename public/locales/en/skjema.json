@@ -1376,9 +1376,10 @@
     "begrunnelse.kort.behov.dokumentasjon.tittel": "Documentation",
     "begrunnelse.kort.behov.dokumentasjon.beskrivelse": "Here you can upload an invoice, receipt or cost estimate for what you are applying for money for. You can take pictures/screenshots.",
     "situasjon.kort.tittel": "Your situation",
-    "situasjon.kort.endring.legend": "Have your income or expenses changed since you last applied?,",
+    "situasjon.kort.endring.legend": "Has anything in your situation changed since you last applied?",
+    "situasjon.kort.endring.description": "For example income, expenses, family situation or living situation.",
     "situasjon.kort.hvaErEndret.label": "What has changed in your situation?",
     "situasjon.kort.hvaErEndret.description": "Example: I have gotten housing allowance and therefore have a higher income",
-    "situasjon.kort.dokumentasjon.title": "Documentation",
+    "situasjon.kort.dokumentasjon.title": "Documentation of the change",
     "situasjon.kort.dokumentasjon.description": "Here you can upload documentation of what has changed in your situation. You can attach images/screenshots."
 }

@@ -1572,10 +1572,11 @@ export const skjema = {
             dokumentasjon: {
                 description:
                     "Here you can upload documentation of what has changed in your situation. You can attach images/screenshots.",
-                title: "Documentation",
+                title: "Documentation of the change",
             },
             endring: {
-                legend: "Have your income or expenses changed since you last applied?,",
+                description: "For example income, expenses, family situation or living situation.",
+                legend: "Has anything in your situation changed since you last applied?",
             },
             hvaErEndret: {
                 description: "Example: I have gotten housing allowance and therefore have a higher income",

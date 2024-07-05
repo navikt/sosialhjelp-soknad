@@ -62,7 +62,7 @@ const routes = (
         <Route path={"skjema"}>
             <Route path="kort/:behandlingsId">
                 <Route element={<RedirectFromKort />}>
-                    <Route index path="1" element={<Personopplysninger />} />
+                    <Route index path="1" element={<Personopplysninger shortSpacing includeNextArrow />} />
                     <Route path="2" element={<Behov />} />
                     <Route path="3" element={<Situasjonsendring />} />
                     <Route path="4" element={<Oppsummering />} />

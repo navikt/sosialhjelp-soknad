@@ -5,7 +5,11 @@ import {YesNoInput} from "../../../lib/components/form/YesNoInput";
 import * as React from "react";
 import {UnderskjemaArrow} from "./UnderskjemaArrow";
 
-export const SkattbarInntekt = () => {
+interface Props {
+    legend: string;
+}
+
+export const SkattbarInntekt = ({legend}: Props) => {
     const {samtykke, setSamtykke} = useSkatteetatenData();
     const {t} = useTranslation("skjema");
 
@@ -14,7 +18,7 @@ export const SkattbarInntekt = () => {
     return (
         <>
             <YesNoInput
-                legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v2")}
+                legend={legend}
                 defaultValue={samtykke}
                 onChange={setSamtykke}
                 name={"skattbar-inntekt-samtykke"}

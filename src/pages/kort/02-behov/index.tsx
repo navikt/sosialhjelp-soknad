@@ -46,13 +46,13 @@ const Behov = (): React.JSX.Element => {
 
     return (
         <SkjemaSteg page={2} onRequestNavigation={handleSubmit(put, inhibitNavigation)}>
-            <SkjemaSteg.Content>
-                <SkjemaSteg.Title />
+            <SkjemaSteg.Content className={"lg:space-y-12"}>
+                <SkjemaSteg.Title className={"lg:mb-12"} />
                 <SkjemaSteg.ErrorSummary errors={errors} />
                 {isPending ? (
                     <ApplicationSpinner />
                 ) : (
-                    <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>
+                    <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
                         {isError && <Feilmelding />}
                         <Textarea
                             {...register("hvaSokesOm")}
@@ -68,7 +68,7 @@ const Behov = (): React.JSX.Element => {
                         />
                     </form>
                 )}
-                <SkjemaSteg.Buttons loading={isPending} />
+                <SkjemaSteg.Buttons loading={isPending} includeNextArrow />
             </SkjemaSteg.Content>
         </SkjemaSteg>
     );

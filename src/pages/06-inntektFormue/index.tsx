@@ -21,7 +21,7 @@ export const InntektFormue = () => {
                 <Heading size="medium" level="2" spacing>
                     {t("utbetalinger.inntekt.skattbar.tittel")}
                 </Heading>
-                <SkattbarInntekt />
+                <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v2")} />
             </div>
 
             <NavYtelser />

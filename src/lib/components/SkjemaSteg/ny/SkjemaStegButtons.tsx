@@ -9,17 +9,20 @@ import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {NavEnhetInaktiv} from "../../../../pages/01-personalia/adresse/NavEnhetInaktiv";
 import {logAmplitudeEvent} from "../../../amplitude/Amplitude";
 import {DigisosLanguageKey} from "../../../i18n";
+import {ArrowRightIcon} from "@navikt/aksel-icons";
 
 interface SkjemaStegNavigasjonProps {
     loading?: boolean;
     onConfirm?: () => Promise<void>;
     confirmTextKey?: DigisosLanguageKey;
+    includeNextArrow?: boolean;
 }
 
 export const SkjemaStegButtons = ({
     loading,
     onConfirm,
     confirmTextKey = "skjema.knapper.neste",
+    includeNextArrow,
 }: SkjemaStegNavigasjonProps) => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
 
@@ -59,6 +62,8 @@ export const SkjemaStegButtons = ({
                         return requestNavigation(page + 1);
                     }}
                     disabled={loading}
+                    icon={includeNextArrow && <ArrowRightIcon />}
+                    iconPosition={"right"}
                 >
                     {t(confirmTextKey)}
                     {loading && <Loader className={"ml-2"} />}

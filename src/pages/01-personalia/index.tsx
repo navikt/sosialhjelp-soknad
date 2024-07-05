@@ -11,7 +11,12 @@ import {FieldErrorsImpl} from "react-hook-form";
 import {NavEnhetFrontend} from "../../generated/model";
 import {erAktiv} from "../../lib/navEnhetStatus";
 
-export const Personopplysninger = () => {
+interface Props {
+    shortSpacing?: boolean;
+    includeNextArrow?: boolean;
+}
+
+export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
     const behandlingsId = useBehandlingsId();
     const {data: adresser} = useHentAdresser(behandlingsId);
     const [error, setError] = useState<string | null>(null);
@@ -37,8 +42,8 @@ export const Personopplysninger = () => {
 
     return (
         <SkjemaSteg.Container page={1} onRequestNavigation={onRequestNavigation}>
-            <SkjemaSteg.Content>
-                <SkjemaSteg.Title />
+            <SkjemaSteg.Content className={shortSpacing ? "lg:space-y-12" : ""}>
+                <SkjemaSteg.Title className={shortSpacing ? "lg:mb-12" : ""} />
                 {error && (
                     <SkjemaSteg.ErrorSummary
                         errors={{adressefelt: {message: error}} as FieldErrorsImpl<NavEnhetFrontend>}
@@ -48,7 +53,7 @@ export const Personopplysninger = () => {
                 <AdresseData />
                 <TelefonData />
                 <Kontonr />
-                <SkjemaSteg.Buttons />
+                <SkjemaSteg.Buttons includeNextArrow={includeNextArrow} />
             </SkjemaSteg.Content>
         </SkjemaSteg.Container>
     );

@@ -33,7 +33,7 @@ const Feilmelding = () => {
 };
 
 const DinSituasjon = (): React.JSX.Element => {
-    const {t} = useTranslation("skjema", {keyPrefix: "situasjon"});
+    const {t} = useTranslation("skjema");
     const {get: defaultValues, put, isError, isPending} = useSituasjon();
 
     const onSubmit = (formValues: SituasjonsendringFrontend) => {
@@ -54,13 +54,13 @@ const DinSituasjon = (): React.JSX.Element => {
     const isEndring = watch("endring");
     return (
         <SkjemaSteg page={3} onRequestNavigation={handleSubmit(onSubmit, inhibitNavigation)}>
-            <SkjemaSteg.Content>
-                <SkjemaSteg.Title />
+            <SkjemaSteg.Content className={"lg:space-y-12"}>
+                <SkjemaSteg.Title className={"lg:mb-16"} />
                 <SkjemaSteg.ErrorSummary errors={errors} />
                 {isPending ? (
                     <ApplicationSpinner />
                 ) : (
-                    <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>
+                    <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
                         {isError && <Feilmelding />}
 
                         <Controller
@@ -71,7 +71,8 @@ const DinSituasjon = (): React.JSX.Element => {
                                     <YesNoInput
                                         {...field}
                                         onBlur={handleSubmit(onSubmit)}
-                                        legend={t("kort.endring.legend")}
+                                        legend={t("situasjon.kort.endring.legend")}
+                                        description={t("situasjon.kort.endring.description")}
                                         onChange={(bool) => field.onChange(bool)}
                                         name="harNoeEndretSeg"
                                     />
@@ -84,24 +85,24 @@ const DinSituasjon = (): React.JSX.Element => {
                                 {...register("hvaErEndret")}
                                 id={"hvaErEndret"}
                                 error={errors.hvaErEndret && <TranslatedError error={errors.hvaErEndret} />}
-                                label={t("kort.hvaErEndret.label")}
-                                description={<BodyShort>{t("kort.hvaErEndret.description")}</BodyShort>}
+                                label={t("situasjon.kort.hvaErEndret.label")}
+                                description={<BodyShort>{t("situasjon.kort.hvaErEndret.description")}</BodyShort>}
                             />
                         )}
                     </form>
                 )}
                 {isEndring && (
                     <>
-                        <SkattbarInntekt />
-                        <Bostotte />
+                        <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
+                        <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
                         <FileUploadBox
-                            sporsmal={t("kort.dokumentasjon.title")}
-                            undertekst={t("kort.dokumentasjon.description")}
+                            sporsmal={t("situasjon.kort.dokumentasjon.title")}
+                            undertekst={t("situasjon.kort.dokumentasjon.description")}
                             dokumentasjonType={"kort|situasjonsendring"}
                         />
                     </>
                 )}
-                <SkjemaSteg.Buttons loading={isPending} />
+                <SkjemaSteg.Buttons loading={isPending} includeNextArrow />
             </SkjemaSteg.Content>
         </SkjemaSteg>
     );

@@ -19,27 +19,37 @@ const BostotteData = () => {
     );
 };
 
-export const Bostotte = () => {
+interface Props {
+    hideHeading?: boolean;
+    skipFirstStep?: boolean;
+    hideSamtykkeDescription?: boolean;
+}
+
+export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: Props) => {
     const {t} = useTranslation("skjema");
-    const {bekreftelse, dataHentet, setBekreftelse, setSamtykke} = useInntekterBostotte();
+    const {bekreftelse, dataHentet, setBekreftelse, setSamtykke} = useInntekterBostotte(skipFirstStep);
 
     return (
         <div className={"space-y-4"}>
-            <Heading size="medium" level="2">
-                {t("inntekt.bostotte.overskrift")}
-            </Heading>
-            <YesNoInput
-                name={"bostotte-bekreftelse"}
-                legend={t("inntekt.bostotte.sporsmal.sporsmal")}
-                defaultValue={bekreftelse}
-                onChange={(checked) => setBekreftelse(checked)}
-            />
+            {!hideHeading && (
+                <Heading size="medium" level="2">
+                    {t("inntekt.bostotte.overskrift")}
+                </Heading>
+            )}
+            {!skipFirstStep && (
+                <YesNoInput
+                    name={"bostotte-bekreftelse"}
+                    legend={t("inntekt.bostotte.sporsmal.sporsmal")}
+                    defaultValue={bekreftelse}
+                    onChange={(checked) => setBekreftelse(checked)}
+                />
+            )}
             {bekreftelse &&
                 (!dataHentet ? (
                     <YesNoInput
                         name={"bostotte-samtykke"}
                         legend={t("inntekt.bostotte.gi_samtykke.overskrift")}
-                        description={t("inntekt.bostotte.gi_samtykke.tekst")}
+                        description={!hideSamtykkeDescription && t("inntekt.bostotte.gi_samtykke.tekst")}
                         onChange={(checked) => setSamtykke(checked)}
                     />
                 ) : (
