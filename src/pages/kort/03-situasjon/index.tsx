@@ -51,6 +51,7 @@ const DinSituasjon = (): React.JSX.Element => {
         resolver: zodResolver(situasjonsendringSchema),
         mode: "onChange",
     });
+    const isEndring = watch("endring");
     return (
         <SkjemaSteg page={3} onRequestNavigation={handleSubmit(onSubmit, inhibitNavigation)}>
             <SkjemaSteg.Content>
@@ -77,7 +78,7 @@ const DinSituasjon = (): React.JSX.Element => {
                             }}
                         />
 
-                        {watch("endring") && (
+                        {isEndring && (
                             <Textarea
                                 {...register("hvaErEndret")}
                                 id={"hvaErEndret"}
@@ -88,12 +89,17 @@ const DinSituasjon = (): React.JSX.Element => {
                         )}
                     </form>
                 )}
-                <SkattbarInntekt />
-                <Bostotte />
-                <FileUploadBox
-                    sporsmal={t("kort.dokumentasjon.title")}
-                    undertekst={t("kort.dokumentasjon.description")}
-                />
+                {isEndring && (
+                    <>
+                        <SkattbarInntekt />
+                        <Bostotte />
+                        <FileUploadBox
+                            sporsmal={t("kort.dokumentasjon.title")}
+                            undertekst={t("kort.dokumentasjon.description")}
+                            dokumentasjonType={"kort|situasjonsendring"}
+                        />
+                    </>
+                )}
                 <SkjemaSteg.Buttons loading={isPending} />
             </SkjemaSteg.Content>
         </SkjemaSteg>

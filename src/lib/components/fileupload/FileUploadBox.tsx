@@ -12,25 +12,27 @@ import {
     SUPPORTED_WITHOUT_CONVERSION,
 } from "../../../pages/08-vedlegg/upload/DokumentUploader";
 import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
+import {VedleggFrontendType} from "../../../generated/model";
 
 interface Props {
     sporsmal: string;
     undertekst: string;
+    dokumentasjonType: VedleggFrontendType;
 }
 
-const FileUploadBox = ({sporsmal, undertekst}: Props): React.JSX.Element => {
+const FileUploadBox = ({sporsmal, undertekst, dokumentasjonType}: Props): React.JSX.Element => {
     return (
         <div className={"rounded-md bg-surface-action-subtle p-8"}>
             <Heading level={"4"} size={"small"} spacing>
                 {sporsmal}
             </Heading>
             <BodyShort spacing>{undertekst}</BodyShort>
-            <Dokumenter />
+            <Dokumenter dokumentasjonType={dokumentasjonType} />
         </div>
     );
 };
 
-const Dokumenter = () => {
+const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType}) => {
     const {t} = useTranslation();
     const {
         deleteDocument,
@@ -39,7 +41,7 @@ const Dokumenter = () => {
         error,
         isPending: uploadPending,
         currentUpload,
-    } = useVedlegg("annet|annet");
+    } = useVedlegg(dokumentasjonType);
     const {conversionPending} = usePDFConverter();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
     const isPending = conversionPending || conversionPending;

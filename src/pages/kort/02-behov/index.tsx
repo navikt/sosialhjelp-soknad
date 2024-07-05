@@ -14,7 +14,7 @@ import {DigisosLanguageKey} from "../../../lib/i18n";
 const MAX_LEN_HVA = 500;
 
 const behovSchema = z.object({
-    hvaSokesOm: z.string().max(MAX_LEN_HVA, "validering.maksLengde"),
+    hvaSokesOm: z.string().max(MAX_LEN_HVA, "validering.maksLengde").nullable(),
 });
 
 const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) => {
@@ -64,6 +64,7 @@ const Behov = (): React.JSX.Element => {
                         <FileUploadBox
                             sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                             undertekst={t("begrunnelse.kort.behov.dokumentasjon.beskrivelse")}
+                            dokumentasjonType={"kort|behov"}
                         />
                     </form>
                 )}
