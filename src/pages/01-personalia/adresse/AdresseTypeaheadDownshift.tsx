@@ -1,4 +1,4 @@
-import {Heading, Link, Loader, TextField} from "@navikt/ds-react";
+import {Heading, Loader, TextField} from "@navikt/ds-react";
 import Downshift from "downshift";
 import {useState} from "react";
 import {useDebounce} from "react-use";
@@ -55,14 +55,8 @@ const AdressesokHeading = () => {
         <>
             <div>
                 <Heading size={"xsmall"}>{t("kontakt.system.oppholdsadresse.hvorOppholder")}</Heading>
-                {t("kontakt.system.kontaktinfo.infotekst.tekst")}
             </div>
-            <div>
-                {t("kontakt.system.kontaktinfo.infotekst.ekstratekst")}{" "}
-                <Link href="https://www.nav.no/sok-nav-kontor" target="_blank">
-                    {t("kontakt.system.kontaktinfo.infotekst.navsearch")}
-                </Link>
-            </div>
+            <div>{t("kontakt.system.kontaktinfo.infotekst.ekstratekst")}</div>
         </>
     );
 };

@@ -978,9 +978,7 @@ export const skjema = {
             kontaktinfo: {
                 infotekst: {
                     ekstratekst:
-                        "Viss du ikkje veit adressa du oppheld deg på, kan du legge inn adressa til NAV-kontoret i kommunen du oppheld deg i.",
-                    navsearch: "Søk opp NAV-kontor.",
-                    tekst: "Døme: Eksempelveien 47, 0123 OSLO",
+                        "Viss du ikkje veit kva adressa er, skriv inn kommune, bydel eller postnummer og vel NAV-kontoret der du bur",
                 },
                 sporsmal: "Adresse",
             },
@@ -1037,9 +1035,9 @@ export const skjema = {
             },
             telefoninfo: {
                 infotekst: {
-                    tekst: "(Henta frå Mi Side)",
+                    tekst: "(Henta frå Kontakt- og reservasjonsregisteret)",
                 },
-                ingeninfo: "Vi finn ikkje eit telefonnummer i kontakt- og reservasjonsregisteret.",
+                ingeninfo: "Vi finn ikkje eit telefonnummer i Kontakt- og reservasjonsregisteret.",
                 sporsmal: "Telefonnummer",
             },
         },
@@ -1063,7 +1061,7 @@ export const skjema = {
             telefonnummerFelt: "Telefonnummer felt",
             tittel: "Nytt telefonnummer",
         },
-        tittel: "Personopplysningar",
+        tittel: "Opplysningar om deg",
     },
     kvittering: {
         dato: "Søknaden er send til NAV",

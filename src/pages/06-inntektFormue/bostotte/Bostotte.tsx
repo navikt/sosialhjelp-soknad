@@ -44,17 +44,17 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
                     onChange={(checked) => setBekreftelse(checked)}
                 />
             )}
-            {bekreftelse &&
-                (!dataHentet ? (
+            {bekreftelse && (
+                <>
                     <YesNoInput
                         name={"bostotte-samtykke"}
                         legend={t("inntekt.bostotte.gi_samtykke.overskrift")}
                         description={!hideSamtykkeDescription && t("inntekt.bostotte.gi_samtykke.tekst")}
                         onChange={(checked) => setSamtykke(checked)}
                     />
-                ) : (
-                    <BostotteData />
-                ))}
+                    {dataHentet && <BostotteData />}
+                </>
+            )}
         </div>
     );
 };

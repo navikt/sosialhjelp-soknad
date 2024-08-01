@@ -965,9 +965,7 @@ export const skjema = {
             kontaktinfo: {
                 infotekst: {
                     ekstratekst:
-                        "Hvis du ikke vet adressen du oppholder deg på, kan du legge inn adressen til NAV-kontoret i kommunen du oppholder deg i.",
-                    navsearch: "Søk opp NAV-kontor.",
-                    tekst: "Eksempel: Eksempelveien 47, 0123 OSLO",
+                        "Hvis du ikke vet hva adressen er, skriv inn kommune, bydel eller postnummeret og velg NAV-kontoret der du bor",
                 },
                 sporsmal: "Adresse",
             },
@@ -997,8 +995,8 @@ export const skjema = {
                     feilmelding: "Du må velge oppholdsadresse og NAV-kontor.",
                     folkeregistrert: "Folkeregistrert adresse",
                     midlertidig: "Midlertidig adresse registrert i NAVs adresseregister (TPS)",
-                    soknad: "Jeg oppholder meg på en annen adresse",
-                    sporsmal: "Hva er din oppholdsadresse?",
+                    soknad: "Jeg bor på en annen adresse",
+                    sporsmal: "Hvilken adresse bor du på?",
                 },
                 velgKontor: "Adressen ga flere treff på NAV-kontor. Velg ditt lokale kontor.",
                 velgMottaker: "Velg NAV-kontor",
@@ -1024,9 +1022,9 @@ export const skjema = {
             },
             telefoninfo: {
                 infotekst: {
-                    tekst: "(Hentet fra Min Side)",
+                    tekst: "(Hentet fra Kontakt- og reservasjonsregisteret)",
                 },
-                ingeninfo: "Vi fant ikke et telefonnummer i kontakt- og reservasjonsregisteret.",
+                ingeninfo: "Vi fant ikke et telefonnummer i Kontakt- og reservasjonsregisteret.",
                 sporsmal: "Telefonnummer",
             },
         },
@@ -1050,7 +1048,7 @@ export const skjema = {
             telefonnummerFelt: "Telefonnummer felt",
             tittel: "Nytt telefonnummer",
         },
-        tittel: "Personopplysninger",
+        tittel: "Opplysninger om deg",
     },
     kvittering: {
         dato: "Søknad ble sendt til NAV",

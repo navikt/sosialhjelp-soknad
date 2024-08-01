@@ -986,9 +986,7 @@ export const skjema = {
             kontaktinfo: {
                 infotekst: {
                     ekstratekst:
-                        "If you do not know the address you are staying at, you can write the address to your local NAV office.",
-                    navsearch: "Find your NAV office.",
-                    tekst: "Example: Eksempelveien 47, 0123 OSLO",
+                        "If you do not know the address, enter the municipality, district, or postal code and select the NAV office where you live",
                 },
                 sporsmal: "Address",
             },
@@ -1045,9 +1043,9 @@ export const skjema = {
             },
             telefoninfo: {
                 infotekst: {
-                    tekst: "(Retrieved from My Page)",
+                    tekst: "(Retrieved from the common contact register)",
                 },
-                ingeninfo: "We did not find any telephone number from the contact and reservation register.",
+                ingeninfo: "We did not find any telephone number from the common contact register.",
                 sporsmal: "Telephone number",
             },
         },
@@ -1070,7 +1068,7 @@ export const skjema = {
             telefonnummerFelt: "Telephone number field",
             tittel: "New telephone number",
         },
-        tittel: "Personal information",
+        tittel: "Information about you",
     },
     kvittering: {
         dato: "Application was sent to NAV",
