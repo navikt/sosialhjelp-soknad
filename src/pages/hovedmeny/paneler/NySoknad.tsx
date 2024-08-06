@@ -27,7 +27,7 @@ export const NySoknadInfo = () => {
     const onSokSosialhjelpButtonClick = async (event: React.SyntheticEvent) => {
         setStartSoknadPending(true);
         event.preventDefault();
-        await logAmplitudeEvent("skjema startet", {
+        logAmplitudeEvent("skjema startet", {
             antallNyligInnsendteSoknader,
             antallPabegynteSoknader,
             enableModalV2: true,
