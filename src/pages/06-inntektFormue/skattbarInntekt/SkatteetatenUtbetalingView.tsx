@@ -19,7 +19,7 @@ export const SkatteetatenUtbetalingView = ({utbetaling: {brutto, forskuddstrekk}
         <>
             {brutto && <SkatteetatenAmount label={t(LABELS["brutto"])} amount={brutto} />}
             {forskuddstrekk && <SkatteetatenAmount label={t(LABELS["trekk"])} amount={forskuddstrekk} />}
-            {netto && <SkatteetatenAmount label={t(LABELS["netto"])} amount={brutto - forskuddstrekk} />}
+            {netto && <SkatteetatenAmount label={t(LABELS["netto"])} amount={brutto - Math.abs(forskuddstrekk)} />}
         </>
     );
 };
