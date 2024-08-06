@@ -182,6 +182,9 @@ export const skjema = {
         tittel: "Du vil få avslag",
     },
     begrunnelse: {
+        annet: {
+            beskrivelse: "Hva annet søker du om penger til?",
+        },
         hva: {
             description: 'Eksempel på tekst: "Jeg søker om penger til mat, husleie og strøm."',
             descriptionOld: "For eksempel penger til/utgifter for å leve og husleie",
@@ -194,6 +197,22 @@ export const skjema = {
             label: "Fortell oss kort om situasjonen din",
             labelOld: "Gi en kort begrunnelse for søknaden",
         },
+        kategorier: {
+            annet: "Annet",
+            barn: "Ting til barn og fritidsaktiviteter",
+            barnehage: "Barnehage, SFO eller AKS",
+            bolig: "Bolig",
+            hoytid: "Høytid, merkedager og gaver",
+            husholdning: "Husholdningsartikler",
+            klaer: "Klær og utstyr",
+            lege: "Lege og medisiner",
+            mat: "Mat",
+            nodhjelp: "Nødhjelp",
+            strom: "Strøm",
+            tannlege: "Tannlege",
+            transport: "Transport",
+            ved: "Ved, gass eller fjernvarme",
+        },
         kort: {
             behov: {
                 dokumentasjon: {
@@ -201,6 +220,25 @@ export const skjema = {
                         "Her kan du laste opp faktura, kvittering eller kostnadsoverslag for det du søker om penger til. Du kan ta bilder/skjermbilder.",
                     tittel: "Dokumentasjon",
                 },
+            },
+        },
+        underkategorier: {
+            bolig: {
+                boliglaan: "Avdrag og renter på boliglån",
+                depositum: "Depositum",
+                flytting: "Flytting",
+                innbo: "Innbo og utstyr",
+                kommunaleAvgifter: "Kommunale avgifter",
+                midlertidigBolig: "Midlertidig bolig",
+            },
+            nodhjelp: {
+                bosted: "Har ikke et sted å bo i natt",
+                helsehjelp: "Har ikke penger til helsehjelp jeg må ha i dag",
+                mat: "Har ikke penger til mat i dag",
+                reise: "Har ikke penger til å komme meg hjem i dag",
+                strøm: "Strømmen er stengt / stenges i dag eller i morgen",
+                utkastet: "Blir kastet ut hjemmefra i dag eller i morgen",
+                varme: "Har ikke penger til varme hjemme i dag",
             },
         },
     },
