@@ -14,7 +14,7 @@ import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 export const NySoknadInfo = () => {
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
     const [startSoknadError, setStartSoknadError] = useState<Error | null>(null);
-    const [soknadstype, setSoknadstype] = useState<"kort" | "standard" | undefined>();
+    const [soknadstype, setSoknadstype] = useState<"kort" | "standard" | null>(null);
 
     const {data: sessionInfo} = useGetSessionInfo();
 
@@ -27,7 +27,7 @@ export const NySoknadInfo = () => {
     const onSokSosialhjelpButtonClick = async (event: React.SyntheticEvent) => {
         setStartSoknadPending(true);
         event.preventDefault();
-        await logAmplitudeEvent("skjema startet", {
+        logAmplitudeEvent("skjema startet", {
             antallNyligInnsendteSoknader,
             antallPabegynteSoknader,
             enableModalV2: true,
@@ -35,7 +35,7 @@ export const NySoknadInfo = () => {
             language: localStorage.getItem("digisos-language"),
         });
         try {
-            const {brukerBehandlingId, useKortSoknad} = await opprettSoknad({soknadstype});
+            const {brukerBehandlingId, useKortSoknad} = await opprettSoknad(soknadstype ? {soknadstype} : undefined);
             await hentXsrfCookie(brukerBehandlingId);
             // TODO: Få info om kort eller lang søknad i responsen og evaluer her
             if (useKortSoknad) {
@@ -71,7 +71,7 @@ export const NySoknadInfo = () => {
 };
 
 interface SoknadstypeValgProps {
-    valg: "kort" | "standard" | undefined;
+    valg: "kort" | "standard" | null;
     setValg: (valg: "kort" | "standard") => void;
 }
 

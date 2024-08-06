@@ -163,7 +163,6 @@ export const maximizeSoknad = async (soknadId: string) => {
         });
     });
 
-    console.log(opplysninger.okonomiskeOpplysninger);
     await Promise.all(
         opplysninger.okonomiskeOpplysninger!.map((opplysning) =>
             updateOkonomiskOpplysning(soknadId, opplysning as NonReadonly<VedleggFrontend>)

@@ -200,6 +200,9 @@ export const skjema = {
         tittel: "Du vil få avslag",
     },
     begrunnelse: {
+        annet: {
+            beskrivelse: "Ka anna søkjer du om penger til?",
+        },
         hva: {
             description: 'Døme på tekst: "Eg søkjer om pengar til mat, husleige og straum."',
             descriptionOld: "Til dømes pengar til/utgifter husleige og for å leve",
@@ -211,6 +214,39 @@ export const skjema = {
                 'Døme på tekst: "Eg er arbeidssøkjar og har ikkje pengar til å kjøpe mat eller betale husleige."',
             label: "Fortel oss kort om situasjonen din",
             labelOld: "Grunngi kort søknaden",
+        },
+        kategorier: {
+            annet: "Anna",
+            barn: "Ting til barn og fritidsaktivitetar",
+            barnehage: "Barnehage, SFO eller AKS",
+            bolig: {
+                boliglaan: "Avdrag og renter på bustadlån",
+                depositum: "Depositum",
+                flytting: "Flytting",
+                innbo: "Innbo og utstyr",
+                kommunaleAvgifter: "Kommunale avgifter",
+                midlertidigBolig: "Midlertidig bustad",
+                stringValue: "Bustad",
+            },
+            hoytid: "Høgtid, merkedagar og gåver",
+            klaer: "Klede og utstyr",
+            label: "Kva søkjer du om penger til?",
+            lege: "Lege og medisin",
+            mat: "Mat",
+            nodhjelp: {
+                bosted: "Har ikkje ein stad å bu i natt",
+                helsehjelp: "Har ikkje pengar til helsehjelp eg må ha i dag",
+                mat: "Har ikkje pengar til mat i dag",
+                reise: "Har ikkje pengar til å kome meg heim i dag",
+                strøm: "Straumen er stengt / stengast i dag eller i morgon",
+                utkastet: "Blir kasta ut heimanfrå i dag eller i morgon",
+                varme: "Har ikkje pengar til varme heime i dag",
+                stringValue: "Nødhjelp",
+            },
+            strom: "Straum",
+            tannlege: "Tannlege",
+            transport: "Transport",
+            ved: "Ved, gass eller fjernvarme",
         },
         kort: {
             behov: {
