@@ -201,6 +201,9 @@ export const skjema = {
         tittel: "Your application will be rejected",
     },
     begrunnelse: {
+        annet: {
+            beskrivelse: "What are you applying for money for?",
+        },
         hva: {
             description: 'Example of text: "I am applying for support for food, rent and electricity."',
             descriptionOld: "For example, money for living expenses and rent",
@@ -211,6 +214,22 @@ export const skjema = {
             description: 'Example of text: "I am a jobseeker and do not have money to purchase food or to pay rent."',
             label: "Tell us briefly about your situation",
             labelOld: "Give a brief reason for the application",
+        },
+        kategorier: {
+            annet: "Other",
+            barn: "Things for children and leisure activities",
+            barnehage: "Kindergarten, SFO or AKS",
+            bolig: "Housing",
+            hoytid: "Holidays, special occasions and gifts",
+            husholdning: "Household items",
+            klaer: "Clothes and equipment",
+            lege: "Doctor and medicine",
+            mat: "Food",
+            nodhjelp: "Emergency aid",
+            strom: "Electricity",
+            tannlege: "Dentist",
+            transport: "Transport",
+            ved: "Firewood, gas or district heating",
         },
         kort: {
             behov: {

@@ -200,6 +200,9 @@ export const skjema = {
         tittel: "Du vil få avslag",
     },
     begrunnelse: {
+        annet: {
+            beskrivelse: "Ka anna søkjer du om penger til?",
+        },
         hva: {
             description: 'Døme på tekst: "Eg søkjer om pengar til mat, husleige og straum."',
             descriptionOld: "Til dømes pengar til/utgifter husleige og for å leve",
@@ -211,6 +214,22 @@ export const skjema = {
                 'Døme på tekst: "Eg er arbeidssøkjar og har ikkje pengar til å kjøpe mat eller betale husleige."',
             label: "Fortel oss kort om situasjonen din",
             labelOld: "Grunngi kort søknaden",
+        },
+        kategorier: {
+            annet: "Anna",
+            barn: "Ting til barn og fritidsaktivitetar",
+            barnehage: "Barnehage, SFO eller AKS",
+            bolig: "Bustad",
+            hoytid: "Høgtid, merkedagar og gåver",
+            husholdning: "Hushaldsartiklar",
+            klaer: "Klede og utstyr",
+            lege: "Lege og medisin",
+            mat: "Mat",
+            nodhjelp: "Nødhjelp",
+            strom: "Straum",
+            tannlege: "Tannlege",
+            transport: "Transport",
+            ved: "Ved, gass eller fjernvarme",
         },
         kort: {
             behov: {
