@@ -1,28 +1,28 @@
 name: Build prod-sbs image - HUSK MANUELL DEPLOY TIL PROD!
 on:
-  workflow_run:
-    workflows: ['Build code and run test']
-    branches: [master]
-    types:
-      - completed
+    workflow_run:
+        workflows: ["Build code and run test"]
+        branches: [master]
+        types:
+            - completed
 
 jobs:
-  build-image:
-    name: 'Build prod-sbs Image'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
-      actions: write
-    env:
-      REACT_APP_DIGISOS_ENV: prod-sbs
-      DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
-      READER_TOKEN: ${{ secrets.READER_TOKEN }}
-      WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - uses: actions/checkout@v4
+    build-image:
+        name: "Build prod-sbs Image"
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            packages: write
+            actions: write
+        env:
+            REACT_APP_DIGISOS_ENV: prod-sbs
+            DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
+            READER_TOKEN: ${{ secrets.READER_TOKEN }}
+            WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        steps:
+            - uses: actions/checkout@v4
 
-      - name: 'Build Docker Image'
-        uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
-        with:
-          prefix: ${{ env.REACT_APP_DIGISOS_ENV }}
+            - name: "Build Docker Image"
+              uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
+              with:
+                  prefix: ${{ env.REACT_APP_DIGISOS_ENV }}

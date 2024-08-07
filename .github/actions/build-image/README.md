@@ -3,15 +3,15 @@
 Inneholder gjenbrukbar logikk relevant for `sosialhjelp-soknad` for å
 bygge et docker image.
 
-### Inputs
+## Inputs
 
 -   `prefix`: sosialhjelp-soknad lager tags basert på config. (prod-sbs, dev-sbs, mock)
 
-### Outputs
+## Outputs
 
 -   `full-tag`: Den fulle taggen inkludert prefix og artifact version
 
-### Eksempel på bruk:
+## Eksempel på bruk:
 
 ```yaml
 - name: "Build Docker Image"

@@ -14,41 +14,41 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@v3
+  - uses: actions/checkout@v3
 
-    - name: 'Create artifact version'
-      id: artifact-version
-      uses: navikt/sosialhjelp-ci/actions/create-artifact-version@main
+  - name: 'Create artifact version'
+    id: artifact-version
+    uses: navikt/sosialhjelp-ci/actions/create-artifact-version@main
 
-    - name: 'Tag with prefix'
-      id: final-tag
-      run: |
-        echo "tag=${{ inputs.prefix }}-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_OUTPUT
-      shell: bash
+  - name: 'Tag with prefix'
+    id: final-tag
+    run: |
+      echo "tag=${{ inputs.prefix }}-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_OUTPUT
+    shell: bash
 
-    - name: 'Build npm artifact'
-      uses: navikt/sosialhjelp-ci/actions/build-npm@main
-      env:
-        REACT_APP_RELEASE: ${{ steps.final-tag.outputs.tag }}
-      with:
-        node-version: 20
-        reader-token: ${{ env.READER_TOKEN }}
-        build-less: 'false'
-        run-orval: 'true'
-        run-test: 'false'
+  - name: 'Build npm artifact'
+    uses: navikt/sosialhjelp-ci/actions/build-npm@main
+    env:
+      REACT_APP_RELEASE: ${{ steps.final-tag.outputs.tag }}
+    with:
+      node-version: 20
+      reader-token: ${{ env.READER_TOKEN }}
+      build-less: 'false'
+      run-orval: 'true'
+      run-test: 'false'
 
-    - name: 'Release Tag'
-      uses: ncipollo/release-action@v1
-      env:
-        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-      with:
-        tag: ${{ steps.final-tag.outputs.tag }}
-        commit: ${{ github.sha }}
-        allowUpdates: true
+  - name: 'Release Tag'
+    uses: ncipollo/release-action@v1
+    env:
+      GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+    with:
+      tag: ${{ steps.final-tag.outputs.tag }}
+      commit: ${{ github.sha }}
+      allowUpdates: true
 
-    - name: 'Build and Push Docker Image'
-      uses: navikt/sosialhjelp-ci/actions/build-and-push-docker-image@main
-      with:
-        artifact-version: ${{ steps.final-tag.outputs.tag }}
-        image-name: ${{ env.DOCKER_IMAGE }}
-        github-token: ${{ env.WORKFLOW_TOKEN }}
+  - name: 'Build and Push Docker Image'
+    uses: navikt/sosialhjelp-ci/actions/build-and-push-docker-image@main
+    with:
+      artifact-version: ${{ steps.final-tag.outputs.tag }}
+      image-name: ${{ env.DOCKER_IMAGE }}
+      github-token: ${{ env.WORKFLOW_TOKEN }}

@@ -1,22 +1,22 @@
-name: 'Build dev-sbs Image'
+name: "Build dev-sbs Image"
 on:
-  workflow_dispatch:
+    workflow_dispatch:
 
 jobs:
-  build-image:
-    name: 'Build dev-sbs Image'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
-      actions: write
-    env:
-      REACT_APP_DIGISOS_ENV: dev-sbs
-      DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
-      READER_TOKEN: ${{ secrets.READER_TOKEN }}
-      WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - name: 'Build Docker Image'
-        uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
-        with:
-          prefix: ${{ env.REACT_APP_DIGISOS_ENV }}
+    build-image:
+        name: "Build dev-sbs Image"
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            packages: write
+            actions: write
+        env:
+            REACT_APP_DIGISOS_ENV: dev-sbs
+            DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
+            READER_TOKEN: ${{ secrets.READER_TOKEN }}
+            WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        steps:
+            - name: "Build Docker Image"
+              uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
+              with:
+                  prefix: ${{ env.REACT_APP_DIGISOS_ENV }}
