@@ -29,7 +29,7 @@ runs:
   - name: 'Build npm artifact'
     uses: navikt/sosialhjelp-ci/actions/build-npm@main
     env:
-      REACT_APP_RELEASE: ${{ steps.final-tag.outputs.tag }}
+      NEXT_PUBLIC_RELEASE: ${{ steps.final-tag.outputs.tag }}
     with:
       node-version: 20
       reader-token: ${{ env.READER_TOKEN }}

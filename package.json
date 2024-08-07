@@ -32,6 +32,7 @@
         "i18next-browser-languagedetector": "^8.0.0",
         "i18next-http-backend": "^2.5.2",
         "libphonenumber-js": "^1.11.4",
+        "next": "^14.2.5",
         "postcss-import": "^16.1.0",
         "react": "^18.3.1",
         "react-collapse": "^5.1.1",
@@ -95,10 +96,10 @@
         "vitest": "^1.6.0"
     },
     "scripts": {
-        "preview": "REACT_APP_DIGISOS_ENV vite preview --port 3000",
-        "build": "vite build",
+        "build": "next build",
         "build:css": "echo brukes ikke lenger",
-        "dev": "vite dev",
+        "dev": "next dev",
+        "start": "next start",
         "test": "vitest",
         "prepare": "husky",
         "fetch-api": "curl -o ./soknad-api.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs && prettier --write soknad-api.json",

@@ -122,7 +122,7 @@ const getConfig = (miljo: unknown): SoknadConfig => {
     return configMap[miljo];
 };
 
-const digisosConfig = getConfig(import.meta.env.REACT_APP_DIGISOS_ENV);
+const digisosConfig = getConfig(import.meta.env.NEXT_PUBLIC_DIGISOS_ENV);
 
 export default digisosConfig;
 export const useFeatureFlags = (): FeatureFlags => digisosConfig.featureFlags;

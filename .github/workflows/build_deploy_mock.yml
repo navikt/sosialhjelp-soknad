@@ -6,7 +6,7 @@ on:
     workflow_dispatch:
 env:
     DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
-    REACT_APP_DIGISOS_ENV: mock
+    NEXT_PUBLIC_DIGISOS_ENV: mock
 
 jobs:
     build-image:
@@ -27,7 +27,7 @@ jobs:
               id: docker-image
               uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
               with:
-                  prefix: ${{ env.REACT_APP_DIGISOS_ENV }}
+                  prefix: ${{ env.NEXT_PUBLIC_DIGISOS_ENV }}
 
     deploy-app:
         name: "Deploy Application"

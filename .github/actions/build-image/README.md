@@ -17,5 +17,5 @@ bygge et docker image.
 - name: "Build Docker Image"
   uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
   with:
-      prefix: ${{ env.REACT_APP_DIGISOS_ENV }}
+      prefix: ${{ env.NEXT_PUBLIC_DIGISOS_ENV }}
 ```
