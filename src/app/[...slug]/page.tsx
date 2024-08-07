@@ -1,4 +1,5 @@
 import "../../index.css";
+import "@navikt/ds-css";
 import {ClientOnly} from "./client";
 
 export function generateStaticParams() {

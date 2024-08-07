@@ -5,7 +5,7 @@ import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
 import {withFaroProfiler} from "@grafana/faro-react";
 import {logWindowError} from "./lib/log/logWindowError";
 import digisosConfig from "./lib/config";
-import {App} from "./app";
+import App from "./app";
 
 window.onerror = logWindowError;
 

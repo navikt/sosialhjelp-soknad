@@ -1,3 +1,5 @@
+import {Metadata} from "next";
+
 export const metadata: Metadata = {
     name: "Søknad om økonomisk sosialhjelp",
     description: "Søknad om økonomisk sosialhjelp",
