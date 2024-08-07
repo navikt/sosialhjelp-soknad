@@ -1,3 +1,4 @@
+"use client";
 import {FileContent} from "@navikt/ds-icons";
 import {BodyShort, ExpansionCard, Heading, Label, LinkPanel} from "@navikt/ds-react";
 import React from "react";

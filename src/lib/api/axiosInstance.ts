@@ -64,11 +64,11 @@ export const axiosInstance = <T>(
                 throw e;
             }
 
-            if (isLoginError(response)) {
-                const redirect = `?redirect=${origin}${LINK_PAGE_PATH}?goto=${getGotoParameter(window.location)}`;
-                window.location.assign(response.data.loginUrl + redirect);
-                return neverResolves();
-            }
+            //            if (isLoginError(response)) {
+            //                const redirect = `?redirect=${origin}${LINK_PAGE_PATH}?goto=${getGotoParameter(window.location)}`;
+            //                window.location.assign(response.data.loginUrl + redirect);
+            //                return neverResolves();
+            //            }
 
             const {status, data} = response;
 

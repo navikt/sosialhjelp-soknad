@@ -9,8 +9,9 @@ export const logError = (message: string): Promise<void> => log(message, LoggLev
 
 const log = async (message: string, level: LoggLevel) => {
     const navLogEntry: Logg = {
-        url: window.location.href,
-        userAgent: window.navigator.userAgent,
+        // FIXME
+        // url: window.location.href,
+        // userAgent: window.navigator.userAgent,
         message: message,
         level,
     };

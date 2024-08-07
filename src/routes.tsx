@@ -26,7 +26,7 @@ import {BASE_PATH} from "./lib/constants";
 import {redirectToGotoSearchParameter} from "./lib/api/auth/redirectToGotoSearchParameter";
 import useIsKort from "./lib/hooks/data/useIsKort";
 
-const Informasjon = React.lazy(() => import("./sider/hovedmeny"));
+const Informasjon = React.lazy(() => import("./app"));
 const SideIkkeFunnet = React.lazy(() => import("./sider/feilsider/SideIkkeFunnet"));
 const ServerFeil = React.lazy(() => import("./sider/feilsider/ServerFeil"));
 const ExceptionThrower = React.lazy(() => import("./sider/feilsider/ExceptionThrower"));

@@ -1,5 +1,4 @@
 import {Suspense} from "react";
-import {useLocalStorageLangSelector} from "./lib/i18n";
 import {ValideringsContextProvider} from "./lib/valideringContextProvider";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
@@ -10,8 +9,6 @@ import {router} from "./routes";
 const queryClient = new QueryClient();
 
 export default function App() {
-    useLocalStorageLangSelector();
-
     return (
         <Suspense fallback={<ApplicationSpinner />}>
             <ValideringsContextProvider>

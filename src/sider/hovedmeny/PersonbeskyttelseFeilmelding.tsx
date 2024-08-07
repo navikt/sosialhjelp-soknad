@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import {Alert, Heading, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";

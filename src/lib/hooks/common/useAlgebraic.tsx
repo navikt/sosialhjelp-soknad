@@ -1,3 +1,4 @@
+"use client";
 import {AsyncData, Result} from "@swan-io/boxed";
 import {ReactElement, useMemo} from "react";
 import {UseQueryResult} from "@tanstack/react-query";
