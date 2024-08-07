@@ -5,7 +5,7 @@ import {faro} from "@grafana/faro-react";
 import {TrashIcon} from "@navikt/aksel-icons";
 import {useBehandlingsId} from "../../hooks/common/useBehandlingsId";
 import {useSlettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
-import {minSideURL} from "../../config";
+import digisosConfig from "../../config";
 import {logError, logWarning} from "../../log/loggerUtils";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 //import {useAmplitude} from "../../amplitude/useAmplitude";
@@ -20,7 +20,7 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
     const deleteAndRedirect = async () => {
         try {
             await mutate({behandlingsId});
-            window.location.href = minSideURL;
+            window.location.href = digisosConfig.minSideURL;
         } catch (e) {
             faro.api.pushError(e);
             logError(`Feil ved sletting: ${e}`);

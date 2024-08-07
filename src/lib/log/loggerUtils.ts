@@ -1,6 +1,7 @@
 import {logToServer} from "./logToServer";
 import {logLocally} from "./logLocally";
 import {Logg, LoggLevel} from "./types";
+import digisosConfig from "../config";
 
 export const logInfo = (message: string): Promise<void> => log(message, LoggLevel.INFO);
 export const logWarning = (message: string): Promise<void> => log(message, LoggLevel.WARN);
@@ -14,7 +15,7 @@ const log = async (message: string, level: LoggLevel) => {
         level,
     };
 
-    if (import.meta.env.REACT_APP_DIGISOS_ENV !== "prod-sbs") {
+    if (digisosConfig.logLocally) {
         logLocally(navLogEntry);
     } else await logToServer(navLogEntry);
 };

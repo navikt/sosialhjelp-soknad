@@ -2,7 +2,7 @@ import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {Heading} from "@navikt/ds-react";
 import cx from "classnames";
-import {isLocalhost, isStaging} from "../../utils";
+import digisosConfig from "../../config";
 const DeveloperToolkit = React.lazy(() => import("./DeveloperToolkit"));
 
 export const AppHeader = ({className}: {className?: string}) => {
@@ -11,7 +11,7 @@ export const AppHeader = ({className}: {className?: string}) => {
 
     return (
         <>
-            {(isLocalhost(window.location.href) || isStaging(window.location.href)) && <DeveloperToolkit />}
+            {digisosConfig.showDevPanel && <DeveloperToolkit />}
             <Heading level="1" size="small" className={styles}>
                 {t("skjema.tittel")}
             </Heading>

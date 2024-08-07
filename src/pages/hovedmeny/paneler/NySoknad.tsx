@@ -8,7 +8,7 @@ import {useState} from "react";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {NedetidPanel} from "../../../lib/components/NedetidPanel";
-import {useFeatureFlags} from "../../../lib/featureFlags";
+import {useFeatureFlags} from "../../../lib/config";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 
 export const NySoknadInfo = () => {

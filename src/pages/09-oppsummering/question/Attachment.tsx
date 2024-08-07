@@ -1,6 +1,6 @@
 import {Link} from "@navikt/ds-react";
 import {Felt} from "../../../generated/model";
-import {baseURL} from "../../../lib/config";
+import digisosConfig from "../../../lib/config";
 import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId";
 
 export const Attachment = ({felter}: {felter?: Felt[]}) =>
@@ -9,7 +9,9 @@ export const Attachment = ({felter}: {felter?: Felt[]}) =>
             {felter.map(({vedlegg}) =>
                 vedlegg?.map(({filnavn, uuid}) => (
                     <li key={uuid}>
-                        <Link href={`${baseURL}opplastetVedlegg/${useBehandlingsId()}/${uuid}/fil`}>{filnavn}</Link>
+                        <Link href={`${digisosConfig.baseURL}opplastetVedlegg/${useBehandlingsId()}/${uuid}/fil`}>
+                            {filnavn}
+                        </Link>
                     </li>
                 ))
             )}

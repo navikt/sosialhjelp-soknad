@@ -4,7 +4,7 @@ import {DokumentUpload} from "../../generated/model";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {TrashIcon} from "@navikt/aksel-icons";
 import {Button} from "@navikt/ds-react";
-import {baseURL} from "../../lib/config";
+import digisosConfig from "../../lib/config";
 import {BekreftSlettDokumentModal} from "../../lib/components/modals/BekreftSlettDokumentModal";
 
 export const OpplastetVedlegg = ({
@@ -27,7 +27,7 @@ export const OpplastetVedlegg = ({
                     setShowConfirmDelete(false);
                 }}
             />
-            <LinkButton onClick={() => window.open(baseURL + lastNedUrl)}>{filename}</LinkButton>
+            <LinkButton onClick={() => window.open(digisosConfig.baseURL + lastNedUrl)}>{filename}</LinkButton>
             <Button
                 size={"small"}
                 variant={"tertiary"}

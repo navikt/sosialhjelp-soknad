@@ -1,5 +1,5 @@
 import {describe, it, expect} from "vitest";
-import {linkPagePath} from "../../config";
+import {LINK_PAGE_PATH} from "../../constants";
 import {getGotoParameter} from "./getGotoParameter";
 
 describe("getGotoParameter", () => {
@@ -11,14 +11,14 @@ describe("getGotoParameter", () => {
         },
         {
             description: 'should keep the original "goto" parameter if on a redirect page',
-            location: {pathname: linkPagePath, search: "?goto=/original/path"},
+            location: {pathname: LINK_PAGE_PATH, search: "?goto=/original/path"},
             expectedGoto: "/original/path",
         },
         {
             description:
                 'should set the "goto" parameter to the pathname if on a redirect page but no underlying "goto"',
-            location: {pathname: linkPagePath, search: ""},
-            expectedGoto: linkPagePath,
+            location: {pathname: LINK_PAGE_PATH, search: ""},
+            expectedGoto: LINK_PAGE_PATH,
         },
         {
             description:
@@ -33,12 +33,12 @@ describe("getGotoParameter", () => {
         },
         {
             description: "should handle search params with special characters",
-            location: {pathname: linkPagePath, search: "?goto=/path/with%20special%20characters"},
+            location: {pathname: LINK_PAGE_PATH, search: "?goto=/path/with%20special%20characters"},
             expectedGoto: "/path/with special characters",
         },
         {
             description: "should double-decode the goto parameter for loginApi bug compatibility",
-            location: {pathname: linkPagePath, search: "?goto=%2Fpath%2Fwith%2520special%2520characters"},
+            location: {pathname: LINK_PAGE_PATH, search: "?goto=%2Fpath%2Fwith%2520special%2520characters"},
             expectedGoto: "/path/with special characters",
         },
         {

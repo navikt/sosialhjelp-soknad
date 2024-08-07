@@ -3,7 +3,7 @@ import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {SkjemaConfig, SkjemaSteg} from "./digisosSkjema";
 import {useState} from "react";
-import {minSideURL} from "../../config";
+import digisosConfig from "../../config";
 import {AvbrytSoknadModal} from "../modals/AvbrytSoknadModal";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 import {logWarning} from "../../log/loggerUtils";
@@ -76,7 +76,7 @@ export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep, onSend}: Sk
                         logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"}).catch((e) =>
                             logWarning(`Amplitude error: ${e}`)
                         );
-                        window.location.href = minSideURL;
+                        window.location.href = digisosConfig.minSideURL;
                     }}
                 >
                     {t("avbryt.fortsettsenere")}

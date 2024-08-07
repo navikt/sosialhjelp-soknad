@@ -4,7 +4,7 @@ import {logWarning} from "./log/loggerUtils";
 import Backend from "i18next-http-backend";
 import {enGB, Locale, nb, nn} from "date-fns/locale";
 import {DecoratorLocale, onLanguageSelect, setAvailableLanguages, setParams} from "@navikt/nav-dekoratoren-moduler";
-import {basePath as url, ENABLE_DEBUG_I18N} from "./config";
+import {ENABLE_DEBUG_I18N, BASE_PATH as url} from "./constants";
 //import {useAmplitude} from "./amplitude/useAmplitude";
 import {useEffect} from "react";
 import {logAmplitudeEvent} from "./amplitude/Amplitude";

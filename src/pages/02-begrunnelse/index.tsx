@@ -5,7 +5,7 @@ import {Alert, BodyShort, Textarea} from "@navikt/ds-react";
 import {FieldError, useForm} from "react-hook-form";
 import {useTranslation} from "react-i18next";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {useFeatureFlags} from "../../lib/featureFlags";
+import {useFeatureFlags} from "../../lib/config";
 import {inhibitNavigation, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useBegrunnelse} from "../../lib/hooks/data/useBegrunnelse";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";

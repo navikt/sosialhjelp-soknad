@@ -21,7 +21,8 @@ import {
     ReactRouterVersion,
 } from "@grafana/faro-react";
 import {TracingInstrumentation} from "@grafana/faro-web-tracing";
-import config, {basePath} from "./lib/config";
+import digisosConfig from "./lib/config";
+import {BASE_PATH} from "./lib/constants";
 import {redirectToGotoSearchParameter} from "./lib/api/auth/redirectToGotoSearchParameter";
 import useIsKort from "./lib/hooks/data/useIsKort";
 
@@ -84,10 +85,10 @@ const routes = (
     </Route>
 );
 
-export const router = createBrowserRouter(createRoutesFromChildren(routes), {basename: basePath});
+export const router = createBrowserRouter(createRoutesFromChildren(routes), {basename: BASE_PATH});
 
 initializeFaro({
-    url: process.env.NODE_ENV !== "development" ? config.faro.url : undefined,
+    url: process.env.NODE_ENV !== "development" ? digisosConfig.faro.url : undefined,
     app: {
         name: "sosialhjelp-soknad",
         version: "1.0.0",

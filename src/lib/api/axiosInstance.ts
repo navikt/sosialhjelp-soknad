@@ -1,15 +1,15 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
-import {isLocalhost, isMockAlt} from "../utils";
 import {logError, logInfo, logWarning} from "../log/loggerUtils";
-import {baseURL, linkPagePath} from "../config";
+import digisosConfig from "../config";
 import {isLoginError} from "./error/isLoginError";
 import {getGotoParameter} from "./auth/getGotoParameter";
+import {LINK_PAGE_PATH} from "../constants";
 
 const AXIOS_INSTANCE = Axios.create({
-    baseURL,
+    baseURL: digisosConfig.baseURL,
     xsrfCookieName: "XSRF-TOKEN-SOKNAD-API",
     xsrfHeaderName: "X-XSRF-TOKEN",
-    withCredentials: isLocalhost(window.location.origin) || isMockAlt(window.location.origin),
+    withCredentials: digisosConfig.withCredentials,
     headers: {Accept: "application/json, text/plain, */*"},
 });
 
@@ -65,7 +65,7 @@ export const axiosInstance = <T>(
             }
 
             if (isLoginError(response)) {
-                const redirect = `?redirect=${origin}${linkPagePath}?goto=${getGotoParameter(window.location)}`;
+                const redirect = `?redirect=${origin}${LINK_PAGE_PATH}?goto=${getGotoParameter(window.location)}`;
                 window.location.assign(response.data.loginUrl + redirect);
                 return neverResolves();
             }

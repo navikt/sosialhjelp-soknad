@@ -6,7 +6,7 @@ import {logWarning} from "../../log/loggerUtils";
 import {updateAdresse} from "../../../generated/adresse-ressurs/adresse-ressurs";
 import {sendSoknad} from "../../../generated/soknad-actions/soknad-actions";
 import {maximizeSoknad} from "./devUtils";
-import {innsynURL} from "../../config";
+import digisosConfig from "../../config";
 
 type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
 
@@ -57,7 +57,7 @@ export const DeveloperToolkit = () => {
                         const soknadId = await createFolkeregistrertSoknad();
                         await maximizeSoknad(soknadId);
                         const {id} = await sendSoknad(soknadId);
-                        window.location.href = `${innsynURL}${id}/status`;
+                        window.location.href = `${digisosConfig.innsynURL}${id}/status`;
                     }}
                 >
                     [ lag og send maksimal søknad ]
@@ -73,7 +73,7 @@ export const DeveloperToolkit = () => {
                 <button
                     className={"text-[#0c0] hover:text-[#0f0]"}
                     onClick={async () =>
-                        (window.location.href = `${innsynURL}${await createFolkeregistrertSoknad()}/status`)
+                        (window.location.href = `${digisosConfig.innsynURL}${await createFolkeregistrertSoknad()}/status`)
                     }
                 >
                     innsyn
@@ -89,7 +89,7 @@ export const DeveloperToolkit = () => {
                         className={"text-[#0c0] hover:text-[#0f0]"}
                         onClick={async () => {
                             const {id} = await sendSoknad(behandlingsId);
-                            window.location.href = `${innsynURL}${id}/status`;
+                            window.location.href = `${digisosConfig.innsynURL}${id}/status`;
                         }}
                     >
                         [ send inn ]

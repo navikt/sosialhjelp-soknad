@@ -1,5 +1,5 @@
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {useFeatureFlags} from "../../featureFlags";
+import {useFeatureFlags} from "../../config";
 import * as React from "react";
 import {useEffect} from "react";
 import {

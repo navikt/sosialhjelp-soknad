@@ -3,7 +3,7 @@ import {BodyShort, ExpansionCard, Heading} from "@navikt/ds-react";
 import React from "react";
 import {Trans, useTranslation} from "react-i18next";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
-import {innsynURL} from "../../../lib/config";
+import digisosConfig from "../../../lib/config";
 
 export const EttersendDokuPanel = () => {
     const {data} = useGetSessionInfo();
@@ -34,7 +34,11 @@ export const EttersendDokuPanel = () => {
                         <Trans
                             i18nKey="applikasjon.dokumentasjon.informasjon.del2"
                             components={{
-                                lenke: <a href={innsynURL}>{t("applikasjon.dokumentasjon.informasjon.url")}</a>,
+                                lenke: (
+                                    <a href={digisosConfig.innsynURL}>
+                                        {t("applikasjon.dokumentasjon.informasjon.url")}
+                                    </a>
+                                ),
                             }}
                         />
                     </li>

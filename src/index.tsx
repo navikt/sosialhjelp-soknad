@@ -12,6 +12,7 @@ import {withFaroProfiler} from "@grafana/faro-react";
 import {ApplicationSpinner} from "./lib/components/animasjoner/ApplicationSpinner";
 import {ValideringsContextProvider} from "./lib/valideringContextProvider";
 import {logWindowError} from "./lib/log/logWindowError";
+import digisosConfig from "./lib/config";
 
 window.onerror = logWindowError;
 
@@ -46,7 +47,7 @@ const App = () => {
 };
 
 // Dersom appen bygges og deployes med docker-image vil dekoratøren bli lagt på serverside med express i Docker (eks ved deploy til miljø)
-if (import.meta.env.REACT_APP_DIGISOS_ENV === "localhost") {
+if (digisosConfig.clientSideDecorator)
     injectDecoratorClientSide({
         env: "dev",
         params: {
@@ -57,7 +58,6 @@ if (import.meta.env.REACT_APP_DIGISOS_ENV === "localhost") {
             logoutWarning: true,
         },
     });
-}
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
