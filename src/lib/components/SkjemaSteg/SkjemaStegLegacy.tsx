@@ -16,7 +16,7 @@ import {AppHeader} from "../appHeader/AppHeader";
 import {scrollToTop} from "../../utils";
 
 import {ValideringsContext} from "../../valideringContextProvider";
-import {NavEnhetInaktiv} from "../../../pages/01-personalia/adresse/NavEnhetInaktiv";
+import {NavEnhetInaktiv} from "../../../sider/01-personalia/adresse/NavEnhetInaktiv";
 import {RequireXsrfCookie} from "./ny/RequireXsrfCookie";
 
 interface StegMedNavigasjonProps {
