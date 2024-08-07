@@ -1,8 +1,7 @@
 import {Metadata} from "next";
 
 export const metadata: Metadata = {
-    name: "Søknad om økonomisk sosialhjelp",
-    description: "Søknad om økonomisk sosialhjelp",
+    title: "Søknad om økonomisk sosialhjelp",
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
