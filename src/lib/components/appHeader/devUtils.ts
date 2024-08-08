@@ -1,30 +1,31 @@
-import {updateBegrunnelse} from "../../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
-import {updateUtdanning} from "../../../generated/utdanning-ressurs/utdanning-ressurs";
+import {updateBegrunnelse} from "../../../generated/client/begrunnelse-ressurs/begrunnelse-ressurs";
+import {updateUtdanning} from "../../../generated/client/utdanning-ressurs/utdanning-ressurs";
 import {
     hentForsorgerplikt,
     updateForsorgerplikt,
-} from "../../../generated/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
-import {updateBosituasjon} from "../../../generated/bosituasjon-ressurs/bosituasjon-ressurs";
-import {putSkatteetatenSamtykke} from "../../../generated/skattbar-inntekt-ressurs/skattbar-inntekt-ressurs";
-import {updateBostotte, updateSamtykke1} from "../../../generated/bostotte-ressurs/bostotte-ressurs";
-import {updateStudielan} from "../../../generated/studielan-ressurs/studielan-ressurs";
-import {updateUtbetalinger} from "../../../generated/utbetaling-ressurs/utbetaling-ressurs";
-import {updateFormue} from "../../../generated/formue-ressurs/formue-ressurs";
-import {updateVerdier} from "../../../generated/verdi-ressurs/verdi-ressurs";
-import {updateBoutgifter} from "../../../generated/boutgift-ressurs/boutgift-ressurs";
-import {updateBarneutgifter} from "../../../generated/barneutgift-ressurs/barneutgift-ressurs";
+} from "../../../generated/client/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
+import {updateBosituasjon} from "../../../generated/client/bosituasjon-ressurs/bosituasjon-ressurs";
+import {putSkatteetatenSamtykke} from "../../../generated/client/skattbar-inntekt-ressurs/skattbar-inntekt-ressurs";
+import {updateBostotte, updateSamtykke1} from "../../../generated/client/bostotte-ressurs/bostotte-ressurs";
+import {updateStudielan} from "../../../generated/client/studielan-ressurs/studielan-ressurs";
+import {updateUtbetalinger} from "../../../generated/client/utbetaling-ressurs/utbetaling-ressurs";
+import {updateFormue} from "../../../generated/client/formue-ressurs/formue-ressurs";
+import {updateVerdier} from "../../../generated/client/verdi-ressurs/verdi-ressurs";
+import {updateBoutgifter} from "../../../generated/client/boutgift-ressurs/boutgift-ressurs";
+import {updateBarneutgifter} from "../../../generated/client/barneutgift-ressurs/barneutgift-ressurs";
 import {
     hentOkonomiskeOpplysninger,
     updateOkonomiskOpplysning,
-} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+} from "../../../generated/client/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {opplysningSpec} from "../../opplysninger";
-import {VedleggFrontend, VedleggRadFrontend} from "../../../generated/model";
+import {VedleggFrontend, VedleggRadFrontend} from "../../../generated/client/model";
+import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
 
 // Jeg har rappet disse fra Orval-boilerplate-kode for å få tilgang til ReadOnly<T> under her.
 
 type IsAny<T> = 0 extends 1 & T ? true : false;
 type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 type isBuiltin = Primitive | Function | Date | Error | RegExp;
 type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 type NonReadonly<T> =
@@ -150,7 +151,7 @@ export const maximizeSoknad = async (soknadId: string) => {
     const opplysninger = await hentOkonomiskeOpplysninger(soknadId);
 
     opplysninger.okonomiskeOpplysninger?.forEach((opplysning) => {
-        const {numRows} = opplysningSpec[opplysning.type];
+        const {numRows} = opplysningSpec[opplysning.type as VedleggFrontendTypeMinusUferdig];
 
         if (numRows === "flere" && opplysning.rader)
             opplysning.rader = duplicateItems(opplysning.rader, rowCountFromString(opplysning.type));

@@ -1,7 +1,7 @@
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useQueryClient} from "@tanstack/react-query";
-import {updateUtbetalinger, useHentUtbetalinger} from "../../../generated/utbetaling-ressurs/utbetaling-ressurs";
-import {UtbetalingerFrontend} from "../../../generated/model";
+import {updateUtbetalinger, useHentUtbetalinger} from "../../../generated/client/utbetaling-ressurs/utbetaling-ressurs";
+import {UtbetalingerFrontend} from "../../../generated/client/model";
 
 export const useUtbetalinger = () => {
     const behandlingsId = useBehandlingsId();

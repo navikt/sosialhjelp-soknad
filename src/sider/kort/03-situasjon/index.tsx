@@ -5,7 +5,7 @@ import {Alert, BodyShort, Textarea} from "@navikt/ds-react";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox";
 import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon";
 import {Controller, FieldError, useForm} from "react-hook-form";
-import {SituasjonsendringFrontend} from "../../../generated/model";
+import {SituasjonsendringFrontend} from "../../../generated/client/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useTranslation} from "react-i18next";
 import * as z from "zod";

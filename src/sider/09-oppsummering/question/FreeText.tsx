@@ -1,5 +1,5 @@
 import {FormattedText} from "./FormattedText";
-import {Felt, Svar} from "../../../generated/model";
+import {Felt, Svar} from "../../../generated/client/model";
 
 export const FreeText = ({felter}: {felter?: Felt[]}) => (
     <>

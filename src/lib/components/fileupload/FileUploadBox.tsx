@@ -12,7 +12,7 @@ import {
     SUPPORTED_WITHOUT_CONVERSION,
 } from "../../../sider/08-vedlegg/upload/DokumentUploader";
 import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
-import {VedleggFrontendType} from "../../../generated/model";
+import {VedleggFrontendType} from "../../../generated/client/model";
 
 interface Props {
     sporsmal: string;
@@ -90,7 +90,7 @@ const DokumentUploader = ({
     const {conversionPending, conversionError, convertToPDF} = usePDFConverter();
     const isPending = visSpinner || conversionPending;
 
-    if (conversionError) throw new PdfConversionError("conversion error", {cause: conversionError});
+    if (conversionError) throw new PdfConversionError(`conversion error: ${conversionError}`);
 
     const handleFileSelect = async ({target: {files}}: ChangeEvent<HTMLInputElement>) => {
         if (!files?.length) return;

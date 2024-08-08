@@ -5,7 +5,7 @@ import {DigisosReadMore} from "../../lib/components/DigisosReadMore";
 import {useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";
 import {UnmountClosed} from "react-collapse";
 import {useFormue} from "../../lib/hooks/data/useFormue";
-import {FormueFrontend} from "../../generated/model";
+import {FormueFrontend} from "../../generated/client/model";
 
 export const Formue = () => {
     const {formue, setFormue, setBeskrivelse} = useFormue();

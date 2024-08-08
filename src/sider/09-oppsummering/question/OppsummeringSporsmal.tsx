@@ -1,4 +1,4 @@
-import {Sporsmal} from "../../../generated/model";
+import {Sporsmal} from "../../../generated/client/model";
 import {Label} from "@navikt/ds-react";
 import {Warning} from "./Warning";
 import {SporsmalFelt} from "../SporsmalFelt";

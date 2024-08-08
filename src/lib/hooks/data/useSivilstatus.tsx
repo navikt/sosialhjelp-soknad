@@ -1,7 +1,7 @@
-import {updateSivilstatus, useHentSivilstatus} from "../../../generated/sivilstatus-ressurs/sivilstatus-ressurs";
+import {updateSivilstatus, useHentSivilstatus} from "../../../generated/client/sivilstatus-ressurs/sivilstatus-ressurs";
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useQueryClient} from "@tanstack/react-query";
-import {EktefelleFrontend, SivilstatusFrontend, SivilstatusFrontendSivilstatus} from "../../../generated/model";
+import {EktefelleFrontend, SivilstatusFrontend, SivilstatusFrontendSivilstatus} from "../../../generated/client/model";
 import {useState} from "react";
 
 const blankPerson: EktefelleFrontend = {

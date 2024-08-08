@@ -6,10 +6,11 @@ import {useDebounce} from "react-use";
 import deepEqual from "deep-equal";
 import {belopTekstfeltPreprocessor} from "../../../sider/08-vedlegg/belopTekstfeltPreprocessor";
 import {ValideringsFeilKode} from "../../validering";
-import {VedleggFrontend} from "../../../generated/model";
+import {VedleggFrontend} from "../../../generated/client/model";
 import {opplysningSpec} from "../../opplysninger";
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {useUpdateOkonomiskOpplysning} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {useUpdateOkonomiskOpplysning} from "../../../generated/client/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
 
 const zodBelopTekstfeltSchema = z.preprocess(
     belopTekstfeltPreprocessor,
@@ -39,7 +40,7 @@ export type VedleggRadFrontendForm = z.infer<typeof VedleggRadFrontendSchema>;
 const DEBOUNCE_DELAY_MS = 500;
 
 export const useOpplysning = (opplysning: VedleggFrontend) => {
-    const {textKey, inputs, numRows} = opplysningSpec[opplysning.type];
+    const {textKey, inputs, numRows} = opplysningSpec[opplysning.type as VedleggFrontendTypeMinusUferdig];
 
     const behandlingsId = useBehandlingsId();
     const {mutate} = useUpdateOkonomiskOpplysning();

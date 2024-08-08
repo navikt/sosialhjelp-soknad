@@ -1,7 +1,7 @@
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {Accordion} from "@navikt/ds-react";
 import React from "react";
-import {Steg} from "../../generated/model";
+import {Steg} from "../../generated/client/model";
 import {useTranslation} from "react-i18next";
 import {Link as ReactRouterLink, useLocation} from "react-router-dom";
 import {OppsummeringAvsnitt} from "./question/OppsummeringAvsnitt";

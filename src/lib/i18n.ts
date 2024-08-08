@@ -1,11 +1,9 @@
-import i18n, {DefaultNamespace, Namespace, TOptions} from "i18next";
+import i18n, {DefaultNamespace, Namespace, ParseKeys, TOptions} from "i18next";
 import {initReactI18next} from "react-i18next";
 import {logWarning} from "./log/loggerUtils";
 import Backend from "i18next-http-backend";
 import {enGB, Locale, nb, nn} from "date-fns/locale";
-import {DecoratorLocale, setParams} from "@navikt/nav-dekoratoren-moduler";
 import {ENABLE_DEBUG_I18N} from "./constants";
-//import {useAmplitude} from "./amplitude/useAmplitude";
 
 import skjemaNb from "../locales/nb/skjema";
 import skjemaNn from "../locales/nn/skjema";
@@ -28,7 +26,6 @@ export type DigisosLanguageKey<Ns extends Namespace = DefaultNamespace, TPrefix 
     TPrefix
 >;
 export const SUPPORTED_LANGUAGES = ["en", "nb", "nn"] as const;
-const DIGISOS_LANGUAGE = "digisos-language";
 const fallbackLng = "nb";
 
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
@@ -80,16 +77,3 @@ i18n.use(Backend)
     });
 
 export default i18n;
-
-/** Sets language for i18next, nav-dekorator, and localStorage */
-const setLanguage = async (language: string) => {
-    if (!isSupportedLanguage(language)) {
-        localStorage.removeItem(DIGISOS_LANGUAGE);
-        await setLanguage(fallbackLng);
-        return;
-    }
-
-    await i18n.changeLanguage(language);
-    await setParams({language: language as DecoratorLocale});
-    localStorage.setItem(DIGISOS_LANGUAGE, language);
-};

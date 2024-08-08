@@ -1,5 +1,9 @@
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {updateBostotte, updateSamtykke1, useHentBostotte} from "../../../generated/bostotte-ressurs/bostotte-ressurs";
+import {
+    updateBostotte,
+    updateSamtykke1,
+    useHentBostotte,
+} from "../../../generated/client/bostotte-ressurs/bostotte-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
 
 export const useInntekterBostotte = (skipFirstStep?: boolean) => {

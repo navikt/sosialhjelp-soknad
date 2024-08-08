@@ -5,10 +5,10 @@ import {useDebounce} from "react-use";
 import styled from "styled-components";
 
 import {formaterAdresseString} from "./AdresseUtils";
-import {AdresseForslag} from "../../../generated/model";
+import {AdresseForslag} from "../../../generated/client/model";
 import * as React from "react";
 import {useTranslation} from "react-i18next";
-import {useAdresseSok} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
+import {useAdresseSok} from "../../../generated/client/informasjon-ressurs/informasjon-ressurs";
 import {UseQueryResult} from "@tanstack/react-query";
 
 type AdresseSokChildProps = Pick<UseQueryResult<AdresseForslag[]>, "isPending" | "data">;

@@ -2,7 +2,7 @@ import * as React from "react";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
-import {updateKontonummer, useHentKontonummer} from "../../generated/kontonummer-ressurs/kontonummer-ressurs";
+import {updateKontonummer, useHentKontonummer} from "../../generated/client/kontonummer-ressurs/kontonummer-ressurs";
 import {KontonrShow} from "./KontonrShow";
 import {KontonrEdit} from "./KontonrEdit";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";

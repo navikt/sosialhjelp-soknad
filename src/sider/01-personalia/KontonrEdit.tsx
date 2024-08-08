@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {BodyShort, Button, Checkbox, TextField} from "@navikt/ds-react";
 import * as React from "react";
-import {KontonummerFrontend, KontonummerInputDTO} from "../../generated/model";
+import {KontonummerFrontend, KontonummerInputDTO} from "../../generated/client/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {formatKontonummer, registerWithMasks} from "@fremtind/jkl-formatters-util";

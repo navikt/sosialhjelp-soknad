@@ -1,4 +1,4 @@
-import {Organisasjon} from "../../../generated/model";
+import {Organisasjon} from "../../../generated/client/model";
 import {useTranslation} from "react-i18next";
 import {BodyShort, Table} from "@navikt/ds-react";
 import {SkatteetatenUtbetalingView} from "./SkatteetatenUtbetalingView";

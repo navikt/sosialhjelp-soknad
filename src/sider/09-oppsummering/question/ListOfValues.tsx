@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {FormattedText} from "./FormattedText";
-import {Felt} from "../../../generated/model";
+import {Felt} from "../../../generated/client/model";
 
 const StyledList = styled.ul`
     padding-left: 1rem;

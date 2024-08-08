@@ -1,5 +1,5 @@
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
-import {useHentKontonummer} from "../../generated/kontonummer-ressurs/kontonummer-ressurs";
+import {useHentKontonummer} from "../../generated/client/kontonummer-ressurs/kontonummer-ressurs";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useTranslation} from "react-i18next";
 import * as React from "react";

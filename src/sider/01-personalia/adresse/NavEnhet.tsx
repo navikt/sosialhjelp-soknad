@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Alert, BodyShort, Heading} from "@navikt/ds-react";
-import {NavEnhetFrontend} from "../../../generated/model";
+import {NavEnhetFrontend} from "../../../generated/client/model";
 import {useTranslation} from "react-i18next";
 import {erAktiv} from "../../../lib/navEnhetStatus";
 import {NavEnhetInaktiv} from "./NavEnhetInaktiv";

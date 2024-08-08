@@ -2,7 +2,7 @@ import * as React from "react";
 import {Systeminfo} from "../../lib/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
 import {Heading} from "@navikt/ds-react";
-import {useHentSivilstatus} from "../../generated/sivilstatus-ressurs/sivilstatus-ressurs";
+import {useHentSivilstatus} from "../../generated/client/sivilstatus-ressurs/sivilstatus-ressurs";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {EktefellePersonaliaSystem} from "./EktefellePersonaliaSystem";

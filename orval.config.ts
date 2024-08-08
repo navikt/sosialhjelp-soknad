@@ -1,12 +1,12 @@
 import {defineConfig} from "orval";
 
 export default defineConfig({
-    "soknad-api": {
+    "soknad-api-client": {
         input: "./soknad-api.json",
         output: {
             mode: "tags-split",
-            target: "src/generated/axiosInstance.ts",
-            schemas: "src/generated/model",
+            target: "src/generated/client/axiosInstance.ts",
+            schemas: "src/generated/client/model",
             client: "react-query",
             override: {
                 mutator: {

@@ -4,7 +4,7 @@ import {Alert, Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {NavYtelserTable} from "./NavYtelserTable";
 import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId";
-import {useHentSystemregistrerteInntekter} from "../../../generated/systemregistrert-inntekt-ressurs/systemregistrert-inntekt-ressurs";
+import {useHentSystemregistrerteInntekter} from "../../../generated/client/systemregistrert-inntekt-ressurs/systemregistrert-inntekt-ressurs";
 
 const useNavYtelser = () => {
     const behandlingsId = useBehandlingsId();

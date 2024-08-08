@@ -1,7 +1,7 @@
 import {Alert} from "@navikt/ds-react";
 import * as React from "react";
 import {useTranslation} from "react-i18next";
-import {useHentNedetidInformasjon} from "../../generated/nedetid-ressurs/nedetid-ressurs";
+import {useHentNedetidInformasjon} from "../../generated/client/nedetid-ressurs/nedetid-ressurs";
 
 // Vis nedetid-varsel om det er satt
 export const NedetidPanel = ({varselType}: {varselType: "infoside" | "avbryt"}) => {

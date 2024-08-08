@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {sendSoknad} from "../../generated/soknad-actions/soknad-actions";
+import {sendSoknad} from "../../generated/client/soknad-actions/soknad-actions";
 import digisosConfig from "../../lib/config";
 import {faro} from "@grafana/faro-react";
 
@@ -12,11 +12,11 @@ export const useSendSoknad = (behandlingsId: string) => {
             try {
                 const {id} = await sendSoknad(behandlingsId);
                 window.location.assign(`${digisosConfig.innsynURL}${id}/status`);
-            } catch (e) {
+            } catch (e: any) {
                 faro.api.pushError(e);
                 throw e;
             }
-        } catch (e) {
+        } catch (e: any) {
             faro.api.pushError(e);
             setIsError(true);
         }

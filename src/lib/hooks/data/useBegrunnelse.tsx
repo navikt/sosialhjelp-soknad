@@ -6,8 +6,8 @@ import {
     getHentBegrunnelseQueryOptions,
     updateBegrunnelse,
     useHentBegrunnelse,
-} from "../../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
-import {BegrunnelseFrontend} from "../../../generated/model";
+} from "../../../generated/client/begrunnelse-ressurs/begrunnelse-ressurs";
+import {BegrunnelseFrontend} from "../../../generated/client/model";
 import {faro} from "@grafana/faro-react";
 import {useQueryClient} from "@tanstack/react-query";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
@@ -39,7 +39,7 @@ export const useBegrunnelse = () => {
         try {
             queryClient.setQueryData(queryKey, begrunnelse);
             await updateBegrunnelse(behandlingsId, begrunnelse);
-        } catch (e) {
+        } catch (e: any) {
             setIsError(true);
             faro.api.pushError(e);
             throw e;

@@ -1,7 +1,7 @@
 import React from "react";
 import {SkjemaSteg, inhibitNavigation} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {FieldError, useForm} from "react-hook-form";
-import {BegrunnelseFrontend} from "../../../generated/model";
+import {BegrunnelseFrontend} from "../../../generated/client/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {useBegrunnelse} from "../../../lib/hooks/data/useBegrunnelse";

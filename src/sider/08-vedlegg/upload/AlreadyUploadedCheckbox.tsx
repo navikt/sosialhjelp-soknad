@@ -5,12 +5,12 @@ import {useQueryClient} from "@tanstack/react-query";
 import {
     updateOkonomiskOpplysning,
     useHentOkonomiskeOpplysninger,
-} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+} from "../../../generated/client/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import * as React from "react";
 import {ChangeEvent} from "react";
 import {Checkbox} from "@navikt/ds-react";
 import cx from "classnames";
-import {VedleggFrontendVedleggStatus} from "../../../generated/model";
+import {VedleggFrontendVedleggStatus} from "../../../generated/client/model";
 
 export const AlreadyUploadedCheckbox = ({opplysning, disabled}: {opplysning: Opplysning; disabled: boolean}) => {
     const behandlingsId = useBehandlingsId();

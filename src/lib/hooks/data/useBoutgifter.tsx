@@ -1,7 +1,7 @@
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useQueryClient} from "@tanstack/react-query";
-import {updateBoutgifter, useHentBoutgifter} from "../../../generated/boutgift-ressurs/boutgift-ressurs";
-import {BoutgifterFrontend} from "../../../generated/model";
+import {updateBoutgifter, useHentBoutgifter} from "../../../generated/client/boutgift-ressurs/boutgift-ressurs";
+import {BoutgifterFrontend} from "../../../generated/client/model";
 
 export const useBoutgifter = () => {
     const behandlingsId = useBehandlingsId();

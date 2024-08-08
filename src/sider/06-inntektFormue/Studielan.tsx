@@ -3,7 +3,7 @@ import {Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {SkalIkkeFinansiereStudier} from "./SkalIkkeFinansiereStudier";
-import {updateStudielan, useHentStudielanBekreftelse} from "../../generated/studielan-ressurs/studielan-ressurs";
+import {updateStudielan, useHentStudielanBekreftelse} from "../../generated/client/studielan-ressurs/studielan-ressurs";
 import {useDigisosMutation} from "../../lib/hooks/common/useDigisosMutation";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";

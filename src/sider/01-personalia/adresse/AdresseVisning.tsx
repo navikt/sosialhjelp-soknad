@@ -1,6 +1,6 @@
 import Detaljeliste, {DetaljelisteElement} from "../../../lib/components/detaljeliste/Detaljeliste";
 import * as React from "react";
-import {AdresseFrontend} from "../../../generated/model";
+import {AdresseFrontend} from "../../../generated/client/model";
 import {useTranslation} from "react-i18next";
 import {logError} from "../../../lib/log/loggerUtils";
 

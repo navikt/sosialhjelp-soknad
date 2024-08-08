@@ -31,7 +31,7 @@ runs:
     env:
       NEXT_PUBLIC_RELEASE: ${{ steps.final-tag.outputs.tag }}
     with:
-      node-version: 20
+      node-version: 22
       reader-token: ${{ env.READER_TOKEN }}
       build-less: 'false'
       run-orval: 'true'

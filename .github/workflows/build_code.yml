@@ -22,6 +22,6 @@ jobs:
             - name: "Build npm project and run Tests"
               uses: navikt/sosialhjelp-ci/actions/build-npm@main
               with:
-                  node-version: 20
+                  node-version: 22
                   reader-token: ${{ secrets.READER_TOKEN }}
                   run-orval: "true"

@@ -2,7 +2,7 @@ import * as React from "react";
 import {Systeminfo, SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
-import {useHentBasisPersonalia} from "../../generated/basis-personalia-ressurs/basis-personalia-ressurs";
+import {useHentBasisPersonalia} from "../../generated/client/basis-personalia-ressurs/basis-personalia-ressurs";
 import {useTranslation} from "react-i18next";
 import {formatFodselsnummer} from "@fremtind/jkl-formatters-util";
 import {BodyShort, Heading} from "@navikt/ds-react";

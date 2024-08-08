@@ -6,7 +6,6 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {BrowserRouter, redirect, Route, Routes} from "react-router-dom";
 import {ApplicationSpinner} from "./lib/components/animasjoner/ApplicationSpinner";
-import {redirectToGotoSearchParameter} from "./lib/api/auth/redirectToGotoSearchParameter";
 import Personopplysninger from "./sider/01-personalia";
 import Begrunnelse from "./sider/02-begrunnelse";
 import ArbeidOgUtdanning from "./sider/03-arbeidUtdanning";

@@ -1,4 +1,4 @@
-import {DokumentUpload, VedleggFrontend, VedleggFrontendType} from "../../../generated/model";
+import {DokumentUpload, VedleggFrontend, VedleggFrontendType} from "../../../generated/client/model";
 
 export type DocumentListState = {
     dokumentasjonType: VedleggFrontendType;

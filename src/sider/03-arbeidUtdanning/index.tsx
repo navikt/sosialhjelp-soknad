@@ -3,7 +3,7 @@ import {Heading, Radio, RadioGroup, ReadMore, Textarea} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {DigisosValidationError, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useForm} from "react-hook-form";
-import {ArbeidsforholdResponse, UtdanningFrontend} from "../../generated/model";
+import {ArbeidsforholdResponse, UtdanningFrontend} from "../../generated/client/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {ArbeidsforholdListe} from "./ArbeidsforholdListe";
@@ -47,7 +47,7 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
             async (data: ArbeidOgUtdanningType) => {
                 try {
                     await mutate(data);
-                } catch (e) {
+                } catch (e: any) {
                     faro.api.pushError(e);
                     setError(true);
                     throw new DigisosValidationError();

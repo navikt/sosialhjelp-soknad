@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {LinkButton} from "../../lib/components/LinkButton";
-import {DokumentUpload} from "../../generated/model";
+import {DokumentUpload} from "../../generated/client/model";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {TrashIcon} from "@navikt/aksel-icons";
 import {Button} from "@navikt/ds-react";

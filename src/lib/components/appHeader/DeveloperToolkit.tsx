@@ -3,10 +3,10 @@
 import * as React from "react";
 import {useEffect} from "react";
 import {useNavigate, useParams} from "react-router";
-import {opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
+import {opprettSoknad} from "../../../generated/client/soknad-ressurs/soknad-ressurs";
 import {logWarning} from "../../log/loggerUtils";
-import {updateAdresse} from "../../../generated/adresse-ressurs/adresse-ressurs";
-import {sendSoknad} from "../../../generated/soknad-actions/soknad-actions";
+import {updateAdresse} from "../../../generated/client/adresse-ressurs/adresse-ressurs";
+import {sendSoknad} from "../../../generated/client/soknad-actions/soknad-actions";
 import {maximizeSoknad} from "./devUtils";
 import digisosConfig from "../../config";
 

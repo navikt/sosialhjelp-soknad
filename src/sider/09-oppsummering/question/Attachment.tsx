@@ -1,5 +1,5 @@
 import {Link} from "@navikt/ds-react";
-import {Felt} from "../../../generated/model";
+import {Felt} from "../../../generated/client/model";
 import digisosConfig from "../../../lib/config";
 import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId";
 

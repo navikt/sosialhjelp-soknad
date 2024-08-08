@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
-import {useHentSivilstatus} from "../../generated/sivilstatus-ressurs/sivilstatus-ressurs";
+import {useHentSivilstatus} from "../../generated/client/sivilstatus-ressurs/sivilstatus-ressurs";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import * as React from "react";
@@ -22,7 +22,7 @@ export const EktefellePersonaliaSystem = () => {
                     <FullName name={ektefelle.navn} />
                 </SysteminfoItem>
                 {ektefelle?.fodselsdato && (
-                    <SysteminfoItem label={t(`system.familie.sivilstatus.gift.ektefelle.fodselsdato.stringValue`)}>
+                    <SysteminfoItem label={t(`system.familie.sivilstatus.gift.ektefelle.fodselsdato`)}>
                         <LocalizedDate date={ektefelle.fodselsdato} />
                     </SysteminfoItem>
                 )}

@@ -3,7 +3,7 @@ import {BodyShort, Table} from "@navikt/ds-react";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate";
 import {LocalizedCurrency} from "../../../lib/components/LocalizedCurrency";
 import * as React from "react";
-import {JsonOkonomiOpplysningUtbetaling} from "../../../generated/model";
+import {JsonOkonomiOpplysningUtbetaling} from "../../../generated/client/model";
 
 // FIXME: Should not initialize with empty list; empty list should be returned from API
 export const HusbankenUtbetalinger = ({utbetalinger}: {utbetalinger?: JsonOkonomiOpplysningUtbetaling[]}) => {

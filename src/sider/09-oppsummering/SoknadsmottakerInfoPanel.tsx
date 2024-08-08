@@ -4,7 +4,7 @@ import {BodyShort, GuidePanel, Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
-import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
+import {useHentAdresser} from "../../generated/client/adresse-ressurs/adresse-ressurs";
 import {erAktiv} from "../../lib/navEnhetStatus";
 import {BehandlingAvPersonopplysningerModal} from "../hovedmeny/paneler/BehandlingAvPersonopplysningerModal";
 import {NavEnhetInaktiv} from "../01-personalia/adresse/NavEnhetInaktiv";

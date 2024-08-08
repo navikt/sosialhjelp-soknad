@@ -6,8 +6,8 @@ import {NySoknadVelkomst} from "./NySoknadVelkomst";
 import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
-import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
-import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
+import {useGetSessionInfo} from "../../../generated/client/informasjon-ressurs/informasjon-ressurs";
+import {hentXsrfCookie, opprettSoknad} from "../../../generated/client/soknad-ressurs/soknad-ressurs";
 import {NedetidPanel} from "../../../lib/components/NedetidPanel";
 import {useFeatureFlags} from "../../../lib/config";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
@@ -44,7 +44,7 @@ export const NySoknadInfo = () => {
             } else {
                 navigate(`../skjema/${brukerBehandlingId}/1`);
             }
-        } catch (e) {
+        } catch (e: any) {
             setStartSoknadError(e);
             setStartSoknadPending(false);
         }

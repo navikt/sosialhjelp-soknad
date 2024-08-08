@@ -3,7 +3,7 @@ import {Dokumentasjon} from "./Dokumentasjon";
 import {useTranslation} from "react-i18next";
 import {Heading} from "@navikt/ds-react";
 import {Opplysning} from "../../lib/opplysninger";
-import {VedleggFrontendGruppe} from "../../generated/model";
+import {VedleggFrontendGruppe} from "../../generated/client/model";
 import {DigisosLanguageKey} from "../../lib/i18n";
 
 const Gruppetittel: Record<VedleggFrontendGruppe, DigisosLanguageKey> = {

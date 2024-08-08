@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 import {BodyShort, Table} from "@navikt/ds-react";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate";
 import * as React from "react";
-import {SysteminntektFrontend} from "../../../generated/model";
+import {SysteminntektFrontend} from "../../../generated/client/model";
 import {LocalizedCurrency} from "../../../lib/components/LocalizedCurrency";
 
 export const NavYtelserTable = ({systeminntekter = []}: {systeminntekter?: SysteminntektFrontend[]}) => {

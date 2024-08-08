@@ -1,7 +1,7 @@
 import {useQueryClient} from "@tanstack/react-query";
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {updateFormue, useHentFormue} from "../../../generated/formue-ressurs/formue-ressurs";
-import {FormueFrontend} from "../../../generated/model";
+import {updateFormue, useHentFormue} from "../../../generated/client/formue-ressurs/formue-ressurs";
+import {FormueFrontend} from "../../../generated/client/model";
 
 export const useFormue = () => {
     const behandlingsId = useBehandlingsId();

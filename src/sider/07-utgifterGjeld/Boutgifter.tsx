@@ -2,7 +2,7 @@ import * as React from "react";
 import {Checkbox, CheckboxGroup, GuidePanel, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {useBoutgifter} from "../../lib/hooks/data/useBoutgifter";
-import {BoutgifterFrontend} from "../../generated/model";
+import {BoutgifterFrontend} from "../../generated/client/model";
 
 export const Boutgifter = () => {
     const {t} = useTranslation("skjema");

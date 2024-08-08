@@ -1,6 +1,6 @@
-import {VedleggFrontendType} from "../../generated/model";
 import {DokumentasjonTexts} from "../types";
-export const dokumentasjon: Record<VedleggFrontendType, DokumentasjonTexts> = {
+import {VedleggFrontendTypeMinusUferdig} from "../nb/dokumentasjon.ts";
+export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, DokumentasjonTexts> = {
     "lonnslipp|arbeid": {
         brutto: {
             label: "Løn før skatt siste månad",

@@ -1,6 +1,6 @@
 import {Trans, useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId";
-import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";
+import {useHentAdresser} from "../../../generated/client/adresse-ressurs/adresse-ressurs";
 import {Alert, Link} from "@navikt/ds-react";
 import * as React from "react";
 

@@ -3,7 +3,7 @@ import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useTranslation} from "react-i18next";
-import {useGetOppsummering} from "../../generated/oppsummering-ressurs/oppsummering-ressurs";
+import {useGetOppsummering} from "../../generated/client/oppsummering-ressurs/oppsummering-ressurs";
 import {OppsummeringSteg} from "./OppsummeringSteg";
 import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullfortEvent";
 import {useSendSoknad} from "./useSendSoknad";

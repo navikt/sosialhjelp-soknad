@@ -11,7 +11,7 @@ export const RegistrerteBarn = () => {
 
     return (
         <div className={"space-y-24"}>
-            {forsorgerplikt?.ansvar?.map((ansvar, index: number) => (
+            {forsorgerplikt?.ansvar?.map((_ansvar, index: number) => (
                 <React.Fragment key={index}>
                     <BarnSysteminfo barnIndex={index} />
                     <BarnSkjema barnIndex={index} />

@@ -3,7 +3,7 @@ import {Attachment} from "@navikt/ds-icons";
 import {BodyShort, ExpansionCard, Heading} from "@navikt/ds-react";
 import React from "react";
 import {Trans, useTranslation} from "react-i18next";
-import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
+import {useGetSessionInfo} from "../../../generated/client/informasjon-ressurs/informasjon-ressurs";
 import digisosConfig from "../../../lib/config";
 
 export const EttersendDokuPanel = () => {

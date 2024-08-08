@@ -7,7 +7,7 @@ import {z} from "zod";
 import {format, isValid, parse} from "date-fns";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {EktefelleFrontend, SivilstatusFrontend} from "../../generated/model";
+import {EktefelleFrontend, SivilstatusFrontend} from "../../generated/client/model";
 
 import {ValideringsFeilKode} from "../../lib/validering";
 import {DigisosLanguageKey} from "../../lib/i18n";

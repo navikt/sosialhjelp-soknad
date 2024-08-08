@@ -1,4 +1,4 @@
-import {Utbetaling} from "../../../generated/model";
+import {Utbetaling} from "../../../generated/client/model";
 import {useTranslation} from "react-i18next";
 import * as React from "react";
 import {SkatteetatenAmount} from "./SkatteetatenAmount";

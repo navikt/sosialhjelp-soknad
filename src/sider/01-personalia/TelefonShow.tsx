@@ -1,5 +1,5 @@
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
-import {useHentTelefonnummer} from "../../generated/telefonnummer-ressurs/telefonnummer-ressurs";
+import {useHentTelefonnummer} from "../../generated/client/telefonnummer-ressurs/telefonnummer-ressurs";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {TelefonShowBrukerdefinert} from "./TelefonShowBrukerdefinert";
 import {TelefonShowFraKRR} from "./TelefonShowFraKRR";

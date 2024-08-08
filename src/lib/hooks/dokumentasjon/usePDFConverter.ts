@@ -1,5 +1,5 @@
 import * as React from "react";
-import {konverterVedlegg} from "../../../generated/file-converter-controller/file-converter-controller";
+import {konverterVedlegg} from "../../../generated/client/file-converter-controller/file-converter-controller";
 
 type UsePDFConverterResult = {
     // En konvertering er i gang.
@@ -32,7 +32,7 @@ export const usePDFConverter = (): UsePDFConverterResult => {
             const blob = await konverterVedlegg({file: file});
             setConversionPending(false);
             return new File([blob], `${basename(file)}.pdf`, {type: "application/pdf"});
-        } catch (e) {
+        } catch (e: any) {
             setConversionError(e);
             throw e;
         } finally {

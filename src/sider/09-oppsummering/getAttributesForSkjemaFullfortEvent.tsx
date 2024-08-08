@@ -1,4 +1,4 @@
-import {Oppsummering} from "../../generated/model";
+import {Oppsummering} from "../../generated/client/model";
 
 export const getAttributesForSkjemaFullfortEvent = (oppsummering: Oppsummering | undefined) => {
     const attr: Record<string, any> = {};

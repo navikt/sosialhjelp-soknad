@@ -1,4 +1,4 @@
-import {AdresseForslag, AdresseFrontend} from "../../../generated/model";
+import {AdresseForslag, AdresseFrontend} from "../../../generated/client/model";
 import {AdresseTypeahead} from "./AdresseTypeaheadDownshift";
 import * as React from "react";
 import styled from "styled-components";

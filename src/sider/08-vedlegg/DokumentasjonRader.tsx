@@ -1,6 +1,6 @@
 import {LinkButton} from "../../lib/components/LinkButton";
 import {OpplysningInputRad} from "./OpplysningInputRad";
-import {VedleggFrontend} from "../../generated/model";
+import {VedleggFrontend} from "../../generated/client/model";
 import {useOpplysning} from "../../lib/hooks/dokumentasjon/useOpplysning";
 import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokumentasjonTekster";
 

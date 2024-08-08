@@ -3,7 +3,7 @@ import {RegistrerteBarn} from "./RegistrerteBarn";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {BodyShort, Heading} from "@navikt/ds-react";
-import {useHentForsorgerplikt} from "../../generated/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
+import {useHentForsorgerplikt} from "../../generated/client/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 
 export const ForsorgerPlikt = () => {

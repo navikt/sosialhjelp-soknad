@@ -10,7 +10,7 @@ import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapperLegacy from "./SkjemaStegNavKnapperLegacy";
 import {AvbrytSoknadModal} from "../../components/modals/AvbrytSoknadModal";
 import {useTranslation} from "react-i18next";
-import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
+import {useHentNedetidInformasjon} from "../../../generated/client/nedetid-ressurs/nedetid-ressurs";
 import {t} from "i18next";
 import {AppHeader} from "../appHeader/AppHeader";
 import {scrollToTop} from "../../utils";

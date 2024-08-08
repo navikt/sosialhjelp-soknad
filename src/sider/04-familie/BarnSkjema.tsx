@@ -47,7 +47,7 @@ export const BarnSkjema = ({barnIndex}: {barnIndex: number}) => {
                             const grad = SamvaersgradSchema.parse(value);
                             setSamvaersgrad(grad);
                             setSamvaersgradError(undefined);
-                        } catch (e) {
+                        } catch (e: any) {
                             setSamvaersgradError(t(e.issues[0].message));
                         }
                     }}

@@ -1,5 +1,5 @@
 // When new backend has been deployed, this can be removed.
-import {DokumentUpload, VedleggFrontendType} from "../../../generated/model";
+import {DokumentUpload, VedleggFrontendType} from "../../../generated/client/model";
 import {useEffect, useReducer, useState} from "react";
 import {DocumentListReducer, initialDocumentListState} from "../../../sider/08-vedlegg/lib/DocumentListReducer";
 import {useBehandlingsId} from "../common/useBehandlingsId";
@@ -7,9 +7,9 @@ import {useTranslation} from "react-i18next";
 import {isSoknadApiError} from "../../api/error/isSoknadApiError";
 import {DigisosApiErrorMap} from "../../api/error/DigisosApiErrorMap";
 import {REST_FEIL} from "../../api/error/restFeil";
-import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
-import {useHentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
-import {useDeleteDokument} from "../../../generated/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
+import {useGetSessionInfo} from "../../../generated/client/informasjon-ressurs/informasjon-ressurs";
+import {useHentOkonomiskeOpplysninger} from "../../../generated/client/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {useDeleteDokument} from "../../../generated/client/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
 import {humanizeFilesize} from "../../../sider/08-vedlegg/lib/humanizeFilesize";
 import {axiosInstance} from "../../api/axiosInstance";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
@@ -106,7 +106,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
             logAmplitudeEvent("dokument lastet opp", {opplysningType: dokumentasjonType}).catch((e) =>
                 logWarning(`Amplitude error: ${e}`)
             );
-        } catch (e) {
+        } catch (e: any) {
             handleApiError(e);
         } finally {
             setUploadPercent(null);

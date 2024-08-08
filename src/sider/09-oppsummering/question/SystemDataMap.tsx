@@ -1,5 +1,5 @@
 import {FormattedText} from "./FormattedText";
-import {Felt} from "../../../generated/model";
+import {Felt} from "../../../generated/client/model";
 import {SYSTEM_LIST_STYLE} from "./SystemData";
 
 export const SystemDataMap = ({felter}: {felter?: Felt[]}) => (

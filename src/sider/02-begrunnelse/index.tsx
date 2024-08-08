@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as z from "zod";
-import {BegrunnelseFrontend} from "../../generated/model";
+import {BegrunnelseFrontend} from "../../generated/client/model";
 import {Alert, BodyShort, Textarea} from "@navikt/ds-react";
 import {FieldError, useForm} from "react-hook-form";
 import {useTranslation} from "react-i18next";

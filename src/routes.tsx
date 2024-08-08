@@ -1,11 +1,4 @@
-import {
-    createBrowserRouter,
-    createRoutesFromChildren,
-    matchRoutes,
-    Routes,
-    useLocation,
-    useNavigationType,
-} from "react-router-dom";
+import {createRoutesFromChildren, matchRoutes, Routes, useLocation, useNavigationType} from "react-router-dom";
 
 import {
     ConsoleInstrumentation,
@@ -17,14 +10,6 @@ import {
 } from "@grafana/faro-react";
 import {TracingInstrumentation} from "@grafana/faro-web-tracing";
 import digisosConfig from "./lib/config";
-import {BASE_PATH} from "./lib/constants";
-
-
-    const routes = (
-
-);
-
-export const router = createBrowserRouter(createRoutesFromChildren(routes), {basename: BASE_PATH});
 
 initializeFaro({
     url: process.env.NODE_ENV !== "development" ? digisosConfig.faro.url : undefined,

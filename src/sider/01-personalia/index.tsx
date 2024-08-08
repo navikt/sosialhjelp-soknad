@@ -4,11 +4,11 @@ import {AdresseData} from "./adresse/Adresse";
 import {BasisPersonalia} from "./BasisPersonalia";
 import {Kontonr} from "./Kontonr";
 import {DigisosValidationError, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
-import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
+import {useHentAdresser} from "../../generated/client/adresse-ressurs/adresse-ressurs";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useEffect, useState} from "react";
 import {FieldErrorsImpl} from "react-hook-form";
-import {NavEnhetFrontend} from "../../generated/model";
+import {NavEnhetFrontend} from "../../generated/client/model";
 import {erAktiv} from "../../lib/navEnhetStatus";
 
 interface Props {

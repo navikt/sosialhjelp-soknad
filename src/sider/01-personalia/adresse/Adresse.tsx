@@ -8,11 +8,11 @@ import {
     getHentAdresserQueryKey,
     updateAdresse,
     useHentAdresser,
-} from "../../../generated/adresse-ressurs/adresse-ressurs";
+} from "../../../generated/client/adresse-ressurs/adresse-ressurs";
 import {BodyLong, Heading, Radio} from "@navikt/ds-react";
 import {formaterSoknadsadresse} from "./AdresseUtils";
 import {AdresseSok} from "./AdresseSok";
-import {AdresseFrontend, AdresserFrontend, AdresserFrontendValg} from "../../../generated/model";
+import {AdresseFrontend, AdresserFrontend, AdresserFrontendValg} from "../../../generated/client/model";
 import cx from "classnames";
 import {useTranslation} from "react-i18next";
 import {HorizontalRadioGroup} from "../../../lib/components/form/HorizontalRadioGroup";

@@ -1,4 +1,4 @@
-import {Felt} from "../../generated/model";
+import {Felt} from "../../generated/client/model";
 import {SystemData} from "./question/SystemData";
 import {SystemDataMap} from "./question/SystemDataMap";
 import {ListOfValues} from "./question/ListOfValues";

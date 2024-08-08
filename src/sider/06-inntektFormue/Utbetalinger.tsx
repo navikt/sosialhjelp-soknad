@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {Checkbox, CheckboxGroup, ReadMore, Textarea} from "@navikt/ds-react";
-import {UtbetalingerFrontend} from "../../generated/model";
+import {UtbetalingerFrontend} from "../../generated/client/model";
 import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {useUtbetalinger} from "../../lib/hooks/data/useUtbetalinger";
 import {useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";

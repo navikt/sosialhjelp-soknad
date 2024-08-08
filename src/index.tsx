@@ -10,16 +10,29 @@ import App from "./app";
 window.onerror = logWindowError;
 
 /* Polyfill for react-pdf, se https://github.com/wojtekmaj/react-pdf/issues/1831 */
+// @ts-expect-error This does not exist outside of polyfill which this is doing
 if (typeof Promise.withResolvers === "undefined") {
-    // @ts-expect-error this is expected to not work
-    Promise.withResolvers = function () {
-        let resolve, reject;
-        const promise = new Promise((res, rej) => {
-            resolve = res;
-            reject = rej;
-        });
-        return {promise, resolve, reject};
-    };
+    if (typeof window !== "undefined") {
+        // @ts-expect-error This does not exist outside of polyfill which this is doing
+        window.Promise.withResolvers = function () {
+            let resolve, reject;
+            const promise = new Promise((res, rej) => {
+                resolve = res;
+                reject = rej;
+            });
+            return {promise, resolve, reject};
+        };
+    } else {
+        // @ts-expect-error This does not exist outside of polyfill which this is doing
+        global.Promise.withResolvers = function () {
+            let resolve, reject;
+            const promise = new Promise((res, rej) => {
+                resolve = res;
+                reject = rej;
+            });
+            return {promise, resolve, reject};
+        };
+    }
 }
 
 // Dersom appen bygges og deployes med docker-image vil dekoratøren bli lagt på serverside med express i Docker (eks ved deploy til miljø)

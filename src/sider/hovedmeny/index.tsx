@@ -7,7 +7,7 @@ import {useTranslation} from "react-i18next";
 import {useSearchParams} from "react-router-dom";
 import {useEffect} from "react";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
-import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs";
+import {useGetSessionInfo} from "../../generated/client/informasjon-ressurs/informasjon-ressurs";
 import {useTitle} from "../../lib/hooks/common/useTitle";
 import {logInfo} from "../../lib/log/loggerUtils";
 import {NedetidPanel} from "../../lib/components/NedetidPanel";

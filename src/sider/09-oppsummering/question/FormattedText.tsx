@@ -1,6 +1,6 @@
 import {BodyShort} from "@navikt/ds-react";
 import {formatTidspunkt} from "../../../lib/utils";
-import {SvarType} from "../../../generated/model";
+import {SvarType} from "../../../generated/client/model";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate";
 import {logError} from "../../../lib/log/loggerUtils";
 import {useBackendTranslation} from "./useBackendTranslationResult";

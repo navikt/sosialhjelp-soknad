@@ -1,4 +1,4 @@
-import {JsonBostotteSak, JsonBostotteSakVedtaksstatus} from "../../../generated/model";
+import {JsonBostotteSak, JsonBostotteSakVedtaksstatus} from "../../../generated/client/model";
 import {useTranslation} from "react-i18next";
 import {Table} from "@navikt/ds-react";
 import {format} from "date-fns";

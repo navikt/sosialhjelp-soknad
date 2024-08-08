@@ -1,4 +1,4 @@
-import {BostotteFrontend} from "../../../generated/model";
+import {BostotteFrontend} from "../../../generated/client/model";
 import {useTranslation} from "react-i18next";
 import {HusbankenUtbetalinger} from "./HusbankenUtbetalinger";
 import {Heading, Link} from "@navikt/ds-react";

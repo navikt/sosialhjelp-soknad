@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {Checkbox, CheckboxGroup, Textarea} from "@navikt/ds-react";
-import {VerdierFrontend} from "../../generated/model";
+import {VerdierFrontend} from "../../generated/client/model";
 import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {DigisosReadMore} from "../../lib/components/DigisosReadMore";
 import {useVerdier} from "../../lib/hooks/data/useVerdier";

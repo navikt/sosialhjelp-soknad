@@ -1,8 +1,8 @@
 import * as React from "react";
 import {Systeminfo, SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
-import {ArbeidsforholdFrontend} from "../../generated/model";
-import {useHentArbeid} from "../../generated/arbeid-ressurs/arbeid-ressurs";
+import {ArbeidsforholdFrontend} from "../../generated/client/model";
+import {useHentArbeid} from "../../generated/client/arbeid-ressurs/arbeid-ressurs";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {BodyShort} from "@navikt/ds-react";

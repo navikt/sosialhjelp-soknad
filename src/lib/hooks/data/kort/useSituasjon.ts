@@ -2,10 +2,10 @@ import {
     getHentSituasjonsendringQueryOptions,
     useHentSituasjonsendring,
     useUpdateSituasjonsendring,
-} from "../../../../generated/situasjonsendring-ressurs/situasjonsendring-ressurs";
+} from "../../../../generated/client/situasjonsendring-ressurs/situasjonsendring-ressurs";
 import {useBehandlingsId} from "../../common/useBehandlingsId";
 import {useQueryClient} from "@tanstack/react-query";
-import {SituasjonsendringFrontend} from "../../../../generated/model";
+import {SituasjonsendringFrontend} from "../../../../generated/client/model";
 
 const useSituasjon = () => {
     const behandlingsId = useBehandlingsId();

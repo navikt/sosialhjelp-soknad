@@ -8,7 +8,7 @@ import cx from "classnames";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate";
 import {getDateFnLocale} from "../../../lib/i18n";
 import {useAlgebraic} from "../../../lib/hooks/common/useAlgebraic";
-import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
+import {useGetSessionInfo} from "../../../generated/client/informasjon-ressurs/informasjon-ressurs";
 import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlaceholder";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 import {logWarning} from "../../../lib/log/loggerUtils";

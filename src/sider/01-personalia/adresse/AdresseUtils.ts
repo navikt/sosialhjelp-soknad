@@ -1,4 +1,4 @@
-import {AdresseForslag, GateadresseFrontend} from "../../../generated/model";
+import {AdresseForslag, GateadresseFrontend} from "../../../generated/client/model";
 
 const formaterAdresseString = (sokTreff: AdresseForslag | null | undefined) => {
     if (!sokTreff) return "";

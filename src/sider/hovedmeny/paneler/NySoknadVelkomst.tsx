@@ -1,7 +1,7 @@
 import {BodyLong, Heading} from "@navikt/ds-react";
 import * as React from "react";
 import {Trans, useTranslation} from "react-i18next";
-import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
+import {useGetSessionInfo} from "../../../generated/client/informasjon-ressurs/informasjon-ressurs";
 import StartNySoknadIllustrasjon from "../../../lib/components/svg/illustrasjoner/StartNySoknadIllustrasjon";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 

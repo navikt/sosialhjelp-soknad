@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, it} from "vitest";
-import {VedleggFrontend, VedleggFrontendType} from "../../../generated/model";
+import {VedleggFrontend, VedleggFrontendType} from "../../../generated/client/model";
 import {
     DocumentListAction,
     DocumentListReducer,

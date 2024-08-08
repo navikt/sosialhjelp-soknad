@@ -1,6 +1,6 @@
 import React from "react";
 import {Heading} from "@navikt/ds-react";
-import {Avsnitt} from "../../../generated/model";
+import {Avsnitt} from "../../../generated/client/model";
 import {OppsummeringSporsmal} from "./OppsummeringSporsmal";
 import {useTranslation} from "react-i18next";
 import {DigisosLanguageKey} from "../../../lib/i18n";
