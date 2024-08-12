@@ -1,9 +1,8 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
 import {logError, logInfo, logWarning} from "../log/loggerUtils";
 import digisosConfig from "../config";
-import {isLoginError} from "./error/isLoginError";
-import {getGotoParameter} from "./auth/getGotoParameter";
-import {LINK_PAGE_PATH, XSRF_COOKIE_NAME, XSRF_HEADER_NAME} from "../constants";
+import {cookies} from "next/headers";
+import {XSRF_COOKIE_NAME, XSRF_HEADER_NAME} from "../constants.ts";
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL: digisosConfig.baseURL,
@@ -12,6 +11,24 @@ const AXIOS_INSTANCE = Axios.create({
     withCredentials: digisosConfig.withCredentials,
     headers: {Accept: "application/json, text/plain, */*"},
 });
+
+AXIOS_INSTANCE.interceptors.request.use(
+    (config) => {
+        // Retrieve cookies from Next.js headers
+        const cookieStore = cookies();
+
+        // Get all cookies as a string
+        const cookieString = cookieStore.toString();
+
+        // Attach cookies to the request header
+        if (cookieString) config.headers["Cookie"] = cookieString;
+
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 interface CancellablePromise<T> extends Promise<T> {
     cancel?: () => void;
@@ -64,19 +81,7 @@ export const axiosInstance = <T>(
                 throw e;
             }
 
-            if (isLoginError(response)) {
-                const redirect = `?redirect=${origin}${LINK_PAGE_PATH}?goto=${getGotoParameter(window.location)}`;
-                window.location.assign(response.data.loginUrl + redirect);
-                return neverResolves();
-            }
-
             const {status, data} = response;
-
-            // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
-            if ([403, 404, 410].includes(status)) {
-                window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
-                return neverResolves();
-            }
 
             // Conflict -- try again
             if (status === 409) {
