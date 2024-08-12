@@ -7,6 +7,7 @@ ENV NODE_AUTH_TOKEN=${NODE_AUTH_TOKEN}
 WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
+COPY .npmrc .
 
 RUN NODE_AUTH_TOKEN=$NODE_AUTH_TOKEN npm ci --prefer-offline --no-audit
 
