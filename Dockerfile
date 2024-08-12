@@ -25,5 +25,6 @@ WORKDIR /app
 COPY --from=builder /app/build build
 COPY --from=dependencies /app/node_modules/ node_modules/
 COPY package.json .
+COPY . .
 
 CMD ["npm", "start"]
