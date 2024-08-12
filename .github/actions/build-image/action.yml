@@ -48,5 +48,5 @@ runs:
       push: true
       tags: ${{ env.DOCKER_TAG }}, ${{ env.DOCKER_IMAGE }}:latest, ${{ env.DOCKER_IMAGE }}:${{ steps.final-tag.outputs.tag }}
       env:
-        NEXT_PUBLIC_RELEASE: ${{ inputs.prefix }}
+        NEXT_PUBLIC_DIGISOS_MILJO: ${{ inputs.prefix }}
       secrets: "NODE_AUTH_TOKEN: ${{ env.READER_TOKEN }}"
