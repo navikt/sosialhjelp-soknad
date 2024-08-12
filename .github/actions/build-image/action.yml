@@ -30,6 +30,7 @@ runs:
     uses: navikt/sosialhjelp-ci/actions/build-npm@main
     env:
       REACT_APP_RELEASE: ${{ steps.final-tag.outputs.tag }}
+      NEXT_PUBLIC_DIGISOS_ENV: ${{ inputs.prefix }}
     with:
       node-version: 20
       reader-token: ${{ env.READER_TOKEN }}
