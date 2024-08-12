@@ -25,7 +25,7 @@ jobs:
         steps:
             - name: "Build Docker Image"
               id: docker-image
-              uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
+              uses: navikt/sosialhjelp-soknad/.github/actions/build-image@vite-to-nextjs
               with:
                   prefix: ${{ env.NEXT_PUBLIC_DIGISOS_ENV }}
 

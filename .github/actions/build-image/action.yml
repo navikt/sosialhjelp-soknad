@@ -26,17 +26,6 @@ runs:
       echo "tag=${{ inputs.prefix }}-${{ steps.artifact-version.outputs.version }}" >> $GITHUB_OUTPUT
     shell: bash
 
-  - name: 'Build npm artifact'
-    uses: navikt/sosialhjelp-ci/actions/build-npm@main
-    env:
-      NEXT_PUBLIC_RELEASE: ${{ steps.final-tag.outputs.tag }}
-    with:
-      node-version: 22
-      reader-token: ${{ env.READER_TOKEN }}
-      build-less: 'false'
-      run-orval: 'true'
-      run-test: 'false'
-
   - name: 'Release Tag'
     uses: ncipollo/release-action@v1
     env:
@@ -46,9 +35,32 @@ runs:
       commit: ${{ github.sha }}
       allowUpdates: true
 
-  - name: 'Build and Push Docker Image'
-    uses: navikt/sosialhjelp-ci/actions/build-and-push-docker-image@main
+  - name: 'Login to GitHub Docker Registry if GitHub Token Provided'
+    if: ${{ env.WORKFLOW_TOKEN != 'false' }}
+    uses: docker/login-action@v2
     with:
-      artifact-version: ${{ steps.final-tag.outputs.tag }}
-      image-name: ${{ env.DOCKER_IMAGE }}
-      github-token: ${{ env.WORKFLOW_TOKEN }}
+      registry: ghcr.io
+      username: ${{ github.actor }}
+      password: ${{ env.WORKFLOW_TOKEN }}
+
+  - name: 'Create docker image tags'
+    run: |
+      echo "DOCKER_TAG=${{ env.DOCKER_IMAGE }}:${{ steps.final-tag.outputs.tag }}" >> $GITHUB_ENV
+    shell: bash
+
+  - name: 'Add latest tag'
+    if: github.ref == 'refs/heads/master'
+    run: |
+      echo "DOCKER_TAG=${{ env.DOCKER_TAG }} -t ${{ env.DOCKER_IMAGE }}:latest" >> $GITHUB_ENV
+    shell: bash
+
+  - name: 'Build docker image'
+    env:
+      NEXT_PUBLIC_RELEASE: ${{ steps.final-tag.outputs.tag }}
+      NODE_AUTH_TOKEN: ${{ env.READER_TOKEN }}
+    run: docker build --build-arg NODE_AUTH_TOKEN=$NODE_AUTH_TOKEN -t ${{ env.DOCKER_TAG }} .
+    shell: bash
+
+  - name: 'Push docker image'
+    run: docker push --all-tags ${{ env.DOCKER_IMAGE }}
+    shell: bash
