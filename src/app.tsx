@@ -23,10 +23,13 @@ import Behov from "./sider/kort/02-behov";
 import {RedirectFromKort} from "./RedirectFromKort";
 import DinSituasjon from "./sider/kort/03-situasjon";
 import {BASE_PATH} from "./lib/constants";
+import {useLocalStorageLangSelector} from "./lib/i18n.ts";
 
 const queryClient = new QueryClient();
 
 export default function App() {
+    useLocalStorageLangSelector();
+
     return (
         <Suspense fallback={<ApplicationSpinner />}>
             <ValideringsContextProvider>
