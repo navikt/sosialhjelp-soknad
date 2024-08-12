@@ -1,12 +1,27 @@
-FROM node:22-alpine
-
-ENV NODE_ENV production
+FROM node:22-alpine AS dependencies
 
 WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
-COPY node_modules/ node_modules/
-COPY server.mjs server.mjs
-COPY build build/
 
-CMD ["node", "./server.mjs"]
+RUN --mount=type=secret,id=READER_TOKEN \
+  echo "//npm.pkg.github.com/:_authToken=$(cat /run/secrets/READER_TOKEN)" >> ~/.npmrc
+RUN npm ci --prefer-offline --no-audit
+
+FROM node:22-alpine AS builder
+
+WORKDIR /app
+
+COPY --from=dependencies /app/node_modules/ node_modules/
+COPY . .
+
+RUN npm run build
+
+FROM node:22-alpine AS release
+
+WORKDIR /app
+COPY --from=builder /app/dist/ dist/
+COPY --from=dependencies /app/node_modules/ node_modules/
+COPY package.json .
+
+CMD ["npm", "start"]
