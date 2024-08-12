@@ -47,5 +47,5 @@ runs:
     with:
       push: true
       tags: "${{ env.DOCKER_IMAGE }}:latest,${{ env.DOCKER_IMAGE }}:${{ steps.final-tag.outputs.tag }}"
-      secret-envs: "NODE_AUTH_TOKEN=${{ env.READER_TOKEN }}"
+      secrets: "NODE_AUTH_TOKEN=${{ env.READER_TOKEN }}"
       build-args: "DIGISOS_ENV=${{ inputs.prefix }}"
