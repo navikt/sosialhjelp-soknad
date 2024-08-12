@@ -58,7 +58,7 @@ runs:
     env:
       NEXT_PUBLIC_RELEASE: ${{ steps.final-tag.outputs.tag }}
       NODE_AUTH_TOKEN: ${{ env.READER_TOKEN }}
-    run: docker build --build-arg NODE_AUTH_TOKEN=$NODE_AUTH_TOKEN -t ${{ env.DOCKER_TAG }} .
+    run: docker build --secret id=NODE_AUTH_TOKEN -t ${{ env.DOCKER_TAG }} .
     shell: bash
 
   - name: 'Push docker image'

@@ -1,5 +1,4 @@
-import {NextResponse} from "next/server";
-import {NextRequest} from "next/server.js";
+import {NextResponse, NextRequest} from "next/server";
 import {getSessionInfoSsr} from "./generated/server/informasjon-ressurs/informasjon-ressurs.ts";
 import {isAxiosError} from "axios";
 import {BASE_PATH, LINK_PAGE_PATH} from "./lib/constants.ts";

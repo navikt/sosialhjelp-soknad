@@ -1,3 +1,4 @@
+import "server-only";
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
 import {logError, logInfo, logWarning} from "../log/loggerUtils";
 import digisosConfig from "../config";

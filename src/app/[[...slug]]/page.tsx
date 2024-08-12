@@ -6,6 +6,8 @@ export function generateStaticParams() {
     return [{slug: [""]}];
 }
 
-export default function Page() {
+function Page() {
     return <ClientOnly />;
 }
+
+export default Page;
