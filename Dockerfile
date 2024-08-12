@@ -8,9 +8,7 @@ WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
 
-RUN --mount=type=secret,id=READER_TOKEN \
-  echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" >> ~/.npmrc
-RUN npm ci --prefer-offline --no-audit
+RUN NODE_AUTH_TOKEN=$NODE_AUTH_TOKEN npm ci --prefer-offline --no-audit
 
 FROM node:22-alpine AS builder
 
