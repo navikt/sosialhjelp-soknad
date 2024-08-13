@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import digisosConfig from "../config.ts";
-import {BASE_PATH, LINK_PAGE_PATH} from "../constants.ts";
+import {LINK_PAGE_PATH} from "../constants.ts";
 import {getGotoParameter} from "../api/auth/getGotoParameter.ts";
 import {RequestCookies} from "next/dist/compiled/@edge-runtime/cookies";
 import {headers} from "next/headers";
@@ -36,8 +36,9 @@ export async function verifyOrRedirectToLogin({
         } else {
             const responseBody = await res.json();
             const nextUrl = new URL(url);
-            const redirect = origin + LINK_PAGE_PATH;
-            const goto = BASE_PATH + getGotoParameter(nextUrl);
+            const redirect = nextUrl.protocol + "//" + origin + LINK_PAGE_PATH;
+            console.log(redirect);
+            const goto = getGotoParameter(nextUrl);
 
             const redirectQuery = `?redirect=${redirect}?goto=${goto}`;
 
