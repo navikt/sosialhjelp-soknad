@@ -28,7 +28,7 @@ export const AntallPersoner = () => {
                 try {
                     await setBosituasjon({antallPersoner: validerAntallPersoner(value)});
                     setError(null);
-                } catch (_e) {
+                } catch {
                     setError(ValideringsFeilKode.ER_TALL);
                 }
             }}
