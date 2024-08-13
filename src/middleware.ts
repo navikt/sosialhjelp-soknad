@@ -1,8 +1,8 @@
 import {type NextRequest} from "next/server";
 import {verifyOrRedirectToLogin} from "./lib/middleware/verifyOrRedirectToLogin.ts";
 
-export async function middleware({nextUrl, cookies}: NextRequest) {
-    return await verifyOrRedirectToLogin({nextUrl, cookies});
+export async function middleware({url, cookies}: NextRequest) {
+    return await verifyOrRedirectToLogin({url, cookies});
 }
 
 export const config = {

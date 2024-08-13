@@ -18,9 +18,9 @@ async function canaryRequest(url: string, cookies: RequestCookies): Promise<Resp
 }
 
 export async function verifyOrRedirectToLogin({
-    nextUrl,
+    url,
     cookies,
-}: Pick<NextRequest, "nextUrl" | "cookies">): Promise<NextResponse> {
+}: Pick<NextRequest, "url" | "cookies">): Promise<NextResponse> {
     try {
         // FIXME: Find better way to verify session validity; this is relatively expensive
         // Because middleware runs on the Edge runtime, we can't use Axios here.
@@ -30,9 +30,13 @@ export async function verifyOrRedirectToLogin({
             return NextResponse.next();
         } else {
             const responseBody = await res.json();
+
+            const nextUrl = new URL(url);
             const redirect = nextUrl.origin + LINK_PAGE_PATH;
             const goto = BASE_PATH + getGotoParameter(nextUrl);
+
             const redirectQuery = `?redirect=${redirect}?goto=${goto}`;
+
             return NextResponse.redirect(new URL(responseBody.loginUrl + redirectQuery));
         }
     } catch (e) {
