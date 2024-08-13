@@ -26,29 +26,28 @@ import {BASE_PATH} from "./lib/constants";
 
 import {useLocalStorageLangSelector} from "./lib/useLocalStorageLangSelector.ts";
 import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
-import digisosConfig from "./lib/config.ts";
 
 const queryClient = new QueryClient();
 
 export default function App() {
     useLocalStorageLangSelector();
     // FIXME: Injeksjon av dekoratoren på klientsiden er ikke optimalt
-    if (digisosConfig.clientSideDecorator)
-        injectDecoratorClientSide({
-            env: "dev",
-            params: {
-                availableLanguages: [
-                    {locale: "nb", url: BASE_PATH, handleInApp: true},
-                    {locale: "nn", url: BASE_PATH, handleInApp: true},
-                    {locale: "en", url: BASE_PATH, handleInApp: true},
-                ],
-                simple: true,
-                feedback: false,
-                chatbot: false,
-                shareScreen: false,
-                logoutWarning: true,
-            },
-        });
+    injectDecoratorClientSide({
+        env: "dev",
+        params: {
+            availableLanguages: [
+                {locale: "nb", url: BASE_PATH, handleInApp: true},
+                {locale: "nn", url: BASE_PATH, handleInApp: true},
+                {locale: "en", url: BASE_PATH, handleInApp: true},
+            ],
+            simple: true,
+            feedback: false,
+            chatbot: false,
+            shareScreen: false,
+            logoutWarning: true,
+        },
+    });
+
     return (
         <Suspense fallback={<ApplicationSpinner />}>
             <ValideringsContextProvider>
