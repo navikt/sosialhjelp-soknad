@@ -43,7 +43,7 @@ jobs:
               run: |
                   echo "IMAGE_TAG=${{ env.DOCKER_IMAGE }}:${{ needs.build-image.outputs.docker-tag }}" >> $GITHUB_ENV
 
-            - name: Deploy til dev
+            - name: Deploy til ${{ env.NEXT_PUBLIC_DIGISOS_ENV }}
               uses: nais/deploy/actions/deploy@v2
               env:
                   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
