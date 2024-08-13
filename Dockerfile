@@ -23,15 +23,20 @@ RUN npm run build
 FROM node:22-alpine AS release
 
 ARG DIGISOS_ENV
+
+RUN addgroup --system --gid 1337 nodejs
+RUN adduser --system --uid 1337 nextjs
+
 ENV NEXT_PUBLIC_DIGISOS_ENV=${DIGISOS_ENV}
 ENV PORT=8080
 ENV HOSTNAME=0.0.0.0
 ENV NODE_ENV=production
 
+USER nextjs
+
 WORKDIR /app
 
-COPY --from=builder /app/build build
-
+COPY --from=builder --chown=nextjs:nodejs /app/build build
 COPY --from=dependencies /app/node_modules/ node_modules/
 COPY package.json .
 COPY . .
