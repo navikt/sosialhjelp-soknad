@@ -5,6 +5,7 @@ metadata:
   namespace: teamdigisos
   labels:
     team: teamdigisos
+    nais.io/read-only-file-system: "false"
 spec:
   image: {{image}}
   port: 8080
