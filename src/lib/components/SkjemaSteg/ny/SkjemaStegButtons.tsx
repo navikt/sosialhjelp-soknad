@@ -6,7 +6,7 @@ import {useContext, useState} from "react";
 import digisosConfig from "../../../config";
 import {logError, logWarning} from "../../../log/loggerUtils";
 import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
-import {NavEnhetInaktiv} from "../../../../sider/01-personalia/adresse/NavEnhetInaktiv";
+import {NavEnhetInaktiv} from "../../../../pages/01-personalia/adresse/NavEnhetInaktiv";
 import {logAmplitudeEvent} from "../../../amplitude/Amplitude";
 import {DigisosLanguageKey} from "../../../i18n";
 import {ArrowRightIcon} from "@navikt/aksel-icons";

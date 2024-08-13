@@ -4,7 +4,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {useEffect, useState} from "react";
 import {useDebounce} from "react-use";
 import deepEqual from "deep-equal";
-import {belopTekstfeltPreprocessor} from "../../../sider/08-vedlegg/belopTekstfeltPreprocessor";
+import {belopTekstfeltPreprocessor} from "../../../pages/08-vedlegg/belopTekstfeltPreprocessor";
 import {ValideringsFeilKode} from "../../validering";
 import {VedleggFrontend} from "../../../generated/client/model";
 import {opplysningSpec} from "../../opplysninger";
