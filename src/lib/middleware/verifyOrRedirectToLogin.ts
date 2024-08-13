@@ -22,8 +22,9 @@ export async function verifyOrRedirectToLogin({
     url,
     cookies,
 }: Pick<NextRequest, "url" | "cookies">): Promise<NextResponse> {
-    console.log(headers().get("host"));
-    console.log(headers().get("x-forwarded-host"));
+    const origin = headers().get("x-forwarded-host") ?? headers().get("host");
+
+    if (!origin) return NextResponse.next();
 
     try {
         // FIXME: Find better way to verify session validity; this is relatively expensive
@@ -35,7 +36,7 @@ export async function verifyOrRedirectToLogin({
         } else {
             const responseBody = await res.json();
             const nextUrl = new URL(url);
-            const redirect = nextUrl.origin + LINK_PAGE_PATH;
+            const redirect = origin + LINK_PAGE_PATH;
             const goto = BASE_PATH + getGotoParameter(nextUrl);
 
             const redirectQuery = `?redirect=${redirect}?goto=${goto}`;
