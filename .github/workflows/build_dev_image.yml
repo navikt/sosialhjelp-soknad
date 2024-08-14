@@ -18,5 +18,7 @@ jobs:
         steps:
             - name: "Build Docker Image"
               uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
               with:
                   prefix: ${{ env.NEXT_PUBLIC_DIGISOS_ENV }}
