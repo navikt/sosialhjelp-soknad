@@ -1,5 +1,5 @@
 import {useTranslation} from "react-i18next";
-import {VedleggFrontendType} from "../../../generated/client/model";
+import {VedleggFrontendType} from "../../../generated/model";
 import {opplysningSpec} from "../../opplysninger";
 import {DokumentasjonTexts} from "../../../locales/types";
 import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";

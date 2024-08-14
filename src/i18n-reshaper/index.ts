@@ -23,7 +23,7 @@ LANGUAGES.forEach(async (language) => {
         `./src/locales/${language}/dokumentasjon.ts`,
         "dokumentasjon",
         "Record<VedleggFrontendType, DokumentasjonTexts>",
-        `import {VedleggFrontendType} from "../../generated/client/model";\nimport {DokumentasjonTexts} from "../types";`
+        `import {VedleggFrontendType} from "../../generated/model";\nimport {DokumentasjonTexts} from "../types";`
     );
 
     // Fjern nøkler som ikke lenger er i bruk

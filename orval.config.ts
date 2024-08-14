@@ -5,8 +5,8 @@ export default defineConfig({
         input: "./soknad-api.json",
         output: {
             mode: "tags-split",
-            target: "src/generated/client/axiosInstance.ts",
-            schemas: "src/generated/client/model",
+            target: "src/generated/axiosInstance.ts",
+            schemas: "src/generated/model",
             client: "react-query",
             override: {
                 mutator: {

@@ -3,7 +3,7 @@ import {useBehandlingsId} from "../common/useBehandlingsId";
 import {
     updateTelefonnummer,
     useHentTelefonnummer,
-} from "../../../generated/client/telefonnummer-ressurs/telefonnummer-ressurs";
+} from "../../../generated/telefonnummer-ressurs/telefonnummer-ressurs";
 
 export const useTelefonnummer = () => {
     const queryClient = useQueryClient();

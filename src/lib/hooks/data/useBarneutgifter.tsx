@@ -1,10 +1,7 @@
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useQueryClient} from "@tanstack/react-query";
-import {
-    updateBarneutgifter,
-    useHentBarneutgifter,
-} from "../../../generated/client/barneutgift-ressurs/barneutgift-ressurs";
-import {BarneutgifterFrontend} from "../../../generated/client/model";
+import {updateBarneutgifter, useHentBarneutgifter} from "../../../generated/barneutgift-ressurs/barneutgift-ressurs";
+import {BarneutgifterFrontend} from "../../../generated/model";
 
 export const useBarneutgifter = () => {
     const behandlingsId = useBehandlingsId();

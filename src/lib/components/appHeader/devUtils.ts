@@ -1,24 +1,24 @@
-import {updateBegrunnelse} from "../../../generated/client/begrunnelse-ressurs/begrunnelse-ressurs";
-import {updateUtdanning} from "../../../generated/client/utdanning-ressurs/utdanning-ressurs";
+import {updateBegrunnelse} from "../../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
+import {updateUtdanning} from "../../../generated/utdanning-ressurs/utdanning-ressurs";
 import {
     hentForsorgerplikt,
     updateForsorgerplikt,
-} from "../../../generated/client/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
-import {updateBosituasjon} from "../../../generated/client/bosituasjon-ressurs/bosituasjon-ressurs";
-import {putSkatteetatenSamtykke} from "../../../generated/client/skattbar-inntekt-ressurs/skattbar-inntekt-ressurs";
-import {updateBostotte, updateSamtykke1} from "../../../generated/client/bostotte-ressurs/bostotte-ressurs";
-import {updateStudielan} from "../../../generated/client/studielan-ressurs/studielan-ressurs";
-import {updateUtbetalinger} from "../../../generated/client/utbetaling-ressurs/utbetaling-ressurs";
-import {updateFormue} from "../../../generated/client/formue-ressurs/formue-ressurs";
-import {updateVerdier} from "../../../generated/client/verdi-ressurs/verdi-ressurs";
-import {updateBoutgifter} from "../../../generated/client/boutgift-ressurs/boutgift-ressurs";
-import {updateBarneutgifter} from "../../../generated/client/barneutgift-ressurs/barneutgift-ressurs";
+} from "../../../generated/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
+import {updateBosituasjon} from "../../../generated/bosituasjon-ressurs/bosituasjon-ressurs";
+import {putSkatteetatenSamtykke} from "../../../generated/skattbar-inntekt-ressurs/skattbar-inntekt-ressurs";
+import {updateBostotte, updateSamtykke1} from "../../../generated/bostotte-ressurs/bostotte-ressurs";
+import {updateStudielan} from "../../../generated/studielan-ressurs/studielan-ressurs";
+import {updateUtbetalinger} from "../../../generated/utbetaling-ressurs/utbetaling-ressurs";
+import {updateFormue} from "../../../generated/formue-ressurs/formue-ressurs";
+import {updateVerdier} from "../../../generated/verdi-ressurs/verdi-ressurs";
+import {updateBoutgifter} from "../../../generated/boutgift-ressurs/boutgift-ressurs";
+import {updateBarneutgifter} from "../../../generated/barneutgift-ressurs/barneutgift-ressurs";
 import {
     hentOkonomiskeOpplysninger,
     updateOkonomiskOpplysning,
-} from "../../../generated/client/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {opplysningSpec} from "../../opplysninger";
-import {VedleggFrontend, VedleggRadFrontend} from "../../../generated/client/model";
+import {VedleggFrontend, VedleggRadFrontend} from "../../../generated/model";
 import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
 
 // Jeg har rappet disse fra Orval-boilerplate-kode for å få tilgang til ReadOnly<T> under her.

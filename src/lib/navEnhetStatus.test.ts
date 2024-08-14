@@ -1,5 +1,5 @@
 import {erAktiv, erMidlDeaktivert} from "./navEnhetStatus";
-import {NavEnhetFrontend} from "../generated/client/model";
+import {NavEnhetFrontend} from "../generated/model";
 import {expect, test} from "vitest";
 
 const aktivNavEnhet: NavEnhetFrontend = {

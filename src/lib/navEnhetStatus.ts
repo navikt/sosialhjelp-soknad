@@ -1,4 +1,4 @@
-import {NavEnhetFrontend} from "../generated/client/model";
+import {NavEnhetFrontend} from "../generated/model";
 
 export const erAktiv = (e?: NavEnhetFrontend | null) =>
     !!e && !e.isMottakDeaktivert && !e.isMottakMidlertidigDeaktivert;

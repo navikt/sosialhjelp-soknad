@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import {faro} from "@grafana/faro-react";
 import {TrashIcon} from "@navikt/aksel-icons";
 import {useBehandlingsId} from "../../hooks/common/useBehandlingsId";
-import {useSlettSoknad} from "../../../generated/client/soknad-ressurs/soknad-ressurs";
+import {useSlettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import digisosConfig from "../../config";
 import {logError, logWarning} from "../../log/loggerUtils";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";

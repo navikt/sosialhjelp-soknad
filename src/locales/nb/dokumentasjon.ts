@@ -1,4 +1,4 @@
-import {VedleggFrontendType} from "../../generated/client/model";
+import {VedleggFrontendType} from "../../generated/model";
 import {DokumentasjonTexts} from "../types";
 
 export type VedleggFrontendTypeMinusUferdig = Exclude<VedleggFrontendType, "kort|behov" | "kort|situasjonsendring">;

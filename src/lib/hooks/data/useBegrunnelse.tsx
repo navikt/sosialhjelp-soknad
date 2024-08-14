@@ -6,8 +6,8 @@ import {
     getHentBegrunnelseQueryOptions,
     updateBegrunnelse,
     useHentBegrunnelse,
-} from "../../../generated/client/begrunnelse-ressurs/begrunnelse-ressurs";
-import {BegrunnelseFrontend} from "../../../generated/client/model";
+} from "../../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
+import {BegrunnelseFrontend} from "../../../generated/model";
 import {faro} from "@grafana/faro-react";
 import {useQueryClient} from "@tanstack/react-query";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";

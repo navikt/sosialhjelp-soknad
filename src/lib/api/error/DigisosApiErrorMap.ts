@@ -1,5 +1,5 @@
 import {ValideringsFeilKode} from "../../validering";
-import {SoknadApiErrorError} from "../../../generated/client/model";
+import {SoknadApiErrorError} from "../../../generated/model";
 import {REST_FEIL} from "./restFeil";
 import {DigisosLanguageKey} from "../../i18n";
 

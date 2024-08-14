@@ -1,9 +1,9 @@
 import {
     updateForsorgerplikt,
     useHentForsorgerplikt,
-} from "../../../generated/client/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
+} from "../../../generated/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {ForsorgerpliktFrontendBarnebidrag} from "../../../generated/client/model";
+import {ForsorgerpliktFrontendBarnebidrag} from "../../../generated/model";
 import {useQueryClient} from "@tanstack/react-query";
 
 export const useBarnebidrag = () => {

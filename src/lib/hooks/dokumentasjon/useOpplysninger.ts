@@ -1,8 +1,8 @@
 import {useMemo} from "react";
-import {VedleggFrontends} from "../../../generated/client/model";
+import {VedleggFrontends} from "../../../generated/model";
 import {Opplysning, opplysningSpec, vedleggGrupper} from "../../opplysninger";
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {useHentOkonomiskeOpplysninger} from "../../../generated/client/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {useHentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {logError} from "../../log/loggerUtils";
 import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
 

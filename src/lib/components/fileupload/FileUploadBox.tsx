@@ -1,18 +1,18 @@
 import React, {ChangeEvent} from "react";
 import {Alert, BodyShort, Button, Heading, Loader} from "@navikt/ds-react";
 import {FaroErrorBoundary} from "@grafana/faro-react";
-import {PdfConversionError, UploadError} from "../../../pages/08-vedlegg/upload/UploadError";
-import {OpplastetVedlegg} from "../../../pages/08-vedlegg/OpplastetVedlegg";
+import {PdfConversionError, UploadError} from "../../../sider/08-vedlegg/upload/UploadError";
+import {OpplastetVedlegg} from "../../../sider/08-vedlegg/OpplastetVedlegg";
 import {useTranslation} from "react-i18next";
 import {usePDFConverter} from "../../hooks/dokumentasjon/usePDFConverter";
 import {PlusIcon} from "@navikt/aksel-icons";
-import {ForhandsvisningVedleggModal} from "../../../pages/08-vedlegg/upload/ForhandsvisningVedleggModal";
+import {ForhandsvisningVedleggModal} from "../../../sider/08-vedlegg/upload/ForhandsvisningVedleggModal";
 import {
     SUPPORTED_WITH_CONVERSION,
     SUPPORTED_WITHOUT_CONVERSION,
-} from "../../../pages/08-vedlegg/upload/DokumentUploader";
+} from "../../../sider/08-vedlegg/upload/DokumentUploader";
 import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
-import {VedleggFrontendType} from "../../../generated/client/model";
+import {VedleggFrontendType} from "../../../generated/model";
 
 interface Props {
     sporsmal: string;

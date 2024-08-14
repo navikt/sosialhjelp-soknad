@@ -1,4 +1,4 @@
-import {type VedleggFrontend, VedleggFrontendGruppe} from "../generated/client/model";
+import {type VedleggFrontend, VedleggFrontendGruppe} from "../generated/model";
 import {DokumentasjonAntallRader} from "../locales/types";
 import {VedleggFrontendTypeMinusUferdig} from "../locales/nb/dokumentasjon.ts";
 

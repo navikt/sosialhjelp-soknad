@@ -1,9 +1,6 @@
-import {
-    useHentBosituasjon,
-    useUpdateBosituasjon,
-} from "../../../generated/client/bosituasjon-ressurs/bosituasjon-ressurs";
+import {useHentBosituasjon, useUpdateBosituasjon} from "../../../generated/bosituasjon-ressurs/bosituasjon-ressurs";
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {BosituasjonFrontend, BosituasjonFrontendBotype} from "../../../generated/client/model";
+import {BosituasjonFrontend, BosituasjonFrontendBotype} from "../../../generated/model";
 import {useQueryClient} from "@tanstack/react-query";
 
 export const useBosituasjon = () => {

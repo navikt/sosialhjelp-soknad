@@ -3,10 +3,10 @@ import {useBehandlingsId} from "../common/useBehandlingsId";
 import {
     useHentSkattbareInntekter,
     usePutSkatteetatenSamtykke,
-} from "../../../generated/client/skattbar-inntekt-ressurs/skattbar-inntekt-ressurs";
+} from "../../../generated/skattbar-inntekt-ressurs/skattbar-inntekt-ressurs";
 import {isValid} from "date-fns";
 import {formatTidspunkt} from "../../utils";
-import {useHentOkonomiskeOpplysninger} from "../../../generated/client/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {useHentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 
 export const useSkatteetatenData = () => {
     const queryClient = useQueryClient();

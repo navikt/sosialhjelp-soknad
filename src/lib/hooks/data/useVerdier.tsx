@@ -1,7 +1,7 @@
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useQueryClient} from "@tanstack/react-query";
-import {updateVerdier, useHentVerdier} from "../../../generated/client/verdi-ressurs/verdi-ressurs";
-import {VerdierFrontend} from "../../../generated/client/model";
+import {updateVerdier, useHentVerdier} from "../../../generated/verdi-ressurs/verdi-ressurs";
+import {VerdierFrontend} from "../../../generated/model";
 
 export const useVerdier = () => {
     const behandlingsId = useBehandlingsId();

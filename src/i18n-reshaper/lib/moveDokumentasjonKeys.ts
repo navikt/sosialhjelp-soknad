@@ -1,5 +1,5 @@
 import type {FlatLanguageFile} from "./types.ts";
-import type {VedleggFrontendType} from "../../generated/client/model";
+import type {VedleggFrontendType} from "../../generated/model";
 import {opplysningSpec} from "../../lib/opplysninger";
 
 export const textKeysForFrontendTypes: Record<VedleggFrontendType, string> = Object.keys(opplysningSpec).reduce(

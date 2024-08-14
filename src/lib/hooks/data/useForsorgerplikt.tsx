@@ -3,7 +3,7 @@ import {useQueryClient} from "@tanstack/react-query";
 import {
     updateForsorgerplikt,
     useHentForsorgerplikt,
-} from "../../../generated/client/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
+} from "../../../generated/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
 import {useEffect} from "react";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 //import {useAmplitude} from "../../amplitude/useAmplitude";
