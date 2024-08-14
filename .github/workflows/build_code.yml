@@ -23,11 +23,8 @@ jobs:
               with:
                   node-version: "22"
 
-            - name: "Move .npmrc into place"
-              run: mv .npmrc.dockerbuild .npmrc
-
             - name: "Install dependencies"
-              run: npm ci
+              run: mv .npmrc.dockerbuild .npmrc && npm ci
               env:
                 NODE_AUTH_TOKEN: ${{ env.READER_TOKEN }}
 
