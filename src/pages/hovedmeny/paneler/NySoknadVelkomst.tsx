@@ -7,7 +7,10 @@ import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 
 export const NySoknadVelkomst = () => {
     const {data: sessionInfo} = useGetSessionInfo();
-    const {t} = useTranslation("skjema");
+    const {t, i18n} = useTranslation("skjema");
+
+    const baseUrl = "https://www.nav.no/personopplysninger-sosialhjelp";
+    const href = i18n.language === "nb" ? baseUrl : `${baseUrl}/${i18n.language}`;
 
     return (
         <div className={"p-8 lg:py-12 lg:px-24 flex flex-col"}>
@@ -57,11 +60,7 @@ export const NySoknadVelkomst = () => {
                     i18nKey={"informasjon.innhenting.tekst_del2"}
                     components={{
                         lenke: (
-                            <a
-                                href="https://www.nav.no/personopplysninger-sosialhjelp"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
+                            <a href={href} target="_blank" rel="noreferrer">
                                 {null}
                             </a>
                         ),
