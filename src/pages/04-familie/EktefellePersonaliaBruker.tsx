@@ -21,7 +21,7 @@ export const EktefellePersonaliaBruker = () => {
                     <FullName name={ektefelle.navn} />
                 </SysteminfoItem>
                 {ektefelle?.fodselsdato && (
-                    <SysteminfoItem label={t(`system.familie.sivilstatus.gift.ektefelle.fodselsdato.stringValue`)}>
+                    <SysteminfoItem label={t(`system.familie.sivilstatus.gift.ektefelle.fodselsdato`)}>
                         <LocalizedDate date={ektefelle.fodselsdato} />
                     </SysteminfoItem>
                 )}
