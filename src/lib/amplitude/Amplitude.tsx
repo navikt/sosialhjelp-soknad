@@ -1,7 +1,7 @@
 import {logAmplitudeEvent as logAmplitudeMedDekorator} from "@navikt/nav-dekoratoren-moduler";
 import {logWarning} from "../log/loggerUtils";
 
-export const logAmplitudeEvent = (eventName: string, eventData?: Record<string, unknown>) => {
+export const logAmplitudeEvent = async (eventName: string, eventData?: Record<string, unknown>) => {
     logAmplitudeMedDekorator({
         origin: "sosialhjelpsoknad",
         eventName,
