@@ -5,17 +5,20 @@ import {getGotoParameter} from "../api/auth/getGotoParameter.ts";
 import {RequestCookies} from "next/dist/compiled/@edge-runtime/cookies";
 import {headers} from "next/headers";
 
-async function canaryRequest(url: string, cookies: RequestCookies): Promise<Response> {
+function getHeadersFromCookies(cookies: RequestCookies): Headers {
     const cookie = Object.values(cookies.getAll())
         .map(({name, value}) => `${name}=${value}`)
         .join("; ");
-    const res = await fetch(url, {headers: {cookie}});
 
-    if (res.ok) return res;
+    return new Headers({cookie});
+}
 
-    if (res.status !== 401) throw new Error("Invalid response in middleware", {cause: res});
-
-    return res;
+async function canaryRequest(cookies: RequestCookies): Promise<Response> {
+    try {
+        return await fetch(`${digisosConfig.baseURL}informasjon/session`, {headers: getHeadersFromCookies(cookies)});
+    } catch (e) {
+        throw new Error("Failed to verify session with canary request", {cause: e});
+    }
 }
 
 export async function verifyOrRedirectToLogin({
@@ -26,25 +29,21 @@ export async function verifyOrRedirectToLogin({
 
     if (!origin) return NextResponse.next();
 
-    try {
-        // FIXME: Find better way to verify session validity; this is relatively expensive
-        // Because middleware runs on the Edge runtime, we can't use Axios here.
-        const res = await canaryRequest(`${digisosConfig.baseURL}informasjon/session`, cookies);
+    // FIXME: Find better way to verify session validity; this is relatively expensive
+    // Because middleware runs on the Edge runtime, we can't use Axios here.
+    const res = await canaryRequest(cookies);
 
-        if (res.ok) {
-            return NextResponse.next();
-        } else {
-            const responseBody = await res.json();
-            const nextUrl = new URL(url);
-            const redirect = nextUrl.protocol + "//" + origin + LINK_PAGE_PATH;
-            console.log(redirect);
-            const goto = getGotoParameter(nextUrl);
+    if (res.ok) {
+        return NextResponse.next();
+    } else if (res.status === 401) {
+        const responseBody = await res.json();
+        const nextUrl = new URL(url);
 
-            const redirectQuery = `?redirect=${redirect}?goto=${goto}`;
+        const redirect = nextUrl.protocol + "//" + origin + LINK_PAGE_PATH;
+        const redirectQuery = `?redirect=${redirect}?goto=${getGotoParameter(nextUrl)}`;
 
-            return NextResponse.redirect(new URL(responseBody.loginUrl + redirectQuery));
-        }
-    } catch (e) {
-        throw new Error("Failed to verify session", {cause: e});
+        return NextResponse.redirect(new URL(responseBody.loginUrl + redirectQuery));
+    } else {
+        throw new Error("Failed to verify session", {cause: res});
     }
 }
