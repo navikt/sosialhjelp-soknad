@@ -1379,5 +1379,6 @@
     "situasjon.kort.hvaErEndret.label": "What has changed in your situation?",
     "situasjon.kort.hvaErEndret.description": "Example: I have gotten housing allowance and therefore have a higher income",
     "situasjon.kort.dokumentasjon.title": "Documentation of the change",
-    "situasjon.kort.dokumentasjon.description": "Here you can upload documentation of what has changed in your situation. You can attach images/screenshots."
+    "situasjon.kort.dokumentasjon.description": "Here you can upload documentation of what has changed in your situation. You can attach images/screenshots.",
+    "info.innsending.soknader": "Due to technical problems, it was not possible to submit applications on Friday 16.08. If you have a started application, you can find it below, and it is possible to submit this application now."
 }
