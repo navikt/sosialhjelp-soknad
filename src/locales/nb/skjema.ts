@@ -606,6 +606,12 @@ export const skjema = {
         informasjon: "Skjemaet du etterspurte ble ikke funnet i våre systemer.",
         tittel: "Skjema ikke funnet",
     },
+    info: {
+        innsending: {
+            soknader:
+                "På grunn av tekniske problemer var det ikke mulig å sende inn søknader fredag 16.08. Har du en påbegynt søknad kan du finne den nedenfor, og det er mulig å sende inn denne søknaden nå.",
+        },
+    },
     informasjon: {
         hilsen: {
             hei: "Hei {{fornavn}}",

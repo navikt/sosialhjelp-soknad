@@ -8,7 +8,6 @@ import {OppsummeringSteg} from "./OppsummeringSteg";
 import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullfortEvent";
 import {useSendSoknad} from "./useSendSoknad";
 import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude";
-import {logWarning} from "../../lib/log/loggerUtils";
 import {SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useLocation} from "react-router-dom";
 
@@ -39,9 +38,7 @@ export const Oppsummering = () => {
                 <SkjemaSteg.Buttons
                     confirmTextKey={"skjema.knapper.send"}
                     onConfirm={() => {
-                        logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering)).catch(
-                            (e) => logWarning(`Amplitude error: ${e}`)
-                        );
+                        logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
                         return sendSoknad();
                     }}
                 />
