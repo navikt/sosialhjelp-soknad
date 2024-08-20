@@ -585,7 +585,7 @@
     "kontakt.telefon.beskrivelse": "For at vi enkelt skal kunne kome i kontakt med deg, må vi ha telefonnummeret ditt",
     "kontakt.telefon.oppgi": "Oppgi telefonnummer",
     "kontakt.telefon.feil.tom": "Legg inn telefonnummer",
-    "kontakt.telefon.feil.maxLength": "Beklager, telefonnummer kan ikkje vera lenger enn 8 siffer.",
+    "kontakt.telefon.feil.maxLength": "Telefonnummer er for langt",
     "kontakt.telefon.feil.ugyldig": "Telefonnummer er ugyldig",
     "kontakt.telefon.infotekst.tekst": "Telefonnummeret du oppgir her kan bli brukt til å kontakte deg i samband med søknaden.",
     "kontakt.telefon.label": "Telefonnummer",

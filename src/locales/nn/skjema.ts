@@ -1052,7 +1052,7 @@ export const skjema = {
             description:
                 "Telefonnummeret du oppgir her kan bli brukt til å kontakte deg i samband med søknaden, oppdateres ikkje på Mi Side",
             feil: {
-                maxLength: "Beklager, telefonnummer kan ikkje vera lenger enn 8 siffer.",
+                maxLength: "Telefonnummer er for langt",
                 tom: "Legg inn telefonnummer",
                 ugyldig: "Telefonnummer er ugyldig",
             },

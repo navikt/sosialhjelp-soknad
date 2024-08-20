@@ -1059,9 +1059,9 @@ export const skjema = {
             beskrivelse: "To make it easier to contact you, we require your telephone number.",
             description: "The phone number you enter here will not be updated on My Page",
             feil: {
-                maxLength: "Sorry, phone number cannot be longer than 8 digits.",
+                maxLength: "The phone number is too long",
                 tom: "You must enter a telephone number",
-                ugyldig: "Phone number is not valid",
+                ugyldig: "The phone number is not valid",
             },
             feilmelding: "No telephone number provided",
             infotekst: {

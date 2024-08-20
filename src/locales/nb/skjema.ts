@@ -1039,7 +1039,7 @@ export const skjema = {
             description:
                 "Telefonnummeret du oppgir her kan bli brukt til å ta kontakt med deg om søknaden, og oppdateres ikke på Min Side",
             feil: {
-                maxLength: "Beklager, telefonnummer kan ikke være lenger enn 8 siffer.",
+                maxLength: "Telefonnummeret er for langt",
                 tom: "Telefonnummer må fylles ut",
                 ugyldig: "Ikke gyldig telefonnummer",
             },

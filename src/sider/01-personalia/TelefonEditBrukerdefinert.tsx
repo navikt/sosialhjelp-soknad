@@ -16,7 +16,7 @@ const TelefonnummerFormSchema = z
         countryCode: z.string(),
     })
     .refine(({phoneNumber, countryCode}) => isValidNumber(`+${countryCode}${phoneNumber}`), {
-        message: "kontakt.telefon.feil.maxLength",
+        message: "kontakt.telefon.feil.ugyldig",
         path: ["phoneNumber"],
     });
 
