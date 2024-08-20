@@ -19,7 +19,7 @@ export const useSkjemaNavigation = (steg: number) => {
                 return;
             } else {
                 dispatch({type: "clearAllValideringsfeil"});
-                logAmplitudeEvent("skjemasteg fullført", {steg});
+                logAmplitudeEvent("skjemasteg fullført", {steg}).then();
             }
         }
 
