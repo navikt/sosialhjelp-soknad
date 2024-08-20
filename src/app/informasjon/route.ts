@@ -1,4 +1,5 @@
 import {NextRequest, NextResponse} from "next/server";
+import {BASE_PATH} from "../../lib/constants.ts";
 
 export async function GET({nextUrl}: NextRequest) {
     // If there's an "axiosError" GET query parameter, we log an error.
@@ -6,5 +7,6 @@ export async function GET({nextUrl}: NextRequest) {
         console.error("axiosError", nextUrl.searchParams.get("axiosError"));
     }
 
-    return NextResponse.redirect("/");
+    nextUrl.pathname = BASE_PATH;
+    return NextResponse.redirect(nextUrl);
 }
