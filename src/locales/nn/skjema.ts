@@ -435,8 +435,8 @@ export const skjema = {
         ingen_registrerte_barn_tekst: "Du har ingen registrerte barn under 18 år.",
         ingen_registrerte_barn_tittel: "Vi har henta følgjande opplysningar frå Folkeregisteret:",
         ingress: {
-            antallBarn_one: "{{antallBarn}} barn under 18 år",
-            antallBarn_other: "{{antallBarn}} barn under 18 år",
+            antallBarn_one: "{{count}} barn under 18 år",
+            antallBarn_other: "{{count}} barn under 18 år",
         },
         ingress_folkeregisteret: "Vi har henta følgjande opplysningar frå Folkeregisteret:",
         ingress_forsorger: "Vi har registrert at du har forsørgjaransvar for:",
