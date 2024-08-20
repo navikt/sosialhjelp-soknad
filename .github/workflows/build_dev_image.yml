@@ -17,6 +17,6 @@ jobs:
             WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         steps:
             - name: "Build Docker Image"
-              uses: navikt/sosialhjelp-soknad/.github/actions/build-image@vite-to-nextjs
+              uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
               with:
                   prefix: ${{ env.NEXT_PUBLIC_DIGISOS_ENV }}
