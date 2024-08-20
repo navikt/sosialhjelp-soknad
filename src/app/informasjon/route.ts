@@ -11,6 +11,7 @@ export async function GET({nextUrl, headers}: NextRequest) {
     const url = nextUrl.clone();
     url.pathname = BASE_PATH;
     url.host = headers.get("host") ?? url.host;
+    url.port = "";
     console.log(url.toString());
     return NextResponse.redirect(url);
 }
