@@ -646,7 +646,7 @@ export const skjema = {
         ikketilgang: {
             bruker: {
                 tekst: {
-                    v2: "Unfortunately, you cannot use the digital application for financial assistance. People with code 6 or 7 cannot apply for financial assistance digital. Contact your local <lenke>NAV office</lenke> to receive help applying.",
+                    v2: "Unfortunately, you cannot use the digital application for financial assistance. People with code 6 or 7 cannot apply for financial assistance digitally. Contact your local <lenke>NAV office</lenke> to receive help applying.",
                 },
                 tittel: "Sorry",
             },
