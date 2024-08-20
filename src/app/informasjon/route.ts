@@ -10,8 +10,7 @@ export async function GET({nextUrl, headers}: NextRequest) {
 
     const url = nextUrl.clone();
     url.pathname = BASE_PATH;
-    url.host = headers.get("x-forwarded-host") ?? headers.get("host")!;
-    url.port = headers.get("x-forwarded-port") ?? headers.get("port")!;
-    console.log(url);
+    url.host = headers.get("host") ?? url.host;
+    console.log(url.toString());
     return NextResponse.redirect(url);
 }
