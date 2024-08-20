@@ -435,8 +435,8 @@ export const skjema = {
         ingen_registrerte_barn_tekst: "Du har ingen registrerte barn under 18 år.",
         ingen_registrerte_barn_tittel: "Vi har henta følgjande opplysningar frå Folkeregisteret:",
         ingress: {
-            antallBarn_one: "{{antallBarn}} barn under 18 år",
-            antallBarn_other: "{{antallBarn}} barn under 18 år",
+            antallBarn_one: "{{count}} barn under 18 år",
+            antallBarn_other: "{{count}} barn under 18 år",
         },
         ingress_folkeregisteret: "Vi har henta følgjande opplysningar frå Folkeregisteret:",
         ingress_forsorger: "Vi har registrert at du har forsørgjaransvar for:",
@@ -1052,7 +1052,7 @@ export const skjema = {
             description:
                 "Telefonnummeret du oppgir her kan bli brukt til å kontakte deg i samband med søknaden, oppdateres ikkje på Mi Side",
             feil: {
-                maxLength: "Beklager, telefonnummer kan ikkje vera lenger enn 8 siffer.",
+                maxLength: "Telefonnummer er for langt",
                 tom: "Legg inn telefonnummer",
                 ugyldig: "Telefonnummer er ugyldig",
             },

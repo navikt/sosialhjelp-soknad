@@ -1,12 +1,30 @@
 {
-    "extends": "@tsconfig/create-react-app/tsconfig.json",
     "compilerOptions": {
-        "target": "es2022",
-        "module": "es2022",
+        "target": "ES2022",
+        "useDefineForClassFields": true,
+        "lib": ["ES2022", "DOM", "DOM.Iterable"],
+        "module": "ESNext",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "preserve",
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
-        "useUnknownInCatchVariables": false,
-        "moduleResolution": "node",
+        "allowJs": true,
+        "forceConsistentCasingInFileNames": true,
+        "incremental": true,
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ]
     },
-    "include": ["src"],
-    "exclude": ["node_modules"]
+    "include": ["./src", "./dist/types/**/*.ts", "./next-env.d.ts", "./build/types/**/*.ts"],
+    "exclude": ["./node_modules", "./src/i18n-reshaper/**/*"]
 }

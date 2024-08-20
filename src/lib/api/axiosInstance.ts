@@ -3,12 +3,12 @@ import {logError, logInfo, logWarning} from "../log/loggerUtils";
 import digisosConfig from "../config";
 import {isLoginError} from "./error/isLoginError";
 import {getGotoParameter} from "./auth/getGotoParameter";
-import {LINK_PAGE_PATH} from "../constants";
+import {LINK_PAGE_PATH, XSRF_COOKIE_NAME, XSRF_HEADER_NAME} from "../constants";
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL: digisosConfig.baseURL,
-    xsrfCookieName: "XSRF-TOKEN-SOKNAD-API",
-    xsrfHeaderName: "X-XSRF-TOKEN",
+    xsrfCookieName: XSRF_COOKIE_NAME,
+    xsrfHeaderName: XSRF_HEADER_NAME,
     withCredentials: digisosConfig.withCredentials,
     headers: {Accept: "application/json, text/plain, */*"},
 });

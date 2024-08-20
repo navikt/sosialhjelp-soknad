@@ -12,7 +12,7 @@ export const logToServer = async (navLogEntry: Logg) => {
             },
             {digisosIgnoreErrors: true}
         );
-    } catch (e) {
+    } catch (e: any) {
         console.warn(`Logg til server failed (${e}).`);
     }
 };

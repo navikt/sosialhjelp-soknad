@@ -32,7 +32,7 @@ export const usePDFConverter = (): UsePDFConverterResult => {
             const blob = await konverterVedlegg({file: file});
             setConversionPending(false);
             return new File([blob], `${basename(file)}.pdf`, {type: "application/pdf"});
-        } catch (e) {
+        } catch (e: any) {
             setConversionError(e);
             throw e;
         } finally {

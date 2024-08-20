@@ -1,5 +1,6 @@
-import {type VedleggFrontend, VedleggFrontendGruppe, VedleggFrontendType} from "../generated/model";
+import {type VedleggFrontend, VedleggFrontendGruppe} from "../generated/model";
 import {DokumentasjonAntallRader} from "../locales/types";
+import {VedleggFrontendTypeMinusUferdig} from "../locales/nb/dokumentasjon.ts";
 
 export type Opplysning = VedleggFrontend & {
     slettet?: boolean;
@@ -15,7 +16,7 @@ export type OpplysningSpec = {
     sortKey: number;
 };
 
-export const opplysningSpec: Record<VedleggFrontendType, OpplysningSpec> = {
+export const opplysningSpec: Record<VedleggFrontendTypeMinusUferdig, OpplysningSpec> = {
     "lonnslipp|arbeid": {
         numRows: "flere",
         inputs: ["brutto", "netto"],

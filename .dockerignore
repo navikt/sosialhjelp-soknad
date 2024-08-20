@@ -1,2 +1,7 @@
 .idea/
 scripts/
+node_modules/
+src/i18n-reshaper/node_modules
+src/generated
+build/
+Dockerfile

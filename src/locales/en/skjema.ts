@@ -646,7 +646,7 @@ export const skjema = {
         ikketilgang: {
             bruker: {
                 tekst: {
-                    v2: "Unfortunately, you cannot use the digital application for financial assistance. People with code 6 or 7 cannot apply for financial assistance digital. Contact your local <lenke>NAV office</lenke> to receive help applying.",
+                    v2: "Unfortunately, you cannot use the digital application for financial assistance. People with code 6 or 7 cannot apply for financial assistance digitally. Contact your local <lenke>NAV office</lenke> to receive help applying.",
                 },
                 tittel: "Sorry",
             },
@@ -1059,9 +1059,9 @@ export const skjema = {
             beskrivelse: "To make it easier to contact you, we require your telephone number.",
             description: "The phone number you enter here will not be updated on My Page",
             feil: {
-                maxLength: "Sorry, phone number cannot be longer than 8 digits.",
+                maxLength: "The phone number is too long",
                 tom: "You must enter a telephone number",
-                ugyldig: "Phone number is not valid",
+                ugyldig: "The phone number is not valid",
             },
             feilmelding: "No telephone number provided",
             infotekst: {

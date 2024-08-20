@@ -11,10 +11,10 @@ Frontend for søknad om sosialhjelp.
 ### Miljøvariabler
 
 ```dotenv
-REACT_APP_DIGISOS_ENV="localhost"
+NEXT_PUBLIC_DIGISOS_ENV="localhost"
 ```
 
-Miljøvariabelen REACT_APP_DIGISOS_ENV velger konfigurasjonsprofiler.
+Miljøvariabelen NEXT_PUBLIC_DIGISOS_ENV velger konfigurasjonsprofiler.
 
 Gyldige profiler er "localhost" til lokal utvikling, "mock" til mock-ekstern,
 "dev-sbs" til dev og "prod-sbs" til prod.

@@ -18,7 +18,7 @@ export const useBeskrivelse = (value: string | undefined, onSave: (beskrivelse: 
         try {
             BeskrivelseAvAnnetSchema.parse(value);
             setError(undefined);
-        } catch (e) {
+        } catch (e: any) {
             setError(t(e.issues[0].message));
         }
     }, [value, t]);

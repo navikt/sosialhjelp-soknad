@@ -25,7 +25,7 @@ export type DigisosSkjemaStegKey =
     | "oppsummering";
 
 export const digisosSkjemaConfig: SkjemaConfig = {
-    tittelId: "applikasjon.sidetittel",
+    tittelId: "applikasjon.sidetittel.stringValue",
     skjemanavn: "digisos",
     steg: {
         kontakt: {

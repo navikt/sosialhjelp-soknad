@@ -128,7 +128,7 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
         try {
             if (onRequestNavigation !== undefined) await onRequestNavigation();
             gotoPage(page);
-        } catch (e) {
+        } catch (e: any) {
             scrollToTop();
             if (!(e instanceof DigisosValidationError)) await logWarning(`Nektet navigering: ${e}`);
         }

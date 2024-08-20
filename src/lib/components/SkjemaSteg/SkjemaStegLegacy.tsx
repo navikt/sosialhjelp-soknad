@@ -8,7 +8,7 @@ import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepperLegacy} from "./SkjemaStegNavStepperLegacy";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapperLegacy from "./SkjemaStegNavKnapperLegacy";
-import {AvbrytSoknadModal} from "../../components/modals/AvbrytSoknadModal";
+import {AvbrytSoknadModal} from "../modals/AvbrytSoknadModal.tsx";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
 import {t} from "i18next";
@@ -16,7 +16,7 @@ import {AppHeader} from "../appHeader/AppHeader";
 import {scrollToTop} from "../../utils";
 
 import {ValideringsContext} from "../../valideringContextProvider";
-import {NavEnhetInaktiv} from "../../../pages/01-personalia/adresse/NavEnhetInaktiv";
+import {NavEnhetInaktiv} from "../../../sider/01-personalia/adresse/NavEnhetInaktiv";
 import {RequireXsrfCookie} from "./ny/RequireXsrfCookie";
 
 interface StegMedNavigasjonProps {

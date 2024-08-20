@@ -1,14 +1,9 @@
-import i18n, {TOptions} from "i18next";
+import i18n, {DefaultNamespace, Namespace, ParseKeys, TOptions} from "i18next";
 import {initReactI18next} from "react-i18next";
 import {logWarning} from "./log/loggerUtils";
 import Backend from "i18next-http-backend";
 import {enGB, Locale, nb, nn} from "date-fns/locale";
-import {DecoratorLocale, onLanguageSelect, setAvailableLanguages, setParams} from "@navikt/nav-dekoratoren-moduler";
-import {ENABLE_DEBUG_I18N, BASE_PATH as url} from "./constants";
-//import {useAmplitude} from "./amplitude/useAmplitude";
-import {useEffect} from "react";
-import {logAmplitudeEvent} from "./amplitude/Amplitude";
-
+import {ENABLE_DEBUG_I18N} from "./constants";
 import skjemaNb from "../locales/nb/skjema";
 import skjemaNn from "../locales/nn/skjema";
 import skjemaEn from "../locales/en/skjema";
@@ -16,9 +11,6 @@ import skjemaEn from "../locales/en/skjema";
 import dokumentasjonNb from "../locales/nb/dokumentasjon";
 import dokumentasjonNn from "../locales/nn/dokumentasjon";
 import dokumentasjonEn from "../locales/en/dokumentasjon";
-
-import {ParseKeys} from "i18next/typescript/t";
-import type {DefaultNamespace, Namespace} from "i18next/typescript/options";
 
 export const resources = {
     en: {dokumentasjon: dokumentasjonEn, skjema: skjemaEn},
@@ -33,8 +25,7 @@ export type DigisosLanguageKey<Ns extends Namespace = DefaultNamespace, TPrefix 
     TPrefix
 >;
 export const SUPPORTED_LANGUAGES = ["en", "nb", "nn"] as const;
-const DIGISOS_LANGUAGE = "digisos-language";
-const fallbackLng = "nb";
+export const fallbackLng = "nb";
 
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
@@ -78,46 +69,8 @@ i18n.use(Backend)
         defaultNS,
         resources,
         debug: ENABLE_DEBUG_I18N,
-
-        interpolation: {
-            escapeValue: false, // not needed for react as it escapes by default
-        },
+        // not needed for react as it escapes by default
+        interpolation: {escapeValue: false},
     });
 
 export default i18n;
-
-/** Sets language for i18next, nav-dekorator, and localStorage */
-const setLanguage = async (language: string) => {
-    if (!isSupportedLanguage(language)) {
-        localStorage.removeItem(DIGISOS_LANGUAGE);
-        await setLanguage(fallbackLng);
-        return;
-    }
-
-    await i18n.changeLanguage(language);
-    await setParams({language: language as DecoratorLocale});
-    localStorage.setItem(DIGISOS_LANGUAGE, language);
-};
-
-export const useLocalStorageLangSelector = () => {
-    //const {logEvent} = useAmplitude();
-
-    useEffect(() => {
-        setAvailableLanguages(
-            SUPPORTED_LANGUAGES.map((locale) => ({
-                locale,
-                url,
-                handleInApp: true,
-            }))
-        ).then();
-
-        const storedLanguage = localStorage.getItem(DIGISOS_LANGUAGE);
-
-        if (storedLanguage) setLanguage(storedLanguage).then();
-    }, []);
-
-    onLanguageSelect(async ({locale}: {locale: DecoratorLocale}) => {
-        await setLanguage(locale);
-        await logAmplitudeEvent("Valgt språk", {language: locale});
-    });
-};

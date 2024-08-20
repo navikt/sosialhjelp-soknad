@@ -26,7 +26,7 @@ export const useDigisosMutation = <TOutput, TInput>(
             const mutatedResource = await mutator(behandlingsId, data);
             queryClient.setQueryData(queryKey, mutatedResource);
             return Result.Ok(mutatedResource);
-        } catch (e) {
+        } catch (e: any) {
             faro.api.pushError(e);
             return Result.Error(e);
         }

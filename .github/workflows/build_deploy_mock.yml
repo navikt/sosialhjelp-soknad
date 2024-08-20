@@ -6,7 +6,7 @@ on:
     workflow_dispatch:
 env:
     DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
-    REACT_APP_DIGISOS_ENV: mock
+    NEXT_PUBLIC_DIGISOS_ENV: mock
 
 jobs:
     build-image:
@@ -25,9 +25,9 @@ jobs:
         steps:
             - name: "Build Docker Image"
               id: docker-image
-              uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
+              uses: navikt/sosialhjelp-soknad/.github/actions/build-image@vite-to-nextjs
               with:
-                  prefix: ${{ env.REACT_APP_DIGISOS_ENV }}
+                  prefix: ${{ env.NEXT_PUBLIC_DIGISOS_ENV }}
 
     deploy-app:
         name: "Deploy Application"
@@ -43,7 +43,7 @@ jobs:
               run: |
                   echo "IMAGE_TAG=${{ env.DOCKER_IMAGE }}:${{ needs.build-image.outputs.docker-tag }}" >> $GITHUB_ENV
 
-            - name: Deploy til dev
+            - name: Deploy til ${{ env.NEXT_PUBLIC_DIGISOS_ENV }}
               uses: nais/deploy/actions/deploy@v2
               env:
                   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}

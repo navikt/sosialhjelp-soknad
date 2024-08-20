@@ -4,12 +4,15 @@ import {Opplysning, opplysningSpec, vedleggGrupper} from "../../opplysninger";
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useHentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {logError} from "../../log/loggerUtils";
+import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
 
 export const flettOgSorter = ({okonomiskeOpplysninger, slettedeVedlegg}: VedleggFrontends): Opplysning[] => {
     const current = okonomiskeOpplysninger?.map((opplysning): Opplysning => ({...opplysning}));
     const deleted = slettedeVedlegg?.map((opplysning): Opplysning => ({...opplysning, slettet: true}));
     return [...(current ?? []), ...(deleted ?? [])].sort(
-        (a: Opplysning, b: Opplysning) => opplysningSpec[a.type].sortKey - opplysningSpec[b.type].sortKey
+        (a: Opplysning, b: Opplysning) =>
+            opplysningSpec[a.type as VedleggFrontendTypeMinusUferdig].sortKey -
+            opplysningSpec[b.type as VedleggFrontendTypeMinusUferdig].sortKey
     );
 };
 

@@ -19,12 +19,13 @@ import {
 } from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {opplysningSpec} from "../../opplysninger";
 import {VedleggFrontend, VedleggRadFrontend} from "../../../generated/model";
+import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
 
 // Jeg har rappet disse fra Orval-boilerplate-kode for å få tilgang til ReadOnly<T> under her.
 
 type IsAny<T> = 0 extends 1 & T ? true : false;
 type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 type isBuiltin = Primitive | Function | Date | Error | RegExp;
 type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 type NonReadonly<T> =
@@ -150,7 +151,7 @@ export const maximizeSoknad = async (soknadId: string) => {
     const opplysninger = await hentOkonomiskeOpplysninger(soknadId);
 
     opplysninger.okonomiskeOpplysninger?.forEach((opplysning) => {
-        const {numRows} = opplysningSpec[opplysning.type];
+        const {numRows} = opplysningSpec[opplysning.type as VedleggFrontendTypeMinusUferdig];
 
         if (numRows === "flere" && opplysning.rader)
             opplysning.rader = duplicateItems(opplysning.rader, rowCountFromString(opplysning.type));
