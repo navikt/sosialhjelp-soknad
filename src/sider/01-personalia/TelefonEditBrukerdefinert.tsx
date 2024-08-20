@@ -12,7 +12,11 @@ import {DigisosLanguageKey} from "../../lib/i18n";
 
 const TelefonnummerFormSchema = z
     .object({
-        phoneNumber: z.string().min(1, "kontakt.telefon.feil.tom").max(11, "kontakt.telefon.feil.maxLength"),
+        phoneNumber: z
+            .string()
+            .min(1, "kontakt.telefon.feil.tom")
+            .min(6, "kontakt.telefon.feil.ugyldig")
+            .max(11, "kontakt.telefon.feil.maxLength"),
         countryCode: z.string(),
     })
     .refine(({phoneNumber, countryCode}) => isValidNumber(`+${countryCode}${phoneNumber}`), {

@@ -5,27 +5,22 @@ import {useTranslation} from "react-i18next";
 import * as React from "react";
 import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import {formatKontonummer} from "@fremtind/jkl-formatters-util";
-import {LinkButton} from "../../lib/components/LinkButton";
-import {PencilWritingIcon} from "@navikt/aksel-icons";
 import {BodyShort} from "@navikt/ds-react";
+import {PersonaliaEditKnapp} from "./PersonaliaEditKnapp.tsx";
 
 export const KontonrShowBrukerdefinert = ({onEdit}: {onEdit?: () => void}) => {
-    const {t} = useTranslation("skjema");
     const {expectOK} = useAlgebraic(useHentKontonummer(useBehandlingsId()));
+    const {t} = useTranslation("skjema");
 
     return expectOK(({brukerutfyltVerdi}) => (
         <li className={"flex flex-row place-content-between"}>
             <div>
-                <SysteminfoItem as="div">{formatKontonummer(brukerutfyltVerdi ?? "")}</SysteminfoItem>
+                <BodyShort className={"pb-3"}>{t("kontakt.kontonummer.bruker.stringValue")}</BodyShort>
+                <SysteminfoItem as="div" label={t(`kontakt.kontonummer.sporsmal`)}>
+                    {formatKontonummer(brukerutfyltVerdi ?? "")}
+                </SysteminfoItem>
             </div>
-            {onEdit && (
-                <div className={"flex flex-row items-center navds-link pr-3"}>
-                    <PencilWritingIcon />
-                    <LinkButton onClick={onEdit} data-testid="kontonummer-endreknapp">
-                        {t("kontakt.system.kontonummer.endreknapp.label")}
-                    </LinkButton>
-                </div>
-            )}
+            {onEdit && <PersonaliaEditKnapp onClick={onEdit} />}
         </li>
     ));
 };
@@ -34,19 +29,10 @@ export const KontonrShowSysteminfo = ({onEdit}: {onEdit?: () => void}) => {
     const {expectOK} = useAlgebraic(useHentKontonummer(useBehandlingsId()));
 
     return expectOK(({systemverdi}) => (
-        <li className={"flex flex-row place-content-between"}>
-            <div>
-                <SysteminfoItem as="div">{formatKontonummer(systemverdi ?? "")}</SysteminfoItem>
-                <BodyShort className={"pt-2"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
-            </div>
-            {onEdit && (
-                <div className={"flex flex-row items-center navds-link pr-3"}>
-                    <PencilWritingIcon />
-                    <LinkButton onClick={onEdit} data-testid="kontonummer-endreknapp">
-                        {t("kontakt.system.kontonummer.endreknapp.label")}
-                    </LinkButton>
-                </div>
-            )}
+        <li>
+            <SysteminfoItem as="div">{formatKontonummer(systemverdi ?? "")}</SysteminfoItem>
+            <BodyShort className={"pt-2"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
+            {onEdit && <PersonaliaEditKnapp onClick={onEdit} />}
         </li>
     ));
 };
@@ -59,12 +45,13 @@ export const KontonrShow = ({onEdit}: {onEdit?: () => void}) => {
     return expectOK(({brukerdefinert, systemverdi, brukerutfyltVerdi, harIkkeKonto}) => {
         if (harIkkeKonto)
             return (
-                <>
+                <div>
                     <BodyShort className={"pb-3"}>{t("kontakt.kontonummer.bruker.stringValue")}</BodyShort>
-                    <SysteminfoItem as="div" label={t(`kontakt.kontonummer.sporsmal`)}>
+                    <SysteminfoItem as="div">
                         <span className={"italic"}> {t("kontakt.kontonummer.harikke.true")}</span>
                     </SysteminfoItem>
-                </>
+                    {onEdit && <PersonaliaEditKnapp onClick={onEdit} />}
+                </div>
             );
 
         if (brukerdefinert && brukerutfyltVerdi) return <KontonrShowBrukerdefinert onEdit={onEdit} />;
@@ -74,14 +61,7 @@ export const KontonrShow = ({onEdit}: {onEdit?: () => void}) => {
         return (
             <li>
                 {t("kontakt.kontonummer.ingeninfo")} <br />
-                <div className={"flex flex-row items-center navds-link"}>
-                    {onEdit && (
-                        <>
-                            <PencilWritingIcon />
-                            <LinkButton onClick={onEdit}>{t("kontakt.kontonummer.oppgi")}</LinkButton>
-                        </>
-                    )}
-                </div>
+                {onEdit && <PersonaliaEditKnapp onClick={onEdit} />}
             </li>
         );
     });

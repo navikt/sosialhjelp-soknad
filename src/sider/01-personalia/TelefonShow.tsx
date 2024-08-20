@@ -3,11 +3,10 @@ import {useHentTelefonnummer} from "../../generated/telefonnummer-ressurs/telefo
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {TelefonShowBrukerdefinert} from "./TelefonShowBrukerdefinert";
 import {TelefonShowFraKRR} from "./TelefonShowFraKRR";
-import {LinkButton} from "../../lib/components/LinkButton";
 import * as React from "react";
 import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import {useTranslation} from "react-i18next";
-import {PencilWritingIcon} from "@navikt/aksel-icons";
+import {PersonaliaEditKnapp} from "./PersonaliaEditKnapp.tsx";
 
 export const TelefonShow = ({onEdit}: {onEdit?: () => void}) => {
     const {expectOK} = useAlgebraic(useHentTelefonnummer(useBehandlingsId()));
@@ -22,14 +21,7 @@ export const TelefonShow = ({onEdit}: {onEdit?: () => void}) => {
         return (
             <li>
                 {t("kontakt.system.telefoninfo.ingeninfo")} <br />
-                <div className={"flex flex-row items-center navds-link"}>
-                    {onEdit && (
-                        <>
-                            <PencilWritingIcon />
-                            <LinkButton onClick={onEdit}>{t("kontakt.telefon.oppgi")}</LinkButton>
-                        </>
-                    )}
-                </div>
+                {onEdit && <PersonaliaEditKnapp onClick={onEdit} />}
             </li>
         );
     });
