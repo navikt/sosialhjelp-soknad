@@ -11,11 +11,9 @@ import {BegrunnelseFrontend} from "../../../generated/model";
 import {faro} from "@grafana/faro-react";
 import {useQueryClient} from "@tanstack/react-query";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
-//import {useAmplitude} from "../../amplitude/useAmplitude";
 
 export const useBegrunnelse = () => {
     const behandlingsId = useBehandlingsId();
-    //const {logEvent} = useAmplitude();
 
     // TODO: Avklare denne. Er det behov lenger?
     const {begrunnelseNyTekst} = useFeatureFlags();
@@ -47,7 +45,7 @@ export const useBegrunnelse = () => {
     };
 
     useEffect(() => {
-        logAmplitudeEvent("begrunnelse åpnet", {begrunnelseNyTekst});
+        logAmplitudeEvent("begrunnelse åpnet", {begrunnelseNyTekst}).then();
     }, [begrunnelseNyTekst]);
 
     return {get, put, isPending, isError};

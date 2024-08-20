@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import {SkjemaStegContext} from "./SkjemaSteg";
 import {useContext, useState} from "react";
 import digisosConfig from "../../../config";
-import {logError, logWarning} from "../../../log/loggerUtils";
+import {logError} from "../../../log/loggerUtils";
 import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {NavEnhetInaktiv} from "../../../../sider/01-personalia/adresse/NavEnhetInaktiv";
 import {logAmplitudeEvent} from "../../../amplitude/Amplitude";
@@ -72,10 +72,8 @@ export const SkjemaStegButtons = ({
             <div className={"pb-8 lg:pb-16"}>
                 <Button
                     variant="tertiary"
-                    onClick={() => {
-                        logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"}).catch((e) =>
-                            logWarning(`Amplitude error: ${e}`)
-                        );
+                    onClick={async () => {
+                        await logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"});
                         window.location.href = digisosConfig.minSideURL;
                     }}
                 >

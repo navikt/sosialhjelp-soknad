@@ -6,10 +6,8 @@ import {
 } from "../../../generated/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
 import {useEffect} from "react";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
-//import {useAmplitude} from "../../amplitude/useAmplitude";
 
 export const useForsorgerplikt = () => {
-    //const {logEvent} = useAmplitude();
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
     const {data: forsorgerplikt, isPending, queryKey} = useHentForsorgerplikt(behandlingsId);

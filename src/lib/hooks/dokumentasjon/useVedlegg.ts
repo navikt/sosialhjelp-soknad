@@ -13,7 +13,6 @@ import {useDeleteDokument} from "../../../generated/opplastet-vedlegg-ressurs/op
 import {humanizeFilesize} from "../../../sider/08-vedlegg/lib/humanizeFilesize";
 import {axiosInstance} from "../../api/axiosInstance";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
-import {logWarning} from "../../log/loggerUtils";
 
 const TEN_MEGABYTE_COMPAT_FALLBACK = 10 * 1024 * 1024;
 
@@ -64,9 +63,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
                 onError: handleApiError,
                 onSuccess: () => {
                     dispatch({type: "remove", dokumentId});
-                    logAmplitudeEvent("dokument slettet", {opplysningType: dokumentasjonType}).catch((e) =>
-                        logWarning(`Amplitude error: ${e}`)
-                    );
+                    logAmplitudeEvent("dokument slettet", {opplysningType: dokumentasjonType}).then();
                 },
             }
         );
@@ -103,9 +100,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
 
             setUploadPercent(null);
             dispatch({type: "insert", dokument});
-            logAmplitudeEvent("dokument lastet opp", {opplysningType: dokumentasjonType}).catch((e) =>
-                logWarning(`Amplitude error: ${e}`)
-            );
+            await logAmplitudeEvent("dokument lastet opp", {opplysningType: dokumentasjonType});
         } catch (e: any) {
             handleApiError(e);
         } finally {

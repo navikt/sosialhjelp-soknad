@@ -37,8 +37,8 @@ export const Oppsummering = () => {
                 </div>
                 <SkjemaSteg.Buttons
                     confirmTextKey={"skjema.knapper.send"}
-                    onConfirm={() => {
-                        logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
+                    onConfirm={async () => {
+                        await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
                         return sendSoknad();
                     }}
                 />

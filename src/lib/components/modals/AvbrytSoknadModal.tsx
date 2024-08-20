@@ -6,24 +6,21 @@ import {TrashIcon} from "@navikt/aksel-icons";
 import {useBehandlingsId} from "../../hooks/common/useBehandlingsId";
 import {useSlettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import digisosConfig from "../../config";
-import {logError, logWarning} from "../../log/loggerUtils";
+import {logError} from "../../log/loggerUtils";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
-//import {useAmplitude} from "../../amplitude/useAmplitude";
 
 export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () => void}) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
     const {mutate, isPending: isLoading, isError} = useSlettSoknad();
 
-    //const {logEvent} = useAmplitude();
-
     const deleteAndRedirect = async () => {
         try {
-            await mutate({behandlingsId});
+            mutate({behandlingsId});
             window.location.href = digisosConfig.minSideURL;
         } catch (e: any) {
             faro.api.pushError(e);
-            logError(`Feil ved sletting: ${e}`);
+            await logError(`Feil ved sletting: ${e}`);
         }
     };
 
@@ -48,10 +45,8 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
                 </Button>
                 <Button
                     variant="primary"
-                    onClick={() => {
-                        logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"}).catch((e) =>
-                            logWarning(`Amplitude error: ${e}`)
-                        );
+                    onClick={async () => {
+                        await logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"});
                         window.location.href = "/sosialhjelp/soknad/informasjon?reason=soknadDeleteModal";
                     }}
                 >
