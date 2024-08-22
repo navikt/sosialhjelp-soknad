@@ -17,7 +17,7 @@ const FormatAsType = ({type, children}: {type: SvarType; children: string}) => {
 
     switch (type) {
         case "TEKST":
-            return children;
+            return <p style={{whiteSpace: "pre"}}>{children}</p>;
         case "LOCALE_TEKST":
             return tBackend(children);
         case "DATO":

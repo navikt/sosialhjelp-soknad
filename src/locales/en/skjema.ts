@@ -201,6 +201,9 @@ export const skjema = {
         tittel: "Your application will be rejected",
     },
     begrunnelse: {
+        annet: {
+            beskrivelse: "What are you applying for money for?",
+        },
         hva: {
             description: 'Example of text: "I am applying for support for food, rent and electricity."',
             descriptionOld: "For example, money for living expenses and rent",
@@ -212,6 +215,22 @@ export const skjema = {
             label: "Tell us briefly about your situation",
             labelOld: "Give a brief reason for the application",
         },
+        kategorier: {
+            annet: "Other",
+            barn: "Things for children and leisure activities",
+            barnehage: "Kindergarten, SFO or AKS",
+            bolig: "Rent",
+            hoytid: "Holidays, special occasions and gifts",
+            klaer: "Clothes and equipment",
+            label: "What are you applying for money for?",
+            lege: "Doctor and medicine",
+            mat: "Food",
+            nodhjelp: "Emergency aid",
+            strom: "Electricity",
+            tannlege: "Dentist",
+            transport: "Transport",
+            ved: "Firewood, gas or district heating",
+        },
         kort: {
             behov: {
                 dokumentasjon: {
@@ -219,6 +238,17 @@ export const skjema = {
                         "Here you can upload an invoice, receipt or cost estimate for what you are applying for money for. You can take pictures/screenshots.",
                     tittel: "Documentation",
                 },
+            },
+        },
+        nødhjelp: {
+            beskrivelse:
+                "If you do not have money for food or a place to stay overnight in the next 24 hours, you should submit the application and call NAV at 55 55 33 33.",
+        },
+        underkategorier: {
+            nodhjelp: {
+                bosted: "No place to stay tonight",
+                mat: "No money for food today",
+                strøm: "Electricity is cut off / will be cut off today or tomorrow",
             },
         },
     },

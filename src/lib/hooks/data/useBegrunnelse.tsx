@@ -28,7 +28,7 @@ export const useBegrunnelse = () => {
 
     // Lagrer data på backend og oppdaterer lokal cache.
     const put = async (begrunnelse: BegrunnelseFrontend) => {
-        await logAmplitudeEvent("begrunnelse fullført", {
+        logAmplitudeEvent("begrunnelse fullført", {
             hvaLengde: (Math.round((begrunnelse?.hvaSokesOm?.length ?? 0) / 20) - 1) * 20,
             hvorforLengde: (Math.round((begrunnelse?.hvorforSoke?.length ?? 0) / 20) - 1) * 20,
             begrunnelseNyTekst,

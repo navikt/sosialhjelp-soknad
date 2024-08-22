@@ -182,6 +182,9 @@ export const skjema = {
         tittel: "Du vil få avslag",
     },
     begrunnelse: {
+        annet: {
+            beskrivelse: "Hva annet søker du om penger til?",
+        },
         hva: {
             description: 'Eksempel på tekst: "Jeg søker om penger til mat, husleie og strøm."',
             descriptionOld: "For eksempel penger til/utgifter for å leve og husleie",
@@ -194,6 +197,22 @@ export const skjema = {
             label: "Fortell oss kort om situasjonen din",
             labelOld: "Gi en kort begrunnelse for søknaden",
         },
+        kategorier: {
+            annet: "Annet",
+            barn: "Ting til barn og fritidsaktiviteter",
+            barnehage: "Barnehage, SFO eller AKS",
+            bolig: "Husleie",
+            hoytid: "Høytid, merkedager og gaver",
+            klaer: "Klær og utstyr",
+            label: "Hva søker du penger til?",
+            lege: "Lege og medisiner",
+            mat: "Mat",
+            nodhjelp: "Nødhjelp",
+            strom: "Strøm",
+            tannlege: "Tannlege",
+            transport: "Transport",
+            ved: "Ved, gass eller fjernvarme",
+        },
         kort: {
             behov: {
                 dokumentasjon: {
@@ -201,6 +220,17 @@ export const skjema = {
                         "Her kan du laste opp faktura, kvittering eller kostnadsoverslag for det du søker om penger til. Du kan ta bilder/skjermbilder.",
                     tittel: "Dokumentasjon",
                 },
+            },
+        },
+        nødhjelp: {
+            beskrivelse:
+                "Hvis du ikke har penger til mat eller et sted å overnatte det neste døgnet, bør du sende søknaden og ringe NAV på 55 55 33 33.",
+        },
+        underkategorier: {
+            nodhjelp: {
+                bosted: "Har ikke et sted å bo i natt",
+                mat: "Har ikke penger til mat i dag",
+                strøm: "Strømmen er stengt / stenges i dag eller i morgen",
             },
         },
     },
