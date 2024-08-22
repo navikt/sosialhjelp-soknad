@@ -1051,7 +1051,7 @@
     "soknadinnsending.sidetittel.avbryt": "Close application - www.nav.no",
     "soknadsmottaker.enhetsnavn.label": "NAV office",
     "soknadsmottaker.hjelpetekst.tekst": "You must enter your residential address so that the application can be sent to the correct NAV office.",
-    "soknadsmottaker.hjelpetekst.ingress": "If you live in an institution (E.g. hospital, psychiatric or substance abuse treatment, prison or crisis center), please state your last address before arriving at the institution.",
+    "soknadsmottaker.hjelpetekst.ingress": "If you live in an institution (E.g. hospital, prison, psychiatric or substance abuse treatment), please state your last address before arriving at the institution.",
     "soknadsmottaker.infotekst.tekst": "State your residential address (mandatory)",
     "soknadsmottaker.kommunenavn.label": "Municipality",
     "soknadsmottaker.sporsmal": "Address and NAV office",
