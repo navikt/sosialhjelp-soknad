@@ -16,6 +16,7 @@ export const BACKEND_FRONTEND_KEY_MAP: Record<string, DigisosLanguageKey> = {
     "inntekt.bankinnskudd.true.type.sporsmal": "formue.type.sporsmal",
     "inntekt.bankinnskudd.true.type.verdipapirer": "formue.type.verdipapirer",
     "inntekt.bostotte.sak": "inntekt.bostotte.sak.stringValue",
+    "inntekt.bostotte.sporsmal.false": "avbryt.nei",
     "inntekt.bostotte.sporsmal.true": "avbryt.ja",
     "inntekt.bostotte.utbetaling": "inntekt.bostotte.utbetaling.stringValue",
     "inntekt.eierandeler.false": "avbryt.nei",
