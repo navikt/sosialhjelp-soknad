@@ -33,7 +33,7 @@ export default function App() {
     useLocalStorageLangSelector();
     // FIXME: Injeksjon av dekoratoren på klientsiden er ikke optimalt
     injectDecoratorClientSide({
-        env: "dev",
+        env: process.env.NEXT_PUBLIC_DIGISOS_ENV == "prod-sbs" ? "prod" : "dev",
         params: {
             availableLanguages: [
                 {locale: "nb", url: BASE_PATH, handleInApp: true},
