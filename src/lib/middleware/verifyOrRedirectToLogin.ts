@@ -39,7 +39,8 @@ export async function verifyOrRedirectToLogin({
         const responseBody = await res.json();
         const nextUrl = new URL(url);
 
-        const redirect = nextUrl.protocol + "//" + origin + LINK_PAGE_PATH;
+        const scheme = origin === "www.nav.no" ? "https" : "http";
+        const redirect = `${scheme}://${origin}${LINK_PAGE_PATH}`;
         const redirectQuery = `?redirect=${redirect}?goto=${getGotoParameter(nextUrl)}`;
 
         return NextResponse.redirect(new URL(responseBody.loginUrl + redirectQuery));
