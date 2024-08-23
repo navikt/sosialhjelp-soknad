@@ -13,7 +13,7 @@ function getHeadersFromCookies(cookies: RequestCookies): Headers {
     return new Headers({cookie});
 }
 
-async function canaryRequest(cookies: RequestCookies): Promise<Response> {
+export async function canaryRequest(cookies: RequestCookies): Promise<Response> {
     try {
         return await fetch(`${digisosConfig.baseURL}informasjon/session`, {headers: getHeadersFromCookies(cookies)});
     } catch (e) {
