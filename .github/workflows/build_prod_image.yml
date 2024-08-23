@@ -1,5 +1,7 @@
 name: Build prod-sbs image - HUSK MANUELL DEPLOY TIL PROD!
 on:
+    workflow_dispatch:
+
     workflow_run:
         workflows: ["Build code and run test"]
         branches: [master]
