@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {BACKEND_FRONTEND_KEY_MAP} from "./BACKEND_FRONTEND_KEY_MAP";
-import {logError} from "../../../lib/log/loggerUtils";
+import {logWarning} from "../../../lib/log/loggerUtils";
 
 interface UseBackendTranslationResult {
     /**
@@ -33,7 +33,7 @@ export const useBackendTranslation = (): UseBackendTranslationResult => {
         }
 
         if (!i18n.exists(languageKey)) {
-            logError(`i18n key "${languageKey}" not found in frontend i18n, is BACKEND_FRONTEND_KEY_MAP up to date?`);
+            logWarning(`i18n key "${languageKey}" not found in frontend i18n, is BACKEND_FRONTEND_KEY_MAP up to date?`);
             return "";
         }
 

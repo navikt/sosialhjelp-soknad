@@ -37,7 +37,6 @@ export const NySoknadInfo = () => {
         try {
             const {brukerBehandlingId, useKortSoknad} = await opprettSoknad({soknadstype});
             await hentXsrfCookie(brukerBehandlingId);
-            // TODO: Få info om kort eller lang søknad i responsen og evaluer her
             if (useKortSoknad) {
                 navigate(`../skjema/kort/${brukerBehandlingId}/1`);
             } else {
