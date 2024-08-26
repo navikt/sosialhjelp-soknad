@@ -241,14 +241,13 @@ export const skjema = {
             },
         },
         nødhjelp: {
-            beskrivelse:
-                "Viss du ikkje har pengar til mat eller ein stad å overnatte det neste døgnet, bør du sende søknaden og ringe NAV på 55 55 33 33.",
+            beskrivelse: "Du kan søkje nødhjelp viss du ikkje har pengar til det mest nødvendige det neste døgnet.",
         },
         underkategorier: {
             nodhjelp: {
                 bosted: "Har ikkje ein stad å bu i natt",
                 mat: "Har ikkje pengar til mat i dag",
-                strøm: "Straumen er stengt / stengast i dag eller i morgon",
+                strøm: "Straumen er stengt, eller stengast i dag eller i morgon",
             },
         },
     },
@@ -1588,6 +1587,12 @@ export const skjema = {
         lagret: "Sist lagra",
     },
     situasjon: {
+        kategorier: {
+            oppsummeringstekst: {
+                label: "Tekst som sendast til NAV-kontoret:",
+                resten: "Eg søkjer om penger til:",
+            },
+        },
         kort: {
             dokumentasjon: {
                 description:
@@ -1603,6 +1608,9 @@ export const skjema = {
                 label: "Kva har endra seg i situasjonen din?",
             },
             tittel: "Din situasjon",
+        },
+        nodsituasjon: {
+            oppsummering: "Eg er i ein naudssituasjon og ",
         },
     },
     skjema: {

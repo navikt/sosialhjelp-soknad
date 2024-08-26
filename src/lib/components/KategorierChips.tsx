@@ -11,6 +11,7 @@ interface Props {
     toggle: (category: string, subCategory?: string) => void;
     register: UseFormReturn<BegrunnelseFrontend>["register"];
     errors: FormState<BegrunnelseFrontend>["errors"];
+    hvaSokesOm?: string;
 }
 
 const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) => {
@@ -21,8 +22,52 @@ const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) => {
     return <>{t(error.message as DigisosLanguageKey)}</>;
 };
 
-const KategorierChips = ({categories, toggle, register, errors}: Props): React.JSX.Element => {
+interface CategoriesSummaryProps {
+    categories: SelectableCategory[];
+    hvaSokesOm?: string;
+}
+
+const CategoriesSummary = ({categories, hvaSokesOm}: CategoriesSummaryProps) => {
     const {t} = useTranslation("skjema");
+    const annet = categories.find((cat) => cat.text === "Annet");
+    const nodhjelp = categories.find((category) => category.text === "Nødhjelp");
+    const nodhjelpText =
+        nodhjelp && nodhjelp.selected && nodhjelp.subCategories?.length
+            ? t("situasjon.nodsituasjon.oppsummering") +
+              nodhjelp.subCategories
+                  ?.filter((subCategory) => subCategory.selected)
+                  ?.map((subCat) => (t(subCat.key) satisfies string).toLowerCase())
+                  ?.join(", ")
+            : null;
+    const annetText = annet && annet.selected ? t(annet.key) : null;
+    const theRest = categories
+        .filter((cat) => cat.text !== "Nødhjelp" && cat.text !== "Annet" && cat.selected)
+        .map((cat) => t(cat.key))
+        .join(", ");
+    return (
+        <Box background="surface-action-subtle" padding="4">
+            <VStack gap="4">
+                {nodhjelpText && <BodyShort>{nodhjelpText}.</BodyShort>}
+                {theRest.length > 0 ? (
+                    <Box>
+                        <BodyShort>{t("situasjon.kategorier.oppsummeringstekst.resten")}</BodyShort>
+                        <BodyShort>{theRest}.</BodyShort>
+                    </Box>
+                ) : null}
+                {annetText && (
+                    <Box>
+                        <BodyShort>{annetText}:</BodyShort>
+                        <BodyShort>{hvaSokesOm}</BodyShort>
+                    </Box>
+                )}
+            </VStack>
+        </Box>
+    );
+};
+
+const KategorierChips = ({categories, toggle, register, errors, hvaSokesOm}: Props): React.JSX.Element => {
+    const {t} = useTranslation("skjema");
+    const selectedCategories = categories.filter((category) => category.selected);
     return (
         <div>
             <Label htmlFor={"kategorier"} id={"kategorier-label"}>
@@ -70,6 +115,14 @@ const KategorierChips = ({categories, toggle, register, errors}: Props): React.J
                     </Box>
                 ))}
             </HStack>
+            {selectedCategories.length > 0 ? (
+                <VStack className="mt-6">
+                    <Label htmlFor={"kategorier"} id={"kategorier-label"}>
+                        {t("situasjon.kategorier.oppsummeringstekst.label")}
+                    </Label>
+                    <CategoriesSummary categories={categories} hvaSokesOm={hvaSokesOm} />
+                </VStack>
+            ) : null}
         </div>
     );
 };
