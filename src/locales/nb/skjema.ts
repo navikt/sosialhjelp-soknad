@@ -636,12 +636,6 @@ export const skjema = {
         informasjon: "Skjemaet du etterspurte ble ikke funnet i våre systemer.",
         tittel: "Skjema ikke funnet",
     },
-    info: {
-        innsending: {
-            soknader:
-                "På grunn av tekniske problemer var det ikke mulig å sende inn søknader fredag 16.08. Har du en påbegynt søknad kan du finne den nedenfor, og det er mulig å sende inn denne søknaden nå.",
-        },
-    },
     informasjon: {
         hilsen: {
             hei: "Hei {{fornavn}}",
@@ -1649,7 +1643,7 @@ export const skjema = {
         },
         hjelpetekst: {
             ingress:
-                "Hvis du oppholder deg på institusjon (F.eks. sykehus, psykiatri, rusbehandling, fengsel eller krisesenter), skal du oppgi adressen du hadde før du kom til institusjonen.",
+                "Hvis du oppholder deg på institusjon (F.eks. sykehus, fengsel, psykiatri, eller rusbehandling), skal du oppgi adressen du hadde før du kom til institusjonen.",
             tekst: "Du må oppgi adressen der du bor for at søknaden skal bli sendt til riktig NAV-kontor.",
         },
         infotekst: {

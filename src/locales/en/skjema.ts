@@ -654,12 +654,6 @@ export const skjema = {
         informasjon: "The form you requested was not found in our systems.",
         tittel: "Form not found",
     },
-    info: {
-        innsending: {
-            soknader:
-                "Due to technical problems, it was not possible to submit applications on Friday 16.08. If you have a started application, you can find it below, and it is possible to submit this application now.",
-        },
-    },
     informasjon: {
         hilsen: {
             hei: "Hello {{fornavn}}",
@@ -1669,7 +1663,7 @@ export const skjema = {
         },
         hjelpetekst: {
             ingress:
-                "If you live in an institution (E.g. hospital, psychiatric or substance abuse treatment, prison or crisis center), please state your last address before arriving at the institution.",
+                "If you live in an institution (E.g. hospital, prison, psychiatric or substance abuse treatment), please state your last address before arriving at the institution.",
             tekst: "You must enter your residential address so that the application can be sent to the correct NAV office.",
         },
         infotekst: {

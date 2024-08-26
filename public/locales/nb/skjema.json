@@ -1360,6 +1360,5 @@
     "situasjon.kort.hvaErEndret.label": "Hva har endret seg i situasjonen din?",
     "situasjon.kort.hvaErEndret.description": "Eksempel: \"Jeg har fått bostøtte og har derfor høyere inntekt.\"",
     "situasjon.kort.dokumentasjon.title": "Dokumentasjon av endringen",
-    "situasjon.kort.dokumentasjon.description": "Her kan du laste opp dokumentasjon på hva som har endret seg i din situasjon. Du kan legge ved bilder/skjermbilder.",
-    "info.innsending.soknader": "På grunn av tekniske problemer var det ikke mulig å sende inn søknader fredag 16.08. Har du en påbegynt søknad kan du finne den nedenfor, og det er mulig å sende inn denne søknaden nå."
+    "situasjon.kort.dokumentasjon.description": "Her kan du laste opp dokumentasjon på hva som har endret seg i din situasjon. Du kan legge ved bilder/skjermbilder."
 }

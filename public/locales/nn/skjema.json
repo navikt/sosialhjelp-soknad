@@ -1361,6 +1361,5 @@
     "situasjon.kort.hvaErEndret.label": "Kva har endra seg i situasjonen din?",
     "situasjon.kort.hvaErEndret.description": "Døme: \"Eg har fått bostønad og har difor høgare inntekt.\"",
     "situasjon.kort.dokumentasjon.title": "Dokumentasjon av endringa",
-    "situasjon.kort.dokumentasjon.description": "Her kan du lasta opp dokumentasjon på kva som har endra seg i situasjonen din. Du kan legge ved bilete/skjermbilete",
-    "info.innsending.soknader": "På grunn av tekniske problem var det ikkje mogleg å sende inn søknader fredag 16.08. Har du ein påbegynt søknad kan du finne den nedanfor, og det er mogleg å sende inn denne søknaden no."
+    "situasjon.kort.dokumentasjon.description": "Her kan du lasta opp dokumentasjon på kva som har endra seg i situasjonen din. Du kan legge ved bilete/skjermbilete"
 }
