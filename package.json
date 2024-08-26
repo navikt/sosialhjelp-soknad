@@ -28,6 +28,7 @@
         "downshift": "^9.0.8",
         "express": "^4.19.2",
         "globals": "^15.9.0",
+        "html-react-parser": "^5.1.13",
         "i18next": "^23.12.2",
         "i18next-browser-languagedetector": "^8.0.0",
         "i18next-http-backend": "^2.5.2",

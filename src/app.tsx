@@ -25,28 +25,11 @@ import DinSituasjon from "./sider/kort/03-situasjon";
 import {BASE_PATH} from "./lib/constants";
 
 import {useLocalStorageLangSelector} from "./lib/useLocalStorageLangSelector.ts";
-import {injectDecoratorClientSide} from "@navikt/nav-dekoratoren-moduler";
 
 const queryClient = new QueryClient();
 
 export default function App() {
     useLocalStorageLangSelector();
-    // FIXME: Injeksjon av dekoratoren på klientsiden er ikke optimalt
-    injectDecoratorClientSide({
-        env: process.env.NEXT_PUBLIC_DIGISOS_ENV == "prod-sbs" ? "prod" : "dev",
-        params: {
-            availableLanguages: [
-                {locale: "nb", url: BASE_PATH, handleInApp: true},
-                {locale: "nn", url: BASE_PATH, handleInApp: true},
-                {locale: "en", url: BASE_PATH, handleInApp: true},
-            ],
-            simple: true,
-            feedback: false,
-            chatbot: false,
-            shareScreen: false,
-            logoutWarning: true,
-        },
-    });
 
     return (
         <Suspense fallback={<ApplicationSpinner />}>
