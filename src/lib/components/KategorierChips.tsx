@@ -32,7 +32,7 @@ const CategoriesSummary = ({categories, hvaSokesOm}: CategoriesSummaryProps) => 
     const annet = categories.find((cat) => cat.text === "Annet");
     const nodhjelp = categories.find((category) => category.text === "Nødhjelp");
     const nodhjelpText =
-        nodhjelp && nodhjelp.selected && nodhjelp.subCategories?.length
+        nodhjelp && nodhjelp.selected && nodhjelp.subCategories?.filter((subCat) => subCat.selected).length
             ? t("situasjon.nodsituasjon.oppsummering") +
               nodhjelp.subCategories
                   ?.filter((subCategory) => subCategory.selected)
@@ -44,30 +44,37 @@ const CategoriesSummary = ({categories, hvaSokesOm}: CategoriesSummaryProps) => 
         .filter((cat) => cat.text !== "Nødhjelp" && cat.text !== "Annet" && cat.selected)
         .map((cat) => t(cat.key))
         .join(", ");
+    if (!nodhjelpText && !annetText && theRest.length === 0) {
+        return null;
+    }
     return (
-        <Box background="surface-action-subtle" padding="4">
-            <VStack gap="4">
-                {nodhjelpText && <BodyShort>{nodhjelpText}.</BodyShort>}
-                {theRest.length > 0 ? (
-                    <Box>
-                        <BodyShort>{t("situasjon.kategorier.oppsummeringstekst.resten")}</BodyShort>
-                        <BodyShort>{theRest}.</BodyShort>
-                    </Box>
-                ) : null}
-                {annetText && (
-                    <Box>
-                        <BodyShort>{annetText}:</BodyShort>
-                        <BodyShort>{hvaSokesOm}</BodyShort>
-                    </Box>
-                )}
-            </VStack>
-        </Box>
+        <VStack className="mt-6">
+            <Label htmlFor={"kategorier"} id={"kategorier-label"}>
+                {t("situasjon.kategorier.oppsummeringstekst.label")}
+            </Label>
+            <Box background="surface-action-subtle" padding="4">
+                <VStack gap="4">
+                    {nodhjelpText && <BodyShort>{nodhjelpText}.</BodyShort>}
+                    {theRest.length > 0 ? (
+                        <Box>
+                            <BodyShort>{t("situasjon.kategorier.oppsummeringstekst.resten")}</BodyShort>
+                            <BodyShort>{theRest}.</BodyShort>
+                        </Box>
+                    ) : null}
+                    {annetText && (
+                        <Box>
+                            <BodyShort>{annetText}:</BodyShort>
+                            <BodyShort>{hvaSokesOm}</BodyShort>
+                        </Box>
+                    )}
+                </VStack>
+            </Box>
+        </VStack>
     );
 };
 
 const KategorierChips = ({categories, toggle, register, errors, hvaSokesOm}: Props): React.JSX.Element => {
     const {t} = useTranslation("skjema");
-    const selectedCategories = categories.filter((category) => category.selected);
     return (
         <div>
             <Label htmlFor={"kategorier"} id={"kategorier-label"}>
@@ -115,14 +122,7 @@ const KategorierChips = ({categories, toggle, register, errors, hvaSokesOm}: Pro
                     </Box>
                 ))}
             </HStack>
-            {selectedCategories.length > 0 ? (
-                <VStack className="mt-6">
-                    <Label htmlFor={"kategorier"} id={"kategorier-label"}>
-                        {t("situasjon.kategorier.oppsummeringstekst.label")}
-                    </Label>
-                    <CategoriesSummary categories={categories} hvaSokesOm={hvaSokesOm} />
-                </VStack>
-            ) : null}
+            <CategoriesSummary categories={categories} hvaSokesOm={hvaSokesOm} />
         </div>
     );
 };
