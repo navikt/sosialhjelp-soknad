@@ -68,7 +68,7 @@ export default function App() {
                                         <Route element={<SideIkkeFunnet />} />
                                     </Route>
                                 </Route>
-                            </Route>{" "}
+                            </Route>
                         </Routes>
                     </BrowserRouter>
                     <ReactQueryDevtools initialIsOpen={false} />
