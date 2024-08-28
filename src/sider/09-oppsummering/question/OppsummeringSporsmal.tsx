@@ -7,6 +7,7 @@ import {useBackendTranslation} from "./useBackendTranslationResult";
 
 export const OppsummeringSporsmal = ({sporsmal}: {sporsmal: Sporsmal}) => {
     const {tBackend} = useBackendTranslation();
+    console.log("OppsummeringSporsmal: ", sporsmal);
     return (
         <div>
             {sporsmal.tittel && <Label spacing>{tBackend(sporsmal.tittel)}</Label>}

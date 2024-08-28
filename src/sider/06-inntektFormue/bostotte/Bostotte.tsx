@@ -50,6 +50,7 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
                         name={"bostotte-samtykke"}
                         legend={t("inntekt.bostotte.gi_samtykke.overskrift")}
                         description={!hideSamtykkeDescription && t("inntekt.bostotte.gi_samtykke.tekst")}
+                        defaultValue={dataHentet}
                         onChange={(checked) => setSamtykke(checked)}
                     />
                     {dataHentet && <BostotteData />}

@@ -10,6 +10,7 @@ export const useBosituasjon = () => {
     const {mutate} = useUpdateBosituasjon();
 
     const setBosituasjon = async (nyBosituasjon: Partial<BosituasjonFrontend>) => {
+        console.log("bosituasjon satt: ", nyBosituasjon);
         const data = {...(bosituasjon as BosituasjonFrontend), ...nyBosituasjon};
         mutate({behandlingsId, data});
         queryClient.setQueryData(queryKey, data);
