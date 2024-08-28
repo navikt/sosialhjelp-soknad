@@ -210,9 +210,8 @@ export const skjema = {
             labelOld: "Skriv i stikkordsform kva du søkjer om",
         },
         hvorfor: {
-            description:
-                'Døme på tekst: "Eg er arbeidssøkjar og har ikkje pengar til å kjøpe mat eller betale husleige."',
-            label: "Fortel oss kort om situasjonen din",
+            description: "om situasjonen din og kva du søkjer om.",
+            label: "Fortel oss mer",
             labelOld: "Grunngi kort søknaden",
         },
         kategorier: {
