@@ -1,6 +1,9 @@
 import {VedleggFrontendType} from "../../generated/model";
 import {DokumentasjonTexts} from "../types";
-export const dokumentasjon: Record<VedleggFrontendType, DokumentasjonTexts> = {
+
+export type VedleggFrontendTypeMinusUferdig = Exclude<VedleggFrontendType, "kort|behov" | "kort|situasjonsendring">;
+
+export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, DokumentasjonTexts> = {
     "lonnslipp|arbeid": {
         brutto: {
             label: "Løn før skatt siste månad",
