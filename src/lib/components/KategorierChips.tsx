@@ -83,8 +83,8 @@ const KategorierChips = ({categories, toggle, register, errors, hvaSokesOm}: Pro
             <HStack align="start" gap="2" id={"kategorier"} aria-labelledby={"kategorier-label"} className={"pt-4"}>
                 {categories.map((category) => (
                     <Box
-                        as={"button"}
-                        className={`flex rounded-lg ${category.selected ? (category.text === "Nødhjelp" ? "bg-surface-warning-subtle" : "bg-blue-200") : "bg-blue-50"} ${
+                        role="button"
+                        className={`flex rounded-lg cursor-pointer ${category.selected ? (category.text === "Nødhjelp" ? "bg-surface-warning-subtle" : "bg-blue-200") : "bg-blue-50"} ${
                             category.selected && ["Annet", "Bolig", "Nødhjelp"].includes(category.text) ? "w-full" : ""
                         }`}
                         key={category.text}
