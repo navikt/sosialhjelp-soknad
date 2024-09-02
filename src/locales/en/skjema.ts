@@ -211,8 +211,8 @@ export const skjema = {
             labelOld: "Using key words, state what you are applying for",
         },
         hvorfor: {
-            description: 'Example of text: "I am a jobseeker and do not have money to purchase food or to pay rent."',
-            label: "Tell us briefly about your situation",
+            description: "about your situation and what you are applying for.",
+            label: "Tell us more",
             labelOld: "Give a brief reason for the application",
         },
         kategorier: {

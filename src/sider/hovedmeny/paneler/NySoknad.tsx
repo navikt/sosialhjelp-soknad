@@ -1,16 +1,16 @@
 "use client";
-import {Alert, Box, Button, ExpansionCard, Heading, Loader, Radio, RadioGroup} from "@navikt/ds-react";
+import {Alert, Button, ExpansionCard, Heading, Loader} from "@navikt/ds-react";
 import * as React from "react";
+import {useState} from "react";
 import {FillForms} from "@navikt/ds-icons";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
 import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
-import {useState} from "react";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {NedetidPanel} from "../../../lib/components/NedetidPanel";
-import {useFeatureFlags} from "../../../lib/config";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
+import {SoknadstypeValg} from "./SoknadstypeValg.tsx";
 
 export const NySoknadInfo = () => {
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
@@ -67,28 +67,6 @@ export const NySoknadInfo = () => {
                 </Button>
             </div>
         </>
-    );
-};
-
-interface SoknadstypeValgProps {
-    valg: "kort" | "standard" | null;
-    setValg: (valg: "kort" | "standard") => void;
-}
-
-const SoknadstypeValg = ({valg, setValg}: SoknadstypeValgProps) => {
-    const {soknadstypeValg} = useFeatureFlags();
-    if (!soknadstypeValg) {
-        return null;
-    }
-    return (
-        <Box className={"flex justify-center mb-8"}>
-            <RadioGroup legend={"Velg søknadstype"} value={valg} onChange={(value) => setValg(value)}>
-                <div className="bg-lightblue-50 p-2 rounded-md">
-                    <Radio value={"standard"}>Standard</Radio>
-                    <Radio value={"kort"}>Kort</Radio>
-                </div>
-            </RadioGroup>
-        </Box>
     );
 };
 
