@@ -24,7 +24,8 @@ export async function canaryRequest(cookies: RequestCookies): Promise<Response> 
 export async function verifyOrRedirectToLogin({
     url,
     cookies,
-}: Pick<NextRequest, "url" | "cookies">): Promise<NextResponse> {
+    retries = 5,
+}: Pick<NextRequest, "url" | "cookies"> & {retries: number}): Promise<NextResponse> {
     const origin = headers().get("x-forwarded-host") ?? headers().get("host");
 
     if (!origin) return NextResponse.next();
@@ -34,8 +35,10 @@ export async function verifyOrRedirectToLogin({
     const res = await canaryRequest(cookies);
 
     if (res.ok) {
+        if (retries != 5) console.log("Lyktes etter " + (5 - retries) + " forsøk");
         return NextResponse.next();
     } else if (res.status === 401) {
+        if (retries != 5) console.log("Lyktes etter " + (5 - retries) + " forsøk");
         const responseBody = await res.json();
         const nextUrl = new URL(url);
 
@@ -45,6 +48,12 @@ export async function verifyOrRedirectToLogin({
 
         return NextResponse.redirect(new URL(responseBody.loginUrl + redirectQuery));
     } else {
-        throw new Error("Failed to verify session", {cause: res});
+        if (retries > 0) {
+            await new Promise((resolve) => setTimeout(resolve, 100));
+            console.warn("Retrying session verification", {retries});
+            return verifyOrRedirectToLogin({url, cookies, retries: retries - 1});
+        } else {
+            throw new Error("Failed to verify session", {cause: res});
+        }
     }
 }
