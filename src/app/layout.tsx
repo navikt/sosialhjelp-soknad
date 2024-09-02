@@ -3,6 +3,8 @@ import {fetchDecoratorHtml} from "@navikt/nav-dekoratoren-moduler/ssr";
 
 import {DECORATOR_SETTINGS} from "../decoratorSettings.tsx";
 import parse from "html-react-parser";
+import {Driftsmeldinger} from "./Driftsmeldinger.tsx";
+
 export const metadata: Metadata = {
     title: "Søknad om økonomisk sosialhjelp",
 };
@@ -15,6 +17,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             <head>{parse(Decorator.DECORATOR_STYLES)}</head>
             <body>
                 <div suppressHydrationWarning dangerouslySetInnerHTML={{__html: Decorator.DECORATOR_HEADER}} />
+                <Driftsmeldinger />
                 <div id="root">{children}</div>
                 <div suppressHydrationWarning dangerouslySetInnerHTML={{__html: Decorator.DECORATOR_FOOTER}} />
                 {parse(Decorator.DECORATOR_SCRIPTS, {
