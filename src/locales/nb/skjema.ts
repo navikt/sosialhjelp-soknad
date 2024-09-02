@@ -192,9 +192,8 @@ export const skjema = {
             labelOld: "Skriv med stikkord hva du søker om",
         },
         hvorfor: {
-            description:
-                'Eksempel på tekst: "Jeg er arbeidssøker og har ikke penger til å kjøpe mat eller betale husleie."',
-            label: "Fortell oss kort om situasjonen din",
+            description: "om situasjonen din og hva du søker om.",
+            label: "Fortell oss mer",
             labelOld: "Gi en kort begrunnelse for søknaden",
         },
         kategorier: {
@@ -223,14 +222,13 @@ export const skjema = {
             },
         },
         nødhjelp: {
-            beskrivelse:
-                "Hvis du ikke har penger til mat eller et sted å overnatte det neste døgnet, bør du sende søknaden og ringe NAV på 55 55 33 33.",
+            beskrivelse: "Du kan søke nødhjelp hvis du ikke har penger til det mest nødvendige det neste døgnet.",
         },
         underkategorier: {
             nodhjelp: {
                 bosted: "Har ikke et sted å bo i natt",
                 mat: "Har ikke penger til mat i dag",
-                strøm: "Strømmen er stengt / stenges i dag eller i morgen",
+                strøm: "Strømmen er stengt, eller stenges i dag eller i morgen",
             },
         },
     },
@@ -1571,6 +1569,12 @@ export const skjema = {
         lagret: "Sist lagret",
     },
     situasjon: {
+        kategorier: {
+            oppsummeringstekst: {
+                label: "Tekst som sendes til NAV-kontoret:",
+                resten: "Jeg søker om penger til:",
+            },
+        },
         kort: {
             dokumentasjon: {
                 description:
@@ -1586,6 +1590,9 @@ export const skjema = {
                 label: "Hva har endret seg i situasjonen din?",
             },
             tittel: "Din situasjon",
+        },
+        nodsituasjon: {
+            oppsummering: "Jeg er i en nødsituasjon og ",
         },
     },
     skjema: {

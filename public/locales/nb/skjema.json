@@ -81,8 +81,8 @@
     "begrunnelse.hva.descriptionOld": "For eksempel penger til/utgifter for å leve og husleie",
     "begrunnelse.hva.label": "Hva søker du om?",
     "begrunnelse.hva.labelOld": "Skriv med stikkord hva du søker om",
-    "begrunnelse.hvorfor.description": "Eksempel på tekst: \"Jeg er arbeidssøker og har ikke penger til å kjøpe mat eller betale husleie.\"",
-    "begrunnelse.hvorfor.label": "Fortell oss kort om situasjonen din",
+    "begrunnelse.hvorfor.description": "om situasjonen din og hva du søker om.",
+    "begrunnelse.hvorfor.label": "Fortell oss mer",
     "begrunnelse.hvorfor.labelOld": "Gi en kort begrunnelse for søknaden",
     "begrunnelsebolk.tittel": "Behov",
     "bilstonad.global.tittel": "Søknad om støtte/stønad til anskaffelse av bil eller spesialutstyr/tilpasning",
@@ -1349,9 +1349,9 @@
     "begrunnelse.kategorier.annet": "Annet",
     "begrunnelse.underkategorier.nodhjelp.mat": "Har ikke penger til mat i dag",
     "begrunnelse.underkategorier.nodhjelp.bosted": "Har ikke et sted å bo i natt",
-    "begrunnelse.underkategorier.nodhjelp.strøm": "Strømmen er stengt / stenges i dag eller i morgen",
+    "begrunnelse.underkategorier.nodhjelp.strøm": "Strømmen er stengt, eller stenges i dag eller i morgen",
     "begrunnelse.annet.beskrivelse": "Hva annet søker du om penger til?",
-    "begrunnelse.nødhjelp.beskrivelse": "Hvis du ikke har penger til mat eller et sted å overnatte det neste døgnet, bør du sende søknaden og ringe NAV på 55 55 33 33.",
+    "begrunnelse.nødhjelp.beskrivelse": "Du kan søke nødhjelp hvis du ikke har penger til det mest nødvendige det neste døgnet.",
     "begrunnelse.kort.behov.dokumentasjon.tittel": "Dokumentasjon",
     "begrunnelse.kort.behov.dokumentasjon.beskrivelse": "Her kan du laste opp faktura, kvittering eller kostnadsoverslag for det du søker om penger til. Du kan ta bilder/skjermbilder.",
     "situasjon.kort.tittel": "Din situasjon",
@@ -1360,5 +1360,8 @@
     "situasjon.kort.hvaErEndret.label": "Hva har endret seg i situasjonen din?",
     "situasjon.kort.hvaErEndret.description": "Eksempel: \"Jeg har fått bostøtte og har derfor høyere inntekt.\"",
     "situasjon.kort.dokumentasjon.title": "Dokumentasjon av endringen",
-    "situasjon.kort.dokumentasjon.description": "Her kan du laste opp dokumentasjon på hva som har endret seg i din situasjon. Du kan legge ved bilder/skjermbilder."
+    "situasjon.kort.dokumentasjon.description": "Her kan du laste opp dokumentasjon på hva som har endret seg i din situasjon. Du kan legge ved bilder/skjermbilder.",
+    "situasjon.nodsituasjon.oppsummering": "Jeg er i en nødsituasjon og ",
+    "situasjon.kategorier.oppsummeringstekst.label": "Tekst som sendes til NAV-kontoret:",
+    "situasjon.kategorier.oppsummeringstekst.resten": "Jeg søker om penger til:"
 }

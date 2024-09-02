@@ -19,7 +19,6 @@ type SoknadMiljo = (typeof SoknadMiljoTypes)[number];
 type SoknadConfig = {
     showDevPanel: boolean;
     logLocally: boolean;
-    clientSideDecorator: boolean;
     withCredentials: boolean;
 
     baseURL: string;
@@ -47,7 +46,6 @@ const configMap: Record<SoknadMiljo, SoknadConfig> = {
         },
         logLocally: true,
         showDevPanel: true,
-        clientSideDecorator: true,
         withCredentials: true,
 
         baseURL: "http://localhost:8181/sosialhjelp/soknad-api/",
@@ -67,7 +65,6 @@ const configMap: Record<SoknadMiljo, SoknadConfig> = {
         },
         showDevPanel: false,
         logLocally: false,
-        clientSideDecorator: false,
         withCredentials: true,
         baseURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad-api/",
         innsynURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn/",
@@ -86,7 +83,6 @@ const configMap: Record<SoknadMiljo, SoknadConfig> = {
         },
         showDevPanel: true,
         logLocally: false,
-        clientSideDecorator: false,
         withCredentials: false,
         baseURL: "https://www-q0.dev.nav.no/sosialhjelp/login-api/soknad-api/",
         innsynURL: "https://www-q0.dev.nav.no/sosialhjelp/innsyn/",
@@ -104,7 +100,6 @@ const configMap: Record<SoknadMiljo, SoknadConfig> = {
             soknadstypeValg: false,
         },
         showDevPanel: false,
-        clientSideDecorator: false,
         logLocally: false,
         withCredentials: false,
         baseURL: "https://www.nav.no/sosialhjelp/login-api/soknad-api/",

@@ -43,6 +43,7 @@ const Behov = (): React.JSX.Element => {
         formState: {errors},
         setValue,
         getValues,
+        watch,
     } = useForm<BegrunnelseFrontend>({
         resolver: zodResolver(behovSchema),
         mode: "onChange",
@@ -61,7 +62,13 @@ const Behov = (): React.JSX.Element => {
                     <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
                         {isError && <Feilmelding />}
                         {isKategorierEnabled && (
-                            <KategorierChips errors={errors} toggle={toggle} register={register} categories={reducer} />
+                            <KategorierChips
+                                errors={errors}
+                                toggle={toggle}
+                                register={register}
+                                categories={reducer}
+                                hvaSokesOm={watch("hvaSokesOm")}
+                            />
                         )}
                         {!isKategorierEnabled ? (
                             <Textarea
@@ -72,6 +79,7 @@ const Behov = (): React.JSX.Element => {
                                 description={<BodyShort>{t("begrunnelse.hva.description")}</BodyShort>}
                             />
                         ) : null}
+                        {}
                         <FileUploadBox
                             sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                             undertekst={t("begrunnelse.kort.behov.dokumentasjon.beskrivelse")}

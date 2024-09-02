@@ -211,8 +211,8 @@ export const skjema = {
             labelOld: "Using key words, state what you are applying for",
         },
         hvorfor: {
-            description: 'Example of text: "I am a jobseeker and do not have money to purchase food or to pay rent."',
-            label: "Tell us briefly about your situation",
+            description: "about your situation and what you are applying for.",
+            label: "Tell us more",
             labelOld: "Give a brief reason for the application",
         },
         kategorier: {
@@ -242,13 +242,13 @@ export const skjema = {
         },
         nødhjelp: {
             beskrivelse:
-                "If you do not have money for food or a place to stay overnight in the next 24 hours, you should submit the application and call NAV at 55 55 33 33.",
+                "You can apply for emergency assistance if you do not have money for the most necessary things in the next 24 hours.",
         },
         underkategorier: {
             nodhjelp: {
-                bosted: "No place to stay tonight",
-                mat: "No money for food today",
-                strøm: "Electricity is cut off / will be cut off today or tomorrow",
+                bosted: "I don't have any place to stay tonight",
+                mat: "I have no money for food today",
+                strøm: "The electricity is cut off, or will be cut off today or tomorrow",
             },
         },
     },
@@ -1596,6 +1596,12 @@ export const skjema = {
         lagret: "Last saved",
     },
     situasjon: {
+        kategorier: {
+            oppsummeringstekst: {
+                label: "Text that will be sent to the NAV office:",
+                resten: "I apply for money for:",
+            },
+        },
         kort: {
             dokumentasjon: {
                 description:
@@ -1611,6 +1617,9 @@ export const skjema = {
                 label: "What has changed in your situation?",
             },
             tittel: "Your situation",
+        },
+        nodsituasjon: {
+            oppsummering: "I'm in an emergency and ",
         },
     },
     skjema: {

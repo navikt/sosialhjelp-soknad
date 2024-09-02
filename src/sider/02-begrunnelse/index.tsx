@@ -52,6 +52,7 @@ export const Begrunnelse = () => {
         formState: {errors},
         setValue,
         getValues,
+        watch,
     } = useForm<BegrunnelseFrontend>({
         defaultValues,
         resolver: zodResolver(begrunnelseSchema),
@@ -71,7 +72,13 @@ export const Begrunnelse = () => {
                     <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>
                         {isError && <Feilmelding />}
                         {isKategorierEnabled && (
-                            <KategorierChips errors={errors} toggle={toggle} register={register} categories={reducer} />
+                            <KategorierChips
+                                errors={errors}
+                                toggle={toggle}
+                                register={register}
+                                categories={reducer}
+                                hvaSokesOm={watch("hvaSokesOm")}
+                            />
                         )}
                         {!isKategorierEnabled && (
                             <Textarea
