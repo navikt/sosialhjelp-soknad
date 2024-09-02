@@ -25,7 +25,7 @@ export async function verifyOrRedirectToLogin({
     url,
     cookies,
     retries = 5,
-}: Pick<NextRequest, "url" | "cookies"> & {retries: number}): Promise<NextResponse> {
+}: Pick<NextRequest, "url" | "cookies"> & {retries?: number}): Promise<NextResponse> {
     const origin = headers().get("x-forwarded-host") ?? headers().get("host");
 
     if (!origin) return NextResponse.next();
