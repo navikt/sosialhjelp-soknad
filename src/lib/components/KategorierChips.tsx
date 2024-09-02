@@ -73,9 +73,8 @@ const CategoriesSummary = ({categories, hvaSokesOm}: CategoriesSummaryProps) => 
     );
 };
 
-const KategorierChips = ({categories, toggle, register, errors, hvaSokesOm}: Props) => {
+const KategorierChips = ({categories, toggle, register, errors, hvaSokesOm}: Props): React.JSX.Element => {
     const {t} = useTranslation("skjema");
-
     return (
         <div>
             <Label htmlFor={"kategorier"} id={"kategorier-label"}>
@@ -83,22 +82,12 @@ const KategorierChips = ({categories, toggle, register, errors, hvaSokesOm}: Pro
             </Label>
             <HStack align="start" gap="2" id={"kategorier"} aria-labelledby={"kategorier-label"} className={"pt-4"}>
                 {categories.map((category) => (
-                    <div
-                        className={`flex rounded-lg ${
-                            category.selected
-                                ? category.text === "Nødhjelp"
-                                    ? "bg-surface-warning-subtle"
-                                    : "bg-blue-200"
-                                : "bg-blue-50"
-                        } ${category.selected && ["Annet", "Bolig", "Nødhjelp"].includes(category.text) ? "w-full" : ""}`}
+                    <Box
+                        className={`flex rounded-lg cursor-pointer ${category.selected ? (category.text === "Nødhjelp" ? "bg-surface-warning-subtle" : "bg-blue-200") : "bg-blue-50"} ${
+                            category.selected && ["Annet", "Bolig", "Nødhjelp"].includes(category.text) ? "w-full" : ""
+                        }`}
                         key={category.text}
-                        role="button"
-                        tabIndex={0}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            toggle(category.text);
-                        }}
-                        style={{cursor: "pointer", padding: "1rem"}}
+                        onClick={() => toggle(category.text)}
                     >
                         <VStack gap="2" margin="6" className={`w-full`}>
                             <HStack gap="2" align="center">
@@ -117,6 +106,7 @@ const KategorierChips = ({categories, toggle, register, errors, hvaSokesOm}: Pro
                                         {...register("hvaSokesOm")}
                                         id={"hvaSokesOm"}
                                         onClick={(e) => {
+                                            e.preventDefault();
                                             e.stopPropagation();
                                         }}
                                         className="w-full"
@@ -128,7 +118,7 @@ const KategorierChips = ({categories, toggle, register, errors, hvaSokesOm}: Pro
                                 </VStack>
                             )}
                         </VStack>
-                    </div>
+                    </Box>
                 ))}
             </HStack>
             <CategoriesSummary categories={categories} hvaSokesOm={hvaSokesOm} />
@@ -157,39 +147,21 @@ const SubCategories = ({category, toggle}: SubCategoriesProps) => {
                           } as CSSProperties)
                         : undefined
                 }
-                onClick={(e) => {
-                    e.stopPropagation();
-                    //e.preventDefault();
-                }}
+                onClick={(e) => e.stopPropagation()}
             >
-                {category.subCategories.map((subCat) => {
-                    const checkboxId = `checkbox-${subCat.key}-${category.text}`;
-                    return (
-                        <div
-                            key={subCat.text}
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                cursor: "pointer",
-                            }}
-                            onClick={(e) => e.stopPropagation()} // Ensures click behavior stays within this component
-                        >
-                            {/* Correctly associates label with the checkbox input */}
-                            <Checkbox
-                                id={checkboxId}
-                                value={subCat.text}
-                                checked={subCat.selected}
-                                className="text-left"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    toggle(category.text, e.currentTarget.value);
-                                }}
-                            >
-                                {t(subCat.key)}
-                            </Checkbox>
-                        </div>
-                    );
-                })}
+                {category.subCategories.map((subCat) => (
+                    <Checkbox
+                        value={subCat.text}
+                        checked={subCat.selected}
+                        key={subCat.text}
+                        className="text-left"
+                        onClick={(e) => {
+                            toggle(category.text, e.currentTarget.value);
+                        }}
+                    >
+                        {t(subCat.key)}
+                    </Checkbox>
+                ))}
             </Box>
         </VStack>
     );
