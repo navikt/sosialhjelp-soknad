@@ -139,6 +139,7 @@ const SubCategories = ({category, toggle}: SubCategoriesProps) => {
         <VStack gap="4">
             {category.ingressKey && <BodyShort align="start">{t(category.ingressKey)}</BodyShort>}
             <Box
+                role="button"
                 style={
                     category.text === "Nødhjelp"
                         ? ({
