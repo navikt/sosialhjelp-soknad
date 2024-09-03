@@ -29,7 +29,7 @@ type SoknadConfig = {
     featureFlags: FeatureFlags;
 
     faro: {
-        url: string;
+        url: string | undefined;
     };
 };
 
@@ -55,7 +55,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         minSideURL: "https://www.nav.no/minside/",
         logoutURL: "http://localhost:3008/",
         faro: {
-            url: "http://localhost:12347/collect",
+            url: undefined, //"http://localhost:12347/collect",
         },
     },
     mock: {

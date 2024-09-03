@@ -12,7 +12,7 @@ import {TracingInstrumentation} from "@grafana/faro-web-tracing";
 import digisosConfig from "./lib/config";
 
 initializeFaro({
-    url: process.env.NODE_ENV !== "development" ? digisosConfig.faro.url : undefined,
+    url: digisosConfig.faro.url,
     app: {
         name: "sosialhjelp-soknad",
         version: "1.0.0",
