@@ -12,12 +12,12 @@ import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () => void}) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
-    const {mutate, isPending: isLoading, isError} = useSlettSoknad();
+    const {mutateAsync, isPending: isLoading, isError} = useSlettSoknad();
 
     const deleteAndRedirect = async () => {
         try {
-            mutate({behandlingsId});
-            window.location.href = digisosConfig.minSideURL;
+            await mutateAsync({behandlingsId});
+            window.location.assign(digisosConfig.minSideURL);
         } catch (e: any) {
             faro.api.pushError(e);
             await logError(`Feil ved sletting: ${e}`);
