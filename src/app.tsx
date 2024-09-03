@@ -26,6 +26,7 @@ import {BASE_PATH} from "./lib/constants";
 
 import {useLocalStorageLangSelector} from "./lib/useLocalStorageLangSelector.ts";
 import {configureLogger} from "@navikt/next-logger";
+import "./faro";
 
 const queryClient = new QueryClient();
 configureLogger({basePath: BASE_PATH});

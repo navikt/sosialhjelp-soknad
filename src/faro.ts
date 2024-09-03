@@ -1,10 +1,10 @@
 import {createRoutesFromChildren, matchRoutes, Routes, useLocation, useNavigationType} from "react-router-dom";
 
 import {
-    ConsoleInstrumentation,
+    // ConsoleInstrumentation,
     getWebInstrumentations,
     initializeFaro,
-    LogLevel,
+    // LogLevel,
     ReactIntegration,
     ReactRouterVersion,
 } from "@grafana/faro-react";
@@ -24,7 +24,8 @@ initializeFaro({
         // Tracing Instrumentation is needed if you want to use the React Profiler
         new TracingInstrumentation(),
 
-        new ConsoleInstrumentation({disabledLevels: [LogLevel.TRACE]}),
+        // Har disablet denne til fordel for next-logger sin capture av console.log
+        // new ConsoleInstrumentation({disabledLevels: [LogLevel.TRACE]}),
 
         new ReactIntegration({
             // Only needed if you want to use the React Router instrumentation
