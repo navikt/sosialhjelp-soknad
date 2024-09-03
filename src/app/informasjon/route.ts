@@ -1,5 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import {BASE_PATH} from "../../lib/constants.ts";
+import {logger} from "@navikt/next-logger";
 
 export async function GET({nextUrl, headers}: NextRequest) {
     // If there's an "axiosError" GET query parameter, we log an error.
@@ -11,7 +12,7 @@ export async function GET({nextUrl, headers}: NextRequest) {
     const url = nextUrl.clone();
     url.pathname = BASE_PATH;
     url.host = headers.get("host") ?? url.host;
-    url.port = "";
-    console.log(url.toString());
+    url.port = process.env.NEXT_PUBLIC_DIGISOS_ENV === "localhost" ? "3000" : "";
+    logger.info(`Redirecting from /informasjon to ${url.toString()};`);
     return NextResponse.redirect(url);
 }
