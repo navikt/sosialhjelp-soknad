@@ -7,11 +7,12 @@ export const useVerdier = () => {
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
     const {data: verdier, queryKey} = useHentVerdier(behandlingsId);
+
     const setBekreftelse = async (verdi: boolean) => {
         if (!verdier) return;
-
         const oppdatert = {...verdier};
         oppdatert.bekreftelse = verdi;
+
         if (!verdi) {
             oppdatert.bolig = false;
             oppdatert.campingvogn = false;
@@ -20,6 +21,7 @@ export const useVerdier = () => {
             oppdatert.annet = false;
             oppdatert.beskrivelseAvAnnet = "";
         }
+
         await updateVerdier(behandlingsId, oppdatert);
         queryClient.setQueryData(queryKey, oppdatert);
     };
