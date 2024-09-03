@@ -2,20 +2,17 @@
 import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {Heading} from "@navikt/ds-react";
-import cx from "classnames";
 import digisosConfig from "../../config";
-const DeveloperToolkit = React.lazy(() => import("./DeveloperToolkit"));
+import DeveloperToolkit from "./DeveloperToolkit.tsx";
 
-export const AppHeader = ({className}: {className?: string}) => {
+export const AppHeader = () => {
     const {t} = useTranslation("skjema");
-    const styles = cx("text-center p-4 bg-[#9bd0b0]", className);
-
     return (
-        <>
+        <header className={"w-full"}>
             {digisosConfig.showDevPanel && <DeveloperToolkit />}
-            <Heading level="1" size="small" className={styles}>
+            <Heading level="1" size="small" className={"text-center p-4 bg-digisosGronnLys"}>
                 {t("skjema.tittel")}
             </Heading>
-        </>
+        </header>
     );
 };
