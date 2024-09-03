@@ -15,7 +15,9 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             <head>{parse(Decorator.DECORATOR_STYLES)}</head>
             <body>
                 <div suppressHydrationWarning dangerouslySetInnerHTML={{__html: Decorator.DECORATOR_HEADER}} />
-                <div id="root">{children}</div>
+                <div id="root" className={"bg-digisosGronnBakgrunn"}>
+                    {children}
+                </div>
                 <div suppressHydrationWarning dangerouslySetInnerHTML={{__html: Decorator.DECORATOR_FOOTER}} />
                 {parse(Decorator.DECORATOR_SCRIPTS, {
                     replace: (domNode) => {
