@@ -25,8 +25,10 @@ import DinSituasjon from "./sider/kort/03-situasjon";
 import {BASE_PATH} from "./lib/constants";
 
 import {useLocalStorageLangSelector} from "./lib/useLocalStorageLangSelector.ts";
+import {configureLogger} from "@navikt/next-logger";
 
 const queryClient = new QueryClient();
+configureLogger({basePath: BASE_PATH});
 
 export default function App() {
     useLocalStorageLangSelector();
