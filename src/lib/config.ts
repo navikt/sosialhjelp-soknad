@@ -1,4 +1,5 @@
-const SoknadMiljoTypes = ["localhost", "dev-sbs", "mock", "prod-sbs"] as const;
+export const DigisosEnvironments = ["localhost", "dev-sbs", "mock", "prod-sbs"] as const;
+export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 
 type FeatureFlags = {
     // Bruk ny tekst i Begrunnelse
@@ -14,12 +15,11 @@ type FeatureFlags = {
     soknadstypeValg: boolean;
 };
 
-type SoknadMiljo = (typeof SoknadMiljoTypes)[number];
-
 type SoknadConfig = {
     showDevPanel: boolean;
     logLocally: boolean;
     withCredentials: boolean;
+    dekoratorMiljo: "dev" | "prod";
 
     baseURL: string;
     innsynURL: string;
@@ -33,10 +33,10 @@ type SoknadConfig = {
     };
 };
 
-const isValidDigisosEnvironment = (miljo: unknown): miljo is SoknadMiljo =>
-    SoknadMiljoTypes.includes(miljo as SoknadMiljo);
+const isValidDigisosEnvironment = (miljo: unknown): miljo is DigisosEnvironment =>
+    DigisosEnvironments.includes(miljo as DigisosEnvironment);
 
-const configMap: Record<SoknadMiljo, SoknadConfig> = {
+const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     localhost: {
         featureFlags: {
             begrunnelseNyTekst: true,
@@ -44,6 +44,8 @@ const configMap: Record<SoknadMiljo, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
         },
+
+        dekoratorMiljo: "dev",
         logLocally: true,
         showDevPanel: true,
         withCredentials: true,
@@ -63,6 +65,8 @@ const configMap: Record<SoknadMiljo, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
         },
+
+        dekoratorMiljo: "dev",
         showDevPanel: false,
         logLocally: false,
         withCredentials: true,
@@ -81,6 +85,8 @@ const configMap: Record<SoknadMiljo, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
         },
+
+        dekoratorMiljo: "dev",
         showDevPanel: true,
         logLocally: false,
         withCredentials: false,
@@ -99,6 +105,8 @@ const configMap: Record<SoknadMiljo, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
         },
+
+        dekoratorMiljo: "prod",
         showDevPanel: false,
         logLocally: false,
         withCredentials: false,

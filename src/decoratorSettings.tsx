@@ -1,8 +1,9 @@
 import {DecoratorFetchProps} from "@navikt/nav-dekoratoren-moduler/ssr";
 import {BASE_PATH} from "./lib/constants.ts";
+import {digisosConfig} from "./lib/config.ts";
 
 export const DECORATOR_SETTINGS: DecoratorFetchProps = {
-    env: process.env.NEXT_PUBLIC_DIGISOS_ENV == "prod-sbs" ? "prod" : "dev",
+    env: digisosConfig.dekoratorMiljo,
     serviceDiscovery: false,
     params: {
         availableLanguages: [
