@@ -141,7 +141,7 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
                     <Link href="#main-content" className="sr-only sr-only-focusable">
                         {t("hoppTilHovedinnhold")}
                     </Link>
-                    <AppHeader className={"w-full"} />
+                    <AppHeader />
                     <SkjemaStegStepper />
                     <main id={"main-content"} className={"max-w-3xl mx-auto w-full"}>
                         <NedetidPanel varselType={"infoside"} />
