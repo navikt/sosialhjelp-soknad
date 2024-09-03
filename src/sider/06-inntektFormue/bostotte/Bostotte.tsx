@@ -40,7 +40,7 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
                 <YesNoInput
                     name={"bostotte-bekreftelse"}
                     legend={t("inntekt.bostotte.sporsmal.sporsmal")}
-                    defaultValue={bekreftelse}
+                    value={bekreftelse}
                     onChange={(checked) => setBekreftelse(checked)}
                 />
             )}
@@ -50,7 +50,7 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
                         name={"bostotte-samtykke"}
                         legend={t("inntekt.bostotte.gi_samtykke.overskrift")}
                         description={!hideSamtykkeDescription && t("inntekt.bostotte.gi_samtykke.tekst")}
-                        defaultValue={dataHentet}
+                        value={dataHentet}
                         onChange={(checked) => setSamtykke(checked)}
                     />
                     {dataHentet && <BostotteData />}
