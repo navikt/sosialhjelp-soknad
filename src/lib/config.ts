@@ -72,7 +72,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         showDevPanel: false,
         logLocally: false,
         withCredentials: true,
-        driftsmeldingUrl: "https://digisos.intern.dev.nav.no/sosialhjelp/driftsmeldinger", // TODO: .ekstern.dev.nav...
+        driftsmeldingUrl: "https://digisos.ansatt.dev.nav.no/sosialhjelp/driftsmeldinger",
         baseURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad-api/",
         innsynURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn/",
         minSideURL: "https://sosialhjelp-mock-alt-mock.ekstern.dev.nav.no/sosialhjelp/mock-alt/",
