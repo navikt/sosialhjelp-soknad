@@ -1,16 +1,15 @@
 import {Alert} from "@navikt/ds-react";
 import {getApiStatus} from "../generated/driftsmelding.ts";
+import {logger} from "@navikt/next-logger";
 
 const Driftsmelding = ({variant, text}: {variant: "error" | "warning" | "info" | "success"; text: string}) => (
-    <>
-        <Alert
-            variant={variant}
-            fullWidth
-            className={"justify-center [&>div]:max-w-lg [&>div]:lg:max-w-3xl [&>div]:w-full"}
-        >
-            {text}
-        </Alert>
-    </>
+    <Alert
+        variant={variant}
+        fullWidth
+        className={"justify-center [&>div]:max-w-lg [&>div]:lg:max-w-3xl [&>div]:w-full"}
+    >
+        {text}
+    </Alert>
 );
 
 export const Driftsmeldinger = async () => {
@@ -24,7 +23,7 @@ export const Driftsmeldinger = async () => {
             </>
         );
     } catch (e: any) {
-        console.warn("Failed to fetch driftsmeldinger", e);
+        logger.warn("Failed to fetch driftsmeldinger", e);
         return null;
     }
 };

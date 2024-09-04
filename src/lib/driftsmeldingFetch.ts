@@ -1,4 +1,5 @@
 import digisosConfig from "./config.ts";
+import {logger} from "@navikt/next-logger";
 
 const getUrl = (contextUrl: string): string => {
     const {pathname, search} = new URL(contextUrl);
@@ -8,6 +9,7 @@ const getUrl = (contextUrl: string): string => {
 
 export const driftsmeldingFetch = async <T>(url: string, options: RequestInit): Promise<T> => {
     const requestUrl = getUrl(url);
+    logger.info(`Fetching driftsmelding from ${requestUrl}`);
     const request = new Request(requestUrl, {...options, signal: AbortSignal.timeout(500)});
     const response = await fetch(request);
     if (!response.ok) {
