@@ -10,6 +10,9 @@ export const driftsmeldingFetch = async <T>(url: string, options: RequestInit): 
     const requestUrl = getUrl(url);
     const request = new Request(requestUrl, {...options, signal: AbortSignal.timeout(500)});
     const response = await fetch(request);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch ${requestUrl}: ${response.status} ${response.statusText}`);
+    }
     const data = (await response.json()) as T;
     return {status: response.status, data} as T;
 };
