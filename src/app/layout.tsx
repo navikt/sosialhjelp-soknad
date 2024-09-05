@@ -11,7 +11,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         <html lang="no">
             <head>
                 <title>Søknad om økonomisk sosialhjelp</title>
-                {parse(Decorator.DECORATOR_STYLES)}
+                {parse(Decorator.DECORATOR_HEAD_ASSETS)}
             </head>
             <body>
                 <div suppressHydrationWarning dangerouslySetInnerHTML={{__html: Decorator.DECORATOR_HEADER}} />
