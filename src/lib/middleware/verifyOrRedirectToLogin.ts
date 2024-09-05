@@ -15,7 +15,10 @@ function getHeadersFromCookies(cookies: RequestCookies): Headers {
 
 export async function canaryRequest(cookies: RequestCookies): Promise<Response> {
     try {
-        return await fetch(`${digisosConfig.baseURL}informasjon/session`, {headers: getHeadersFromCookies(cookies)});
+        return await fetch(`${digisosConfig.baseURL}informasjon/session`, {
+            headers: getHeadersFromCookies(cookies),
+            signal: AbortSignal.timeout(1000),
+        });
     } catch (e) {
         throw new Error("Failed to verify session with canary request", {cause: e});
     }

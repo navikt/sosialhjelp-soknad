@@ -21,6 +21,7 @@ type SoknadConfig = {
     withCredentials: boolean;
     dekoratorMiljo: "dev" | "prod";
 
+    driftsmeldingUrl?: string;
     baseURL: string;
     innsynURL: string;
     minSideURL: string;
@@ -50,6 +51,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         showDevPanel: true,
         withCredentials: true,
 
+        driftsmeldingUrl: "http://localhost:3005/sosialhjelp/driftsmeldinger",
         baseURL: "http://localhost:8181/sosialhjelp/soknad-api/",
         innsynURL: "http://localhost:3000/sosialhjelp/innsyn/",
         minSideURL: "https://www.nav.no/minside/",
@@ -70,6 +72,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         showDevPanel: false,
         logLocally: false,
         withCredentials: true,
+        driftsmeldingUrl: "https://digisos.ekstern.dev.nav.no/sosialhjelp/driftsmeldinger",
         baseURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad-api/",
         innsynURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn/",
         minSideURL: "https://sosialhjelp-mock-alt-mock.ekstern.dev.nav.no/sosialhjelp/mock-alt/",
@@ -90,6 +93,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         showDevPanel: true,
         logLocally: false,
         withCredentials: false,
+        driftsmeldingUrl: "https://digisos.ekstern.dev.nav.no/sosialhjelp/driftsmeldinger",
         baseURL: "https://www-q0.dev.nav.no/sosialhjelp/login-api/soknad-api/",
         innsynURL: "https://www-q0.dev.nav.no/sosialhjelp/innsyn/",
         minSideURL: "https://www.dev.nav.no/minside/",
