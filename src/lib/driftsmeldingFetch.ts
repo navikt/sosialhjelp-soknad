@@ -10,7 +10,11 @@ const getUrl = (contextUrl: string): string => {
 export const driftsmeldingFetch = async <T>(url: string, options: RequestInit): Promise<T> => {
     const requestUrl = getUrl(url);
     logger.info(`Fetching driftsmelding from ${requestUrl}`);
-    const request = new Request(requestUrl, {...options, signal: AbortSignal.timeout(500)});
+    const request = new Request(requestUrl, {
+        ...options,
+        signal: AbortSignal.timeout(500),
+        next: {revalidate: 30},
+    });
     const response = await fetch(request);
     if (!response.ok) {
         throw new Error(`Failed to fetch ${requestUrl}: ${response.status} ${response.statusText}`);
