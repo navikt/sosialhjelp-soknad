@@ -25,7 +25,7 @@ export const AdresseData = ({setNavEnhet}: {setNavEnhet: Dispatch<SetStateAction
         setBrukerdefinertAdresse,
     } = useAdresser(setNavEnhet);
 
-    if (isPending) return <div>loading...</div>;
+    if (isPending) return null;
 
     return (
         <div className={"space-y-2"} id={"adressefelt"}>
