@@ -5,7 +5,7 @@ import {useTranslation} from "react-i18next";
 import {erAktiv} from "../../../lib/navEnhetStatus";
 import {NavEnhetInaktiv} from "./NavEnhetInaktiv";
 
-export const NavEnhet = ({navEnhet}: {navEnhet?: NavEnhetFrontend}) => {
+export const NavEnhet = ({navEnhet}: {navEnhet: NavEnhetFrontend | undefined}) => {
     const {t} = useTranslation();
     if (!navEnhet) return null;
     const {enhetsnavn, kommunenavn} = navEnhet;

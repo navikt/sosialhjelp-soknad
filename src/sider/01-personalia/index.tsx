@@ -4,8 +4,6 @@ import {AdresseData} from "./adresse/Adresse";
 import {BasisPersonalia} from "./BasisPersonalia";
 import {Kontonr} from "./Kontonr";
 import {DigisosValidationError, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
-import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useEffect, useState} from "react";
 import {FieldErrorsImpl} from "react-hook-form";
 import {NavEnhetFrontend} from "../../generated/model";
@@ -17,15 +15,15 @@ interface Props {
 }
 
 export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
-    const behandlingsId = useBehandlingsId();
-    const {data: adresser} = useHentAdresser(behandlingsId);
     const [error, setError] = useState<string | null>(null);
+    const [navEnhet, setNavEnhet] = useState<NavEnhetFrontend | undefined>(undefined);
+
     const onRequestNavigation = () =>
         new Promise<void>((resolve, reject) => {
-            if (adresser?.navEnhet === null) {
+            if (!navEnhet) {
                 setError("validering.adresseMangler");
                 reject(new DigisosValidationError("NAV-enhet ikke satt"));
-            } else if (!erAktiv(adresser?.navEnhet)) {
+            } else if (!erAktiv(navEnhet)) {
                 // FIXME: Egen feilmelding for inaktive NAV-kontorer
                 setError("validering.adresseMangler");
                 reject("NAV-enhet inaktiv");
@@ -37,8 +35,8 @@ export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
 
     // Midlertidig hack til komponentene under kan behandles som react-hook-form-inputs
     useEffect(() => {
-        if (erAktiv(adresser?.navEnhet)) setError(null);
-    }, [adresser]);
+        if (erAktiv(navEnhet)) setError(null);
+    }, [navEnhet]);
 
     return (
         <SkjemaSteg.Container page={1} onRequestNavigation={onRequestNavigation}>
@@ -50,7 +48,7 @@ export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
                     />
                 )}
                 <BasisPersonalia />
-                <AdresseData />
+                <AdresseData setNavEnhet={setNavEnhet} />
                 <TelefonData />
                 <Kontonr />
                 <SkjemaSteg.Buttons includeNextArrow={includeNextArrow} />
