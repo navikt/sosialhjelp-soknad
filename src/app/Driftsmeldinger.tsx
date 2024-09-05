@@ -2,6 +2,7 @@ import {Alert, AlertProps} from "@navikt/ds-react";
 import {getApiStatus} from "../generated/driftsmelding.ts";
 import {logger} from "@navikt/next-logger";
 import digisosConfig from "../lib/config.ts";
+import Markdown from "markdown-to-jsx";
 
 const DriftsmeldingView = ({variant, text}: {variant: AlertProps["variant"]; text: string}) => (
     <Alert
@@ -9,7 +10,7 @@ const DriftsmeldingView = ({variant, text}: {variant: AlertProps["variant"]; tex
         fullWidth
         className={"justify-center [&>div]:max-w-lg [&>div]:lg:max-w-3xl [&>svg]:md:ml-8 [&>div]:w-full"}
     >
-        {text}
+        <Markdown>{text}</Markdown>
     </Alert>
 );
 
