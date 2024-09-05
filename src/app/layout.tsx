@@ -1,20 +1,18 @@
-import {Metadata} from "next";
 import {fetchDecoratorHtml} from "@navikt/nav-dekoratoren-moduler/ssr";
 
 import {DECORATOR_SETTINGS} from "../decoratorSettings.tsx";
 import parse from "html-react-parser";
 import {Driftsmeldinger} from "./Driftsmeldinger.tsx";
 
-export const metadata: Metadata = {
-    title: "Søknad om økonomisk sosialhjelp",
-};
-
 export default async function RootLayout({children}: {children: React.ReactNode}) {
     const Decorator = await fetchDecoratorHtml(DECORATOR_SETTINGS);
 
     return (
         <html lang="no">
-            <head>{parse(Decorator.DECORATOR_STYLES)}</head>
+            <head>
+                <title>Søknad om økonomisk sosialhjelp</title>
+                {parse(Decorator.DECORATOR_STYLES)}
+            </head>
             <body>
                 <div suppressHydrationWarning dangerouslySetInnerHTML={{__html: Decorator.DECORATOR_HEADER}} />
                 <Driftsmeldinger />
