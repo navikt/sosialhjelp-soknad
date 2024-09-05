@@ -1,8 +1,9 @@
-import {Alert} from "@navikt/ds-react";
-import {getApiStatus} from "../generated/driftsmelding.ts";
+import {Alert, AlertProps} from "@navikt/ds-react";
+import {Driftsmelding, getApiStatus} from "../generated/driftsmelding.ts";
 import {logger} from "@navikt/next-logger";
+import digisosConfig from "../lib/config.ts";
 
-const Driftsmelding = ({variant, text}: {variant: "error" | "warning" | "info" | "success"; text: string}) => (
+const DriftsmeldingView = ({variant, text}: {variant: AlertProps["variant"]; text: string}) => (
     <Alert
         variant={variant}
         fullWidth
@@ -12,18 +13,24 @@ const Driftsmelding = ({variant, text}: {variant: "error" | "warning" | "info" |
     </Alert>
 );
 
-export const Driftsmeldinger = async () => {
+export const getDriftsmeldinger = async () => {
+    if (!digisosConfig.driftsmeldingUrl) return [];
+
     try {
         const {data: driftsmeldinger} = await getApiStatus({audience: "soknad"});
-        return (
-            <>
-                {driftsmeldinger.map((driftsmelding) => (
-                    <Driftsmelding key={driftsmelding.id} variant={driftsmelding.severity} text={driftsmelding.text} />
-                ))}
-            </>
-        );
+        return driftsmeldinger;
     } catch (e: any) {
         logger.warn("Failed to fetch driftsmeldinger", e);
-        return null;
+        return [];
     }
+};
+
+export const Driftsmeldinger = async ({driftsmeldinger}: {driftsmeldinger: Driftsmelding[]}) => {
+    return (
+        <>
+            {driftsmeldinger?.map((driftsmelding) => (
+                <DriftsmeldingView key={driftsmelding.id} variant={driftsmelding.severity} text={driftsmelding.text} />
+            ))}
+        </>
+    );
 };
