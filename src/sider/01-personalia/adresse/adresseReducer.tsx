@@ -2,6 +2,8 @@ import {AdresseFrontend, AdresserFrontend, AdresserFrontendValg, NavEnhetFronten
 
 export type AdresseState =
     | {mode: "uninitialized"}
+    // Dersom valg er "soknad" men soknad er null, får vi 500 fra API.
+    // derav denne halv-committed state.
     | ({mode: "uncommittedChanges"} & AdresserFrontend)
     | ({mode: "synchronized"} & AdresserFrontend);
 
@@ -21,6 +23,8 @@ export const adresseReducer = (state: AdresseState, action: AdresseAction): Adre
         return {
             ...state,
             ...action.backendState,
+            // backend flytter valgt adresse til "soknad", så dersom den ikke er valgt må vi nullstille.
+            soknad: action.backendState.valg === "soknad" ? action.backendState.soknad : null,
             mode: "synchronized",
         };
 

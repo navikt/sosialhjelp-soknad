@@ -21,6 +21,7 @@ export const useAdresser = (setNavEnhet: Dispatch<SetStateAction<NavEnhetFronten
             throw new Error("Cannot set adresseValg while uninitialized, UI should be disabled");
 
         dispatch({type: "setNavEnhet", navEnhet: undefined});
+        setNavEnhet(undefined);
 
         await logAmplitudeEvent("adresseValg", {addresseValgt});
 
