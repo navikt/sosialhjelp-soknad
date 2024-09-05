@@ -3,6 +3,9 @@ import {fetchDecoratorHtml} from "@navikt/nav-dekoratoren-moduler/ssr";
 import {DECORATOR_SETTINGS} from "../decoratorSettings.tsx";
 import parse from "html-react-parser";
 import {Driftsmeldinger} from "./Driftsmeldinger.tsx";
+
+export const dynamic = "force-dynamic";
+
 export default async function RootLayout({children}: {children: React.ReactNode}) {
     const Decorator = await fetchDecoratorHtml(DECORATOR_SETTINGS);
 
