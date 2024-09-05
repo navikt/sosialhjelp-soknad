@@ -17,7 +17,10 @@ export const getDriftsmeldinger = async () => {
     if (!digisosConfig.driftsmeldingUrl) return [];
 
     try {
-        const {data: driftsmeldinger} = await getApiStatus({audience: "soknad"});
+        const {data: driftsmeldinger} = await getApiStatus(
+            {audience: "soknad"},
+            {signal: AbortSignal.timeout(500), cache: "no-cache"}
+        );
         return driftsmeldinger;
     } catch (e: any) {
         logger.warn("Failed to fetch driftsmeldinger", e);
