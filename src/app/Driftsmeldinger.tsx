@@ -7,7 +7,7 @@ const DriftsmeldingView = ({variant, text}: {variant: AlertProps["variant"]; tex
     <Alert
         variant={variant}
         fullWidth
-        className={"justify-center [&>div]:max-w-lg [&>div]:lg:max-w-3xl [&>div]:w-full"}
+        className={"justify-center [&>div]:max-w-lg [&>div]:lg:max-w-3xl [&>svg]:ml-8 [&>div]:w-full"}
     >
         {text}
     </Alert>
