@@ -23,11 +23,11 @@ export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
     const onRequestNavigation = () =>
         new Promise<void>((resolve, reject) => {
             if (adresser?.navEnhet === null) {
-                setError("validering.soknadsmottaker.feilmelding");
+                setError("validering.adresseMangler");
                 reject(new DigisosValidationError("NAV-enhet ikke satt"));
             } else if (!erAktiv(adresser?.navEnhet)) {
                 // FIXME: Egen feilmelding for inaktive NAV-kontorer
-                setError("validering.soknadsmottaker.feilmelding");
+                setError("validering.adresseMangler");
                 reject("NAV-enhet inaktiv");
             } else {
                 setError(null);

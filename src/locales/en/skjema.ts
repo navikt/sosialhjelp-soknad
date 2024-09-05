@@ -2002,6 +2002,7 @@ export const skjema = {
         tittel: "Expenses and debt",
     },
     validering: {
+        adresseMangler: "You must select a valid address before you can continue",
         erFdato: "Invalid date",
         erFdatoEtterIdag: "Date of birth cannot be after today’s date",
         erKontonummer: "Invalid account number",
@@ -2015,9 +2016,6 @@ export const skjema = {
         maksLengde: "You have entered too many characters.",
         minLengde: "Not enough characters.",
         pakrevd: "Must be completed",
-        soknadsmottaker: {
-            feilmelding: "You must select a valid address before you can continue",
-        },
         tittel: "You must fix the following before you can continue.",
     },
     vedlegg: {
