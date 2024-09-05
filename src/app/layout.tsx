@@ -2,11 +2,10 @@ import {fetchDecoratorHtml} from "@navikt/nav-dekoratoren-moduler/ssr";
 
 import {DECORATOR_SETTINGS} from "../decoratorSettings.tsx";
 import parse from "html-react-parser";
-import {Driftsmeldinger, getDriftsmeldinger} from "./Driftsmeldinger.tsx";
+import {Driftsmeldinger} from "./Driftsmeldinger.tsx";
 export default async function RootLayout({children}: {children: React.ReactNode}) {
     const Decorator = await fetchDecoratorHtml(DECORATOR_SETTINGS);
 
-    const driftsmeldinger = await getDriftsmeldinger();
     return (
         <html lang="no">
             <head>
@@ -15,7 +14,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             </head>
             <body>
                 <div suppressHydrationWarning dangerouslySetInnerHTML={{__html: Decorator.DECORATOR_HEADER}} />
-                <Driftsmeldinger driftsmeldinger={driftsmeldinger} />
+                <Driftsmeldinger />
                 <div id="root" className={"bg-digisosGronnBakgrunn"}>
                     {children}
                 </div>

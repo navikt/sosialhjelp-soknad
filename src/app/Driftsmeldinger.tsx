@@ -1,5 +1,5 @@
 import {Alert, AlertProps} from "@navikt/ds-react";
-import {Driftsmelding, getApiStatus} from "../generated/driftsmelding.ts";
+import {getApiStatus} from "../generated/driftsmelding.ts";
 import {logger} from "@navikt/next-logger";
 import digisosConfig from "../lib/config.ts";
 
@@ -25,7 +25,9 @@ export const getDriftsmeldinger = async () => {
     }
 };
 
-export const Driftsmeldinger = async ({driftsmeldinger}: {driftsmeldinger: Driftsmelding[]}) => {
+export const Driftsmeldinger = async () => {
+    const driftsmeldinger = await getDriftsmeldinger();
+
     return (
         <>
             {driftsmeldinger?.map((driftsmelding) => (
