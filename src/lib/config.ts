@@ -1,4 +1,5 @@
-const SoknadMiljoTypes = ["localhost", "dev-sbs", "mock", "prod-sbs"] as const;
+export const DigisosEnvironments = ["localhost", "dev-sbs", "mock", "prod-sbs"] as const;
+export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 
 type FeatureFlags = {
     // Bruk ny tekst i Begrunnelse
@@ -14,13 +15,13 @@ type FeatureFlags = {
     soknadstypeValg: boolean;
 };
 
-type SoknadMiljo = (typeof SoknadMiljoTypes)[number];
-
 type SoknadConfig = {
     showDevPanel: boolean;
     logLocally: boolean;
     withCredentials: boolean;
+    dekoratorMiljo: "dev" | "prod";
 
+    driftsmeldingUrl?: string;
     baseURL: string;
     innsynURL: string;
     minSideURL: string;
@@ -29,14 +30,14 @@ type SoknadConfig = {
     featureFlags: FeatureFlags;
 
     faro: {
-        url: string;
+        url: string | undefined;
     };
 };
 
-const isValidDigisosEnvironment = (miljo: unknown): miljo is SoknadMiljo =>
-    SoknadMiljoTypes.includes(miljo as SoknadMiljo);
+const isValidDigisosEnvironment = (miljo: unknown): miljo is DigisosEnvironment =>
+    DigisosEnvironments.includes(miljo as DigisosEnvironment);
 
-const configMap: Record<SoknadMiljo, SoknadConfig> = {
+const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     localhost: {
         featureFlags: {
             begrunnelseNyTekst: true,
@@ -44,16 +45,19 @@ const configMap: Record<SoknadMiljo, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
         },
+
+        dekoratorMiljo: "dev",
         logLocally: true,
         showDevPanel: true,
         withCredentials: true,
 
+        driftsmeldingUrl: "http://localhost:3005/sosialhjelp/driftsmeldinger",
         baseURL: "http://localhost:8181/sosialhjelp/soknad-api/",
         innsynURL: "http://localhost:3000/sosialhjelp/innsyn/",
         minSideURL: "https://www.nav.no/minside/",
         logoutURL: "http://localhost:3008/",
         faro: {
-            url: "http://localhost:12347/collect",
+            url: undefined, //"http://localhost:12347/collect",
         },
     },
     mock: {
@@ -63,9 +67,12 @@ const configMap: Record<SoknadMiljo, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
         },
+
+        dekoratorMiljo: "dev",
         showDevPanel: false,
         logLocally: false,
         withCredentials: true,
+        driftsmeldingUrl: "https://digisos.ekstern.dev.nav.no/sosialhjelp/driftsmeldinger",
         baseURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad-api/",
         innsynURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn/",
         minSideURL: "https://sosialhjelp-mock-alt-mock.ekstern.dev.nav.no/sosialhjelp/mock-alt/",
@@ -81,9 +88,12 @@ const configMap: Record<SoknadMiljo, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
         },
+
+        dekoratorMiljo: "dev",
         showDevPanel: true,
         logLocally: false,
         withCredentials: false,
+        driftsmeldingUrl: "https://digisos.ekstern.dev.nav.no/sosialhjelp/driftsmeldinger",
         baseURL: "https://www-q0.dev.nav.no/sosialhjelp/login-api/soknad-api/",
         innsynURL: "https://www-q0.dev.nav.no/sosialhjelp/innsyn/",
         minSideURL: "https://www.dev.nav.no/minside/",
@@ -99,6 +109,8 @@ const configMap: Record<SoknadMiljo, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
         },
+
+        dekoratorMiljo: "prod",
         showDevPanel: false,
         logLocally: false,
         withCredentials: false,

@@ -6,6 +6,9 @@ const nextConfig = {
     // For å unngå issues med nginx
     trailingSlash: true,
     swcMinify: false,
+    experimental: {
+        instrumentationHook: true,
+    },
 };
 
 export default nextConfig;

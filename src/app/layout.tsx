@@ -1,21 +1,26 @@
-import {Metadata} from "next";
 import {fetchDecoratorHtml} from "@navikt/nav-dekoratoren-moduler/ssr";
 
 import {DECORATOR_SETTINGS} from "../decoratorSettings.tsx";
 import parse from "html-react-parser";
-export const metadata: Metadata = {
-    title: "Søknad om økonomisk sosialhjelp",
-};
+import {Driftsmeldinger} from "./Driftsmeldinger.tsx";
+
+export const dynamic = "force-dynamic";
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
     const Decorator = await fetchDecoratorHtml(DECORATOR_SETTINGS);
 
     return (
         <html lang="no">
-            <head>{parse(Decorator.DECORATOR_STYLES)}</head>
+            <head>
+                <title>Søknad om økonomisk sosialhjelp</title>
+                {parse(Decorator.DECORATOR_HEAD_ASSETS)}
+            </head>
             <body>
                 <div suppressHydrationWarning dangerouslySetInnerHTML={{__html: Decorator.DECORATOR_HEADER}} />
-                <div id="root">{children}</div>
+                <Driftsmeldinger />
+                <div id="root" className={"bg-digisosGronnBakgrunn"}>
+                    {children}
+                </div>
                 <div suppressHydrationWarning dangerouslySetInnerHTML={{__html: Decorator.DECORATOR_FOOTER}} />
                 {parse(Decorator.DECORATOR_SCRIPTS, {
                     replace: (domNode) => {

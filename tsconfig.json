@@ -26,5 +26,5 @@
         ]
     },
     "include": ["./src", "./dist/types/**/*.ts", "./next-env.d.ts", "./build/types/**/*.ts"],
-    "exclude": ["./node_modules", "./src/i18n-reshaper/**/*"]
+    "exclude": ["./node_modules"]
 }

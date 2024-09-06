@@ -22,6 +22,25 @@ export default defineConfig({
             afterAllFilesWrite: "prettier --write",
         },
     },
+    driftsmeldinger: {
+        input: "./driftsmelding-api.json",
+        output: {
+            baseUrl: "https://fakePlaceholder/", // blir overstyrt i driftsmeldingFetch.ts
+            mode: "single",
+            target: "src/generated/driftsmelding.ts",
+            client: "fetch",
+            mock: false,
+            override: {
+                mutator: {
+                    path: "src/lib/driftsmeldingFetch.ts",
+                    name: "driftsmeldingFetch",
+                },
+            },
+        },
+        hooks: {
+            afterAllFilesWrite: "prettier --write",
+        },
+    },
     "soknad-api-ssr": {
         input: "./soknad-api.json",
         output: {

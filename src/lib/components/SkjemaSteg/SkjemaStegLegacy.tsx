@@ -70,7 +70,7 @@ export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: S
                 <Link href="#main-content" className="sr-only sr-only-focusable">
                     {t("hoppTilHovedinnhold")}
                 </Link>
-                <AppHeader className={"w-full"} />
+                <AppHeader />
                 <SkjemaStegNavStepperLegacy skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={gotoPage} />
                 <div className={"w-full max-w-3xl mx-auto"}>
                     <NedetidPanel varselType={"infoside"} />
