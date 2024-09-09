@@ -8,10 +8,22 @@ import {useValidering} from "../../lib/hooks/common/useValidering";
 import {ValidationArea} from "../../lib/ValidationArea";
 
 export const AntallPersoner = () => {
-    const {antallPersoner, setAntallPersoner} = useBosituasjon();
+    const {antallPersoner, setAntallPersoner, isLoading} = useBosituasjon();
     const {t} = useTranslation("skjema");
-
     const {errorMessage, setError} = useValidering(ValidationArea.BosituasjonAntallPersoner);
+
+    if (isLoading) return null;
+
+    const validateAndSet: React.FocusEventHandler<HTMLInputElement> = async ({target: {value}}) => {
+        try {
+            await setAntallPersoner(validerAntallPersoner(value));
+            setError(null);
+        } catch {
+            setError(ValideringsFeilKode.ER_TALL);
+        }
+    };
+
+    const clearValidationErrors = () => setError(null);
 
     return (
         <TextField
@@ -24,15 +36,8 @@ export const AntallPersoner = () => {
             maxLength={2}
             htmlSize={5}
             defaultValue={antallPersoner}
-            onBlur={async ({target: {value}}) => {
-                try {
-                    await setAntallPersoner(validerAntallPersoner(value));
-                    setError(null);
-                } catch {
-                    setError(ValideringsFeilKode.ER_TALL);
-                }
-            }}
-            onChange={() => setError(null)}
+            onBlur={validateAndSet}
+            onChange={clearValidationErrors}
             error={errorMessage}
         />
     );

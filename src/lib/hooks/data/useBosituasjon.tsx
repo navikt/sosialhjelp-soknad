@@ -21,11 +21,10 @@ export const useBosituasjon = () => {
     const showSecondaryOptions = !["eier", "leier", "kommunal", "ingen", null].includes(bosituasjon?.botype || null);
 
     return {
-        bosituasjon,
         botype,
+        setBotype,
         antallPersoner,
         setAntallPersoner,
-        setBotype,
         isLoading,
         isError,
         showSecondaryOptions,
