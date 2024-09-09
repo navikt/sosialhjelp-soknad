@@ -2316,7 +2316,7 @@ export const skjema = {
     },
     backendCompat: {
         jsonOkonomiOpplysningerArbeidAvsluttet: "Final settlement/holiday pay after tax",
-        jsonOkonomiOpplysningerArbeidJobb: "Employment income",
+        jsonOkonomiOpplysningerArbeidJobb: "Salary income",
     },
 };
 
