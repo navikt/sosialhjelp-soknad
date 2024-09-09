@@ -1,15 +1,15 @@
 import * as React from "react";
+import {useEffect, useState} from "react";
 import {TelefonData} from "./Telefon";
 import {AdresseData} from "./adresse/Adresse";
 import {BasisPersonalia} from "./BasisPersonalia";
 import {Kontonr} from "./Kontonr";
 import {DigisosValidationError, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
-import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
-import {useEffect, useState} from "react";
 import {FieldErrorsImpl} from "react-hook-form";
 import {NavEnhetFrontend} from "../../generated/model";
 import {erAktiv} from "../../lib/navEnhetStatus";
+import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
+import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId.ts";
 
 interface Props {
     shortSpacing?: boolean;
@@ -17,17 +17,17 @@ interface Props {
 }
 
 export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
-    const behandlingsId = useBehandlingsId();
-    const {data: adresser} = useHentAdresser(behandlingsId);
     const [error, setError] = useState<string | null>(null);
+    const {data: {navEnhet} = {navEnhet: null}} = useHentAdresser(useBehandlingsId());
+
     const onRequestNavigation = () =>
         new Promise<void>((resolve, reject) => {
-            if (adresser?.navEnhet === null) {
-                setError("validering.soknadsmottaker.feilmelding");
+            if (!navEnhet) {
+                setError("validering.adresseMangler");
                 reject(new DigisosValidationError("NAV-enhet ikke satt"));
-            } else if (!erAktiv(adresser?.navEnhet)) {
+            } else if (!erAktiv(navEnhet)) {
                 // FIXME: Egen feilmelding for inaktive NAV-kontorer
-                setError("validering.soknadsmottaker.feilmelding");
+                setError("validering.adresseMangler");
                 reject("NAV-enhet inaktiv");
             } else {
                 setError(null);
@@ -37,8 +37,8 @@ export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
 
     // Midlertidig hack til komponentene under kan behandles som react-hook-form-inputs
     useEffect(() => {
-        if (erAktiv(adresser?.navEnhet)) setError(null);
-    }, [adresser]);
+        if (erAktiv(navEnhet)) setError(null);
+    }, [navEnhet]);
 
     return (
         <SkjemaSteg.Container page={1} onRequestNavigation={onRequestNavigation}>

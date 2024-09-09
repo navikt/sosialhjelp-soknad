@@ -1981,6 +1981,7 @@ export const skjema = {
         tittel: "Utgifter og gjeld",
     },
     validering: {
+        adresseMangler: "Du må velge en gyldig adresse før du kan gå videre",
         erFdato: "Ugyldig dato",
         erFdatoEtterIdag: "Fødselsdato kan ikke være etter dagens dato",
         erKontonummer: "Ugyldig kontonummer",
@@ -1994,9 +1995,6 @@ export const skjema = {
         maksLengde: "Du har brukt for mange tegn.",
         minLengde: "For få tegn.",
         pakrevd: "Må fylles ut",
-        soknadsmottaker: {
-            feilmelding: "Du må velge en gyldig adresse før du kan gå videre",
-        },
         tittel: "Du må fikse disse feilene før du kan fortsette.",
     },
     vedlegg: {
