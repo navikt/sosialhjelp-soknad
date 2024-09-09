@@ -8,7 +8,9 @@ const nextConfig = {
     swcMinify: false,
     experimental: {
         instrumentationHook: true,
+        optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"]
     },
+
 };
 
 export default nextConfig;
