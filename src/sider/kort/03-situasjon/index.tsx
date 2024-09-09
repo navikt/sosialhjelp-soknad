@@ -13,6 +13,10 @@ import {SkattbarInntekt} from "../../06-inntektFormue/skattbarInntekt";
 import {YesNoInput} from "../../../lib/components/form/YesNoInput";
 import {DigisosLanguageKey} from "../../../lib/i18n";
 import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
+import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {SkjemaStegErrorSummary} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
+import {SkjemaContent} from "../../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
+import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 
 const situasjonsendringSchema = z.object({
     hvaErEndret: z.string().max(500, "validering.maksLengde").nullable(),
@@ -54,9 +58,9 @@ const DinSituasjon = (): React.JSX.Element => {
     const isEndring = watch("endring");
     return (
         <SkjemaSteg page={3} onRequestNavigation={handleSubmit(onSubmit, inhibitNavigation)}>
-            <SkjemaSteg.Content className={"lg:space-y-12"}>
-                <SkjemaSteg.Title className={"lg:mb-16"} />
-                <SkjemaSteg.ErrorSummary errors={errors} />
+            <SkjemaContent className={"lg:space-y-12"}>
+                <SkjemaStegTitle className={"lg:mb-16"} />
+                <SkjemaStegErrorSummary errors={errors} />
                 {isPending ? (
                     <ApplicationSpinner />
                 ) : (
@@ -102,8 +106,8 @@ const DinSituasjon = (): React.JSX.Element => {
                         />
                     </>
                 )}
-                <SkjemaSteg.Buttons loading={isPending} includeNextArrow />
-            </SkjemaSteg.Content>
+                <SkjemaStegButtons loading={isPending} includeNextArrow />
+            </SkjemaContent>
         </SkjemaSteg>
     );
 };

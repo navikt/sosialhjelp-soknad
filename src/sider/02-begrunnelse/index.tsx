@@ -13,6 +13,10 @@ import {DigisosLanguageKey} from "../../lib/i18n";
 import useKategorier from "../../lib/hooks/data/useKategorier";
 import KategorierChips from "../../lib/components/KategorierChips";
 import {useFeatureToggles} from "../../generated/feature-toggle-ressurs/feature-toggle-ressurs";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
+import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
+import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;
@@ -63,9 +67,9 @@ export const Begrunnelse = () => {
 
     return (
         <SkjemaSteg page={2} onRequestNavigation={onSubmit}>
-            <SkjemaSteg.Content>
-                <SkjemaSteg.Title />
-                <SkjemaSteg.ErrorSummary errors={errors} />
+            <SkjemaContent>
+                <SkjemaStegTitle />
+                <SkjemaStegErrorSummary errors={errors} />
                 {isPending || featureFlagsPending ? (
                     <ApplicationSpinner />
                 ) : (
@@ -110,8 +114,8 @@ export const Begrunnelse = () => {
                         />
                     </form>
                 )}
-                <SkjemaSteg.Buttons loading={isPending} />
-            </SkjemaSteg.Content>
+                <SkjemaStegButtons loading={isPending} />
+            </SkjemaContent>
         </SkjemaSteg>
     );
 };

@@ -10,7 +10,7 @@ export const SkjemaStegStepper = () => {
     const context = useContext(SkjemaStegContext);
 
     if (context === null) {
-        logError("<SkjemaSteg.Stepper/> must be used inside <SkjemaSteg.Container />");
+        logError("<SkjemaStegStepper/> must be used inside <SkjemaSteg />");
         return null;
     }
 

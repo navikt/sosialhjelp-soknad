@@ -30,7 +30,7 @@ export const SkjemaStegButtons = ({
     const context = useContext(SkjemaStegContext);
 
     if (context === null) {
-        logError("<SkjemaSteg.Buttons/> must be used inside <SkjemaSteg.Container />");
+        logError("<SkjemaStegButtons/> must be used inside <SkjemaSteg />");
         return null;
     }
 

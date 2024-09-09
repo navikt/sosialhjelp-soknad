@@ -10,6 +10,10 @@ import {NavEnhetFrontend} from "../../generated/model";
 import {erAktiv} from "../../lib/navEnhetStatus";
 import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId.ts";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
+import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
+import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 
 interface Props {
     shortSpacing?: boolean;
@@ -41,11 +45,11 @@ export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
     }, [navEnhet]);
 
     return (
-        <SkjemaSteg.Container page={1} onRequestNavigation={onRequestNavigation}>
-            <SkjemaSteg.Content className={shortSpacing ? "lg:space-y-12" : ""}>
-                <SkjemaSteg.Title className={shortSpacing ? "lg:mb-12" : ""} />
+        <SkjemaSteg page={1} onRequestNavigation={onRequestNavigation}>
+            <SkjemaContent className={shortSpacing ? "lg:space-y-12" : ""}>
+                <SkjemaStegTitle className={shortSpacing ? "lg:mb-12" : ""} />
                 {error && (
-                    <SkjemaSteg.ErrorSummary
+                    <SkjemaStegErrorSummary
                         errors={{adressefelt: {message: error}} as FieldErrorsImpl<NavEnhetFrontend>}
                     />
                 )}
@@ -53,9 +57,9 @@ export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
                 <AdresseData />
                 <TelefonData />
                 <Kontonr />
-                <SkjemaSteg.Buttons includeNextArrow={includeNextArrow} />
-            </SkjemaSteg.Content>
-        </SkjemaSteg.Container>
+                <SkjemaStegButtons includeNextArrow={includeNextArrow} />
+            </SkjemaContent>
+        </SkjemaSteg>
     );
 };
 
