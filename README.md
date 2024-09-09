@@ -51,6 +51,16 @@ npm run dev # Bygger less og starter dev-server
 npm test # Kjør enhetstestene
 ```
 
+## Oppgradering av avhengigheter
+
+En snarvei for oppgradering av avhengigheter er:
+
+```shell
+npm run checkUpdates
+```
+
+Eventuelle unntak (f. eks. når man er låst til en tidligere major) kan konfigureres i `.ncurc.js`.
+
 ## Bygg og deploy
 
 Image bygges vha Github Actions,

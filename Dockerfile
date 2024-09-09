@@ -1,3 +1,4 @@
+# OBS: Når vi en gang oppgraderer Node, husk å fjerne "@types/node" fra .ncurc.js.
 FROM node:20-alpine AS dependencies
 
 WORKDIR /app
