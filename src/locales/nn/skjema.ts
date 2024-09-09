@@ -2238,6 +2238,10 @@ export const skjema = {
         },
         tittel: "Opplasting av vedlegg",
     },
+    backendCompat: {
+        jsonOkonomiOpplysningerArbeidAvsluttet: "Sluttoppgjer/feriepengar etter skatt",
+        jsonOkonomiOpplysningerArbeidJobb: "Lønnsinntekt",
+    },
 };
 
 export default skjema;
