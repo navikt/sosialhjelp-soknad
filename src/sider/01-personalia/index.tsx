@@ -1,13 +1,15 @@
 import * as React from "react";
+import {useEffect, useState} from "react";
 import {TelefonData} from "./Telefon";
 import {AdresseData} from "./adresse/Adresse";
 import {BasisPersonalia} from "./BasisPersonalia";
 import {Kontonr} from "./Kontonr";
 import {DigisosValidationError, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
-import {useEffect, useState} from "react";
 import {FieldErrorsImpl} from "react-hook-form";
 import {NavEnhetFrontend} from "../../generated/model";
 import {erAktiv} from "../../lib/navEnhetStatus";
+import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
+import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId.ts";
 
 interface Props {
     shortSpacing?: boolean;
@@ -16,7 +18,7 @@ interface Props {
 
 export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
     const [error, setError] = useState<string | null>(null);
-    const [navEnhet, setNavEnhet] = useState<NavEnhetFrontend | undefined>(undefined);
+    const {data: {navEnhet} = {navEnhet: null}} = useHentAdresser(useBehandlingsId());
 
     const onRequestNavigation = () =>
         new Promise<void>((resolve, reject) => {
@@ -48,7 +50,7 @@ export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
                     />
                 )}
                 <BasisPersonalia />
-                <AdresseData setNavEnhet={setNavEnhet} />
+                <AdresseData />
                 <TelefonData />
                 <Kontonr />
                 <SkjemaSteg.Buttons includeNextArrow={includeNextArrow} />

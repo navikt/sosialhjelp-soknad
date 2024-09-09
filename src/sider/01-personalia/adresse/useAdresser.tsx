@@ -1,27 +1,50 @@
 import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId.ts";
-import {Dispatch, SetStateAction, useEffect, useReducer} from "react";
+import {useEffect, useReducer} from "react";
 import {adresseReducer} from "./adresseReducer.tsx";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude.tsx";
-import {hentAdresser, updateAdresse} from "../../../generated/adresse-ressurs/adresse-ressurs.ts";
-import {AdresseFrontend, AdresserFrontendValg, NavEnhetFrontend} from "../../../generated/model/index.ts";
+import {
+    getHentAdresserQueryKey,
+    hentAdresser,
+    updateAdresse,
+} from "../../../generated/adresse-ressurs/adresse-ressurs.ts";
+import {
+    AdresseFrontend,
+    AdresserFrontend,
+    AdresserFrontendValg,
+    NavEnhetFrontend,
+} from "../../../generated/model/index.ts";
+import {useQueryClient} from "@tanstack/react-query";
 
-export const useAdresser = (setNavEnhet: Dispatch<SetStateAction<NavEnhetFrontend | undefined>>) => {
+export const useAdresser = () => {
     const behandlingsId = useBehandlingsId();
+    const queryClient = useQueryClient();
     const [state, dispatch] = useReducer(adresseReducer, {mode: "uninitialized"});
 
     useEffect(() => {
         hentAdresser(behandlingsId).then((backendState) => {
             dispatch({type: "synchronize", backendState});
-            setNavEnhet(backendState.navEnhet);
+            setQueryDataNavEnhet(backendState.navEnhet);
         });
     }, [behandlingsId]);
+
+    const setQueryDataNavEnhet = (navEnhet: NavEnhetFrontend | undefined) => {
+        const queryKey = getHentAdresserQueryKey(behandlingsId);
+        const cachedData = queryClient.getQueryData<AdresserFrontend>(queryKey);
+
+        const updated = {
+            ...(cachedData || {}),
+            navEnhet,
+        };
+
+        queryClient.setQueryData(queryKey, updated);
+    };
 
     const setAdresseValg = async (addresseValgt: AdresserFrontendValg) => {
         if (state.mode === "uninitialized")
             throw new Error("Cannot set adresseValg while uninitialized, UI should be disabled");
 
         dispatch({type: "setNavEnhet", navEnhet: undefined});
-        setNavEnhet(undefined);
+        setQueryDataNavEnhet(undefined);
 
         await logAmplitudeEvent("adresseValg", {addresseValgt});
 
@@ -30,7 +53,7 @@ export const useAdresser = (setNavEnhet: Dispatch<SetStateAction<NavEnhetFronten
         if (addresseValgt !== AdresserFrontendValg.soknad) {
             const [navEnhet] = await updateAdresse(behandlingsId, {valg: addresseValgt});
             dispatch({type: "setNavEnhet", navEnhet});
-            setNavEnhet(navEnhet);
+            setQueryDataNavEnhet(navEnhet);
         }
     };
 
@@ -45,7 +68,7 @@ export const useAdresser = (setNavEnhet: Dispatch<SetStateAction<NavEnhetFronten
         });
 
         dispatch({type: "adresseSoknadChange", soknad, navEnhet});
-        setNavEnhet(navEnhet);
+        setQueryDataNavEnhet(navEnhet);
     };
 
     switch (state.mode) {

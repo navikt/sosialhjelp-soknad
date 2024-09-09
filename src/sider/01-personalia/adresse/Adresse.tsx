@@ -8,10 +8,8 @@ import cx from "classnames";
 import {useTranslation} from "react-i18next";
 import {HorizontalRadioGroup} from "../../../lib/components/form/HorizontalRadioGroup";
 import {useAdresser} from "./useAdresser.tsx";
-import {Dispatch, SetStateAction} from "react";
-import {NavEnhetFrontend} from "../../../generated/model/index.ts";
 
-export const AdresseData = ({setNavEnhet}: {setNavEnhet: Dispatch<SetStateAction<NavEnhetFrontend | undefined>>}) => {
+export const AdresseData = () => {
     const {t} = useTranslation();
 
     const {
@@ -23,7 +21,7 @@ export const AdresseData = ({setNavEnhet}: {setNavEnhet: Dispatch<SetStateAction
         brukerdefinert,
         setAdresseValg,
         setBrukerdefinertAdresse,
-    } = useAdresser(setNavEnhet);
+    } = useAdresser();
 
     if (isPending) return null;
 
