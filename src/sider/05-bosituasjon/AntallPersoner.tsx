@@ -8,7 +8,7 @@ import {useValidering} from "../../lib/hooks/common/useValidering";
 import {ValidationArea} from "../../lib/ValidationArea";
 
 export const AntallPersoner = () => {
-    const {antallPersoner, setBosituasjon} = useBosituasjon();
+    const {antallPersoner, setAntallPersoner} = useBosituasjon();
     const {t} = useTranslation("skjema");
 
     const {errorMessage, setError} = useValidering(ValidationArea.BosituasjonAntallPersoner);
@@ -26,7 +26,7 @@ export const AntallPersoner = () => {
             defaultValue={antallPersoner}
             onBlur={async ({target: {value}}) => {
                 try {
-                    await setBosituasjon({antallPersoner: validerAntallPersoner(value)});
+                    await setAntallPersoner(validerAntallPersoner(value));
                     setError(null);
                 } catch {
                     setError(ValideringsFeilKode.ER_TALL);

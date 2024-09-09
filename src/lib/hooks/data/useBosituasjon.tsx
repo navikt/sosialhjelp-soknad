@@ -15,16 +15,19 @@ export const useBosituasjon = () => {
         queryClient.setQueryData(queryKey, data);
     };
 
+    const setAntallPersoner = (antallPersoner: number | undefined) => setBosituasjon({antallPersoner});
     const setBotype = (botype: BosituasjonFrontendBotype) => setBosituasjon({botype});
     const {botype, antallPersoner} = bosituasjon || {};
+    const showSecondaryOptions = !["eier", "leier", "kommunal", "ingen", null].includes(bosituasjon?.botype || null);
 
     return {
         bosituasjon,
         botype,
         antallPersoner,
-        setBosituasjon,
+        setAntallPersoner,
         setBotype,
         isLoading,
         isError,
+        showSecondaryOptions,
     };
 };
