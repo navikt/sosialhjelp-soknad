@@ -14,7 +14,9 @@ const BotypeRadio = ({value, legend}: {value: BosituasjonFrontendBotype; legend:
 
 export const Botype = () => {
     const {t} = useTranslation("skjema");
-    const {botype, setBotype, showSecondaryOptions} = useBosituasjon();
+    const {botype, setBotype, showSecondaryOptions, isLoading} = useBosituasjon();
+
+    if (isLoading) return null;
 
     return (
         <div className={"mt-12 lg:mt-24 mb-12 lg:mb-24"}>
