@@ -1,4 +1,8 @@
-# OBS: Når vi en gang oppgraderer Node, husk å fjerne "@types/node" fra .ncurc.js.
+# NB: Når Node-versjon endres, bør samme endring også gjøres i:
+# - .nvmrc
+# - .github/dependabot.yml (fjern versjonspin for docker)
+# - packages.json under "engines" (her leter dependabot npm)
+# - .ncurc.js (automatiske oppdateringer for node-types)
 FROM node:20-alpine AS dependencies
 
 WORKDIR /app

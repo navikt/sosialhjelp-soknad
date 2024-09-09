@@ -5,14 +5,14 @@ updates:
   schedule:
     interval: daily
   commit-message:
-    prefix: "npm"
+    prefix: "[npm]"
 
 - package-ecosystem: "github-actions"
   directory: "/"
   schedule:
     interval: daily
   commit-message:
-    prefix: "github-actions"
+    prefix: "[gha]"
 
 - package-ecosystem: "docker"
   directory: "/"
@@ -20,3 +20,8 @@ updates:
     interval: daily
   commit-message:
     prefix: "[docker]"
+  # We had stability issues with Next 14 and Node 22.
+  # When we do make the jump, please remove this kommentar.
+  ignore:
+    - dependency-name: "node"
+      versions: [ ">=22.0.0" ]
