@@ -8,8 +8,6 @@ import {isValid} from "date-fns";
 import {formatTidspunkt} from "../../utils";
 import {useHentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 
-const SAMTYKKE_KEY = "skattbarInntektSamtykke";
-
 export const useSkatteetatenData = () => {
     const queryClient = useQueryClient();
     const behandlingsId = useBehandlingsId();
@@ -17,9 +15,6 @@ export const useSkatteetatenData = () => {
     const {data, isPending: isFetching, isError: isFetchError, queryKey} = useHentSkattbareInntekter(behandlingsId);
     const {mutate, status: mutationStatus, isError: isMutateError} = usePutSkatteetatenSamtykke();
     const {queryKey: opplysningerQueryKey} = useHentOkonomiskeOpplysninger(behandlingsId);
-
-    const storedSamtykke = localStorage.getItem(SAMTYKKE_KEY);
-    const initialSamtykke = storedSamtykke !== null ? JSON.parse(storedSamtykke) : (data?.samtykke ?? null);
 
     const setSamtykke = async (samtykke: boolean) => {
         // Any HentSkattbareInntekter queries on the way are no longer valid
@@ -48,7 +43,7 @@ export const useSkatteetatenData = () => {
             isMutateError ||
             data?.inntektFraSkatteetatenFeilet === true ||
             (data?.samtykke && samtykkeTidspunkt === ""),
-        samtykke: initialSamtykke,
+        samtykke: data?.samtykke ?? null,
         isPending: isFetching || mutationStatus === "pending",
         samtykkeTidspunkt,
         setSamtykke,
