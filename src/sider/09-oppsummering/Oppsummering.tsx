@@ -10,6 +10,9 @@ import {useSendSoknad} from "./useSendSoknad";
 import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude";
 import {SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useLocation} from "react-router-dom";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
+import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
@@ -23,8 +26,8 @@ export const Oppsummering = () => {
 
     return (
         <SkjemaSteg page={isKortSoknad ? 4 : 9}>
-            <SkjemaSteg.Content>
-                <SkjemaSteg.Title />
+            <SkjemaContent>
+                <SkjemaStegTitle />
 
                 <div>
                     {oppsummering?.steg.map((steg) => <OppsummeringSteg steg={steg} key={steg.stegNr} />)}
@@ -35,14 +38,14 @@ export const Oppsummering = () => {
                         </Alert>
                     )}
                 </div>
-                <SkjemaSteg.Buttons
+                <SkjemaStegButtons
                     confirmTextKey={"skjema.knapper.send"}
                     onConfirm={async () => {
                         await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
                         return sendSoknad();
                     }}
                 />
-            </SkjemaSteg.Content>
+            </SkjemaContent>
         </SkjemaSteg>
     );
 };

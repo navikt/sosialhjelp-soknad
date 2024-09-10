@@ -2314,6 +2314,10 @@ export const skjema = {
             knapp: "Uploading in 60 seconds",
         },
     },
+    backendCompat: {
+        jsonOkonomiOpplysningerArbeidAvsluttet: "Final settlement/holiday pay after tax",
+        jsonOkonomiOpplysningerArbeidJobb: "Salary income",
+    },
 };
 
 export default skjema;

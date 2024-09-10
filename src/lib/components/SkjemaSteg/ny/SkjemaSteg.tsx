@@ -1,18 +1,15 @@
 import * as React from "react";
-import {createContext, ReactNode, useContext, useEffect} from "react";
-import {Heading, Link} from "@navikt/ds-react";
+import {createContext, ReactNode, useEffect} from "react";
+import {Link} from "@navikt/ds-react";
 import {NedetidPanel} from "../../NedetidPanel";
 import {useTranslation} from "react-i18next";
 import {useSkjemaNavigation} from "../useSkjemaNavigation";
 import SnakkebobleIllustrasjon from "../../svg/illustrasjoner/SnakkebobleIllustrasjon";
-import {SkjemaStegButtons} from "./SkjemaStegButtons";
 import {SkjemaStegStepper} from "./SkjemaStegStepper";
-import {SkjemaStegErrorSummary} from "./SkjemaStegErrorSummary";
 import StresskoffertIllustrasjon from "../../svg/illustrasjoner/StresskoffertIllustrasjon";
 import DokumentIllustrasjon from "../../svg/illustrasjoner/DokumentIllustrasjon";
-import cx from "classnames";
 import {AppHeader} from "../../appHeader/AppHeader";
-import {logError, logWarning} from "../../../log/loggerUtils";
+import {logWarning} from "../../../log/loggerUtils";
 import {scrollToTop} from "../../../utils";
 import {useTitle} from "../../../hooks/common/useTitle";
 import {HusIllustrasjon} from "../../svg/illustrasjoner/HusIllustrasjon";
@@ -73,43 +70,7 @@ export const KortSkjemaHeadings: Record<KortSkjemaPage, {tittel: DigisosLanguage
     4: {tittel: "oppsummering.tittel", ikon: <SnakkebobleIllustrasjon />},
 };
 
-const SkjemaTitle = ({className}: {className?: string}) => {
-    const {t} = useTranslation("skjema");
-    const context = useContext(SkjemaStegContext);
-
-    if (context === null) {
-        logError("<SkjemaSteg.Buttons/> must be used inside <SkjemaSteg.Container />");
-        return null;
-    }
-
-    const {page} = context;
-
-    const skjemaHeading = context.kort ? KortSkjemaHeadings[page as KortSkjemaPage] : SkjemaHeadings[page];
-    return (
-        <div tabIndex={-1} className={cx("text-center mb-12 lg:mb-24", className)}>
-            <div className="mx-auto w-fit mb-2">{skjemaHeading.ikon}</div>
-            <Heading level={"2"} size={"large"} data-testid={page === 2 ? "skjemasteg-heading" : null}>
-                {t(skjemaHeading.tittel)}
-            </Heading>
-        </div>
-    );
-};
-
-const SkjemaContent = React.forwardRef<HTMLDivElement, {children: ReactNode; className?: string}>(
-    ({children, className}, ref) => (
-        <section
-            ref={ref}
-            className={cx(
-                "bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 pt-8 pb-8 mb-16 space-y-12 lg:space-y-24",
-                className
-            )}
-        >
-            {children}
-        </section>
-    )
-);
-
-const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
+export const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
     useEffect(() => {
         scrollToTop();
     }, []);
@@ -152,12 +113,3 @@ const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
         </RequireXsrfCookie>
     );
 };
-
-SkjemaSteg.Buttons = SkjemaStegButtons;
-SkjemaSteg.Title = SkjemaTitle;
-SkjemaSteg.Container = SkjemaSteg;
-SkjemaSteg.Content = SkjemaContent;
-SkjemaSteg.Stepper = SkjemaStegStepper;
-SkjemaSteg.ErrorSummary = SkjemaStegErrorSummary;
-
-export {SkjemaSteg};

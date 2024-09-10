@@ -12,6 +12,10 @@ import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {UnmountClosed} from "react-collapse";
 import {faro} from "@grafana/faro-react";
 import {useArbeidOgUtdanning} from "../../lib/hooks/data/useArbeidOgUtdanning";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
+import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
+import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 
 const ArbeidOgUtdanningSchema = z.object({
     arbeid: z.object({kommentarTilArbeidsforhold: z.string().max(500, "validering.maksLengde").nullable()}),
@@ -60,10 +64,10 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
 
     return (
         <SkjemaSteg page={3} onRequestNavigation={onRequestNavigation}>
-            <SkjemaSteg.Content>
-                <SkjemaSteg.Title />
+            <SkjemaContent>
+                <SkjemaStegTitle />
                 <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>
-                    <SkjemaSteg.ErrorSummary errors={errors} />
+                    <SkjemaStegErrorSummary errors={errors} />
 
                     <div className={"space-y-6"}>
                         <Heading size="medium" spacing>
@@ -111,9 +115,9 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                         </UnmountClosed>
                     </div>
                     {error && <div>{t("skjema.navigering.feil")}</div>}
-                    <SkjemaSteg.Buttons />
+                    <SkjemaStegButtons />
                 </form>
-            </SkjemaSteg.Content>
+            </SkjemaContent>
         </SkjemaSteg>
     );
 };
