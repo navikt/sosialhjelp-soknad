@@ -27,12 +27,15 @@ import {BASE_PATH} from "./lib/constants";
 import {useLocalStorageLangSelector} from "./lib/useLocalStorageLangSelector.ts";
 import {configureLogger} from "@navikt/next-logger";
 import "./faro";
+import {initAmplitude} from "./lib/amplitude/Amplitude.tsx";
 
 const queryClient = new QueryClient();
 configureLogger({basePath: BASE_PATH});
 
 export default function App() {
     useLocalStorageLangSelector();
+    initAmplitude();
+
     // @ts-expect-error Polyfill for react-pdf, se https://github.com/wojtekmaj/react-pdf/issues/1831
     if (typeof Promise.withResolvers === "undefined") {
         // @ts-expect-error this is expected to not work
