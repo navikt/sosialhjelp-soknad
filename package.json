@@ -28,7 +28,7 @@
         "deep-equal": "^2.2.3",
         "dotenv": "^16.4.5",
         "downshift": "^9.0.8",
-        "express": "^4.19.2",
+        "express": "^4.20.0",
         "globals": "^15.9.0",
         "html-react-parser": "^5.1.15",
         "i18next": "^23.14.0",
