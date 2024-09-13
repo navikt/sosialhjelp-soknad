@@ -7,7 +7,6 @@ import cx from "classnames";
 import {VedleggRadFrontendForm} from "../../lib/hooks/dokumentasjon/useOpplysning";
 import {VedleggFrontendType} from "../../generated/model";
 import {DigisosLanguageKey} from "../../lib/i18n";
-import {useOpplysningContext} from "../../lib/OpplysningContextProvider.tsx";
 
 export const OpplysningInputRad = ({
     fields,
@@ -27,23 +26,12 @@ export const OpplysningInputRad = ({
     const {t} = useTranslation();
     const {t: tDok} = useTranslation("dokumentasjon");
 
-    const {state, dispatch} = useOpplysningContext();
-    const rader = state?.rader ?? [];
-
-    const handleChange = (fieldName: string, value: string | number) => {
-        const updatedRow = {...rader[index], [fieldName]: value};
-        const updatedRader = rader.map((row, i) => (i === index ? updatedRow : row));
-        dispatch({type: "SET_RADER", payload: updatedRader});
-    };
-
     return (
         <li className={className}>
             {fields.map((fieldName) => (
                 <Controller
                     key={fieldName}
-                    control={control}
-                    name={`rader.${index}.${fieldName}`}
-                    render={({field}) => (
+                    render={({field, fieldState}) => (
                         <TextField
                             label={
                                 <span style={{fontSize: 16, fontWeight: "normal"}}>
@@ -55,15 +43,21 @@ export const OpplysningInputRad = ({
                                 </span>
                             }
                             className={cx("pb-2")}
+                            error={
+                                fieldState.isTouched &&
+                                fieldState.error?.message &&
+                                t(fieldState.error.message as DigisosLanguageKey)
+                            }
                             autoComplete={"off"}
+                            {...field}
+                            // Ensure the correct value is shown and persisted
                             value={field.value || ""}
-                            onChange={(e) => {
-                                field.onChange(e);
-                                handleChange(fieldName, e.target.value);
-                            }}
+                            onChange={(e) => field.onChange(e.target.value)}
                             htmlSize={fieldName === "beskrivelse" ? 32 : 20}
                         />
                     )}
+                    name={`rader.${index}.${fieldName}`}
+                    control={control}
                 />
             ))}
             {onDelete && <LinkButton onClick={() => onDelete(index)}>{t("opplysninger.fjern")}</LinkButton>}

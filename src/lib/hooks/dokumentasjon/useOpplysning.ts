@@ -88,7 +88,7 @@ export const useOpplysning = (opplysning: VedleggFrontend) => {
         return () => subscription.unsubscribe();
     }, [handleSubmit, watch]);
 
-    const {fields, append, remove} = useFieldArray<VedleggRadFrontendForm>({
+    const {fields, append, remove, update} = useFieldArray<VedleggRadFrontendForm>({
         control,
         name: "rader",
     });
@@ -98,6 +98,7 @@ export const useOpplysning = (opplysning: VedleggFrontend) => {
             entries: fields,
             append,
             remove,
+            update,
         },
         form: {
             control,
