@@ -69,7 +69,7 @@ export const SkjemaStegButtons = ({
                     iconPosition={"right"}
                 >
                     {t(confirmTextKey)}
-                    {loading && <Loader className={"ml-2"} />}
+                    {(sendSoknadPending || loading) && <Loader className={"ml-2"} />}
                 </Button>
             </div>
             <div className={"pb-8 lg:pb-16"}>
