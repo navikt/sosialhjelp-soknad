@@ -1887,7 +1887,9 @@ export const skjema = {
                     "We have registered that you{ antall, plural,=0 { have not had }other {have had{ antall, plural,=1 {{en}}=2 {{to}}=3 {{tre}}=4 {{fire}}=5 {{fem}}=6 {{seks}}=7 {{sju}}=8 {{åtte}}=9 {{ni}}=10 {{ti}}=11 {{elleve}}=12 {{tolv}}other {{#}}}}}taxable incomes.",
                 samtykke_info:
                     "This information can be necessary to process the application. If you do not wish us to obtain this personal information, you can upload documentation in the last stage of the application.",
-                samtykke_sporsmal: "Do you wish to obtain information about your income from the Tax Administration?",
+                samtykke_sporsmal_v1:
+                    "Do you wish to obtain information about your income from the Tax Administration?",
+                samtykke_sporsmal_v2: "Do you want to retrieve your income from The Norwegian Tax Administration?",
                 skatteetaten: "See details from the Tax Administration",
                 ta_bort_samtykke: "Remove information from the Tax Administration",
                 tidspunkt: "Information was obtained",
