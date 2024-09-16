@@ -37,6 +37,33 @@ export const SkjemaStegButtons = ({
 
     const {page, requestNavigation} = context;
 
+    function debounce(func: (...args: any[]) => void, wait: number) {
+        let timeout: NodeJS.Timeout;
+        return function executedFunction(...args: any[]) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    const handleConfirm = debounce(async () => {
+        if (onConfirm) {
+            setSendSoknadPending(true);
+            try {
+                await onConfirm();
+            } catch (error) {
+                console.error("Error during confirmation:", error);
+                // Handle error appropriately
+            } finally {
+                setSendSoknadPending(false);
+            }
+        }
+        return requestNavigation(page + 1);
+    }, 300); // Adjust debounce time as needed
+
     return (
         <div>
             {page !== 9 && <NavEnhetInaktiv />}
@@ -56,14 +83,7 @@ export const SkjemaStegButtons = ({
                 <Button
                     variant="primary"
                     id="gaa_videre_button"
-                    onClick={async () => {
-                        if (onConfirm) {
-                            setSendSoknadPending(true);
-                            await onConfirm();
-                            setSendSoknadPending(false);
-                        }
-                        return requestNavigation(page + 1);
-                    }}
+                    onClick={handleConfirm}
                     disabled={sendSoknadPending || loading}
                     icon={includeNextArrow && <ArrowRightIcon />}
                     iconPosition={"right"}
