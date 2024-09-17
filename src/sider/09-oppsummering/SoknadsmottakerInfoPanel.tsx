@@ -1,18 +1,17 @@
-import React, {useState} from "react";
-import {LinkButton} from "../../lib/components/LinkButton";
-import {BodyShort, GuidePanel, Heading} from "@navikt/ds-react";
+import React from "react";
+import {BodyShort, GuidePanel, Heading, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
 import {erAktiv} from "../../lib/navEnhetStatus";
-import {BehandlingAvPersonopplysningerModal} from "../hovedmeny/paneler/BehandlingAvPersonopplysningerModal";
 import {NavEnhetInaktiv} from "../01-personalia/adresse/NavEnhetInaktiv";
+
+const URL = "https://www.nav.no/personopplysninger-sosialhjelp";
 
 export const SoknadsmottakerInfoPanel = () => {
     const {expectOK} = useAlgebraic(useHentAdresser(useBehandlingsId()));
-    const {t} = useTranslation("skjema");
-    const [visPersonopplysningerModal, setVisPersonopplysningerModal] = useState<boolean>(false);
+    const {t, i18n} = useTranslation("skjema");
 
     return expectOK(({navEnhet}) => {
         if (!navEnhet) return null;
@@ -23,10 +22,6 @@ export const SoknadsmottakerInfoPanel = () => {
 
         return (
             <>
-                <BehandlingAvPersonopplysningerModal
-                    open={visPersonopplysningerModal}
-                    onClose={() => setVisPersonopplysningerModal(false)}
-                />
                 <GuidePanel poster className={"mt-6 mb-6"}>
                     <Heading level="2" size="medium" spacing>
                         {t("soknadsosialhjelp.oppsummering.hvorsendes_del1", {valgtEnhetsNavn})}
@@ -35,9 +30,14 @@ export const SoknadsmottakerInfoPanel = () => {
                         {t("soknadsosialhjelp.oppsummering.hvorsendes_del2", {valgtEnhetsNavn})}
                     </BodyShort>
 
-                    <LinkButton type="button" onClick={() => setVisPersonopplysningerModal(true)}>
+                    <Link
+                        type="button"
+                        href={i18n.language === "nb" ? URL : `URL/${i18n.language}`}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
                         <BodyShort spacing>{t("informasjon.tekster.personopplysninger.rettigheter.lenke")}</BodyShort>
-                    </LinkButton>
+                    </Link>
                 </GuidePanel>
             </>
         );

@@ -4106,7 +4106,11 @@
                     "brukerutfyltVerdi": {"type": "string", "nullable": true}
                 }
             },
+<<<<<<< HEAD
             "KontonummerInputDto": {
+=======
+            "KontonummerInputDTO": {
+>>>>>>> e8f6f54b (Designendringer for kort søknad)
                 "type": "object",
                 "properties": {
                     "brukerutfyltVerdi": {
@@ -4842,8 +4846,13 @@
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
+<<<<<<< HEAD
                     "group": {"type": "string"},
                     "dokumentasjonForventet": {"type": "boolean"},
+=======
+                    "dokumentasjonForventet": {"type": "boolean"},
+                    "group": {"type": "string"},
+>>>>>>> e8f6f54b (Designendringer for kort søknad)
                     "type": {"type": "string"}
                 },
                 "discriminator": {"propertyName": "type"}
@@ -4960,12 +4969,17 @@
                 }
             },
             "HarIkkeUtbetalingerInput": {
+<<<<<<< HEAD
                 "required": ["harIkkeUtbetalinger"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/UtbetalingerInput"},
                     {"type": "object", "properties": {"harIkkeUtbetalinger": {"type": "boolean"}}}
                 ]
+=======
+                "type": "object",
+                "allOf": [{"$ref": "#/components/schemas/UtbetalingerInput"}]
+>>>>>>> e8f6f54b (Designendringer for kort søknad)
             },
             "HarUtbetalingerInput": {
                 "required": ["hasAnnet", "hasForsikring", "hasSalg", "hasUtbytte"],
