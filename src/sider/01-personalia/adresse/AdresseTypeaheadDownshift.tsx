@@ -42,11 +42,11 @@ const SelectMenu = styled.ul`
     width: 100%;
 `;
 
-const Item = styled.li<{isHighlighted: boolean}>`
+const Item = styled.li<{$isHighlighted: boolean}>`
     padding: 0.25rem 0.5rem;
 
-    color: ${(props) => (props.isHighlighted ? "var(--a-surface-default)" : "inherit")};
-    background-color: ${(props) => (props.isHighlighted ? "var(--a-blue-400)" : "inherit")};
+    color: ${(props) => (props.$isHighlighted ? "var(--a-surface-default)" : "inherit")};
+    background-color: ${(props) => (props.$isHighlighted ? "var(--a-blue-400)" : "inherit")};
 `;
 
 const AdressesokHeading = () => {
@@ -79,13 +79,13 @@ export const AdresseTypeahead = ({
                     {({isPending, data}) => (
                         <SelectMenu {...getMenuProps()}>
                             {isPending ? (
-                                <Item isHighlighted={false}>
+                                <Item $isHighlighted={false}>
                                     <Loader />
                                 </Item>
                             ) : (
                                 data?.map((item, index: number) => (
                                     <Item
-                                        isHighlighted={index === highlightedIndex}
+                                        $isHighlighted={index === highlightedIndex}
                                         key={index}
                                         {...getItemProps({item, index})}
                                     >

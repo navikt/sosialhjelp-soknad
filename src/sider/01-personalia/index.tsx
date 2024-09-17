@@ -45,7 +45,7 @@ export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
     }, [navEnhet]);
 
     return (
-        <SkjemaSteg page={1} onRequestNavigation={onRequestNavigation}>
+        <SkjemaSteg skipStepper page={1} onRequestNavigation={onRequestNavigation}>
             <SkjemaContent className={shortSpacing ? "lg:space-y-12" : ""}>
                 <SkjemaStegTitle className={shortSpacing ? "lg:mb-12" : ""} />
                 {error && (
