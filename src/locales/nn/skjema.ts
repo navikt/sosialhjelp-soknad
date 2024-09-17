@@ -216,25 +216,25 @@ export const skjema = {
         },
         kategorier: {
             annet: "Anna",
-            barn: "Ting til barn og fritidsaktivitetar",
-            barnehage: "Barnehage, SFO eller AKS",
-            bolig: "Husleie",
-            hoytid: "Høgtid, merkedagar og gåver",
+            barn: "Andre utgifter til barn",
+            barnehage: "Barnehage og SFO/AKS",
+            bolig: "Husleige",
+            hoytid: "Høgtid og merkedagar",
             klaer: "Klede og utstyr",
             label: "Kva søkjer du om penger til?",
             lege: "Lege og medisin",
             mat: "Mat",
             nodhjelp: "Nødhjelp",
-            strom: "Straum",
+            strom: "Straum og oppvarming",
             tannlege: "Tannlege",
             transport: "Transport",
-            ved: "Ved, gass eller fjernvarme",
+            fritidsaktiviteter: "fritidsaktivitetar for barn",
         },
         kort: {
             behov: {
                 dokumentasjon: {
                     beskrivelse:
-                        "Her kan du laste opp faktura, kvittering eller kostnadsoverslag for det du søkjer om pengar til. Du kan ta bilete/skjermbilete",
+                        "Du kan laste opp dokumentasjon som viser situasjonen din, utgiftene dine eller det du søkjer om pengar til. Til dømes fakturaer, kvitteringar eller kostnadsoverslag. Du kan gjerne ta bilete og skjermbilete.",
                     tittel: "Dokumentasjon",
                 },
             },
@@ -1588,14 +1588,14 @@ export const skjema = {
     situasjon: {
         kategorier: {
             oppsummeringstekst: {
-                label: "Tekst som sendast til NAV-kontoret:",
+                label: "Du har valgt:",
                 resten: "Eg søkjer om penger til:",
             },
         },
         kort: {
             dokumentasjon: {
                 description:
-                    "Her kan du lasta opp dokumentasjon på kva som har endra seg i situasjonen din. Du kan legge ved bilete/skjermbilete",
+                    "Her kan du laste opp dokumentasjon som eventuelt manglar. Du kan ta bilete og skjermbilete.",
                 title: "Dokumentasjon av endringa",
             },
             endring: {
@@ -1603,13 +1603,14 @@ export const skjema = {
                 legend: "Har noko i situasjonen din endra seg sidan du søkte sist?",
             },
             hvaErEndret: {
-                description: 'Døme: "Eg har fått bostønad og har difor høgare inntekt."',
-                label: "Kva har endra seg i situasjonen din?",
+                description:
+                    "Du kan laste opp dokumentasjon som viser situasjonen din, utgiftene dine eller det du søkjer om pengar til. Til dømes fakturaer, kvitteringar eller kostnadsoverslag. Du kan gjerne ta bilete og skjermbilete.",
+                label: "Kva er situasjonen din?",
             },
             tittel: "Din situasjon",
         },
         nodsituasjon: {
-            oppsummering: "Eg er i ein naudssituasjon og ",
+            oppsummering: "Nødhjelp:",
         },
     },
     skjema: {
@@ -1770,6 +1771,7 @@ export const skjema = {
                     },
                     listetittel: "Opplysningar om barn",
                 },
+                empty: "Vi fann ingen barn registrert på deg",
             },
             sivilstatus: {
                 diskresjonskode: "Ektefelle/partnar har diskresjonskode",
@@ -1811,6 +1813,7 @@ export const skjema = {
                 sporsmal: "Din sivilstatus",
                 ugift: "Ugift",
                 stringValue: "(Henta frå Folkeregisteret)",
+                empty: "Vi fann ingen registrert ektefelle eller partnar",
             },
         },
     },
@@ -2241,6 +2244,10 @@ export const skjema = {
     backendCompat: {
         jsonOkonomiOpplysningerArbeidAvsluttet: "Sluttoppgjer/feriepengar etter skatt",
         jsonOkonomiOpplysningerArbeidJobb: "Lønnsinntekt",
+    },
+    arbeidOgFamilie: {
+        tittel: "Arbeite og familie",
+        alert: "Vi har laga ein kortare søknad for deg som har søkt tidlegare. Har du tilbakemeldingar, kan du gi dei til din rettleiar.",
     },
 };
 
