@@ -217,25 +217,25 @@ export const skjema = {
         },
         kategorier: {
             annet: "Other",
-            barn: "Things for children and leisure activities",
-            barnehage: "Kindergarten, SFO or AKS",
+            barn: "Other expenses for children",
+            barnehage: "Kindergarten and SFO/AKS",
             bolig: "Rent",
-            hoytid: "Holidays, special occasions and gifts",
+            hoytid: "Holidays and special occasions",
             klaer: "Clothes and equipment",
             label: "What are you applying for money for?",
             lege: "Doctor and medicine",
             mat: "Food",
             nodhjelp: "Emergency aid",
-            strom: "Electricity",
+            strom: "Electricity and heating",
             tannlege: "Dentist",
             transport: "Transport",
-            ved: "Firewood, gas or district heating",
+            fritidsaktiviteter: "Recreational activities for children",
         },
         kort: {
             behov: {
                 dokumentasjon: {
                     beskrivelse:
-                        "Here you can upload an invoice, receipt or cost estimate for what you are applying for money for. You can take pictures/screenshots.",
+                        "You can upload documentation that shows your situation, your expenses, or what you are applying for money for. For example, invoices, receipts, or cost estimates. You are welcome to take photos and screenshots.",
                     tittel: "Documentation",
                 },
             },
@@ -1126,7 +1126,7 @@ export const skjema = {
             lenke: "Go to case",
         },
         samtale: {
-            tekst: 'If you apply for financial assistance, you will normally be called in to an interview with an adviser. You can also contact your NAV office to arrange a meeting. <a href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote"  target="_blank" rel="noreferrer noopener">Read more about how meetings are held.</lenke>',
+            tekst: 'If you apply for financial assistance, you will normally be called in to an interview with an advisor. You can also contact your NAV office to arrange a meeting. <a href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote"  target="_blank" rel="noreferrer noopener">Read more about how meetings are held.</lenke>',
             tittel: "Interview with NAV office",
         },
         situasjon: {
@@ -1598,7 +1598,7 @@ export const skjema = {
     situasjon: {
         kategorier: {
             oppsummeringstekst: {
-                label: "Text that will be sent to the NAV office:",
+                label: "You have chosen:",
                 resten: "I apply for money for:",
             },
         },
@@ -1613,13 +1613,14 @@ export const skjema = {
                 legend: "Has anything in your situation changed since you last applied?",
             },
             hvaErEndret: {
-                description: "Example: I have gotten housing allowance and therefore have a higher income",
-                label: "What has changed in your situation?",
+                description:
+                    "Has anything changed since the last time you applied, or would you like to provide more details about what you are applying for money for?",
+                label: "What is your situation?",
             },
             tittel: "Your situation",
         },
         nodsituasjon: {
-            oppsummering: "I'm in an emergency and ",
+            oppsummering: "Emergency aid:",
         },
     },
     skjema: {
@@ -2319,6 +2320,10 @@ export const skjema = {
     backendCompat: {
         jsonOkonomiOpplysningerArbeidAvsluttet: "Final settlement/holiday pay after tax",
         jsonOkonomiOpplysningerArbeidJobb: "Salary income",
+    },
+    arbeidOgFamilie: {
+        tittel: "Work and family",
+        alert: "We have created a shorter application for you who have applied before. If you have feedback, you can give it to your advisor.",
     },
 };
 

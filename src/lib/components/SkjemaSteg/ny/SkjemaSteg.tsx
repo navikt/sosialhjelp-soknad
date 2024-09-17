@@ -17,6 +17,7 @@ import {MynterIllustrasjon} from "../../svg/illustrasjoner/MynterIllustrasjon";
 import {RequireXsrfCookie} from "./RequireXsrfCookie";
 import {useLocation} from "react-router-dom";
 import {DigisosLanguageKey} from "../../../i18n";
+import {SparegrisIllustrasjon} from "../../svg/illustrasjoner/SparegrisIllustrasjon.tsx";
 
 type TSkjemaStegContext = {
     page: SkjemaPage | KortSkjemaPage;
@@ -46,10 +47,11 @@ interface SkjemaStegProps {
      * If another exception is thrown, the error is logged.
      */
     onRequestNavigation?: () => Promise<unknown>;
+    skipStepper?: boolean;
 }
 
 export type SkjemaPage = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
-export type KortSkjemaPage = 1 | 2 | 3 | 4;
+export type KortSkjemaPage = 1 | 2 | 3 | 4 | 5;
 
 export const SkjemaHeadings: Record<SkjemaPage, {tittel: DigisosLanguageKey; ikon: ReactNode}> = {
     1: {tittel: "kontakt.tittel", ikon: <HusIllustrasjon />},
@@ -65,12 +67,13 @@ export const SkjemaHeadings: Record<SkjemaPage, {tittel: DigisosLanguageKey; iko
 
 export const KortSkjemaHeadings: Record<KortSkjemaPage, {tittel: DigisosLanguageKey; ikon: ReactNode}> = {
     1: {tittel: "kontakt.tittel", ikon: <HusIllustrasjon />},
-    2: {tittel: "begrunnelsebolk.tittel", ikon: <MynterIllustrasjon />},
-    3: {tittel: "situasjon.kort.tittel", ikon: <StresskoffertIllustrasjon />},
-    4: {tittel: "oppsummering.tittel", ikon: <SnakkebobleIllustrasjon />},
+    2: {tittel: "arbeidOgFamilie.tittel", ikon: <StresskoffertIllustrasjon />},
+    3: {tittel: "begrunnelsebolk.tittel", ikon: <MynterIllustrasjon />},
+    4: {tittel: "situasjon.kort.tittel", ikon: <SparegrisIllustrasjon />},
+    5: {tittel: "oppsummering.tittel", ikon: <SnakkebobleIllustrasjon />},
 };
 
-export const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProps) => {
+export const SkjemaSteg = ({page, children, onRequestNavigation, skipStepper}: SkjemaStegProps) => {
     useEffect(() => {
         scrollToTop();
     }, []);
@@ -88,6 +91,9 @@ export const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProp
     const requestNavigation = async (page: number) => {
         try {
             if (onRequestNavigation !== undefined) await onRequestNavigation();
+            if (isKortSoknad && page === 1) {
+                gotoPage(page);
+            }
             gotoPage(page);
         } catch (e: any) {
             scrollToTop();
@@ -97,13 +103,13 @@ export const SkjemaSteg = ({page, children, onRequestNavigation}: SkjemaStegProp
 
     return (
         <RequireXsrfCookie>
-            <SkjemaStegContext.Provider value={{page, requestNavigation, kort: !!isKortSoknad}}>
+            <SkjemaStegContext.Provider value={{page, requestNavigation, kort: isKortSoknad}}>
                 <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn flex gap-10 items-center flex-col">
                     <Link href="#main-content" className="sr-only sr-only-focusable">
                         {t("hoppTilHovedinnhold")}
                     </Link>
                     <AppHeader />
-                    <SkjemaStegStepper />
+                    {!skipStepper && <SkjemaStegStepper />}
                     <main id={"main-content"} className={"max-w-3xl mx-auto w-full"}>
                         <NedetidPanel varselType={"infoside"} />
                         {children}

@@ -4,7 +4,11 @@ import {BarnSkjema} from "./BarnSkjema";
 import {BarnSysteminfo} from "./BarnSysteminfo";
 import {Barnebidrag} from "./Barnebidrag";
 
-export const RegistrerteBarn = () => {
+interface Props {
+    skipForm?: boolean;
+}
+
+export const RegistrerteBarn = ({skipForm}: Props) => {
     const {forsorgerplikt} = useForsorgerplikt();
 
     if (!forsorgerplikt) return null;
@@ -14,10 +18,10 @@ export const RegistrerteBarn = () => {
             {forsorgerplikt?.ansvar?.map((_ansvar, index: number) => (
                 <React.Fragment key={index}>
                     <BarnSysteminfo barnIndex={index} />
-                    <BarnSkjema barnIndex={index} />
+                    {!skipForm && <BarnSkjema barnIndex={index} />}
                 </React.Fragment>
             ))}
-            <Barnebidrag />
+            {!skipForm && <Barnebidrag />}
         </div>
     );
 };

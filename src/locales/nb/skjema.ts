@@ -198,25 +198,25 @@ export const skjema = {
         },
         kategorier: {
             annet: "Annet",
-            barn: "Ting til barn og fritidsaktiviteter",
-            barnehage: "Barnehage, SFO eller AKS",
+            barn: "Andre utgifter til barn",
+            barnehage: "Barnehage og SFO/AKS",
             bolig: "Husleie",
-            hoytid: "Høytid, merkedager og gaver",
+            hoytid: "Høytid og merkedager",
             klaer: "Klær og utstyr",
             label: "Hva søker du penger til?",
             lege: "Lege og medisiner",
             mat: "Mat",
             nodhjelp: "Nødhjelp",
-            strom: "Strøm",
+            strom: "Strøm og oppvarming",
             tannlege: "Tannlege",
             transport: "Transport",
-            ved: "Ved, gass eller fjernvarme",
+            fritidsaktiviteter: "Fritidsaktiviteter for barn",
         },
         kort: {
             behov: {
                 dokumentasjon: {
                     beskrivelse:
-                        "Her kan du laste opp faktura, kvittering eller kostnadsoverslag for det du søker om penger til. Du kan ta bilder/skjermbilder.",
+                        "Du kan laste opp dokumentasjon som viser situasjonen din, utgiftene dine eller det du søker om penger til. For eksempel fakturaer, kvitteringer eller kostnadsoverslag. Du kan gjerne ta bilder og skjermbilder.",
                     tittel: "Dokumentasjon",
                 },
             },
@@ -1571,7 +1571,7 @@ export const skjema = {
     situasjon: {
         kategorier: {
             oppsummeringstekst: {
-                label: "Tekst som sendes til NAV-kontoret:",
+                label: "Du har valgt",
                 resten: "Jeg søker om penger til:",
             },
         },
@@ -1586,13 +1586,14 @@ export const skjema = {
                 legend: "Har noe i situasjonen din endret seg siden du søkte sist?",
             },
             hvaErEndret: {
-                description: 'Eksempel: "Jeg har fått bostøtte og har derfor høyere inntekt."',
-                label: "Hva har endret seg i situasjonen din?",
+                description:
+                    "Har noe endret seg siden forrige gang du søkte, eller vil du fortelle mer om hva du søker om penger til?",
+                label: "Hva er situasjonen din?",
             },
             tittel: "Din situasjon",
         },
         nodsituasjon: {
-            oppsummering: "Jeg er i en nødsituasjon og ",
+            oppsummering: "Nødhjelp:",
         },
     },
     skjema: {
@@ -2232,6 +2233,10 @@ export const skjema = {
     backendCompat: {
         jsonOkonomiOpplysningerArbeidAvsluttet: "Sluttoppgjør/feriepenger etter skatt",
         jsonOkonomiOpplysningerArbeidJobb: "Lønnsinntekt",
+    },
+    arbeidOgFamilie: {
+        tittel: "Arbeid og familie",
+        alert: "Vi har laget en kortere søknad for deg som har søkt tidligere. Har du tilbakemeldinger, kan du gi dem til din veileder.",
     },
 };
 
