@@ -217,27 +217,30 @@ export const skjema = {
         },
         kategorier: {
             annet: "Other",
-            barn: "Things for children and leisure activities",
-            barnehage: "Kindergarten, SFO or AKS",
+            barn: "Other expenses for children",
+            barnehage: "Kindergarten and SFO/AKS",
             bolig: "Rent",
-            hoytid: "Holidays, special occasions and gifts",
+            hoytid: "Holidays and special occasions",
             klaer: "Clothes and equipment",
             label: "What are you applying for money for?",
+            description:
+                'Here are some common expenses to apply for. You can enter others under "Other". You can select multiple categories.',
             lege: "Doctor and medicine",
             mat: "Food",
             nodhjelp: "Emergency aid",
-            strom: "Electricity",
+            strom: "Electricity and heating",
             tannlege: "Dentist",
             transport: "Transport",
-            ved: "Firewood, gas or district heating",
+            fritidsaktiviteter: "Recreational activities for children",
         },
         kort: {
             behov: {
                 dokumentasjon: {
                     beskrivelse:
-                        "Here you can upload an invoice, receipt or cost estimate for what you are applying for money for. You can take pictures/screenshots.",
+                        "You can upload documentation that shows your situation, your expenses, or what you are applying for money for. For example, invoices, receipts, or cost estimates. You are welcome to take photos and screenshots.",
                     tittel: "Documentation",
                 },
+                oppsummeringstittel: "Your needs",
             },
         },
         nødhjelp: {
@@ -774,6 +777,8 @@ export const skjema = {
             gi_samtykke: {
                 overskrift: "Do you wish to obtain information concerning housing allowance from Husbanken?",
                 tekst: "This information can be necessary to process the application. If you do not wish us to obtain this personal information, you can upload documentation in the last stage of the application.",
+                ja: "Yes, get information",
+                nei: "No",
             },
             har_gitt_samtykke: "You have obtained information from Husbanken",
             husbanken: {
@@ -1126,7 +1131,7 @@ export const skjema = {
             lenke: "Go to case",
         },
         samtale: {
-            tekst: 'If you apply for financial assistance, you will normally be called in to an interview with an adviser. You can also contact your NAV office to arrange a meeting. <a href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote"  target="_blank" rel="noreferrer noopener">Read more about how meetings are held.</lenke>',
+            tekst: 'If you apply for financial assistance, you will normally be called in to an interview with an advisor. You can also contact your NAV office to arrange a meeting. <a href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote"  target="_blank" rel="noreferrer noopener">Read more about how meetings are held.</lenke>',
             tittel: "Interview with NAV office",
         },
         situasjon: {
@@ -1598,14 +1603,13 @@ export const skjema = {
     situasjon: {
         kategorier: {
             oppsummeringstekst: {
-                label: "Text that will be sent to the NAV office:",
+                label: "You have chosen:",
                 resten: "I apply for money for:",
             },
         },
         kort: {
             dokumentasjon: {
-                description:
-                    "Here you can upload documentation of what has changed in your situation. You can attach images/screenshots.",
+                description: "Here you can upload any missing documentation. You can take photos and screenshots.",
                 title: "Documentation of the change",
             },
             endring: {
@@ -1613,13 +1617,14 @@ export const skjema = {
                 legend: "Has anything in your situation changed since you last applied?",
             },
             hvaErEndret: {
-                description: "Example: I have gotten housing allowance and therefore have a higher income",
-                label: "What has changed in your situation?",
+                description:
+                    "Has anything changed since the last time you applied, or would you like to provide more details about what you are applying for money for?",
+                label: "What is your situation?",
             },
             tittel: "Your situation",
         },
         nodsituasjon: {
-            oppsummering: "I'm in an emergency and ",
+            oppsummering: "Emergency aid:",
         },
     },
     skjema: {
@@ -1780,6 +1785,7 @@ export const skjema = {
                     },
                     listetittel: "Information about the child/children",
                 },
+                empty: "We could not find any children registered on you",
             },
             sivilstatus: {
                 diskresjonskode: "Spouse/partner has discretion code",
@@ -1821,6 +1827,7 @@ export const skjema = {
                 sporsmal: "Your marital status",
                 ugift: "Unmarried",
                 stringValue: "(Retrieved from the National Population Register)",
+                empty: "We could not find any registered spouse or partner",
             },
         },
     },
@@ -2319,6 +2326,10 @@ export const skjema = {
     backendCompat: {
         jsonOkonomiOpplysningerArbeidAvsluttet: "Final settlement/holiday pay after tax",
         jsonOkonomiOpplysningerArbeidJobb: "Salary income",
+    },
+    arbeidOgFamilie: {
+        tittel: "Work and family",
+        alert: "We have created a shorter application for you who have applied before. If you have feedback, you can give it to your advisor.",
     },
 };
 

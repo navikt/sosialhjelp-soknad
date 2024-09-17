@@ -1,5 +1,5 @@
 import React from "react";
-import {Heading} from "@navikt/ds-react";
+import {Heading, VStack} from "@navikt/ds-react";
 import {Avsnitt} from "../../../generated/model";
 import {OppsummeringSporsmal} from "./OppsummeringSporsmal";
 import {useTranslation} from "react-i18next";
@@ -15,7 +15,9 @@ export const OppsummeringAvsnitt = ({avsnitt: {tittel, sporsmal}}: {avsnitt: Avs
                     {t(tittel as DigisosLanguageKey)}
                 </Heading>
             </div>
-            {sporsmal?.map((sporsmal, i) => <OppsummeringSporsmal sporsmal={sporsmal} key={i} />)}
+            <VStack gap="4">
+                {sporsmal?.map((sporsmal, i) => <OppsummeringSporsmal sporsmal={sporsmal} key={i} />)}
+            </VStack>
         </div>
     );
 };

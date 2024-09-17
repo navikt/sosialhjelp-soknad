@@ -25,7 +25,7 @@ export const Oppsummering = () => {
     const isKortSoknad = location.pathname.includes("/kort");
 
     return (
-        <SkjemaSteg page={isKortSoknad ? 4 : 9}>
+        <SkjemaSteg page={isKortSoknad ? 5 : 9}>
             <SkjemaContent>
                 <SkjemaStegTitle />
 
