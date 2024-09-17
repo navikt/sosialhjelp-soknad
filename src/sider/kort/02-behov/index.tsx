@@ -1,27 +1,33 @@
 import React from "react";
-import {SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {inhibitNavigation, SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {FieldError, useForm} from "react-hook-form";
-import {BegrunnelseFrontend} from "../../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {ApplicationSpinner} from "../../../lib/components/animasjoner/ApplicationSpinner";
 import {Alert, BodyShort, Textarea} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox";
-import {DigisosLanguageKey} from "../../../lib/i18n";
-import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs";
 import useKategorier from "../../../lib/hooks/data/useKategorier";
 import KategorierChips from "../../../lib/components/KategorierChips";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {SkjemaStegErrorSummary} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
 import {SkjemaContent} from "../../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
+import {DigisosLanguageKey} from "../../../lib/i18n.ts";
+import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
+import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 
-const MAX_LEN_HVA = 500;
+const MAX_LEN_HVA = 150;
 
 const behovSchema = z.object({
     hvaSokesOm: z.string().max(MAX_LEN_HVA, "validering.maksLengde").nullable().optional(),
+    hvaErEndret: z.string().max(500, "validering.maksLengde").nullable(),
 });
+
+interface FormValues {
+    hvaSokesOm?: string | null;
+    hvaErEndret?: string | null;
+}
 
 const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) => {
     const {t} = useTranslation("skjema");
@@ -37,9 +43,16 @@ const Feilmelding = () => {
 };
 
 const Behov = (): React.JSX.Element => {
-    const {data: featureFlagData, isPending: featureFlagsPending} = useFeatureToggles();
-    const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
     const {t} = useTranslation("skjema");
+
+    const {forsorgerplikt} = useForsorgerplikt();
+
+    const {
+        get: defaultValues,
+        put: putSituasjon,
+        isError: situasjonError,
+        isPending: situasjonPending,
+    } = useSituasjon();
 
     const {
         register,
@@ -48,42 +61,52 @@ const Behov = (): React.JSX.Element => {
         setValue,
         getValues,
         watch,
-    } = useForm<BegrunnelseFrontend>({
+    } = useForm<FormValues>({
         resolver: zodResolver(behovSchema),
         mode: "onChange",
+        defaultValues,
     });
 
-    const {onSubmit, isPending, isError, reducer, toggle} = useKategorier(setValue, handleSubmit, getValues);
+    const {
+        put: putKategorier,
+        isPending: kategorierPending,
+        isError: kategorierError,
+        reducer,
+        toggle,
+    } = useKategorier(!!forsorgerplikt?.harForsorgerplikt, setValue, getValues);
+
+    const onSubmit = (formValues: FormValues) => {
+        putSituasjon({...formValues, hvaErEndret: formValues.hvaErEndret ?? undefined});
+        putKategorier({hvaSokesOm: formValues.hvaSokesOm});
+    };
+
+    const isPending = kategorierPending || situasjonPending;
+    const isError = kategorierError || situasjonError;
 
     return (
-        <SkjemaSteg page={2} onRequestNavigation={onSubmit}>
+        <SkjemaSteg page={2} onRequestNavigation={handleSubmit(onSubmit, inhibitNavigation)}>
             <SkjemaContent className={"lg:space-y-12"}>
                 <SkjemaStegTitle className={"lg:mb-12"} />
                 <SkjemaStegErrorSummary errors={errors} />
-                {isPending || featureFlagsPending ? (
+                {isPending ? (
                     <ApplicationSpinner />
                 ) : (
                     <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
                         {isError && <Feilmelding />}
-                        {isKategorierEnabled && (
-                            <KategorierChips
-                                errors={errors}
-                                toggle={toggle}
-                                register={register}
-                                categories={reducer}
-                                hvaSokesOm={watch("hvaSokesOm")}
-                            />
-                        )}
-                        {!isKategorierEnabled ? (
-                            <Textarea
-                                {...register("hvaSokesOm")}
-                                id={"kategorier"}
-                                error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
-                                label={t("begrunnelse.hva.label")}
-                                description={<BodyShort>{t("begrunnelse.hva.description")}</BodyShort>}
-                            />
-                        ) : null}
-                        {}
+                        <KategorierChips
+                            errors={errors}
+                            toggle={toggle}
+                            register={register}
+                            categories={reducer}
+                            hvaSokesOm={watch("hvaSokesOm")}
+                        />
+                        <Textarea
+                            {...register("hvaErEndret")}
+                            id={"hvaErEndret"}
+                            error={errors.hvaErEndret && <TranslatedError error={errors.hvaErEndret} />}
+                            label={t("situasjon.kort.hvaErEndret.label")}
+                            description={<BodyShort>{t("situasjon.kort.hvaErEndret.description")}</BodyShort>}
+                        />
                         <FileUploadBox
                             sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                             undertekst={t("begrunnelse.kort.behov.dokumentasjon.beskrivelse")}
