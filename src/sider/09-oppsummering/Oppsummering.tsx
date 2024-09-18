@@ -18,7 +18,7 @@ export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
     const behandlingsId = useBehandlingsId();
     const {sendSoknad, isError} = useSendSoknad(behandlingsId);
-    const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId);
+    const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId, {query: {staleTime: 0}});
     const location = useLocation();
 
     if (isLoading) return <ApplicationSpinner />;
