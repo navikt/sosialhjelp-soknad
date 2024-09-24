@@ -44,20 +44,21 @@ export const axiosInstance = <T>(
     options?: AxiosRequestConfig & DigisosAxiosConfig,
     retry: number = 0
 ): Promise<T> => {
-    const source = Axios.CancelToken.source();
+    const controller = new AbortController();
     const promise: CancellablePromise<AxiosResponse> = AXIOS_INSTANCE({
         ...config,
         ...options,
-        cancelToken: source.token,
+        signal: controller.signal, // Use signal instead of cancelToken
     })
         .then(({data}) => data)
         .catch(async (e) => {
             if (!(e instanceof AxiosError)) await logWarning(`non-axioserror error ${e} in axiosinstance`);
 
-            if (isCancel(e) || options?.digisosIgnoreErrors) return neverResolves();
+            if (isCancel(e) || options?.digisosIgnoreErrors) {
+                return neverResolves();
+            }
 
             const {response} = e;
-
             if (!response) {
                 await logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
                 console.warn(e);
@@ -78,7 +79,6 @@ export const axiosInstance = <T>(
                 return neverResolves();
             }
 
-            // Conflict -- try again
             if (status === 409) {
                 if (retry >= 10) {
                     await logError("Max retries encountered!");
@@ -93,9 +93,7 @@ export const axiosInstance = <T>(
             throw e;
         });
 
-    promise.cancel = () => source.cancel("Query was cancelled");
+    promise.cancel = () => controller.abort(); // Use abort method
 
     return promise as Promise<T>;
 };
-
-export type ErrorType<Error> = AxiosError<Error>;
