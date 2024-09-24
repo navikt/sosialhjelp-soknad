@@ -1,4 +1,4 @@
-import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
+import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
 import {logError, logInfo, logWarning} from "../log/loggerUtils";
 import digisosConfig from "../config";
 import {isLoginError} from "./error/isLoginError";
@@ -54,7 +54,7 @@ export const axiosInstance = <T>(
         .catch(async (e) => {
             if (!(e instanceof AxiosError)) await logWarning(`non-axioserror error ${e} in axiosinstance`);
 
-            if (e.name === "CanceledError" || options?.digisosIgnoreErrors) {
+            if (isCancel(e) || options?.digisosIgnoreErrors) {
                 return neverResolves();
             }
 
