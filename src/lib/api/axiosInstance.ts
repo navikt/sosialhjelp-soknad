@@ -1,4 +1,4 @@
-import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
+import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
 import {logError, logInfo, logWarning} from "../log/loggerUtils";
 import digisosConfig from "../config";
 import {isLoginError} from "./error/isLoginError";
@@ -44,20 +44,21 @@ export const axiosInstance = <T>(
     options?: AxiosRequestConfig & DigisosAxiosConfig,
     retry: number = 0
 ): Promise<T> => {
-    const source = Axios.CancelToken.source();
+    const controller = new AbortController();
     const promise: CancellablePromise<AxiosResponse> = AXIOS_INSTANCE({
         ...config,
         ...options,
-        cancelToken: source.token,
+        signal: controller.signal, // Use signal instead of cancelToken
     })
         .then(({data}) => data)
         .catch(async (e) => {
             if (!(e instanceof AxiosError)) await logWarning(`non-axioserror error ${e} in axiosinstance`);
 
-            if (isCancel(e) || options?.digisosIgnoreErrors) return neverResolves();
+            if (e.name === "CanceledError" || options?.digisosIgnoreErrors) {
+                return neverResolves();
+            }
 
             const {response} = e;
-
             if (!response) {
                 await logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
                 console.warn(e);
@@ -72,13 +73,11 @@ export const axiosInstance = <T>(
 
             const {status, data} = response;
 
-            // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
             if ([403, 404, 410].includes(status)) {
                 window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
                 return neverResolves();
             }
 
-            // Conflict -- try again
             if (status === 409) {
                 if (retry >= 10) {
                     await logError("Max retries encountered!");
@@ -93,9 +92,7 @@ export const axiosInstance = <T>(
             throw e;
         });
 
-    promise.cancel = () => source.cancel("Query was cancelled");
+    promise.cancel = () => controller.abort(); // Use abort method
 
     return promise as Promise<T>;
 };
-
-export type ErrorType<Error> = AxiosError<Error>;
