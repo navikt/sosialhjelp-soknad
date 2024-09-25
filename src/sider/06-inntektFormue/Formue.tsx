@@ -2,7 +2,7 @@ import React from "react";
 import {useTranslation} from "react-i18next";
 import {Checkbox, CheckboxGroup, Textarea} from "@navikt/ds-react";
 import {DigisosReadMore} from "../../lib/components/DigisosReadMore";
-import {useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";
+import {MAX_CHARS, useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";
 import {UnmountClosed} from "react-collapse";
 import {useFormue} from "../../lib/hooks/data/useFormue";
 import {FormueFrontend} from "../../generated/model";
@@ -40,7 +40,7 @@ export const Formue = () => {
                 {t("formue.type.annet")}
             </Checkbox>
             <UnmountClosed isOpened={formue?.annet}>
-                <Textarea {...registerAnnet} label={t("formue.annetLabel")} />
+                <Textarea {...registerAnnet} label={t("formue.annetLabel")} maxLength={MAX_CHARS} />
             </UnmountClosed>
         </CheckboxGroup>
     );
