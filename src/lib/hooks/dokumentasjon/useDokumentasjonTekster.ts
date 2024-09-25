@@ -16,7 +16,7 @@ export const useDokumentasjonTekster = (opplysningType: VedleggFrontendType): Do
 
     const {sporsmal, undertekst, leggtil, dokumentBeskrivelse} = t(opplysningType, "", {
         returnObjects: true,
-    }) as DokumentasjonTexts;
+    }) as unknown as DokumentasjonTexts;
 
     if (!sporsmal) throw new Error(`Missing translation for ${opplysningType}.sporsmal`);
     if (!leggtil && numRows === "flere") throw new Error(`Missing translation for ${opplysningType}.leggtil`);
