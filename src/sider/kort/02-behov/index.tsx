@@ -18,10 +18,11 @@ import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
 import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 
 const MAX_LEN_HVA = 150;
+const MAX_LEN_HVA_ER_ENDRET = 500;
 
 const behovSchema = z.object({
     hvaSokesOm: z.string().max(MAX_LEN_HVA, "validering.maksLengde").nullable().optional(),
-    hvaErEndret: z.string().max(500, "validering.maksLengde").nullable(),
+    hvaErEndret: z.string().max(MAX_LEN_HVA_ER_ENDRET, "validering.maksLengde").nullable(),
 });
 
 interface FormValues {
@@ -109,6 +110,7 @@ const Behov = (): React.JSX.Element => {
                             <Textarea
                                 {...register("hvaErEndret")}
                                 id={"hvaErEndret"}
+                                maxLength={MAX_LEN_HVA_ER_ENDRET}
                                 error={errors.hvaErEndret && <TranslatedError error={errors.hvaErEndret} />}
                                 label={t("situasjon.kort.hvaErEndret.label")}
                                 description={<BodyShort>{t("situasjon.kort.hvaErEndret.description")}</BodyShort>}

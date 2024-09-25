@@ -136,6 +136,8 @@ interface CategoryProps<T extends HvaSokesOm> {
     errors: FormState<T | HvaSokesOm>["errors"];
 }
 
+const MAX_LEN_ANNET = 150;
+
 const Category = <T extends HvaSokesOm>({category, toggle, register, errors}: CategoryProps<T>) => {
     const {t} = useTranslation("skjema");
     return (
@@ -172,6 +174,7 @@ const Category = <T extends HvaSokesOm>({category, toggle, register, errors}: Ca
                                 e.preventDefault();
                                 e.stopPropagation();
                             }}
+                            maxLength={MAX_LEN_ANNET}
                             className="w-full"
                             error={
                                 errors.hvaSokesOm && (

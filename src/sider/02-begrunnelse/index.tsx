@@ -105,6 +105,7 @@ export const Begrunnelse = () => {
                             <Textarea
                                 {...register("hvaSokesOm")}
                                 id={"hvaSokesOm"}
+                                maxLength={MAX_LEN_HVA}
                                 error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
                                 label={begrunnelseNyTekst ? t("begrunnelse.hva.label") : t("begrunnelse.hva.labelOld")}
                                 description={
@@ -123,6 +124,7 @@ export const Begrunnelse = () => {
                             label={
                                 begrunnelseNyTekst ? t("begrunnelse.hvorfor.label") : t("begrunnelse.hvorfor.labelOld")
                             }
+                            maxLength={MAX_LEN_HVORFOR}
                             description={
                                 begrunnelseNyTekst ? (
                                     <BodyShort>{t("begrunnelse.hvorfor.description")}</BodyShort>

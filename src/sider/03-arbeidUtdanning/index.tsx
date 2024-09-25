@@ -17,8 +17,10 @@ import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaS
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 
+const MAX_LENGTH = 500;
+
 const ArbeidOgUtdanningSchema = z.object({
-    arbeid: z.object({kommentarTilArbeidsforhold: z.string().max(500, "validering.maksLengde").nullable()}),
+    arbeid: z.object({kommentarTilArbeidsforhold: z.string().max(MAX_LENGTH, "validering.maksLengde").nullable()}),
     utdanning: z.object({
         erStudent: z.boolean().nullable().optional(),
         studengradErHeltid: z.boolean().nullable().optional(),
@@ -77,6 +79,7 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                         <Textarea
                             {...register("arbeid.kommentarTilArbeidsforhold")}
                             id={"arbeid.kommentarTilArbeidsforhold"}
+                            maxLength={MAX_LENGTH}
                             description={t("opplysninger.arbeidsituasjon.kommentarer.description")}
                             label={t("opplysninger.arbeidsituasjon.kommentarer.label")}
                             error={
