@@ -1828,8 +1828,8 @@ export const skjema = {
     },
     textarea: {
         feilmleding: "Du er over teikngrensa",
-        overmaks: "Du har {{antall}} teikn for mykje",
-        undermaks: "Du har {{antall}} teikn att",
+        overmaks: "for mange teikn",
+        undermaks: "teikn igjen",
     },
     tilbake: {
         til: {

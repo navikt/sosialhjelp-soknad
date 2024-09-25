@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as z from "zod";
-import {Alert, BodyShort, Textarea} from "@navikt/ds-react";
+import {Alert, BodyShort} from "@navikt/ds-react";
 import {FieldError, useForm} from "react-hook-form";
 import {useTranslation} from "react-i18next";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -17,6 +17,7 @@ import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaS
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {useForsorgerplikt} from "../../lib/hooks/data/useForsorgerplikt.tsx";
+import LocalizedTextArea from "../../lib/components/LocalizedTextArea.tsx";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;
@@ -102,7 +103,7 @@ export const Begrunnelse = () => {
                             />
                         )}
                         {!isKategorierEnabled && (
-                            <Textarea
+                            <LocalizedTextArea
                                 {...register("hvaSokesOm")}
                                 id={"hvaSokesOm"}
                                 maxLength={MAX_LEN_HVA}
@@ -117,7 +118,7 @@ export const Begrunnelse = () => {
                                 }
                             />
                         )}
-                        <Textarea
+                        <LocalizedTextArea
                             {...register("hvorforSoke")}
                             id={"hvorforSoke"}
                             error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
