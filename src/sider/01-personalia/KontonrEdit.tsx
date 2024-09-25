@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {BodyShort, Button, Checkbox, TextField} from "@navikt/ds-react";
 import * as React from "react";
-import {KontonummerFrontend, KontonummerInputDTO} from "../../generated/model";
+import {KontonummerFrontend, KontonummerInputDto} from "../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {formatKontonummer, registerWithMasks} from "@fremtind/jkl-formatters-util";
@@ -27,7 +27,7 @@ export const KontonrEdit = ({
     onCancel,
 }: {
     defaultValues: KontonummerFrontend;
-    onSave: SubmitHandler<KontonummerInputDTO>;
+    onSave: SubmitHandler<KontonummerInputDto>;
     onCancel: () => void;
 }) => {
     const {t} = useTranslation("skjema");
@@ -38,7 +38,7 @@ export const KontonrEdit = ({
         defaultValues.brukerutfyltVerdi = formatKontonummer(defaultValues.brukerutfyltVerdi);
     }
 
-    const form = useForm<KontonummerInputDTO>({
+    const form = useForm<KontonummerInputDto>({
         defaultValues: defaultValues,
         resolver: zodResolver(KontonummerSchema),
     });

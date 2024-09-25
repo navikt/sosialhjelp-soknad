@@ -21,6 +21,7 @@ export const NySoknadInfo = () => {
 
     const antallNyligInnsendteSoknader = sessionInfo?.numRecentlySent ?? 0;
     const antallPabegynteSoknader = sessionInfo?.open?.length ?? 0;
+    const qualifiesForKortSoknad = sessionInfo?.qualifiesForKortSoknad ?? false;
 
     const navigate = useNavigate();
     const {t} = useTranslation("skjema");
@@ -28,9 +29,10 @@ export const NySoknadInfo = () => {
     const onSokSosialhjelpButtonClick = async (event: React.SyntheticEvent) => {
         setStartSoknadPending(true);
         event.preventDefault();
-        logAmplitudeEvent("skjema startet", {
+        await logAmplitudeEvent("skjema startet", {
             antallNyligInnsendteSoknader,
             antallPabegynteSoknader,
+            qualifiesForKortSoknad,
             enableModalV2: true,
             erProdsatt: true,
             language: localStorage.getItem("digisos-language"),
