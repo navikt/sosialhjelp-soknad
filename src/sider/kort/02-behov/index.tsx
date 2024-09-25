@@ -4,7 +4,7 @@ import {FieldError, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {ApplicationSpinner} from "../../../lib/components/animasjoner/ApplicationSpinner";
-import {Alert, BodyShort, Textarea, VStack} from "@navikt/ds-react";
+import {Alert, BodyShort, VStack} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox";
 import useKategorier from "../../../lib/hooks/data/useKategorier";
@@ -16,6 +16,7 @@ import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegT
 import {DigisosLanguageKey} from "../../../lib/i18n.ts";
 import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
 import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
+import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";
 
 const MAX_LEN_HVA = 150;
 const MAX_LEN_HVA_ER_ENDRET = 500;
@@ -107,7 +108,7 @@ const Behov = (): React.JSX.Element => {
                                 categories={reducer}
                                 hvaSokesOm={watch("hvaSokesOm")}
                             />
-                            <Textarea
+                            <LocalizedTextArea
                                 {...register("hvaErEndret")}
                                 id={"hvaErEndret"}
                                 maxLength={MAX_LEN_HVA_ER_ENDRET}

@@ -1,10 +1,11 @@
 import React, {CSSProperties} from "react";
-import {BodyShort, Box, Checkbox, HStack, Label, Textarea, VStack} from "@navikt/ds-react";
+import {BodyShort, Box, Checkbox, HStack, Label, VStack} from "@navikt/ds-react";
 import {SelectableCategory} from "../hooks/data/useKategorier";
 import {useTranslation} from "react-i18next";
 import {FormState, UseFormReturn} from "react-hook-form";
 import {DigisosLanguageKey} from "../i18n";
 import {XMarkIcon} from "@navikt/aksel-icons";
+import LocalizedTextArea from "./LocalizedTextArea";
 
 type HvaSokesOm = {hvaSokesOm?: string | null};
 
@@ -167,7 +168,7 @@ const Category = <T extends HvaSokesOm>({category, toggle, register, errors}: Ca
                 {category.text === "Annet" && category.selected && (
                     <VStack className="w-full" align="start" gap="2">
                         <BodyShort>{t("begrunnelse.annet.beskrivelse")}</BodyShort>
-                        <Textarea
+                        <LocalizedTextArea
                             {...register("hvaSokesOm")}
                             id={"hvaSokesOm"}
                             onClick={(e) => {

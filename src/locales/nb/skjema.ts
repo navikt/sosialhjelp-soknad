@@ -1815,9 +1815,8 @@ export const skjema = {
         },
     },
     textarea: {
-        feilmleding: "Du har skrevet for mange tegn",
-        overmaks: "Du har {{antall}} tegn for mye",
-        undermaks: "Du har {{antall}} tegn igjen",
+        overmaks: "tegn for mye",
+        undermaks: "tegn igjen",
     },
     tilbake: {
         til: {
