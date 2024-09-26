@@ -4702,7 +4702,6 @@
             },
             "KontoInput": {"type": "object"},
             "KontonummerBrukerInput": {
-                "required": ["kontonummer"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/KontoInput"},
@@ -4842,8 +4841,8 @@
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
-                    "group": {"type": "string"},
                     "dokumentasjonForventet": {"type": "boolean"},
+                    "group": {"type": "string"},
                     "type": {"type": "string"}
                 },
                 "discriminator": {"propertyName": "type"}
@@ -4864,6 +4863,7 @@
                     "UTGIFTER_SFO",
                     "UTGIFTER_BARNEHAGE",
                     "UTGIFTER_HUSLEIE",
+                    "UTGIFTER_HUSLEIE_KOMMUNAL",
                     "UTGIFTER_BOLIGLAN",
                     "UTGIFTER_BOLIGLAN_AVDRAG",
                     "UTGIFTER_BOLIGLAN_RENTER"
@@ -5214,11 +5214,7 @@
                 "type": "object",
                 "properties": {"hvaSokesOm": {"type": "string"}, "hvorforSoke": {"type": "string"}}
             },
-            "ArbeidInput": {
-                "required": ["kommentarTilArbeidsforhold"],
-                "type": "object",
-                "properties": {"kommentarTilArbeidsforhold": {"type": "string"}}
-            },
+            "ArbeidInput": {"type": "object", "properties": {"kommentarTilArbeidsforhold": {"type": "string"}}},
             "ArbeidDto": {
                 "required": ["arbeidsforholdList"],
                 "type": "object",
@@ -5595,14 +5591,7 @@
                 "description": "Påbegynte men ikke innleverte søknader"
             },
             "SessionResponse": {
-                "required": [
-                    "daysBeforeDeletion",
-                    "maxUploadSizeBytes",
-                    "numRecentlySent",
-                    "open",
-                    "qualifiesForKortSoknad",
-                    "userBlocked"
-                ],
+                "required": ["daysBeforeDeletion", "maxUploadSizeBytes", "numRecentlySent", "open", "userBlocked"],
                 "type": "object",
                 "properties": {
                     "userBlocked": {

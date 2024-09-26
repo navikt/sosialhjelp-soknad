@@ -1,10 +1,10 @@
 import * as React from "react";
 import {Alert, Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {YesNoInput} from "../../../lib/components/form/YesNoInput";
 import {useInntekterBostotte} from "../../../lib/hooks/data/useInntekterBostotte";
 import {FaroErrorBoundary} from "@grafana/faro-react";
 import {BostotteDataVisning} from "./BostotteDataVisning";
+import {BaseBooleanInputProps, BooleanInput} from "../../../lib/components/form/BooleanInput.tsx";
 
 const BostotteData = () => {
     const {t} = useTranslation("skjema");
@@ -27,7 +27,7 @@ interface Props {
 
 export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: Props) => {
     const {t} = useTranslation("skjema");
-    const {bekreftelse, dataHentet, setBekreftelse, setSamtykke} = useInntekterBostotte(skipFirstStep);
+    const {bekreftelse, dataHentet, bostotte, setBekreftelse, setSamtykke} = useInntekterBostotte(skipFirstStep);
 
     return (
         <div className={"space-y-4"}>
@@ -50,7 +50,10 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
                         name={"bostotte-samtykke"}
                         legend={t("inntekt.bostotte.gi_samtykke.overskrift")}
                         description={!hideSamtykkeDescription && t("inntekt.bostotte.gi_samtykke.tekst")}
-                        onChange={(checked) => setSamtykke(checked)}
+                        onChange={(checked) => {
+                            setSamtykke(checked);
+                        }}
+                        defaultValue={bostotte?.samtykke}
                     />
                     {dataHentet && <BostotteData />}
                 </>
@@ -58,3 +61,14 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
         </div>
     );
 };
+
+const YesNoInput = React.forwardRef((baseprops: BaseBooleanInputProps, ref: React.ForwardedRef<HTMLInputElement>) => {
+    const {t} = useTranslation("skjema");
+    return (
+        <BooleanInput
+            ref={ref}
+            {...baseprops}
+            radioLabels={[t("inntekt.bostotte.gi_samtykke.ja"), t("inntekt.bostotte.gi_samtykke.nei")]}
+        />
+    );
+});

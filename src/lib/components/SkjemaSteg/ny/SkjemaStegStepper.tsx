@@ -25,7 +25,7 @@ export const SkjemaStegStepper = () => {
                 orientation={"horizontal"}
                 onStepChange={(s: number) => requestNavigation(s)}
             >
-                {[...Array(kort ? 3 : 8).keys()].map((key) => (
+                {[...Array(kort ? 4 : 8).keys()].map((key) => (
                     <Stepper.Step aria-label={`steg ${key}`} key={key} as="button">
                         {t(SkjemaHeadings[page].tittel)}
                     </Stepper.Step>

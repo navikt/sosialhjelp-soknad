@@ -217,27 +217,30 @@ export const skjema = {
         },
         kategorier: {
             annet: "Other",
-            barn: "Things for children and leisure activities",
-            barnehage: "Kindergarten, SFO or AKS",
+            barn: "Other expenses for children",
+            barnehage: "Kindergarten and SFO/AKS",
             bolig: "Rent",
-            hoytid: "Holidays, special occasions and gifts",
+            hoytid: "Holidays and special occasions",
             klaer: "Clothes and equipment",
             label: "What are you applying for money for?",
-            lege: "Doctor and medicine",
+            description:
+                'Here are some common expenses to apply for. You can enter others under "Other". You can select multiple categories.',
+            lege: "Medical help and medicine",
             mat: "Food",
-            nodhjelp: "Emergency aid",
-            strom: "Electricity",
-            tannlege: "Dentist",
+            nodhjelp: "Emergency assistance",
+            strom: "Electricity and heating",
+            tannlege: "Dental treatment",
             transport: "Transport",
-            ved: "Firewood, gas or district heating",
+            fritidsaktiviteter: "Leisure activities for children",
         },
         kort: {
             behov: {
                 dokumentasjon: {
                     beskrivelse:
-                        "Here you can upload an invoice, receipt or cost estimate for what you are applying for money for. You can take pictures/screenshots.",
+                        "Here you can upload documentation about your situation and expenses. You can take photos and screenshots.",
                     tittel: "Documentation",
                 },
+                oppsummeringstittel: "Your needs",
             },
         },
         nødhjelp: {
@@ -394,11 +397,11 @@ export const skjema = {
                             label: "State why",
                         },
                     },
-                    sporsmal: "Do you live with your spouse?",
+                    sporsmal: "Registered on the same address",
                 },
                 ektefelle: {
                     borsammen: {
-                        sporsmal: "Do you live with your spouse?",
+                        sporsmal: "Registered on the same address?",
                     },
                     etternavn: {
                         label: "Surname",
@@ -460,7 +463,7 @@ export const skjema = {
                 },
                 sporsmal: "Add children we have not registered",
             },
-            sporsmal: "Children you are responsible for as a provider:",
+            sporsmal: "Children you provide for:",
         },
         fodselsdato: "Date of birth",
         hentet_fra_folkeregisteret: "(Retrieved from the National Population Register)",
@@ -475,7 +478,7 @@ export const skjema = {
         },
         ingress_folkeregisteret: "We have obtained the following information from the National Population Register:",
         ingress_forsorger: "We have registered that you are responsible as a provider for:",
-        samme_folkeregistrerte_adresse: "Has/have the same registered address as you",
+        samme_folkeregistrerte_adresse: "Registered on the same address",
         samvaer: {
             sporsmal: "What is the extent of visits you have with the child?",
         },
@@ -682,11 +685,11 @@ export const skjema = {
         innhenting: {
             tekst_del1:
                 'We automatically collect information from public registers. By pressing "Start application" you accept this.',
-            tekst_del2: "<lenke>Read more about the collection and processing of your personal data</lenke>.",
+            tekst_del2: "<lenke>Read more about collecting and processing of your personal data</lenke>.",
             undertittel: "Collecting and processing of personal data",
         },
         nodsituasjon: {
-            tekst: "If you do not have money for food or a place to stay for the next 24 hours, you can apply for help in an emergency situation. In addition to submitting the application, you should contact NAV or be available by phone after you have submitted the application.",
+            tekst: "If you do not have money for food or a place to stay for the next 24 hours, you should mention this in your application.",
             undertittel: "Are you in an emergency situation?",
         },
         samtykke: {
@@ -699,8 +702,7 @@ export const skjema = {
             sporsmal: "Update information from",
         },
         start: {
-            tekst_del1:
-                "In order to get a reply as quickly as possible, you should fill in the application as best you can, and attach relevant documentation.",
+            tekst_del1: "Please complete the application as best you can. Attach relevant documentation.",
             tekst_del2: "See examples of <lenke>what documentation we might ask for</lenke>.",
             tekst_del3:
                 "If you intentionally withhold or provide incorrect information, you may have to pay back the benefit.",
@@ -772,8 +774,10 @@ export const skjema = {
         },
         bostotte: {
             gi_samtykke: {
-                overskrift: "Do you wish to obtain information concerning housing allowance from Husbanken?",
+                overskrift: "Would you like to retrieve information about your housing allowance from Husbanken?",
                 tekst: "This information can be necessary to process the application. If you do not wish us to obtain this personal information, you can upload documentation in the last stage of the application.",
+                ja: "Yes, get information",
+                nei: "No",
             },
             har_gitt_samtykke: "You have obtained information from Husbanken",
             husbanken: {
@@ -938,7 +942,7 @@ export const skjema = {
                 stringValue: "You have stated:",
             },
             description:
-                "The account number you enter here will only be used for payment of financial social assistance, and will not be updated on My Page",
+                "The account number you enter here will only be used for payment of financial assistance, and will not be updated on My Page",
             feilmelding: "Account number must be entered",
             harikke: {
                 sporsmal: "Account number",
@@ -952,7 +956,7 @@ export const skjema = {
             kontonummerFelt: "Account number field",
             label: "New account number (11 digits)",
             oppgi: "Enter account number",
-            sporsmal: "Account number for the application",
+            sporsmal: "Your account number",
         },
         statsborger: {
             feilmelding: "Citizenship must be selected",
@@ -1016,7 +1020,7 @@ export const skjema = {
             kontaktinfo: {
                 infotekst: {
                     ekstratekst:
-                        "If you do not know the address, enter the municipality, district, or postal code and select the NAV office where you live",
+                        "Write the address where you are staying. If you do not know the address, you can write the address of the NAV office in the municipality or district where you live. <lenke>Look up NAV office.</lenke>",
                 },
                 sporsmal: "Address",
             },
@@ -1032,7 +1036,7 @@ export const skjema = {
             },
             oppholdsadresse: {
                 finnerKontor: "Find your NAV office",
-                folkeregistrertAdresse: "Address registered in the National Population Register:",
+                folkeregistrertAdresse: "Registered address:",
                 hvorOppholder: "What is your current address?",
                 midlertidigAdresse: "Temporary address on My Page:",
                 soknad: {
@@ -1044,16 +1048,16 @@ export const skjema = {
                 sporsmal: "Residential address and NAV office",
                 valg: {
                     feilmelding: "You must select your residential address and NAV office",
-                    folkeregistrert: "Address registered in the National Population Register",
+                    folkeregistrert: "Registered address",
                     midlertidig: "Temporary address registered in NAV address register (TPS)",
-                    soknad: "I reside at another address",
+                    soknad: "I live at a different address",
                     sporsmal: "What is your residential address?",
                 },
                 velgKontor: "The address generated several NAV offices. Select your local office.",
                 velgMottaker: "Select NAV office",
             },
             personalia: {
-                fnr: "Date of birth/ID number",
+                fnr: "National identity number",
                 fodselsdato: "Date of birth",
                 infotekst: {
                     tekst: "(Retrieved from My Page)",
@@ -1126,7 +1130,7 @@ export const skjema = {
             lenke: "Go to case",
         },
         samtale: {
-            tekst: 'If you apply for financial assistance, you will normally be called in to an interview with an adviser. You can also contact your NAV office to arrange a meeting. <a href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote"  target="_blank" rel="noreferrer noopener">Read more about how meetings are held.</lenke>',
+            tekst: 'If you apply for financial assistance, you will normally be called in to an interview with an advisor. You can also contact your NAV office to arrange a meeting. <a href="https://www.nav.no/sosialhjelp/slik-foregar-et-mote"  target="_blank" rel="noreferrer noopener">Read more about how meetings are held.</lenke>',
             tittel: "Interview with NAV office",
         },
         situasjon: {
@@ -1524,7 +1528,7 @@ export const skjema = {
         co: "c/o:",
         ferdig: "Personal details completed",
         fnr: "Date of birth/ID number",
-        folkeregistrertadresse: "Address registered in the National Population Register",
+        folkeregistrertadresse: "Registered address",
         gyldigTil: "Valid until:",
         informasjon:
             "For us to send the application to the correct NAV office, we need to know where you live or are staying.",
@@ -1598,14 +1602,14 @@ export const skjema = {
     situasjon: {
         kategorier: {
             oppsummeringstekst: {
-                label: "Text that will be sent to the NAV office:",
-                resten: "I apply for money for:",
+                label: "You have chosen:",
+                resten: "I need money for:",
             },
         },
         kort: {
             dokumentasjon: {
                 description:
-                    "Here you can upload documentation of what has changed in your situation. You can attach images/screenshots.",
+                    "Here you can upload any other documentation you consider important. You can take photos and screenshots.",
                 title: "Documentation of the change",
             },
             endring: {
@@ -1613,13 +1617,14 @@ export const skjema = {
                 legend: "Has anything in your situation changed since you last applied?",
             },
             hvaErEndret: {
-                description: "Example: I have gotten housing allowance and therefore have a higher income",
-                label: "What has changed in your situation?",
+                description:
+                    "Has anything changed since the last time you applied, or would you like to provide more details about what you're applying for?",
+                label: "What is your situation?",
             },
-            tittel: "Your situation",
+            tittel: "Income",
         },
         nodsituasjon: {
-            oppsummering: "I'm in an emergency and ",
+            oppsummering: "Emergency aid:",
         },
     },
     skjema: {
@@ -1672,8 +1677,8 @@ export const skjema = {
         },
         hjelpetekst: {
             ingress:
-                "If you live in an institution (E.g. hospital, prison, psychiatric or substance abuse treatment), please state your last address before arriving at the institution.",
-            tekst: "You must enter your residential address so that the application can be sent to the correct NAV office.",
+                "If you are staying in an institution, for example in a hospital or prison, write your last address before arriving at the institution.",
+            tekst: "Fill in the address where you currently live so that we can send your application to the correct NAV office.",
         },
         infotekst: {
             tekst: "State your residential address (mandatory)",
@@ -1681,7 +1686,7 @@ export const skjema = {
         kommunenavn: {
             label: "Municipality",
         },
-        sporsmal: "Address and NAV office",
+        sporsmal: "Your address",
     },
     soknadsmottakerbolk: {
         tittel: "Application recipient",
@@ -1716,7 +1721,7 @@ export const skjema = {
             harLestSamtykker: "I confirm that the information I have provided is correct.",
             hvorsendes_del1: "Your application will be sent to {{valgtEnhetsNavn}}.",
             hvorsendes_del2:
-                "The NAV office will process your application as quick as possible, and will contact you if they need anything from you!",
+                "The NAV office will process your application as quick as possible. They will contact you if they need anything from you!",
             infoSamtykke: "Information concerning your personal privacy rights.",
             samtykke: {
                 oversendelse: {
@@ -1780,6 +1785,7 @@ export const skjema = {
                     },
                     listetittel: "Information about the child/children",
                 },
+                empty: "We could not find any children registered on you",
             },
             sivilstatus: {
                 diskresjonskode: "Spouse/partner has discretion code",
@@ -1821,6 +1827,7 @@ export const skjema = {
                 sporsmal: "Your marital status",
                 ugift: "Unmarried",
                 stringValue: "(Retrieved from the National Population Register)",
+                empty: "We could not find any registered spouse or partner",
             },
         },
     },
@@ -1830,9 +1837,8 @@ export const skjema = {
         },
     },
     textarea: {
-        feilmleding: "You have entered too many characters",
-        overmaks: "You have {{antall}} characters too many",
-        undermaks: "You have {{antall}} characters left",
+        overmaks: "characters too many",
+        undermaks: "characters remaining",
     },
     tilbake: {
         til: {
@@ -1864,8 +1870,8 @@ export const skjema = {
             fra: "From",
             skattbar: {
                 avbryt: {
-                    ja: "Yes, retrieve it for me.",
-                    nei: "No, do not retrieve it for me",
+                    ja: "Yes, get information",
+                    nei: "No",
                 },
                 beskrivelse: "You have obtained information about your income from the Tax Administration.",
                 bruttoinntekt: "Income before tax",
@@ -1888,8 +1894,9 @@ export const skjema = {
                 samtykke_info:
                     "This information can be necessary to process the application. If you do not wish us to obtain this personal information, you can upload documentation in the last stage of the application.",
                 samtykke_sporsmal_v1:
-                    "Do you wish to obtain information about your income from the Tax Administration?",
-                samtykke_sporsmal_v2: "Do you want to retrieve your income from The Norwegian Tax Administration?",
+                    "Would you like to retrieve information about your income from The Norwegian Tax Administration?",
+                samtykke_sporsmal_v2:
+                    "Would you like to retrieve information about your income from The Norwegian Tax Administration?",
                 skatteetaten: "See details from the Tax Administration",
                 ta_bort_samtykke: "Remove information from the Tax Administration",
                 tidspunkt: "Information was obtained",
@@ -1935,7 +1942,7 @@ export const skjema = {
             },
             sporsmal: "Benefit",
             type: {
-                label: "Type",
+                label: "Benefit",
             },
             utbetalingsdato: {
                 label: "Date",
@@ -2319,6 +2326,10 @@ export const skjema = {
     backendCompat: {
         jsonOkonomiOpplysningerArbeidAvsluttet: "Final settlement/holiday pay after tax",
         jsonOkonomiOpplysningerArbeidJobb: "Salary income",
+    },
+    arbeidOgFamilie: {
+        tittel: "Work and family",
+        alert: "You are getting a new and shorter application since you have applied before. Feel free to provide feedback on the application to your advisor.",
     },
 };
 
