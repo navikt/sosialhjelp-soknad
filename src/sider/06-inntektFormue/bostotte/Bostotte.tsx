@@ -27,7 +27,7 @@ interface Props {
 
 export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: Props) => {
     const {t} = useTranslation("skjema");
-    const {bekreftelse, dataHentet, setBekreftelse, setSamtykke} = useInntekterBostotte(skipFirstStep);
+    const {bekreftelse, dataHentet, bostotte, setBekreftelse, setSamtykke} = useInntekterBostotte(skipFirstStep);
 
     return (
         <div className={"space-y-4"}>
@@ -50,7 +50,10 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
                         name={"bostotte-samtykke"}
                         legend={t("inntekt.bostotte.gi_samtykke.overskrift")}
                         description={!hideSamtykkeDescription && t("inntekt.bostotte.gi_samtykke.tekst")}
-                        onChange={(checked) => setSamtykke(checked)}
+                        onChange={(checked) => {
+                            setSamtykke(checked);
+                        }}
+                        defaultValue={bostotte?.samtykke}
                     />
                     {dataHentet && <BostotteData />}
                 </>

@@ -50,7 +50,7 @@ const CategoriesSummary = ({categories, hvaSokesOm}: CategoriesSummaryProps) => 
         .map((cat) => t(cat.key))
         .join(", ")
         .toLowerCase();
-    if (!nodhjelpText && !annetText && theRest.length === 0) {
+    if (!nodhjelpText && !hvaSokesOm && theRest.length === 0) {
         return null;
     }
     return (
@@ -113,15 +113,26 @@ const KategorierChips = <T extends HvaSokesOm>({
                             categories.findIndex((cat) => cat.text === "Annet")
                         )
                         .map((category) => (
-                            <Category category={category} toggle={toggle} register={register} errors={errors} />
+                            <Category
+                                category={category}
+                                toggle={toggle}
+                                register={register}
+                                errors={errors}
+                                showXMark={
+                                    category.selected &&
+                                    Boolean(category.subCategories?.length) &&
+                                    category.subCategories?.every((it) => !it.selected)
+                                }
+                            />
                         ))}
                 </HStack>
-                <Box className="pt-2">
+                <Box className={`pt-2 ${categories[categories.length - 1]?.selected ? "min-w-full" : ""}`}>
                     <Category
                         category={categories[categories.length - 1]}
                         toggle={toggle}
                         register={register}
                         errors={errors}
+                        showXMark={categories[categories.length - 1]?.selected && !hvaSokesOm}
                     />
                 </Box>
             </VStack>
@@ -135,17 +146,18 @@ interface CategoryProps<T extends HvaSokesOm> {
     toggle: (category: string, subCategory?: string) => void;
     register: UseFormReturn<T | HvaSokesOm>["register"];
     errors: FormState<T | HvaSokesOm>["errors"];
+    showXMark?: boolean;
 }
 
 const MAX_LEN_ANNET = 150;
 
-const Category = <T extends HvaSokesOm>({category, toggle, register, errors}: CategoryProps<T>) => {
+const Category = <T extends HvaSokesOm>({category, toggle, register, errors, showXMark}: CategoryProps<T>) => {
     const {t} = useTranslation("skjema");
     return (
         <Box
             role="button"
             className={`flex rounded-lg cursor-pointer ${category.selected ? (category.text === "Nødhjelp" ? "bg-surface-warning-subtle" : "bg-blue-200") : "bg-blue-50"} ${
-                category.selected && ["Annet", "Bolig", "Nødhjelp"].includes(category.text) ? "w-full" : ""
+                category.selected && ["Annet", "Nødhjelp"].includes(category.text) ? "w-full min-w-full" : ""
             }`}
             key={category.text}
             onClick={() => toggle(category.text)}
@@ -160,9 +172,7 @@ const Category = <T extends HvaSokesOm>({category, toggle, register, errors}: Ca
                         </HStack>
                         {t(category.key)}
                     </HStack>
-                    {category.selected && (category.subCategories?.length || category.text === "Annet") && (
-                        <XMarkIcon />
-                    )}
+                    {showXMark && <XMarkIcon />}
                 </HStack>
                 {category.selected && <SubCategories category={category} toggle={toggle} />}
                 {category.text === "Annet" && category.selected && (

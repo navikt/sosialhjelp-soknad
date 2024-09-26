@@ -18,10 +18,11 @@ export const useInntekterBostotte = (skipFirstStep?: boolean) => {
     const setBekreftelse = async (harInntektHusbanken: boolean) => {
         if (!bostotte) return;
 
+        const samtykke = skipFirstStep ? undefined : harInntektHusbanken ? bostotte.samtykke : false;
         const oppdatert = {
             ...bostotte,
             bekreftelse: harInntektHusbanken,
-            samtykke: harInntektHusbanken ? bostotte.samtykke : false,
+            samtykke,
         };
 
         if (!harInntektHusbanken) await updateSamtykke1(behandlingsId, false);

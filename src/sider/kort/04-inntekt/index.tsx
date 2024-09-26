@@ -9,7 +9,7 @@ import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaSte
 import {SkattbarInntekt} from "../../06-inntektFormue/skattbarInntekt/index.tsx";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox.tsx";
 
-const DinSituasjon = (): React.JSX.Element => {
+const Inntekt = (): React.JSX.Element => {
     const {t} = useTranslation("skjema");
 
     return (
@@ -30,4 +30,4 @@ const DinSituasjon = (): React.JSX.Element => {
     );
 };
 
-export default DinSituasjon;
+export default Inntekt;

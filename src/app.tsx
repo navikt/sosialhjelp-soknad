@@ -22,7 +22,7 @@ import Informasjon from "./sider/hovedmeny";
 import Behov from "./sider/kort/02-behov";
 import ArbeidOgFamilie from "./sider/kort/03-arbeid-og-familie";
 import {SwitchSoknadType} from "./SwitchSoknadType.tsx";
-import DinSituasjon from "./sider/kort/04-situasjon";
+import Inntekt from "./sider/kort/04-inntekt";
 import {BASE_PATH} from "./lib/constants";
 
 import {useLocalStorageLangSelector} from "./lib/useLocalStorageLangSelector.ts";
@@ -71,7 +71,7 @@ export default function App() {
                                             <Route path="1" element={<RedirectToStandard />} />
                                             <Route path="2" element={<Behov />} />
                                             <Route path="3" element={<ArbeidOgFamilie />} />
-                                            <Route path="4" element={<DinSituasjon />} />
+                                            <Route path="4" element={<Inntekt />} />
                                             <Route path="5" element={<Oppsummering />} />
                                         </Route>
                                     </Route>
