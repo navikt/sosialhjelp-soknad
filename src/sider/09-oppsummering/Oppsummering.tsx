@@ -6,18 +6,19 @@ import {useTranslation} from "react-i18next";
 import {useGetOppsummering} from "../../generated/oppsummering-ressurs/oppsummering-ressurs";
 import {OppsummeringSteg} from "./OppsummeringSteg";
 import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullfortEvent";
-import {useSendSoknad} from "./useSendSoknad";
 import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude";
 import {SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useLocation} from "react-router-dom";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
+import {useSendSoknad1} from "../../generated/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
+import digisosConfig from "../../lib/config.ts";
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
     const behandlingsId = useBehandlingsId();
-    const {sendSoknad, isError} = useSendSoknad(behandlingsId);
+    const {mutateAsync, isError} = useSendSoknad1();
     const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId);
     const location = useLocation();
 
@@ -41,8 +42,11 @@ export const Oppsummering = () => {
                 <SkjemaStegButtons
                     confirmTextKey={"skjema.knapper.send"}
                     onConfirm={async () => {
-                        await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
-                        return sendSoknad();
+                        const {digisosId} = await mutateAsync({soknadId: behandlingsId});
+                        await logAmplitudeEvent("skjema fullført", {
+                            ...getAttributesForSkjemaFullfortEvent(oppsummering),
+                        });
+                        window.location.assign(`${digisosConfig.innsynURL}${digisosId}/status`);
                     }}
                 />
             </SkjemaContent>

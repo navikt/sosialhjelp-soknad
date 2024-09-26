@@ -3641,9 +3641,6 @@
             "get": {
                 "tags": ["informasjon-ressurs"],
                 "operationId": "getSessionInfo",
-                "parameters": [
-                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
-                ],
                 "responses": {
                     "413": {
                         "description": "Payload Too Large",
@@ -4702,7 +4699,6 @@
             },
             "KontoInput": {"type": "object"},
             "KontonummerBrukerInput": {
-                "required": ["kontonummer"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/KontoInput"},
@@ -4864,6 +4860,7 @@
                     "UTGIFTER_SFO",
                     "UTGIFTER_BARNEHAGE",
                     "UTGIFTER_HUSLEIE",
+                    "UTGIFTER_HUSLEIE_KOMMUNAL",
                     "UTGIFTER_BOLIGLAN",
                     "UTGIFTER_BOLIGLAN_AVDRAG",
                     "UTGIFTER_BOLIGLAN_RENTER"
@@ -5214,11 +5211,7 @@
                 "type": "object",
                 "properties": {"hvaSokesOm": {"type": "string"}, "hvorforSoke": {"type": "string"}}
             },
-            "ArbeidInput": {
-                "required": ["kommentarTilArbeidsforhold"],
-                "type": "object",
-                "properties": {"kommentarTilArbeidsforhold": {"type": "string"}}
-            },
+            "ArbeidInput": {"type": "object", "properties": {"kommentarTilArbeidsforhold": {"type": "string"}}},
             "ArbeidDto": {
                 "required": ["arbeidsforholdList"],
                 "type": "object",
@@ -5365,9 +5358,16 @@
                 "properties": {"type": {"type": "string"}, "verdi": {"type": "boolean"}}
             },
             "SendTilUrlFrontend": {
-                "required": ["id", "sendtTil"],
+                "required": ["antallDokumenter", "id", "kortSoknad", "prosentFyltUt", "sendtTil"],
                 "type": "object",
-                "properties": {"sendtTil": {"type": "string", "enum": ["FIKS_DIGISOS_API"]}, "id": {"type": "string"}}
+                "properties": {
+                    "sendtTil": {"type": "string", "enum": ["FIKS_DIGISOS_API"]},
+                    "id": {"type": "string"},
+                    "forrigeSoknadSendt": {"type": "string", "format": "date"},
+                    "antallDokumenter": {"type": "integer", "format": "int32"},
+                    "prosentFyltUt": {"type": "number", "format": "double"},
+                    "kortSoknad": {"type": "boolean"}
+                }
             },
             "StartSoknadResponse": {
                 "required": ["brukerBehandlingId", "useKortSoknad"],
@@ -5595,14 +5595,7 @@
                 "description": "Påbegynte men ikke innleverte søknader"
             },
             "SessionResponse": {
-                "required": [
-                    "daysBeforeDeletion",
-                    "maxUploadSizeBytes",
-                    "numRecentlySent",
-                    "open",
-                    "qualifiesForKortSoknad",
-                    "userBlocked"
-                ],
+                "required": ["daysBeforeDeletion", "maxUploadSizeBytes", "numRecentlySent", "open", "userBlocked"],
                 "type": "object",
                 "properties": {
                     "userBlocked": {
@@ -5629,8 +5622,7 @@
                         "type": "integer",
                         "description": "Max file upload size, in bytes",
                         "format": "int64"
-                    },
-                    "qualifiesForKortSoknad": {"type": "boolean", "description": "User qualifies for kort søknad"}
+                    }
                 },
                 "description": "Informasjon om brukerøkt"
             },
