@@ -3641,6 +3641,9 @@
             "get": {
                 "tags": ["informasjon-ressurs"],
                 "operationId": "getSessionInfo",
+                "parameters": [
+                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
+                ],
                 "responses": {
                     "413": {
                         "description": "Payload Too Large",
@@ -4838,8 +4841,8 @@
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
-                    "group": {"type": "string"},
                     "dokumentasjonForventet": {"type": "boolean"},
+                    "group": {"type": "string"},
                     "type": {"type": "string"}
                 },
                 "discriminator": {"propertyName": "type"}
@@ -5595,7 +5598,14 @@
                 "description": "Påbegynte men ikke innleverte søknader"
             },
             "SessionResponse": {
-                "required": ["daysBeforeDeletion", "maxUploadSizeBytes", "numRecentlySent", "open", "userBlocked"],
+                "required": [
+                    "daysBeforeDeletion",
+                    "maxUploadSizeBytes",
+                    "numRecentlySent",
+                    "open",
+                    "qualifiesForKortSoknad",
+                    "userBlocked"
+                ],
                 "type": "object",
                 "properties": {
                     "userBlocked": {
@@ -5622,7 +5632,8 @@
                         "type": "integer",
                         "description": "Max file upload size, in bytes",
                         "format": "int64"
-                    }
+                    },
+                    "qualifiesForKortSoknad": {"type": "boolean", "description": "User qualifies for kort søknad"}
                 },
                 "description": "Informasjon om brukerøkt"
             },

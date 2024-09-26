@@ -14,16 +14,50 @@ import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.ts
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {useSendSoknad1} from "../../generated/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
 import digisosConfig from "../../lib/config.ts";
+//import {sendSoknad} from "../../generated/soknad-actions/soknad-actions.ts";
+//import {useSendSoknad} from "./useSendSoknad.tsx";
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
     const behandlingsId = useBehandlingsId();
     const {mutateAsync, isError} = useSendSoknad1();
+    //const {sendSoknad, isError: hei} = useSendSoknad(behandlingsId);
+
     const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId);
     const location = useLocation();
 
     if (isLoading) return <ApplicationSpinner />;
     const isKortSoknad = location.pathname.includes("/kort");
+
+    /**
+
+                      <SkjemaStegButtons
+                          confirmTextKey={"skjema.knapper.send"}
+                          onConfirm={async () => {
+                              const {digisosId} = await mutateAsync({soknadId: behandlingsId});
+                              await logAmplitudeEvent("skjema fullført", {
+                                  ...getAttributesForSkjemaFullfortEvent(oppsummering),
+                              });
+                              window.location.assign(`${digisosConfig.innsynURL}${digisosId}/status`);
+                          }}
+                      />
+
+
+
+                      <SkjemaStegButtons
+                          confirmTextKey={"skjema.knapper.send"}
+                          onConfirm={async () => {
+                              await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
+                              return sendSoknad();
+                          }}
+                      />
+                      </SkjemaContent>
+
+
+
+
+
+     * */
 
     return (
         <SkjemaSteg page={isKortSoknad ? 4 : 9}>
@@ -42,10 +76,13 @@ export const Oppsummering = () => {
                 <SkjemaStegButtons
                     confirmTextKey={"skjema.knapper.send"}
                     onConfirm={async () => {
+                        console.log("send1");
                         const {digisosId} = await mutateAsync({soknadId: behandlingsId});
+                        console.log("send2");
                         await logAmplitudeEvent("skjema fullført", {
                             ...getAttributesForSkjemaFullfortEvent(oppsummering),
                         });
+                        console.log("send3");
                         window.location.assign(`${digisosConfig.innsynURL}${digisosId}/status`);
                     }}
                 />
