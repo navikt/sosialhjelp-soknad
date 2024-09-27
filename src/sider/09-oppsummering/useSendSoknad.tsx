@@ -24,7 +24,7 @@ export const useSendSoknad = (behandlingsId: string) => {
             try {
                 const response = await sendSoknad(behandlingsId);
                 const {id, antallDokumenter, sendtTil, forrigeSoknadSendt} = response;
-                logAmplitudeEvent("Soknad sendt", {
+                logAmplitudeEvent("Søknad sendt", {
                     id: id,
                     sendtTil: sendtTil,
                     forrigeSoknadSendt: forrigeSoknadSendt,
