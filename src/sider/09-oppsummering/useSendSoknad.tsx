@@ -1,42 +1,35 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {sendSoknad} from "../../generated/soknad-actions/soknad-actions";
-//import digisosConfig from "../../lib/config";
+import digisosConfig from "../../lib/config";
 import {faro} from "@grafana/faro-react";
-import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude"; // Import the logging function
+import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude.tsx";
+import {useAdresser} from "../01-personalia/adresse/useAdresser.tsx";
 
 export const useSendSoknad = (behandlingsId: string) => {
     const [isError, setIsError] = useState<boolean>(false);
+    const {folkeregistrert, brukerdefinert} = useAdresser();
+    const [endretAdresse, setEndretAdresse] = useState<boolean>(false);
 
-    logAmplitudeEvent("blir dette logget?");
+    useEffect(() => {
+        if (brukerdefinert) {
+            setEndretAdresse(true);
+        } else if (folkeregistrert) {
+            setEndretAdresse(false);
+        }
+    }, [brukerdefinert]);
 
-    const sendSoknaden = async () => {
+    const sendSoknaden = async (isKortSoknad: boolean) => {
         setIsError(false);
         try {
             try {
-                // Call the backend to send the application
-                try {
-                    console.log("send1");
-                    const response = await sendSoknad(behandlingsId);
-                    console.log("Response from sendSoknad:", response); // This will print if successful
-                    const {id, antallDokumenter, kortSoknad} = response;
-                    console.log("send2", id, antallDokumenter, kortSoknad); // Check destructuring
-
-                    console.log("send3");
-                    await logAmplitudeEvent("soknad_sendt", {antallDokumenter, kortSoknad});
-                    console.log("send4");
-                } catch (error) {
-                    console.error("Caught Error:", error); // Catch any error and log it
-                }
-                // Log Amplitude Event
-                console.log("send3");
-                //await logAmplitudeEvent("soknad_sendt", {
-                //    antallDokumenter,
-                //    kortSoknad,
-                //});
-                //console.log("send4")
-
-                // Redirect to status page after successful submission
-                //window.location.assign(`${digisosConfig.innsynURL}${id}/status`);
+                const response = await sendSoknad(behandlingsId);
+                const {id, antallDokumenter} = response;
+                logAmplitudeEvent("Soknad sendt", {
+                    AntallDokumenterSendt: antallDokumenter,
+                    KortSoknad: isKortSoknad,
+                    EndrerSokerAdresse: endretAdresse,
+                });
+                window.location.assign(`${digisosConfig.innsynURL}${id}/status`);
             } catch (e: any) {
                 faro.api.pushError(e);
                 throw e;

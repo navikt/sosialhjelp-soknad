@@ -4841,8 +4841,8 @@
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
-                    "dokumentasjonForventet": {"type": "boolean"},
                     "group": {"type": "string"},
+                    "dokumentasjonForventet": {"type": "boolean"},
                     "type": {"type": "string"}
                 },
                 "discriminator": {"propertyName": "type"}
@@ -5361,15 +5361,13 @@
                 "properties": {"type": {"type": "string"}, "verdi": {"type": "boolean"}}
             },
             "SendTilUrlFrontend": {
-                "required": ["antallDokumenter", "id", "kortSoknad", "prosentFyltUt", "sendtTil"],
+                "required": ["antallDokumenter", "id", "sendtTil"],
                 "type": "object",
                 "properties": {
                     "sendtTil": {"type": "string", "enum": ["FIKS_DIGISOS_API"]},
                     "id": {"type": "string"},
-                    "forrigeSoknadSendt": {"type": "string", "format": "date"},
-                    "antallDokumenter": {"type": "integer", "format": "int32"},
-                    "prosentFyltUt": {"type": "number", "format": "double"},
-                    "kortSoknad": {"type": "boolean"}
+                    "forrigeSoknadSendt": {"type": "string", "format": "date-time"},
+                    "antallDokumenter": {"type": "integer", "format": "int32"}
                 }
             },
             "StartSoknadResponse": {
@@ -5598,14 +5596,7 @@
                 "description": "Påbegynte men ikke innleverte søknader"
             },
             "SessionResponse": {
-                "required": [
-                    "daysBeforeDeletion",
-                    "maxUploadSizeBytes",
-                    "numRecentlySent",
-                    "open",
-                    "qualifiesForKortSoknad",
-                    "userBlocked"
-                ],
+                "required": ["daysBeforeDeletion", "maxUploadSizeBytes", "numRecentlySent", "open", "userBlocked"],
                 "type": "object",
                 "properties": {
                     "userBlocked": {

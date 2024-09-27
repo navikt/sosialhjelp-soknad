@@ -26,7 +26,7 @@ export const initAmplitude = () => {
     amplitude.getInstance("sosialhjelpsoknad").setUserProperties(userProps);
 };
 
-export const logAmplitudeEvent = async (eventName: string, eventData?: Record<string, unknown>) => {
+export const logAmplitudeEvent = (eventName: string, eventData?: Record<string, unknown>) => {
     return new Promise((resolve) => {
         amplitude.getInstance("sosialhjelpsoknad").logEvent(
             eventName,
