@@ -26,8 +26,8 @@ export const useSendSoknad = (behandlingsId: string) => {
                 const {id, antallDokumenter} = response;
                 logAmplitudeEvent("Soknad sendt", {
                     AntallDokumenterSendt: antallDokumenter,
-                    KortSoknad: isKortSoknad,
-                    EndrerSokerAdresse: endretAdresse,
+                    KortSoknad: isKortSoknad ? "Ja" : "Nei",
+                    EndrerSokerAdresse: endretAdresse ? "Ja" : "Nei",
                 });
                 window.location.assign(`${digisosConfig.innsynURL}${id}/status`);
             } catch (e: any) {
