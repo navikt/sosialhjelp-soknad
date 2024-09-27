@@ -38,13 +38,9 @@ export const NySoknadInfo = () => {
             language: localStorage.getItem("digisos-language"),
         });
         try {
-            const {brukerBehandlingId, useKortSoknad} = await opprettSoknad(soknadstype ? {soknadstype} : undefined);
+            const {brukerBehandlingId} = await opprettSoknad(soknadstype ? {soknadstype} : undefined);
             await hentXsrfCookie(brukerBehandlingId);
-            if (useKortSoknad) {
-                navigate(`../skjema/kort/${brukerBehandlingId}/1`);
-            } else {
-                navigate(`../skjema/${brukerBehandlingId}/1`);
-            }
+            navigate(`../skjema/${brukerBehandlingId}/1`);
         } catch (e: any) {
             setStartSoknadError(e);
             setStartSoknadPending(false);

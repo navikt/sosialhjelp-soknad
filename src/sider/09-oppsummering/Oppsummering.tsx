@@ -60,7 +60,7 @@ export const Oppsummering = () => {
      * */
 
     return (
-        <SkjemaSteg page={isKortSoknad ? 4 : 9}>
+        <SkjemaSteg page={isKortSoknad ? 5 : 9}>
             <SkjemaContent>
                 <SkjemaStegTitle />
 

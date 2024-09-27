@@ -5598,14 +5598,7 @@
                 "description": "Påbegynte men ikke innleverte søknader"
             },
             "SessionResponse": {
-                "required": [
-                    "daysBeforeDeletion",
-                    "maxUploadSizeBytes",
-                    "numRecentlySent",
-                    "open",
-                    "qualifiesForKortSoknad",
-                    "userBlocked"
-                ],
+                "required": ["daysBeforeDeletion", "maxUploadSizeBytes", "numRecentlySent", "open", "userBlocked"],
                 "type": "object",
                 "properties": {
                     "userBlocked": {

@@ -27,7 +27,7 @@ export const skjema = {
                 v2: "{{kommuneNavn}} kommune kan dessverre ikke ta i mot digitale søknader akkurat nå. <lenke>Søk på papirskjema</lenke>, eller prøv igjen senere.",
             },
             navKontor: "{{enhetsnavn}}, {{kommunenavn}} kommune.",
-            suksess: "Søknaden vil bli sendt til:",
+            suksess: "Din søknad vil bli sendt til:",
         },
     },
     antallvelger: {
@@ -198,36 +198,39 @@ export const skjema = {
         },
         kategorier: {
             annet: "Annet",
-            barn: "Ting til barn og fritidsaktiviteter",
-            barnehage: "Barnehage, SFO eller AKS",
+            barn: "Andre utgifter til barn",
+            barnehage: "Barnehage og SFO/AKS",
             bolig: "Husleie",
-            hoytid: "Høytid, merkedager og gaver",
+            hoytid: "Høytid og merkedager",
             klaer: "Klær og utstyr",
-            label: "Hva søker du penger til?",
+            label: "Hva søker du om penger til?",
+            description:
+                "Her er noen utgifter det er vanlig å søke om. Du kan skrive inn andre under “Annet”. Du kan velge flere av kategoriene.",
             lege: "Lege og medisiner",
             mat: "Mat",
             nodhjelp: "Nødhjelp",
-            strom: "Strøm",
+            strom: "Strøm og oppvarming",
             tannlege: "Tannlege",
             transport: "Transport",
-            ved: "Ved, gass eller fjernvarme",
+            fritidsaktiviteter: "Fritidsaktiviteter for barn",
         },
         kort: {
             behov: {
                 dokumentasjon: {
                     beskrivelse:
-                        "Her kan du laste opp faktura, kvittering eller kostnadsoverslag for det du søker om penger til. Du kan ta bilder/skjermbilder.",
+                        "Her kan du laste opp dokumentasjon om situasjonen din og utgiftene dine. Du kan ta bilder og skjermbilder.",
                     tittel: "Dokumentasjon",
                 },
+                oppsummeringstittel: "Ditt behov",
             },
         },
         nødhjelp: {
-            beskrivelse: "Du kan søke nødhjelp hvis du ikke har penger til det mest nødvendige det neste døgnet.",
+            beskrivelse: "Nødhjelp kan du søke om hvis du ikke har penger til det mest nødvendige det neste døgnet.",
         },
         underkategorier: {
             nodhjelp: {
-                bosted: "Har ikke et sted å bo i natt",
-                mat: "Har ikke penger til mat i dag",
+                bosted: "Jeg har ikke et sted å bo i natt",
+                mat: "Jeg har ikke penger til mat i dag",
                 strøm: "Strømmen er stengt, eller stenges i dag eller i morgen",
             },
         },
@@ -376,7 +379,7 @@ export const skjema = {
                             label: "Beskriv hvorfor",
                         },
                     },
-                    sporsmal: "Bor du sammen med ektefelle?",
+                    sporsmal: "Folkeregistrert på samme adresse",
                 },
                 ektefelle: {
                     borsammen: {
@@ -442,7 +445,7 @@ export const skjema = {
                 },
                 sporsmal: "Legg til barn vi ikke har registrert",
             },
-            sporsmal: "Barn du har forsørgeransvar for:",
+            sporsmal: "Barn du forsørger",
         },
         fodselsdato: "Fødselsdato",
         hentet_fra_folkeregisteret: "(Hentet fra Folkeregisteret)",
@@ -456,7 +459,7 @@ export const skjema = {
         },
         ingress_folkeregisteret: "Vi har hentet følgende opplysninger fra Folkeregisteret:",
         ingress_forsorger: "Vi har registrert at du har forsørgeransvar for:",
-        samme_folkeregistrerte_adresse: "Har samme folkeregistrerte adresse som deg",
+        samme_folkeregistrerte_adresse: "Folkeregistrert på samme adresse",
         samvaer: {
             sporsmal: "Hvor mye samvær har du med barnet?",
         },
@@ -666,7 +669,7 @@ export const skjema = {
             undertittel: "Innhenting og behandling av personopplysninger",
         },
         nodsituasjon: {
-            tekst: "Hvis du ikke har penger til mat eller et sted å overnatte det neste døgnet, bør du sende søknaden og ringe NAV på 55 55 33 33.",
+            tekst: "Hvis du ikke har penger til mat eller et sted å overnatte det neste døgnet, bør du opplyse om dette i søknaden.",
             undertittel: "Er du i en nødssituasjon?",
         },
         samtykke: {
@@ -679,8 +682,7 @@ export const skjema = {
             sporsmal: "Oppdater opplysningene fra",
         },
         start: {
-            tekst_del1:
-                "For å få så raskt svar som mulig bør du fylle inn søknaden så godt du klarer, og legge ved aktuell dokumentasjon.",
+            tekst_del1: "Vennligst fyll ut søknaden så godt du kan. Legg ved relevant dokumentasjon.",
             tekst_del2: "Se eksempler på <lenke>hvilken dokumentasjon vi kan be om</lenke>.",
             tekst_del3:
                 "Hvis du med vilje holder tilbake eller gir uriktige opplysninger, kan du måtte betale tilbake stønaden.",
@@ -752,8 +754,10 @@ export const skjema = {
         },
         bostotte: {
             gi_samtykke: {
-                overskrift: "Vil du hente informasjon om bostøtte fra Husbanken?",
+                overskrift: "Vil du hente informasjon om du har søkt om eller mottar bostøtte fra Husbanken?",
                 tekst: "Disse opplysningene kan være nødvendig for å behandle søknaden. Hvis du ikke ønsker at vi henter denne informasjonen om deg, så kan du laste opp dokumentasjon i siste steg av søknaden.",
+                ja: "Ja, hent informasjon",
+                nei: "Nei",
             },
             har_gitt_samtykke: "Du har hentet informasjon fra Husbanken",
             husbanken: {
@@ -929,7 +933,7 @@ export const skjema = {
             kontonummerFelt: "Kontonummeret felt",
             label: "Nytt kontonummer (11 siffer)",
             oppgi: "Oppgi kontonummer",
-            sporsmal: "Kontonummer for søknaden",
+            sporsmal: "Ditt kontonummer",
         },
         statsborger: {
             feilmelding: "Statsborgerskap må velges",
@@ -993,7 +997,7 @@ export const skjema = {
             kontaktinfo: {
                 infotekst: {
                     ekstratekst:
-                        "Hvis du ikke vet hva adressen er, skriv inn kommune, bydel eller postnummeret og velg NAV-kontoret der du bor",
+                        'Skriv adressen der du bor eller oppholder deg. Hvis du ikke vet adressen kan du skrive adressen til NAV-kontoret i kommunen eller bydelen. <lenke a href="https://www.nav.no/sok-nav-kontor" target="_blank">Søk opp NAV-kontoret.</lenke>',
                 },
                 sporsmal: "Adresse",
             },
@@ -1010,15 +1014,15 @@ export const skjema = {
             oppholdsadresse: {
                 finnerKontor: "Finner ditt NAV-kontor",
                 folkeregistrertAdresse: "Folkeregistrert adresse:",
-                hvorOppholder: "Hvor oppholder du deg nå?",
+                hvorOppholder: "Hvilken adresse bor du på?",
                 midlertidigAdresse: "Midlertidig adresse på Min Side:",
                 soknad: {
                     infotekst: {
                         tekst: "Du må legge inn hvor du oppholder deg for at søknaden skal sendes til riktig NAV-kontor. (Gjelder bare for denne søknaden.)",
                     },
-                    sporsmal: "Hvor oppholder du deg nå?",
+                    sporsmal: "Hvilken adresse bor du på?",
                 },
-                sporsmal: "Oppholdsadresse og NAV-kontor",
+                sporsmal: "Din adresse",
                 valg: {
                     feilmelding: "Du må velge oppholdsadresse og NAV-kontor.",
                     folkeregistrert: "Folkeregistrert adresse",
@@ -1076,7 +1080,7 @@ export const skjema = {
             telefonnummerFelt: "Telefonnummer felt",
             tittel: "Nytt telefonnummer",
         },
-        tittel: "Opplysninger om deg",
+        tittel: "Personopplysninger",
     },
     kvittering: {
         dato: "Søknad ble sendt til NAV",
@@ -1571,28 +1575,29 @@ export const skjema = {
     situasjon: {
         kategorier: {
             oppsummeringstekst: {
-                label: "Tekst som sendes til NAV-kontoret:",
+                label: "Du har valgt:",
                 resten: "Jeg søker om penger til:",
             },
         },
         kort: {
             dokumentasjon: {
                 description:
-                    "Her kan du laste opp dokumentasjon på hva som har endret seg i din situasjon. Du kan legge ved bilder/skjermbilder.",
-                title: "Dokumentasjon av endringen",
+                    "Her kan du laste opp annen dokumentasjon du tenker er viktig. Du kan ta bilder og skjermbilder.",
+                title: "Dokumentasjon",
             },
             endring: {
                 description: "For eksempel inntekter, utgifter, familiesituasjon eller bosituasjon.",
                 legend: "Har noe i situasjonen din endret seg siden du søkte sist?",
             },
             hvaErEndret: {
-                description: 'Eksempel: "Jeg har fått bostøtte og har derfor høyere inntekt."',
-                label: "Hva har endret seg i situasjonen din?",
+                description:
+                    "Har noe endret seg siden forrige gang du søkte, eller vil du fortelle mer om hva du søker om penger til?",
+                label: "Hva er situasjonen din?",
             },
-            tittel: "Din situasjon",
+            tittel: "Inntekter",
         },
         nodsituasjon: {
-            oppsummering: "Jeg er i en nødsituasjon og ",
+            oppsummering: "Nødhjelp:",
         },
     },
     skjema: {
@@ -1650,7 +1655,7 @@ export const skjema = {
         },
         hjelpetekst: {
             ingress:
-                "Hvis du oppholder deg på institusjon (F.eks. sykehus, fengsel, psykiatri, eller rusbehandling), skal du oppgi adressen du hadde før du kom til institusjonen.",
+                "Hvis du oppholder deg på en institusjon, for eksempel på sykehus eller i fengsel, skriv den siste adresse din før du kom til institusjonen.",
             tekst: "Du må oppgi adressen der du bor for at søknaden skal bli sendt til riktig NAV-kontor.",
         },
         infotekst: {
@@ -1659,7 +1664,7 @@ export const skjema = {
         kommunenavn: {
             label: "Kommune",
         },
-        sporsmal: "Adresse og NAV-kontor",
+        sporsmal: "Din adresse",
     },
     soknadsmottakerbolk: {
         tittel: "Søknadsmottaker",
@@ -1694,7 +1699,7 @@ export const skjema = {
             harLestSamtykker: "Jeg bekrefter at opplysningene jeg har gitt er riktige.",
             hvorsendes_del1: "Søknaden din sendes til {{valgtEnhetsNavn}}.",
             hvorsendes_del2:
-                "NAV-kontoret skal behandle søknaden din så fort som mulig, og tar kontakt hvis de trenger noe fra deg!",
+                "NAV-kontoret skal behandle søknaden din så fort som mulig. De tar kontakt hvis de trenger noe fra deg!",
             infoSamtykke: "informasjon om dine personvernrettigheter",
             samtykke: {
                 oversendelse: {
@@ -1740,7 +1745,7 @@ export const skjema = {
                             label: "Fødselsdato (ddmmåååå)",
                         },
                         folkeregistrertsammen: {
-                            sporsmal: "Barnet har samme folkeregistrerte adresse som deg",
+                            sporsmal: "Barnet Folkeregistrert på samme adresse",
                         },
                         fornavn: {
                             label: "Fornavn",
@@ -1758,6 +1763,7 @@ export const skjema = {
                     },
                     listetittel: "Opplysninger om barn",
                 },
+                empty: "Vi fant ingen barn registrert på deg",
             },
             sivilstatus: {
                 diskresjonskode: "Ektefelle/partner har diskresjonskode",
@@ -1768,7 +1774,7 @@ export const skjema = {
                             label: "Etternavn",
                         },
                         fodselsdato: "Fødselsdato",
-                        folkereg: "Har samme folkeregistrerte adresse som deg",
+                        folkereg: "Folkeregistrert på samme adresse",
                         folkeregistrertsammen: {
                             sporsmal: "Folkeregistrert på samme adresse som ektefelle",
                         },
@@ -1799,6 +1805,7 @@ export const skjema = {
                 sporsmal: "Din sivilstatus",
                 ugift: "Ugift",
                 stringValue: "(Hentet fra Folkeregisteret)",
+                empty: "Vi fant ingen registrert ektefelle eller partner",
             },
         },
     },
@@ -1808,9 +1815,8 @@ export const skjema = {
         },
     },
     textarea: {
-        feilmleding: "Du har skrevet for mange tegn",
-        overmaks: "Du har {{antall}} tegn for mye",
-        undermaks: "Du har {{antall}} tegn igjen",
+        overmaks: "tegn for mye",
+        undermaks: "tegn igjen",
     },
     tilbake: {
         til: {
@@ -1842,8 +1848,8 @@ export const skjema = {
             fra: "Fra",
             skattbar: {
                 avbryt: {
-                    ja: "Ja, hent for meg",
-                    nei: "Nei, ikke hent for meg",
+                    ja: "Ja, hent informasjon",
+                    nei: "Nei",
                 },
                 beskrivelse: "Du har hentet informasjon om inntekten din fra Skatteetaten.",
                 bruttoinntekt: "Inntekt før skatt",
@@ -1912,7 +1918,7 @@ export const skjema = {
             },
             sporsmal: "Ytelse",
             type: {
-                label: "Type",
+                label: "Ytelse",
             },
             utbetalingsdato: {
                 label: "Dato",
@@ -2232,6 +2238,10 @@ export const skjema = {
     backendCompat: {
         jsonOkonomiOpplysningerArbeidAvsluttet: "Sluttoppgjør/feriepenger etter skatt",
         jsonOkonomiOpplysningerArbeidJobb: "Lønnsinntekt",
+    },
+    arbeidOgFamilie: {
+        tittel: "Arbeid og familie",
+        alert: "Du får en ny og kortere søknad siden du har søkt før. Gi gjerne tilbakemeldinger om søknaden til veilederen din.",
     },
 };
 

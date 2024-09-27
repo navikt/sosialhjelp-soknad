@@ -1,12 +1,11 @@
 import * as React from "react";
 import * as z from "zod";
-import {BegrunnelseFrontend} from "../../generated/model";
-import {Alert, BodyShort, Textarea} from "@navikt/ds-react";
+import {Alert, BodyShort} from "@navikt/ds-react";
 import {FieldError, useForm} from "react-hook-form";
 import {useTranslation} from "react-i18next";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useFeatureFlags} from "../../lib/config";
-import {SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {inhibitNavigation, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useBegrunnelse} from "../../lib/hooks/data/useBegrunnelse";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
 import {DigisosLanguageKey} from "../../lib/i18n";
@@ -17,6 +16,8 @@ import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBu
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
+import {useForsorgerplikt} from "../../lib/hooks/data/useForsorgerplikt.tsx";
+import LocalizedTextArea from "../../lib/components/LocalizedTextArea.tsx";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;
@@ -24,6 +25,11 @@ const MAX_LEN_HVORFOR = 600;
 const feilmeldinger: Record<string, DigisosLanguageKey> = {
     maksLengde: "validering.maksLengde",
 } as const;
+
+export interface FormValues {
+    hvaSokesOm?: string | null;
+    hvorforSoke?: string | null;
+}
 
 const begrunnelseSchema = z.object({
     hvaSokesOm: z.string().max(MAX_LEN_HVA, feilmeldinger.maksLengde).optional(),
@@ -50,6 +56,7 @@ export const Begrunnelse = () => {
     const {begrunnelseNyTekst} = useFeatureFlags();
     const {data: featureFlagData, isPending: featureFlagsPending} = useFeatureToggles();
     const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
+    const {forsorgerplikt} = useForsorgerplikt();
     const {
         register,
         handleSubmit,
@@ -57,16 +64,27 @@ export const Begrunnelse = () => {
         setValue,
         getValues,
         watch,
-    } = useForm<BegrunnelseFrontend>({
+        reset,
+    } = useForm<FormValues>({
         defaultValues,
         resolver: zodResolver(begrunnelseSchema),
         mode: "onChange",
     });
 
-    const {onSubmit, isPending, reducer, toggle, isError} = useKategorier(setValue, handleSubmit, getValues);
+    const {put, isPending, reducer, toggle, isError} = useKategorier(
+        !!forsorgerplikt?.harForsorgerplikt,
+        setValue,
+        getValues
+    );
 
     return (
-        <SkjemaSteg page={2} onRequestNavigation={onSubmit}>
+        <SkjemaSteg
+            page={2}
+            onRequestNavigation={handleSubmit((values: FormValues) => {
+                put(values);
+                reset({hvaSokesOm: null, hvorforSoke: null});
+            }, inhibitNavigation)}
+        >
             <SkjemaContent>
                 <SkjemaStegTitle />
                 <SkjemaStegErrorSummary errors={errors} />
@@ -85,9 +103,10 @@ export const Begrunnelse = () => {
                             />
                         )}
                         {!isKategorierEnabled && (
-                            <Textarea
+                            <LocalizedTextArea
                                 {...register("hvaSokesOm")}
                                 id={"hvaSokesOm"}
+                                maxLength={MAX_LEN_HVA}
                                 error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
                                 label={begrunnelseNyTekst ? t("begrunnelse.hva.label") : t("begrunnelse.hva.labelOld")}
                                 description={
@@ -99,13 +118,14 @@ export const Begrunnelse = () => {
                                 }
                             />
                         )}
-                        <Textarea
+                        <LocalizedTextArea
                             {...register("hvorforSoke")}
                             id={"hvorforSoke"}
                             error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
                             label={
                                 begrunnelseNyTekst ? t("begrunnelse.hvorfor.label") : t("begrunnelse.hvorfor.labelOld")
                             }
+                            maxLength={MAX_LEN_HVORFOR}
                             description={
                                 begrunnelseNyTekst ? (
                                     <BodyShort>{t("begrunnelse.hvorfor.description")}</BodyShort>

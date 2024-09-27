@@ -43,7 +43,7 @@ export const useSkatteetatenData = () => {
             isMutateError ||
             data?.inntektFraSkatteetatenFeilet === true ||
             (data?.samtykke && samtykkeTidspunkt === ""),
-        samtykke: data?.samtykke ?? null,
+        samtykke: data?.samtykke,
         isPending: isFetching || mutationStatus === "pending",
         samtykkeTidspunkt,
         setSamtykke,

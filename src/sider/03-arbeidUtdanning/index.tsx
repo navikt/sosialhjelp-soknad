@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Heading, Radio, RadioGroup, ReadMore, Textarea} from "@navikt/ds-react";
+import {Heading, Radio, RadioGroup, ReadMore} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {DigisosValidationError, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useForm} from "react-hook-form";
@@ -16,9 +16,12 @@ import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBu
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
+import LocalizedTextarea from "../../lib/components/LocalizedTextArea.tsx";
+
+const MAX_LENGTH = 500;
 
 const ArbeidOgUtdanningSchema = z.object({
-    arbeid: z.object({kommentarTilArbeidsforhold: z.string().max(500, "validering.maksLengde").nullable()}),
+    arbeid: z.object({kommentarTilArbeidsforhold: z.string().max(MAX_LENGTH, "validering.maksLengde").nullable()}),
     utdanning: z.object({
         erStudent: z.boolean().nullable().optional(),
         studengradErHeltid: z.boolean().nullable().optional(),
@@ -74,9 +77,10 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                             {t("arbeidsforhold.sporsmal")}
                         </Heading>
                         <ArbeidsforholdListe />
-                        <Textarea
+                        <LocalizedTextarea
                             {...register("arbeid.kommentarTilArbeidsforhold")}
                             id={"arbeid.kommentarTilArbeidsforhold"}
+                            maxLength={MAX_LENGTH}
                             description={t("opplysninger.arbeidsituasjon.kommentarer.description")}
                             label={t("opplysninger.arbeidsituasjon.kommentarer.label")}
                             error={
