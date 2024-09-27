@@ -12,16 +12,16 @@ import {useLocation} from "react-router-dom";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
-import {useSendSoknad1} from "../../generated/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
-import digisosConfig from "../../lib/config.ts";
+//import {useSendSoknad1} from "../../generated/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
+//import digisosConfig from "../../lib/config.ts";
 //import {sendSoknad} from "../../generated/soknad-actions/soknad-actions.ts";
-//import {useSendSoknad} from "./useSendSoknad.tsx";
+import {useSendSoknad} from "./useSendSoknad.tsx";
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
     const behandlingsId = useBehandlingsId();
-    const {mutateAsync, isError} = useSendSoknad1();
-    //const {sendSoknad, isError: hei} = useSendSoknad(behandlingsId);
+    //const {mutateAsync, isError} = useSendSoknad1();
+    const {sendSoknad, isError: hei} = useSendSoknad(behandlingsId);
 
     const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId);
     const location = useLocation();
@@ -51,7 +51,7 @@ export const Oppsummering = () => {
                               return sendSoknad();
                           }}
                       />
-                      </SkjemaContent>
+
 
 
 
@@ -67,7 +67,7 @@ export const Oppsummering = () => {
                 <div>
                     {oppsummering?.steg.map((steg) => <OppsummeringSteg steg={steg} key={steg.stegNr} />)}
                     <SoknadsmottakerInfoPanel />
-                    {isError && (
+                    {hei && (
                         <Alert role="alert" variant="error" style={{marginTop: "1rem"}}>
                             {t("soknad.innsendingFeilet")}
                         </Alert>
@@ -76,14 +76,8 @@ export const Oppsummering = () => {
                 <SkjemaStegButtons
                     confirmTextKey={"skjema.knapper.send"}
                     onConfirm={async () => {
-                        console.log("send1");
-                        const {digisosId} = await mutateAsync({soknadId: behandlingsId});
-                        console.log("send2");
-                        await logAmplitudeEvent("skjema fullført", {
-                            ...getAttributesForSkjemaFullfortEvent(oppsummering),
-                        });
-                        console.log("send3");
-                        window.location.assign(`${digisosConfig.innsynURL}${digisosId}/status`);
+                        await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
+                        return sendSoknad();
                     }}
                 />
             </SkjemaContent>
