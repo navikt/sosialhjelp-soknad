@@ -2,10 +2,12 @@ import {useState} from "react";
 import {sendSoknad} from "../../generated/soknad-actions/soknad-actions";
 //import digisosConfig from "../../lib/config";
 import {faro} from "@grafana/faro-react";
-//import { logAmplitudeEvent } from "../../lib/amplitude/Amplitude"; // Import the logging function
+import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude"; // Import the logging function
 
 export const useSendSoknad = (behandlingsId: string) => {
     const [isError, setIsError] = useState<boolean>(false);
+
+    logAmplitudeEvent("blir dette logget?");
 
     const sendSoknaden = async () => {
         setIsError(false);
@@ -13,13 +15,17 @@ export const useSendSoknad = (behandlingsId: string) => {
             try {
                 // Call the backend to send the application
                 try {
-                    console.log("Before sendSoknad");
+                    console.log("send1");
                     const response = await sendSoknad(behandlingsId);
-                    console.log("Response from sendSoknad:", response);
+                    console.log("Response from sendSoknad:", response); // This will print if successful
                     const {id, antallDokumenter, kortSoknad} = response;
-                    console.log("send2", id, antallDokumenter, kortSoknad);
-                } catch (e) {
-                    console.log("Error in sendSoknad", e);
+                    console.log("send2", id, antallDokumenter, kortSoknad); // Check destructuring
+
+                    console.log("send3");
+                    await logAmplitudeEvent("soknad_sendt", {antallDokumenter, kortSoknad});
+                    console.log("send4");
+                } catch (error) {
+                    console.error("Caught Error:", error); // Catch any error and log it
                 }
                 // Log Amplitude Event
                 console.log("send3");
