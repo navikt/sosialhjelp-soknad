@@ -7,13 +7,13 @@ import {useAdresser} from "../01-personalia/adresse/useAdresser.tsx";
 
 export const useSendSoknad = (behandlingsId: string) => {
     const [isError, setIsError] = useState<boolean>(false);
-    const {folkeregistrert, brukerdefinert} = useAdresser();
+    const {brukerdefinert} = useAdresser();
     const [endretAdresse, setEndretAdresse] = useState<boolean>(false);
 
     useEffect(() => {
         if (brukerdefinert) {
             setEndretAdresse(true);
-        } else if (folkeregistrert) {
+        } else {
             setEndretAdresse(false);
         }
     }, [brukerdefinert]);

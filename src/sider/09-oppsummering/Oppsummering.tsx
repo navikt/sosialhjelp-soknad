@@ -6,7 +6,7 @@ import {useTranslation} from "react-i18next";
 import {useGetOppsummering} from "../../generated/oppsummering-ressurs/oppsummering-ressurs";
 import {OppsummeringSteg} from "./OppsummeringSteg";
 import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullfortEvent";
-import {useSendSoknad} from "./useSendSoknad.tsx";
+import {useSendSoknad} from "./useSendSoknad";
 import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude";
 import {SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useLocation} from "react-router-dom";
