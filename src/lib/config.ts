@@ -114,6 +114,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         showDevPanel: false,
         logLocally: false,
         withCredentials: false,
+        driftsmeldingUrl: "https://www.nav.no/sosialhjelp/driftsmeldinger",
         baseURL: "https://www.nav.no/sosialhjelp/login-api/soknad-api/",
         innsynURL: "https://www.nav.no/sosialhjelp/innsyn/",
         minSideURL: "https://www.nav.no/minside/",
