@@ -18,12 +18,12 @@ export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
     const behandlingsId = useBehandlingsId();
     const {sendSoknad, isError} = useSendSoknad(behandlingsId);
+
     const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId);
     const location = useLocation();
 
     if (isLoading) return <ApplicationSpinner />;
     const isKortSoknad = location.pathname.includes("/kort");
-
     return (
         <SkjemaSteg page={isKortSoknad ? 5 : 9}>
             <SkjemaContent>
@@ -41,8 +41,8 @@ export const Oppsummering = () => {
                 <SkjemaStegButtons
                     confirmTextKey={"skjema.knapper.send"}
                     onConfirm={async () => {
-                        await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
-                        return sendSoknad();
+                        logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
+                        return sendSoknad(isKortSoknad);
                     }}
                 />
             </SkjemaContent>

@@ -4841,8 +4841,8 @@
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
-                    "dokumentasjonForventet": {"type": "boolean"},
                     "group": {"type": "string"},
+                    "dokumentasjonForventet": {"type": "boolean"},
                     "type": {"type": "string"}
                 },
                 "discriminator": {"propertyName": "type"}
@@ -5361,9 +5361,14 @@
                 "properties": {"type": {"type": "string"}, "verdi": {"type": "boolean"}}
             },
             "SendTilUrlFrontend": {
-                "required": ["id", "sendtTil"],
+                "required": ["antallDokumenter", "id", "sendtTil"],
                 "type": "object",
-                "properties": {"sendtTil": {"type": "string", "enum": ["FIKS_DIGISOS_API"]}, "id": {"type": "string"}}
+                "properties": {
+                    "sendtTil": {"type": "string", "enum": ["FIKS_DIGISOS_API"]},
+                    "id": {"type": "string"},
+                    "forrigeSoknadSendt": {"type": "string", "format": "date-time"},
+                    "antallDokumenter": {"type": "integer", "format": "int32"}
+                }
             },
             "StartSoknadResponse": {
                 "required": ["brukerBehandlingId", "useKortSoknad"],
