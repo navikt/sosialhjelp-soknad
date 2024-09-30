@@ -41,7 +41,7 @@ export const Oppsummering = () => {
                 <SkjemaStegButtons
                     confirmTextKey={"skjema.knapper.send"}
                     onConfirm={async () => {
-                        logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
+                        await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
                         return sendSoknad(isKortSoknad);
                     }}
                 />
