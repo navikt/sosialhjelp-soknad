@@ -42,7 +42,7 @@ export const Oppsummering = () => {
                     confirmTextKey={"skjema.knapper.send"}
                     onConfirm={async () => {
                         await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
-                        return sendSoknad(isKortSoknad);
+                        return sendSoknad();
                     }}
                 />
             </SkjemaContent>
