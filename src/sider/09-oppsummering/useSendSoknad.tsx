@@ -1,41 +1,37 @@
-import {/** */ useState} from "react";
-//import {sendSoknad} from "../../generated/soknad-actions/soknad-actions";
+import {useEffect, useState} from "react";
+import {sendSoknad} from "../../generated/soknad-actions/soknad-actions";
 import digisosConfig from "../../lib/config";
 import {faro} from "@grafana/faro-react";
-//import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude.tsx";
-//import {useAdresser} from "../01-personalia/adresse/useAdresser.tsx";
+import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude.tsx";
+import {useAdresser} from "../01-personalia/adresse/useAdresser.tsx";
 
 export const useSendSoknad = (behandlingsId: string) => {
     const [isError, setIsError] = useState<boolean>(false);
-    //const {brukerdefinert} = useAdresser();
-    //const [endretAdresse, setEndretAdresse] = useState<boolean>(false);
+    const {brukerdefinert} = useAdresser();
+    const [endretAdresse, setEndretAdresse] = useState<boolean>(false);
 
-    //useEffect(() => {
-    //    if (brukerdefinert) {
-    //        setEndretAdresse(true);
-    //    } else {
-    //        setEndretAdresse(false);
-    //    }
-    //}, [brukerdefinert]);
+    useEffect(() => {
+        if (brukerdefinert) {
+            setEndretAdresse(true);
+        } else {
+            setEndretAdresse(false);
+        }
+    }, [brukerdefinert]);
 
-    const sendSoknaden = async () => {
+    const sendSoknaden = async (isKortSoknad: boolean) => {
         setIsError(false);
         try {
-            try {
-                //const {id, antallDokumenter} = await sendSoknad(behandlingsId);
-                //await logAmplitudeEvent("Søknad sendt", {
-                //    AntallDokumenterSendt: antallDokumenter,
-                //    KortSoknad: isKortSoknad ? "Ja" : "Nei",
-                //    EndrerSokerAdresse: endretAdresse ? "Ja" : "Nei",
-                //});
-                window.location.assign(`${digisosConfig.innsynURL}${behandlingsId}/status`);
-            } catch (e: any) {
-                faro.api.pushError(e);
-                throw e;
-            }
+            const {id, antallDokumenter} = await sendSoknad(behandlingsId);
+            await logAmplitudeEvent("Søknad sendt", {
+                AntallDokumenterSendt: antallDokumenter,
+                KortSoknad: isKortSoknad ? "Ja" : "Nei",
+                EndrerSokerAdresse: endretAdresse ? "Ja" : "Nei",
+            });
+            window.location.assign(`${digisosConfig.innsynURL}${id}/status`);
         } catch (e: any) {
             faro.api.pushError(e);
             setIsError(true);
+            throw e;
         }
     };
 
