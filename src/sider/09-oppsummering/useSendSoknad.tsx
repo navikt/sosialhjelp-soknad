@@ -22,11 +22,15 @@ export const useSendSoknad = (behandlingsId: string) => {
         setIsError(false);
         try {
             const {id, antallDokumenter} = await sendSoknad(behandlingsId);
+            console.log("behandlingsId", behandlingsId);
+            console.log("id", id);
             await logAmplitudeEvent("Søknad sendt", {
                 AntallDokumenterSendt: antallDokumenter,
                 KortSoknad: isKortSoknad ? "Ja" : "Nei",
                 EndrerSokerAdresse: endretAdresse ? "Ja" : "Nei",
             });
+            console.log("behandlingsId link", `${digisosConfig.innsynURL}${behandlingsId}/status`);
+            console.log("id link", `${digisosConfig.innsynURL}${id}/status`);
             window.location.assign(`${digisosConfig.innsynURL}${id}/status`);
         } catch (e: any) {
             faro.api.pushError(e);
