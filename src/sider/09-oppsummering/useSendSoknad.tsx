@@ -31,7 +31,7 @@ export const useSendSoknad = (behandlingsId: string) => {
                         AntallDokumenterSendt: antallDokumenter,
                         KortSoknad: isKortSoknad ? "Ja" : "Nei",
                         EndrerSokerAdresse: endretAdresse ? "Ja" : "Nei",
-                    });
+                    }).then();
                     console.log("After logging to Amplitude");
 
                     // Navigate after logging completes
