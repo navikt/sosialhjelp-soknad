@@ -19,7 +19,6 @@ export const useSendSoknad = (behandlingsId: string) => {
     }, [brukerdefinert]);
 
     const sendSoknaden = async (isKortSoknad: boolean) => {
-        logAmplitudeEvent("Send søknad knapp trykket");
         setIsError(false);
         try {
             try {
