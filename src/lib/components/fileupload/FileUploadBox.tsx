@@ -36,7 +36,7 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType
     const {t} = useTranslation();
     const {
         deleteDocument,
-        documents,
+        documents = [],
         uploadDocument,
         error,
         isPending: uploadPending,

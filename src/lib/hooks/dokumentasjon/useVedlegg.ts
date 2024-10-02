@@ -20,7 +20,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
     const [error, setError] = useState<string | null>(null);
     const [maxUploadSize, setMaxUploadSize] = useState<number | null>(null);
     const [uploadPercent, setUploadPercent] = useState<number | null>(null);
-    const [{documents}, dispatch] = useReducer(DocumentListReducer, initialDocumentListState(dokumentasjonType));
+    const [{documents = []}, dispatch] = useReducer(DocumentListReducer, initialDocumentListState(dokumentasjonType));
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
 
