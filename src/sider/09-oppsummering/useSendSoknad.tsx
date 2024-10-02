@@ -21,19 +21,51 @@ export const useSendSoknad = (behandlingsId: string) => {
     const sendSoknaden = async (isKortSoknad: boolean) => {
         setIsError(false);
         try {
-            const {id, antallDokumenter} = await sendSoknad(behandlingsId);
-            console.log("behandlingsId", behandlingsId);
-            console.log("id", id);
-            await logAmplitudeEvent("Søknad sendt", {
-                AntallDokumenterSendt: antallDokumenter,
-                KortSoknad: isKortSoknad ? "Ja" : "Nei",
-                EndrerSokerAdresse: endretAdresse ? "Ja" : "Nei",
-            });
-            console.log("behandlingsId link", `${digisosConfig.innsynURL}${behandlingsId}/status`);
-            console.log("id link", `${digisosConfig.innsynURL}${id}/status`);
-            window.location.assign(`${digisosConfig.innsynURL}${id}/status`);
+            try {
+                console.log("before await sendSoknad");
+                const {antallDokumenter} = await sendSoknad(behandlingsId);
+                console.log("before try catch");
+                try {
+                    console.log("Before logging to Amplitude");
+                    await logAmplitudeEvent("Søknad sendt", {
+                        AntallDokumenterSendt: antallDokumenter,
+                        KortSoknad: isKortSoknad ? "Ja" : "Nei",
+                        EndrerSokerAdresse: endretAdresse ? "Ja" : "Nei",
+                    });
+                    console.log("After logging to Amplitude");
+
+                    // Navigate after logging completes
+                    window.location.assign(`${digisosConfig.innsynURL}${behandlingsId}/status`);
+                } catch (e: any) {
+                    console.log("Error logging to Amplitude or navigating:", {
+                        message: e.message,
+                        code: e.code,
+                        status: e.response?.status,
+                        data: e.response?.data,
+                        config: e.config, // Log the request configuration as well
+                    });
+                    setIsError(true);
+                }
+            } catch (e: any) {
+                faro.api.pushError(e);
+                console.log("inne error sending søknad:", {
+                    message: e.message,
+                    code: e.code,
+                    status: e.response?.status,
+                    data: e.response?.data,
+                    config: e.config, // Log the request configuration as well
+                });
+                throw e;
+            }
         } catch (e: any) {
             faro.api.pushError(e);
+            console.log("ute error sending søknad:", {
+                message: e.message,
+                code: e.code,
+                status: e.response?.status,
+                data: e.response?.data,
+                config: e.config, // Log the request configuration as well
+            });
             setIsError(true);
             throw e;
         }
