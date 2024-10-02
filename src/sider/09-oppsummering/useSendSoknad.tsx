@@ -10,6 +10,8 @@ export const useSendSoknad = (behandlingsId: string) => {
     const {brukerdefinert} = useAdresser();
     const [endretAdresse, setEndretAdresse] = useState<boolean>(false);
 
+    logAmplitudeEvent("Sendt søknad knapp trykket");
+
     useEffect(() => {
         if (brukerdefinert) {
             setEndretAdresse(true);
