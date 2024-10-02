@@ -42,6 +42,8 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
                     legend={t("inntekt.bostotte.sporsmal.sporsmal")}
                     defaultValue={bekreftelse}
                     onChange={(checked) => setBekreftelse(checked)}
+                    trueLabel={t("avbryt.ja")}
+                    falseLabel={t("avbryt.nei")}
                 />
             )}
             {bekreftelse && (
