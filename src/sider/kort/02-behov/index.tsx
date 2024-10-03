@@ -17,6 +17,7 @@ import {DigisosLanguageKey} from "../../../lib/i18n.ts";
 import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
 import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";
+import {useProcessedData} from "../ProcessedDataContext.tsx";
 
 const MAX_LEN_HVA = 150;
 const MAX_LEN_HVA_ER_ENDRET = 500;
@@ -78,7 +79,17 @@ const Behov = (): React.JSX.Element => {
         toggle,
     } = useKategorier(!!forsorgerplikt?.harForsorgerplikt, setValue, getValues);
 
+    const {setProcessedData} = useProcessedData(); // Access the set function
+
     const onSubmit = (formValues: FormValues) => {
+        // Process the form values
+        const selectedKategorier = formValues.hvaSokesOm ? [formValues.hvaSokesOm] : [];
+        const situasjonEndret = formValues.hvaErEndret ? "ja" : "Ikke utfylt";
+
+        // Store in the context (merging with existing data)
+        setProcessedData({selectedKategorier, situasjonEndret});
+
+        // Continue with other logic (putting data, etc.)
         putSituasjon({...formValues, hvaErEndret: formValues.hvaErEndret ?? undefined});
         putKategorier({hvaSokesOm: formValues.hvaSokesOm});
         reset({hvaSokesOm: null, hvaErEndret: null});

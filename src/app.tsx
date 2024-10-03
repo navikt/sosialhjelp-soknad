@@ -29,7 +29,7 @@ import {useLocalStorageLangSelector} from "./lib/useLocalStorageLangSelector.ts"
 import {configureLogger} from "@navikt/next-logger";
 import "./faro";
 import {initAmplitude} from "./lib/amplitude/Amplitude.tsx";
-import {FormContext} from "./sider/kort/FormContextProvider.tsx";
+import {ProcessedDataProvider} from "./sider/kort/ProcessedDataContext.tsx";
 
 const queryClient = new QueryClient();
 configureLogger({basePath: BASE_PATH});
@@ -59,8 +59,8 @@ export default function App() {
         <Suspense fallback={<ApplicationSpinner />}>
             <ValideringsContextProvider>
                 <QueryClientProvider client={queryClient}>
-                    <FormContext>
-                        <BrowserRouter basename={BASE_PATH}>
+                    <BrowserRouter basename={BASE_PATH}>
+                        <ProcessedDataProvider>
                             <Routes>
                                 <Route errorElement={<SideIkkeFunnet />}>
                                     <Route index path={`/`} element={<Informasjon />} />
@@ -98,9 +98,9 @@ export default function App() {
                                     </Route>
                                 </Route>
                             </Routes>
-                        </BrowserRouter>
-                        <ReactQueryDevtools initialIsOpen={false} />
-                    </FormContext>
+                        </ProcessedDataProvider>
+                    </BrowserRouter>
+                    <ReactQueryDevtools initialIsOpen={false} />
                 </QueryClientProvider>
             </ValideringsContextProvider>
         </Suspense>

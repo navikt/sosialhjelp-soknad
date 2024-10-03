@@ -13,8 +13,8 @@ import {useLocation} from "react-router-dom";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
-import {SelectableCategory} from "../../lib/hooks/data/useKategorier.tsx";
-import {useFormContextValues} from "../kort/FormContextProvider.tsx";
+import {useProcessedData} from "../kort/ProcessedDataContext.tsx";
+import {faro} from "@grafana/faro-react";
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
@@ -24,7 +24,8 @@ export const Oppsummering = () => {
     const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId);
     const location = useLocation();
 
-    const {getValues} = useFormContextValues<{hvaSokesOm: SelectableCategory[]; hvaErEndret: string}>();
+    const {processedData} = useProcessedData(); // Access processed data
+    const {selectedKategorier, situasjonEndret} = processedData;
 
     if (isLoading) return <ApplicationSpinner />;
     const isKortSoknad = location.pathname.includes("/kort");
@@ -45,13 +46,16 @@ export const Oppsummering = () => {
                 <SkjemaStegButtons
                     confirmTextKey={"skjema.knapper.send"}
                     onConfirm={async () => {
-                        const selectedKategorier = getValues("hvaSokesOm")
-                            .filter((kategori: SelectableCategory) => kategori.selected)
-                            .map((kategori: SelectableCategory) => kategori.text);
-                        const situasjonEndret = getValues("hvaErEndret") ? "ja" : "Ikke utfylt";
-
-                        logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
-                        return sendSoknad(isKortSoknad, selectedKategorier, situasjonEndret);
+                        try {
+                            await logAmplitudeEvent(
+                                "skjema fullført",
+                                getAttributesForSkjemaFullfortEvent(oppsummering)
+                            );
+                            return sendSoknad(isKortSoknad, selectedKategorier, situasjonEndret);
+                        } catch (e: any) {
+                            faro.api.pushError(e);
+                            throw e;
+                        }
                     }}
                 />
             </SkjemaContent>
