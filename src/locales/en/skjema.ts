@@ -1295,7 +1295,7 @@ export const skjema = {
                 },
                 bolk2: {
                     avsnitt1:
-                        "If you have documentation on paper, you can scan it and send it digitally. Scanned documentation will be of better quality and easier to read.",
+                        "If you have documentation on paper, you can scan it and send it digitally.",
                     avsnitt2:
                         "Using a scanning app, you can use the camera on your mobile phone to scan the documentation. You can compile several paper pages into one digital attachment, for example your tenancy agreement.",
                     avsnitt3:
@@ -1304,7 +1304,7 @@ export const skjema = {
                 },
                 bolk3: {
                     avsnitt1:
-                        "If you wish to send documentation from another website, download the content if possible. For example, the tax returns and letters of decisions from Lånekassen can be downloaded as PDF files. Avoid taking pictures of a PC screen with a camera.",
+                        "If you wish to send documentation from another website, download the content if possible. For example, tax returns and letters of decisions from Lånekassen can be downloaded as PDF files. Avoid taking pictures of a PC screen with your mobile phone.",
                     tittel: "Send documentation from other websites",
                 },
                 bolk4: {
