@@ -21,7 +21,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         slettet: "We have deleted your documentation relating to income as it is no longer relevant.",
         sporsmal: "What is your income?",
         undertekst: "State your income for all work situations",
-        dokumentBeskrivelse: "Upload information on income (last month)",
+        dokumentBeskrivelse: "Upload information on income",
     },
     "sluttoppgjor|arbeid": {
         belop: {
@@ -40,13 +40,13 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
     },
     "student|vedtak": {
         belop: {
-            label: "Amount last month",
+            label: "Amount",
         },
         slettet:
             "We have deleted the documentation on loans/grants as you have no longer responded you receive these.",
-        sporsmal: "How much in loan/grants do you receive per month?",
+        sporsmal: "How much in loan/grants do you receive per month from Lånekassen?",
         utbetaling: {
-            label: "Amount last month",
+            label: "Amount",
         },
         dokumentBeskrivelse: "Upload letter of decision from Lånekassen",
     },
@@ -72,7 +72,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         slettet:
             "We have deleted the documentation on child support as you have no longer responded that you receive child support.",
         sporsmal: "How much do you receive in child support per month?",
-        dokumentBeskrivelse: "upload information on received child support",
+        dokumentBeskrivelse: "Upload information on received child support",
     },
     "samvarsavtale|barn": {
         slettet: "We have deleted the documentation on visitation agreement as it is no longer relevant.",
@@ -93,19 +93,19 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
     },
     "husbanken|vedtak": {
         belop: {
-            label: "Amount last month",
+            label: "Amount",
         },
         slettet:
             "We have deleted the documentation on housing allowance as you have no longer responded you receive it.",
         sporsmal: "How much do you receive in housing allowance from Husbanken?",
         utbetaling: {
-            label: "Amount last month",
+            label: "Amount",
         },
         dokumentBeskrivelse: "Upload the last letter of decision on housing allowance",
     },
     "kontooversikt|brukskonto": {
         belop: {
-            label: "Balance in current account",
+            label: "Balance",
         },
         leggtil: "Add a current account",
         saldo: {
@@ -114,8 +114,8 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         slettet:
             "We have deleted the documentation on current account as you have no longer responded you have it.",
         sporsmal: "What is the balance in your current account?",
-        undertekst: "State the balance of each current accounts",
-        dokumentBeskrivelse: "Upload a balance statement for your current accounts",
+        undertekst: "State the balance in each current account",
+        dokumentBeskrivelse: "Upload balance statement",
     },
     "kontooversikt|bsu": {
         belop: {
@@ -127,7 +127,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         slettet: "We have deleted the documentation on BSU as you have no longer responded you have it.",
         sporsmal: "What is the balance in your BSU account?",
-        dokumentBeskrivelse: "Upload balance statement for BSU",
+        dokumentBeskrivelse: "Upload balance statement",
     },
     "kontooversikt|sparekonto": {
         belop: {
@@ -152,7 +152,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
             label: "Balance",
         },
         slettet: "We have deleted the documentation on life insurance as you have no longer responded you have it.",
-        sporsmal: "What is the balance in your life insurance with savings plan?",
+        sporsmal: "What is the balance in your life insurance?",
         dokumentBeskrivelse: "Upload documentation on life insurance",
     },
     "kontooversikt|aksjer": {
@@ -233,14 +233,14 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
     },
     "faktura|husleie": {
         belop: {
-            label: "Amount per month",
+            label: "Amount",
         },
         permnd: {
-            label: "Amount per month",
+            label: "Amount",
         },
         slettet: "We have deleted the documentation on rent as you have no longer responded you have them.",
         sporsmal: "How much do you pay in rent per month?",
-        dokumentBeskrivelse: "Upload receipt/invoice for rent",
+        dokumentBeskrivelse: "Upload receipt/invoice",
     },
     "faktura|strom": {
         belop: {
@@ -252,7 +252,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         slettet:
             "We have deleted the documentation on electricity expenses as you have no longer responded you have them.",
         sporsmal: "How much do you pay for electricity?",
-        dokumentBeskrivelse: "Upload receipt/invoice for electricity",
+        dokumentBeskrivelse: "Upload receipt/invoice",
     },
     "faktura|kommunaleavgifter": {
         belop: {
@@ -264,7 +264,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         slettet:
             "We have deleted the documentation on municipal charges as you have no longer responded you have them.",
         sporsmal: "How much do you pay in municipal charges?",
-        dokumentBeskrivelse: "Upload receipt/invoice for municipal charges",
+        dokumentBeskrivelse: "Upload receipt/invoice",
     },
     "faktura|oppvarming": {
         belop: {
@@ -276,7 +276,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         slettet:
             "We have deleted the documentation on heating expenses as you have no longer responded you have them.",
         sporsmal: "How much do you pay for heating (excluding electricity)?",
-        dokumentBeskrivelse: "Upload receipt/invoice for heating",
+        dokumentBeskrivelse: "Upload receipt/invoice",
     },
     "nedbetalingsplan|avdraglaan": {
         avdrag: {
@@ -327,33 +327,33 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         type: {
             label: "Description of activity",
         },
-        dokumentBeskrivelse: "Upload receipt/invoice from leisure activity",
+        dokumentBeskrivelse: "Upload receipt/invoice",
     },
     "faktura|barnehage": {
         belop: {
-            label: "Amount last month",
+            label: "Amount",
         },
         leggtil: "Add kindergarten",
         sistemnd: {
-            label: "Amount last month",
+            label: "Amount",
         },
         slettet:
             "We have deleted the document relating to kindergarten expenses as you have no longer responded you have them.",
         sporsmal: "How much do you pay for kindergarten?",
-        dokumentBeskrivelse: "Upload receipt/invoice from kindergarten",
+        dokumentBeskrivelse: "Upload receipt/invoice",
     },
     "faktura|sfo": {
         belop: {
-            label: "Amount last month",
+            label: "Amount",
         },
         leggtil: "Add after-school program (SFO/AKS)",
         sistemnd: {
-            label: "Amount last month",
+            label: "Amount",
         },
         slettet:
             "We have deleted the document relating to after-school program (SFO/AKS) as you have no longer responded you have it.",
         sporsmal: "How much do you pay for after-school program (SFO/AKS)?",
-        dokumentBeskrivelse: "Upload receipt/invoice from after-school program (SFO/AKS)",
+        dokumentBeskrivelse: "Upload receipt/invoice",
     },
     "faktura|tannbehandling": {
         belop: {
@@ -366,7 +366,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         slettet:
             "We have deleted the document relating to dental treatment expenses as you have no longer responded you have them.",
         sporsmal: "How much do you pay for orthodontic treatment for children?",
-        dokumentBeskrivelse: "Upload receipt/invoice for orthodontic treatment",
+        dokumentBeskrivelse: "Upload receipt/invoice",
     },
     "faktura|annetbarnutgift": {
         belop: {
@@ -385,7 +385,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         type: {
             label: "Type of expense",
         },
-        dokumentBeskrivelse: "Upload receipt/invoice for other expenses",
+        dokumentBeskrivelse: "Upload receipt/invoice",
     },
     "skattemelding|skattemelding": {
         slettet: "We have deleted the documentation relating to tax return as it is no longer relevant.",
@@ -393,16 +393,16 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         dokumentBeskrivelse: "Upload tax return and tax settlement",
     },
     "oppholdstillatel|oppholdstillatel": {
-        sporsmal: "Registration certificate or residence permit",
+        sporsmal: "Please document your stay in Norway with a registration certificate or residence permit",
         dokumentBeskrivelse:
-            "Upload your registration certificate/residence permit documenting your residence in Norway.",
+            "Upload registration certificate/residence permit",
     },
     "annet|annet": {
         belop: {
-            label: "Expenditure amount",
+            label: "Amount",
         },
         beskrivelse: {
-            label: "Provide brief details",
+            label: "Provide details about other expences",
         },
         leggtil: "Add expense",
         slettet:
