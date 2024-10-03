@@ -18,27 +18,24 @@ export const useSendSoknad = (behandlingsId: string) => {
         }
     }, [brukerdefinert]);
 
-    const sendSoknaden = async (isKortSoknad: boolean) => {
+    const sendSoknaden = async (isKortSoknad: boolean, selectedKategorier: string[], situasjonEndret: string) => {
         setIsError(false);
         try {
-            try {
-                const {id, antallDokumenter, forrigeSoknadSendt} = await sendSoknad(behandlingsId);
-                await logAmplitudeEvent("Søknad sendt", {
-                    AntallDokumenterSendt: antallDokumenter,
-                    KortSoknad: isKortSoknad ? "Ja" : "Nei",
-                    EndrerSokerAdresse: endretAdresse ? "Ja" : "Nei",
-                    forrigeSoknadSendt: forrigeSoknadSendt,
-                });
-                window.location.assign(`${digisosConfig.innsynURL}${id}/status`);
-            } catch (e: any) {
-                faro.api.pushError(e);
-                throw e;
-            }
+            const {id, antallDokumenter, forrigeSoknadSendt} = await sendSoknad(behandlingsId);
+            await logAmplitudeEvent("Søknad sendt", {
+                AntallDokumenterSendt: antallDokumenter,
+                KortSoknad: isKortSoknad ? "Ja" : "Nei",
+                EndrerSokerAdresse: endretAdresse ? "Ja" : "Nei",
+                forrigeSoknadSendt: forrigeSoknadSendt,
+                kategorier: selectedKategorier.length > 0 ? selectedKategorier : "Ikke utfylt",
+                situasjonEndret: situasjonEndret || "Ikke utfylt",
+            });
+            window.location.assign(`${digisosConfig.innsynURL}${id}/status`);
         } catch (e: any) {
             faro.api.pushError(e);
             setIsError(true);
+            throw e;
         }
     };
-
     return {sendSoknad: sendSoknaden, isError};
 };
