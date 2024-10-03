@@ -27,7 +27,7 @@ export const skjema = {
                 v2: "{{kommuneNavn}} municipality cannot accept digital applications right now. <lenke>Apply using a paper form</lenke>, or try again later.",
             },
             navKontor: "{{enhetsnavn}}, {{kommunenavn}} municipality.",
-            suksess: "The application will be sent to:",
+            suksess: "Your application will be sent to:",
         },
     },
     adresse_med_fylke: {
@@ -46,7 +46,7 @@ export const skjema = {
                     '{{kommuneNavn}} municipality ({{fylkeNavn}}) cannot accept digital applications right now. <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">Apply using a paper form</lenke>, or try again later.',
             },
             suksess:
-                "The application will be sent to: {{navkontorNavn}}, {{kommuneNavn}} municipality ({{fylkeNavn}}).",
+                "Your application will be sent to: {{navkontorNavn}}, {{kommuneNavn}} municipality ({{fylkeNavn}}).",
         },
     },
     antallvelger: {
@@ -270,7 +270,7 @@ export const skjema = {
         },
         annet: "Other living situation",
         antallpersoner: {
-            label: "-	Number. Do not include yourself.",
+            label: "Number. Do not include yourself.",
             sporsmal: "How many people do you live with?",
         },
         eier: "I live in a home that I own",
@@ -307,7 +307,7 @@ export const skjema = {
             mer: {
                 info: {
                     forklaring:
-                        "-	Answer yes if you are attending school or studying. This can include high school, college, university, Norwegian language courses, primary school for adults, or adult education.",
+                        "Answer yes if you are attending school or studying. This can include high school, college, university, Norwegian language courses, primary school for adults, or adult education.",
                     tittel: "More information",
                 },
             },
@@ -380,7 +380,7 @@ export const skjema = {
                 barnebidrag: {
                     begge: "Yes, I both pay and receive child support",
                     betaler: "Yes, I pay child support",
-                    ingen: "Neither of these",
+                    ingen: "No",
                     mottar: "Yes, I receive child support",
                     sporsmal: "Do you receive or pay child support?",
                 },
@@ -665,9 +665,9 @@ export const skjema = {
         husbanken: {
             bostotte: {
                 url: "https://husbanken.no/bostotte",
-                v2: "-	If you have low income and high housing expences you can apply for housing allowance (bostøtte) from Husbanken. We recommend that you check if you can get<lenke>support from Husbanken</lenke>.",
+                v2: "If you have low income and high housing expences you can apply for housing allowance (bostøtte) from Husbanken. We recommend that you check if you can get <lenke>support from Husbanken</lenke>.",
                 stringValue:
-                    '-	If you have low income and high housing expences you can apply for housing allowance (bostøtte) from Husbanken. We recommend that you check if you can get<a href="https://husbanken.no/bostotte"  target="_blank" rel="noreferrer noopener">support from Husbanken</lenke>.',
+                    'If you have low income and high housing expences you can apply for housing allowance (bostøtte) from Husbanken. We recommend that you check if you can get <a href="https://husbanken.no/bostotte"  target="_blank" rel="noreferrer noopener">support from Husbanken</lenke>.',
             },
         },
         ikketilgang: {
@@ -712,7 +712,7 @@ export const skjema = {
         student: {
             studielan: {
                 number1: {
-                    v2: "If you are a student, you generally do not have the right to financial assistance. You can check if you can apply for a lone or grant at <lenke>lanekassen.no</lenke>.",
+                    v2: "If you are a student, you generally do not have the right to financial assistance. You can check if you can apply for a loan or grant at <lenke>lanekassen.no</lenke>.",
                 },
                 number2:
                     "There are some exceptions to the right to financial assistance. This might be if you have a temporary need for help before receiving payments from Lånekassen, or are in an emergency situation. Contact your NAV office to clarify your needs and to receive information, advice and guidance.",
@@ -775,7 +775,7 @@ export const skjema = {
         bostotte: {
             gi_samtykke: {
                 overskrift: "Would you like to retrieve information about your housing allowance from Husbanken?",
-                tekst: "This information can be necessary to process the application. If you do not wish us to obtain this personal information, you can upload documentation in the last stage of the application.",
+                tekst: "This information can be necessary for us to process the application. If you do not wish to obtain this information automatically, you can upload the documentation yourself.",
                 ja: "Yes, get information",
                 nei: "No",
             },
@@ -819,10 +819,10 @@ export const skjema = {
                 status: "Status",
                 stringValue: "Case",
             },
-            sakerIkkefunnet: "You have no cases registered with Husbanken for the last month.",
+            sakerIkkefunnet: "You have no registered cases at Husbanken the last month.",
             sporsmal: {
                 sporsmal:
-                    "Have you applied for or received housing allowance from Husbanken (The Norwegian State Housing Bank) within the last two months?",
+                    "Have you applied for or received housing allowance from Husbanken the last two months?",
             },
             ta_bort_samtykke: "Remove information from Husbanken",
             tidspunkt: "Information was obtained",
@@ -849,7 +849,7 @@ export const skjema = {
                 tekst: "By 'financial value,' we mean property or assets of higher value, both in Norway and abroad. We may require you to sell objects that you do not need in your daily life and that can be sold for a significant amount. Personal belongings, such as clothing and household items of standard quality, cannot be required to be sold.",
             },
             infotekst: {
-                tekst: "For example, a housing or vehicles",
+                tekst: "For example, housing or vehicle",
             },
             sporsmal: "Do you own anything of financial value?",
             true: {
@@ -864,7 +864,7 @@ export const skjema = {
                     },
                     bolig: "Property",
                     campingvogn: "Caravan and/or boat",
-                    fritidseiendom: "leisure property",
+                    fritidseiendom: "Leisure property",
                     kjoretoy: "Vehicle(s)",
                     sporsmal: "What do you own?",
                 },
@@ -1043,15 +1043,15 @@ export const skjema = {
                     infotekst: {
                         tekst: "Fill in the address where you currently live so that we can send your application to the correct NAV office.",
                     },
-                    sporsmal: "Where are you resident at present?",
+                    sporsmal: "Where are you living at present?",
                 },
                 sporsmal: "Residential address and NAV office",
                 valg: {
-                    feilmelding: "You must select your residential address and NAV office",
+                    feilmelding: "You must select your address and NAV office",
                     folkeregistrert: "Registered address",
-                    midlertidig: "Temporary address registered in NAV address register (TPS)",
-                    soknad: "I live at a different address",
-                    sporsmal: "What is your residential address?",
+                    midlertidig: "Temporary address registered in NAV address register",
+                    soknad: "I live on another address",
+                    sporsmal: "What is your address?",
                 },
                 velgKontor: "The address generated several NAV offices. Select your local office.",
                 velgMottaker: "Select NAV office",
@@ -1102,7 +1102,7 @@ export const skjema = {
             telefonnummerFelt: "Telephone number field",
             tittel: "New telephone number",
         },
-        tittel: "Information about you",
+        tittel: "Your personal information",
     },
     kvittering: {
         dato: "Application was sent to NAV",
@@ -1331,7 +1331,7 @@ export const skjema = {
                     saldo: {
                         label: "Balance",
                     },
-                    sporsmal: "What is the balance in your life insurance with savings plan?",
+                    sporsmal: "What is the balance in your life insurance?",
                 },
                 verdipapirer: {
                     saldo: {
@@ -1796,7 +1796,7 @@ export const skjema = {
                             label: "Surname",
                         },
                         fodselsdato: "Date of birth",
-                        folkereg: "Has/have the same registered address as you",
+                        folkereg: "Registered at the same address",
                         folkeregistrertsammen: {
                             sporsmal: "Registered at the same address as spouse in the National Population Register",
                         },
