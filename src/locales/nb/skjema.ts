@@ -240,13 +240,13 @@ export const skjema = {
     },
     bosituasjon: {
         annenBotype: {
-            familie: "Bor hos familie",
+            familie: "Jeg bor hos annen familie",
             fengsel: "Fengsel",
-            foreldre: "Bor hos foreldre",
-            institusjon: "Institusjon (sykehus, psykiatri eller rusbehandling)",
+            foreldre: "Jeg bor hos foreldrene mine",
+            institusjon: "Institusjon (for eksempel sykehus eller rusbehandling)",
             krisesenter: "Krisesenter",
-            sporsmal: "Vil du utdype?",
-            venner: "Bor hos venner",
+            sporsmal: "Vennligst utdyp hvor du oppholder deg",
+            venner: "Jeg bor hos venner",
         },
         annet: "Annen bosituasjon",
         antallpersoner: {
@@ -289,8 +289,8 @@ export const skjema = {
             mer: {
                 info: {
                     forklaring:
-                        "Her kan du svare ja hvis du går på skole eller studerer. Det kan være videregående skole, høyskole, universitet, norskopplæring, grunnskole for voksne eller voksenopplæring.",
-                    tittel: "Eksempler på å være elev",
+                        "Svar ja hvis du går på skole eller studerer. Det kan være videregående skole, høyskole, universitet, norskopplæring, grunnskole for voksne eller voksenopplæring.",
+                    tittel: "Mer informasjon",
                 },
             },
             sporsmal: "Er du skoleelev eller student?",
@@ -362,9 +362,9 @@ export const skjema = {
                 barnebidrag: {
                     begge: "Jeg betaler og mottar barnebidrag",
                     betaler: "Jeg betaler barnebidrag",
-                    ingen: "Ingen av delene",
+                    ingen: "Nei",
                     mottar: "Jeg mottar barnebidrag",
-                    sporsmal: "Mottar eller betaler du barnebidrag for ett eller flere av barna?",
+                    sporsmal: "Mottar eller betaler du barnebidrag?",
                 },
                 listetittel: "Opplysninger om barn",
             },
@@ -576,10 +576,10 @@ export const skjema = {
             brukskonto: "Brukskonto",
             bsu: "Boligsparing for Ungdom (BSU)",
             hjelpetekst: {
-                tekst: "Du må oppgi alle bankkontoer og spareordninger du har både i Norge og i utlandet. Du skal huke av selv om du ikke har penger disponibelt.",
+                tekst: "Vennligst oppgi alle bankkontoer og spareordninger du har både i Norge og i utlandet. Du skal huke av selv om du ikke har penger på konto.",
             },
-            livsforsikring: "Livsforsikring med sparedel",
-            livsforsikringssparedel: "Livsforsikring med sparedel",
+            livsforsikring: "Livsforsikring",
+            livsforsikringssparedel: "Livsforsikring",
             sparekonto: "Sparekonto",
             sporsmal: "Hvilke bankkontoer og spareordninger har du?",
             verdipapirer: "Aksjer, obligasjoner og fond",
@@ -1270,7 +1270,7 @@ export const skjema = {
                 },
                 bolk2: {
                     avsnitt1:
-                        "Har du dokumentasjon på papir, kan du skanne det og sende det digitalt. Ved å skanne dokumentasjonen blir kvaliteten bedre, slik de er lettere å lese.",
+                        "Har du dokumentasjon på papir, kan du skanne det og sende det digitalt.",
                     avsnitt2:
                         "Med en skanne-app kan du bruke kameraet på mobiltelefonen din til å skanne dokumentasjonen. Du kan samle flere papirsider til ett digitalt vedlegg, for eksempel husleiekontrakten din.",
                     avsnitt3:
@@ -1279,7 +1279,7 @@ export const skjema = {
                 },
                 bolk3: {
                     avsnitt1:
-                        "Hvis du skal sende dokumentasjon fra en annen nettside, kan du laste ned dokumentet først hvis det er mulig. For eksempel er skattemeldingen og vedtak fra Lånekassen tilgjengelig for nedlastning som PDF. Du bør unngå å ta bilde av PC-skjermen med et kamera.",
+                        "Hvis du skal sende dokumentasjon fra en annen nettside, kan du laste ned dokumentet først hvis det er mulig. For eksempel er skattemeldingen og vedtak fra Lånekassen tilgjengelig for nedlastning som PDF. Du bør unngå å ta bilde av PC-skjermen med mobiltelefonen din.",
                     tittel: "Dokumentasjon fra andre nettsider",
                 },
                 bolk4: {
@@ -1976,7 +1976,7 @@ export const skjema = {
                     kommunalAvgift: "Kommunale avgifter",
                     kommunaleavgifter: "Kommunale avgifter",
                     oppvarming: "Ved, gass eller fjernvarme",
-                    sporsmal: "Hva betaler du for der du bor?",
+                    sporsmal: "Hvilke utgifter har du der du bor?",
                     strom: "Strøm",
                 },
             },
