@@ -27,6 +27,9 @@ export const Oppsummering = () => {
     const {processedData} = useProcessedData(); // Access processed data
     const {selectedKategorier, situasjonEndret} = processedData;
 
+    console.log("selectedKategorier", selectedKategorier);
+    console.log("situasjonEndret", situasjonEndret);
+
     if (isLoading) return <ApplicationSpinner />;
     const isKortSoknad = location.pathname.includes("/kort");
     return (

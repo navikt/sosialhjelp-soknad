@@ -32,7 +32,7 @@ export const useSendSoknad = (behandlingsId: string) => {
                 EndrerSokerAdresse: endretAdresse ? "Ja" : "Nei",
                 forrigeSoknadSendt: forrigeSoknadSendt,
                 kategorier: selectedKategorier && selectedKategorier.length > 0 ? selectedKategorier : "Ikke utfylt",
-                situasjonEndret: situasjonEndret ? "Ja" : "Ikke utfylt",
+                situasjonEndret: situasjonEndret !== "Ikke utfylt" ? "Ja" : "Ikke utfylt",
             });
             window.location.assign(`${digisosConfig.innsynURL}${id}/status`);
         } catch (e: any) {
