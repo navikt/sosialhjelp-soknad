@@ -42,8 +42,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         belop: {
             label: "Amount",
         },
-        slettet:
-            "We have deleted the documentation on loans/grants as you have no longer responded you receive these.",
+        slettet: "We have deleted the documentation on loans/grants as you have no longer responded you receive these.",
         sporsmal: "How much in loan/grants do you receive per month from Lånekassen?",
         utbetaling: {
             label: "Amount",
@@ -80,16 +79,14 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         dokumentBeskrivelse: "Upload visitation agreement, or agreement on shared residence",
     },
     "husleiekontrakt|husleiekontrakt": {
-        slettet:
-            "We have deleted the rental agreement for private home as you have no longer responded that you rent.",
+        slettet: "We have deleted the rental agreement for private home as you have no longer responded that you rent.",
         sporsmal: "Rental agreement",
-        dokumentBeskrivelse: "Upload rental agreement",
+        dokumentBeskrivelse: "",
     },
     "husleiekontrakt|kommunal": {
-        slettet:
-            "We have deleted the rental agreement for municipal home as you have no longer responded you have it.",
+        slettet: "We have deleted the rental agreement for municipal home as you have no longer responded you have it.",
         sporsmal: "Rental agreement",
-        dokumentBeskrivelse: "Upload rental agreement",
+        dokumentBeskrivelse: "",
     },
     "husbanken|vedtak": {
         belop: {
@@ -111,8 +108,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         saldo: {
             label: "Balance",
         },
-        slettet:
-            "We have deleted the documentation on current account as you have no longer responded you have it.",
+        slettet: "We have deleted the documentation on current account as you have no longer responded you have it.",
         sporsmal: "What is the balance in your current account?",
         undertekst: "State the balance in each current account",
         dokumentBeskrivelse: "Upload balance statement",
@@ -137,8 +133,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         saldo: {
             label: "Balance",
         },
-        slettet:
-            "We have deleted the documentation on savings account as you have no longer responded you have it.",
+        slettet: "We have deleted the documentation on savings account as you have no longer responded you have it.",
         sporsmal: "What is the balance in your savings account(s)?",
         undertekst: "State the balance in each savings account",
         dokumentBeskrivelse: "Upload balance statement",
@@ -273,8 +268,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sisteregning: {
             label: "Amount on the last bill",
         },
-        slettet:
-            "We have deleted the documentation on heating expenses as you have no longer responded you have them.",
+        slettet: "We have deleted the documentation on heating expenses as you have no longer responded you have them.",
         sporsmal: "How much do you pay for heating (excluding electricity)?",
         dokumentBeskrivelse: "Upload receipt/invoice",
     },
@@ -394,8 +388,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
     },
     "oppholdstillatel|oppholdstillatel": {
         sporsmal: "Please document your stay in Norway with a registration certificate or residence permit",
-        dokumentBeskrivelse:
-            "Upload registration certificate/residence permit",
+        dokumentBeskrivelse: "Upload registration certificate/residence permit",
     },
     "annet|annet": {
         belop: {
