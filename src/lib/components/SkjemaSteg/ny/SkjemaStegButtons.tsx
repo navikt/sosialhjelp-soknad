@@ -1,21 +1,25 @@
 import * as React from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {SkjemaStegContext} from "./SkjemaSteg";
-import {useContext, useState} from "react";
+import {DigisosValidationError, KortSkjemaPage, SkjemaPage} from "./SkjemaSteg";
+import {useState} from "react";
 import digisosConfig from "../../../config";
-import {logError} from "../../../log/loggerUtils";
 import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
 import {NavEnhetInaktiv} from "../../../../sider/01-personalia/adresse/NavEnhetInaktiv";
 import {logAmplitudeEvent} from "../../../amplitude/Amplitude";
 import {DigisosLanguageKey} from "../../../i18n";
 import {ArrowRightIcon} from "@navikt/aksel-icons";
+import {scrollToTop} from "../../../utils";
+import {logWarning} from "../../../log/loggerUtils.ts";
+import {useSkjemaNavigation} from "../useSkjemaNavigation.ts";
 
 interface SkjemaStegNavigasjonProps {
     loading?: boolean;
     onConfirm?: () => Promise<void>;
     confirmTextKey?: DigisosLanguageKey;
     includeNextArrow?: boolean;
+    page: SkjemaPage | KortSkjemaPage;
+    onRequestNavigation?: () => Promise<unknown>;
 }
 
 export const SkjemaStegButtons = ({
@@ -23,19 +27,24 @@ export const SkjemaStegButtons = ({
     onConfirm,
     confirmTextKey = "skjema.knapper.neste",
     includeNextArrow,
+    page,
+    onRequestNavigation,
 }: SkjemaStegNavigasjonProps) => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
 
     const {t} = useTranslation("skjema");
-    const context = useContext(SkjemaStegContext);
     const [sendSoknadPending, setSendSoknadPending] = useState<boolean>(false);
+    const {gotoPage} = useSkjemaNavigation(page);
 
-    if (context === null) {
-        logError("<SkjemaStegButtons/> must be used inside <SkjemaSteg />");
-        return null;
-    }
-
-    const {page, requestNavigation} = context;
+    const requestNavigation = async (page: number) => {
+        try {
+            if (onRequestNavigation !== undefined) await onRequestNavigation();
+            gotoPage(page);
+        } catch (e: any) {
+            scrollToTop();
+            if (!(e instanceof DigisosValidationError)) await logWarning(`Nektet navigering: ${e}`);
+        }
+    };
 
     return (
         <div>

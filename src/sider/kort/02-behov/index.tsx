@@ -1,5 +1,5 @@
 import React from "react";
-import {inhibitNavigation, SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {inhibitNavigation, KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {FieldError, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -94,7 +94,11 @@ const Behov = (): React.JSX.Element => {
                     <BodyShort>{t("arbeidOgFamilie.alert")}</BodyShort>
                 </Alert>
                 <SkjemaContent className={"lg:space-y-12"}>
-                    <SkjemaStegTitle className={"lg:mb-12"} />
+                    <SkjemaStegTitle
+                        className={"lg:mb-12"}
+                        title={KortSkjemaHeadings[2].tittel}
+                        icon={KortSkjemaHeadings[2].ikon}
+                    />
                     <SkjemaStegErrorSummary errors={errors} />
                     {isPending ? (
                         <ApplicationSpinner />
@@ -123,7 +127,12 @@ const Behov = (): React.JSX.Element => {
                             />
                         </form>
                     )}
-                    <SkjemaStegButtons loading={isPending} includeNextArrow />
+                    <SkjemaStegButtons
+                        loading={isPending}
+                        includeNextArrow
+                        page={2}
+                        onRequestNavigation={handleSubmit(onSubmit, inhibitNavigation)}
+                    />
                 </SkjemaContent>
             </VStack>
         </SkjemaSteg>

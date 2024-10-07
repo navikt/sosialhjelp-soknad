@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Heading, Radio, RadioGroup, ReadMore} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {DigisosValidationError, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {DigisosValidationError, SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useForm} from "react-hook-form";
 import {ArbeidsforholdResponse, UtdanningFrontend} from "../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -68,7 +68,7 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
     return (
         <SkjemaSteg page={3} onRequestNavigation={onRequestNavigation}>
             <SkjemaContent>
-                <SkjemaStegTitle />
+                <SkjemaStegTitle title={SkjemaHeadings[3].tittel} icon={SkjemaHeadings[3].ikon} />
                 <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>
                     <SkjemaStegErrorSummary errors={errors} />
 
@@ -119,7 +119,7 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                         </UnmountClosed>
                     </div>
                     {error && <div>{t("skjema.navigering.feil")}</div>}
-                    <SkjemaStegButtons />
+                    <SkjemaStegButtons page={3} onRequestNavigation={onRequestNavigation} />
                 </form>
             </SkjemaContent>
         </SkjemaSteg>

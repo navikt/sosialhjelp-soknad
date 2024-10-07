@@ -1,20 +1,18 @@
 import * as React from "react";
 import {useTranslation} from "react-i18next";
-import {SkjemaHeadings, SkjemaStegContext} from "./SkjemaSteg";
+import {KortSkjemaPage, SkjemaHeadings, SkjemaPage} from "./SkjemaSteg";
 import {Stepper} from "@navikt/ds-react";
-import {useContext} from "react";
-import {logError} from "../../../log/loggerUtils";
 
-export const SkjemaStegStepper = () => {
+export const SkjemaStegStepper = ({
+    page,
+    requestNavigation,
+    kort,
+}: {
+    page: SkjemaPage | KortSkjemaPage;
+    requestNavigation: (toPage: number) => Promise<void>;
+    kort: boolean;
+}) => {
     const {t} = useTranslation("skjema");
-    const context = useContext(SkjemaStegContext);
-
-    if (context === null) {
-        logError("<SkjemaStegStepper/> must be used inside <SkjemaSteg />");
-        return null;
-    }
-
-    const {page, requestNavigation, kort} = context;
 
     return (
         <div className={"max-w-md w-full mx-auto"}>

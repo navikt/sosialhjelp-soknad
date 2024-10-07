@@ -3,7 +3,7 @@ import {Gruppe} from "./Gruppe";
 import {InfopanelOpplysninger} from "./InfopanelOpplysninger";
 import {UbesvarteOpplysninger} from "./UbesvarteOpplysninger";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
-import {SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import cx from "classnames";
 import {useOpplysninger} from "../../lib/hooks/dokumentasjon/useOpplysninger";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
@@ -22,7 +22,7 @@ export const OkonomiskeOpplysningerView = () => {
     return (
         <SkjemaSteg page={8}>
             <SkjemaContent className={cx("pb-12", {"lg:space-y-8": true})}>
-                <SkjemaStegTitle className={"lg:mb-8"} />
+                <SkjemaStegTitle title={SkjemaHeadings[8].tittel} icon={SkjemaHeadings[8].ikon} className={"lg:mb-8"} />
                 {bekreftet ? <InfopanelOpplysninger /> : <UbesvarteOpplysninger />}
                 <Gruppe gruppeKey={firstGroup} opplysninger={sorterte.filter((x) => x.gruppe === firstGroup)} />
             </SkjemaContent>
@@ -37,7 +37,7 @@ export const OkonomiskeOpplysningerView = () => {
             ))}
             <SkjemaContent className={cx("pb-12")}>
                 <Gruppe gruppeKey={lastGroup} opplysninger={sorterte.filter((x) => x.gruppe === lastGroup)} />
-                <SkjemaStegButtons />
+                <SkjemaStegButtons page={8} />
             </SkjemaContent>
         </SkjemaSteg>
     );

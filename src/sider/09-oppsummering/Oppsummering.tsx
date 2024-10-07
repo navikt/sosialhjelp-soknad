@@ -8,7 +8,7 @@ import {OppsummeringSteg} from "./OppsummeringSteg";
 import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullfortEvent";
 import {useSendSoknad} from "./useSendSoknad";
 import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude";
-import {SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {KortSkjemaHeadings, SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useLocation} from "react-router-dom";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
@@ -21,13 +21,15 @@ export const Oppsummering = () => {
 
     const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId);
     const location = useLocation();
-
     if (isLoading) return <ApplicationSpinner />;
     const isKortSoknad = location.pathname.includes("/kort");
+
+    const {tittel, ikon} = isKortSoknad ? KortSkjemaHeadings[5] : SkjemaHeadings[9];
+
     return (
         <SkjemaSteg page={isKortSoknad ? 5 : 9}>
             <SkjemaContent>
-                <SkjemaStegTitle />
+                <SkjemaStegTitle title={tittel} icon={ikon} />
 
                 <div>
                     {oppsummering?.steg.map((steg) => <OppsummeringSteg steg={steg} key={steg.stegNr} />)}
@@ -39,6 +41,7 @@ export const Oppsummering = () => {
                     )}
                 </div>
                 <SkjemaStegButtons
+                    page={isKortSoknad ? 5 : 9}
                     confirmTextKey={"skjema.knapper.send"}
                     onConfirm={async () => {
                         logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));

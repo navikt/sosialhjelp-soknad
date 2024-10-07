@@ -1,5 +1,5 @@
 import React from "react";
-import {SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {BodyShort, Box, Heading} from "@navikt/ds-react";
 import {SkjemaContent} from "../../../lib/components/SkjemaSteg/ny/SkjemaContent";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
@@ -21,7 +21,11 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
     return (
         <SkjemaSteg page={3}>
             <SkjemaContent className={"lg:space-y-12"}>
-                <SkjemaStegTitle className={"lg:mb-12"} />
+                <SkjemaStegTitle
+                    className={"lg:mb-12"}
+                    title={KortSkjemaHeadings[3].tittel}
+                    icon={KortSkjemaHeadings[3].ikon}
+                />
                 <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
                     <Box className="space-y-2">
                         <Heading size="small">{t("arbeidsforhold.sporsmal")}</Heading>
@@ -57,7 +61,7 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
                         )}
                     </Box>
                 </form>
-                <SkjemaStegButtons includeNextArrow />
+                <SkjemaStegButtons includeNextArrow page={3} />
             </SkjemaContent>
         </SkjemaSteg>
     );

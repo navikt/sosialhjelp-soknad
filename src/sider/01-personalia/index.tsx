@@ -4,7 +4,7 @@ import {TelefonData} from "./Telefon";
 import {AdresseData} from "./adresse/Adresse";
 import {BasisPersonalia} from "./BasisPersonalia";
 import {Kontonr} from "./Kontonr";
-import {DigisosValidationError, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {DigisosValidationError, SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {FieldErrorsImpl} from "react-hook-form";
 import {NavEnhetFrontend} from "../../generated/model";
 import {erAktiv} from "../../lib/navEnhetStatus";
@@ -47,7 +47,11 @@ export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
     return (
         <SkjemaSteg skipStepper page={1} onRequestNavigation={onRequestNavigation}>
             <SkjemaContent className={shortSpacing ? "lg:space-y-12" : ""}>
-                <SkjemaStegTitle className={shortSpacing ? "lg:mb-12" : ""} />
+                <SkjemaStegTitle
+                    className={shortSpacing ? "lg:mb-12" : ""}
+                    title={SkjemaHeadings[1].tittel}
+                    icon={SkjemaHeadings[1].ikon}
+                />
                 {error && (
                     <SkjemaStegErrorSummary
                         errors={{adressefelt: {message: error}} as FieldErrorsImpl<NavEnhetFrontend>}
@@ -57,7 +61,11 @@ export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
                 <AdresseData />
                 <TelefonData />
                 <Kontonr />
-                <SkjemaStegButtons includeNextArrow={includeNextArrow} />
+                <SkjemaStegButtons
+                    includeNextArrow={includeNextArrow}
+                    page={1}
+                    onRequestNavigation={onRequestNavigation}
+                />
             </SkjemaContent>
         </SkjemaSteg>
     );

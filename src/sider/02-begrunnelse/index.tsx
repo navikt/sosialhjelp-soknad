@@ -5,7 +5,7 @@ import {FieldError, useForm} from "react-hook-form";
 import {useTranslation} from "react-i18next";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useFeatureFlags} from "../../lib/config";
-import {inhibitNavigation, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {inhibitNavigation, SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useBegrunnelse} from "../../lib/hooks/data/useBegrunnelse";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
 import {DigisosLanguageKey} from "../../lib/i18n";
@@ -86,7 +86,7 @@ export const Begrunnelse = () => {
             }, inhibitNavigation)}
         >
             <SkjemaContent>
-                <SkjemaStegTitle />
+                <SkjemaStegTitle title={SkjemaHeadings[2].tittel} icon={SkjemaHeadings[2].ikon} />
                 <SkjemaStegErrorSummary errors={errors} />
                 {isPending || featureFlagsPending ? (
                     <ApplicationSpinner />
@@ -134,7 +134,14 @@ export const Begrunnelse = () => {
                         />
                     </form>
                 )}
-                <SkjemaStegButtons loading={isPending} />
+                <SkjemaStegButtons
+                    loading={isPending}
+                    page={2}
+                    onRequestNavigation={handleSubmit((values: FormValues) => {
+                        put(values);
+                        reset({hvaSokesOm: null, hvorforSoke: null});
+                    }, inhibitNavigation)}
+                />
             </SkjemaContent>
         </SkjemaSteg>
     );

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {createContext, ReactNode, useEffect} from "react";
+import {ReactNode, useEffect} from "react";
 import {Link} from "@navikt/ds-react";
 import {NedetidPanel} from "../../NedetidPanel";
 import {useTranslation} from "react-i18next";
@@ -18,14 +18,6 @@ import {RequireXsrfCookie} from "./RequireXsrfCookie";
 import {useLocation} from "react-router-dom";
 import {DigisosLanguageKey} from "../../../i18n";
 import {SparegrisIllustrasjon} from "../../svg/illustrasjoner/SparegrisIllustrasjon.tsx";
-
-type TSkjemaStegContext = {
-    page: SkjemaPage | KortSkjemaPage;
-    kort: boolean;
-    requestNavigation: (toPage: number) => Promise<void>;
-};
-
-export const SkjemaStegContext = createContext<TSkjemaStegContext | null>(null);
 
 // This error can be thrown in requestNavigation to prevent navigation.
 // All other errors prevent navigation too; this just prevents it from
@@ -100,19 +92,19 @@ export const SkjemaSteg = ({page, children, onRequestNavigation, skipStepper}: S
 
     return (
         <RequireXsrfCookie>
-            <SkjemaStegContext.Provider value={{page, requestNavigation, kort: isKortSoknad}}>
-                <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn flex gap-10 items-center flex-col">
-                    <Link href="#main-content" className="sr-only sr-only-focusable">
-                        {t("hoppTilHovedinnhold")}
-                    </Link>
-                    <AppHeader />
-                    {!skipStepper && <SkjemaStegStepper />}
-                    <main id={"main-content"} className={"max-w-3xl mx-auto w-full"}>
-                        <NedetidPanel varselType={"infoside"} />
-                        {children}
-                    </main>
-                </div>
-            </SkjemaStegContext.Provider>
+            <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn flex gap-10 items-center flex-col">
+                <Link href="#main-content" className="sr-only sr-only-focusable">
+                    {t("hoppTilHovedinnhold")}
+                </Link>
+                <AppHeader />
+                {!skipStepper && (
+                    <SkjemaStegStepper requestNavigation={requestNavigation} kort={isKortSoknad} page={page} />
+                )}
+                <main id={"main-content"} className={"max-w-3xl mx-auto w-full"}>
+                    <NedetidPanel varselType={"infoside"} />
+                    {children}
+                </main>
+            </div>
         </RequireXsrfCookie>
     );
 };
