@@ -1,5 +1,5 @@
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {updateBostotte, updateSamtykke1, useHentBostotte} from "../../../generated/bostotte-ressurs/bostotte-ressurs";
+import {updateBostotte, updateSamtykke2, useHentBostotte} from "../../../generated/bostotte-ressurs/bostotte-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
 
 export const useInntekterBostotte = (skipFirstStep?: boolean) => {
@@ -11,7 +11,7 @@ export const useInntekterBostotte = (skipFirstStep?: boolean) => {
     const setSamtykke = async (nyttHarSamtykke: boolean) => {
         if (!bostotte) return;
         // FIXME: Replace with contentful PUT
-        await updateSamtykke1(behandlingsId, nyttHarSamtykke);
+        await updateSamtykke2(behandlingsId, nyttHarSamtykke);
         await queryClient.invalidateQueries({queryKey});
     };
 
@@ -25,7 +25,7 @@ export const useInntekterBostotte = (skipFirstStep?: boolean) => {
             samtykke,
         };
 
-        if (!harInntektHusbanken) await updateSamtykke1(behandlingsId, false);
+        if (!harInntektHusbanken) await updateSamtykke2(behandlingsId, false);
 
         await updateBostotte(behandlingsId, oppdatert);
         await queryClient.invalidateQueries({queryKey});

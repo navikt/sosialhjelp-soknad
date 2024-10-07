@@ -27,7 +27,7 @@ export const skjema = {
                 v2: "{{kommuneNavn}} municipality cannot accept digital applications right now. <lenke>Apply using a paper form</lenke>, or try again later.",
             },
             navKontor: "{{enhetsnavn}}, {{kommunenavn}} municipality.",
-            suksess: "The application will be sent to:",
+            suksess: "Your application will be sent to:",
         },
     },
     adresse_med_fylke: {
@@ -46,7 +46,7 @@ export const skjema = {
                     '{{kommuneNavn}} municipality ({{fylkeNavn}}) cannot accept digital applications right now. <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">Apply using a paper form</lenke>, or try again later.',
             },
             suksess:
-                "The application will be sent to: {{navkontorNavn}}, {{kommuneNavn}} municipality ({{fylkeNavn}}).",
+                "Your application will be sent to: {{navkontorNavn}}, {{kommuneNavn}} municipality ({{fylkeNavn}}).",
         },
     },
     antallvelger: {
@@ -78,7 +78,7 @@ export const skjema = {
         paabegynt: {
             soknad: {
                 flertall: "started applications",
-                informasjon: "Please note that started applications are deleted after {{DAYS_BEFORE_DELETION}} days.",
+                informasjon: "Please note that the started applications will be deleted after {{DAYS_BEFORE_DELETION}} days.",
                 sist: {
                     oppdatert: "Last updated",
                 },
@@ -260,24 +260,24 @@ export const skjema = {
     },
     bosituasjon: {
         annenBotype: {
-            familie: "With family",
+            familie: "I live with other family",
             fengsel: "Prison",
-            foreldre: "With parents",
-            institusjon: "Institution (hospital, psychiatric or substance abuse treatment)",
+            foreldre: "I live with my parents",
+            institusjon: "Institution (for example hospital, or admitted for addiction treatment)",
             krisesenter: "Crisis centre",
-            sporsmal: "Do you wish to provide more details?",
-            venner: "With friends",
+            sporsmal: "Please provide more details about where you are staying",
+            venner: "I live with friends",
         },
         annet: "Other living situation",
         antallpersoner: {
-            label: "Number. Not including yourself.",
+            label: "Number. Do not include yourself.",
             sporsmal: "How many people do you live with?",
         },
-        eier: "I live in housing that I own",
+        eier: "I live in a home that I own",
         feilmelding: "You must state your living situation",
-        ingen: "I do not have housing",
-        kommunal: "I rent municipal housing",
-        leier: "I rent private housing",
+        ingen: "I do not have a place to live",
+        kommunal: "I rent a municipal home",
+        leier: "I rent a private home",
         sporsmal: "What is your living situation?",
         tittel: "Your living situation",
     },
@@ -307,11 +307,11 @@ export const skjema = {
             mer: {
                 info: {
                     forklaring:
-                        "Here you can answer yes if you attend school or are studying. This can include high school, college, university, Norwegian language courses, primary school for adults, or adult education.",
-                    tittel: "Examples of being a student",
+                        "Answer yes if you are attending school or studying. This can include high school, college, university, Norwegian language courses, primary school for adults, or adult education.",
+                    tittel: "More information",
                 },
             },
-            sporsmal: "Are you a school pupil or student?",
+            sporsmal: "Are you attending school or studying?",
             true: {
                 grad: {
                     deltid: "Yes - Part-time",
@@ -323,7 +323,7 @@ export const skjema = {
     faktum: {
         key: {
             grad: {
-                label: "Extent of visits",
+                label: "Visiting arrangement",
             },
         },
     },
@@ -331,9 +331,9 @@ export const skjema = {
         barn: {
             feilmelding: "You must respond whether you have children who live with you",
             hjelpetekst: {
-                tekst: "State all children you are obliged to provide for (cover necessary expenses for). You are obliged to provide for your children under 18 years of age, even if they do not live with you. If your finances allow, you must provide for your children until they have completed secondary education.",
+                tekst: "State all children you are responsible to provide for (cover necessary expenses for). You are responsible to provide for your children under 18 years of age, even if they do not live with you. If your finances allow, you must provide for your children until they have completed secondary education.",
             },
-            sporsmal: "Do you have children you are obliged to provide for?",
+            sporsmal: "Do you have children you are responsible to provide for?",
             tittel: "Child",
             true: {
                 barn: {
@@ -361,8 +361,8 @@ export const skjema = {
                         deltid: "Part-time",
                         heltid: "Full-time",
                         hoyretekst: "%",
-                        label: "Extent of visits in percentage (max. 50)",
-                        sporsmal: "What is the extent of visits you have with the child?",
+                        label: "Write amount in percent % (max. 50)",
+                        sporsmal: "What is your visiting arrangement with your child?",
                     },
                     leggtil: "Add child",
                     mellomnavn: {
@@ -378,18 +378,18 @@ export const skjema = {
                     sporsmal: "Information about the child",
                 },
                 barnebidrag: {
-                    begge: "I pay and receive child support",
-                    betaler: "I pay child support",
-                    ingen: "Neither of these",
-                    mottar: "I receive child support",
-                    sporsmal: "Do you receive or pay child support for one or several of the children?",
+                    begge: "Yes, I both pay and receive child support",
+                    betaler: "Yes, I pay child support",
+                    ingen: "No",
+                    mottar: "Yes, I receive child support",
+                    sporsmal: "Do you receive or pay child support?",
                 },
                 listetittel: "Information about the child/children",
             },
         },
         sivilstatus: {
             enke: "Widow/widower",
-            feilmelding: "You must state your marital status",
+            feilmelding: "You must state your civil status",
             gift: {
                 borsammen: {
                     false: {
@@ -441,7 +441,7 @@ export const skjema = {
             samboer: "Cohabiting partner",
             separert: "Separated",
             skilt: "Divorced",
-            sporsmal: "What is your marital status?",
+            sporsmal: "What is your civil status?",
             ugift: "Unmarried",
         },
     },
@@ -480,7 +480,7 @@ export const skjema = {
         ingress_forsorger: "We have registered that you are responsible as a provider for:",
         samme_folkeregistrerte_adresse: "Registered on the same address",
         samvaer: {
-            sporsmal: "What is the extent of visits you have with the child?",
+            sporsmal: "What is your visiting arrangement with your child?",
         },
     },
     feilmelding: {
@@ -596,7 +596,7 @@ export const skjema = {
             brukskonto: "Current account",
             bsu: "Young People's Housing Savings (BSU)",
             hjelpetekst: {
-                tekst: "You must provide details of all bank accounts and savings schemes you have, both in Norway and abroad. You must check the boxes for these even if you do not have funds available.",
+                tekst: "Please provide details of all bank accounts and savings schemes you have, both in Norway and abroad. You can check the boxes for these even if you do not have funds available.",
             },
             livsforsikring: "Life insurance with savings plan",
             livsforsikringssparedel: "Life insurance with savings plan",
@@ -650,7 +650,7 @@ export const skjema = {
     },
     hvormye: {
         faktum: {
-            sporsmal: "What is the extent of visits you have with the child?",
+            sporsmal: "What is your visiting arrangement with your child?",
         },
     },
     ikkefunnet: {
@@ -665,9 +665,9 @@ export const skjema = {
         husbanken: {
             bostotte: {
                 url: "https://husbanken.no/bostotte",
-                v2: "Housing allowance from Husbanken is a state support scheme for those on low incomes with high housing costs. Housing allowance is intended to help pay housing costs. You have responded that you have housing costs, but do not receive housing allowance. We recommend that you check whether you can receive<lenke>support from Husbanken</lenke>.",
+                v2: "If you have low income and high housing expences you can apply for housing allowance (bostøtte) from Husbanken. We recommend that you check if you can get <lenke>support from Husbanken</lenke>.",
                 stringValue:
-                    'Housing allowance from Husbanken is a state support scheme for those on low incomes with high housing costs. Housing allowance is intended to help pay housing costs. You have responded that you have housing costs, but do not receive housing allowance. We recommend that you check whether you can receive<a href="https://husbanken.no/bostotte"  target="_blank" rel="noreferrer noopener">support from Husbanken</lenke>.',
+                    'If you have low income and high housing expences you can apply for housing allowance (bostøtte) from Husbanken. We recommend that you check if you can get <a href="https://husbanken.no/bostotte"  target="_blank" rel="noreferrer noopener">support from Husbanken</lenke>.',
             },
         },
         ikketilgang: {
@@ -712,10 +712,10 @@ export const skjema = {
         student: {
             studielan: {
                 number1: {
-                    v2: "In principle, financial assistance shall not finance higher education. Check whether you can apply for alone or bursary at <lenke>lanekassen.no</lenke>.",
+                    v2: "If you are a student, you generally do not have the right to financial assistance. You can check if you can apply for a loan or grant at <lenke>lanekassen.no</lenke>.",
                 },
                 number2:
-                    "There are some exceptions to the right to financial assistance. This may apply if you have a temporary need for help before you have received payments from Lånekassen (the Norwegian State Educational Loan Fund), or are in an emergency situation. Contact your NAV office to clarify your needs and to receive information, advice and guidance.",
+                    "There are some exceptions to the right to financial assistance. This might be if you have a temporary need for help before receiving payments from Lånekassen, or are in an emergency situation. Contact your NAV office to clarify your needs and to receive information, advice and guidance.",
                 tittel: "Information for students",
                 url: "https://lanekassen.no",
             },
@@ -743,7 +743,7 @@ export const skjema = {
                     tekst: "You have the right to receive information about and access to your own personal information. If the information contains errors, or is incomplete or unnecessary, you can request that the information be corrected or supplemented.",
                     tittel: "Your rights",
                 },
-                sporsmal: "If you have any questions concerning personal information, please contact your NAV office.",
+                sporsmal: "If you have any questions about personal information, please contact your NAV office.",
                 tittel: "How we process your personal information",
             },
         },
@@ -775,7 +775,7 @@ export const skjema = {
         bostotte: {
             gi_samtykke: {
                 overskrift: "Would you like to retrieve information about your housing allowance from Husbanken?",
-                tekst: "This information can be necessary to process the application. If you do not wish us to obtain this personal information, you can upload documentation in the last stage of the application.",
+                tekst: "This information can be necessary for us to process the application. If you do not wish to obtain this information automatically, you can upload the documentation yourself.",
                 ja: "Yes, get information",
                 nei: "No",
             },
@@ -807,22 +807,22 @@ export const skjema = {
             },
             ikkefunnet: "You have no payments or cases registered with Husbanken for the last month.",
             infotekst: {
-                tekst: "You have obtained information concerning cases and payments from Husbanken.",
+                tekst: "You have obtained information about cases and payments from Husbanken.",
             },
             kontaktproblemer: "We could not obtain information from Husbanken",
             mangler_samtykke: "You have not obtained information from Husbanken",
             nedlasting_feilet:
-                "We could not contact Husbanken You can try again in a few minutes or upload the documentation yourself at the last stage of the application.",
+                "-	We could not contact Husbanken. You can try again in a few minutes or upload the documentation yourself.",
             overskrift: "Housing allowance from Husbanken",
             sak: {
                 dato: "Date",
                 status: "Status",
                 stringValue: "Case",
             },
-            sakerIkkefunnet: "You have no cases registered with Husbanken for the last month.",
+            sakerIkkefunnet: "You have no registered cases at Husbanken the last month.",
             sporsmal: {
                 sporsmal:
-                    "Have you applied for or received housing allowance from Husbanken (The Norwegian State Housing Bank) within the last two months?",
+                    "Have you applied for or received housing allowance from Husbanken the last two months?",
             },
             ta_bort_samtykke: "Remove information from Husbanken",
             tidspunkt: "Information was obtained",
@@ -846,12 +846,12 @@ export const skjema = {
         },
         eierandeler: {
             hjelpetekst: {
-                tekst: "The term ‘financial value’ means high-value property or assets both in Norway and in foreign countries. We can require you to sell objects that you do not need in your everyday life that can be sold for a significant amount. We cannot demand that you sell personal property such as clothes and household effects of a normal standard.",
+                tekst: "By 'financial value,' we mean property or assets of higher value, both in Norway and abroad. We may require you to sell objects that you do not need in your daily life and that can be sold for a significant amount. Personal belongings, such as clothing and household items of standard quality, cannot be required to be sold.",
             },
             infotekst: {
-                tekst: "For example, a housing or vehicles",
+                tekst: "For example, housing or vehicle",
             },
-            sporsmal: "Do you own anything with a financial value?",
+            sporsmal: "Do you own anything of financial value?",
             true: {
                 type: {
                     annet: {
@@ -862,9 +862,9 @@ export const skjema = {
                         },
                         stringValue: "Other",
                     },
-                    bolig: "Housing",
+                    bolig: "Property",
                     campingvogn: "Caravan and/or boat",
-                    fritidseiendom: "Recreational housing",
+                    fritidseiendom: "Leisure property",
                     kjoretoy: "Vehicle(s)",
                     sporsmal: "What do you own?",
                 },
@@ -872,11 +872,11 @@ export const skjema = {
         },
         inntekter: {
             hjelpetekst: {
-                tekst: "We need to know if you have received monetary payment in the form of dividends on shares, funds, sale of assets or elsewhere.",
+                tekst: "By other income, we mean in the form of dividends on shares, funds, the sale of assets or other.",
             },
-            lesmer: "Examples of payments",
+            lesmer: "Examples of other income",
             sporsmal:
-                "Within the last three months, have you received money that is neither wages nor benefits from NAV?",
+                "Have you received money, other than wages or benefits from NAV, the last three months?",
             tittel: "Other income",
             true: {
                 type: {
@@ -914,7 +914,7 @@ export const skjema = {
             sporsmal: "Have you applied for benefits from NAV, and this is not fully processed?",
         },
         studielan: {
-            sporsmal: "Do you receive loans/bursaries from Lånekassen?",
+            sporsmal: "Do you receive loans/grants from Lånekassen?",
             tittel: "Student loan",
         },
     },
@@ -1041,17 +1041,17 @@ export const skjema = {
                 midlertidigAdresse: "Temporary address on My Page:",
                 soknad: {
                     infotekst: {
-                        tekst: "You must enter your residential address so that the application can be sent to the correct NAV office. (Only applies to this application.)",
+                        tekst: "Fill in the address where you currently live so that we can send your application to the correct NAV office.",
                     },
-                    sporsmal: "Where are you resident at present?",
+                    sporsmal: "Where are you living at present?",
                 },
                 sporsmal: "Residential address and NAV office",
                 valg: {
-                    feilmelding: "You must select your residential address and NAV office",
+                    feilmelding: "You must select your address and NAV office",
                     folkeregistrert: "Registered address",
-                    midlertidig: "Temporary address registered in NAV address register (TPS)",
-                    soknad: "I live at a different address",
-                    sporsmal: "What is your residential address?",
+                    midlertidig: "Temporary address registered in NAV address register",
+                    soknad: "I live on another address",
+                    sporsmal: "What is your address?",
                 },
                 velgKontor: "The address generated several NAV offices. Select your local office.",
                 velgMottaker: "Select NAV office",
@@ -1102,7 +1102,7 @@ export const skjema = {
             telefonnummerFelt: "Telephone number field",
             tittel: "New telephone number",
         },
-        tittel: "Information about you",
+        tittel: "Your personal information",
     },
     kvittering: {
         dato: "Application was sent to NAV",
@@ -1295,7 +1295,7 @@ export const skjema = {
                 },
                 bolk2: {
                     avsnitt1:
-                        "If you have documentation on paper, you can scan it and send it digitally. Scanned documentation will be of better quality and easier to read.",
+                        "If you have documentation on paper, you can scan it and send it digitally.",
                     avsnitt2:
                         "Using a scanning app, you can use the camera on your mobile phone to scan the documentation. You can compile several paper pages into one digital attachment, for example your tenancy agreement.",
                     avsnitt3:
@@ -1304,7 +1304,7 @@ export const skjema = {
                 },
                 bolk3: {
                     avsnitt1:
-                        "If you wish to send documentation from another website, download the content if possible. For example, the tax returns and decisions from Lånekassen can be downloaded as PDF files. Avoid taking pictures of a PC screen with a camera.",
+                        "If you wish to send documentation from another website, download the content if possible. For example, tax returns and letters of decisions from Lånekassen can be downloaded as PDF files. Avoid taking pictures of a PC screen with your mobile phone.",
                     tittel: "Send documentation from other websites",
                 },
                 bolk4: {
@@ -1331,7 +1331,7 @@ export const skjema = {
                     saldo: {
                         label: "Balance",
                     },
-                    sporsmal: "What is the balance in your life insurance with savings plan?",
+                    sporsmal: "What is the balance in your life insurance?",
                 },
                 verdipapirer: {
                     saldo: {
@@ -1400,7 +1400,7 @@ export const skjema = {
                     sisteregning: {
                         label: "Amount last expense",
                     },
-                    sporsmal: "Which expenses do you have for children’s recreational activities?",
+                    sporsmal: "Which expenses do you have for children’s leisure activities?",
                     type: {
                         label: "Description of activity",
                     },
@@ -1432,7 +1432,7 @@ export const skjema = {
             sporsmal: "Expenses and debt",
         },
         vedlegg: {
-            alleredelastetopp: "I have submitted the documentation previously",
+            alleredelastetopp: "I have submitted this documentation previously",
             feil: {
                 footer: "The problem has been logged and will be adressed.",
                 konvertering:
@@ -1773,9 +1773,9 @@ export const skjema = {
                             label: "First name",
                         },
                         grad: {
-                            label: "What is the extent of visits you have with the child?",
-                            pattern: "Extent of visits in %",
-                            sporsmal: "What is the extent of visits you have with the child?",
+                            label: "What is your visiting arrangement with your child?",
+                            pattern: "Write amount in percent %",
+                            sporsmal: "What is your visiting arrangement with your child?",
                         },
                         mellomnavn: {
                             label: "Middle name",
@@ -1796,7 +1796,7 @@ export const skjema = {
                             label: "Surname",
                         },
                         fodselsdato: "Date of birth",
-                        folkereg: "Has/have the same registered address as you",
+                        folkereg: "Registered at the same address",
                         folkeregistrertsammen: {
                             sporsmal: "Registered at the same address as spouse in the National Population Register",
                         },
@@ -1824,7 +1824,7 @@ export const skjema = {
                 samboer: "Cohabiting partner",
                 separert: "Separated",
                 skilt: "Divorced",
-                sporsmal: "Your marital status",
+                sporsmal: "Your civil status",
                 ugift: "Unmarried",
                 stringValue: "(Retrieved from the National Population Register)",
                 empty: "We could not find any registered spouse or partner",
@@ -1875,7 +1875,7 @@ export const skjema = {
                 },
                 beskrivelse: "You have obtained information about your income from the Tax Administration.",
                 bruttoinntekt: "Income before tax",
-                forskuddstrekk: "Tax withholding",
+                forskuddstrekk: "Tax deduction",
                 gi_samtykke: "Obtain from the Tax Administration",
                 har_gitt_samtykke: "You have obtained information from the Tax Administration",
                 hent: {
@@ -1952,18 +1952,18 @@ export const skjema = {
     utgifter: {
         barn: {
             infotekst: {
-                tekst: "For example kindergarten, after-school club or recreational activities",
+                tekst: "For example kindergarten, after-school program (SFO/AKS) or leisure activities",
             },
             sporsmal: "Do you have expenses for children?",
             typer: {
                 annet: "Other",
-                barnFritidsaktiviteter: "Recreational activities",
+                barnFritidsaktiviteter: "Leisure activities",
                 barnTannregulering: "Orthodontic treatment",
                 barnehage: "Kindergarten",
-                fritidsaktivitet: "Recreational activities",
-                fritidsaktiviteter: "Recreational activities",
+                fritidsaktivitet: "Leisure activities",
+                fritidsaktiviteter: "Leisure activities",
                 helse: "Health",
-                sfo: "After-school club",
+                sfo: "After-school program (SFO/AKS)",
                 sporsmal: "What type of expense is it?",
                 tannbehandling: "Orthodontic treatment",
                 tannregulering: "Orthodontic treatment",
@@ -1992,15 +1992,15 @@ export const skjema = {
                         },
                         stringValue: "Other expenses",
                     },
-                    avdraglaan: "Instalments and interest on home loan",
-                    boliglan: "Instalments and interest on home loan",
-                    boliglanAvdrag: "Instalments and interest on home loan",
+                    avdraglaan: "Installments and interest on home mortgage",
+                    boliglan: "Installments and interest on home mortgage",
+                    boliglanAvdrag: "Installments and interest on home mortgage",
                     feilmelding: "You must state your housing expenses",
                     husleie: "Rent",
                     kommunalAvgift: "Municipal charges",
                     kommunaleavgifter: "Municipal charges",
                     oppvarming: "Wood, gas or district heating",
-                    sporsmal: "What expenses do you have for your place of residence?",
+                    sporsmal: "Which expences do you have where you live?",
                     strom: "Electricity",
                 },
             },
@@ -2015,8 +2015,8 @@ export const skjema = {
         erFdato: "Invalid date",
         erFdatoEtterIdag: "Date of birth cannot be after today’s date",
         erKontonummer: "Invalid account number",
-        erSamvaersgrad: "Extent of visits must be between 0 and 100%",
-        erTall: "Invalid number. You must state a whole number",
+        erSamvaersgrad: "Visiting arrangement must be between 0 and 100%",
+        erTall: "Please state the amount in whole numbers",
         erTelefonnummer: "Invalid telephone number",
         feltEksistererIkke:
             "We could not update the field. This may be because you have made changes in the application. Please update this page and try again.",
@@ -2058,10 +2058,10 @@ export const skjema = {
         },
         barnebidrag: {
             betaler: {
-                tittel: "Information concerning child support expense",
+                tittel: "Upload information on how much you pay",
             },
             mottar: {
-                tittel: "Information concerning received child support",
+                tittel: "Upload information on how much you receive",
             },
         },
         behandlet: {
@@ -2112,28 +2112,28 @@ export const skjema = {
         },
         dokumentasjon: {
             annetboutgift: {
-                tittel: "Information concerning other housing expenses",
+                tittel: "Information about other housing expenses",
             },
             annetinntekter: {
-                tittel: "Information concerning other payments",
+                tittel: "Information about other payments",
             },
             annetverdi: {
-                tittel: "Information concerning other objects of value",
+                tittel: "Information about other objects of value",
             },
             campingvogn: {
-                tittel: "Information concerning caravan and/or boat",
+                tittel: "Information about caravan and/or boat",
             },
             forsikringsutbetaling: {
-                tittel: "Information concerning insurance payouts",
+                tittel: "Information about insurance payouts",
             },
             fritidseiendom: {
-                tittel: "Information concerning recreational property",
+                tittel: "Information about leisure property",
             },
             kjoretoy: {
-                tittel: "Information concerning vehicles",
+                tittel: "Information about vehicles",
             },
             utbytte: {
-                tittel: "Information concerning dividends",
+                tittel: "Information about dividends",
             },
         },
         faktum: {
@@ -2164,7 +2164,7 @@ export const skjema = {
                 tittel: "Receipt/invoice from kindergarten",
             },
             fritidsaktivitet: {
-                tittel: "Receipt/invoice from recreational activity",
+                tittel: "Receipt/invoice from leisure activity",
             },
             husleie: {
                 tittel: "Receipt/invoice for rent",
@@ -2176,7 +2176,7 @@ export const skjema = {
                 tittel: "Receipt/invoice for heating",
             },
             sfo: {
-                tittel: "Receipt/invoice from after-school club",
+                tittel: "Receipt/invoice from after-school program (SFO/AKS)",
             },
             strom: {
                 tittel: "Receipt/invoice for electricity",
@@ -2207,10 +2207,10 @@ export const skjema = {
         },
         husleiekontrakt: {
             husleiekontrakt: {
-                tittel: "Tenancy agreement",
+                tittel: "Rental agreement",
             },
             kommunal: {
-                tittel: "Tenancy agreement",
+                tittel: "Rental agreement",
             },
         },
         info1: 'Upload all of the documentation you wish to submit with this application. If you have paper-based documentation and do not have a scanner, you can instead<a href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Relatert+informasjon/ta-bilde-av-vedleggene-med-mobilen">take a picture of the document/lenke> with your mobile telephone.',
@@ -2239,7 +2239,7 @@ export const skjema = {
                 tittel: "Balance statement for BSU (at the time of application)",
             },
             livsforsikring: {
-                tittel: "Upload information concerning life insurance",
+                tittel: "Upload information about life insurance",
             },
             sparekonto: {
                 tittel: "Balance statement for savings account(s) (at the time of application)",
@@ -2287,7 +2287,7 @@ export const skjema = {
         },
         salgsoppgjor: {
             eiendom: {
-                tittel: "Information concerning sale settlement",
+                tittel: "Information about sale settlement",
             },
         },
         samvarsavtale: {
@@ -2314,7 +2314,7 @@ export const skjema = {
         },
         student: {
             vedtak: {
-                tittel: "Decision from Lånekassen",
+                tittel: "Letter of decision from Lånekassen",
             },
         },
         tittel: "Uploading documentation",

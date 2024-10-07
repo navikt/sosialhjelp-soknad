@@ -80,13 +80,13 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
     },
     "husleiekontrakt|husleiekontrakt": {
         slettet: "Vi har slettet vedlegget tilknyttet leiekontrakt fordi du ikke lenger har svart at du leier.",
-        sporsmal: "Du leier bolig, vi ber deg derfor dokumentere",
-        dokumentBeskrivelse: "Husleiekontrakt",
+        sporsmal: "Husleiekontrakt",
+        dokumentBeskrivelse: "",
     },
     "husleiekontrakt|kommunal": {
         slettet: "Vi har slettet dokumentet tilknyttet kommunal bolig fordi du ikke lenger har svart at du har det.",
-        sporsmal: "Du leier kommunal bolig, vi ber deg derfor dokumentere",
-        dokumentBeskrivelse: "Husleiekontrakt",
+        sporsmal: "Husleiekontrakt",
+        dokumentBeskrivelse: "",
     },
     "husbanken|vedtak": {
         belop: {
