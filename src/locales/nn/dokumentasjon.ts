@@ -84,8 +84,8 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
     },
     "husleiekontrakt|kommunal": {
         slettet: "Vi har sletta dokumentet knytt til kommunal bustad, då du har svart at du ikkje lenger har dette.",
-        sporsmal: "Då du leiger ein kommunal bustad, ber vi om dokumentasjon",
-        dokumentBeskrivelse: "Husleigekontrakt",
+        sporsmal: "Husleigekontrakt",
+        dokumentBeskrivelse: "",
     },
     "husbanken|vedtak": {
         belop: {

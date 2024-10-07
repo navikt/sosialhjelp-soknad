@@ -86,7 +86,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
     "husleiekontrakt|kommunal": {
         slettet: "We have deleted the rental agreement for municipal home as you have no longer responded you have it.",
         sporsmal: "Rental agreement",
-        dokumentBeskrivelse: "Upload rental agreement",
+        dokumentBeskrivelse: "",
     },
     "husbanken|vedtak": {
         belop: {
