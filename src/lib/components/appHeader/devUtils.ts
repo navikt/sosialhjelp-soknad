@@ -6,7 +6,7 @@ import {
 } from "../../../generated/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
 import {updateBosituasjon} from "../../../generated/bosituasjon-ressurs/bosituasjon-ressurs";
 import {putSkatteetatenSamtykke} from "../../../generated/skattbar-inntekt-ressurs/skattbar-inntekt-ressurs";
-import {updateBostotte, updateSamtykke1} from "../../../generated/bostotte-ressurs/bostotte-ressurs";
+import {updateBostotte, updateSamtykke2} from "../../../generated/bostotte-ressurs/bostotte-ressurs";
 import {updateStudielan} from "../../../generated/studielan-ressurs/studielan-ressurs";
 import {updateUtbetalinger} from "../../../generated/utbetaling-ressurs/utbetaling-ressurs";
 import {updateFormue} from "../../../generated/formue-ressurs/formue-ressurs";
@@ -91,7 +91,7 @@ export const maximizeSoknad = async (soknadId: string) => {
         bekreftelse: true,
     });
 
-    await updateSamtykke1(soknadId, true);
+    await updateSamtykke2(soknadId, true);
 
     await updateStudielan(soknadId, {
         bekreftelse: true,
