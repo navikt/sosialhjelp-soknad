@@ -17,7 +17,7 @@ const Inntekt = (): React.JSX.Element => {
             <SkjemaContent className={"lg:space-y-12"}>
                 <SkjemaStegTitle
                     className={"lg:mb-16"}
-                    title={KortSkjemaHeadings[4].tittel}
+                    title={t(KortSkjemaHeadings[4].tittel)}
                     icon={KortSkjemaHeadings[4].ikon}
                 />
                 <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />

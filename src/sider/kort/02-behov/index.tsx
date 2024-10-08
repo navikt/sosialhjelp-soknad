@@ -96,7 +96,7 @@ const Behov = (): React.JSX.Element => {
                 <SkjemaContent className={"lg:space-y-12"}>
                     <SkjemaStegTitle
                         className={"lg:mb-12"}
-                        title={KortSkjemaHeadings[2].tittel}
+                        title={t(KortSkjemaHeadings[2].tittel)}
                         icon={KortSkjemaHeadings[2].ikon}
                     />
                     <SkjemaStegErrorSummary errors={errors} />

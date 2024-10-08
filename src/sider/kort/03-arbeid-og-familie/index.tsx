@@ -23,7 +23,7 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
             <SkjemaContent className={"lg:space-y-12"}>
                 <SkjemaStegTitle
                     className={"lg:mb-12"}
-                    title={KortSkjemaHeadings[3].tittel}
+                    title={t(KortSkjemaHeadings[3].tittel)}
                     icon={KortSkjemaHeadings[3].ikon}
                 />
                 <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>

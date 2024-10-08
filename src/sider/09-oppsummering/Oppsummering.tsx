@@ -29,7 +29,7 @@ export const Oppsummering = () => {
     return (
         <SkjemaSteg page={isKortSoknad ? 5 : 9}>
             <SkjemaContent>
-                <SkjemaStegTitle title={tittel} icon={ikon} />
+                <SkjemaStegTitle title={t(tittel)} icon={ikon} />
 
                 <div>
                     {oppsummering?.steg.map((steg) => <OppsummeringSteg steg={steg} key={steg.stegNr} />)}

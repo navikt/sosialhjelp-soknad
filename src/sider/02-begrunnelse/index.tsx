@@ -86,7 +86,7 @@ export const Begrunnelse = () => {
             }, inhibitNavigation)}
         >
             <SkjemaContent>
-                <SkjemaStegTitle title={SkjemaHeadings[2].tittel} icon={SkjemaHeadings[2].ikon} />
+                <SkjemaStegTitle title={t(SkjemaHeadings[2].tittel)} icon={SkjemaHeadings[2].ikon} />
                 <SkjemaStegErrorSummary errors={errors} />
                 {isPending || featureFlagsPending ? (
                     <ApplicationSpinner />

@@ -68,7 +68,7 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
     return (
         <SkjemaSteg page={3} onRequestNavigation={onRequestNavigation}>
             <SkjemaContent>
-                <SkjemaStegTitle title={SkjemaHeadings[3].tittel} icon={SkjemaHeadings[3].ikon} />
+                <SkjemaStegTitle title={t(SkjemaHeadings[3].tittel)} icon={SkjemaHeadings[3].ikon} />
                 <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>
                     <SkjemaStegErrorSummary errors={errors} />
 

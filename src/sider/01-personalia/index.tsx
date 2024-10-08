@@ -14,6 +14,7 @@ import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBu
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
+import {useTranslation} from "react-i18next";
 
 interface Props {
     shortSpacing?: boolean;
@@ -23,6 +24,7 @@ interface Props {
 export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
     const [error, setError] = useState<string | null>(null);
     const {data: {navEnhet} = {navEnhet: null}} = useHentAdresser(useBehandlingsId());
+    const {t} = useTranslation("skjema");
 
     const onRequestNavigation = () =>
         new Promise<void>((resolve, reject) => {
@@ -49,7 +51,7 @@ export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
             <SkjemaContent className={shortSpacing ? "lg:space-y-12" : ""}>
                 <SkjemaStegTitle
                     className={shortSpacing ? "lg:mb-12" : ""}
-                    title={SkjemaHeadings[1].tittel}
+                    title={t(SkjemaHeadings[1].tittel)}
                     icon={SkjemaHeadings[1].ikon}
                 />
                 {error && (
