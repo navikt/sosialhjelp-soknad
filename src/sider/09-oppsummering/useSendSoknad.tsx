@@ -21,22 +21,18 @@ export const useSendSoknad = (behandlingsId: string) => {
     const sendSoknaden = async (isKortSoknad: boolean) => {
         setIsError(false);
         try {
-            try {
-                const {id, antallDokumenter, forrigeSoknadSendt} = await sendSoknad(behandlingsId);
-                await logAmplitudeEvent("Søknad sendt", {
-                    AntallDokumenterSendt: antallDokumenter,
-                    KortSoknad: isKortSoknad ? "Ja" : "Nei",
-                    EndrerSokerAdresse: endretAdresse ? "Ja" : "Nei",
-                    forrigeSoknadSendt: forrigeSoknadSendt,
-                });
-                window.location.assign(`${digisosConfig.innsynURL}${id}/status`);
-            } catch (e: any) {
-                faro.api.pushError(e);
-                throw e;
-            }
+            const {id, antallDokumenter, forrigeSoknadSendt} = await sendSoknad(behandlingsId);
+            await logAmplitudeEvent("Søknad sendt", {
+                AntallDokumenterSendt: antallDokumenter,
+                KortSoknad: isKortSoknad ? "Ja" : "Nei",
+                EndrerSokerAdresse: endretAdresse ? "Ja" : "Nei",
+                forrigeSoknadSendt: forrigeSoknadSendt,
+            });
+            window.location.assign(`${digisosConfig.innsynURL}${id}/status`);
         } catch (e: any) {
             faro.api.pushError(e);
             setIsError(true);
+            throw e;
         }
     };
 
