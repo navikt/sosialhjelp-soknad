@@ -1,40 +1,62 @@
-/**
-import { useEffect, useState } from "react";
-import { useBegrunnelse } from "../hooks/data/useBegrunnelse";
-import { useSituasjon } from "../hooks/data/kort/useSituasjon";
-import { useSendSoknad } from "../../sider/09-oppsummering/useSendSoknad";
-import { hentOkonomiskeOpplysninger } from "../../generated/oppsummering-ressurs/oppsummering-ressurs"; // Example API for fetching economic info
+import {useState, useEffect} from "react";
+import {useBegrunnelse} from "../hooks/data/useBegrunnelse";
+import useSituasjon from "../hooks/data/kort/useSituasjon";
+import {hentOkonomiskeOpplysninger} from "../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {getOppsummering} from "../../generated/oppsummering-ressurs/oppsummering-ressurs";
+import {useBehandlingsId} from "../hooks/common/useBehandlingsId";
+import {BegrunnelseFrontend} from "../../generated/model";
+import {SituasjonsendringFrontend} from "../../generated/model";
+import {VedleggFrontends} from "../../generated/model";
+import {Oppsummering} from "../../generated/model";
 
-export const useDataForAmplitude = (behandlingsId: string) => {
-    const [amplitudeData, setAmplitudeData] = useState<any>(null);
-    const { begrunnelse, hentBegrunnelse } = useBegrunnelse();
-    const { situasjon, hentSituasjon } = useSituasjon(behandlingsId);
-    const { sendSoknad, isError } = useSendSoknad(behandlingsId);
+interface AmplitudeData {
+    begrunnelse: BegrunnelseFrontend | null;
+    situasjon: SituasjonsendringFrontend | null;
+    okonomiskeOpplysninger: VedleggFrontends | null;
+    oppsummering: Oppsummering | null;
+}
+
+export const useDataForAmplitude = () => {
+    const behandlingsId = useBehandlingsId();
+    const [data, setData] = useState<AmplitudeData>({
+        begrunnelse: null,
+        situasjon: null,
+        okonomiskeOpplysninger: null,
+        oppsummering: null,
+    });
+    const [isLoading, setIsLoading] = useState(true);
+    const [isError, setIsError] = useState(false);
+
+    const {get: hentBegrunnelse} = useBegrunnelse();
+    const {get: hentSituasjon} = useSituasjon();
 
     useEffect(() => {
-        // Fetch all necessary data
         const fetchData = async () => {
             try {
-                await hentBegrunnelse();
-                await hentSituasjon();
+                setIsLoading(true);
+                const [begrunnelseData, situasjonData, okonomiskeOpplysninger, oppsummeringData] = await Promise.all([
+                    hentBegrunnelse(),
+                    hentSituasjon(),
+                    hentOkonomiskeOpplysninger(behandlingsId),
+                    getOppsummering(behandlingsId),
+                ]);
 
-                // Assuming that hentOkonomiskeOpplysninger is a function that fetches document information
-                const økonomiskeOpplysninger = await hentOkonomiskeOpplysninger(behandlingsId);
-
-                // Once all data is fetched, prepare the data for Amplitude logging
-                setAmplitudeData({
-                    begrunnelse,
-                    situasjon,
-                    antallDokumenter: økonomiskeOpplysninger?.antallDokumenter || 0,
+                setData({
+                    begrunnelse: begrunnelseData,
+                    situasjon: situasjonData,
+                    okonomiskeOpplysninger: okonomiskeOpplysninger,
+                    oppsummering: oppsummeringData,
                 });
             } catch (error) {
-                console.error('Error fetching data for Amplitude:', error);
+                console.error("Error fetching data for Amplitude:", error);
+                setIsError(true);
+            } finally {
+                setIsLoading(false);
             }
         };
 
         fetchData();
     }, [behandlingsId, hentBegrunnelse, hentSituasjon]);
 
-    return { amplitudeData, sendSoknad, isError };
+    return {data, isLoading, isError};
 };
-*/
