@@ -52,6 +52,8 @@ export const useAdresser = () => {
 
     useEffect(() => {
         if (adresser) {
+            console.log("Adresser fetched:", adresser); // Add this to debug
+            console.log("NAV-enhet:", adresser.navEnhet); // Check if navEnhet is set
             dispatch({type: "synchronize", backendState: adresser});
             setQueryDataNavEnhet(adresser.navEnhet);
         }
