@@ -14,6 +14,7 @@ import {
     NavEnhetFrontend,
 } from "../../../generated/model/index.ts";
 import {useQueryClient} from "@tanstack/react-query";
+import {erAktiv} from "../../../lib/navEnhetStatus.ts";
 
 export const useAdresser = () => {
     const behandlingsId = useBehandlingsId();
@@ -43,18 +44,21 @@ export const useAdresser = () => {
         if (state.mode === "uninitialized")
             throw new Error("Cannot set adresseValg while uninitialized, UI should be disabled");
 
-        if (addresseValgt !== state.valg) {
-            dispatch({type: "setNavEnhet", navEnhet: undefined});
-            setQueryDataNavEnhet(undefined);
-        }
         await logAmplitudeEvent("adresseValg", {addresseValgt});
-
         dispatch({type: "adresseValg", adresseValg: addresseValgt});
 
         if (addresseValgt !== AdresserFrontendValg.soknad) {
             const [navEnhet] = await updateAdresse(behandlingsId, {valg: addresseValgt});
-            dispatch({type: "setNavEnhet", navEnhet});
-            setQueryDataNavEnhet(navEnhet);
+
+            if (navEnhet) {
+                if (erAktiv(navEnhet)) {
+                    dispatch({type: "setNavEnhet", navEnhet});
+                    setQueryDataNavEnhet(navEnhet);
+                } else {
+                    dispatch({type: "setNavEnhet", navEnhet});
+                    setQueryDataNavEnhet(navEnhet);
+                }
+            }
         }
     };
 
