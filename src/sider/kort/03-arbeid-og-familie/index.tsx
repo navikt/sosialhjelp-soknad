@@ -61,7 +61,7 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
                         )}
                     </Box>
                 </form>
-                <SkjemaStegButtons includeNextArrow page={3} />
+                <SkjemaStegButtons page={3} />
             </SkjemaContent>
         </SkjemaSteg>
     );

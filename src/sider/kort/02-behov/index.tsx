@@ -129,7 +129,6 @@ const Behov = (): React.JSX.Element => {
                     )}
                     <SkjemaStegButtons
                         loading={isPending}
-                        includeNextArrow
                         page={2}
                         onRequestNavigation={handleSubmit(onSubmit, inhibitNavigation)}
                     />

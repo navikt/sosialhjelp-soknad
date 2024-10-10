@@ -21,7 +21,7 @@ interface Props {
     includeNextArrow?: boolean;
 }
 
-export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
+export const Personopplysninger = ({shortSpacing}: Props) => {
     const [error, setError] = useState<string | null>(null);
     const {data: {navEnhet} = {navEnhet: null}} = useHentAdresser(useBehandlingsId());
     const {t} = useTranslation("skjema");
@@ -63,11 +63,7 @@ export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
                 <AdresseData />
                 <TelefonData />
                 <Kontonr />
-                <SkjemaStegButtons
-                    includeNextArrow={includeNextArrow}
-                    page={1}
-                    onRequestNavigation={onRequestNavigation}
-                />
+                <SkjemaStegButtons page={1} onRequestNavigation={onRequestNavigation} />
             </SkjemaContent>
         </SkjemaSteg>
     );

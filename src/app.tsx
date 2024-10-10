@@ -76,11 +76,7 @@ export default function App() {
                                         </Route>
                                     </Route>
                                     <Route path=":behandlingsId">
-                                        <Route
-                                            index
-                                            path="1"
-                                            element={<Personopplysninger shortSpacing includeNextArrow />}
-                                        />
+                                        <Route index path="1" element={<Personopplysninger shortSpacing />} />
                                         <Route element={<SwitchSoknadType />}>
                                             <Route path="2" element={<Begrunnelse />} />
                                             <Route path="3" element={<ArbeidOgUtdanning />} />

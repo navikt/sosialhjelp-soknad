@@ -14,7 +14,6 @@ interface SkjemaStegNavigasjonProps {
     loading?: boolean;
     onConfirm?: () => Promise<void>;
     confirmTextKey?: DigisosLanguageKey;
-    includeNextArrow?: boolean;
     page: SkjemaPage | KortSkjemaPage;
     onRequestNavigation?: () => Promise<unknown>;
 }
@@ -23,7 +22,6 @@ export const SkjemaStegButtons = ({
     loading,
     onConfirm,
     confirmTextKey = "skjema.knapper.neste",
-    includeNextArrow,
     page,
     onRequestNavigation,
 }: SkjemaStegNavigasjonProps) => {
@@ -62,7 +60,7 @@ export const SkjemaStegButtons = ({
                     variant="primary"
                     onClick={async () => await requestNavigation(page + 1)}
                     disabled={sendSoknadPending || loading}
-                    icon={includeNextArrow && <ArrowRightIcon />}
+                    icon={<ArrowRightIcon />}
                     iconPosition={"right"}
                 >
                     {t(confirmTextKey)}

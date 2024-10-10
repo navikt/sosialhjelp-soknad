@@ -28,7 +28,7 @@ const Inntekt = (): React.JSX.Element => {
                     undertekst={t("situasjon.kort.dokumentasjon.description")}
                     dokumentasjonType={"annet|annet"}
                 />
-                <SkjemaStegButtons includeNextArrow page={4} />
+                <SkjemaStegButtons page={4} />
             </SkjemaContent>
         </SkjemaSteg>
     );
