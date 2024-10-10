@@ -35,7 +35,7 @@ export const Oppsummering = () => {
                     {oppsummering?.steg.map((steg) => <OppsummeringSteg steg={steg} key={steg.stegNr} />)}
                     <SoknadsmottakerInfoPanel />
                     {isError && (
-                        <Alert role="alert" variant="error" style={{marginTop: "1rem"}}>
+                        <Alert variant="error" className="mt-4">
                             {t("soknad.innsendingFeilet")}
                         </Alert>
                     )}
