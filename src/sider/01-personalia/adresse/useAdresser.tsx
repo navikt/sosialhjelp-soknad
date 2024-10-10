@@ -1,5 +1,5 @@
 import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId.ts";
-import {useEffect, useReducer} from "react";
+import {useEffect, useReducer, useState} from "react";
 import {adresseReducer} from "./adresseReducer.tsx";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude.tsx";
 import {
@@ -15,17 +15,47 @@ import {
 } from "../../../generated/model/index.ts";
 import {useQueryClient} from "@tanstack/react-query";
 
+export const useHentAdresser = (behandlingsId: string) => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [adresser, setAdresser] = useState<AdresserFrontend | null>(null);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchAdresser = async () => {
+            try {
+                setIsLoading(true);
+                const result = await hentAdresser(behandlingsId);
+                setAdresser(result);
+                setIsLoading(false);
+            } catch (err) {
+                console.log("err", err);
+                setError("Error fetching addresses");
+                setIsLoading(false);
+            }
+        };
+
+        if (behandlingsId) {
+            fetchAdresser();
+        }
+    }, [behandlingsId]);
+
+    return {isLoading, adresser, error};
+};
+
+// Main useAdresser hook
 export const useAdresser = () => {
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
     const [state, dispatch] = useReducer(adresseReducer, {mode: "uninitialized"});
 
+    const {isLoading, adresser, error} = useHentAdresser(behandlingsId);
+
     useEffect(() => {
-        hentAdresser(behandlingsId).then((backendState) => {
-            dispatch({type: "synchronize", backendState});
-            setQueryDataNavEnhet(backendState.navEnhet);
-        });
-    }, [behandlingsId]);
+        if (adresser) {
+            dispatch({type: "synchronize", backendState: adresser});
+            setQueryDataNavEnhet(adresser.navEnhet);
+        }
+    }, [adresser]);
 
     const setQueryDataNavEnhet = (navEnhet: NavEnhetFrontend | undefined) => {
         const queryKey = getHentAdresserQueryKey(behandlingsId);
@@ -73,7 +103,7 @@ export const useAdresser = () => {
 
     switch (state.mode) {
         case "uninitialized":
-            return {isPending: true};
+            return {isPending: true, error};
         case "uncommittedChanges":
             return {
                 isPending: false,
@@ -87,7 +117,7 @@ export const useAdresser = () => {
             };
         case "synchronized":
             return {
-                isPending: false,
+                isPending: isLoading,
                 valg: state.valg,
                 midlertidig: state.midlertidig,
                 folkeregistrert: state.folkeregistrert,
