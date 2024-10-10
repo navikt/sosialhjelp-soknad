@@ -43,9 +43,10 @@ export const useAdresser = () => {
         if (state.mode === "uninitialized")
             throw new Error("Cannot set adresseValg while uninitialized, UI should be disabled");
 
-        dispatch({type: "setNavEnhet", navEnhet: undefined});
-        setQueryDataNavEnhet(undefined);
-
+        if (addresseValgt !== state.valg) {
+            dispatch({type: "setNavEnhet", navEnhet: undefined});
+            setQueryDataNavEnhet(undefined);
+        }
         await logAmplitudeEvent("adresseValg", {addresseValgt});
 
         dispatch({type: "adresseValg", adresseValg: addresseValgt});
