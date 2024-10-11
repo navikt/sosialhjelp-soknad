@@ -31,6 +31,7 @@ export const ProcessedDataProvider = ({children}: {children: React.ReactNode}) =
 
 export const useProcessedData = () => {
     const context = useContext(ProcessedDataContext);
+    console.log("context", context);
     if (!context) {
         throw new Error("useProcessedData must be used within a ProcessedDataProvider");
     }

@@ -47,7 +47,6 @@ const Feilmelding = () => {
 
 const Behov = (): React.JSX.Element => {
     const {t} = useTranslation("skjema");
-
     const {forsorgerplikt} = useForsorgerplikt();
 
     const {
@@ -75,7 +74,7 @@ const Behov = (): React.JSX.Element => {
         put: putKategorier,
         isPending: kategorierPending,
         isError: kategorierError,
-        reducer,
+        reducer: categories, // This is the important line, using `reducer` as `categories`
         toggle,
     } = useKategorier(!!forsorgerplikt?.harForsorgerplikt, setValue, getValues);
 
@@ -117,8 +116,9 @@ const Behov = (): React.JSX.Element => {
                                 errors={errors}
                                 toggle={toggle}
                                 register={register}
-                                categories={reducer}
+                                categories={categories} // This is where you pass the categories (reducer)
                                 hvaSokesOm={watch("hvaSokesOm")}
+                                setValue={setValue}
                             />
                             <LocalizedTextArea
                                 {...register("hvaErEndret")}

@@ -12,7 +12,7 @@ import {Oppsummering} from "../../generated/model";
 interface AmplitudeData {
     begrunnelse: BegrunnelseFrontend | null;
     situasjon: SituasjonsendringFrontend | null;
-    okonomiskeOpplysninger: VedleggFrontends | null;
+    økonomiskeOpplysninger: VedleggFrontends | null;
     oppsummering: Oppsummering | null;
 }
 
@@ -21,7 +21,7 @@ export const useDataForAmplitude = () => {
     const [data, setData] = useState<AmplitudeData>({
         begrunnelse: null,
         situasjon: null,
-        okonomiskeOpplysninger: null,
+        økonomiskeOpplysninger: null,
         oppsummering: null,
     });
     const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +34,7 @@ export const useDataForAmplitude = () => {
         const fetchData = async () => {
             try {
                 setIsLoading(true);
-                const [begrunnelseData, situasjonData, okonomiskeOpplysninger, oppsummeringData] = await Promise.all([
+                const [begrunnelseData, situasjonData, økonomiskeOpplysninger, oppsummeringData] = await Promise.all([
                     hentBegrunnelse(),
                     hentSituasjon(),
                     hentOkonomiskeOpplysninger(behandlingsId),
@@ -44,7 +44,7 @@ export const useDataForAmplitude = () => {
                 setData({
                     begrunnelse: begrunnelseData,
                     situasjon: situasjonData,
-                    okonomiskeOpplysninger: okonomiskeOpplysninger,
+                    økonomiskeOpplysninger: økonomiskeOpplysninger,
                     oppsummering: oppsummeringData,
                 });
             } catch (error) {
