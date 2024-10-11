@@ -21,17 +21,17 @@ interface Props {
 }
 
 export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
+    const behandlingsId = useBehandlingsId();
+    const {data: adresser} = useHentAdresser(behandlingsId);
     const [error, setError] = useState<string | null>(null);
-    const {data: {navEnhet} = {navEnhet: null}} = useHentAdresser(useBehandlingsId());
-
     const onRequestNavigation = () =>
         new Promise<void>((resolve, reject) => {
-            if (!navEnhet) {
-                setError("validering.adresseMangler");
+            if (adresser?.navEnhet === null) {
+                setError("validering.soknadsmottaker.feilmelding");
                 reject(new DigisosValidationError("NAV-enhet ikke satt"));
-            } else if (!erAktiv(navEnhet)) {
+            } else if (!erAktiv(adresser?.navEnhet)) {
                 // FIXME: Egen feilmelding for inaktive NAV-kontorer
-                setError("validering.adresseMangler");
+                setError("validering.soknadsmottaker.feilmelding");
                 reject("NAV-enhet inaktiv");
             } else {
                 setError(null);
@@ -41,8 +41,8 @@ export const Personopplysninger = ({shortSpacing, includeNextArrow}: Props) => {
 
     // Midlertidig hack til komponentene under kan behandles som react-hook-form-inputs
     useEffect(() => {
-        if (erAktiv(navEnhet)) setError(null);
-    }, [navEnhet]);
+        if (erAktiv(adresser?.navEnhet)) setError(null);
+    }, [adresser]);
 
     return (
         <SkjemaSteg skipStepper page={1} onRequestNavigation={onRequestNavigation}>
