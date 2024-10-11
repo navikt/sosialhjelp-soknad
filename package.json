@@ -5,7 +5,7 @@
     "homepage": "/sosialhjelp/soknad/",
     "dependencies": {
         "@amplitude/analytics-browser": "^2.11.6",
-        "@fremtind/jkl-formatters-util": "^6.0.1",
+        "@fremtind/jkl-formatters-util": "^6.0.9",
         "@fremtind/jkl-validators-util": "^3.0.1",
         "@grafana/faro-react": "^1.10.0",
         "@hookform/error-message": "^2.0.1",
