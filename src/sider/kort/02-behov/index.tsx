@@ -94,6 +94,9 @@ const Behov = (): React.JSX.Element => {
                         return `${category.text}: ${JSON.stringify(selectedSubCategories)}`;
                     }
                 }
+                if (category.text === "Annet" && formValues.hvaSokesOm) {
+                    return category.text;
+                }
                 return category.text; // Always return a string here
             })
             .filter((categoryText): categoryText is string => !!categoryText); // Ensure it's only strings
