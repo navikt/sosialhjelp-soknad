@@ -1,4 +1,4 @@
-import React, {CSSProperties, useEffect} from "react";
+import React, {CSSProperties} from "react";
 import {BodyShort, Box, Checkbox, HStack, Label, VStack} from "@navikt/ds-react";
 import {SelectableCategory} from "../hooks/data/useKategorier";
 import {useTranslation} from "react-i18next";
@@ -15,7 +15,6 @@ interface Props<T extends HvaSokesOm> {
     register: UseFormReturn<T | HvaSokesOm>["register"];
     errors: FormState<T | HvaSokesOm>["errors"];
     hvaSokesOm?: string | null;
-    setValue: UseFormReturn<T | HvaSokesOm>["setValue"]; // Add setValue to update the form value
 }
 
 const TranslatedError = ({error}: {error?: string | null}) => {
@@ -87,26 +86,8 @@ const KategorierChips = <T extends HvaSokesOm>({
     register,
     errors,
     hvaSokesOm,
-    setValue,
 }: Props<T>): React.JSX.Element => {
     const {t} = useTranslation("skjema");
-
-    useEffect(() => {
-        // Get all selected categories and update the hvaSokesOm form value
-        const selectedCategories = categories
-            .filter((category) => category.selected && category.text !== "Annet") // Exclude "Annet" here
-            .map((category) => category.text);
-
-        // If "Annet" is selected, handle its input separately
-        const annetCategory = categories.find((category) => category.text === "Annet");
-        const annetInput = hvaSokesOm?.trim() || null;
-
-        // Update the form field with the selected categories and the "Annet" input
-        const allSelected = [...selectedCategories, annetCategory?.selected && annetInput].filter(Boolean).join(", ");
-
-        setValue("hvaSokesOm", allSelected);
-    }, [categories, setValue]);
-
     return (
         <div>
             <Label htmlFor={"kategorier"} id={"kategorier-label"}>

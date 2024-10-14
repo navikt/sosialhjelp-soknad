@@ -118,7 +118,6 @@ const Behov = (): React.JSX.Element => {
                                 register={register}
                                 categories={reducer} // This is where you pass the categories (reducer)
                                 hvaSokesOm={watch("hvaSokesOm")}
-                                setValue={setValue}
                             />
                             <LocalizedTextArea
                                 {...register("hvaErEndret")}
