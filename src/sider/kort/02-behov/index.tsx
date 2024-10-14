@@ -82,9 +82,9 @@ const Behov = (): React.JSX.Element => {
 
     const onSubmit = (formValues: FormValues) => {
         // Process the form values
-        const selectedKategorier = formValues.hvaSokesOm ? [formValues.hvaSokesOm] : [];
+        const selectedKategorier = reducer.filter((category) => category.selected).map((category) => category.text);
         const situasjonEndret =
-            formValues.hvaErEndret && formValues.hvaErEndret.trim().length > 0 ? "ja" : "Ikke utfylt";
+            formValues.hvaErEndret && formValues.hvaErEndret.trim().length > 0 ? "Ja" : "Ikke utfylt";
 
         // Store in the context (merging with existing data)
         setProcessedData({selectedKategorier, situasjonEndret});
