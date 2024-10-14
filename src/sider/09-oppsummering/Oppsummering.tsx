@@ -14,7 +14,6 @@ import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBu
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {useProcessedData} from "../kort/ProcessedDataContext.tsx";
-import {faro} from "@grafana/faro-react";
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
@@ -49,16 +48,8 @@ export const Oppsummering = () => {
                 <SkjemaStegButtons
                     confirmTextKey={"skjema.knapper.send"}
                     onConfirm={async () => {
-                        try {
-                            await logAmplitudeEvent(
-                                "skjema fullført",
-                                getAttributesForSkjemaFullfortEvent(oppsummering)
-                            );
-                            return sendSoknad(isKortSoknad, selectedKategorier, situasjonEndret);
-                        } catch (e: any) {
-                            faro.api.pushError(e);
-                            throw e;
-                        }
+                        await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
+                        return sendSoknad(isKortSoknad, selectedKategorier, situasjonEndret);
                     }}
                 />
             </SkjemaContent>

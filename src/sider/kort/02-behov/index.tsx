@@ -74,7 +74,7 @@ const Behov = (): React.JSX.Element => {
         put: putKategorier,
         isPending: kategorierPending,
         isError: kategorierError,
-        reducer: categories, // This is the important line, using `reducer` as `categories`
+        reducer, // This is the important line, using `reducer` as `categories`
         toggle,
     } = useKategorier(!!forsorgerplikt?.harForsorgerplikt, setValue, getValues);
 
@@ -116,7 +116,7 @@ const Behov = (): React.JSX.Element => {
                                 errors={errors}
                                 toggle={toggle}
                                 register={register}
-                                categories={categories} // This is where you pass the categories (reducer)
+                                categories={reducer} // This is where you pass the categories (reducer)
                                 hvaSokesOm={watch("hvaSokesOm")}
                                 setValue={setValue}
                             />

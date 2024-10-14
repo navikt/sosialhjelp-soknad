@@ -25,7 +25,6 @@ const TranslatedError = ({error}: {error?: string | null}) => {
 
     return <>{t(error as DigisosLanguageKey)}</>;
 };
-/**
 
 interface CategoriesSummaryProps {
     categories: SelectableCategory[];
@@ -81,7 +80,7 @@ const CategoriesSummary = ({categories, hvaSokesOm}: CategoriesSummaryProps) => 
         </VStack>
     );
 };
- */
+
 const KategorierChips = <T extends HvaSokesOm>({
     categories,
     toggle,
@@ -94,10 +93,18 @@ const KategorierChips = <T extends HvaSokesOm>({
 
     useEffect(() => {
         // Get all selected categories and update the hvaSokesOm form value
-        const selectedCategories = categories.filter((category) => category.selected).map((category) => category.text);
+        const selectedCategories = categories
+            .filter((category) => category.selected && category.text !== "Annet") // Exclude "Annet" here
+            .map((category) => category.text);
 
-        // Update the form field with the selected categories
-        setValue("hvaSokesOm", selectedCategories.join(", "));
+        // If "Annet" is selected, handle its input separately
+        const annetCategory = categories.find((category) => category.text === "Annet");
+        const annetInput = hvaSokesOm?.trim() || null;
+
+        // Update the form field with the selected categories and the "Annet" input
+        const allSelected = [...selectedCategories, annetCategory?.selected && annetInput].filter(Boolean).join(", ");
+
+        setValue("hvaSokesOm", allSelected);
     }, [categories, setValue]);
 
     return (
@@ -114,13 +121,7 @@ const KategorierChips = <T extends HvaSokesOm>({
                             categories.findIndex((cat) => cat.text === "Nødhjelp")
                         )
                         .map((category) => (
-                            <Category
-                                key={category.text}
-                                category={category}
-                                toggle={toggle}
-                                register={register}
-                                errors={errors}
-                            />
+                            <Category category={category} toggle={toggle} register={register} errors={errors} />
                         ))}
                 </HStack>
                 <HStack align="start" gap="2" id={"kategorier"} aria-labelledby={"kategorier-label"} className={"pt-2"}>
@@ -131,7 +132,6 @@ const KategorierChips = <T extends HvaSokesOm>({
                         )
                         .map((category) => (
                             <Category
-                                key={category.text}
                                 category={category}
                                 toggle={toggle}
                                 register={register}
@@ -154,9 +154,7 @@ const KategorierChips = <T extends HvaSokesOm>({
                     />
                 </Box>
             </VStack>
-
-            {/* Show the selected categories summary */}
-            <BodyShort>Selected Categories: {hvaSokesOm}</BodyShort>
+            <CategoriesSummary categories={categories} hvaSokesOm={hvaSokesOm} />
         </div>
     );
 };
