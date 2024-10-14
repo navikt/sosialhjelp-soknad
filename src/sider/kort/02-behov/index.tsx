@@ -82,7 +82,22 @@ const Behov = (): React.JSX.Element => {
 
     const onSubmit = (formValues: FormValues) => {
         // Process the form values
-        const selectedKategorier = reducer.filter((category) => category.selected).map((category) => category.text);
+        const selectedKategorier: string[] = reducer
+            .filter((category) => category.selected)
+            .map((category) => {
+                if (category.text === "Nødhjelp" && category.subCategories?.length) {
+                    const selectedSubCategories = category.subCategories
+                        .filter((subCategory) => subCategory.selected)
+                        .map((subCategory) => subCategory.text);
+
+                    if (selectedSubCategories.length > 0) {
+                        return `${category.text}: ${JSON.stringify(selectedSubCategories)}`;
+                    }
+                }
+                return category.text; // Always return a string here
+            })
+            .filter((categoryText): categoryText is string => !!categoryText); // Ensure it's only strings
+
         const situasjonEndret =
             formValues.hvaErEndret && formValues.hvaErEndret.trim().length > 0 ? "Ja" : "Ikke utfylt";
 
