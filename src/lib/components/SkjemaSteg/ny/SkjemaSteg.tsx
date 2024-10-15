@@ -1,7 +1,6 @@
 import * as React from "react";
 import {ReactNode, useEffect} from "react";
 import {Link} from "@navikt/ds-react";
-import {NedetidPanel} from "../../NedetidPanel";
 import {useTranslation} from "react-i18next";
 import {useSkjemaNavigation} from "../useSkjemaNavigation";
 import SnakkebobleIllustrasjon from "../../svg/illustrasjoner/SnakkebobleIllustrasjon";
@@ -103,7 +102,6 @@ export const SkjemaSteg = ({page, children, onRequestNavigation, skipStepper}: S
                         <SkjemaStegStepper requestNavigation={requestNavigation} kort={isKortSoknad} page={page} />
                     )}
                     <main id={"main-content"} className={"max-w-3xl mx-auto w-full"}>
-                        <NedetidPanel varselType={"infoside"} />
                         {children}
                     </main>
                 </div>
