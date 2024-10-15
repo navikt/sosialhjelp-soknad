@@ -98,7 +98,7 @@ const Behov = (): React.JSX.Element => {
                 }
                 return category.text;
             })
-            .filter((categoryText): categoryText is string => !!categoryText); // Ensure it's only strings
+            .filter((categoryText): categoryText is string => !!categoryText);
 
         const situasjonEndret =
             formValues.hvaErEndret && formValues.hvaErEndret.trim().length > 0 ? "Ja" : "Ikke utfylt";
