@@ -2,7 +2,7 @@ import React from "react";
 import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useTranslation} from "react-i18next";
 import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
-import {SkjemaContent} from "../../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
+import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {NavYtelser} from "../../06-inntektFormue/navytelser";
 import {SkattbarInntekt} from "../../06-inntektFormue/skattbarInntekt";
@@ -24,7 +24,7 @@ const Inntekt = () => {
     return (
         <SkjemaSteg page={4}>
             <SkjemaStegStepper page={4} onStepChange={gotoPage} />
-            <SkjemaContent className={"lg:space-y-12"}>
+            <SkjemaStegBlock className={"lg:space-y-12"}>
                 <SkjemaStegTitle
                     className={"lg:mb-16"}
                     title={t(KortSkjemaHeadings[4].tittel)}
@@ -39,7 +39,7 @@ const Inntekt = () => {
                     dokumentasjonType={"annet|annet"}
                 />
                 <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
-            </SkjemaContent>
+            </SkjemaStegBlock>
         </SkjemaSteg>
     );
 };

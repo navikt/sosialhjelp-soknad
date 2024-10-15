@@ -6,7 +6,7 @@ import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSp
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import cx from "classnames";
 import {useOpplysninger} from "../../lib/hooks/dokumentasjon/useOpplysninger";
-import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
+import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {useTranslation} from "react-i18next";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
@@ -35,7 +35,7 @@ export const OkonomiskeOpplysningerView = () => {
                     navigate(`../${toPage}`);
                 }}
             />
-            <SkjemaContent className={cx("pb-12", {"lg:space-y-8": true})}>
+            <SkjemaStegBlock className={cx("pb-12", {"lg:space-y-8": true})}>
                 <SkjemaStegTitle
                     title={t(SkjemaHeadings[8].tittel)}
                     icon={SkjemaHeadings[8].ikon}
@@ -43,17 +43,17 @@ export const OkonomiskeOpplysningerView = () => {
                 />
                 {bekreftet ? <InfopanelOpplysninger /> : <UbesvarteOpplysninger />}
                 <Gruppe gruppeKey={firstGroup} opplysninger={sorterte.filter((x) => x.gruppe === firstGroup)} />
-            </SkjemaContent>
+            </SkjemaStegBlock>
             {middleGroups.map((gruppe, i) => (
-                <SkjemaContent key={i} className={"pb-12"}>
+                <SkjemaStegBlock key={i} className={"pb-12"}>
                     <Gruppe
                         key={gruppe}
                         gruppeKey={gruppe}
                         opplysninger={sorterte.filter((x) => x.gruppe === gruppe)}
                     />
-                </SkjemaContent>
+                </SkjemaStegBlock>
             ))}
-            <SkjemaContent className={cx("pb-12")}>
+            <SkjemaStegBlock className={cx("pb-12")}>
                 <Gruppe gruppeKey={lastGroup} opplysninger={sorterte.filter((x) => x.gruppe === lastGroup)} />
                 <SkjemaStegButtons
                     onPrevious={async () => navigate(`../7`)}
@@ -62,7 +62,7 @@ export const OkonomiskeOpplysningerView = () => {
                         navigate("../9");
                     }}
                 />
-            </SkjemaContent>
+            </SkjemaStegBlock>
         </SkjemaSteg>
     );
 };

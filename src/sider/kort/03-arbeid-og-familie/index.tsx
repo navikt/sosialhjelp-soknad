@@ -1,7 +1,7 @@
 import React from "react";
 import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {BodyShort, Box, Heading} from "@navikt/ds-react";
-import {SkjemaContent} from "../../../lib/components/SkjemaSteg/ny/SkjemaContent";
+import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {useTranslation} from "react-i18next";
 import {ArbeidsforholdListe} from "../../03-arbeidUtdanning/ArbeidsforholdListe.tsx";
@@ -31,7 +31,7 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
     return (
         <SkjemaSteg page={3}>
             <SkjemaStegStepper page={2} onStepChange={gotoPage} />
-            <SkjemaContent className={"lg:space-y-12"}>
+            <SkjemaStegBlock className={"lg:space-y-12"}>
                 <SkjemaStegTitle
                     className={"lg:mb-12"}
                     title={t(KortSkjemaHeadings[3].tittel)}
@@ -73,7 +73,7 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
                     </Box>
                 </form>
                 <SkjemaStegButtons onPrevious={async () => navigate("../2")} onNext={async () => await gotoPage(4)} />
-            </SkjemaContent>
+            </SkjemaStegBlock>
         </SkjemaSteg>
     );
 };

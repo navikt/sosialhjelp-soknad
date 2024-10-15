@@ -13,7 +13,7 @@ import {UnmountClosed} from "react-collapse";
 import {faro} from "@grafana/faro-react";
 import {useArbeidOgUtdanning} from "../../lib/hooks/data/useArbeidOgUtdanning";
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
-import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
+import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import LocalizedTextarea from "../../lib/components/LocalizedTextArea.tsx";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
@@ -68,7 +68,7 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
     return (
         <SkjemaSteg page={3}>
             <SkjemaStegStepper page={3} onStepChange={goto} />
-            <SkjemaContent>
+            <SkjemaStegBlock>
                 <SkjemaStegTitle title={t(SkjemaHeadings[3].tittel)} icon={SkjemaHeadings[3].ikon} />
                 <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>
                     <SkjemaStegErrorSummary errors={errors.arbeid as FieldErrors} />
@@ -122,7 +122,7 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                     {error && <div>{t("skjema.navigering.feil")}</div>}
                     <SkjemaStegButtons onPrevious={async () => navigate("../2")} onNext={async () => await goto(4)} />
                 </form>
-            </SkjemaContent>
+            </SkjemaStegBlock>
         </SkjemaSteg>
     );
 };

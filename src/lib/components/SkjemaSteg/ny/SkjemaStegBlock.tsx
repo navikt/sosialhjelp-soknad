@@ -3,7 +3,7 @@ import {ReactNode} from "react";
 import cx from "classnames";
 import {Page} from "@navikt/ds-react";
 
-export const SkjemaContent = React.forwardRef<
+export const SkjemaStegBlock = React.forwardRef<
     HTMLDivElement,
     {
         children: ReactNode;

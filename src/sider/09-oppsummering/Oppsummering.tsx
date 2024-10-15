@@ -9,7 +9,7 @@ import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullf
 import {useSendSoknad} from "./useSendSoknad";
 import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude";
 import {KortSkjemaHeadings, SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
-import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
+import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
 import React from "react";
@@ -32,7 +32,7 @@ export const Oppsummering = () => {
     return (
         <SkjemaSteg page={isKortSoknad ? 5 : 9}>
             <SkjemaStegStepper page={isKortSoknad ? 5 : 9} onStepChange={async (page) => navigate(`../${page}`)} />
-            <SkjemaContent>
+            <SkjemaStegBlock>
                 <SkjemaStegTitle title={t(tittel)} icon={ikon} />
 
                 <div>
@@ -52,7 +52,7 @@ export const Oppsummering = () => {
                         await sendSoknad(isKortSoknad);
                     }}
                 />
-            </SkjemaContent>
+            </SkjemaStegBlock>
         </SkjemaSteg>
     );
 };

@@ -10,7 +10,7 @@ import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox";
 import useKategorier from "../../../lib/hooks/data/useKategorier";
 import KategorierChips from "../../../lib/components/KategorierChips";
 import {SkjemaStegErrorSummary} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
-import {SkjemaContent} from "../../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
+import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {DigisosLanguageKey} from "../../../lib/i18n.ts";
 import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
@@ -106,7 +106,7 @@ const Behov = (): React.JSX.Element => {
                 <Alert variant="info">
                     <BodyShort>{t("arbeidOgFamilie.alert")}</BodyShort>
                 </Alert>
-                <SkjemaContent className={"lg:space-y-12"}>
+                <SkjemaStegBlock className={"lg:space-y-12"}>
                     <SkjemaStegTitle
                         className={"lg:mb-12"}
                         title={t(KortSkjemaHeadings[2].tittel)}
@@ -141,7 +141,7 @@ const Behov = (): React.JSX.Element => {
                         </form>
                     )}
                     <SkjemaStegButtons onPrevious={async () => navigate("../1")} onNext={async () => goto(3)} />
-                </SkjemaContent>
+                </SkjemaStegBlock>
             </VStack>
         </SkjemaSteg>
     );

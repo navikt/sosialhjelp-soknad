@@ -13,7 +13,7 @@ import useKategorier from "../../lib/hooks/data/useKategorier";
 import KategorierChips from "../../lib/components/KategorierChips";
 import {useFeatureToggles} from "../../generated/feature-toggle-ressurs/feature-toggle-ressurs";
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
-import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
+import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {useForsorgerplikt} from "../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../lib/components/LocalizedTextArea.tsx";
@@ -93,7 +93,7 @@ export const Begrunnelse = () => {
     return (
         <SkjemaSteg page={2}>
             <SkjemaStegStepper page={2} onStepChange={goto} />
-            <SkjemaContent>
+            <SkjemaStegBlock>
                 <SkjemaStegTitle title={t(SkjemaHeadings[2].tittel)} icon={SkjemaHeadings[2].ikon} />
                 <SkjemaStegErrorSummary errors={errors} />
                 {isPending || featureFlagsPending ? (
@@ -143,7 +143,7 @@ export const Begrunnelse = () => {
                     </form>
                 )}
                 <SkjemaStegButtons onPrevious={async () => navigate("../1")} onNext={async () => await goto(3)} />
-            </SkjemaContent>
+            </SkjemaStegBlock>
         </SkjemaSteg>
     );
 };

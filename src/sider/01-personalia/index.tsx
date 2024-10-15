@@ -11,7 +11,7 @@ import {erAktiv} from "../../lib/navEnhetStatus";
 import {useHentAdresser} from "../../generated/adresse-ressurs/adresse-ressurs";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId.ts";
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
-import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
+import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {useTranslation} from "react-i18next";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
@@ -49,7 +49,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
 
     return (
         <SkjemaSteg page={1}>
-            <SkjemaContent className={shortSpacing ? "lg:space-y-12" : ""}>
+            <SkjemaStegBlock className={shortSpacing ? "lg:space-y-12" : ""}>
                 <SkjemaStegTitle
                     className={shortSpacing ? "lg:mb-12" : ""}
                     title={t(SkjemaHeadings[1].tittel)}
@@ -61,7 +61,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                 <TelefonData />
                 <Kontonr />
                 <SkjemaStegButtons onNext={onClickNext} />
-            </SkjemaContent>
+            </SkjemaStegBlock>
         </SkjemaSteg>
     );
 };
