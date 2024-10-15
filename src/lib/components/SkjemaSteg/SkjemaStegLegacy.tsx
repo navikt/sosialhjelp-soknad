@@ -15,7 +15,7 @@ import {t} from "i18next";
 import {AppHeader} from "../appHeader/AppHeader";
 import {scrollToTop} from "../../utils";
 
-import {ValideringsContext} from "../../valideringContextProvider";
+import {ValideringsContext, ValideringsContextProvider} from "../../valideringContextProvider";
 import {NavEnhetInaktiv} from "../../../sider/01-personalia/adresse/NavEnhetInaktiv";
 import {RequireXsrfCookie} from "./ny/RequireXsrfCookie";
 
@@ -47,7 +47,17 @@ const SkjemaStegHeading = ({ikon, stegTittel}: {ikon: ReactNode; stegTittel: str
     </div>
 );
 
-export const SkjemaStegLegacy = ({skjemaConfig, steg, ikon, children, onSend}: StegMedNavigasjonProps) => {
+/**
+ * En liten hack for å flytte ValideringsContext ut av rot-noden til App
+ * @see SkjemaStegLegacyInner
+ */
+export const SkjemaStegLegacy = (props: StegMedNavigasjonProps) => (
+    <ValideringsContextProvider>
+        <SkjemaStegLegacyInner {...props} />
+    </ValideringsContextProvider>
+);
+
+const SkjemaStegLegacyInner = ({skjemaConfig, steg, ikon, children, onSend}: StegMedNavigasjonProps) => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
     const {data: nedetid} = useHentNedetidInformasjon();
 

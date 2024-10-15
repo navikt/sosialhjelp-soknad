@@ -18,6 +18,7 @@ import {RequireXsrfCookie} from "./RequireXsrfCookie";
 import {useLocation} from "react-router-dom";
 import {DigisosLanguageKey} from "../../../i18n";
 import {SparegrisIllustrasjon} from "../../svg/illustrasjoner/SparegrisIllustrasjon.tsx";
+import {ValideringsContextProvider} from "../../../valideringContextProvider.tsx";
 
 // This error can be thrown in requestNavigation to prevent navigation.
 // All other errors prevent navigation too; this just prevents it from
@@ -92,19 +93,21 @@ export const SkjemaSteg = ({page, children, onRequestNavigation, skipStepper}: S
 
     return (
         <RequireXsrfCookie>
-            <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn flex gap-10 items-center flex-col">
-                <Link href="#main-content" className="sr-only sr-only-focusable">
-                    {t("hoppTilHovedinnhold")}
-                </Link>
-                <AppHeader />
-                {!skipStepper && (
-                    <SkjemaStegStepper requestNavigation={requestNavigation} kort={isKortSoknad} page={page} />
-                )}
-                <main id={"main-content"} className={"max-w-3xl mx-auto w-full"}>
-                    <NedetidPanel varselType={"infoside"} />
-                    {children}
-                </main>
-            </div>
+            <ValideringsContextProvider>
+                <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn flex gap-10 items-center flex-col">
+                    <Link href="#main-content" className="sr-only sr-only-focusable">
+                        {t("hoppTilHovedinnhold")}
+                    </Link>
+                    <AppHeader />
+                    {!skipStepper && (
+                        <SkjemaStegStepper requestNavigation={requestNavigation} kort={isKortSoknad} page={page} />
+                    )}
+                    <main id={"main-content"} className={"max-w-3xl mx-auto w-full"}>
+                        <NedetidPanel varselType={"infoside"} />
+                        {children}
+                    </main>
+                </div>
+            </ValideringsContextProvider>
         </RequireXsrfCookie>
     );
 };
