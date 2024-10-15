@@ -14,7 +14,6 @@ import {useTitle} from "../../../hooks/common/useTitle";
 import {HusIllustrasjon} from "../../svg/illustrasjoner/HusIllustrasjon";
 import {MynterIllustrasjon} from "../../svg/illustrasjoner/MynterIllustrasjon";
 import {RequireXsrfCookie} from "./RequireXsrfCookie";
-import {useLocation} from "react-router-dom";
 import {DigisosLanguageKey} from "../../../i18n";
 import {SparegrisIllustrasjon} from "../../svg/illustrasjoner/SparegrisIllustrasjon.tsx";
 import {ValideringsContextProvider} from "../../../valideringContextProvider.tsx";
@@ -72,10 +71,6 @@ export const SkjemaSteg = ({page, children, onRequestNavigation, skipStepper}: S
 
     const {t} = useTranslation("skjema");
 
-    const location = useLocation();
-
-    const isKortSoknad = location.pathname.includes("/kort");
-
     useTitle(`${t(SkjemaHeadings[page].tittel)} - ${t("applikasjon.sidetittel.stringValue")}`);
 
     const {gotoPage} = useSkjemaNavigation(page);
@@ -99,9 +94,7 @@ export const SkjemaSteg = ({page, children, onRequestNavigation, skipStepper}: S
                     </Link>
                     <AppHeader />
                     <Box as={"main"} id={"main-content"}>
-                        {!skipStepper && (
-                            <SkjemaStegStepper requestNavigation={requestNavigation} kort={isKortSoknad} page={page} />
-                        )}
+                        {!skipStepper && <SkjemaStegStepper requestNavigation={requestNavigation} page={page} />}
                         {children}
                     </Box>
                 </div>
