@@ -1,6 +1,6 @@
 import * as React from "react";
 import {ReactNode, useEffect} from "react";
-import {Link} from "@navikt/ds-react";
+import {Box, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useSkjemaNavigation} from "../useSkjemaNavigation";
 import SnakkebobleIllustrasjon from "../../svg/illustrasjoner/SnakkebobleIllustrasjon";
@@ -98,12 +98,12 @@ export const SkjemaSteg = ({page, children, onRequestNavigation, skipStepper}: S
                         {t("hoppTilHovedinnhold")}
                     </Link>
                     <AppHeader />
-                    {!skipStepper && (
-                        <SkjemaStegStepper requestNavigation={requestNavigation} kort={isKortSoknad} page={page} />
-                    )}
-                    <main id={"main-content"} className={"max-w-3xl mx-auto w-full"}>
+                    <Box as={"main"} id={"main-content"}>
+                        {!skipStepper && (
+                            <SkjemaStegStepper requestNavigation={requestNavigation} kort={isKortSoknad} page={page} />
+                        )}
                         {children}
-                    </main>
+                    </Box>
                 </div>
             </ValideringsContextProvider>
         </RequireXsrfCookie>

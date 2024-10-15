@@ -15,7 +15,7 @@ export const SkjemaStegStepper = ({
     const {t} = useTranslation("skjema");
 
     return (
-        <div className={"max-w-md w-full mx-auto"}>
+        <div className={"max-w-md w-full mx-auto pb-10"}>
             <Stepper
                 className={"top-stepper"}
                 aria-label="Søknadssteg"
