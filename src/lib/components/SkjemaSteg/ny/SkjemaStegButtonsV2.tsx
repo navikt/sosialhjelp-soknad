@@ -7,8 +7,8 @@ import {useState} from "react";
 
 interface SkjemaStegButtonsV2Props {
     isFinalStep?: boolean;
-    onNext: () => Promise<void>;
-    onPrevious?: () => Promise<void>;
+    onNext: () => Promise<any>;
+    onPrevious?: () => Promise<any>;
 }
 
 export const SkjemaStegButtonsV2 = ({onNext, onPrevious, isFinalStep}: SkjemaStegButtonsV2Props) => {
