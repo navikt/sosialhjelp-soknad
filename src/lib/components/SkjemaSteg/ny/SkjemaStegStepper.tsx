@@ -2,17 +2,17 @@ import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {KortSkjemaPage, SkjemaHeadings, SkjemaPage} from "./SkjemaSteg";
 import {Stepper} from "@navikt/ds-react";
+import {useCurrentSoknadIsKort} from "./useCurrentSoknadIsKort.tsx";
 
 export const SkjemaStegStepper = ({
     page,
     requestNavigation,
-    kort,
 }: {
     page: SkjemaPage | KortSkjemaPage;
     requestNavigation: (toPage: number) => Promise<void>;
-    kort: boolean;
 }) => {
     const {t} = useTranslation("skjema");
+    const kort = useCurrentSoknadIsKort();
 
     return (
         <div className={"max-w-md w-full mx-auto pb-10"}>
