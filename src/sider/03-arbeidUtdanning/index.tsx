@@ -18,7 +18,7 @@ import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitl
 import LocalizedTextarea from "../../lib/components/LocalizedTextArea.tsx";
 import {SkjemaStegStepperV2} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
 import {useNavigate} from "react-router";
-import {SkjemaStegButtonsV2} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtonsV2.tsx";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
 
 const MAX_LENGTH = 500;
@@ -120,7 +120,7 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                         </UnmountClosed>
                     </div>
                     {error && <div>{t("skjema.navigering.feil")}</div>}
-                    <SkjemaStegButtonsV2 onPrevious={async () => navigate("../2")} onNext={async () => await goto(4)} />
+                    <SkjemaStegButtons onPrevious={async () => navigate("../2")} onNext={async () => await goto(4)} />
                 </form>
             </SkjemaContent>
         </SkjemaSteg>

@@ -18,7 +18,7 @@ import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegStepperV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
-import {SkjemaStegButtonsV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtonsV2.tsx";
+import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 
 const MAX_LEN_HVA = 150;
 const MAX_LEN_HVA_ER_ENDRET = 500;
@@ -138,7 +138,7 @@ const Behov = (): React.JSX.Element => {
                             />
                         </form>
                     )}
-                    <SkjemaStegButtonsV2 onPrevious={async () => navigate("../1")} onNext={async () => goto(3)} />
+                    <SkjemaStegButtons onPrevious={async () => navigate("../1")} onNext={async () => goto(3)} />
                 </SkjemaContent>
             </VStack>
         </SkjemaSteg>

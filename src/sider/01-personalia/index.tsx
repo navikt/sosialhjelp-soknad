@@ -14,7 +14,7 @@ import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaS
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {useTranslation} from "react-i18next";
-import {SkjemaStegButtonsV2} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtonsV2.tsx";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {scrollToTop} from "../../lib/utils";
 import {useNavigate} from "react-router";
 import {DigisosLanguageKey} from "../../lib/i18n.ts";
@@ -60,7 +60,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                 <AdresseData />
                 <TelefonData />
                 <Kontonr />
-                <SkjemaStegButtonsV2 onNext={onClickNext} />
+                <SkjemaStegButtons onNext={onClickNext} />
             </SkjemaContent>
         </SkjemaSteg>
     );

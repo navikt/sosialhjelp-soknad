@@ -9,7 +9,7 @@ import {SkattbarInntekt} from "../../06-inntektFormue/skattbarInntekt";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox.tsx";
 import {SkjemaStegStepperV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
 import {useNavigate} from "react-router";
-import {SkjemaStegButtonsV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtonsV2.tsx";
+import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
@@ -34,10 +34,7 @@ const Inntekt = () => {
                     undertekst={t("situasjon.kort.dokumentasjon.description")}
                     dokumentasjonType={"annet|annet"}
                 />
-                <SkjemaStegButtonsV2
-                    onPrevious={async () => await gotoPage(3)}
-                    onNext={async () => await gotoPage(5)}
-                />
+                <SkjemaStegButtons onPrevious={async () => await gotoPage(3)} onNext={async () => await gotoPage(5)} />
             </SkjemaContent>
         </SkjemaSteg>
     );

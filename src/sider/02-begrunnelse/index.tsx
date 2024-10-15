@@ -18,7 +18,7 @@ import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitl
 import {useForsorgerplikt} from "../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../lib/components/LocalizedTextArea.tsx";
 import {SkjemaStegStepperV2} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
-import {SkjemaStegButtonsV2} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtonsV2.tsx";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {useNavigate} from "react-router";
 import {logAmplitudeSkjemaStegFullfort} from "../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
 
@@ -142,7 +142,7 @@ export const Begrunnelse = () => {
                         />
                     </form>
                 )}
-                <SkjemaStegButtonsV2 onPrevious={async () => navigate("../1")} onNext={async () => await goto(3)} />
+                <SkjemaStegButtons onPrevious={async () => navigate("../1")} onNext={async () => await goto(3)} />
             </SkjemaContent>
         </SkjemaSteg>
     );

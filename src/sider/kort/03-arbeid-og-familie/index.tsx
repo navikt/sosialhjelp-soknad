@@ -12,7 +12,7 @@ import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import {ForsorgerPlikt} from "../../04-familie/ForsorgerPlikt.tsx";
 import {SkjemaStegStepperV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
 import {useNavigate} from "react-router";
-import {SkjemaStegButtonsV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtonsV2.tsx";
+import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 
 const ArbeidOgFamilie = (): React.JSX.Element => {
     const {t} = useTranslation("skjema");
@@ -68,10 +68,7 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
                         )}
                     </Box>
                 </form>
-                <SkjemaStegButtonsV2
-                    onPrevious={async () => await gotoPage(2)}
-                    onNext={async () => await gotoPage(4)}
-                />
+                <SkjemaStegButtons onPrevious={async () => await gotoPage(2)} onNext={async () => await gotoPage(4)} />
             </SkjemaContent>
         </SkjemaSteg>
     );

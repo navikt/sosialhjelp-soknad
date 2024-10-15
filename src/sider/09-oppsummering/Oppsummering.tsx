@@ -15,7 +15,7 @@ import {SkjemaStegStepperV2} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg
 import React from "react";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/ny/useCurrentSoknadIsKort.tsx";
 import {useNavigate} from "react-router";
-import {SkjemaStegButtonsV2} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtonsV2.tsx";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
@@ -44,7 +44,7 @@ export const Oppsummering = () => {
                         </Alert>
                     )}
                 </div>
-                <SkjemaStegButtonsV2
+                <SkjemaStegButtons
                     isFinalStep
                     onPrevious={async () => navigate("../" + (isKortSoknad ? 4 : 8))}
                     onNext={async () => {
