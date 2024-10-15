@@ -96,6 +96,7 @@ const Behov = (): React.JSX.Element => {
                 if (category.text === "Annet" && formValues.hvaSokesOm) {
                     return category.text;
                 }
+                return category.text;
             })
             .filter((categoryText): categoryText is string => !!categoryText);
 
