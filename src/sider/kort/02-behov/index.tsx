@@ -17,9 +17,11 @@ import {DigisosLanguageKey} from "../../../lib/i18n.ts";
 import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
 import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";
+import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
 
 const MAX_LEN_HVA = 150;
 const MAX_LEN_HVA_ER_ENDRET = 500;
+const MAX_LEN_HVA_SOKES_OM = 500;
 
 const behovSchema = z.object({
     hvaSokesOm: z.string().max(MAX_LEN_HVA, "validering.maksLengde").nullable().optional(),
@@ -46,6 +48,18 @@ const Feilmelding = () => {
 
 const Behov = (): React.JSX.Element => {
     const {t} = useTranslation("skjema");
+
+    // Don't have to fetch feature flags more than once
+    const {data: featureFlagData, isPending: featureFlagsPending} = useFeatureToggles({
+        query: {
+            refetchOnWindowFocus: false,
+            refetchOnMount: false,
+            refetchOnReconnect: false,
+            retry: false,
+            staleTime: 24 * 60 * 60,
+        },
+    });
+    const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
 
     const {forsorgerplikt} = useForsorgerplikt();
 
@@ -84,7 +98,7 @@ const Behov = (): React.JSX.Element => {
         reset({hvaSokesOm: null, hvaErEndret: null});
     };
 
-    const isPending = kategorierPending || situasjonPending;
+    const isPending = kategorierPending || situasjonPending || featureFlagsPending;
     const isError = kategorierError || situasjonError;
 
     return (
@@ -101,13 +115,25 @@ const Behov = (): React.JSX.Element => {
                     ) : (
                         <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
                             {isError && <Feilmelding />}
-                            <KategorierChips
-                                errors={errors}
-                                toggle={toggle}
-                                register={register}
-                                categories={reducer}
-                                hvaSokesOm={watch("hvaSokesOm")}
-                            />
+                            {isKategorierEnabled && (
+                                <KategorierChips
+                                    errors={errors}
+                                    toggle={toggle}
+                                    register={register}
+                                    categories={reducer}
+                                    hvaSokesOm={watch("hvaSokesOm")}
+                                />
+                            )}
+                            {!isKategorierEnabled && (
+                                <LocalizedTextArea
+                                    {...register("hvaSokesOm")}
+                                    id="hvaSokesOm"
+                                    maxLength={MAX_LEN_HVA_SOKES_OM}
+                                    error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
+                                    label={t("begrunnelse.kategorier.label")}
+                                    description={<BodyShort>{t("begrunnelse.kort.behov.description")}</BodyShort>}
+                                />
+                            )}
                             <LocalizedTextArea
                                 {...register("hvaErEndret")}
                                 id={"hvaErEndret"}
