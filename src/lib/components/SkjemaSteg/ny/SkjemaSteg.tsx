@@ -15,11 +15,6 @@ import {DigisosLanguageKey} from "../../../i18n";
 import {SparegrisIllustrasjon} from "../../svg/illustrasjoner/SparegrisIllustrasjon.tsx";
 import {ValideringsContextProvider} from "../../../valideringContextProvider.tsx";
 
-// This error can be thrown in requestNavigation to prevent navigation.
-// All other errors prevent navigation too; this just prevents it from
-// being logged.
-export class DigisosValidationError extends Error {}
-
 interface SkjemaStegProps {
     page: SkjemaPage;
     children?: ReactNode | ReactNode[];
