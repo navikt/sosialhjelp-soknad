@@ -10,7 +10,7 @@ import {Systeminfo} from "../../../lib/components/systeminfo/Systeminfo.tsx";
 import {useSivilstatus} from "../../../lib/hooks/data/useSivilstatus.tsx";
 import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import {ForsorgerPlikt} from "../../04-familie/ForsorgerPlikt.tsx";
-import {SkjemaStegStepperV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
+import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
@@ -30,7 +30,7 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
 
     return (
         <SkjemaSteg page={3}>
-            <SkjemaStegStepperV2 page={2} onStepChange={gotoPage} />
+            <SkjemaStegStepper page={2} onStepChange={gotoPage} />
             <SkjemaContent className={"lg:space-y-12"}>
                 <SkjemaStegTitle
                     className={"lg:mb-12"}

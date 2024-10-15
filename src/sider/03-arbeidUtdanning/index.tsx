@@ -16,7 +16,7 @@ import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaS
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import LocalizedTextarea from "../../lib/components/LocalizedTextArea.tsx";
-import {SkjemaStegStepperV2} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
+import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
@@ -67,7 +67,7 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
 
     return (
         <SkjemaSteg page={3}>
-            <SkjemaStegStepperV2 page={3} onStepChange={goto} />
+            <SkjemaStegStepper page={3} onStepChange={goto} />
             <SkjemaContent>
                 <SkjemaStegTitle title={t(SkjemaHeadings[3].tittel)} icon={SkjemaHeadings[3].ikon} />
                 <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>

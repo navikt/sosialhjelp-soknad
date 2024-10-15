@@ -7,7 +7,7 @@ import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegT
 import {NavYtelser} from "../../06-inntektFormue/navytelser";
 import {SkattbarInntekt} from "../../06-inntektFormue/skattbarInntekt";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox.tsx";
-import {SkjemaStegStepperV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
+import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
@@ -23,7 +23,7 @@ const Inntekt = () => {
 
     return (
         <SkjemaSteg page={4}>
-            <SkjemaStegStepperV2 page={4} onStepChange={gotoPage} />
+            <SkjemaStegStepper page={4} onStepChange={gotoPage} />
             <SkjemaContent className={"lg:space-y-12"}>
                 <SkjemaStegTitle
                     className={"lg:mb-16"}

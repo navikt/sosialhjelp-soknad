@@ -9,7 +9,7 @@ import {useOpplysninger} from "../../lib/hooks/dokumentasjon/useOpplysninger";
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {useTranslation} from "react-i18next";
-import {SkjemaStegStepperV2} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
+import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
@@ -28,7 +28,7 @@ export const OkonomiskeOpplysningerView = () => {
 
     return (
         <SkjemaSteg page={8}>
-            <SkjemaStegStepperV2
+            <SkjemaStegStepper
                 page={8}
                 onStepChange={async (toPage) => {
                     await logAmplitudeSkjemaStegFullfort(8);

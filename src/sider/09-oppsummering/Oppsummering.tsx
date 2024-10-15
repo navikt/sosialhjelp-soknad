@@ -11,7 +11,7 @@ import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude";
 import {KortSkjemaHeadings, SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
-import {SkjemaStegStepperV2} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
+import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
 import React from "react";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/ny/useCurrentSoknadIsKort.tsx";
 import {useNavigate} from "react-router";
@@ -31,7 +31,7 @@ export const Oppsummering = () => {
 
     return (
         <SkjemaSteg page={isKortSoknad ? 5 : 9}>
-            <SkjemaStegStepperV2 page={isKortSoknad ? 5 : 9} onStepChange={async (page) => navigate(`../${page}`)} />
+            <SkjemaStegStepper page={isKortSoknad ? 5 : 9} onStepChange={async (page) => navigate(`../${page}`)} />
             <SkjemaContent>
                 <SkjemaStegTitle title={t(tittel)} icon={ikon} />
 

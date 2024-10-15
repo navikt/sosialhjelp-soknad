@@ -17,7 +17,7 @@ import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
 import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";
 import {useNavigate} from "react-router";
-import {SkjemaStegStepperV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
+import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
 
@@ -101,7 +101,7 @@ const Behov = (): React.JSX.Element => {
 
     return (
         <SkjemaSteg page={2}>
-            <SkjemaStegStepperV2 page={2} onStepChange={goto} />
+            <SkjemaStegStepper page={2} onStepChange={goto} />
             <VStack gap="4">
                 <Alert variant="info">
                     <BodyShort>{t("arbeidOgFamilie.alert")}</BodyShort>

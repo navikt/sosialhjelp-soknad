@@ -17,7 +17,7 @@ import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.ts
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {useForsorgerplikt} from "../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../lib/components/LocalizedTextArea.tsx";
-import {SkjemaStegStepperV2} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
+import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {useNavigate} from "react-router";
 import {logAmplitudeSkjemaStegFullfort} from "../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
@@ -92,7 +92,7 @@ export const Begrunnelse = () => {
 
     return (
         <SkjemaSteg page={2}>
-            <SkjemaStegStepperV2 page={2} onStepChange={goto} />
+            <SkjemaStegStepper page={2} onStepChange={goto} />
             <SkjemaContent>
                 <SkjemaStegTitle title={t(SkjemaHeadings[2].tittel)} icon={SkjemaHeadings[2].ikon} />
                 <SkjemaStegErrorSummary errors={errors} />

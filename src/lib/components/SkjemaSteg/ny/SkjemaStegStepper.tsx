@@ -4,7 +4,7 @@ import {KortSkjemaPage, SkjemaHeadings, SkjemaPage} from "./SkjemaSteg";
 import {Stepper} from "@navikt/ds-react";
 import {useCurrentSoknadIsKort} from "./useCurrentSoknadIsKort.tsx";
 
-export const SkjemaStegStepperV2 = ({
+export const SkjemaStegStepper = ({
     page,
     onStepChange,
 }: {
