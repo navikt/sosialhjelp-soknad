@@ -29,10 +29,10 @@ export const AnalyticsProvider = ({children}: {children: React.ReactNode}) => {
     );
 };
 
-export const useAnalyticsContextData = () => {
+export const useAnalyticsContext = () => {
     const context = useContext(AnalyticsContextProvider);
     if (!context) {
-        throw new Error("useProcessedData must be used within a ProcessedDataProvider");
+        throw new Error("useAnalyticsContext must be used within a AnalyticsProvider");
     }
     return context;
 };
