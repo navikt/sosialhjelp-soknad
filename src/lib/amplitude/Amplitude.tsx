@@ -1,44 +1,18 @@
-import amplitude from "amplitude-js";
-import {logger} from "@navikt/next-logger";
-
-const buildPlatformField = () => {
-    const {origin, pathname, hash} = window.location;
-    return `${origin}${pathname}${hash}`;
-};
+import {init, track, setTransport} from "@amplitude/analytics-browser";
 
 export const initAmplitude = () => {
-    const userProps = {
-        skjermbredde: window.screen.width,
-        skjermhoyde: window.screen.height,
-        vindusbredde: window.innerWidth,
-        vindushoyde: window.innerHeight,
-    };
-
-    amplitude.getInstance("sosialhjelpsoknad").init("default", "", {
-        apiEndpoint: "amplitude.nav.no/collect-auto",
-        saveEvents: false,
-        includeUtm: true,
-        includeReferrer: true,
-        transport: "beacon",
-        platform: buildPlatformField(),
+    init("default", undefined, {
+        serverUrl: "https://amplitude.nav.no/collect-auto",
+        ingestionMetadata: {
+            sourceName: window.location.toString(),
+        },
     });
-
-    amplitude.getInstance("sosialhjelpsoknad").setUserProperties(userProps);
 };
 
+window.addEventListener("pagehide", () => {
+    setTransport("beacon");
+});
+
 export const logAmplitudeEvent = async (eventName: string, eventData?: Record<string, unknown>) => {
-    return new Promise((resolve) => {
-        amplitude.getInstance("sosialhjelpsoknad").logEvent(
-            eventName,
-            {
-                ...eventData,
-                skjemaId: "sosialhjelpsoknad",
-                platform: buildPlatformField(),
-                origin: "sosialhjelpsoknad",
-                originVersion: eventData?.originVersion || "unknown",
-            },
-            resolve,
-            logger.warn
-        );
-    });
+    track(eventName, eventData);
 };

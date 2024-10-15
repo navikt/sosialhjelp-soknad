@@ -117,8 +117,6 @@ const useKategorier = <T extends KategorierFormValues>(
     const behandlingsId = useBehandlingsId();
     const {data} = useHentBegrunnelse(behandlingsId);
     const {data: isKortSoknad} = useIsKort();
-    console.log("data", data);
-    console.log("isKortSoknad", isKortSoknad);
     const [reducer, dispatch] = useReducer(
         (state: SelectableCategory[], action: CategoryAction) => {
             switch (action.type) {
