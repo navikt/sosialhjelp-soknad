@@ -216,6 +216,7 @@ export const skjema = {
         },
         kort: {
             behov: {
+                description: 'Eksempel på tekst: "Jeg søker om penger til livsopphold, husleie og strøm."',
                 dokumentasjon: {
                     beskrivelse:
                         "Her kan du laste opp dokumentasjon om situasjonen din og utgiftene dine. Du kan ta bilder og skjermbilder.",
