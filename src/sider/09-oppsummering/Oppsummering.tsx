@@ -23,7 +23,7 @@ export const Oppsummering = () => {
     const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId);
     const location = useLocation();
 
-    const {processedData} = useProcessedData(); // Access processed data
+    const {processedData} = useProcessedData();
     const {selectedKategorier, situasjonEndret} = processedData;
 
     if (isLoading) return <ApplicationSpinner />;

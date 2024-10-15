@@ -74,14 +74,13 @@ const Behov = (): React.JSX.Element => {
         put: putKategorier,
         isPending: kategorierPending,
         isError: kategorierError,
-        reducer, // This is the important line, using `reducer` as `categories`
+        reducer,
         toggle,
     } = useKategorier(!!forsorgerplikt?.harForsorgerplikt, setValue, getValues);
 
-    const {setProcessedData} = useProcessedData(); // Access the set function
+    const {setProcessedData} = useProcessedData();
 
     const onSubmit = (formValues: FormValues) => {
-        // Process the form values
         const selectedKategorier: string[] = reducer
             .filter((category) => category.selected)
             .map((category) => {
@@ -97,17 +96,15 @@ const Behov = (): React.JSX.Element => {
                 if (category.text === "Annet" && formValues.hvaSokesOm) {
                     return category.text;
                 }
-                return category.text; // Always return a string here
+                return category.text;
             })
             .filter((categoryText): categoryText is string => !!categoryText); // Ensure it's only strings
 
         const situasjonEndret =
             formValues.hvaErEndret && formValues.hvaErEndret.trim().length > 0 ? "Ja" : "Ikke utfylt";
 
-        // Store in the context (merging with existing data)
         setProcessedData({selectedKategorier, situasjonEndret});
 
-        // Continue with other logic (putting data, etc.)
         putSituasjon({...formValues, hvaErEndret: formValues.hvaErEndret ?? undefined});
         putKategorier({hvaSokesOm: formValues.hvaSokesOm});
         reset({hvaSokesOm: null, hvaErEndret: null});
@@ -134,7 +131,7 @@ const Behov = (): React.JSX.Element => {
                                 errors={errors}
                                 toggle={toggle}
                                 register={register}
-                                categories={reducer} // This is where you pass the categories (reducer)
+                                categories={reducer}
                                 hvaSokesOm={watch("hvaSokesOm")}
                             />
                             <LocalizedTextArea
