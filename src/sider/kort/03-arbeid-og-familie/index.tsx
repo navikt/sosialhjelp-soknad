@@ -13,7 +13,7 @@ import {ForsorgerPlikt} from "../../04-familie/ForsorgerPlikt.tsx";
 import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
-import {logAmplitudeSkjemaStegFullfort} from "../../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
+import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
 
 const ArbeidOgFamilie = (): React.JSX.Element => {
     const {t} = useTranslation("skjema");

@@ -20,7 +20,7 @@ import LocalizedTextArea from "../../lib/components/LocalizedTextArea.tsx";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {useNavigate} from "react-router";
-import {logAmplitudeSkjemaStegFullfort} from "../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
+import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;

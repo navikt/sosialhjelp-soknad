@@ -18,7 +18,7 @@ import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBu
 import {scrollToTop} from "../../lib/utils";
 import {useNavigate} from "react-router";
 import {DigisosLanguageKey} from "../../lib/i18n.ts";
-import {logAmplitudeSkjemaStegFullfort} from "./logAmplitudeSkjemaStegFullfort.tsx";
+import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
