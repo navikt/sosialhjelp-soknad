@@ -94,7 +94,7 @@ export const SkjemaSteg = ({page, children, onRequestNavigation, skipStepper}: S
     return (
         <RequireXsrfCookie>
             <ValideringsContextProvider>
-                <div className="pb-4 lg:pb-40 bg-digisosGronnBakgrunn flex gap-10 items-center flex-col">
+                <div className="pb-4 lg:pb-40 flex gap-10 items-center flex-col">
                     <Link href="#main-content" className="sr-only sr-only-focusable">
                         {t("hoppTilHovedinnhold")}
                     </Link>
