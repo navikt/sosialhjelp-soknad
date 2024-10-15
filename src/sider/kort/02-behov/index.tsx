@@ -1,5 +1,5 @@
 import React from "react";
-import {inhibitNavigation, KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {FieldError, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -9,7 +9,6 @@ import {useTranslation} from "react-i18next";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox";
 import useKategorier from "../../../lib/hooks/data/useKategorier";
 import KategorierChips from "../../../lib/components/KategorierChips";
-import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {SkjemaStegErrorSummary} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
 import {SkjemaContent} from "../../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
@@ -17,6 +16,9 @@ import {DigisosLanguageKey} from "../../../lib/i18n.ts";
 import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
 import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";
+import {useNavigate} from "react-router";
+import {SkjemaStegStepperV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
+import {SkjemaStegButtonsV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtonsV2.tsx";
 
 const MAX_LEN_HVA = 150;
 const MAX_LEN_HVA_ER_ENDRET = 500;
@@ -78,17 +80,26 @@ const Behov = (): React.JSX.Element => {
         toggle,
     } = useKategorier(!!forsorgerplikt?.harForsorgerplikt, setValue, getValues);
 
-    const onSubmit = (formValues: FormValues) => {
-        putSituasjon({...formValues, hvaErEndret: formValues.hvaErEndret ?? undefined});
-        putKategorier({hvaSokesOm: formValues.hvaSokesOm});
-        reset({hvaSokesOm: null, hvaErEndret: null});
+    const navigate = useNavigate();
+
+    const goto = async (page: number) => {
+        await handleSubmit((formValues: FormValues) => {
+            putSituasjon({
+                ...formValues,
+                hvaErEndret: formValues.hvaErEndret ?? undefined,
+            });
+            putKategorier({hvaSokesOm: formValues.hvaSokesOm});
+            reset({hvaSokesOm: null, hvaErEndret: null});
+            navigate(`../${page}`);
+        })();
     };
 
     const isPending = kategorierPending || situasjonPending;
     const isError = kategorierError || situasjonError;
 
     return (
-        <SkjemaSteg page={2} onRequestNavigation={handleSubmit(onSubmit, inhibitNavigation)}>
+        <SkjemaSteg page={2}>
+            <SkjemaStegStepperV2 page={2} onStepChange={goto} />
             <VStack gap="4">
                 <Alert variant="info">
                     <BodyShort>{t("arbeidOgFamilie.alert")}</BodyShort>
@@ -127,11 +138,7 @@ const Behov = (): React.JSX.Element => {
                             />
                         </form>
                     )}
-                    <SkjemaStegButtons
-                        loading={isPending}
-                        page={2}
-                        onRequestNavigation={handleSubmit(onSubmit, inhibitNavigation)}
-                    />
+                    <SkjemaStegButtonsV2 onPrevious={async () => navigate("../1")} onNext={async () => goto(3)} />
                 </SkjemaContent>
             </VStack>
         </SkjemaSteg>

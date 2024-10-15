@@ -5,15 +5,21 @@ import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
 import {SkjemaContent} from "../../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {NavYtelser} from "../../06-inntektFormue/navytelser";
-import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {SkattbarInntekt} from "../../06-inntektFormue/skattbarInntekt";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox.tsx";
+import {SkjemaStegStepperV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
+import {useNavigate} from "react-router";
+import {SkjemaStegButtonsV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtonsV2.tsx";
 
-const Inntekt = (): React.JSX.Element => {
+const Inntekt = () => {
     const {t} = useTranslation("skjema");
+
+    const navigate = useNavigate();
+    const gotoPage = async (page: number) => navigate(`../${page}`);
 
     return (
         <SkjemaSteg page={4}>
+            <SkjemaStegStepperV2 page={4} onStepChange={gotoPage} />
             <SkjemaContent className={"lg:space-y-12"}>
                 <SkjemaStegTitle
                     className={"lg:mb-16"}
@@ -28,7 +34,10 @@ const Inntekt = (): React.JSX.Element => {
                     undertekst={t("situasjon.kort.dokumentasjon.description")}
                     dokumentasjonType={"annet|annet"}
                 />
-                <SkjemaStegButtons page={4} />
+                <SkjemaStegButtonsV2
+                    onPrevious={async () => await gotoPage(3)}
+                    onNext={async () => await gotoPage(5)}
+                />
             </SkjemaContent>
         </SkjemaSteg>
     );

@@ -5,19 +5,22 @@ import {FieldError, useForm} from "react-hook-form";
 import {useTranslation} from "react-i18next";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useFeatureFlags} from "../../lib/config";
-import {inhibitNavigation, SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {useBegrunnelse} from "../../lib/hooks/data/useBegrunnelse";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
 import {DigisosLanguageKey} from "../../lib/i18n";
 import useKategorier from "../../lib/hooks/data/useKategorier";
 import KategorierChips from "../../lib/components/KategorierChips";
 import {useFeatureToggles} from "../../generated/feature-toggle-ressurs/feature-toggle-ressurs";
-import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {useForsorgerplikt} from "../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../lib/components/LocalizedTextArea.tsx";
+import {SkjemaStegStepperV2} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
+import {SkjemaStegButtonsV2} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtonsV2.tsx";
+import {useNavigate} from "react-router";
+import {logAmplitudeSkjemaStegFullfort} from "../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;
@@ -77,14 +80,19 @@ export const Begrunnelse = () => {
         getValues
     );
 
+    const navigate = useNavigate();
+
+    const goto = (page: number) =>
+        handleSubmit(async (values: FormValues) => {
+            await put(values);
+            reset({hvaSokesOm: null, hvorforSoke: null});
+            await logAmplitudeSkjemaStegFullfort(2);
+            navigate(`../${page}`);
+        })();
+
     return (
-        <SkjemaSteg
-            page={2}
-            onRequestNavigation={handleSubmit((values: FormValues) => {
-                put(values);
-                reset({hvaSokesOm: null, hvorforSoke: null});
-            }, inhibitNavigation)}
-        >
+        <SkjemaSteg page={2}>
+            <SkjemaStegStepperV2 page={2} onStepChange={goto} />
             <SkjemaContent>
                 <SkjemaStegTitle title={t(SkjemaHeadings[2].tittel)} icon={SkjemaHeadings[2].ikon} />
                 <SkjemaStegErrorSummary errors={errors} />
@@ -134,14 +142,7 @@ export const Begrunnelse = () => {
                         />
                     </form>
                 )}
-                <SkjemaStegButtons
-                    loading={isPending}
-                    page={2}
-                    onRequestNavigation={handleSubmit((values: FormValues) => {
-                        put(values);
-                        reset({hvaSokesOm: null, hvorforSoke: null});
-                    }, inhibitNavigation)}
-                />
+                <SkjemaStegButtonsV2 onPrevious={async () => navigate("../1")} onNext={async () => await goto(3)} />
             </SkjemaContent>
         </SkjemaSteg>
     );

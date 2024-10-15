@@ -7,19 +7,26 @@ import {useTranslation} from "react-i18next";
 import {ArbeidsforholdListe} from "../../03-arbeidUtdanning/ArbeidsforholdListe.tsx";
 import {EktefellePersonaliaBruker} from "../../04-familie/EktefellePersonaliaBruker.tsx";
 import {Systeminfo} from "../../../lib/components/systeminfo/Systeminfo.tsx";
-import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {useSivilstatus} from "../../../lib/hooks/data/useSivilstatus.tsx";
 import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import {ForsorgerPlikt} from "../../04-familie/ForsorgerPlikt.tsx";
+import {SkjemaStegStepperV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
+import {useNavigate} from "react-router";
+import {SkjemaStegButtonsV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtonsV2.tsx";
 
 const ArbeidOgFamilie = (): React.JSX.Element => {
     const {t} = useTranslation("skjema");
 
+    const navigate = useNavigate();
+    const gotoPage = async (page: number) => navigate(`../${page}`);
+
     const {sivilstatus} = useSivilstatus();
+
     const {forsorgerplikt} = useForsorgerplikt();
 
     return (
         <SkjemaSteg page={3}>
+            <SkjemaStegStepperV2 page={2} onStepChange={gotoPage} />
             <SkjemaContent className={"lg:space-y-12"}>
                 <SkjemaStegTitle
                     className={"lg:mb-12"}
@@ -61,7 +68,10 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
                         )}
                     </Box>
                 </form>
-                <SkjemaStegButtons page={3} />
+                <SkjemaStegButtonsV2
+                    onPrevious={async () => await gotoPage(2)}
+                    onNext={async () => await gotoPage(4)}
+                />
             </SkjemaContent>
         </SkjemaSteg>
     );
