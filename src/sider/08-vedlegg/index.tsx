@@ -12,6 +12,7 @@ import {useTranslation} from "react-i18next";
 import {SkjemaStegStepperV2} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {logAmplitudeSkjemaStegFullfort} from "../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
 
 export const OkonomiskeOpplysningerView = () => {
     const {bekreftet, isLoading, sorterte, grupper} = useOpplysninger();
@@ -27,7 +28,13 @@ export const OkonomiskeOpplysningerView = () => {
 
     return (
         <SkjemaSteg page={8}>
-            <SkjemaStegStepperV2 page={8} onStepChange={async (toPage) => navigate(`../${toPage}`)} />
+            <SkjemaStegStepperV2
+                page={8}
+                onStepChange={async (toPage) => {
+                    await logAmplitudeSkjemaStegFullfort(8);
+                    navigate(`../${toPage}`);
+                }}
+            />
             <SkjemaContent className={cx("pb-12", {"lg:space-y-8": true})}>
                 <SkjemaStegTitle
                     title={t(SkjemaHeadings[8].tittel)}
@@ -48,7 +55,13 @@ export const OkonomiskeOpplysningerView = () => {
             ))}
             <SkjemaContent className={cx("pb-12")}>
                 <Gruppe gruppeKey={lastGroup} opplysninger={sorterte.filter((x) => x.gruppe === lastGroup)} />
-                <SkjemaStegButtons onPrevious={async () => navigate(`../7`)} onNext={async () => navigate("../9")} />
+                <SkjemaStegButtons
+                    onPrevious={async () => navigate(`../7`)}
+                    onNext={async () => {
+                        await logAmplitudeSkjemaStegFullfort(8);
+                        navigate("../9");
+                    }}
+                />
             </SkjemaContent>
         </SkjemaSteg>
     );

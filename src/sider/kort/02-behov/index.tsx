@@ -19,6 +19,7 @@ import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegStepperV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {logAmplitudeSkjemaStegFullfort} from "../../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
 
 const MAX_LEN_HVA = 150;
 const MAX_LEN_HVA_ER_ENDRET = 500;
@@ -83,13 +84,14 @@ const Behov = (): React.JSX.Element => {
     const navigate = useNavigate();
 
     const goto = async (page: number) => {
-        await handleSubmit((formValues: FormValues) => {
+        await handleSubmit(async (formValues: FormValues) => {
             putSituasjon({
                 ...formValues,
                 hvaErEndret: formValues.hvaErEndret ?? undefined,
             });
             putKategorier({hvaSokesOm: formValues.hvaSokesOm});
             reset({hvaSokesOm: null, hvaErEndret: null});
+            await logAmplitudeSkjemaStegFullfort(2);
             navigate(`../${page}`);
         })();
     };

@@ -13,12 +13,16 @@ import {ForsorgerPlikt} from "../../04-familie/ForsorgerPlikt.tsx";
 import {SkjemaStegStepperV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {logAmplitudeSkjemaStegFullfort} from "../../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
 
 const ArbeidOgFamilie = (): React.JSX.Element => {
     const {t} = useTranslation("skjema");
 
     const navigate = useNavigate();
-    const gotoPage = async (page: number) => navigate(`../${page}`);
+    const gotoPage = async (page: number) => {
+        await logAmplitudeSkjemaStegFullfort(3);
+        navigate(`../${page}`);
+    };
 
     const {sivilstatus} = useSivilstatus();
 
@@ -68,7 +72,7 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
                         )}
                     </Box>
                 </form>
-                <SkjemaStegButtons onPrevious={async () => await gotoPage(2)} onNext={async () => await gotoPage(4)} />
+                <SkjemaStegButtons onPrevious={async () => navigate("../2")} onNext={async () => await gotoPage(4)} />
             </SkjemaContent>
         </SkjemaSteg>
     );

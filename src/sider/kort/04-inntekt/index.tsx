@@ -10,12 +10,16 @@ import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox.tsx"
 import {SkjemaStegStepperV2} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepperV2.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {logAmplitudeSkjemaStegFullfort} from "../../01-personalia/logAmplitudeSkjemaStegFullfort.tsx";
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
 
     const navigate = useNavigate();
-    const gotoPage = async (page: number) => navigate(`../${page}`);
+    const gotoPage = async (page: number) => {
+        await logAmplitudeSkjemaStegFullfort(4);
+        navigate(`../${page}`);
+    };
 
     return (
         <SkjemaSteg page={4}>
@@ -34,7 +38,7 @@ const Inntekt = () => {
                     undertekst={t("situasjon.kort.dokumentasjon.description")}
                     dokumentasjonType={"annet|annet"}
                 />
-                <SkjemaStegButtons onPrevious={async () => await gotoPage(3)} onNext={async () => await gotoPage(5)} />
+                <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
             </SkjemaContent>
         </SkjemaSteg>
     );
