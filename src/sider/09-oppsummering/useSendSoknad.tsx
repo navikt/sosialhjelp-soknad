@@ -31,9 +31,8 @@ export const useSendSoknad = (behandlingsId: string) => {
                 KortSoknad: isKortSoknad ? "Ja" : "Nei",
                 EndrerSokerAdresse: endretAdresse ? "Ja" : "Nei",
                 forrigeSoknadSendt: forrigeSoknadSendt,
-                kategorier: selectedKategorier && selectedKategorier.length > 0 ? "Ja" : "Ikke utfylt",
-                valgteKategorier:
-                    selectedKategorier && selectedKategorier.length > 0 ? selectedKategorier : "Ikke utfylt",
+                kategorier: selectedKategorier?.length ? "Ja" : "Ikke utfylt",
+                valgteKategorier: selectedKategorier?.length ? selectedKategorier : "Ikke utfylt",
                 situasjonEndret: situasjonEndret !== "Ikke utfylt" ? "Ja" : "Ikke utfylt",
             });
             window.location.assign(`${digisosConfig.innsynURL}${id}/status`);

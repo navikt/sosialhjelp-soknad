@@ -17,7 +17,7 @@ import {DigisosLanguageKey} from "../../../lib/i18n.ts";
 import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
 import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";
-import {useProcessedData} from "../ProcessedDataContext.tsx";
+import {useAnalyticsContextData} from "../../../lib/AnalyticsContextProvider.tsx";
 
 const MAX_LEN_HVA = 150;
 const MAX_LEN_HVA_ER_ENDRET = 500;
@@ -78,7 +78,7 @@ const Behov = (): React.JSX.Element => {
         toggle,
     } = useKategorier(!!forsorgerplikt?.harForsorgerplikt, setValue, getValues);
 
-    const {setProcessedData} = useProcessedData();
+    const {setAnalyticsData} = useAnalyticsContextData();
 
     const onSubmit = (formValues: FormValues) => {
         const selectedKategorier: string[] = reducer
@@ -96,14 +96,12 @@ const Behov = (): React.JSX.Element => {
                 if (category.text === "Annet" && formValues.hvaSokesOm) {
                     return category.text;
                 }
-                return category.text;
             })
             .filter((categoryText): categoryText is string => !!categoryText);
 
-        const situasjonEndret =
-            formValues.hvaErEndret && formValues.hvaErEndret.trim().length > 0 ? "Ja" : "Ikke utfylt";
+        const situasjonEndret = formValues.hvaErEndret?.trim() ? "Ja" : "Ikke utfylt";
 
-        setProcessedData({selectedKategorier, situasjonEndret});
+        setAnalyticsData({selectedKategorier, situasjonEndret});
 
         putSituasjon({...formValues, hvaErEndret: formValues.hvaErEndret ?? undefined});
         putKategorier({hvaSokesOm: formValues.hvaSokesOm});
