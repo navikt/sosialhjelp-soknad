@@ -5,7 +5,6 @@ import {useTitle} from "../../hooks/common/useTitle";
 import {Link} from "@navikt/ds-react";
 import {NedetidPanel} from "../NedetidPanel";
 import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
-import {SkjemaStegNavStepperLegacy} from "./SkjemaStegNavStepperLegacy";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapperLegacy from "./SkjemaStegNavKnapperLegacy";
 import {useTranslation} from "react-i18next";
@@ -18,6 +17,7 @@ import {ValideringsContext, ValideringsContextProvider} from "../../valideringCo
 import {NavEnhetInaktiv} from "../../../sider/01-personalia/adresse/NavEnhetInaktiv";
 import {RequireXsrfCookie} from "./ny/RequireXsrfCookie";
 import {SkjemaStegTitle} from "./ny/SkjemaStegTitle.tsx";
+import {SkjemaStegStepper} from "./ny/SkjemaStegStepper.tsx";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
@@ -71,7 +71,7 @@ const SkjemaStegLegacyInner = ({skjemaConfig, steg, ikon, children, onSend}: Ste
                     {t("hoppTilHovedinnhold")}
                 </Link>
                 <AppHeader />
-                <SkjemaStegNavStepperLegacy skjemaConfig={skjemaConfig} aktivtSteg={steg} onStepChange={gotoPage} />
+                <SkjemaStegStepper page={aktivtSteg.id} onStepChange={async (page) => gotoPage(page)} />
                 <div className={"w-full max-w-3xl mx-auto"}>
                     <NedetidPanel varselType={"infoside"} />
                     {visValideringsfeil && <Feiloppsummering valideringsfeil={feil} />}

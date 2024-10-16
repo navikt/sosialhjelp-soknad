@@ -1,9 +1,10 @@
 import {DigisosLanguageKey} from "../../i18n";
+import {SkjemaPage} from "./ny/SkjemaSteg.tsx";
 
 export type SkjemaStegType = "skjema" | "oppsummering";
 
 export interface SkjemaSteg {
-    id: number;
+    id: SkjemaPage;
     type: SkjemaStegType;
 }
 
