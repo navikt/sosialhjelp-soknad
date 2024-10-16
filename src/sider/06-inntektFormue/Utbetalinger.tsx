@@ -18,7 +18,6 @@ export const Utbetalinger = () => {
     return (
         <div>
             <YesNoInput
-                name={"utbetalinger-bekreftelse"}
                 legend={t("inntekt.inntekter.sporsmal")}
                 description={
                     <ReadMore header={t("inntekt.inntekter.lesmer")}>
@@ -27,6 +26,7 @@ export const Utbetalinger = () => {
                 }
                 defaultValue={utbetalinger.bekreftelse}
                 onChange={setBekreftelse}
+                name={"utbetalinger-bekreftelse"}
             />
 
             {utbetalinger.bekreftelse && (
