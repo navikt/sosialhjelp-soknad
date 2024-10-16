@@ -4,7 +4,7 @@ import {Checkbox, CheckboxGroup, ReadMore, Textarea} from "@navikt/ds-react";
 import {UtbetalingerFrontend} from "../../generated/model";
 import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {useUtbetalinger} from "../../lib/hooks/data/useUtbetalinger";
-import {useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";
+import {MAX_CHARS, useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";
 import {UnmountClosed} from "react-collapse";
 import {NyttUnderskjema} from "../05-bosituasjon/NyttUnderskjema";
 
@@ -48,6 +48,7 @@ export const Utbetalinger = () => {
                             <Textarea
                                 label={t("inntekt.inntekter.true.type.annet.true.beskrivelse.label")}
                                 {...registerAnnet}
+                                maxLength={MAX_CHARS}
                             />
                         </UnmountClosed>
                     </CheckboxGroup>

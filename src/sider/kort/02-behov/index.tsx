@@ -1,27 +1,38 @@
 import React from "react";
-import {SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {inhibitNavigation, SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg";
 import {FieldError, useForm} from "react-hook-form";
-import {BegrunnelseFrontend} from "../../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {ApplicationSpinner} from "../../../lib/components/animasjoner/ApplicationSpinner";
-import {Alert, BodyShort, Textarea} from "@navikt/ds-react";
+import {Alert, BodyShort, VStack} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox";
-import {DigisosLanguageKey} from "../../../lib/i18n";
-import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs";
 import useKategorier from "../../../lib/hooks/data/useKategorier";
 import KategorierChips from "../../../lib/components/KategorierChips";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {SkjemaStegErrorSummary} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
 import {SkjemaContent} from "../../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
+import {DigisosLanguageKey} from "../../../lib/i18n.ts";
+import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
+import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
+import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";
+import {useAnalyticsContext} from "../../../lib/AnalyticsContextProvider.tsx";
+import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
 
-const MAX_LEN_HVA = 500;
+const MAX_LEN_HVA = 150;
+const MAX_LEN_HVA_ER_ENDRET = 500;
+const MAX_LEN_HVA_SOKES_OM = 500;
 
 const behovSchema = z.object({
     hvaSokesOm: z.string().max(MAX_LEN_HVA, "validering.maksLengde").nullable().optional(),
+    hvaErEndret: z.string().max(MAX_LEN_HVA_ER_ENDRET, "validering.maksLengde").nullable(),
 });
+
+interface FormValues {
+    hvaSokesOm?: string | null;
+    hvaErEndret?: string | null;
+}
 
 const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) => {
     const {t} = useTranslation("skjema");
@@ -37,9 +48,28 @@ const Feilmelding = () => {
 };
 
 const Behov = (): React.JSX.Element => {
-    const {data: featureFlagData, isPending: featureFlagsPending} = useFeatureToggles();
-    const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
     const {t} = useTranslation("skjema");
+
+    // Don't have to fetch feature flags more than once
+    const {data: featureFlagData, isPending: featureFlagsPending} = useFeatureToggles({
+        query: {
+            refetchOnWindowFocus: false,
+            refetchOnMount: false,
+            refetchOnReconnect: false,
+            retry: false,
+            staleTime: 24 * 60 * 60,
+        },
+    });
+    const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
+
+    const {forsorgerplikt} = useForsorgerplikt();
+
+    const {
+        get: defaultValues,
+        put: putSituasjon,
+        isError: situasjonError,
+        isPending: situasjonPending,
+    } = useSituasjon();
 
     const {
         register,
@@ -48,51 +78,106 @@ const Behov = (): React.JSX.Element => {
         setValue,
         getValues,
         watch,
-    } = useForm<BegrunnelseFrontend>({
+        reset,
+    } = useForm<FormValues>({
         resolver: zodResolver(behovSchema),
         mode: "onChange",
+        defaultValues,
     });
 
-    const {onSubmit, isPending, isError, reducer, toggle} = useKategorier(setValue, handleSubmit, getValues);
+    const {
+        put: putKategorier,
+        isPending: kategorierPending,
+        isError: kategorierError,
+        reducer,
+        toggle,
+    } = useKategorier(!!forsorgerplikt?.harForsorgerplikt, setValue, getValues);
+
+    const {setAnalyticsData} = useAnalyticsContext();
+
+    const onSubmit = (formValues: FormValues) => {
+        const selectedKategorier: string[] = reducer
+            .filter((category) => category.selected)
+            .map((category) => {
+                if (category.text === "Nødhjelp" && category.subCategories?.length) {
+                    const selectedSubCategories = category.subCategories
+                        .filter((subCategory) => subCategory.selected)
+                        .map((subCategory) => subCategory.text);
+
+                    if (selectedSubCategories.length > 0) {
+                        return `${category.text}: ${JSON.stringify(selectedSubCategories)}`;
+                    }
+                }
+                if (category.text === "Annet" && formValues.hvaSokesOm) {
+                    return category.text;
+                }
+                return category.text;
+            })
+            .filter((categoryText): categoryText is string => !!categoryText);
+
+        const situasjonEndret = formValues.hvaErEndret?.trim() ? "Ja" : "Ikke utfylt";
+
+        setAnalyticsData({selectedKategorier, situasjonEndret});
+
+        putSituasjon({...formValues, hvaErEndret: formValues.hvaErEndret ?? undefined});
+        putKategorier({hvaSokesOm: formValues.hvaSokesOm});
+        reset({hvaSokesOm: null, hvaErEndret: null});
+    };
+
+    const isPending = kategorierPending || situasjonPending || featureFlagsPending;
+    const isError = kategorierError || situasjonError;
 
     return (
-        <SkjemaSteg page={2} onRequestNavigation={onSubmit}>
-            <SkjemaContent className={"lg:space-y-12"}>
-                <SkjemaStegTitle className={"lg:mb-12"} />
-                <SkjemaStegErrorSummary errors={errors} />
-                {isPending || featureFlagsPending ? (
-                    <ApplicationSpinner />
-                ) : (
-                    <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
-                        {isError && <Feilmelding />}
-                        {isKategorierEnabled && (
-                            <KategorierChips
-                                errors={errors}
-                                toggle={toggle}
-                                register={register}
-                                categories={reducer}
-                                hvaSokesOm={watch("hvaSokesOm")}
+        <SkjemaSteg page={2} onRequestNavigation={handleSubmit(onSubmit, inhibitNavigation)}>
+            <VStack gap="4">
+                <Alert variant="info">
+                    <BodyShort>{t("arbeidOgFamilie.alert")}</BodyShort>
+                </Alert>
+                <SkjemaContent className={"lg:space-y-12"}>
+                    <SkjemaStegTitle className={"lg:mb-12"} />
+                    <SkjemaStegErrorSummary errors={errors} />
+                    {isPending ? (
+                        <ApplicationSpinner />
+                    ) : (
+                        <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
+                            {isError && <Feilmelding />}
+                            {isKategorierEnabled && (
+                                <KategorierChips
+                                    errors={errors}
+                                    toggle={toggle}
+                                    register={register}
+                                    categories={reducer}
+                                    hvaSokesOm={watch("hvaSokesOm")}
+                                />
+                            )}
+                            {!isKategorierEnabled && (
+                                <LocalizedTextArea
+                                    {...register("hvaSokesOm")}
+                                    id="hvaSokesOm"
+                                    maxLength={MAX_LEN_HVA_SOKES_OM}
+                                    error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
+                                    label={t("begrunnelse.kategorier.label")}
+                                    description={<BodyShort>{t("begrunnelse.kort.behov.description")}</BodyShort>}
+                                />
+                            )}
+                            <LocalizedTextArea
+                                {...register("hvaErEndret")}
+                                id={"hvaErEndret"}
+                                maxLength={MAX_LEN_HVA_ER_ENDRET}
+                                error={errors.hvaErEndret && <TranslatedError error={errors.hvaErEndret} />}
+                                label={t("situasjon.kort.hvaErEndret.label")}
+                                description={<BodyShort>{t("situasjon.kort.hvaErEndret.description")}</BodyShort>}
                             />
-                        )}
-                        {!isKategorierEnabled ? (
-                            <Textarea
-                                {...register("hvaSokesOm")}
-                                id={"kategorier"}
-                                error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
-                                label={t("begrunnelse.hva.label")}
-                                description={<BodyShort>{t("begrunnelse.hva.description")}</BodyShort>}
+                            <FileUploadBox
+                                sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+                                undertekst={t("begrunnelse.kort.behov.dokumentasjon.beskrivelse")}
+                                dokumentasjonType={"kort|behov"}
                             />
-                        ) : null}
-                        {}
-                        <FileUploadBox
-                            sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
-                            undertekst={t("begrunnelse.kort.behov.dokumentasjon.beskrivelse")}
-                            dokumentasjonType={"kort|behov"}
-                        />
-                    </form>
-                )}
-                <SkjemaStegButtons loading={isPending} includeNextArrow />
-            </SkjemaContent>
+                        </form>
+                    )}
+                    <SkjemaStegButtons loading={isPending} includeNextArrow />
+                </SkjemaContent>
+            </VStack>
         </SkjemaSteg>
     );
 };

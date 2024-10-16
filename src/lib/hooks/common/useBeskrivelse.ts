@@ -3,7 +3,7 @@ import {z} from "zod";
 import {useTranslation} from "react-i18next";
 
 import {ValideringsFeilKode} from "../../validering";
-const MAX_CHARS = 500;
+export const MAX_CHARS = 500;
 
 const BeskrivelseAvAnnetSchema = z.string().max(MAX_CHARS, {
     message: ValideringsFeilKode.MAX_LENGDE,

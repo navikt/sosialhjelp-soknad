@@ -7,7 +7,7 @@ import styled from "styled-components";
 import {formaterAdresseString} from "./AdresseUtils";
 import {AdresseForslag} from "../../../generated/model";
 import * as React from "react";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 import {useAdresseSok} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {UseQueryResult} from "@tanstack/react-query";
 
@@ -42,21 +42,33 @@ const SelectMenu = styled.ul`
     width: 100%;
 `;
 
-const Item = styled.li<{isHighlighted: boolean}>`
+const Item = styled.li<{$isHighlighted: boolean}>`
     padding: 0.25rem 0.5rem;
 
-    color: ${(props) => (props.isHighlighted ? "var(--a-surface-default)" : "inherit")};
-    background-color: ${(props) => (props.isHighlighted ? "var(--a-blue-400)" : "inherit")};
+    color: ${(props) => (props.$isHighlighted ? "var(--a-surface-default)" : "inherit")};
+    background-color: ${(props) => (props.$isHighlighted ? "var(--a-blue-400)" : "inherit")};
 `;
 
 const AdressesokHeading = () => {
-    const {t} = useTranslation("skjema");
+    const {t, i18n} = useTranslation("skjema");
+    const baseUrl = "https://www.nav.no/sok-nav-kontor";
+    const href = i18n.language === "nb" ? baseUrl : `${baseUrl}/${i18n.language}`;
     return (
         <>
             <div>
                 <Heading size={"xsmall"}>{t("kontakt.system.oppholdsadresse.hvorOppholder")}</Heading>
             </div>
-            <div>{t("kontakt.system.kontaktinfo.infotekst.ekstratekst")}</div>
+            <Trans
+                t={t}
+                i18nKey={"kontakt.system.kontaktinfo.infotekst.ekstratekst"}
+                components={{
+                    lenke: (
+                        <a href={href} target="_blank" rel="noreferrer">
+                            {null}
+                        </a>
+                    ),
+                }}
+            />
         </>
     );
 };
@@ -79,13 +91,13 @@ export const AdresseTypeahead = ({
                     {({isPending, data}) => (
                         <SelectMenu {...getMenuProps()}>
                             {isPending ? (
-                                <Item isHighlighted={false}>
+                                <Item $isHighlighted={false}>
                                     <Loader />
                                 </Item>
                             ) : (
                                 data?.map((item, index: number) => (
                                     <Item
-                                        isHighlighted={index === highlightedIndex}
+                                        $isHighlighted={index === highlightedIndex}
                                         key={index}
                                         {...getItemProps({item, index})}
                                     >

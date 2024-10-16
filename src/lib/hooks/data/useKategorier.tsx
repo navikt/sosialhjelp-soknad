@@ -6,22 +6,19 @@ import {DigisosLanguageKey} from "../../i18n";
 import {
     TrainIcon,
     ChildEyesIcon,
-    ClothingHangerIcon,
-    CoffeeIcon,
     ExclamationmarkTriangleIcon,
     FirstAidIcon,
-    FirstAidKitIcon,
     HouseIcon,
     LightningIcon,
     CalendarIcon,
-    ThermometerIcon,
     PencilWritingIcon,
     CarIcon,
 } from "@navikt/aksel-icons";
-import {UseFormGetValues, UseFormHandleSubmit, UseFormSetValue} from "react-hook-form";
-import {BegrunnelseFrontend} from "../../../generated/model";
-import {inhibitNavigation} from "../../components/SkjemaSteg/ny/SkjemaSteg";
+import {UseFormGetValues, UseFormSetValue} from "react-hook-form";
 import {useBegrunnelse} from "./useBegrunnelse";
+import Tann from "../../components/svg/illustrasjoner/Tann.tsx";
+import Eple from "../../components/svg/illustrasjoner/Eple.tsx";
+import TSkjorte from "../../components/svg/illustrasjoner/TSkjorte.tsx";
 
 interface Category {
     key: DigisosLanguageKey;
@@ -43,8 +40,15 @@ interface CategoryAction {
     categories?: SelectableCategory[];
 }
 
-export const CATEGORIES: Category[] = [
-    {key: "begrunnelse.kategorier.mat", icons: [CoffeeIcon], text: "Mat"},
+const addIf = <T,>(bool: boolean, items: T[]) => {
+    if (bool) {
+        return items;
+    }
+    return [];
+};
+
+export const createCategories = (hasChildren: boolean): Category[] => [
+    {key: "begrunnelse.kategorier.mat", icons: [Eple], text: "Mat"},
     {
         key: "begrunnelse.kategorier.bolig",
         icons: [HouseIcon],
@@ -66,13 +70,27 @@ export const CATEGORIES: Category[] = [
         text: "Nødhjelp",
     },
     {key: "begrunnelse.kategorier.lege", icons: [FirstAidIcon], text: "Lege og medisiner"},
-    {key: "begrunnelse.kategorier.tannlege", icons: [FirstAidKitIcon], text: "Tannlege"},
-    {key: "begrunnelse.kategorier.klaer", icons: [ClothingHangerIcon], text: "Klær og utstyr"},
-    {key: "begrunnelse.kategorier.barnehage", icons: [ChildEyesIcon], text: "Barnehage, SFO eller AKS"},
-    {key: "begrunnelse.kategorier.barn", icons: [ChildEyesIcon], text: "Ting til barn og fritidsaktiviteter"},
+    {key: "begrunnelse.kategorier.tannlege", icons: [Tann], text: "Tannlege"},
+    {key: "begrunnelse.kategorier.klaer", icons: [TSkjorte], text: "Klær og utstyr"},
+    ...addIf<Category>(hasChildren, [
+        {
+            key: "begrunnelse.kategorier.barnehage",
+            icons: [ChildEyesIcon],
+            text: "Barnehage og SFO/AKS",
+        },
+        {
+            key: "begrunnelse.kategorier.fritidsaktiviteter",
+            icons: [ChildEyesIcon],
+            text: "Fritidsaktiviteter til barn",
+        },
+        {
+            key: "begrunnelse.kategorier.barn",
+            icons: [ChildEyesIcon],
+            text: "Andre utgifter til barn",
+        },
+    ]),
     {key: "begrunnelse.kategorier.transport", icons: [CarIcon, TrainIcon], text: "Transport"},
-    {key: "begrunnelse.kategorier.hoytid", icons: [CalendarIcon], text: "Høytid, merkedager og gaver"},
-    {key: "begrunnelse.kategorier.ved", icons: [ThermometerIcon], text: "Ved, gass eller fjernvarme"},
+    {key: "begrunnelse.kategorier.hoytid", icons: [CalendarIcon], text: "Høytid og merkedager"},
     {
         key: "begrunnelse.kategorier.annet",
         ingressKey: "begrunnelse.annet.beskrivelse",
@@ -81,14 +99,19 @@ export const CATEGORIES: Category[] = [
     },
 ];
 
+interface KategorierFormValues {
+    hvaSokesOm?: string | null;
+    hvorforSoke?: string | null;
+}
+
 /* FIXME:
     Dette er kvalme greier, vær så snill å fiks det når vi er på ny datamodell og kan kontrollere
     hva som kommer inn i hvaSokesOm.
 */
-const useKategorier = (
-    setValue: UseFormSetValue<BegrunnelseFrontend>,
-    handleSubmit: UseFormHandleSubmit<BegrunnelseFrontend>,
-    getValues: UseFormGetValues<BegrunnelseFrontend>
+const useKategorier = <T extends KategorierFormValues>(
+    hasChildren: boolean,
+    setValue: UseFormSetValue<T | KategorierFormValues>,
+    getValues: UseFormGetValues<T | KategorierFormValues>
 ) => {
     const behandlingsId = useBehandlingsId();
     const {data} = useHentBegrunnelse(behandlingsId);
@@ -128,7 +151,7 @@ const useKategorier = (
                     return state;
             }
         },
-        CATEGORIES,
+        createCategories(hasChildren),
         (initialState) =>
             initialState.map((category) => ({
                 ...category,
@@ -140,8 +163,8 @@ const useKategorier = (
         return dispatch({type: "toggle", category, subCategory});
     };
     const {data: featureFlagData} = useFeatureToggles();
-    const {put, isPending, isError} = useBegrunnelse();
-    const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
+    const {put: doPut, isPending, isError} = useBegrunnelse();
+    const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"];
 
     /**
         Kommer i json-format
@@ -155,7 +178,7 @@ const useKategorier = (
             if (annetText) {
                 setValue("hvaSokesOm", annetText);
             }
-            const categories = CATEGORIES.map((category) => {
+            const categories = createCategories(hasChildren).map((category) => {
                 const previouslySelectedCategory = hvaSokesOm.find((it) => it.text === category.text);
                 if (previouslySelectedCategory) {
                     return {
@@ -174,10 +197,10 @@ const useKategorier = (
                 }
                 return category;
             }) as SelectableCategory[];
-            dispatch({type: "set", categories: categories});
+            dispatch({type: "set", categories});
         }
-    }, [data, dispatch]);
-    const onSubmit = handleSubmit((begrunnelseFrontend: BegrunnelseFrontend) => {
+    }, [data, dispatch, hasChildren, isKategorierEnabled, setValue]);
+    const put = (begrunnelseFrontend: T) => {
         if (isKategorierEnabled) {
             const jsonString = reducer
                 .filter((category) => category.selected)
@@ -193,12 +216,18 @@ const useKategorier = (
                     };
                 });
 
-            return put({hvaSokesOm: JSON.stringify(jsonString), hvorforSoke: begrunnelseFrontend.hvorforSoke});
+            return doPut({
+                hvaSokesOm: JSON.stringify(jsonString),
+                hvorforSoke: begrunnelseFrontend.hvorforSoke ?? undefined,
+            });
         } else {
-            return put(begrunnelseFrontend);
+            return doPut({
+                hvaSokesOm: begrunnelseFrontend.hvaSokesOm ?? undefined,
+                hvorforSoke: begrunnelseFrontend.hvorforSoke ?? undefined,
+            });
         }
-    }, inhibitNavigation);
-    return {onSubmit, isPending, isError, reducer, dispatch, toggle};
+    };
+    return {put, isPending, isError, reducer, dispatch, toggle};
 };
 
 export default useKategorier;

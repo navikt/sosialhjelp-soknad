@@ -28,6 +28,7 @@ export const SkjemaStegButtons = ({
 
     const {t} = useTranslation("skjema");
     const context = useContext(SkjemaStegContext);
+    const [sendSoknadPending, setSendSoknadPending] = useState<boolean>(false);
 
     if (context === null) {
         logError("<SkjemaStegButtons/> must be used inside <SkjemaSteg />");
@@ -55,18 +56,20 @@ export const SkjemaStegButtons = ({
                 <Button
                     variant="primary"
                     id="gaa_videre_button"
-                    onClick={() => {
+                    onClick={async () => {
                         if (onConfirm) {
-                            return onConfirm();
+                            setSendSoknadPending(true);
+                            await onConfirm();
+                            setSendSoknadPending(false);
                         }
                         return requestNavigation(page + 1);
                     }}
-                    disabled={loading}
+                    disabled={sendSoknadPending || loading}
                     icon={includeNextArrow && <ArrowRightIcon />}
                     iconPosition={"right"}
                 >
                     {t(confirmTextKey)}
-                    {loading && <Loader className={"ml-2"} />}
+                    {(sendSoknadPending || loading) && <Loader className={"ml-2"} />}
                 </Button>
             </div>
             <div className={"pb-8 lg:pb-16"}>

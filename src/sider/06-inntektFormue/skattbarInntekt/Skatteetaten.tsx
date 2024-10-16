@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Alert, Heading} from "@navikt/ds-react";
+import {Alert, Heading, Box} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlaceholder";
 import {useSkatteetatenData} from "../../../lib/hooks/data/useSkatteetatenData";
@@ -22,10 +22,10 @@ export const Skatteetaten = () => {
         );
 
     return (
-        <>
+        <Box>
             {inntekt.map(({organisasjoner}) =>
                 organisasjoner?.map((o) => <SkatteetatenOrganisasjon key={o.orgnr} organisasjon={o} />)
             )}
-        </>
+        </Box>
     );
 };

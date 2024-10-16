@@ -21,6 +21,7 @@ export const NySoknadInfo = () => {
 
     const antallNyligInnsendteSoknader = sessionInfo?.numRecentlySent ?? 0;
     const antallPabegynteSoknader = sessionInfo?.open?.length ?? 0;
+    const qualifiesForKortSoknad = sessionInfo?.qualifiesForKortSoknad ?? false;
 
     const navigate = useNavigate();
     const {t} = useTranslation("skjema");
@@ -28,21 +29,18 @@ export const NySoknadInfo = () => {
     const onSokSosialhjelpButtonClick = async (event: React.SyntheticEvent) => {
         setStartSoknadPending(true);
         event.preventDefault();
-        logAmplitudeEvent("skjema startet", {
+        await logAmplitudeEvent("skjema startet", {
             antallNyligInnsendteSoknader,
             antallPabegynteSoknader,
+            qualifiesForKortSoknad,
             enableModalV2: true,
             erProdsatt: true,
             language: localStorage.getItem("digisos-language"),
         });
         try {
-            const {brukerBehandlingId, useKortSoknad} = await opprettSoknad(soknadstype ? {soknadstype} : undefined);
+            const {brukerBehandlingId} = await opprettSoknad(soknadstype ? {soknadstype} : undefined);
             await hentXsrfCookie(brukerBehandlingId);
-            if (useKortSoknad) {
-                navigate(`../skjema/kort/${brukerBehandlingId}/1`);
-            } else {
-                navigate(`../skjema/${brukerBehandlingId}/1`);
-            }
+            navigate(`../skjema/${brukerBehandlingId}/1`);
         } catch (e: any) {
             setStartSoknadError(e);
             setStartSoknadPending(false);
