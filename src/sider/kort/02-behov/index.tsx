@@ -7,7 +7,7 @@ import {ApplicationSpinner} from "../../../lib/components/animasjoner/Applicatio
 import {Alert, BodyShort, VStack} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox";
-import useKategorier from "../../../lib/hooks/data/useKategorier";
+import useKategorier, {SelectableCategory} from "../../../lib/hooks/data/useKategorier";
 import KategorierChips from "../../../lib/components/KategorierChips";
 import {SkjemaStegErrorSummary} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
 import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
@@ -48,6 +48,18 @@ const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) => {
 const Feilmelding = () => {
     const {t} = useTranslation("skjema");
     return <Alert variant={"error"}>{t("skjema.navigering.feil")}</Alert>;
+};
+
+const mapToTextOrSubcategoriesText = ({subCategories, text}: SelectableCategory) => {
+    if (text === "Nødhjelp" && subCategories?.length) {
+        const selectedSubCategories = subCategories
+            .filter(({selected}) => selected)
+            .map((subCategory) => subCategory.text);
+
+        if (selectedSubCategories.length) return `${text}: ${JSON.stringify(selectedSubCategories)}`;
+    }
+
+    return text;
 };
 
 const Behov = () => {
@@ -98,41 +110,24 @@ const Behov = () => {
     const {setAnalyticsData} = useAnalyticsContext();
     const navigate = useNavigate();
 
-    const goto = async (page: number) => {
-        await handleSubmit(async (formValues: FormValues) => {
+    const goto = async (page: number) =>
+        await handleSubmit(async (formValues) => {
             const selectedKategorier: string[] = reducer
-                .filter((category) => category.selected)
-                .map((category) => {
-                    if (category.text === "Nødhjelp" && category.subCategories?.length) {
-                        const selectedSubCategories = category.subCategories
-                            .filter((subCategory) => subCategory.selected)
-                            .map((subCategory) => subCategory.text);
-
-                        if (selectedSubCategories.length > 0) {
-                            return `${category.text}: ${JSON.stringify(selectedSubCategories)}`;
-                        }
-                    }
-                    if (category.text === "Annet" && formValues.hvaSokesOm) {
-                        return category.text;
-                    }
-                    return category.text;
-                })
+                .filter(({selected}) => selected)
+                .map(mapToTextOrSubcategoriesText)
                 .filter((categoryText): categoryText is string => !!categoryText);
 
             const situasjonEndret = formValues.hvaErEndret?.trim() ? "Ja" : "Ikke utfylt";
+            const hvaErEndret = formValues.hvaErEndret ?? undefined;
 
             setAnalyticsData({selectedKategorier, situasjonEndret});
 
-            await putSituasjon({
-                ...formValues,
-                hvaErEndret: formValues.hvaErEndret ?? undefined,
-            });
+            await putSituasjon({...formValues, hvaErEndret});
             await putKategorier({hvaSokesOm: formValues.hvaSokesOm});
             reset({hvaSokesOm: null, hvaErEndret: null});
             await logAmplitudeSkjemaStegFullfort(2);
             navigate(`../${page}`);
         })();
-    };
 
     const isPending = kategorierPending || situasjonPending || featureFlagsPending;
     const isError = kategorierError || situasjonError;
