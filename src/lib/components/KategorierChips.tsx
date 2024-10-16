@@ -29,6 +29,7 @@ interface CategoriesSummaryProps {
     categories: SelectableCategory[];
     hvaSokesOm?: string | null;
 }
+
 const CategoriesSummary = ({categories, hvaSokesOm}: CategoriesSummaryProps) => {
     const {t} = useTranslation("skjema");
     const annet = categories.find((cat) => cat.text === "Annet");
