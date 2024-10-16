@@ -20,9 +20,12 @@ import {useNavigate} from "react-router";
 import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
+import {useAnalyticsContext} from "../../../lib/AnalyticsContextProvider.tsx";
+import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
 
 const MAX_LEN_HVA = 150;
 const MAX_LEN_HVA_ER_ENDRET = 500;
+const MAX_LEN_HVA_SOKES_OM = 500;
 
 const behovSchema = z.object({
     hvaSokesOm: z.string().max(MAX_LEN_HVA, "validering.maksLengde").nullable().optional(),
@@ -47,8 +50,20 @@ const Feilmelding = () => {
     return <Alert variant={"error"}>{t("skjema.navigering.feil")}</Alert>;
 };
 
-const Behov = (): React.JSX.Element => {
+const Behov = () => {
     const {t} = useTranslation("skjema");
+
+    // Don't have to fetch feature flags more than once
+    const {data: featureFlagData, isPending: featureFlagsPending} = useFeatureToggles({
+        query: {
+            refetchOnWindowFocus: false,
+            refetchOnMount: false,
+            refetchOnReconnect: false,
+            retry: false,
+            staleTime: 24 * 60 * 60,
+        },
+    });
+    const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
 
     const {forsorgerplikt} = useForsorgerplikt();
 
@@ -80,23 +95,46 @@ const Behov = (): React.JSX.Element => {
         reducer,
         toggle,
     } = useKategorier(!!forsorgerplikt?.harForsorgerplikt, setValue, getValues);
-
+    const {setAnalyticsData} = useAnalyticsContext();
     const navigate = useNavigate();
 
     const goto = async (page: number) => {
         await handleSubmit(async (formValues: FormValues) => {
-            putSituasjon({
+            const selectedKategorier: string[] = reducer
+                .filter((category) => category.selected)
+                .map((category) => {
+                    if (category.text === "Nødhjelp" && category.subCategories?.length) {
+                        const selectedSubCategories = category.subCategories
+                            .filter((subCategory) => subCategory.selected)
+                            .map((subCategory) => subCategory.text);
+
+                        if (selectedSubCategories.length > 0) {
+                            return `${category.text}: ${JSON.stringify(selectedSubCategories)}`;
+                        }
+                    }
+                    if (category.text === "Annet" && formValues.hvaSokesOm) {
+                        return category.text;
+                    }
+                    return category.text;
+                })
+                .filter((categoryText): categoryText is string => !!categoryText);
+
+            const situasjonEndret = formValues.hvaErEndret?.trim() ? "Ja" : "Ikke utfylt";
+
+            setAnalyticsData({selectedKategorier, situasjonEndret});
+
+            await putSituasjon({
                 ...formValues,
                 hvaErEndret: formValues.hvaErEndret ?? undefined,
             });
-            putKategorier({hvaSokesOm: formValues.hvaSokesOm});
+            await putKategorier({hvaSokesOm: formValues.hvaSokesOm});
             reset({hvaSokesOm: null, hvaErEndret: null});
             await logAmplitudeSkjemaStegFullfort(2);
             navigate(`../${page}`);
         })();
     };
 
-    const isPending = kategorierPending || situasjonPending;
+    const isPending = kategorierPending || situasjonPending || featureFlagsPending;
     const isError = kategorierError || situasjonError;
 
     return (
@@ -118,13 +156,24 @@ const Behov = (): React.JSX.Element => {
                     ) : (
                         <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
                             {isError && <Feilmelding />}
-                            <KategorierChips
-                                errors={errors}
-                                toggle={toggle}
-                                register={register}
-                                categories={reducer}
-                                hvaSokesOm={watch("hvaSokesOm")}
-                            />
+                            {isKategorierEnabled ? (
+                                <KategorierChips
+                                    errors={errors}
+                                    toggle={toggle}
+                                    register={register}
+                                    categories={reducer}
+                                    hvaSokesOm={watch("hvaSokesOm")}
+                                />
+                            ) : (
+                                <LocalizedTextArea
+                                    {...register("hvaSokesOm")}
+                                    id="hvaSokesOm"
+                                    maxLength={MAX_LEN_HVA_SOKES_OM}
+                                    error={errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm} />}
+                                    label={t("begrunnelse.kategorier.label")}
+                                    description={<BodyShort>{t("begrunnelse.kort.behov.description")}</BodyShort>}
+                                />
+                            )}
                             <LocalizedTextArea
                                 {...register("hvaErEndret")}
                                 id={"hvaErEndret"}

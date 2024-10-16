@@ -19,7 +19,6 @@ import {useBegrunnelse} from "./useBegrunnelse";
 import Tann from "../../components/svg/illustrasjoner/Tann.tsx";
 import Eple from "../../components/svg/illustrasjoner/Eple.tsx";
 import TSkjorte from "../../components/svg/illustrasjoner/TSkjorte.tsx";
-import useIsKort from "./useIsKort.ts";
 
 interface Category {
     key: DigisosLanguageKey;
@@ -116,7 +115,6 @@ const useKategorier = <T extends KategorierFormValues>(
 ) => {
     const behandlingsId = useBehandlingsId();
     const {data} = useHentBegrunnelse(behandlingsId);
-    const {data: isKortSoknad} = useIsKort();
     const [reducer, dispatch] = useReducer(
         (state: SelectableCategory[], action: CategoryAction) => {
             switch (action.type) {
@@ -166,7 +164,7 @@ const useKategorier = <T extends KategorierFormValues>(
     };
     const {data: featureFlagData} = useFeatureToggles();
     const {put: doPut, isPending, isError} = useBegrunnelse();
-    const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] || isKortSoknad;
+    const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"];
 
     /**
         Kommer i json-format

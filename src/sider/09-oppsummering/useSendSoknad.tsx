@@ -18,15 +18,22 @@ export const useSendSoknad = (behandlingsId: string) => {
         }
     }, [brukerdefinert]);
 
-    const sendSoknaden = async (isKortSoknad: boolean) => {
+    const sendSoknaden = async (
+        isKortSoknad: boolean,
+        selectedKategorier: string[] | undefined,
+        situasjonEndret: string | undefined
+    ) => {
         setIsError(false);
+        const {id, antallDokumenter, forrigeSoknadSendt} = await sendSoknad(behandlingsId);
         try {
-            const {id, antallDokumenter, forrigeSoknadSendt} = await sendSoknad(behandlingsId);
             await logAmplitudeEvent("Søknad sendt", {
                 AntallDokumenterSendt: antallDokumenter,
                 KortSoknad: isKortSoknad ? "Ja" : "Nei",
                 EndrerSokerAdresse: endretAdresse ? "Ja" : "Nei",
                 forrigeSoknadSendt: forrigeSoknadSendt,
+                kategorier: selectedKategorier?.length ? "Ja" : "Ikke utfylt",
+                valgteKategorier: selectedKategorier?.length ? selectedKategorier : "Ikke utfylt",
+                situasjonEndret: situasjonEndret !== "Ikke utfylt" ? "Ja" : "Ikke utfylt",
             });
             window.location.assign(`${digisosConfig.innsynURL}${id}/status`);
         } catch (e: any) {
@@ -35,6 +42,5 @@ export const useSendSoknad = (behandlingsId: string) => {
             throw e;
         }
     };
-
     return {sendSoknad: sendSoknaden, isError};
 };

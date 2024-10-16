@@ -16,6 +16,7 @@ import React from "react";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/ny/useCurrentSoknadIsKort.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {useAnalyticsContext} from "../../lib/AnalyticsContextProvider.tsx";
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
@@ -25,6 +26,11 @@ export const Oppsummering = () => {
     const isKortSoknad = useCurrentSoknadIsKort();
 
     const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId);
+
+    const {
+        analyticsData: {selectedKategorier, situasjonEndret},
+    } = useAnalyticsContext();
+
     if (isLoading) return <ApplicationSpinner />;
 
     const {tittel, ikon} = isKortSoknad ? KortSkjemaHeadings[5] : SkjemaHeadings[9];
@@ -49,7 +55,7 @@ export const Oppsummering = () => {
                     onPrevious={async () => navigate("../" + (isKortSoknad ? 4 : 8))}
                     onNext={async () => {
                         await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
-                        await sendSoknad(isKortSoknad);
+                        await sendSoknad(isKortSoknad, selectedKategorier, situasjonEndret);
                     }}
                 />
             </SkjemaStegBlock>
