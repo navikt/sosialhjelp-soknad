@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useContext, useEffect} from "react";
+import {useEffect} from "react";
 import Feiloppsummering from "../Feiloppsummering";
 import {useTitle} from "../../hooks/common/useTitle";
 import {Link} from "@navikt/ds-react";
@@ -10,7 +10,7 @@ import {useTranslation} from "react-i18next";
 import {t} from "i18next";
 import {AppHeader} from "../appHeader/AppHeader";
 import {scrollToTop} from "../../utils";
-import {ValideringsContext, ValideringsContextProvider} from "../../valideringContextProvider";
+import {ValideringsContextProvider} from "../../valideringContextProvider";
 import {RequireXsrfCookie} from "./ny/RequireXsrfCookie";
 import {SkjemaStegTitle} from "./ny/SkjemaStegTitle.tsx";
 import {SkjemaStegStepper} from "./ny/SkjemaStegStepper.tsx";
@@ -23,7 +23,7 @@ interface StegMedNavigasjonProps {
     children?: any;
 }
 
-export const useSkjemaConfig = (skjemaConfig: SkjemaConfig, steg: DigisosSkjemaStegKey) => {
+const useSkjemaConfig = (skjemaConfig: SkjemaConfig, steg: DigisosSkjemaStegKey) => {
     const {t} = useTranslation("skjema");
 
     return {
@@ -33,10 +33,6 @@ export const useSkjemaConfig = (skjemaConfig: SkjemaConfig, steg: DigisosSkjemaS
     };
 };
 
-/**
- * En liten hack for å flytte ValideringsContext ut av rot-noden til App
- * @see SkjemaStegLegacyInner
- */
 export const SkjemaStegLegacy = (props: StegMedNavigasjonProps) => (
     <ValideringsContextProvider>
         <SkjemaStegLegacyInner {...props} />
@@ -44,10 +40,6 @@ export const SkjemaStegLegacy = (props: StegMedNavigasjonProps) => (
 );
 
 const SkjemaStegLegacyInner = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps) => {
-    const {
-        state: {feil, visValideringsfeil},
-    } = useContext(ValideringsContext);
-
     const {stegTittel, documentTitle, aktivtSteg} = useSkjemaConfig(skjemaConfig, steg);
     const {gotoPage} = useSkjemaNavigation(aktivtSteg.id);
 
@@ -66,7 +58,7 @@ const SkjemaStegLegacyInner = ({skjemaConfig, steg, ikon, children}: StegMedNavi
                 <AppHeader />
                 <SkjemaStegStepper page={aktivtSteg.id} onStepChange={async (page) => gotoPage(page)} />
                 <div className={"w-full max-w-3xl mx-auto"}>
-                    {visValideringsfeil && <Feiloppsummering valideringsfeil={feil} />}
+                    <Feiloppsummering />
                     <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8"}>
                         <SkjemaStegTitle icon={ikon} title={stegTittel} />
                         <main id="main-content" className={"space-y-12 lg:space-y-24"}>
