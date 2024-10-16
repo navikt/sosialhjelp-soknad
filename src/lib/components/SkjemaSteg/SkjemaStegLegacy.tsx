@@ -3,18 +3,14 @@ import {useContext, useEffect} from "react";
 import Feiloppsummering from "../Feiloppsummering";
 import {useTitle} from "../../hooks/common/useTitle";
 import {Link} from "@navikt/ds-react";
-import {NedetidPanel} from "../NedetidPanel";
 import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapperLegacy from "./SkjemaStegNavKnapperLegacy";
 import {useTranslation} from "react-i18next";
-import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
 import {t} from "i18next";
 import {AppHeader} from "../appHeader/AppHeader";
 import {scrollToTop} from "../../utils";
-
 import {ValideringsContext, ValideringsContextProvider} from "../../valideringContextProvider";
-import {NavEnhetInaktiv} from "../../../sider/01-personalia/adresse/NavEnhetInaktiv";
 import {RequireXsrfCookie} from "./ny/RequireXsrfCookie";
 import {SkjemaStegTitle} from "./ny/SkjemaStegTitle.tsx";
 import {SkjemaStegStepper} from "./ny/SkjemaStegStepper.tsx";
@@ -25,7 +21,6 @@ interface StegMedNavigasjonProps {
     pending?: boolean;
     ikon?: React.ReactNode;
     children?: any;
-    onSend?: () => Promise<void>;
 }
 
 export const useSkjemaConfig = (skjemaConfig: SkjemaConfig, steg: DigisosSkjemaStegKey) => {
@@ -48,9 +43,7 @@ export const SkjemaStegLegacy = (props: StegMedNavigasjonProps) => (
     </ValideringsContextProvider>
 );
 
-const SkjemaStegLegacyInner = ({skjemaConfig, steg, ikon, children, onSend}: StegMedNavigasjonProps) => {
-    const {data: nedetid} = useHentNedetidInformasjon();
-
+const SkjemaStegLegacyInner = ({skjemaConfig, steg, ikon, children}: StegMedNavigasjonProps) => {
     const {
         state: {feil, visValideringsfeil},
     } = useContext(ValideringsContext);
@@ -73,19 +66,16 @@ const SkjemaStegLegacyInner = ({skjemaConfig, steg, ikon, children, onSend}: Ste
                 <AppHeader />
                 <SkjemaStegStepper page={aktivtSteg.id} onStepChange={async (page) => gotoPage(page)} />
                 <div className={"w-full max-w-3xl mx-auto"}>
-                    <NedetidPanel varselType={"infoside"} />
                     {visValideringsfeil && <Feiloppsummering valideringsfeil={feil} />}
                     <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8"}>
                         <SkjemaStegTitle icon={ikon} title={stegTittel} />
                         <main id="main-content" className={"space-y-12 lg:space-y-24"}>
                             {children}
                         </main>
-                        {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && <NavEnhetInaktiv />}
                         <SkjemaStegNavKnapperLegacy
                             skjemaConfig={skjemaConfig}
                             steg={skjemaConfig.steg[steg]}
                             goToStep={gotoPage}
-                            onSend={onSend}
                         />
                     </div>
                 </div>

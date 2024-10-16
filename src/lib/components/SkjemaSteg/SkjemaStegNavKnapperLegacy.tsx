@@ -13,12 +13,10 @@ interface SkjemaStegNavigasjonProps {
     loading?: boolean;
     gaVidereLabel?: string;
     goToStep: (newStep: number) => void;
-    onSend?: () => Promise<void>;
 }
 
-export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep, onSend}: SkjemaStegNavigasjonProps) => {
+export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep}: SkjemaStegNavigasjonProps) => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
-    const [sendSoknadPending, setSendSoknadPending] = useState<boolean>(false);
 
     const {t} = useTranslation("skjema");
 
@@ -38,32 +36,15 @@ export const SkjemaStegNavKnapperLegacy = ({steg, loading, goToStep, onSend}: Sk
                     {t("skjema.knapper.forrige")}
                     {loading && <Loader />}
                 </Button>
-                {steg.type === "skjema" ? (
-                    <Button
-                        variant="primary"
-                        id="gaa_videre_button"
-                        onClick={() => goToStep(steg.id + 1)}
-                        disabled={forwardInhibited}
-                    >
-                        {t("skjema.knapper.neste")}
-                        {loading && <Loader />}
-                    </Button>
-                ) : (
-                    <Button
-                        variant="primary"
-                        id="send_button"
-                        onClick={async () => {
-                            if (!onSend) return;
-                            setSendSoknadPending(true);
-                            await onSend();
-                            setSendSoknadPending(false);
-                        }}
-                        disabled={sendSoknadPending || forwardInhibited}
-                    >
-                        {t("skjema.knapper.send")}
-                        {sendSoknadPending && <Loader className={"ml-2 h-[1em]"} />}
-                    </Button>
-                )}
+                <Button
+                    variant="primary"
+                    id="gaa_videre_button"
+                    onClick={() => goToStep(steg.id + 1)}
+                    disabled={forwardInhibited}
+                >
+                    {t("skjema.knapper.neste")}
+                    {loading && <Loader />}
+                </Button>
             </div>
             <div className={"pb-8 lg:pb-16"}>
                 <Button
