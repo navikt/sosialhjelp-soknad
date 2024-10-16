@@ -13,6 +13,7 @@ import {useLocation} from "react-router-dom";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
+import {useAnalyticsContext} from "../../lib/AnalyticsContextProvider.tsx";
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
@@ -21,6 +22,10 @@ export const Oppsummering = () => {
 
     const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId);
     const location = useLocation();
+
+    const {
+        analyticsData: {selectedKategorier, situasjonEndret},
+    } = useAnalyticsContext();
 
     if (isLoading) return <ApplicationSpinner />;
     const isKortSoknad = location.pathname.includes("/kort");
@@ -41,8 +46,8 @@ export const Oppsummering = () => {
                 <SkjemaStegButtons
                     confirmTextKey={"skjema.knapper.send"}
                     onConfirm={async () => {
-                        logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
-                        return sendSoknad(isKortSoknad);
+                        await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
+                        return sendSoknad(isKortSoknad, selectedKategorier, situasjonEndret);
                     }}
                 />
             </SkjemaContent>

@@ -17,6 +17,7 @@ import {DigisosLanguageKey} from "../../../lib/i18n.ts";
 import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
 import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";
+import {useAnalyticsContext} from "../../../lib/AnalyticsContextProvider.tsx";
 import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
 
 const MAX_LEN_HVA = 150;
@@ -92,7 +93,32 @@ const Behov = (): React.JSX.Element => {
         toggle,
     } = useKategorier(!!forsorgerplikt?.harForsorgerplikt, setValue, getValues);
 
+    const {setAnalyticsData} = useAnalyticsContext();
+
     const onSubmit = (formValues: FormValues) => {
+        const selectedKategorier: string[] = reducer
+            .filter((category) => category.selected)
+            .map((category) => {
+                if (category.text === "Nødhjelp" && category.subCategories?.length) {
+                    const selectedSubCategories = category.subCategories
+                        .filter((subCategory) => subCategory.selected)
+                        .map((subCategory) => subCategory.text);
+
+                    if (selectedSubCategories.length > 0) {
+                        return `${category.text}: ${JSON.stringify(selectedSubCategories)}`;
+                    }
+                }
+                if (category.text === "Annet" && formValues.hvaSokesOm) {
+                    return category.text;
+                }
+                return category.text;
+            })
+            .filter((categoryText): categoryText is string => !!categoryText);
+
+        const situasjonEndret = formValues.hvaErEndret?.trim() ? "Ja" : "Ikke utfylt";
+
+        setAnalyticsData({selectedKategorier, situasjonEndret});
+
         putSituasjon({...formValues, hvaErEndret: formValues.hvaErEndret ?? undefined});
         putKategorier({hvaSokesOm: formValues.hvaSokesOm});
         reset({hvaSokesOm: null, hvaErEndret: null});

@@ -3712,9 +3712,6 @@
             "get": {
                 "tags": ["informasjon-ressurs"],
                 "operationId": "getSessionInfo",
-                "parameters": [
-                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
-                ],
                 "responses": {
                     "413": {
                         "description": "Payload Too Large",
@@ -4908,7 +4905,7 @@
                 ]
             },
             "OpplysningType": {
-                "required": ["dokumentasjonForventet", "group", "name", "type"],
+                "required": ["group", "name", "type"],
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
@@ -4934,7 +4931,6 @@
                     "UTGIFTER_SFO",
                     "UTGIFTER_BARNEHAGE",
                     "UTGIFTER_HUSLEIE",
-                    "UTGIFTER_HUSLEIE_KOMMUNAL",
                     "UTGIFTER_BOLIGLAN",
                     "UTGIFTER_BOLIGLAN_AVDRAG",
                     "UTGIFTER_BOLIGLAN_RENTER"
