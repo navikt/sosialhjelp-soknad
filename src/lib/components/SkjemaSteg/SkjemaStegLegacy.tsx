@@ -5,7 +5,6 @@ import {useTitle} from "../../hooks/common/useTitle";
 import {Link} from "@navikt/ds-react";
 import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
-import SkjemaStegNavKnapperLegacy from "./SkjemaStegNavKnapperLegacy";
 import {useTranslation} from "react-i18next";
 import {t} from "i18next";
 import {AppHeader} from "../appHeader/AppHeader";
@@ -14,6 +13,7 @@ import {ValideringsContextProvider} from "../../valideringContextProvider";
 import {RequireXsrfCookie} from "./ny/RequireXsrfCookie";
 import {SkjemaStegTitle} from "./ny/SkjemaStegTitle.tsx";
 import {SkjemaStegStepper} from "./ny/SkjemaStegStepper.tsx";
+import {SkjemaStegButtons} from "./ny/SkjemaStegButtons.tsx";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
@@ -64,10 +64,14 @@ const SkjemaStegLegacyInner = ({skjemaConfig, steg, ikon, children}: StegMedNavi
                         <main id="main-content" className={"space-y-12 lg:space-y-24"}>
                             {children}
                         </main>
-                        <SkjemaStegNavKnapperLegacy
-                            skjemaConfig={skjemaConfig}
-                            steg={skjemaConfig.steg[steg]}
-                            goToStep={gotoPage}
+                        {/**
+                            Note that this only works because the remaining users of SkjemaStegLegacy
+                             are all in the middle of the application, so we don't need to handle
+                             disabling the back button, nor next/send differentiation.
+                         */}
+                        <SkjemaStegButtons
+                            onNext={async () => gotoPage(aktivtSteg.id + 1)}
+                            onPrevious={async () => gotoPage(aktivtSteg.id - 1)}
                         />
                     </div>
                 </div>
