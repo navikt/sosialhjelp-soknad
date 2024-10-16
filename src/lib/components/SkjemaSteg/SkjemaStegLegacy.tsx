@@ -1,8 +1,8 @@
 import * as React from "react";
-import {ReactNode, useContext, useEffect} from "react";
+import {useContext, useEffect} from "react";
 import Feiloppsummering from "../Feiloppsummering";
 import {useTitle} from "../../hooks/common/useTitle";
-import {Heading, Link} from "@navikt/ds-react";
+import {Link} from "@navikt/ds-react";
 import {NedetidPanel} from "../NedetidPanel";
 import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepperLegacy} from "./SkjemaStegNavStepperLegacy";
@@ -17,6 +17,7 @@ import {scrollToTop} from "../../utils";
 import {ValideringsContext, ValideringsContextProvider} from "../../valideringContextProvider";
 import {NavEnhetInaktiv} from "../../../sider/01-personalia/adresse/NavEnhetInaktiv";
 import {RequireXsrfCookie} from "./ny/RequireXsrfCookie";
+import {SkjemaStegTitle} from "./ny/SkjemaStegTitle.tsx";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
@@ -36,15 +37,6 @@ export const useSkjemaConfig = (skjemaConfig: SkjemaConfig, steg: DigisosSkjemaS
         aktivtSteg: skjemaConfig.steg[steg],
     };
 };
-
-const SkjemaStegHeading = ({ikon, stegTittel}: {ikon: ReactNode; stegTittel: string}) => (
-    <div className={"text-center mb-12 lg:mb-24"}>
-        <div className="mx-auto w-fit mb-2">{ikon}</div>
-        <div className="skjema-steg__tittel" tabIndex={-1}>
-            <Heading size={"large"}>{stegTittel}</Heading>
-        </div>
-    </div>
-);
 
 /**
  * En liten hack for å flytte ValideringsContext ut av rot-noden til App
@@ -84,7 +76,7 @@ const SkjemaStegLegacyInner = ({skjemaConfig, steg, ikon, children, onSend}: Ste
                     <NedetidPanel varselType={"infoside"} />
                     {visValideringsfeil && <Feiloppsummering valideringsfeil={feil} />}
                     <div className={"bg-white mx-auto rounded-2xl px-4 md:px-12 lg:px-24 space-y-8 pt-8"}>
-                        <SkjemaStegHeading ikon={ikon} stegTittel={stegTittel} />
+                        <SkjemaStegTitle icon={ikon} title={stegTittel} />
                         <main id="main-content" className={"space-y-12 lg:space-y-24"}>
                             {children}
                         </main>
