@@ -56,9 +56,9 @@ export default function App() {
     }
     return (
         <Suspense fallback={<ApplicationSpinner />}>
-            <AnalyticsProvider>
-                <QueryClientProvider client={queryClient}>
-                    <BrowserRouter basename={BASE_PATH}>
+            <QueryClientProvider client={queryClient}>
+                <BrowserRouter basename={BASE_PATH}>
+                    <AnalyticsProvider>
                         <Routes>
                             <Route errorElement={<SideIkkeFunnet />}>
                                 <Route index path={`/`} element={<Informasjon />} />
@@ -92,10 +92,10 @@ export default function App() {
                                 </Route>
                             </Route>
                         </Routes>
-                    </BrowserRouter>
-                    <ReactQueryDevtools initialIsOpen={false} />
-                </QueryClientProvider>
-            </AnalyticsProvider>
+                    </AnalyticsProvider>
+                </BrowserRouter>
+                <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
         </Suspense>
     );
 }
