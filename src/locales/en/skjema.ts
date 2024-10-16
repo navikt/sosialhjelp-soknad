@@ -78,7 +78,8 @@ export const skjema = {
         paabegynt: {
             soknad: {
                 flertall: "started applications",
-                informasjon: "Please note that the started applications will be deleted after {{DAYS_BEFORE_DELETION}} days.",
+                informasjon:
+                    "Please note that the started applications will be deleted after {{DAYS_BEFORE_DELETION}} days.",
                 sist: {
                     oppdatert: "Last updated",
                 },
@@ -235,6 +236,7 @@ export const skjema = {
         },
         kort: {
             behov: {
+                description: 'Example: "I\'m applying for money for everyday living expenses, rent and electricity."',
                 dokumentasjon: {
                     beskrivelse:
                         "Here you can upload documentation about your situation and expenses. You can take photos and screenshots.",
@@ -821,8 +823,7 @@ export const skjema = {
             },
             sakerIkkefunnet: "You have no registered cases at Husbanken the last month.",
             sporsmal: {
-                sporsmal:
-                    "Have you applied for or received housing allowance from Husbanken the last two months?",
+                sporsmal: "Have you applied for or received housing allowance from Husbanken the last two months?",
             },
             ta_bort_samtykke: "Remove information from Husbanken",
             tidspunkt: "Information was obtained",
@@ -875,8 +876,7 @@ export const skjema = {
                 tekst: "By other income, we mean in the form of dividends on shares, funds, the sale of assets or other.",
             },
             lesmer: "Examples of other income",
-            sporsmal:
-                "Have you received money, other than wages or benefits from NAV, the last three months?",
+            sporsmal: "Have you received money, other than wages or benefits from NAV, the last three months?",
             tittel: "Other income",
             true: {
                 type: {
@@ -1294,8 +1294,7 @@ export const skjema = {
                     tittel: "Are we not accepting the documentation you are trying to submit?",
                 },
                 bolk2: {
-                    avsnitt1:
-                        "If you have documentation on paper, you can scan it and send it digitally.",
+                    avsnitt1: "If you have documentation on paper, you can scan it and send it digitally.",
                     avsnitt2:
                         "Using a scanning app, you can use the camera on your mobile phone to scan the documentation. You can compile several paper pages into one digital attachment, for example your tenancy agreement.",
                     avsnitt3:
