@@ -11,16 +11,12 @@ export const useSkjemaNavigation = (steg: number) => {
     const navigate = useNavigate();
 
     const gotoPage = (newPage: number) => {
-        if (newPage < steg) {
-            dispatch({type: "clearAllValideringsfeil"});
-        } else {
+        if (newPage > steg) {
             if (feil.length) {
                 dispatch({type: "visValideringsfeilPanel"});
                 return;
-            } else {
-                dispatch({type: "clearAllValideringsfeil"});
-                logAmplitudeEvent("skjemasteg fullført", {steg}).then();
             }
+            logAmplitudeEvent("skjemasteg fullført", {steg}).then();
         }
 
         navigate(`../${newPage}`);
