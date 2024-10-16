@@ -9,6 +9,7 @@ export const useVerdier = () => {
     const {data: verdier, queryKey} = useHentVerdier(behandlingsId);
     const setBekreftelse = async (verdi: boolean) => {
         if (!verdier) return;
+
         const oppdatert = {...verdier};
         oppdatert.bekreftelse = verdi;
         if (!verdi) {
