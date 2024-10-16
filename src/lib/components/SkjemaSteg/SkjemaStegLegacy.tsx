@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ReactNode, useContext, useEffect, useState} from "react";
+import {ReactNode, useContext, useEffect} from "react";
 import Feiloppsummering from "../Feiloppsummering";
 import {useTitle} from "../../hooks/common/useTitle";
 import {Heading, Link} from "@navikt/ds-react";
@@ -8,7 +8,6 @@ import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {SkjemaStegNavStepperLegacy} from "./SkjemaStegNavStepperLegacy";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import SkjemaStegNavKnapperLegacy from "./SkjemaStegNavKnapperLegacy";
-import {AvbrytSoknadModal} from "../modals/AvbrytSoknadModal.tsx";
 import {useTranslation} from "react-i18next";
 import {useHentNedetidInformasjon} from "../../../generated/nedetid-ressurs/nedetid-ressurs";
 import {t} from "i18next";
@@ -58,7 +57,6 @@ export const SkjemaStegLegacy = (props: StegMedNavigasjonProps) => (
 );
 
 const SkjemaStegLegacyInner = ({skjemaConfig, steg, ikon, children, onSend}: StegMedNavigasjonProps) => {
-    const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
     const {data: nedetid} = useHentNedetidInformasjon();
 
     const {
@@ -90,7 +88,6 @@ const SkjemaStegLegacyInner = ({skjemaConfig, steg, ikon, children, onSend}: Ste
                         <main id="main-content" className={"space-y-12 lg:space-y-24"}>
                             {children}
                         </main>
-                        <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
                         {aktivtSteg.id !== 1 && !(aktivtSteg.id === 9 && nedetid?.isNedetid) && <NavEnhetInaktiv />}
                         <SkjemaStegNavKnapperLegacy
                             skjemaConfig={skjemaConfig}
