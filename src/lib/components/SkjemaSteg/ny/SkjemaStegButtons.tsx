@@ -1,17 +1,19 @@
 import * as React from "react";
+import {useState} from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {ArrowRightIcon} from "@navikt/aksel-icons";
 import {SkjemaStegCancelButtons} from "./SkjemaStegCancelButtons.tsx";
-import {useState} from "react";
 
-interface SkjemaStegButtonsV2Props {
+export const SkjemaStegButtons = ({
+    onNext,
+    onPrevious,
+    isFinalStep,
+}: {
     isFinalStep?: boolean;
     onNext: () => Promise<any>;
     onPrevious?: () => Promise<any>;
-}
-
-export const SkjemaStegButtons = ({onNext, onPrevious, isFinalStep}: SkjemaStegButtonsV2Props) => {
+}) => {
     const {t} = useTranslation("skjema");
     const [isPending, setIsPending] = useState<boolean>(false);
 
