@@ -66,7 +66,7 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
         })();
 
     return (
-        <SkjemaSteg page={3}>
+        <SkjemaSteg>
             <SkjemaStegStepper page={3} onStepChange={goto} />
             <SkjemaStegBlock>
                 <SkjemaStegTitle title={t(SkjemaHeadings[3].tittel)} icon={SkjemaHeadings[3].ikon} />

@@ -23,8 +23,11 @@ export const useSkjemaNavigation = (steg: number) => {
      * @param newPage New page number to navigate to
      */
     const handleStepChange = async (newPage: number) => {
-        if (newPage <= steg) {
-            if (newPage == 0) throw new Error("Cannot go back from first page");
+        if (newPage == 0) throw new Error("Cannot go back from first page");
+
+        if (newPage == steg) return;
+
+        if (newPage < steg) {
             navigate(`../${newPage}`);
             return;
         }

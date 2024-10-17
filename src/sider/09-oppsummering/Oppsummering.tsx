@@ -36,7 +36,7 @@ export const Oppsummering = () => {
     const {tittel, ikon} = isKortSoknad ? KortSkjemaHeadings[5] : SkjemaHeadings[9];
 
     return (
-        <SkjemaSteg page={isKortSoknad ? 5 : 9}>
+        <SkjemaSteg>
             <SkjemaStegStepper page={isKortSoknad ? 5 : 9} onStepChange={async (page) => navigate(`../${page}`)} />
             <SkjemaStegBlock>
                 <SkjemaStegTitle title={t(tittel)} icon={ikon} />

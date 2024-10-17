@@ -14,14 +14,16 @@ import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.t
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
+import Feiloppsummering from "../../lib/components/Feiloppsummering.tsx";
 
 export const InntektFormue = () => {
     const {t} = useTranslation("skjema");
     const {handleStepChange, handlePrevious, handleNext} = useSkjemaNavigation(6);
 
     return (
-        <SkjemaSteg page={6}>
+        <SkjemaSteg>
             <SkjemaStegStepper page={6} onStepChange={handleStepChange} />
+            <Feiloppsummering />
             <SkjemaStegBlock>
                 <SkjemaStegTitle title={t(SkjemaHeadings[6].tittel)} icon={SkjemaHeadings[6].ikon} />
 

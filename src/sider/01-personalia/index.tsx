@@ -48,7 +48,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
     }, [navEnhet]);
 
     return (
-        <SkjemaSteg page={1}>
+        <SkjemaSteg>
             <SkjemaStegBlock className={shortSpacing ? "lg:space-y-12" : ""}>
                 <SkjemaStegTitle
                     className={shortSpacing ? "lg:mb-12" : ""}

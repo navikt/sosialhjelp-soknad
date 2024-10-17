@@ -7,21 +7,14 @@ import StresskoffertIllustrasjon from "../svg/illustrasjoner/StresskoffertIllust
 import DokumentIllustrasjon from "../svg/illustrasjoner/DokumentIllustrasjon.tsx";
 import {AppHeader} from "../appHeader/AppHeader.tsx";
 import {scrollToTop} from "../../utils";
-import {useTitle} from "../../hooks/common/useTitle.ts";
 import {HusIllustrasjon} from "../svg/illustrasjoner/HusIllustrasjon.tsx";
 import {MynterIllustrasjon} from "../svg/illustrasjoner/MynterIllustrasjon.tsx";
 import {RequireXsrfCookie} from "../RequireXsrfCookie.tsx";
 import {DigisosLanguageKey} from "../../i18n.ts";
 import {SparegrisIllustrasjon} from "../svg/illustrasjoner/SparegrisIllustrasjon.tsx";
-import {ValideringsContextProvider} from "../../valideringContextProvider.tsx";
 import FamilieIllustrasjon from "../svg/illustrasjoner/FamilieIllustrasjon.tsx";
 import BoligIllustrasjon from "../svg/illustrasjoner/BoligIllustrasjon.tsx";
 import LommebokIllustrasjon from "../svg/illustrasjoner/LommebokIllustrasjon.tsx";
-
-interface SkjemaStegProps {
-    page: SkjemaPage;
-    children?: ReactNode | ReactNode[];
-}
 
 export type SkjemaPage = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 export type KortSkjemaPage = 1 | 2 | 3 | 4 | 5;
@@ -46,28 +39,24 @@ export const KortSkjemaHeadings: Record<KortSkjemaPage, {tittel: DigisosLanguage
     5: {tittel: "oppsummering.tittel", ikon: <SnakkebobleIllustrasjon />},
 };
 
-export const SkjemaSteg = ({page, children}: SkjemaStegProps) => {
+export const SkjemaSteg = ({children}: {children?: ReactNode | ReactNode[]}) => {
     useEffect(() => {
         scrollToTop();
     }, []);
 
     const {t} = useTranslation("skjema");
 
-    useTitle(`${t(SkjemaHeadings[page].tittel)} - ${t("applikasjon.sidetittel.stringValue")}`);
-
     return (
         <RequireXsrfCookie>
-            <ValideringsContextProvider>
-                <div className="pb-4 lg:pb-40 flex gap-10 items-center flex-col">
-                    <Link href="#main-content" className="sr-only sr-only-focusable">
-                        {t("hoppTilHovedinnhold")}
-                    </Link>
-                    <AppHeader />
-                    <Box as={"main"} id={"main-content"} className={"max-w-3xl w-full"}>
-                        {children}
-                    </Box>
-                </div>
-            </ValideringsContextProvider>
+            <div className="pb-4 lg:pb-40 flex gap-10 items-center flex-col">
+                <Link href="#main-content" className="sr-only sr-only-focusable">
+                    {t("hoppTilHovedinnhold")}
+                </Link>
+                <AppHeader />
+                <Box as={"main"} id={"main-content"} className={"max-w-3xl w-full"}>
+                    {children}
+                </Box>
+            </div>
         </RequireXsrfCookie>
     );
 };

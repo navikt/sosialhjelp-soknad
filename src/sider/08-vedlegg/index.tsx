@@ -27,7 +27,7 @@ export const OkonomiskeOpplysningerView = () => {
     const navigate = useNavigate();
 
     return (
-        <SkjemaSteg page={8}>
+        <SkjemaSteg>
             <SkjemaStegStepper
                 page={8}
                 onStepChange={async (toPage) => {

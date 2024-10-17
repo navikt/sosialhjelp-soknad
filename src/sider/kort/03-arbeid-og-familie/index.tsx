@@ -29,7 +29,7 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
     const {forsorgerplikt} = useForsorgerplikt();
 
     return (
-        <SkjemaSteg page={3}>
+        <SkjemaSteg>
             <SkjemaStegStepper page={2} onStepChange={gotoPage} />
             <SkjemaStegBlock className={"lg:space-y-12"}>
                 <SkjemaStegTitle

@@ -8,14 +8,16 @@ import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/Skjema
 import {useTranslation} from "react-i18next";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
+import Feiloppsummering from "../../lib/components/Feiloppsummering.tsx";
 
 export const UtgifterGjeld = () => {
     const {t} = useTranslation("skjema");
     const {handleStepChange, handlePrevious, handleNext} = useSkjemaNavigation(7);
 
     return (
-        <SkjemaSteg page={7}>
+        <SkjemaSteg>
             <SkjemaStegStepper page={7} onStepChange={handleStepChange} />
+            <Feiloppsummering />
             <SkjemaStegBlock>
                 <SkjemaStegTitle title={t(SkjemaHeadings[7].tittel)} icon={SkjemaHeadings[7].ikon} />
                 <Boutgifter />

@@ -91,7 +91,7 @@ export const Begrunnelse = () => {
         })();
 
     return (
-        <SkjemaSteg page={2}>
+        <SkjemaSteg>
             <SkjemaStegStepper page={2} onStepChange={goto} />
             <SkjemaStegBlock>
                 <SkjemaStegTitle title={t(SkjemaHeadings[2].tittel)} icon={SkjemaHeadings[2].ikon} />

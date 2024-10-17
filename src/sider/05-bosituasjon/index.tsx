@@ -8,14 +8,16 @@ import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/Skjema
 import {useTranslation} from "react-i18next";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
+import Feiloppsummering from "../../lib/components/Feiloppsummering.tsx";
 
 export const Bosituasjon = () => {
     const {t} = useTranslation("skjema");
     const {handleStepChange, handlePrevious, handleNext} = useSkjemaNavigation(5);
 
     return (
-        <SkjemaSteg page={5}>
+        <SkjemaSteg>
             <SkjemaStegStepper page={5} onStepChange={handleStepChange} />
+            <Feiloppsummering />
             <SkjemaStegBlock>
                 <SkjemaStegTitle title={t(SkjemaHeadings[5].tittel)} icon={SkjemaHeadings[5].ikon} />
                 <Botype />

@@ -133,7 +133,7 @@ const Behov = () => {
     const isError = kategorierError || situasjonError;
 
     return (
-        <SkjemaSteg page={2}>
+        <SkjemaSteg>
             <SkjemaStegStepper page={2} onStepChange={goto} />
             <VStack gap="4">
                 <Alert variant="info">

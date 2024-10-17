@@ -8,14 +8,16 @@ import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/Skjema
 import {useTranslation} from "react-i18next";
 import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
+import Feiloppsummering from "../../lib/components/Feiloppsummering.tsx";
 
 export const Familie = () => {
     const {t} = useTranslation("skjema");
     const {handleStepChange, handlePrevious, handleNext} = useSkjemaNavigation(4);
 
     return (
-        <SkjemaSteg page={4}>
+        <SkjemaSteg>
             <SkjemaStegStepper page={4} onStepChange={handleStepChange} />
+            <Feiloppsummering />
             <SkjemaStegBlock>
                 <SkjemaStegTitle title={t(SkjemaHeadings[4].tittel)} icon={SkjemaHeadings[4].ikon} />
                 <DinSivilstatus />

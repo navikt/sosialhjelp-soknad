@@ -22,7 +22,7 @@ const Inntekt = () => {
     };
 
     return (
-        <SkjemaSteg page={4}>
+        <SkjemaSteg>
             <SkjemaStegStepper page={4} onStepChange={gotoPage} />
             <SkjemaStegBlock className={"lg:space-y-12"}>
                 <SkjemaStegTitle
