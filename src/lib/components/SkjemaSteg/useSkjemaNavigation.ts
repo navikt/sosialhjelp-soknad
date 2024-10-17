@@ -3,6 +3,10 @@ import {useContext} from "react";
 import {ValideringsContext} from "../../valideringContextProvider";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 
+/**
+ * Utility hook for handling navigation between steps, using error validation context.
+ * @param steg Current step, number
+ */
 export const useSkjemaNavigation = (steg: number) => {
     const {
         state: {feil},
@@ -10,19 +14,38 @@ export const useSkjemaNavigation = (steg: number) => {
     } = useContext(ValideringsContext);
     const navigate = useNavigate();
 
-    const gotoPage = (newPage: number) => {
-        if (newPage > steg) {
-            if (feil.length) {
-                dispatch({type: "visValideringsfeilPanel"});
-                return;
-            }
-            logAmplitudeEvent("skjemasteg fullført", {steg}).then();
+    /**
+     * Handles navigation between steps.
+     * Prevents navigation in the forward direction if validation error present.
+     * Logs event to Amplitude on successful navigation.
+     *
+     * @throws Error if trying to navigate back from first page
+     * @param newPage New page number to navigate to
+     */
+    const handleStepChange = async (newPage: number) => {
+        if (newPage <= steg) {
+            if (newPage == 0) throw new Error("Cannot go back from first page");
+            navigate(`../${newPage}`);
+            return;
         }
 
+        if (feil.length) {
+            dispatch({type: "visValideringsfeilPanel"});
+            return;
+        }
+
+        await logAmplitudeEvent("skjemasteg fullført", {steg});
         navigate(`../${newPage}`);
     };
 
+    /** Convenience function for navigating to the previous step, calls handleStepChange */
+    const handlePrevious = async () => await handleStepChange(steg - 1);
+    /** Convenience function for navigating to the next step, calls handleStepChange */
+    const handleNext = async () => await handleStepChange(steg + 1);
+
     return {
-        gotoPage,
+        handleStepChange,
+        handlePrevious,
+        handleNext,
     };
 };

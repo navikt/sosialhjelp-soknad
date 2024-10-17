@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useTranslation} from "react-i18next";
-import {KortSkjemaPage, SkjemaHeadings, SkjemaPage} from "./SkjemaSteg";
+import {KortSkjemaPage, SkjemaHeadings, SkjemaPage} from "./SkjemaSteg.tsx";
 import {Stepper} from "@navikt/ds-react";
 import {useCurrentSoknadIsKort} from "./useCurrentSoknadIsKort.tsx";
 

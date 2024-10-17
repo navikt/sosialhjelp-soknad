@@ -9,19 +9,19 @@ import {SkattbarInntekt} from "./skattbarInntekt";
 import {Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {useSkjemaNavigation} from "../../lib/components/SkjemaSteg/useSkjemaNavigation.ts";
-import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
-import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
-import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg.tsx";
-import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
-import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
+import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
+import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
+import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
+import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 
 export const InntektFormue = () => {
     const {t} = useTranslation("skjema");
-    const {gotoPage} = useSkjemaNavigation(5);
+    const {handleStepChange, handlePrevious, handleNext} = useSkjemaNavigation(6);
 
     return (
         <SkjemaSteg page={6}>
-            <SkjemaStegStepper page={6} onStepChange={async (page) => gotoPage(page)} />
+            <SkjemaStegStepper page={6} onStepChange={handleStepChange} />
             <SkjemaStegBlock>
                 <SkjemaStegTitle title={t(SkjemaHeadings[6].tittel)} icon={SkjemaHeadings[6].ikon} />
 
@@ -51,7 +51,7 @@ export const InntektFormue = () => {
                     <Heading size={"medium"}>{t("opplysninger.formue.annen.undertittel")}</Heading>
                     <Verdier />
                 </div>
-                <SkjemaStegButtons onNext={async () => gotoPage(5)} onPrevious={async () => gotoPage(7)} />
+                <SkjemaStegButtons onNext={handleNext} onPrevious={handlePrevious} />
             </SkjemaStegBlock>
         </SkjemaSteg>
     );

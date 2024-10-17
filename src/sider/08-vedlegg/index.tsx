@@ -3,15 +3,15 @@ import {Gruppe} from "./Gruppe";
 import {InfopanelOpplysninger} from "./InfopanelOpplysninger";
 import {UbesvarteOpplysninger} from "./UbesvarteOpplysninger";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
-import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import cx from "classnames";
 import {useOpplysninger} from "../../lib/hooks/dokumentasjon/useOpplysninger";
-import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
-import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
+import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
+import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import {useTranslation} from "react-i18next";
-import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
+import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
-import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 
 export const OkonomiskeOpplysningerView = () => {

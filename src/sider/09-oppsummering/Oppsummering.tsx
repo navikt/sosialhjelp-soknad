@@ -8,14 +8,14 @@ import {OppsummeringSteg} from "./OppsummeringSteg";
 import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullfortEvent";
 import {useSendSoknad} from "./useSendSoknad";
 import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude";
-import {KortSkjemaHeadings, SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
-import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
-import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
-import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
+import {KortSkjemaHeadings, SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
+import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
+import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
+import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import React from "react";
-import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/ny/useCurrentSoknadIsKort.tsx";
+import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useNavigate} from "react-router";
-import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {useAnalyticsContext} from "../../lib/AnalyticsContextProvider.tsx";
 
 export const Oppsummering = () => {

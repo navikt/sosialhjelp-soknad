@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Heading, Radio, RadioGroup, ReadMore} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {FieldErrors, useForm} from "react-hook-form";
 import {ArbeidsforholdResponse, UtdanningFrontend} from "../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -12,13 +12,13 @@ import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {UnmountClosed} from "react-collapse";
 import {faro} from "@grafana/faro-react";
 import {useArbeidOgUtdanning} from "../../lib/hooks/data/useArbeidOgUtdanning";
-import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
-import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
-import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
+import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/SkjemaStegErrorSummary.tsx";
+import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
+import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import LocalizedTextarea from "../../lib/components/LocalizedTextArea.tsx";
-import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
+import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
-import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 
 const MAX_LENGTH = 500;
