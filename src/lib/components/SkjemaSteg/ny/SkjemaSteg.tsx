@@ -63,7 +63,7 @@ export const SkjemaSteg = ({page, children}: SkjemaStegProps) => {
                         {t("hoppTilHovedinnhold")}
                     </Link>
                     <AppHeader />
-                    <Box as={"main"} id={"main-content"}>
+                    <Box as={"main"} id={"main-content"} className={"max-w-3xl w-full"}>
                         {children}
                     </Box>
                 </div>
