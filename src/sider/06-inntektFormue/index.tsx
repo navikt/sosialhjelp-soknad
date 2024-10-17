@@ -1,6 +1,5 @@
 import * as React from "react";
 import {digisosSkjemaConfig} from "../../lib/components/SkjemaSteg/digisosSkjema";
-import {SparegrisIllustrasjon} from "../../lib/components/svg/illustrasjoner/SparegrisIllustrasjon";
 import {Bostotte} from "./bostotte/Bostotte";
 import {Utbetalinger} from "./Utbetalinger";
 import {Verdier} from "./Verdier";
@@ -11,12 +10,19 @@ import {SkattbarInntekt} from "./skattbarInntekt";
 import {SkjemaStegLegacy} from "../../lib/components/SkjemaSteg/SkjemaStegLegacy";
 import {Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
+import {useSkjemaNavigation} from "../../lib/components/SkjemaSteg/useSkjemaNavigation.ts";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
+import {SkjemaHeadings} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg.tsx";
 
 export const InntektFormue = () => {
     const {t} = useTranslation("skjema");
+    const {gotoPage} = useSkjemaNavigation(5);
 
     return (
-        <SkjemaStegLegacy skjemaConfig={digisosSkjemaConfig} steg={"inntektbolk"} ikon={<SparegrisIllustrasjon />}>
+        <SkjemaStegLegacy skjemaConfig={digisosSkjemaConfig} steg={"inntektbolk"}>
+            <SkjemaStegTitle title={t(SkjemaHeadings[6].tittel)} icon={SkjemaHeadings[6].ikon} />
+
             <div>
                 <Heading size="medium" level="2" spacing>
                     {t("utbetalinger.inntekt.skattbar.tittel")}
@@ -43,6 +49,7 @@ export const InntektFormue = () => {
                 <Heading size={"medium"}>{t("opplysninger.formue.annen.undertittel")}</Heading>
                 <Verdier />
             </div>
+            <SkjemaStegButtons onNext={async () => gotoPage(5)} onPrevious={async () => gotoPage(7)} />
         </SkjemaStegLegacy>
     );
 };
