@@ -7,13 +7,13 @@ import {
 } from "../../../generated/model";
 
 // A mock data store that could be replaced by a real backend API or local storage
-const mockOpplysningStore: Record<string, VedleggFrontend["rader"]> = {};
+const opplysningStore: Record<string, VedleggFrontend["rader"]> = {};
 
 // Hook to manage saving and loading of opplysning data
 export const useStoredOpplysning = (opplysningType: string) => {
     const [savedOpplysning, setSavedOpplysning] = useState<VedleggFrontend | null>(() => {
         // Load from store (this could be a backend or local storage)
-        const rader = mockOpplysningStore[opplysningType] || null;
+        const rader = opplysningStore[opplysningType] || null;
         return rader
             ? {rader, gruppe: "defaultGruppe" as VedleggFrontendGruppe, type: "defaultType" as VedleggFrontendType}
             : null;
@@ -21,7 +21,7 @@ export const useStoredOpplysning = (opplysningType: string) => {
 
     const saveOpplysning = (rader: VedleggRadFrontend[]) => {
         // Save to store
-        mockOpplysningStore[opplysningType] = rader;
+        opplysningStore[opplysningType] = rader;
         setSavedOpplysning({
             rader,
             gruppe: "defaultGruppe" as VedleggFrontendGruppe,
