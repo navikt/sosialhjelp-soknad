@@ -3,7 +3,7 @@ import {useEffect} from "react";
 import Feiloppsummering from "../Feiloppsummering";
 import {useTitle} from "../../hooks/common/useTitle";
 import {Link} from "@navikt/ds-react";
-import {DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
+import {digisosSkjemaConfig, DigisosSkjemaStegKey, SkjemaConfig} from "./digisosSkjema";
 import {useSkjemaNavigation} from "./useSkjemaNavigation";
 import {useTranslation} from "react-i18next";
 import {t} from "i18next";
@@ -15,8 +15,6 @@ import {SkjemaStegStepper} from "./ny/SkjemaStegStepper.tsx";
 
 interface StegMedNavigasjonProps {
     steg: DigisosSkjemaStegKey;
-    skjemaConfig: SkjemaConfig;
-    pending?: boolean;
     children?: any;
 }
 
@@ -36,7 +34,8 @@ export const SkjemaStegLegacy = (props: StegMedNavigasjonProps) => (
     </ValideringsContextProvider>
 );
 
-const SkjemaStegLegacyInner = ({skjemaConfig, steg, children}: StegMedNavigasjonProps) => {
+const SkjemaStegLegacyInner = ({steg, children}: StegMedNavigasjonProps) => {
+    const skjemaConfig = digisosSkjemaConfig;
     const {stegTittel, documentTitle, aktivtSteg} = useSkjemaConfig(skjemaConfig, steg);
     const {gotoPage} = useSkjemaNavigation(aktivtSteg.id);
 

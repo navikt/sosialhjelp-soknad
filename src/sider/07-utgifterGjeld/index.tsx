@@ -1,5 +1,4 @@
 import * as React from "react";
-import {digisosSkjemaConfig} from "../../lib/components/SkjemaSteg/digisosSkjema";
 import {Boutgifter} from "./Boutgifter";
 import {Barneutgifter} from "./Barneutgifter";
 import {SkjemaStegLegacy} from "../../lib/components/SkjemaSteg/SkjemaStegLegacy";
@@ -14,7 +13,7 @@ export const UtgifterGjeld = () => {
     const {gotoPage} = useSkjemaNavigation(5);
 
     return (
-        <SkjemaStegLegacy skjemaConfig={digisosSkjemaConfig} steg={"utgifterbolk"}>
+        <SkjemaStegLegacy steg={"utgifterbolk"}>
             <SkjemaStegTitle title={t(SkjemaHeadings[7].tittel)} icon={SkjemaHeadings[7].ikon} />
             <Boutgifter />
             <Barneutgifter />

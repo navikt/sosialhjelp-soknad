@@ -1,5 +1,4 @@
 import * as React from "react";
-import {digisosSkjemaConfig} from "../../lib/components/SkjemaSteg/digisosSkjema";
 import {Bostotte} from "./bostotte/Bostotte";
 import {Utbetalinger} from "./Utbetalinger";
 import {Verdier} from "./Verdier";
@@ -20,7 +19,7 @@ export const InntektFormue = () => {
     const {gotoPage} = useSkjemaNavigation(5);
 
     return (
-        <SkjemaStegLegacy skjemaConfig={digisosSkjemaConfig} steg={"inntektbolk"}>
+        <SkjemaStegLegacy steg={"inntektbolk"}>
             <SkjemaStegTitle title={t(SkjemaHeadings[6].tittel)} icon={SkjemaHeadings[6].ikon} />
 
             <div>

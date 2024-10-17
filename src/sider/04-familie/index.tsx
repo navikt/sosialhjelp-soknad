@@ -1,5 +1,4 @@
 import * as React from "react";
-import {digisosSkjemaConfig} from "../../lib/components/SkjemaSteg/digisosSkjema";
 import {ForsorgerPlikt} from "./ForsorgerPlikt";
 import {DinSivilstatus} from "./DinSivilstatus";
 import {SkjemaStegLegacy} from "../../lib/components/SkjemaSteg/SkjemaStegLegacy";
@@ -14,7 +13,7 @@ export const Familie = () => {
     const {gotoPage} = useSkjemaNavigation(4);
 
     return (
-        <SkjemaStegLegacy skjemaConfig={digisosSkjemaConfig} steg={"familiebolk"}>
+        <SkjemaStegLegacy steg={"familiebolk"}>
             <SkjemaStegTitle title={t(SkjemaHeadings[4].tittel)} icon={SkjemaHeadings[4].ikon} />
             <div>
                 <DinSivilstatus />
