@@ -14,6 +14,9 @@ import {RequireXsrfCookie} from "./RequireXsrfCookie";
 import {DigisosLanguageKey} from "../../../i18n";
 import {SparegrisIllustrasjon} from "../../svg/illustrasjoner/SparegrisIllustrasjon.tsx";
 import {ValideringsContextProvider} from "../../../valideringContextProvider.tsx";
+import FamilieIllustrasjon from "../../svg/illustrasjoner/FamilieIllustrasjon.tsx";
+import BoligIllustrasjon from "../../svg/illustrasjoner/BoligIllustrasjon.tsx";
+import LommebokIllustrasjon from "../../svg/illustrasjoner/LommebokIllustrasjon.tsx";
 
 interface SkjemaStegProps {
     page: SkjemaPage;
@@ -27,10 +30,10 @@ export const SkjemaHeadings: Record<SkjemaPage, {tittel: DigisosLanguageKey; iko
     1: {tittel: "kontakt.tittel", ikon: <HusIllustrasjon />},
     2: {tittel: "begrunnelsebolk.tittel", ikon: <MynterIllustrasjon />},
     3: {tittel: "arbeidbolk.tittel", ikon: <StresskoffertIllustrasjon />},
-    4: {tittel: "familiebolk.tittel", ikon: <SnakkebobleIllustrasjon />},
-    5: {tittel: "bosituasjonbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
-    6: {tittel: "inntektbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
-    7: {tittel: "utgifterbolk.tittel", ikon: <SnakkebobleIllustrasjon />},
+    4: {tittel: "familiebolk.tittel", ikon: <FamilieIllustrasjon />},
+    5: {tittel: "bosituasjonbolk.tittel", ikon: <BoligIllustrasjon />},
+    6: {tittel: "inntektbolk.tittel", ikon: <SparegrisIllustrasjon />},
+    7: {tittel: "utgifterbolk.tittel", ikon: <LommebokIllustrasjon />},
     8: {tittel: "opplysningerbolk.tittel", ikon: <DokumentIllustrasjon />},
     9: {tittel: "oppsummering.tittel", ikon: <SnakkebobleIllustrasjon />},
 };
