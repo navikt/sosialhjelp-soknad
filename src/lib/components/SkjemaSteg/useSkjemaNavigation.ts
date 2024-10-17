@@ -28,6 +28,7 @@ export const useSkjemaNavigation = (steg: number) => {
         if (newPage == steg) return;
 
         if (newPage < steg) {
+            dispatch({type: "clearAllValideringsfeil"});
             navigate(`../${newPage}`);
             return;
         }
@@ -38,6 +39,7 @@ export const useSkjemaNavigation = (steg: number) => {
         }
 
         await logAmplitudeEvent("skjemasteg fullført", {steg});
+        dispatch({type: "clearAllValideringsfeil"});
         navigate(`../${newPage}`);
     };
 
