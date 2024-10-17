@@ -1,15 +1,15 @@
 import React from "react";
-import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
+import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg.tsx";
 import {useTranslation} from "react-i18next";
 import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
-import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
-import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
+import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
+import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {NavYtelser} from "../../06-inntektFormue/navytelser";
 import {SkattbarInntekt} from "../../06-inntektFormue/skattbarInntekt";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox.tsx";
-import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
+import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
-import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
+import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
 
 const Inntekt = () => {

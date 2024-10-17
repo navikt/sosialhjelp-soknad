@@ -1,10 +1,10 @@
 import * as React from "react";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
-import {AvbrytSoknadModal} from "../modals/AvbrytSoknadModal.tsx";
+import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal.tsx";
 import {Button} from "@navikt/ds-react";
-import {logAmplitudeEvent} from "../../amplitude/Amplitude.tsx";
-import digisosConfig from "../../config.ts";
+import {logAmplitudeEvent} from "../../../amplitude/Amplitude.tsx";
+import digisosConfig from "../../../config.ts";
 
 export const SkjemaStegCancelButtons = () => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);

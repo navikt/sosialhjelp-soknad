@@ -1,8 +1,8 @@
 import React from "react";
-import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
+import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg.tsx";
 import {BodyShort, Box, Heading} from "@navikt/ds-react";
-import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
-import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
+import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
+import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {useTranslation} from "react-i18next";
 import {ArbeidsforholdListe} from "../../03-arbeidUtdanning/ArbeidsforholdListe.tsx";
 import {EktefellePersonaliaBruker} from "../../04-familie/EktefellePersonaliaBruker.tsx";
@@ -10,9 +10,9 @@ import {Systeminfo} from "../../../lib/components/systeminfo/Systeminfo.tsx";
 import {useSivilstatus} from "../../../lib/hooks/data/useSivilstatus.tsx";
 import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import {ForsorgerPlikt} from "../../04-familie/ForsorgerPlikt.tsx";
-import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
+import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
-import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
+import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
 
 const ArbeidOgFamilie = (): React.JSX.Element => {
