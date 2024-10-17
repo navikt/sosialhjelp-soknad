@@ -1,7 +1,7 @@
 import * as React from "react";
 import {ReactNode, useEffect} from "react";
-import {useBehandlingsId} from "../../../hooks/common/useBehandlingsId";
-import {hentXsrfCookie} from "../../../../generated/soknad-ressurs/soknad-ressurs";
+import {useBehandlingsId} from "../hooks/common/useBehandlingsId.ts";
+import {hentXsrfCookie} from "../../generated/soknad-ressurs/soknad-ressurs.ts";
 
 /**
  * pt bruker backend én XSRF-cookie per søknad, ikke per økt.

@@ -1,16 +1,30 @@
 import * as React from "react";
-import {digisosSkjemaConfig} from "../../lib/components/SkjemaSteg/digisosSkjema";
-import {FamilieIllustrasjon} from "../../lib/components/svg/illustrasjoner/FamilieIllustrasjon";
 import {ForsorgerPlikt} from "./ForsorgerPlikt";
 import {DinSivilstatus} from "./DinSivilstatus";
-import {SkjemaStegLegacy} from "../../lib/components/SkjemaSteg/SkjemaStegLegacy";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {useSkjemaNavigation} from "../../lib/components/SkjemaSteg/useSkjemaNavigation.ts";
+import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
+import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg.tsx";
+import {useTranslation} from "react-i18next";
+import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
+import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
+import Feiloppsummering from "../../lib/components/Feiloppsummering.tsx";
 
-export const Familie = () => (
-    <SkjemaStegLegacy skjemaConfig={digisosSkjemaConfig} steg={"familiebolk"} ikon={<FamilieIllustrasjon />}>
-        <div>
-            <DinSivilstatus />
-            <ForsorgerPlikt />
-        </div>
-    </SkjemaStegLegacy>
-);
+export const Familie = () => {
+    const {t} = useTranslation("skjema");
+    const {handleStepChange, handlePrevious, handleNext} = useSkjemaNavigation(4);
+
+    return (
+        <SkjemaSteg>
+            <SkjemaStegStepper page={4} onStepChange={handleStepChange} />
+            <Feiloppsummering />
+            <SkjemaStegBlock>
+                <SkjemaStegTitle title={t(SkjemaHeadings[4].tittel)} icon={SkjemaHeadings[4].ikon} />
+                <DinSivilstatus />
+                <ForsorgerPlikt />
+                <SkjemaStegButtons onNext={handleNext} onPrevious={handlePrevious} />
+            </SkjemaStegBlock>
+        </SkjemaSteg>
+    );
+};
 export default Familie;

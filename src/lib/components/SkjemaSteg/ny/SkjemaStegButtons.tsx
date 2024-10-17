@@ -1,91 +1,48 @@
 import * as React from "react";
+import {useState} from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {SkjemaStegContext} from "./SkjemaSteg";
-import {useContext, useState} from "react";
-import digisosConfig from "../../../config";
-import {logError} from "../../../log/loggerUtils";
-import {AvbrytSoknadModal} from "../../modals/AvbrytSoknadModal";
-import {NavEnhetInaktiv} from "../../../../sider/01-personalia/adresse/NavEnhetInaktiv";
-import {logAmplitudeEvent} from "../../../amplitude/Amplitude";
-import {DigisosLanguageKey} from "../../../i18n";
 import {ArrowRightIcon} from "@navikt/aksel-icons";
-
-interface SkjemaStegNavigasjonProps {
-    loading?: boolean;
-    onConfirm?: () => Promise<void>;
-    confirmTextKey?: DigisosLanguageKey;
-    includeNextArrow?: boolean;
-}
+import {SkjemaStegCancelButtons} from "./SkjemaStegCancelButtons.tsx";
 
 export const SkjemaStegButtons = ({
-    loading,
-    onConfirm,
-    confirmTextKey = "skjema.knapper.neste",
-    includeNextArrow,
-}: SkjemaStegNavigasjonProps) => {
-    const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
-
+    onNext,
+    onPrevious,
+    isFinalStep,
+}: {
+    isFinalStep?: boolean;
+    onNext: () => Promise<any>;
+    onPrevious?: () => Promise<any>;
+}) => {
     const {t} = useTranslation("skjema");
-    const context = useContext(SkjemaStegContext);
-    const [sendSoknadPending, setSendSoknadPending] = useState<boolean>(false);
+    const [isPending, setIsPending] = useState<boolean>(false);
 
-    if (context === null) {
-        logError("<SkjemaStegButtons/> must be used inside <SkjemaSteg />");
-        return null;
-    }
+    const nextButtonText = isFinalStep ? "skjema.knapper.send" : "skjema.knapper.neste";
+    const nextButtonIcon = isPending ? <Loader /> : <ArrowRightIcon />;
 
-    const {page, requestNavigation} = context;
+    const onClickNext = async () => {
+        setIsPending(true);
+        await onNext();
+        setIsPending(false);
+    };
 
     return (
         <div>
-            {page !== 9 && <NavEnhetInaktiv />}
-            <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
             <div className={"!mt-12 md:!mt-16 lg:!mt-24 !mb-8 lg:!mb-16 space-x-3"}>
-                <Button
-                    variant="secondary"
-                    id="gaa_tilbake_button"
-                    onClick={async () => {
-                        await requestNavigation(page - 1);
-                    }}
-                    disabled={loading || page <= 1}
-                >
+                <Button variant="secondary" onClick={onPrevious} disabled={onPrevious === undefined}>
                     {t("skjema.knapper.forrige")}
-                    {loading && <Loader className={"ml-2"} />}
                 </Button>
                 <Button
                     variant="primary"
-                    id="gaa_videre_button"
-                    onClick={async () => {
-                        if (onConfirm) {
-                            setSendSoknadPending(true);
-                            await onConfirm();
-                            setSendSoknadPending(false);
-                        }
-                        return requestNavigation(page + 1);
-                    }}
-                    disabled={sendSoknadPending || loading}
-                    icon={includeNextArrow && <ArrowRightIcon />}
+                    onClick={onClickNext}
+                    disabled={isPending}
+                    icon={nextButtonIcon}
                     iconPosition={"right"}
                 >
-                    {t(confirmTextKey)}
-                    {(sendSoknadPending || loading) && <Loader className={"ml-2"} />}
+                    {t(nextButtonText)}
                 </Button>
             </div>
-            <div className={"pb-8 lg:pb-16"}>
-                <Button
-                    variant="tertiary"
-                    onClick={async () => {
-                        await logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"});
-                        window.location.href = digisosConfig.minSideURL;
-                    }}
-                >
-                    {t("avbryt.fortsettsenere")}
-                </Button>
-                <Button variant="tertiary" onClick={() => setAvbrytModalOpen(true)}>
-                    {t("avbryt.slett")}
-                </Button>
-            </div>
+            <SkjemaStegCancelButtons />
         </div>
     );
 };

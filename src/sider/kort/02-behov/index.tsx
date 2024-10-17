@@ -1,5 +1,5 @@
 import React from "react";
-import {inhibitNavigation, SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg";
+import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/ny/SkjemaSteg.tsx";
 import {FieldError, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -7,16 +7,19 @@ import {ApplicationSpinner} from "../../../lib/components/animasjoner/Applicatio
 import {Alert, BodyShort, VStack} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox";
-import useKategorier from "../../../lib/hooks/data/useKategorier";
+import useKategorier, {SelectableCategory} from "../../../lib/hooks/data/useKategorier";
 import KategorierChips from "../../../lib/components/KategorierChips";
-import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {SkjemaStegErrorSummary} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
-import {SkjemaContent} from "../../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
+import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
 import {DigisosLanguageKey} from "../../../lib/i18n.ts";
 import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
 import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";
+import {useNavigate} from "react-router";
+import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
+import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
+import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {useAnalyticsContext} from "../../../lib/AnalyticsContextProvider.tsx";
 import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
 
@@ -47,7 +50,19 @@ const Feilmelding = () => {
     return <Alert variant={"error"}>{t("skjema.navigering.feil")}</Alert>;
 };
 
-const Behov = (): React.JSX.Element => {
+const mapToTextOrSubcategoriesText = ({subCategories, text}: SelectableCategory) => {
+    if (text === "Nødhjelp" && subCategories?.length) {
+        const selectedSubCategories = subCategories
+            .filter(({selected}) => selected)
+            .map((subCategory) => subCategory.text);
+
+        if (selectedSubCategories.length) return `${text}: ${JSON.stringify(selectedSubCategories)}`;
+    }
+
+    return text;
+};
+
+const Behov = () => {
     const {t} = useTranslation("skjema");
 
     // Don't have to fetch feature flags more than once
@@ -92,56 +107,51 @@ const Behov = (): React.JSX.Element => {
         reducer,
         toggle,
     } = useKategorier(!!forsorgerplikt?.harForsorgerplikt, setValue, getValues);
-
     const {setAnalyticsData} = useAnalyticsContext();
+    const navigate = useNavigate();
 
-    const onSubmit = (formValues: FormValues) => {
-        const selectedKategorier: string[] = reducer
-            .filter((category) => category.selected)
-            .map((category) => {
-                if (category.text === "Nødhjelp" && category.subCategories?.length) {
-                    const selectedSubCategories = category.subCategories
-                        .filter((subCategory) => subCategory.selected)
-                        .map((subCategory) => subCategory.text);
+    const goto = async (page: number) =>
+        await handleSubmit(async (formValues) => {
+            const selectedKategorier: string[] = reducer
+                .filter(({selected}) => selected)
+                .map(mapToTextOrSubcategoriesText)
+                .filter((categoryText): categoryText is string => !!categoryText);
 
-                    if (selectedSubCategories.length > 0) {
-                        return `${category.text}: ${JSON.stringify(selectedSubCategories)}`;
-                    }
-                }
-                if (category.text === "Annet" && formValues.hvaSokesOm) {
-                    return category.text;
-                }
-                return category.text;
-            })
-            .filter((categoryText): categoryText is string => !!categoryText);
+            const situasjonEndret = formValues.hvaErEndret?.trim() ? "Ja" : "Ikke utfylt";
+            const hvaErEndret = formValues.hvaErEndret ?? undefined;
 
-        const situasjonEndret = formValues.hvaErEndret?.trim() ? "Ja" : "Ikke utfylt";
+            setAnalyticsData({selectedKategorier, situasjonEndret});
 
-        setAnalyticsData({selectedKategorier, situasjonEndret});
-
-        putSituasjon({...formValues, hvaErEndret: formValues.hvaErEndret ?? undefined});
-        putKategorier({hvaSokesOm: formValues.hvaSokesOm});
-        reset({hvaSokesOm: null, hvaErEndret: null});
-    };
+            await putSituasjon({...formValues, hvaErEndret});
+            await putKategorier({hvaSokesOm: formValues.hvaSokesOm});
+            reset({hvaSokesOm: null, hvaErEndret: null});
+            await logAmplitudeSkjemaStegFullfort(2);
+            navigate(`../${page}`);
+        })();
 
     const isPending = kategorierPending || situasjonPending || featureFlagsPending;
     const isError = kategorierError || situasjonError;
 
     return (
-        <SkjemaSteg page={2} onRequestNavigation={handleSubmit(onSubmit, inhibitNavigation)}>
+        <SkjemaSteg>
+            <SkjemaStegStepper page={2} onStepChange={goto} />
             <VStack gap="4">
                 <Alert variant="info">
                     <BodyShort>{t("arbeidOgFamilie.alert")}</BodyShort>
                 </Alert>
-                <SkjemaContent className={"lg:space-y-12"}>
-                    <SkjemaStegTitle className={"lg:mb-12"} />
+                <SkjemaStegBlock className={"lg:space-y-12"}>
+                    <SkjemaStegTitle
+                        className={"lg:mb-12"}
+                        title={t(KortSkjemaHeadings[2].tittel)}
+                        icon={KortSkjemaHeadings[2].ikon}
+                    />
                     <SkjemaStegErrorSummary errors={errors} />
                     {isPending ? (
                         <ApplicationSpinner />
                     ) : (
                         <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
                             {isError && <Feilmelding />}
-                            {isKategorierEnabled && (
+                            {isKategorierEnabled ? (
                                 <KategorierChips
                                     errors={errors}
                                     toggle={toggle}
@@ -149,8 +159,7 @@ const Behov = (): React.JSX.Element => {
                                     categories={reducer}
                                     hvaSokesOm={watch("hvaSokesOm")}
                                 />
-                            )}
-                            {!isKategorierEnabled && (
+                            ) : (
                                 <LocalizedTextArea
                                     {...register("hvaSokesOm")}
                                     id="hvaSokesOm"
@@ -175,8 +184,8 @@ const Behov = (): React.JSX.Element => {
                             />
                         </form>
                     )}
-                    <SkjemaStegButtons loading={isPending} includeNextArrow />
-                </SkjemaContent>
+                    <SkjemaStegButtons onPrevious={async () => navigate("../1")} onNext={async () => goto(3)} />
+                </SkjemaStegBlock>
             </VStack>
         </SkjemaSteg>
     );

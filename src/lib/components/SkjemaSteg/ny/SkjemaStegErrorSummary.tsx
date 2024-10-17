@@ -1,7 +1,7 @@
 import {FieldErrors} from "react-hook-form";
 import {ErrorSummary} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {DigisosLanguageKey} from "../../../i18n";
+import {DigisosLanguageKey} from "../../../i18n.ts";
 
 export const SkjemaStegErrorSummary = ({errors}: {errors?: FieldErrors}) => {
     const {t} = useTranslation("skjema");

@@ -52,7 +52,7 @@ export const valideringsReducer = (state: ValideringState, action: ValideringAct
         }
         case "clearValideringsfeil": {
             const feil = state.feil.filter(({faktumKey}) => faktumKey !== action.faktumKey);
-            return {...state, feil, visValideringsfeil: feil.length === 0 ? false : state.visValideringsfeil};
+            return {...state, feil, visValideringsfeil: feil.length ? state.visValideringsfeil : false};
         }
         case "clearAllValideringsfeil": {
             return {...state, feil: []};

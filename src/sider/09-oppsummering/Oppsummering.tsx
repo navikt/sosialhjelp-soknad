@@ -8,49 +8,57 @@ import {OppsummeringSteg} from "./OppsummeringSteg";
 import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullfortEvent";
 import {useSendSoknad} from "./useSendSoknad";
 import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude";
-import {SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
-import {useLocation} from "react-router-dom";
-import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
-import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
+import {KortSkjemaHeadings, SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg.tsx";
+import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/ny/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
+import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/ny/SkjemaStegStepper.tsx";
+import React from "react";
+import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/ny/useCurrentSoknadIsKort.tsx";
+import {useNavigate} from "react-router";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
 import {useAnalyticsContext} from "../../lib/AnalyticsContextProvider.tsx";
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
     const behandlingsId = useBehandlingsId();
     const {sendSoknad, isError} = useSendSoknad(behandlingsId);
+    const navigate = useNavigate();
+    const isKortSoknad = useCurrentSoknadIsKort();
 
     const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId);
-    const location = useLocation();
 
     const {
         analyticsData: {selectedKategorier, situasjonEndret},
     } = useAnalyticsContext();
 
     if (isLoading) return <ApplicationSpinner />;
-    const isKortSoknad = location.pathname.includes("/kort");
+
+    const {tittel, ikon} = isKortSoknad ? KortSkjemaHeadings[5] : SkjemaHeadings[9];
+
     return (
-        <SkjemaSteg page={isKortSoknad ? 5 : 9}>
-            <SkjemaContent>
-                <SkjemaStegTitle />
+        <SkjemaSteg>
+            <SkjemaStegStepper page={isKortSoknad ? 5 : 9} onStepChange={async (page) => navigate(`../${page}`)} />
+            <SkjemaStegBlock>
+                <SkjemaStegTitle title={t(tittel)} icon={ikon} />
 
                 <div>
                     {oppsummering?.steg.map((steg) => <OppsummeringSteg steg={steg} key={steg.stegNr} />)}
                     <SoknadsmottakerInfoPanel />
                     {isError && (
-                        <Alert role="alert" variant="error" style={{marginTop: "1rem"}}>
+                        <Alert variant="error" className="mt-4">
                             {t("soknad.innsendingFeilet")}
                         </Alert>
                     )}
                 </div>
                 <SkjemaStegButtons
-                    confirmTextKey={"skjema.knapper.send"}
-                    onConfirm={async () => {
+                    isFinalStep
+                    onPrevious={async () => navigate("../" + (isKortSoknad ? 4 : 8))}
+                    onNext={async () => {
                         await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
-                        return sendSoknad(isKortSoknad, selectedKategorier, situasjonEndret);
+                        await sendSoknad(isKortSoknad, selectedKategorier, situasjonEndret);
                     }}
                 />
-            </SkjemaContent>
+            </SkjemaStegBlock>
         </SkjemaSteg>
     );
 };

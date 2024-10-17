@@ -6,33 +6,25 @@ import {useHentBasisPersonalia} from "../../generated/basis-personalia-ressurs/b
 import {useTranslation} from "react-i18next";
 import {formatFodselsnummer} from "@fremtind/jkl-formatters-util";
 import {BodyShort, Heading} from "@navikt/ds-react";
-import {FullName} from "./FulltNavn";
 
-export const BasisPersonaliaData = () => {
+export const BasisPersonalia = () => {
     const {expectOK} = useAlgebraic(useHentBasisPersonalia(useBehandlingsId()));
     const {t} = useTranslation("skjema");
     return expectOK(({navn, fodselsnummer, statsborgerskap = "Ukjent/statsløs"}) => (
-        <Systeminfo>
-            <SysteminfoItem label={t("kontakt.system.personalia.navn")}>
-                <FullName name={navn} />
-            </SysteminfoItem>
-            <SysteminfoItem label={t("kontakt.system.personalia.fnr")}>
-                {formatFodselsnummer(fodselsnummer ?? "")}
-            </SysteminfoItem>
-            <SysteminfoItem label={t("kontakt.system.personalia.statsborgerskap")}>{statsborgerskap}</SysteminfoItem>
-            <BodyShort className={"pt-3"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
-        </Systeminfo>
-    ));
-};
-
-export const BasisPersonalia = () => {
-    const {t} = useTranslation("skjema");
-    return (
-        <div className={"space-y-2"}>
-            <Heading level={"3"} size={"small"}>
+        <div>
+            <Heading level={"3"} size={"small"} spacing>
                 {t("kontakt.system.personalia.sporsmal")}
             </Heading>
-            <BasisPersonaliaData />
+            <Systeminfo>
+                <SysteminfoItem label={t("kontakt.system.personalia.navn")}>{navn?.fulltNavn}</SysteminfoItem>
+                <SysteminfoItem label={t("kontakt.system.personalia.fnr")}>
+                    {formatFodselsnummer(fodselsnummer ?? "")}
+                </SysteminfoItem>
+                <SysteminfoItem label={t("kontakt.system.personalia.statsborgerskap")}>
+                    {statsborgerskap}
+                </SysteminfoItem>
+                <BodyShort className={"pt-3"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
+            </Systeminfo>
         </div>
-    );
+    ));
 };
