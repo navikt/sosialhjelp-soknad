@@ -1,6 +1,7 @@
 "use client";
 
 import {Suspense} from "react";
+import {ValideringsContextProvider} from "./lib/valideringContextProvider.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {BrowserRouter, Navigate, redirect, Route, Routes, useLocation} from "react-router-dom";
@@ -29,7 +30,6 @@ import {configureLogger} from "@navikt/next-logger";
 import "./faro";
 import {initAmplitude} from "./lib/amplitude/Amplitude.tsx";
 import {AnalyticsProvider} from "./lib/AnalyticsContextProvider.tsx";
-import {ValideringsContextProvider} from "./lib/valideringContextProvider.tsx";
 
 const queryClient = new QueryClient();
 configureLogger({basePath: BASE_PATH});
