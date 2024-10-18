@@ -32,30 +32,29 @@ export const OpplysningInputRad = ({
                 <Controller
                     key={fieldName}
                     render={({field, fieldState}) => (
-                        <>
-                            <TextField
-                                label={
-                                    <span style={{fontSize: 16, fontWeight: "normal"}}>
-                                        {
-                                            tDok(
-                                                `${textKey}.${fieldName}.label` as DigisosLanguageKey<"dokumentasjon">
-                                            ) as string
-                                        }
-                                    </span>
-                                }
-                                className={cx("pb-2")}
-                                error={
-                                    fieldState.isTouched &&
-                                    fieldState.error?.message &&
-                                    t(fieldState.error.message as DigisosLanguageKey)
-                                }
-                                autoComplete={"off"}
-                                {...field}
-                                // To avoid value === null
-                                value={field.value || ""}
-                                htmlSize={fieldName === "beskrivelse" ? 32 : 20}
-                            />
-                        </>
+                        <TextField
+                            label={
+                                <span style={{fontSize: 16, fontWeight: "normal"}}>
+                                    {
+                                        tDok(
+                                            `${textKey}.${fieldName}.label` as DigisosLanguageKey<"dokumentasjon">
+                                        ) as string
+                                    }
+                                </span>
+                            }
+                            className={cx("pb-2")}
+                            error={
+                                fieldState.isTouched &&
+                                fieldState.error?.message &&
+                                t(fieldState.error.message as DigisosLanguageKey)
+                            }
+                            autoComplete={"off"}
+                            {...field}
+                            // Ensure the correct value is shown and persisted
+                            value={field.value || ""}
+                            onChange={(e) => field.onChange(e.target.value)}
+                            htmlSize={fieldName === "beskrivelse" ? 32 : 20}
+                        />
                     )}
                     name={`rader.${index}.${fieldName}`}
                     control={control}

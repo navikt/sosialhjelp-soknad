@@ -17,14 +17,13 @@ import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFu
 export const OkonomiskeOpplysningerView = () => {
     const {bekreftet, isLoading, sorterte, grupper} = useOpplysninger();
     const {t} = useTranslation("skjema");
+    const navigate = useNavigate();
 
     if (isLoading) return <ApplicationSpinner />;
 
     const firstGroup = grupper[0];
     const middleGroups = grupper.slice(1, grupper.length - 1);
     const lastGroup = grupper[grupper.length - 1];
-
-    const navigate = useNavigate();
 
     return (
         <SkjemaSteg>
