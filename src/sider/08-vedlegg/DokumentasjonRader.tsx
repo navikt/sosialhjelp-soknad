@@ -35,6 +35,8 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
         }
     }, [opplysning, append, update]);
 
+    //TODO: multirow knappen skjules for lonnslipp|arbeid
+    //TODO: dette på grunn av det kan skap forvirringer for søkeren på grunn av kor uoversiktlig det kan bli
     return (
         <>
             {entries.length > 0 && (

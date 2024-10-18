@@ -6,12 +6,45 @@ import {useDebounce} from "react-use";
 import deepEqual from "deep-equal";
 import {belopTekstfeltPreprocessor} from "../../../sider/08-vedlegg/belopTekstfeltPreprocessor";
 import {ValideringsFeilKode} from "../../validering";
-import {VedleggFrontend} from "../../../generated/model";
+import {
+    VedleggFrontend,
+    VedleggRadFrontend,
+    VedleggFrontendGruppe,
+    VedleggFrontendType,
+} from "../../../generated/model";
 import {opplysningSpec} from "../../opplysninger";
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useUpdateOkonomiskOpplysning} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
-import {useStoredOpplysning} from "../data/useStoredOpplysning.tsx"; // New Hook!
+
+// A mock data store that could be replaced by a real backend API or local storage
+const opplysningStore: Record<string, VedleggFrontend["rader"]> = {};
+
+// Hook to manage saving and loading of opplysning data
+export const useStoredOpplysning = (opplysningType: string) => {
+    const [savedOpplysning, setSavedOpplysning] = useState<VedleggFrontend | null>(() => {
+        // Load from store (this could be a backend or local storage)
+        const rader = opplysningStore[opplysningType] || null;
+        return rader
+            ? {rader, gruppe: "defaultGruppe" as VedleggFrontendGruppe, type: "defaultType" as VedleggFrontendType}
+            : null;
+    });
+
+    const saveOpplysning = (rader: VedleggRadFrontend[]) => {
+        // Save to store
+        opplysningStore[opplysningType] = rader;
+        setSavedOpplysning({
+            rader,
+            gruppe: "defaultGruppe" as VedleggFrontendGruppe,
+            type: "defaultType" as VedleggFrontendType,
+        } as VedleggFrontend); // Update state
+    };
+
+    return {
+        savedOpplysning,
+        saveOpplysning,
+    };
+};
 
 const zodBelopTekstfeltSchema = z.preprocess(
     belopTekstfeltPreprocessor,
