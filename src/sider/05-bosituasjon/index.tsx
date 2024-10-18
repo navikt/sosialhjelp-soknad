@@ -1,16 +1,30 @@
 import * as React from "react";
-import BoligIllustrasjon from "../../lib/components/svg/illustrasjoner/BoligIllustrasjon";
-import {digisosSkjemaConfig} from "../../lib/components/SkjemaSteg/digisosSkjema";
 import {AntallPersoner} from "./AntallPersoner";
 import {Botype} from "./Botype";
-import {SkjemaStegLegacy} from "../../lib/components/SkjemaSteg/SkjemaStegLegacy";
+import {useSkjemaNavigation} from "../../lib/components/SkjemaSteg/useSkjemaNavigation.ts";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
+import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
+import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
+import {useTranslation} from "react-i18next";
+import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
+import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
+import Feiloppsummering from "../../lib/components/Feiloppsummering.tsx";
 
-export const Bosituasjon = () => (
-    <SkjemaStegLegacy skjemaConfig={digisosSkjemaConfig} steg={"bosituasjonbolk"} ikon={<BoligIllustrasjon />}>
-        <div>
-            <Botype />
-            <AntallPersoner />
-        </div>
-    </SkjemaStegLegacy>
-);
+export const Bosituasjon = () => {
+    const {t} = useTranslation("skjema");
+    const {handleStepChange, handlePrevious, handleNext} = useSkjemaNavigation(5);
+
+    return (
+        <SkjemaSteg>
+            <SkjemaStegStepper page={5} onStepChange={handleStepChange} />
+            <Feiloppsummering />
+            <SkjemaStegBlock>
+                <SkjemaStegTitle title={t(SkjemaHeadings[5].tittel)} icon={SkjemaHeadings[5].ikon} />
+                <Botype />
+                <AntallPersoner />
+                <SkjemaStegButtons onNext={handleNext} onPrevious={handlePrevious} />
+            </SkjemaStegBlock>
+        </SkjemaSteg>
+    );
+};
 export default Bosituasjon;

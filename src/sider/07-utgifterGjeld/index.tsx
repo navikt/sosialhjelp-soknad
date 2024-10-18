@@ -1,14 +1,30 @@
 import * as React from "react";
-import {digisosSkjemaConfig} from "../../lib/components/SkjemaSteg/digisosSkjema";
-import LommebokIllustrasjon from "../../lib/components/svg/illustrasjoner/LommebokIllustrasjon";
 import {Boutgifter} from "./Boutgifter";
 import {Barneutgifter} from "./Barneutgifter";
-import {SkjemaStegLegacy} from "../../lib/components/SkjemaSteg/SkjemaStegLegacy";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
+import {useSkjemaNavigation} from "../../lib/components/SkjemaSteg/useSkjemaNavigation.ts";
+import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
+import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
+import {useTranslation} from "react-i18next";
+import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
+import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
+import Feiloppsummering from "../../lib/components/Feiloppsummering.tsx";
 
-export const UtgifterGjeld = () => (
-    <SkjemaStegLegacy skjemaConfig={digisosSkjemaConfig} steg={"utgifterbolk"} ikon={<LommebokIllustrasjon />}>
-        <Boutgifter />
-        <Barneutgifter />
-    </SkjemaStegLegacy>
-);
+export const UtgifterGjeld = () => {
+    const {t} = useTranslation("skjema");
+    const {handleStepChange, handlePrevious, handleNext} = useSkjemaNavigation(7);
+
+    return (
+        <SkjemaSteg>
+            <SkjemaStegStepper page={7} onStepChange={handleStepChange} />
+            <Feiloppsummering />
+            <SkjemaStegBlock>
+                <SkjemaStegTitle title={t(SkjemaHeadings[7].tittel)} icon={SkjemaHeadings[7].ikon} />
+                <Boutgifter />
+                <Barneutgifter />
+                <SkjemaStegButtons onNext={handleNext} onPrevious={handlePrevious} />
+            </SkjemaStegBlock>
+        </SkjemaSteg>
+    );
+};
 export default UtgifterGjeld;

@@ -1,8 +1,8 @@
 import * as React from "react";
 import {Heading, Radio, RadioGroup, ReadMore} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {DigisosValidationError, SkjemaSteg} from "../../lib/components/SkjemaSteg/ny/SkjemaSteg";
-import {useForm} from "react-hook-form";
+import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
+import {FieldErrors, useForm} from "react-hook-form";
 import {ArbeidsforholdResponse, UtdanningFrontend} from "../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
@@ -12,11 +12,14 @@ import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {UnmountClosed} from "react-collapse";
 import {faro} from "@grafana/faro-react";
 import {useArbeidOgUtdanning} from "../../lib/hooks/data/useArbeidOgUtdanning";
-import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/ny/SkjemaStegButtons.tsx";
-import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/ny/SkjemaStegErrorSummary.tsx";
-import {SkjemaContent} from "../../lib/components/SkjemaSteg/ny/SkjemaContent.tsx";
-import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/ny/SkjemaStegTitle.tsx";
+import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/SkjemaStegErrorSummary.tsx";
+import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
+import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import LocalizedTextarea from "../../lib/components/LocalizedTextArea.tsx";
+import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
+import {useNavigate} from "react-router";
+import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
+import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 
 const MAX_LENGTH = 500;
 
@@ -48,29 +51,27 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
     const {t} = useTranslation("skjema");
     const [error, setError] = React.useState<boolean>(false);
     const {mutate} = useArbeidOgUtdanning();
+    const navigate = useNavigate();
 
-    const onRequestNavigation = async () =>
-        handleSubmit(
-            async (data: ArbeidOgUtdanningType) => {
-                try {
-                    await mutate(data);
-                } catch (e: any) {
-                    faro.api.pushError(e);
-                    setError(true);
-                    throw new DigisosValidationError();
-                }
-            },
-            (_) => {
-                throw new DigisosValidationError();
+    const goto = (page: number) =>
+        handleSubmit(async (data: ArbeidOgUtdanningType) => {
+            try {
+                await mutate(data);
+                await logAmplitudeSkjemaStegFullfort(3);
+                navigate(`../${page}`);
+            } catch (e: any) {
+                faro.api.pushError(e);
+                setError(true);
             }
-        )();
+        })();
 
     return (
-        <SkjemaSteg page={3} onRequestNavigation={onRequestNavigation}>
-            <SkjemaContent>
-                <SkjemaStegTitle />
+        <SkjemaSteg>
+            <SkjemaStegStepper page={3} onStepChange={goto} />
+            <SkjemaStegBlock>
+                <SkjemaStegTitle title={t(SkjemaHeadings[3].tittel)} icon={SkjemaHeadings[3].ikon} />
                 <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>
-                    <SkjemaStegErrorSummary errors={errors} />
+                    <SkjemaStegErrorSummary errors={errors.arbeid as FieldErrors} />
 
                     <div className={"space-y-6"}>
                         <Heading size="medium" spacing>
@@ -119,9 +120,9 @@ export const ArbeidOgUtdanningForm = ({data}: {data: ArbeidOgUtdanningType}) => 
                         </UnmountClosed>
                     </div>
                     {error && <div>{t("skjema.navigering.feil")}</div>}
-                    <SkjemaStegButtons />
+                    <SkjemaStegButtons onPrevious={async () => navigate("../2")} onNext={async () => await goto(4)} />
                 </form>
-            </SkjemaContent>
+            </SkjemaStegBlock>
         </SkjemaSteg>
     );
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import {Suspense} from "react";
-import {ValideringsContextProvider} from "./lib/valideringContextProvider";
+import {ValideringsContextProvider} from "./lib/valideringContextProvider.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {BrowserRouter, Navigate, redirect, Route, Routes, useLocation} from "react-router-dom";
@@ -78,11 +78,7 @@ export default function App() {
                                             </Route>
                                         </Route>
                                         <Route path=":behandlingsId">
-                                            <Route
-                                                index
-                                                path="1"
-                                                element={<Personopplysninger shortSpacing includeNextArrow />}
-                                            />
+                                            <Route index path="1" element={<Personopplysninger shortSpacing />} />
                                             <Route element={<SwitchSoknadType />}>
                                                 <Route path="2" element={<Begrunnelse />} />
                                                 <Route path="3" element={<ArbeidOgUtdanning />} />
