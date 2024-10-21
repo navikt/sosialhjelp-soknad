@@ -15,7 +15,7 @@ export const DeveloperToolkit = () => {
     const navigate = useNavigate();
 
     const createFolkeregistrertSoknad = async () => {
-        const {brukerBehandlingId} = await opprettSoknad();
+        const {brukerBehandlingId} = await opprettSoknad({soknadstype: "standard"});
         if (!brukerBehandlingId) throw new Error("ingen soknadId!");
         await updateAdresse(brukerBehandlingId, {valg: "folkeregistrert"});
         return brukerBehandlingId;
