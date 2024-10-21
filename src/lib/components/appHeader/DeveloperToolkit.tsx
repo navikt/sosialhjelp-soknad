@@ -1,10 +1,8 @@
 "use client";
 
 import * as React from "react";
-import {useEffect} from "react";
 import {useNavigate, useParams} from "react-router";
 import {opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
-import {logWarning} from "../../log/loggerUtils";
 import {updateAdresse} from "../../../generated/adresse-ressurs/adresse-ressurs";
 import {sendSoknad} from "../../../generated/soknad-actions/soknad-actions";
 import {maximizeSoknad} from "./devUtils";
@@ -15,9 +13,6 @@ type UrlParams = Record<"behandlingsId" | "skjemaSteg", string>;
 export const DeveloperToolkit = () => {
     const {behandlingsId} = useParams<UrlParams>();
     const navigate = useNavigate();
-    useEffect(() => {
-        logWarning("Viser utviklermeny. Dette skal ikke skje i prod!");
-    }, []);
 
     const createFolkeregistrertSoknad = async () => {
         const {brukerBehandlingId} = await opprettSoknad();
