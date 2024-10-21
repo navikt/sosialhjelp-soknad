@@ -47,7 +47,7 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
                             textKey={opplysning.type}
                             index={index}
                             control={control}
-                            fields={inputs}
+                            fields={inputs || []}
                             onDelete={index > 0 ? () => remove(index) : undefined}
                         />
                     ))}
