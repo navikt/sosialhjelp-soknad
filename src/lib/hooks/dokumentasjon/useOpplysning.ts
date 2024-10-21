@@ -6,14 +6,49 @@ import {useDebounce} from "react-use";
 import deepEqual from "deep-equal";
 import {belopTekstfeltPreprocessor} from "../../../sider/08-vedlegg/belopTekstfeltPreprocessor";
 import {ValideringsFeilKode} from "../../validering";
-import {VedleggFrontend} from "../../../generated/model";
+import {
+    VedleggFrontend,
+    VedleggRadFrontend,
+    VedleggFrontendGruppe,
+    VedleggFrontendType,
+} from "../../../generated/model";
 import {opplysningSpec} from "../../opplysninger";
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {
-    useHentOkonomiskeOpplysninger,
-    useUpdateOkonomiskOpplysning,
-} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {useUpdateOkonomiskOpplysning} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
+
+const opplysningStore: Record<string, VedleggFrontend["rader"]> = {};
+
+export const useStoredOpplysning = (opplysningType: string, fetchedData: VedleggFrontend | null) => {
+    const [savedOpplysning, setSavedOpplysning] = useState<VedleggFrontend | null>(() => {
+        const rader = opplysningStore[opplysningType] || null;
+        if (rader) {
+            return {
+                rader,
+                gruppe: "defaultGruppe" as VedleggFrontendGruppe,
+                type: "defaultType" as VedleggFrontendType,
+            };
+        }
+        if (fetchedData) {
+            return {rader: fetchedData.rader, gruppe: fetchedData.gruppe, type: fetchedData.type};
+        }
+        return null;
+    });
+
+    const saveOpplysning = (rader: VedleggRadFrontend[]) => {
+        opplysningStore[opplysningType] = rader;
+        setSavedOpplysning({
+            rader,
+            gruppe: "defaultGruppe" as VedleggFrontendGruppe,
+            type: "defaultType" as VedleggFrontendType,
+        } as VedleggFrontend); // Update state
+    };
+
+    return {
+        savedOpplysning,
+        saveOpplysning,
+    };
+};
 
 const zodBelopTekstfeltSchema = z.preprocess(
     belopTekstfeltPreprocessor,
@@ -42,22 +77,19 @@ export type VedleggRadFrontendForm = z.infer<typeof VedleggRadFrontendSchema>;
 // This is the delay we wait between keystrokes before we push changes to backend
 const DEBOUNCE_DELAY_MS = 500;
 
-export const useOpplysning = (opplysning: VedleggFrontend) => {
-    const {textKey, inputs = [], numRows} = opplysningSpec[opplysning.type as VedleggFrontendTypeMinusUferdig];
+export const useOpplysning = (opplysning: VedleggFrontend, fetchedData: VedleggFrontend | null) => {
+    const {textKey, inputs, numRows} = opplysningSpec[opplysning.type as VedleggFrontendTypeMinusUferdig];
     const behandlingsId = useBehandlingsId();
     const {mutate} = useUpdateOkonomiskOpplysning();
 
-    // Fetch economic information from the backend
-    const {data: fetchedData, isLoading} = useHentOkonomiskeOpplysninger(behandlingsId, {
-        query: {
-            refetchOnWindowFocus: false,
-            staleTime: 60000,
-        },
-    });
+    const {savedOpplysning, saveOpplysning} = useStoredOpplysning(opplysning.type, fetchedData);
 
-    const initialValues =
-        fetchedData?.okonomiskeOpplysninger?.find((item) => item.type === opplysning.type)?.rader || opplysning.rader;
-
+    const initialValues = savedOpplysning?.rader || opplysning.rader;
+    console.log("------------------");
+    console.log("before opplysning", opplysning);
+    console.log("before fetchedData", fetchedData);
+    console.log("initialValues", initialValues);
+    console.log("------------------");
     const {control, handleSubmit, watch} = useForm<VedleggRadFrontendForm>({
         defaultValues: {rader: initialValues},
         resolver: zodResolver(VedleggRadFrontendSchema),
@@ -65,29 +97,41 @@ export const useOpplysning = (opplysning: VedleggFrontend) => {
         shouldFocusError: false,
     });
 
-    const [rader, setRader] = useState<VedleggFrontend["rader"]>(initialValues);
-
-    // Debounce and save data
+    const [rader, setRader] = useState<VedleggFrontend["rader"]>(
+        initialValues ||
+            ([
+                {
+                    beskrivelse: null,
+                    belop: null,
+                    brutto: null,
+                    netto: null,
+                    renter: null,
+                    avdrag: null,
+                },
+            ] as VedleggFrontend["rader"])
+    );
+    // Wait DEBOUNCE_DELAY_MS after a change to "rader" before pushing it to backend.
     useDebounce(
         () => {
-            console.log("attempting to mutate with data: ", rader);
-            //const currentRader = rader ?? [];
-            if (!deepEqual(rader, opplysning.rader)) {
-                mutate(
-                    {
-                        behandlingsId,
-                        data: {...opplysning, rader},
+            console.log("rader ", rader);
+            const currentRader = rader ?? [];
+            console.log("attempting to mutate with data: ", currentRader);
+            if (deepEqual(currentRader, opplysning.rader)) return;
+            mutate(
+                {
+                    behandlingsId,
+                    data: {...opplysning, rader: currentRader},
+                },
+                {
+                    onSuccess: (data) => {
+                        console.log("mutate success", data);
                     },
-                    {
-                        onSuccess: (data) => {
-                            console.log("mutate success", data);
-                        },
-                        onError: (error) => {
-                            console.error("mutate error", error);
-                        },
-                    }
-                );
-            }
+                    onError: (error) => {
+                        console.error("mutate error", error);
+                    },
+                }
+            );
+            saveOpplysning(currentRader);
         },
         DEBOUNCE_DELAY_MS,
         [rader]
@@ -96,7 +140,7 @@ export const useOpplysning = (opplysning: VedleggFrontend) => {
     // Submit data to server when form changes, with delay - this could probably be done better.
     // The row state is changed, which starts a timer in useDebounce above before submitting to backend.
     useEffect(() => {
-        console.log("fetchedData:", fetchedData);
+        console.log("fetchData", fetchedData);
         const subscription = watch(() =>
             handleSubmit(({rader}) => {
                 setRader(rader);
@@ -109,10 +153,6 @@ export const useOpplysning = (opplysning: VedleggFrontend) => {
         control,
         name: "rader",
     });
-
-    if (isLoading) {
-        return {isLoading, rows: {entries: [], append, remove, update}, form: {control, handleSubmit}};
-    }
 
     return {
         rows: {
@@ -128,6 +168,5 @@ export const useOpplysning = (opplysning: VedleggFrontend) => {
         textKey,
         inputs,
         multirow: numRows === "flere",
-        isLoading,
     };
 };
