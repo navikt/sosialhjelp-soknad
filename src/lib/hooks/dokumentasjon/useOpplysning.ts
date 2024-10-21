@@ -14,15 +14,19 @@ import {
 } from "../../../generated/model";
 import {opplysningSpec} from "../../opplysninger";
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {useUpdateOkonomiskOpplysning} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {
+    useHentOkonomiskeOpplysninger,
+    useUpdateOkonomiskOpplysning,
+} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
 
 const opplysningStore: Record<string, VedleggFrontend["rader"]> = {};
 
-export const useStoredOpplysning = (opplysningType: string, fetchedData: VedleggFrontend | null) => {
+export const useStoredOpplysning = (opplysningType: string, fetchedData: any) => {
     const [savedOpplysning, setSavedOpplysning] = useState<VedleggFrontend | null>(() => {
         const rader = opplysningStore[opplysningType] || null;
         if (rader) {
+            console.log("er det data i mock?", rader);
             return {
                 rader,
                 gruppe: "defaultGruppe" as VedleggFrontendGruppe,
@@ -30,6 +34,7 @@ export const useStoredOpplysning = (opplysningType: string, fetchedData: Vedlegg
             };
         }
         if (fetchedData) {
+            console.log("mock har ikke data, har fetchData?", fetchedData);
             return {rader: fetchedData.rader, gruppe: fetchedData.gruppe, type: fetchedData.type};
         }
         return null;
@@ -77,11 +82,12 @@ export type VedleggRadFrontendForm = z.infer<typeof VedleggRadFrontendSchema>;
 // This is the delay we wait between keystrokes before we push changes to backend
 const DEBOUNCE_DELAY_MS = 500;
 
-export const useOpplysning = (opplysning: VedleggFrontend, fetchedData: VedleggFrontend | null) => {
+export const useOpplysning = (opplysning: VedleggFrontend) => {
     const {textKey, inputs, numRows} = opplysningSpec[opplysning.type as VedleggFrontendTypeMinusUferdig];
     const behandlingsId = useBehandlingsId();
     const {mutate} = useUpdateOkonomiskOpplysning();
 
+    const {data: fetchedData} = useHentOkonomiskeOpplysninger(behandlingsId);
     const {savedOpplysning, saveOpplysning} = useStoredOpplysning(opplysning.type, fetchedData);
 
     const initialValues = savedOpplysning?.rader || opplysning.rader;
@@ -94,6 +100,9 @@ export const useOpplysning = (opplysning: VedleggFrontend, fetchedData: VedleggF
         defaultValues: {rader: initialValues},
         resolver: zodResolver(VedleggRadFrontendSchema),
         mode: "onBlur",
+        // Egentlig burde dette være true, men om det ikke er false så vil den
+        // umiddelbart bytte fokus til første ugyldige felt dersom man endrer
+        // et gyldig felt pga. mode: "onBlur"
         shouldFocusError: false,
     });
 
@@ -110,6 +119,7 @@ export const useOpplysning = (opplysning: VedleggFrontend, fetchedData: VedleggF
                 },
             ] as VedleggFrontend["rader"])
     );
+
     // Wait DEBOUNCE_DELAY_MS after a change to "rader" before pushing it to backend.
     useDebounce(
         () => {
@@ -117,6 +127,7 @@ export const useOpplysning = (opplysning: VedleggFrontend, fetchedData: VedleggF
             const currentRader = rader ?? [];
             console.log("attempting to mutate with data: ", currentRader);
             if (deepEqual(currentRader, opplysning.rader)) return;
+
             mutate(
                 {
                     behandlingsId,
