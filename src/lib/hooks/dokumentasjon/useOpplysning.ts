@@ -46,7 +46,7 @@ export const useStoredOpplysning = (opplysningType: string, fetchedData: any) =>
             rader,
             gruppe: "defaultGruppe" as VedleggFrontendGruppe,
             type: "defaultType" as VedleggFrontendType,
-        } as VedleggFrontend); // Update state
+        } as VedleggFrontend);
     };
 
     return {
