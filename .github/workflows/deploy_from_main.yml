@@ -36,7 +36,7 @@ jobs:
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           image_suffix: ${{ matrix.environment }}
           build_args: |
-            DIGISOS_ENV=${{ matrix.environment }}w
+            DIGISOS_ENV=${{ matrix.environment }}
           build_secrets: |
             NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
 
