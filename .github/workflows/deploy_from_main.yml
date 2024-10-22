@@ -14,6 +14,8 @@ jobs:
         include:
           - environment: preprod
             cluster: dev-gcp
+          - environment: mock
+            cluster: dev-gcp
           #- environment: prod
           #  cluster: prod-gcp
 

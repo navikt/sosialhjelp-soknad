@@ -1,4 +1,4 @@
-export const DigisosEnvironments = ["localhost", "dev-sbs", "mock", "prod-sbs", "preprod", "prod"] as const;
+export const DigisosEnvironments = ["localhost", "dev-sbs", "mock", "prod-sbs", "preprod"] as const;
 export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 
 type FeatureFlags = {
