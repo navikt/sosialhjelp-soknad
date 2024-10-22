@@ -4,7 +4,7 @@ import {TextField} from "@navikt/ds-react";
 import {OpplysningInputType} from "../../lib/opplysninger";
 import {LinkButton} from "../../lib/components/LinkButton";
 import cx from "classnames";
-import {VedleggRadFrontendForm} from "../../lib/hooks/dokumentasjon/useOpplysning";
+import {VedleggRadFrontendForm} from "../../lib/hooks/dokumentasjon/vedleggRadFormSchema.ts";
 import {VedleggFrontendType} from "../../generated/model";
 import {DigisosLanguageKey} from "../../lib/i18n";
 
