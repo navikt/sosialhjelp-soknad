@@ -1,40 +1,19 @@
 import {useFieldArray, useForm} from "react-hook-form";
-import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useEffect, useState} from "react";
 import {useDebounce} from "react-use";
 import deepEqual from "deep-equal";
-import {belopTekstfeltPreprocessor} from "../../../sider/08-vedlegg/belopTekstfeltPreprocessor";
-import {ValideringsFeilKode} from "../../validering";
 import {VedleggFrontend} from "../../../generated/model";
 import {opplysningSpec} from "../../opplysninger";
 import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
 import {useOpplysningMutation} from "./useOpplysningMutation.ts";
-
-const zodBelopTekstfeltSchema = z.preprocess(
-    belopTekstfeltPreprocessor,
-    z.number({invalid_type_error: ValideringsFeilKode.ER_TALL}).min(0, ValideringsFeilKode.ER_TALL).nullable()
-);
-
-const RadSchema = z
-    .object({
-        beskrivelse: z.string().max(100, ValideringsFeilKode.MAX_LENGDE).nullable(),
-        belop: zodBelopTekstfeltSchema,
-        brutto: zodBelopTekstfeltSchema,
-        netto: zodBelopTekstfeltSchema,
-        renter: zodBelopTekstfeltSchema,
-        avdrag: zodBelopTekstfeltSchema,
-    })
-    .partial();
-
-const VedleggRadFrontendSchema = z.object({
-    rader: z.array(RadSchema).optional(),
-});
-
-export type VedleggRadFrontendForm = z.infer<typeof VedleggRadFrontendSchema>;
+import {VedleggRadFrontendForm, VedleggRadFrontendSchema} from "./vedleggRadFormSchema.ts";
 
 // This is the delay we wait between keystrokes before we push changes to backend
 const DEBOUNCE_DELAY_MS = 500;
+const INITIAL_RADER: VedleggFrontend["rader"] = [
+    {beskrivelse: null, belop: null, brutto: null, netto: null, renter: null, avdrag: null},
+];
 
 export const useOpplysning = (opplysning: VedleggFrontend) => {
     const {textKey, inputs, numRows} = opplysningSpec[opplysning.type as VedleggFrontendTypeMinusUferdig];
@@ -52,9 +31,7 @@ export const useOpplysning = (opplysning: VedleggFrontend) => {
     });
 
     // Initialize with all members being null
-    const [rader, setRader] = useState<VedleggFrontend["rader"]>([
-        {beskrivelse: null, belop: null, brutto: null, netto: null, renter: null, avdrag: null},
-    ] as VedleggFrontend["rader"]);
+    const [rader, setRader] = useState<VedleggFrontend["rader"] | undefined>([...INITIAL_RADER]);
 
     const submitFormIfChanged = () => {
         if (!deepEqual(rader, opplysning.rader)) mutateOpplysning({...opplysning, rader});
@@ -70,10 +47,7 @@ export const useOpplysning = (opplysning: VedleggFrontend) => {
         return () => subscription.unsubscribe();
     }, [handleSubmit, watch]);
 
-    const {fields, append, remove} = useFieldArray<VedleggRadFrontendForm>({
-        control,
-        name: "rader",
-    });
+    const {fields, append, remove} = useFieldArray<VedleggRadFrontendForm>({control, name: "rader"});
 
     return {
         rows: {
