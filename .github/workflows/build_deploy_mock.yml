@@ -47,7 +47,8 @@ jobs:
               uses: nais/deploy/actions/deploy@v2
               env:
                   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-                  RESOURCE: nais/mock.yaml
+                  RESOURCE: nais/nais.yaml
+                  VARS: nais/vars/mock.yaml
                   CLUSTER: dev-gcp
                   REF: ${{ github.sha }}
                   PRINT_PAYLOAD: true

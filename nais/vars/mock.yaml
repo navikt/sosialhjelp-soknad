@@ -1,0 +1,7 @@
+ingresses:
+  - "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad"
+externalOutboundAccesses:
+  - "dekoratoren.dev.nav.no"
+  - "dekoratoren.ekstern.dev.nav.no"
+  - "digisos.ekstern.dev.nav.no"
+  - "www.dev.nav.no"
