@@ -8,14 +8,18 @@ import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
+import {createSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
 import {NedetidPanel} from "../../../lib/components/NedetidPanel";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 import {SoknadstypeValg} from "./SoknadstypeValg.tsx";
+import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
 
 export const NySoknadInfo = () => {
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
     const [startSoknadError, setStartSoknadError] = useState<Error | null>(null);
     const [soknadstype, setSoknadstype] = useState<"kort" | "standard" | null>(null);
+    const {data: featureToggles} = useFeatureToggles();
+    const isNyttApiEnabled = featureToggles?.["sosialhjelp.soknad.nytt-api"] ?? false;
 
     const {data: sessionInfo} = useGetSessionInfo();
 
@@ -38,7 +42,12 @@ export const NySoknadInfo = () => {
             language: localStorage.getItem("digisos-language"),
         });
         try {
-            const {brukerBehandlingId} = await opprettSoknad(soknadstype ? {soknadstype} : undefined);
+            let brukerBehandlingId;
+            if (isNyttApiEnabled) {
+                brukerBehandlingId = (await createSoknad(soknadstype ? {soknadstype} : undefined)).soknadId;
+            } else {
+                brukerBehandlingId = (await opprettSoknad(soknadstype ? {soknadstype} : undefined)).brukerBehandlingId;
+            }
             await hentXsrfCookie(brukerBehandlingId);
             navigate(`../skjema/${brukerBehandlingId}/1`);
         } catch (e: any) {
