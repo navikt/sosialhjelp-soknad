@@ -31,6 +31,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - run: cp .npmrc.dockerbuild .npmrc
       - run: npm install ci --prefer-offline --no-audit
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
