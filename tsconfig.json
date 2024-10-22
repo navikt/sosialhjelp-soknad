@@ -25,6 +25,12 @@
             }
         ]
     },
-    "include": ["./src", "./dist/types/**/*.ts", "./next-env.d.ts", "./build/types/**/*.ts"],
+    "include": [
+        "./src",
+        "./dist/types/**/*.ts",
+        "./next-env.d.ts",
+        "./build/types/**/*.ts",
+        "node_modules/vitest/globals.d.ts"
+    ],
     "exclude": ["./node_modules"]
 }

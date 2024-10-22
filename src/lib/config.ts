@@ -126,7 +126,8 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
 };
 
 const getConfig = (miljo: unknown): SoknadConfig => {
-    if (!isValidDigisosEnvironment(miljo)) throw new Error(`Unknown SoknadMiljo ${miljo}`);
+    if (process.env.NODE_ENV === "test") return configMap.localhost;
+    if (!isValidDigisosEnvironment(miljo)) throw new Error(`Unknown SoknadMiljo: "${miljo}"`);
     return configMap[miljo];
 };
 
