@@ -91,11 +91,6 @@ export const useOpplysning = (opplysning: VedleggFrontend) => {
     const {savedOpplysning, saveOpplysning} = useStoredOpplysning(opplysning.type, fetchedData);
 
     const initialValues = savedOpplysning?.rader || opplysning.rader;
-    console.log("------------------");
-    console.log("before opplysning", opplysning);
-    console.log("before fetchedData", fetchedData);
-    console.log("initialValues", initialValues);
-    console.log("------------------");
     const {control, handleSubmit, watch} = useForm<VedleggRadFrontendForm>({
         defaultValues: {rader: initialValues},
         resolver: zodResolver(VedleggRadFrontendSchema),
@@ -151,7 +146,6 @@ export const useOpplysning = (opplysning: VedleggFrontend) => {
     // Submit data to server when form changes, with delay - this could probably be done better.
     // The row state is changed, which starts a timer in useDebounce above before submitting to backend.
     useEffect(() => {
-        console.log("fetchData", fetchedData);
         const subscription = watch(() =>
             handleSubmit(({rader}) => {
                 setRader(rader);
