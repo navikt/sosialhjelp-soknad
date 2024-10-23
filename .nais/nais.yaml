@@ -1,7 +1,7 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: sosialhjelp-soknad-mock
+  name: sosialhjelp-soknad-{{postfix}}
   namespace: teamdigisos
   labels:
     team: teamdigisos
@@ -11,14 +11,15 @@ spec:
   image: {{image}}
   port: 8080
   ingresses:
-    - "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad"
+    {{#each ingresses as |url|}}
+    - {{url}}
+    {{/each}}
   accessPolicy:
     outbound:
       external:
-        - host: dekoratoren.dev.nav.no
-        - host: dekoratoren.ekstern.dev.nav.no
-        - host: digisos.ekstern.dev.nav.no
-        - host: www.dev.nav.no
+        {{#each externalOutboundAccesses as |url|}}
+        - host: {{url}}
+        {{/each}}
   liveness:
     path: /sosialhjelp/soknad/internal/isAlive
     initialDelay: 5

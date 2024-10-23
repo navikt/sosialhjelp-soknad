@@ -1,4 +1,4 @@
-export const DigisosEnvironments = ["localhost", "dev-sbs", "mock", "prod-sbs"] as const;
+export const DigisosEnvironments = ["localhost", "dev-sbs", "mock", "prod-sbs", "preprod"] as const;
 export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 
 type FeatureFlags = {
@@ -103,6 +103,27 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         },
     },
     "prod-sbs": {
+        featureFlags: {
+            begrunnelseNyTekst: false,
+            nyOppsummering: false,
+            oppsummeringNavEnhet: false,
+            soknadstypeValg: false,
+        },
+
+        dekoratorMiljo: "prod",
+        showDevPanel: false,
+        logLocally: false,
+        withCredentials: false,
+        driftsmeldingUrl: "https://www.nav.no/sosialhjelp/driftsmeldinger",
+        baseURL: "https://www.nav.no/sosialhjelp/login-api/soknad-api/",
+        innsynURL: "https://www.nav.no/sosialhjelp/innsyn/",
+        minSideURL: "https://www.nav.no/minside/",
+        logoutURL: "https://loginservice.nav.no/slo",
+        faro: {
+            url: "https://telemetry.nav.no/collect",
+        },
+    },
+    preprod: {
         featureFlags: {
             begrunnelseNyTekst: false,
             nyOppsummering: false,

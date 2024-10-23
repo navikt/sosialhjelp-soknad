@@ -25,7 +25,7 @@ RUN npm run orval
 RUN npm run build
 
 
-FROM node:20-alpine AS release
+FROM node:20-slim AS release
 
 ARG DIGISOS_ENV
 
