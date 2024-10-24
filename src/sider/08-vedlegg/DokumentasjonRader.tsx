@@ -14,12 +14,6 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
 
     const {leggtil} = useDokumentasjonTekster(opplysning.type);
 
-    console.log("---------------------------------");
-    console.log("opplysning", opplysning);
-    console.log("inputs", inputs);
-    console.log("multirow", multirow);
-    console.log("---------------------------------");
-
     return (
         <form onSubmit={(e) => e.preventDefault()}>
             {entries.length > 0 && (
