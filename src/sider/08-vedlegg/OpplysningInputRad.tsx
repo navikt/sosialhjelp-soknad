@@ -3,8 +3,7 @@ import {useTranslation} from "react-i18next";
 import {TextField} from "@navikt/ds-react";
 import {OpplysningInputType} from "../../lib/opplysninger";
 import {LinkButton} from "../../lib/components/LinkButton";
-import cx from "classnames";
-import {VedleggRadFrontendForm} from "../../lib/hooks/dokumentasjon/useOpplysning";
+import {VedleggRadFrontendForm} from "../../lib/hooks/dokumentasjon/vedleggRadFormSchema.ts";
 import {VedleggFrontendType} from "../../generated/model";
 import {DigisosLanguageKey} from "../../lib/i18n";
 
@@ -14,7 +13,6 @@ export const OpplysningInputRad = ({
     control,
     textKey,
     onDelete,
-    className,
 }: {
     fields: OpplysningInputType[];
     index: number;
@@ -27,12 +25,12 @@ export const OpplysningInputRad = ({
     const {t: tDok} = useTranslation("dokumentasjon");
 
     return (
-        <li className={className}>
+        <li className={"first:mb-6 odd:mt-5 even:mt-5"}>
             {fields.map((fieldName) => (
                 <Controller
                     key={fieldName}
                     render={({field, fieldState}) => (
-                        <>
+                        <div className={"first:mt-0 mt-3"}>
                             <TextField
                                 label={
                                     <span style={{fontSize: 16, fontWeight: "normal"}}>
@@ -43,7 +41,6 @@ export const OpplysningInputRad = ({
                                         }
                                     </span>
                                 }
-                                className={cx("pb-2")}
                                 error={
                                     fieldState.isTouched &&
                                     fieldState.error?.message &&
@@ -51,11 +48,17 @@ export const OpplysningInputRad = ({
                                 }
                                 autoComplete={"off"}
                                 {...field}
-                                // To avoid value === null
+                                // Ensure the correct value is shown and persisted
                                 value={field.value || ""}
+                                onChange={(e) => field.onChange(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        e.preventDefault();
+                                    }
+                                }}
                                 htmlSize={fieldName === "beskrivelse" ? 32 : 20}
                             />
-                        </>
+                        </div>
                     )}
                     name={`rader.${index}.${fieldName}`}
                     control={control}
