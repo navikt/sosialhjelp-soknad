@@ -56,10 +56,10 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                     icon={SkjemaHeadings[1].ikon}
                 />
                 <SkjemaStegErrorSummary errors={errors} />
-                <BasisPersonalia />
+                {/*<BasisPersonalia />*/}
                 <AdresseData />
-                <TelefonData />
-                <Kontonr />
+                {/*<TelefonData />*/}
+                {/*<Kontonr />*/}
                 <SkjemaStegButtons onNext={onClickNext} />
             </SkjemaStegBlock>
         </SkjemaSteg>

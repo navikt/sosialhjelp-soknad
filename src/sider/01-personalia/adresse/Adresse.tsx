@@ -8,9 +8,17 @@ import cx from "classnames";
 import {useTranslation} from "react-i18next";
 import {HorizontalRadioGroup} from "../../../lib/components/form/HorizontalRadioGroup";
 import {useAdresser} from "./useAdresser.tsx";
+import {useGetAdresser} from "../../../generated/new/adresse-controller/adresse-controller.ts";
+import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId.ts";
 
 export const AdresseData = () => {
     const {t} = useTranslation();
+    const behandlingsid = useBehandlingsId();
+    const {data} = useGetAdresser(behandlingsid);
+    if (!data) {
+        return null;
+    }
+    data.folkeregistrertAdresse
 
     const {
         isPending,

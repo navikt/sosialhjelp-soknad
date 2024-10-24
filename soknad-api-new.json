@@ -1485,10 +1485,7 @@
             "post": {
                 "tags": ["soknad-lifecycle-controller"],
                 "operationId": "createSoknad",
-                "parameters": [
-                    {"name": "Authorization", "in": "header", "required": true, "schema": {"type": "string"}},
-                    {"name": "soknadstype", "in": "query", "required": false, "schema": {"type": "string"}}
-                ],
+                "parameters": [{"name": "soknadstype", "in": "query", "required": false, "schema": {"type": "string"}}],
                 "responses": {
                     "413": {
                         "description": "Payload Too Large",
@@ -1908,15 +1905,14 @@
                 }
             },
             "IkkeStudentInput": {
-                "required": ["verdi"],
+                "required": ["erStudent"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/UtdanningInput"},
-                    {"type": "object", "properties": {"verdi": {"type": "integer", "format": "int32"}}}
+                    {"type": "object", "properties": {"erStudent": {"type": "boolean"}}}
                 ]
             },
             "StudentgradInput": {
-                "required": ["studentgrad"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/UtdanningInput"},
@@ -2530,12 +2526,25 @@
                     "harFastStilling": {"type": "boolean"}
                 }
             },
-            "Adresse": {"type": "object"},
-            "AdresseMedKommunenummer": {
+            "Adresse": {
+                "required": ["type"],
                 "type": "object",
-                "allOf": [
-                    {"$ref": "#/components/schemas/Adresse"},
-                    {"type": "object", "properties": {"kommunenummer": {"type": "string"}}}
+                "properties": {"type": {"type": "string", "enum": ["POSTBOKS", "USTRUKTURERT", "VEG", "MATRIKKEL"]}},
+                "description": "Base interface for different types of addresses",
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "PostboksAdresse": "#/components/schemas/PostboksAdresse",
+                        "UstrukturertAdresse": "#/components/schemas/UstrukturertAdresse",
+                        "VegAdresse": "#/components/schemas/VegAdresse",
+                        "MatrikkelAdresse": "#/components/schemas/MatrikkelAdresse"
+                    }
+                },
+                "oneOf": [
+                    {"$ref": "#/components/schemas/PostboksAdresse"},
+                    {"$ref": "#/components/schemas/UstrukturertAdresse"},
+                    {"$ref": "#/components/schemas/VegAdresse"},
+                    {"$ref": "#/components/schemas/MatrikkelAdresse"}
                 ]
             },
             "AdresserInput": {
@@ -2545,7 +2554,6 @@
                     "adresseValg": {"type": "string", "enum": ["FOLKEREGISTRERT", "MIDLERTIDIG", "SOKNAD"]},
                     "brukerAdresse": {
                         "oneOf": [
-                            {"$ref": "#/components/schemas/AdresseMedKommunenummer"},
                             {"$ref": "#/components/schemas/MatrikkelAdresse"},
                             {"$ref": "#/components/schemas/PostboksAdresse"},
                             {"$ref": "#/components/schemas/UstrukturertAdresse"},
@@ -2555,25 +2563,25 @@
                 }
             },
             "MatrikkelAdresse": {
-                "required": ["bruksnummer", "gaardsnummer", "kommunenummer"],
+                "required": ["bruksnummer", "gaardsnummer", "kommunenummer", "type"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/Adresse"},
                     {
                         "type": "object",
                         "properties": {
-                            "kommunenummer": {"type": "string"},
                             "gaardsnummer": {"type": "string"},
                             "bruksnummer": {"type": "string"},
                             "festenummer": {"type": "string"},
                             "seksjonsnummer": {"type": "string"},
-                            "undernummer": {"type": "string"}
+                            "undernummer": {"type": "string"},
+                            "kommunenummer": {"type": "string"}
                         }
                     }
                 ]
             },
             "PostboksAdresse": {
-                "required": ["postboks", "postnummer", "poststed"],
+                "required": ["postboks", "postnummer", "poststed", "type"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/Adresse"},
@@ -2588,7 +2596,7 @@
                 ]
             },
             "UstrukturertAdresse": {
-                "required": ["adresse"],
+                "required": ["adresse", "type"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/Adresse"},
@@ -2596,7 +2604,7 @@
                 ]
             },
             "VegAdresse": {
-                "required": ["adresselinjer", "landkode"],
+                "required": ["adresselinjer", "landkode", "type"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/Adresse"},
@@ -2604,14 +2612,14 @@
                         "type": "object",
                         "properties": {
                             "landkode": {"type": "string"},
-                            "kommunenummer": {"type": "string"},
                             "adresselinjer": {"type": "array", "items": {"type": "string"}},
                             "bolignummer": {"type": "string"},
                             "postnummer": {"type": "string"},
                             "poststed": {"type": "string"},
                             "gatenavn": {"type": "string"},
                             "husnummer": {"type": "string"},
-                            "husbokstav": {"type": "string"}
+                            "husbokstav": {"type": "string"},
+                            "kommunenummer": {"type": "string"}
                         }
                     }
                 ]
@@ -2622,7 +2630,6 @@
                     "adresseValg": {"type": "string", "enum": ["FOLKEREGISTRERT", "MIDLERTIDIG", "SOKNAD"]},
                     "folkeregistrertAdresse": {
                         "oneOf": [
-                            {"$ref": "#/components/schemas/AdresseMedKommunenummer"},
                             {"$ref": "#/components/schemas/MatrikkelAdresse"},
                             {"$ref": "#/components/schemas/PostboksAdresse"},
                             {"$ref": "#/components/schemas/UstrukturertAdresse"},
@@ -2631,7 +2638,6 @@
                     },
                     "midlertidigAdresse": {
                         "oneOf": [
-                            {"$ref": "#/components/schemas/AdresseMedKommunenummer"},
                             {"$ref": "#/components/schemas/MatrikkelAdresse"},
                             {"$ref": "#/components/schemas/PostboksAdresse"},
                             {"$ref": "#/components/schemas/UstrukturertAdresse"},
@@ -2640,7 +2646,6 @@
                     },
                     "brukerAdresse": {
                         "oneOf": [
-                            {"$ref": "#/components/schemas/AdresseMedKommunenummer"},
                             {"$ref": "#/components/schemas/MatrikkelAdresse"},
                             {"$ref": "#/components/schemas/PostboksAdresse"},
                             {"$ref": "#/components/schemas/UstrukturertAdresse"},
