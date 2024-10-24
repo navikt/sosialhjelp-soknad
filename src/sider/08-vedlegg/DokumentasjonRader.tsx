@@ -6,12 +6,19 @@ import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokument
 
 export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) => {
     const {
+        multirow,
         inputs,
         form: {control},
         rows: {entries, append, remove},
     } = useOpplysning(opplysning);
 
     const {leggtil} = useDokumentasjonTekster(opplysning.type);
+
+    console.log("---------------------------------");
+    console.log("opplysning", opplysning);
+    console.log("inputs", inputs);
+    console.log("multirow", multirow);
+    console.log("---------------------------------");
 
     return (
         <form onSubmit={(e) => e.preventDefault()}>
@@ -27,12 +34,14 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
                             onDelete={index > 0 ? remove : undefined}
                         />
                     ))}
-                    <li className={"mt-6"}>
-                        <LinkButton onClick={() => append({})}>
-                            <span aria-hidden={true}>+ </span>
-                            {leggtil}
-                        </LinkButton>
-                    </li>
+                    {multirow && (
+                        <li className={"mt-6"}>
+                            <LinkButton onClick={() => append({})}>
+                                <span aria-hidden={true}>+ </span>
+                                {leggtil}
+                            </LinkButton>
+                        </li>
+                    )}
                 </ul>
             )}
         </form>
