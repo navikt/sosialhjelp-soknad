@@ -17,9 +17,7 @@ export default defineConfig({
             // Vi bruker ikke mocks enda, og avventer ny versjon av orval
             // som støtter msw v2.
             mock: false,
-        },
-        hooks: {
-            afterAllFilesWrite: "prettier --write",
+            prettier: true,
         },
     },
     "soknad-api-client-new": {
@@ -38,9 +36,7 @@ export default defineConfig({
             // Vi bruker ikke mocks enda, og avventer ny versjon av orval
             // som støtter msw v2.
             mock: false,
-        },
-        hooks: {
-            afterAllFilesWrite: "prettier --write",
+            prettier: true,
         },
     },
     driftsmeldinger: {
