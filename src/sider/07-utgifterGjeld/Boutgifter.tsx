@@ -3,13 +3,26 @@ import {Checkbox, CheckboxGroup, GuidePanel, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {useBoutgifter} from "../../lib/hooks/data/useBoutgifter";
 import {BoutgifterFrontend} from "../../generated/model";
+import {useBosituasjon} from "../../lib/hooks/data/useBosituasjon.tsx";
+import {useInntekterBostotte} from "../../lib/hooks/data/useInntekterBostotte.tsx";
 
 export const Boutgifter = () => {
     const {t} = useTranslation("skjema");
 
     const {boutgifter, setBoutgifter} = useBoutgifter();
+    const {bosituasjon} = useBosituasjon();
+    const {bostotte} = useInntekterBostotte();
 
     if (!boutgifter) return null;
+
+    console.log("boutgifter.skalViseInfoVedBekreftelse", boutgifter.skalViseInfoVedBekreftelse);
+    console.log("boutgifter.bekreftelse", boutgifter.bekreftelse);
+    const bosituasjonen = bosituasjon?.botype === "leier" || bosituasjon?.botype === "kommunal";
+    const bostottenBek = bostotte?.bekreftelse;
+    const bostottenSam = bostotte?.samtykke;
+    console.log("bosituasjonen", bosituasjonen);
+    console.log("bostottenBek", bostottenBek);
+    console.log("bostottenSam", bostottenSam);
 
     return (
         <div className="skjema-sporsmal">
@@ -27,7 +40,7 @@ export const Boutgifter = () => {
                 <Checkbox value={"boliglan"}>{t("utgifter.boutgift.true.type.boliglan")}</Checkbox>
                 <Checkbox value={"annet"}>{t("utgifter.boutgift.true.type.andreutgifter.stringValue")}</Checkbox>
             </CheckboxGroup>
-            {!boutgifter?.skalViseInfoVedBekreftelse && boutgifter?.bekreftelse && (
+            {!boutgifter?.skalViseInfoVedBekreftelse && ((bostottenBek && !bostottenSam) || bosituasjon) && (
                 <GuidePanel poster>
                     <Trans
                         t={t}
