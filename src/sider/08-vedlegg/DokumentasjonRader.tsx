@@ -6,7 +6,6 @@ import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokument
 
 export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) => {
     const {
-        multirow,
         inputs,
         form: {control},
         rows: {entries, append, remove},
@@ -28,14 +27,12 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
                             onDelete={index > 0 ? remove : undefined}
                         />
                     ))}
-                    {multirow && (
-                        <li className={"mt-6"}>
-                            <LinkButton onClick={() => append({})}>
-                                <span aria-hidden={true}>+ </span>
-                                {leggtil}
-                            </LinkButton>
-                        </li>
-                    )}
+                    <li className={"mt-6"}>
+                        <LinkButton onClick={() => append({})}>
+                            <span aria-hidden={true}>+ </span>
+                            {leggtil}
+                        </LinkButton>
+                    </li>
                 </ul>
             )}
         </form>
