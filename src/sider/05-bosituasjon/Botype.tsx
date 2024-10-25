@@ -15,7 +15,7 @@ export const Botype = () => {
         <div className={"mt-12 lg:mt-24 mb-12 lg:mb-24"}>
             <RadioGroup
                 legend={t("bosituasjon.sporsmal")}
-                value={erAnnet() ? "annet" : bosituasjon?.botype}
+                value={erAnnet() ? "annet" : bosituasjon?.botype || ""}
                 onChange={(botype) => setBosituasjon({botype})}
             >
                 <Radio value={"eier"}>{t("bosituasjon.eier")}</Radio>
@@ -27,6 +27,7 @@ export const Botype = () => {
             <NyttUnderskjema hidden={!erAnnet()}>
                 <RadioGroup
                     legend={t("bosituasjon.annenBotype.sporsmal")}
+                    value={bosituasjon?.botype || ""}
                     onChange={(botype) => setBosituasjon({botype})}
                 >
                     <Radio value={"foreldre"}>{t("bosituasjon.annenBotype.foreldre")}</Radio>

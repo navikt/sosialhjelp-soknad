@@ -10,17 +10,17 @@ export const useUtbetalinger = () => {
 
     const setBekreftelse = async (bekreftelse: boolean) => {
         if (!utbetalinger) return;
-        const oppdatert = {...utbetalinger, bekreftelse};
+        const oppdatert = {...utbetalinger};
+        oppdatert.bekreftelse = bekreftelse;
 
         if (!bekreftelse) {
-            utbetalinger.salg = false;
-            utbetalinger.utbytte = false;
-            utbetalinger.forsikring = false;
-            utbetalinger.annet = false;
-            utbetalinger.beskrivelseAvAnnet = "";
+            oppdatert.salg = false;
+            oppdatert.utbytte = false;
+            oppdatert.forsikring = false;
+            oppdatert.annet = false;
+            oppdatert.beskrivelseAvAnnet = "";
         }
 
-        queryClient.setQueryData(queryKey, oppdatert);
         await updateUtbetalinger(behandlingsId, oppdatert);
         queryClient.setQueryData(queryKey, oppdatert);
     };
@@ -29,14 +29,14 @@ export const useUtbetalinger = () => {
         if (!utbetalinger) return;
 
         const oppdatert: UtbetalingerFrontend = {
-            bekreftelse: !!valg.length,
+            ...utbetalinger,
             utbytte: valg.includes("utbytte"),
             salg: valg.includes("salg"),
             forsikring: valg.includes("forsikring"),
             annet: valg.includes("annet"),
             beskrivelseAvAnnet: valg.includes("annet") ? utbetalinger.beskrivelseAvAnnet : "",
         };
-        queryClient.setQueryData(queryKey, oppdatert);
+
         await updateUtbetalinger(behandlingsId, oppdatert);
         queryClient.setQueryData(queryKey, oppdatert);
     };
