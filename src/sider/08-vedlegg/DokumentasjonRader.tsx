@@ -14,6 +14,9 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
 
     const {leggtil} = useDokumentasjonTekster(opplysning.type);
 
+    //TODO: multirow knappen skjules for lonnslipp|arbeid
+    //TODO: dette på grunn av det kan skap forvirringer for søkeren på grunn av kor uoversiktlig det kan bli
+
     return (
         <form onSubmit={(e) => e.preventDefault()}>
             {entries.length > 0 && (
@@ -28,8 +31,8 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
                             onDelete={index > 0 ? remove : undefined}
                         />
                     ))}
-                    {multirow && (
-                        <li className={"mt-6"}>
+                    {multirow && opplysning.type !== "lonnslipp|arbeid" && (
+                        <li className={`pt-3 pb-4`}>
                             <LinkButton onClick={() => append({})}>
                                 <span aria-hidden={true}>+ </span>
                                 {leggtil}
