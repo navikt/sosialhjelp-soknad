@@ -28,7 +28,7 @@ export const AdresseSok = ({
 }: {
     className?: string;
     defaultValue?: string;
-    onChange: (nyAdresse: AdresseFrontend | null) => Promise<void>;
+    onChange: (nyAdresse: AdresseFrontend | null) => Promise<void> | void;
 }) => {
     return (
         <div className={className}>
@@ -36,7 +36,7 @@ export const AdresseSok = ({
             <div className={"space-y-4 bg-blue-50 rounded-lg p-4 pt-3 shadow-lg"}>
                 <AdresseTypeahead
                     defaultValue={defaultValue}
-                    onChange={async (adresse) => onChange(adresse ? adresseForslagTilAdresse(adresse) : null)}
+                    onChange={(adresse) => onChange(adresse ? adresseForslagTilAdresse(adresse) : null)}
                 />
             </div>
         </div>

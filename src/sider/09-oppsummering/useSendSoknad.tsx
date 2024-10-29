@@ -3,23 +3,23 @@ import {sendSoknad} from "../../generated/soknad-actions/soknad-actions";
 import digisosConfig from "../../lib/config";
 import {faro} from "@grafana/faro-react";
 import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude.tsx";
-import {useAdresser} from "../01-personalia/adresse/useAdresser.tsx";
+import {useAdresserOld} from "../01-personalia/adresse/useAdresserOld.tsx";
 import {useFeatureToggles} from "../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
 
 export const useSendSoknad = (behandlingsId: string) => {
     const [isError, setIsError] = useState<boolean>(false);
-    const {brukerdefinert} = useAdresser();
+    const adresser = useAdresserOld(true);
     const [endretAdresse, setEndretAdresse] = useState<boolean>(false);
 
     const {data: featureFlagData} = useFeatureToggles();
 
     useEffect(() => {
-        if (brukerdefinert) {
+        if (adresser?.brukerdefinert) {
             setEndretAdresse(true);
         } else {
             setEndretAdresse(false);
         }
-    }, [brukerdefinert]);
+    }, [adresser?.brukerdefinert]);
 
     const sendSoknaden = async (
         isKortSoknad: boolean,

@@ -14,12 +14,18 @@ export type UseDigisosResult<InputDTO, OutputDTO> = {
 };
 
 export const useDigisosMutation = <TOutput, TInput>(
-    getHook: (behandlingsId: string) => UseQueryResult<TOutput | undefined, TError> & {queryKey: QueryKey},
-    mutator: (behandlingsId: string, data: TInput) => Promise<TOutput>
+    getHook: (
+        behandlingsId: string,
+        opts: {
+            query: {enabled?: boolean};
+        }
+    ) => UseQueryResult<TOutput | undefined, TError> & {queryKey: QueryKey},
+    mutator: (behandlingsId: string, data: TInput) => Promise<TOutput>,
+    enabled?: boolean
 ): UseDigisosResult<TInput, TOutput> => {
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
-    const {isLoading, queryKey} = getHook(behandlingsId);
+    const {isLoading, queryKey} = getHook(behandlingsId, {query: {enabled}});
 
     const mutate = async (data: TInput) => {
         try {

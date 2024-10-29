@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {TelefonData} from "./Telefon";
 import {AdresseData} from "./adresse/Adresse";
 import {BasisPersonalia} from "./BasisPersonalia";
-import {Kontonr} from "./Kontonr";
+import Kontonr from "./Kontonr";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {FieldErrorsImpl} from "react-hook-form";
 import {NavEnhetFrontend} from "../../generated/model";
@@ -19,16 +19,25 @@ import {scrollToTop} from "../../lib/utils";
 import {useNavigate} from "react-router";
 import {DigisosLanguageKey} from "../../lib/i18n.ts";
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
+import {useGetAdresser} from "../../generated/new/adresse-controller/adresse-controller.ts";
+import {useIsNyDatamodell} from "../../generated/soknad-ressurs/soknad-ressurs.ts";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
     const errors = !error ? undefined : ({adressefelt: {message: error}} as FieldErrorsImpl<NavEnhetFrontend>);
-    const {data: {navEnhet} = {navEnhet: null}} = useHentAdresser(useBehandlingsId());
+    const behandlingsId = useBehandlingsId();
+    const {data: isNyModell} = useIsNyDatamodell(behandlingsId);
+    const {data: {navEnhet: navEnhetOld} = {navEnhet: null}} = useHentAdresser(behandlingsId, {
+        query: {enabled: isNyModell === false},
+    });
+    const {data: {navenhet: navEnhetNy} = {navenhet: null}} = useGetAdresser(behandlingsId, {
+        query: {enabled: isNyModell === true},
+    });
     const {t} = useTranslation("skjema");
     const navigate = useNavigate();
 
     const validate = () => {
-        if (!navEnhet || !erAktiv(navEnhet)) {
+        if ((!navEnhetNy && !navEnhetOld) || (!erAktiv(navEnhetOld) && !erAktiv(navEnhetNy))) {
             setError("validering.adresseMangler");
             scrollToTop();
             return false;
@@ -44,8 +53,8 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
 
     // Midlertidig hack til komponentene under kan behandles som react-hook-form-inputs
     useEffect(() => {
-        if (erAktiv(navEnhet)) setError(null);
-    }, [navEnhet]);
+        if (erAktiv(navEnhetOld) || erAktiv(navEnhetNy)) setError(null);
+    }, [navEnhetOld, navEnhetNy]);
 
     return (
         <SkjemaSteg>
@@ -56,10 +65,10 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                     icon={SkjemaHeadings[1].ikon}
                 />
                 <SkjemaStegErrorSummary errors={errors} />
-                {/*<BasisPersonalia />*/}
+                <BasisPersonalia />
                 <AdresseData />
-                {/*<TelefonData />*/}
-                {/*<Kontonr />*/}
+                <TelefonData />
+                <Kontonr />
                 <SkjemaStegButtons onNext={onClickNext} />
             </SkjemaStegBlock>
         </SkjemaSteg>

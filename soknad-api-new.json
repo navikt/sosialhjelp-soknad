@@ -1944,7 +1944,18 @@
                     {"type": "object", "properties": {"harIkkeKonto": {"type": "boolean"}}}
                 ]
             },
-            "KontoInput": {"type": "object"},
+            "KontoInput": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {"type": {"type": "string"}},
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "HarIkkeKonto": "#/components/schemas/HarIkkeKontoInput",
+                        "KontonummerBruker": "#/components/schemas/KontonummerBrukerInput"
+                    }
+                }
+            },
             "KontonummerBrukerInput": {
                 "type": "object",
                 "allOf": [
@@ -2526,103 +2537,84 @@
                     "harFastStilling": {"type": "boolean"}
                 }
             },
-            "Adresse": {
+            "AdresseInput": {
                 "required": ["type"],
                 "type": "object",
-                "properties": {"type": {"type": "string", "enum": ["POSTBOKS", "USTRUKTURERT", "VEG", "MATRIKKEL"]}},
-                "description": "Base interface for different types of addresses",
+                "properties": {"type": {"type": "string"}},
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
-                        "PostboksAdresse": "#/components/schemas/PostboksAdresse",
-                        "UstrukturertAdresse": "#/components/schemas/UstrukturertAdresse",
                         "VegAdresse": "#/components/schemas/VegAdresse",
                         "MatrikkelAdresse": "#/components/schemas/MatrikkelAdresse"
                     }
-                },
-                "oneOf": [
-                    {"$ref": "#/components/schemas/PostboksAdresse"},
-                    {"$ref": "#/components/schemas/UstrukturertAdresse"},
-                    {"$ref": "#/components/schemas/VegAdresse"},
-                    {"$ref": "#/components/schemas/MatrikkelAdresse"}
-                ]
+                }
             },
             "AdresserInput": {
-                "required": ["adresseValg"],
                 "type": "object",
                 "properties": {
                     "adresseValg": {"type": "string", "enum": ["FOLKEREGISTRERT", "MIDLERTIDIG", "SOKNAD"]},
                     "brukerAdresse": {
                         "oneOf": [
                             {"$ref": "#/components/schemas/MatrikkelAdresse"},
-                            {"$ref": "#/components/schemas/PostboksAdresse"},
-                            {"$ref": "#/components/schemas/UstrukturertAdresse"},
                             {"$ref": "#/components/schemas/VegAdresse"}
                         ]
                     }
                 }
             },
             "MatrikkelAdresse": {
-                "required": ["bruksnummer", "gaardsnummer", "kommunenummer", "type"],
+                "required": ["bruksnummer", "gaardsnummer", "kommunenummer"],
                 "type": "object",
                 "allOf": [
-                    {"$ref": "#/components/schemas/Adresse"},
+                    {"$ref": "#/components/schemas/AdresseInput"},
                     {
                         "type": "object",
                         "properties": {
+                            "kommunenummer": {"type": "string"},
                             "gaardsnummer": {"type": "string"},
                             "bruksnummer": {"type": "string"},
                             "festenummer": {"type": "string"},
                             "seksjonsnummer": {"type": "string"},
-                            "undernummer": {"type": "string"},
-                            "kommunenummer": {"type": "string"}
+                            "undernummer": {"type": "string"}
                         }
-                    }
-                ]
-            },
-            "PostboksAdresse": {
-                "required": ["postboks", "postnummer", "poststed", "type"],
-                "type": "object",
-                "allOf": [
-                    {"$ref": "#/components/schemas/Adresse"},
-                    {
-                        "type": "object",
-                        "properties": {
-                            "postboks": {"type": "string"},
-                            "postnummer": {"type": "string"},
-                            "poststed": {"type": "string"}
-                        }
-                    }
-                ]
-            },
-            "UstrukturertAdresse": {
-                "required": ["adresse", "type"],
-                "type": "object",
-                "allOf": [
-                    {"$ref": "#/components/schemas/Adresse"},
-                    {"type": "object", "properties": {"adresse": {"type": "array", "items": {"type": "string"}}}}
+                    },
+                    {"$ref": "#/components/schemas/Adresse"}
                 ]
             },
             "VegAdresse": {
-                "required": ["adresselinjer", "landkode", "type"],
+                "required": ["adresselinjer", "landkode"],
                 "type": "object",
                 "allOf": [
-                    {"$ref": "#/components/schemas/Adresse"},
+                    {"$ref": "#/components/schemas/AdresseInput"},
                     {
                         "type": "object",
                         "properties": {
                             "landkode": {"type": "string"},
+                            "kommunenummer": {"type": "string"},
                             "adresselinjer": {"type": "array", "items": {"type": "string"}},
                             "bolignummer": {"type": "string"},
                             "postnummer": {"type": "string"},
                             "poststed": {"type": "string"},
                             "gatenavn": {"type": "string"},
                             "husnummer": {"type": "string"},
-                            "husbokstav": {"type": "string"},
-                            "kommunenummer": {"type": "string"}
+                            "husbokstav": {"type": "string"}
                         }
-                    }
+                    },
+                    {"$ref": "#/components/schemas/Adresse"}
                 ]
+            },
+            "Adresse": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {"type": {"type": "string"}},
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "VegAdresse": "#/components/schemas/VegAdresse",
+                        "MatrikkelAdresse": "#/components/schemas/MatrikkelAdresse",
+                        "PostboksAdresse": "#/components/schemas/PostboksAdresse",
+                        "UstrukturertAdresse": "#/components/schemas/UstrukturertAdresse"
+                    }
+                }
             },
             "AdresserDto": {
                 "type": "object",
@@ -2662,8 +2654,33 @@
                     "orgnummer": {"type": "string"},
                     "enhetsnummer": {"type": "string"},
                     "kommunenummer": {"type": "string"},
-                    "kommunenavn": {"type": "string"}
+                    "kommunenavn": {"type": "string"},
+                    "isMottakMidlertidigDeaktivert": {"type": "boolean"},
+                    "isMottakDeaktivert": {"type": "boolean"}
                 }
+            },
+            "PostboksAdresse": {
+                "required": ["postboks", "postnummer", "poststed"],
+                "type": "object",
+                "allOf": [
+                    {"$ref": "#/components/schemas/Adresse"},
+                    {
+                        "type": "object",
+                        "properties": {
+                            "postboks": {"type": "string"},
+                            "postnummer": {"type": "string"},
+                            "poststed": {"type": "string"}
+                        }
+                    }
+                ]
+            },
+            "UstrukturertAdresse": {
+                "required": ["adresse"],
+                "type": "object",
+                "allOf": [
+                    {"$ref": "#/components/schemas/Adresse"},
+                    {"type": "object", "properties": {"adresse": {"type": "array", "items": {"type": "string"}}}}
+                ]
             },
             "SoknadSendtDto": {
                 "required": ["digisosId", "tidspunkt"],
@@ -2684,12 +2701,13 @@
                 "properties": {"soknadId": {"type": "string", "format": "uuid"}, "useKortSoknad": {"type": "boolean"}}
             },
             "NavnDto": {
-                "required": ["etternavn", "fornavn"],
+                "required": ["etternavn", "fornavn", "fulltNavn"],
                 "type": "object",
                 "properties": {
                     "fornavn": {"type": "string"},
                     "mellomnavn": {"type": "string"},
-                    "etternavn": {"type": "string"}
+                    "etternavn": {"type": "string"},
+                    "fulltNavn": {"type": "string"}
                 }
             },
             "PersonaliaDto": {
@@ -2697,6 +2715,7 @@
                 "type": "object",
                 "properties": {
                     "navn": {"$ref": "#/components/schemas/NavnDto"},
+                    "fodselsnummer": {"type": "string"},
                     "statsborgerskap": {"type": "string"},
                     "nordiskBorger": {"type": "boolean"}
                 }
