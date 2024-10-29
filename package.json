@@ -95,6 +95,7 @@
     },
     "scripts": {
         "build": "next build",
+        "tsc": "tsc",
         "dev": "next dev | pino-pretty",
         "start": "next start -H 0.0.0.0",
         "test": "vitest",
