@@ -172,7 +172,7 @@ export const skjema = {
             "Vi har lagra det du har fylt ut så langt i søknaden, og du kan velje å halde fram seinare. Søknaden blir lagra i to veker før han blir sletta. Dersom du vel å slette søknaden no, blir alle opplysningane sletta.",
         fortsettsenere: "Hald fram seinare",
         ja: "Ja",
-        lenkenavn: "Tilbake til ditt NAV",
+        lenkenavn: "Tilbake til ditt Nav",
         navigasjon: {
             forklaring:
                 "Før du avbryt, må du velje om du vil at vi skal lagre søknaden, slik at du kan halde fram seinare, eller om du ønskjer å slette alt du har fylt ut i søknaden. Dersom du ønskjer å gjere ferdig søknaden seinare, har du to veker på deg før søknaden automatisk blir sletta.",
@@ -492,7 +492,7 @@ export const skjema = {
         mineinnsedinger: {
             lenketekst: "Mine innsendingar",
         },
-        tps: "Systemet for persondata hos NAV er diverre ikkje tilgjengeleg. Vi anbefaler at du prøver igjen seinare.",
+        tps: "Systemet for persondata hos Nav er diverre ikkje tilgjengeleg. Vi anbefaler at du prøver igjen seinare.",
         stringValue: "Vi beklagar, men noko gjekk gale.",
     },
     feilside: {
@@ -528,7 +528,7 @@ export const skjema = {
                     "Søknaden er oppretta, men det er ikkje lagra svar på han. Du kan halde fram på søknaden seinare.",
                 stringValue: "Søknaden blei sist lagra {{0}}, og du kan jobbe vidare med han seinare.",
             },
-            knapp: "Kontakt NAV-Kontoret ditt",
+            knapp: "Kontakt Nav-Kontoret ditt",
             lenke: {
                 meldfra: "Send feilrapport",
                 minside: "Gå til Mi Side",
@@ -537,14 +537,14 @@ export const skjema = {
             loggUt: "Logg ut",
             loggfort: "Hendinga har vorte loggført og problemet blir utbetra så fort som mogleg.",
             nodsituasjon: {
-                tekst: "Kontakt NAV-kontoret dersom du ikkje har pengar til det aller mest nødvendige (t.d. mat). NAV skal også hjelpe deg å finne eit mellombels butilbod dersom du ikkje har ein stad å sove eller opphalde deg på det nærmaste døgnet.",
+                tekst: "Kontakt Nav-kontoret dersom du ikkje har pengar til det aller mest nødvendige (t.d. mat). Nav skal også hjelpe deg å finne eit mellombels butilbod dersom du ikkje har ein stad å sove eller opphalde deg på det nærmaste døgnet.",
                 tittel: "Treng du rask hjelp?",
             },
             opprett: {
                 informasjon:
                     "Eit teknisk problem gjorde at vi ikkje kunne opprette søknaden. Prøv igjen eller vent til seinare.",
             },
-            papir: "Du kan òg <lenke>søkje om økonomisk sosialhjelp på papir</lenke> hos NAV-kontoret ditt.",
+            papir: "Du kan òg <lenke>søkje om økonomisk sosialhjelp på papir</lenke> hos Nav-kontoret ditt.",
             prov: {
                 igjen: "Me tilrår at du prøver på nytt.",
             },
@@ -610,7 +610,7 @@ export const skjema = {
             send: "Send",
         },
         fortsettlink: "Hald fram på søknad",
-        info: "Vi har lagra alt du har gjort, men søknaden er ikkje send til NAV. Du kan sende søknaden seinare ved å logge deg inn på Mi Side. Vi kan også sende deg ein e-post med ei lenkje tilbake til innsendinga.",
+        info: "Vi har lagra alt du har gjort, men søknaden er ikkje send til Nav. Du kan sende søknaden seinare ved å logge deg inn på Mi Side. Vi kan også sende deg ein e-post med ei lenkje tilbake til innsendinga.",
         kvittering: {
             inngangsportenlink: "Inngangsporten",
             sendpaanyttlink: "Send e-posten på nytt",
@@ -621,7 +621,7 @@ export const skjema = {
         oppsummeringlinktekst: "Til oppsummering",
         sendEpost: {
             epostInnhold:
-                "Du har valt å sende inn søknaden seinare. Du kan gjere dette via denne lenkja: {{0}} . Søknaden er ikkje send til NAV. Søknader du har starta på, men ikkje sendt inn, blir automatisk sletta dersom det går meir enn åtte veker utan at du gjer noko meir med dei. Vennleg helsing NAV",
+                "Du har valt å sende inn søknaden seinare. Du kan gjere dette via denne lenkja: {{0}} . Søknaden er ikkje send til Nav. Søknader du har starta på, men ikkje sendt inn, blir automatisk sletta dersom det går meir enn åtte veker utan at du gjer noko meir med dei. Vennleg helsing Nav",
             epostTittel: "Lenkje til påbyrja søknad",
         },
         sidetittel: "Send inn seinare – www.nav.no",
@@ -666,12 +666,12 @@ export const skjema = {
         ikketilgang: {
             bruker: {
                 tekst: {
-                    v2: "Du kan diverre ikkje bruke den digitale søknaden om økonomisk sosialhjelp. \nPersoner med kode 6 eller 7 kan ikkje søke om økonomisk sosialhjelp digitalt. \nTa kontakt med <lenke>det lokale NAV-kontoret ditt</lenke> for å få hjelp til å søkja.",
+                    v2: "Du kan diverre ikkje bruke den digitale søknaden om økonomisk sosialhjelp. \nPersoner med kode 6 eller 7 kan ikkje søke om økonomisk sosialhjelp digitalt. \nTa kontakt med <lenke>det lokale Nav-kontoret ditt</lenke> for å få hjelp til å søkja.",
                 },
                 tittel: "Beklagar",
             },
             tekst: {
-                v2: "Du er no komen til ei digital teneste for å søkje om økonomisk stønad. Tenesta er under utvikling, og er på noverande tidspunkt berre tilgjengeleg for innbyggjarar med adresse i Horten, Skien, Bergen, Oslo, Trondheim eller Askøy kommune. Dersom du har behov for økonomisk stønad, kontaktar du <lenke>ditt lokale NAV-kontor.</lenke>",
+                v2: "Du er no komen til ei digital teneste for å søkje om økonomisk stønad. Tenesta er under utvikling, og er på noverande tidspunkt berre tilgjengeleg for innbyggjarar med adresse i Horten, Skien, Bergen, Oslo, Trondheim eller Askøy kommune. Dersom du har behov for økonomisk stønad, kontaktar du <lenke>ditt lokale Nav-kontor.</lenke>",
             },
             tittel: "Beklagar",
         },
@@ -708,7 +708,7 @@ export const skjema = {
                     v2: "Økonomisk sosialhjelp skal i utgangspunktet ikkje finansiere høgare utdanning. Sjekk om du kan søkje om lån og stipend på <lenke>lanekassen.no</lenke>.",
                 },
                 number2:
-                    "Det finst unntak der du kan ha rett på økonomisk sosialhjelp. Dette kan vere dersom du er i ein naudssituasjon eller har mellombels behov for hjelp før du har fått utbetalinga frå Lånekassen. Kontakt NAV-kontoret for å få avklart behovet ditt og få opplysning, råd og rettleiing.",
+                    "Det finst unntak der du kan ha rett på økonomisk sosialhjelp. Dette kan vere dersom du er i ein naudssituasjon eller har mellombels behov for hjelp før du har fått utbetalinga frå Lånekassen. Kontakt Nav-kontoret for å få avklart behovet ditt og få opplysning, råd og rettleiing.",
                 tittel: "Informasjon til deg som er student",
                 url: "https://lanekassen.no",
             },
@@ -728,7 +728,7 @@ export const skjema = {
                     tittel: "Før du sender søknaden",
                 },
                 innhenting: {
-                    tekst: 'Du legg sjølv inn opplysningar i søknaden. I tillegg hentar vi informasjon frå offentlege register der det er lov. Dette vil til dømes vere opplysningar om familie frå Folkeregisteret, opplysningar om arbeidsforhold frå Arbeidstakarregisteret og informasjon om statlege ytingar frå NAV. <br></br><br></br>Dersom du ikkje ønskjer at vi hentar inn slike opplysningar om deg automatisk, kan du bruke papirskjema for å søkje om økonomisk sosialhjelp. Papirskjema kan du laste ned frå <a href="https://nav.no" target="_blank">nav.no</a> eller hente på NAV-kontoret.',
+                    tekst: 'Du legg sjølv inn opplysningar i søknaden. I tillegg hentar vi informasjon frå offentlege register der det er lov. Dette vil til dømes vere opplysningar om familie frå Folkeregisteret, opplysningar om arbeidsforhold frå Arbeidstakarregisteret og informasjon om statlege ytingar frå Nav. <br></br><br></br>Dersom du ikkje ønskjer at vi hentar inn slike opplysningar om deg automatisk, kan du bruke papirskjema for å søkje om økonomisk sosialhjelp. Papirskjema kan du laste ned frå <a href="https://nav.no" target="_blank">nav.no</a> eller hente på Nav-kontoret.',
                     tittel: "Innhenting av personopplysningar",
                 },
                 rettigheter: {
@@ -736,7 +736,7 @@ export const skjema = {
                     tekst: "Du har rett på å få informasjon om og innsyn i eigne personopplysningar. Dersom det er lagra opplysningar om deg som er feil, ufullstendige eller unødvendige, kan du krevje at desse blir retta eller supplerte.",
                     tittel: "Rettane dine",
                 },
-                sporsmal: "Kontakt NAV-kontoret ditt dersom du har spørsmål om personopplysningar.",
+                sporsmal: "Kontakt Nav-kontoret ditt dersom du har spørsmål om personopplysningar.",
                 tittel: "Slik behandlar vi personopplysningane dine",
             },
         },
@@ -868,7 +868,7 @@ export const skjema = {
             },
             lesmer: "Døme på utbetalingar",
             sporsmal:
-                "Har du i løpet av dei siste tre månadene fått utbetalt pengar som verken er løn eller yting frå NAV?",
+                "Har du i løpet av dei siste tre månadene fått utbetalt pengar som verken er løn eller yting frå Nav?",
             tittel: "Andre inntekter",
             true: {
                 type: {
@@ -897,12 +897,12 @@ export const skjema = {
             },
         },
         mottarytelser: {
-            feilmelding: "Du må svare på om du tek imot ytingar frå NAV",
-            sporsmal: "Tek du imot ytingar frå NAV?",
+            feilmelding: "Du må svare på om du tek imot ytingar frå Nav",
+            sporsmal: "Tek du imot ytingar frå Nav?",
         },
         soktytelser: {
-            feilmelding: "Du må svare på om du har ikkje-ferdigbehandla søknader om ytingar hos NAV",
-            sporsmal: "Har du ikkje-ferdigbehandla søknader om ytingar hos NAV?",
+            feilmelding: "Du må svare på om du har ikkje-ferdigbehandla søknader om ytingar hos Nav",
+            sporsmal: "Har du ikkje-ferdigbehandla søknader om ytingar hos Nav?",
         },
         studielan: {
             sporsmal: "Får du lån/stipend frå Lånekassen?",
@@ -952,7 +952,7 @@ export const skjema = {
         statsborger: {
             feilmelding: "Vel statsborgarskap",
             hjelpetekst: {
-                tekst: "Som nordisk borgar reknar ein personar med svensk, dansk, finsk eller islandsk statsborgarskap. Dersom du er EØS-borgar og ikkje har fått sosialhjelp tidlegare, må du kontakte NAV-kontoret før du søkjer.",
+                tekst: "Som nordisk borgar reknar ein personar med svensk, dansk, finsk eller islandsk statsborgarskap. Dersom du er EØS-borgar og ikkje har fått sosialhjelp tidlegare, må du kontakte Nav-kontoret før du søkjer.",
             },
         },
         system: {
@@ -1011,7 +1011,7 @@ export const skjema = {
             kontaktinfo: {
                 infotekst: {
                     ekstratekst:
-                        "Skriv adressa der du bur eller oppheld deg. Viss du ikkje veit adressa kan du skrive adressa til Nav-kontoret i kommunen eller bydelen. Søk opp <lenke>NAV-kontoret.</lenke>",
+                        "Skriv adressa der du bur eller oppheld deg. Viss du ikkje veit adressa kan du skrive adressa til Nav-kontoret i kommunen eller bydelen. Søk opp <lenke>Nav-kontoret.</lenke>",
                 },
                 sporsmal: "Adresse",
             },
@@ -1026,7 +1026,7 @@ export const skjema = {
                 sporsmal: "Kontonummer",
             },
             oppholdsadresse: {
-                finnerKontor: "Finn NAV-kontoret ditt",
+                finnerKontor: "Finn Nav-kontoret ditt",
                 folkeregistrertAdresse: "Folkeregistrert adresse",
                 hvorOppholder: "Kva adresse bur du på?",
                 midlertidigAdresse: "Mellombels adresse på Mi Side:",
@@ -1036,16 +1036,16 @@ export const skjema = {
                     },
                     sporsmal: "Kva adresse bur du på?",
                 },
-                sporsmal: "Opphaldsadresse og NAV-kontor",
+                sporsmal: "Opphaldsadresse og Nav-kontor",
                 valg: {
-                    feilmelding: "Vel opphaldsadresse og NAV-kontor.",
+                    feilmelding: "Vel opphaldsadresse og Nav-kontor.",
                     folkeregistrert: "Folkeregistrert adresse",
-                    midlertidig: "Mellombels adresse registrert i adresseregisteret hos NAV (TPS)",
+                    midlertidig: "Mellombels adresse registrert i adresseregisteret hos Nav (TPS)",
                     soknad: "Eg bur på ei anna adresse",
                     sporsmal: "Kva er opphaldsadressa di?",
                 },
-                velgKontor: "Adressa gav fleire treff på NAV-kontor. Vel ditt lokale kontor.",
-                velgMottaker: "Vel NAV-kontor",
+                velgKontor: "Adressa gav fleire treff på Nav-kontor. Vel ditt lokale kontor.",
+                velgMottaker: "Vel Nav-kontor",
             },
             personalia: {
                 fnr: "Fødselsnummer",
@@ -1097,14 +1097,14 @@ export const skjema = {
         tittel: "Personopplysningar",
     },
     kvittering: {
-        dato: "Søknaden er send til NAV",
-        erSendt: "{{0}} av {{1}} vedlegg blei sendt til NAV {{2}}, klokka {{3}}",
+        dato: "Søknaden er send til Nav",
+        erSendt: "{{0}} av {{1}} vedlegg blei sendt til Nav {{2}}, klokka {{3}}",
         ikkeInnsendt: {
             tittel: "Følgjande vedlegg er ikkje sendt",
         },
         informasjonstekst: {
-            del1: '<p>Du kan ettersende dokument <strong><a href="https://tjenester.nav.no/saksoversikt/app/ettersending" target="_blank">her</lenke>.</strong>  Dersom noko skal sendast til NAV av andre enn deg (t.d. lege eller arbeidsgivar), må du gi vedkomande beskjed om dette, slik at du er sikker på at det blir sendt.</p>',
-            del2: "<p>Dersom NAV ikkje har fått nødvendig dokumentasjon <strong>innan 14 dagar</strong>, kan søknaden bli avslått på grunn av manglande opplysningar.</p>",
+            del1: '<p>Du kan ettersende dokument <strong><a href="https://tjenester.nav.no/saksoversikt/app/ettersending" target="_blank">her</lenke>.</strong>  Dersom noko skal sendast til Nav av andre enn deg (t.d. lege eller arbeidsgivar), må du gi vedkomande beskjed om dette, slik at du er sikker på at det blir sendt.</p>',
+            del2: "<p>Dersom Nav ikkje har fått nødvendig dokumentasjon <strong>innan 14 dagar</strong>, kan søknaden bli avslått på grunn av manglande opplysningar.</p>",
         },
         innsendt: {
             tittel: "Følgjande vedlegg er sendt",

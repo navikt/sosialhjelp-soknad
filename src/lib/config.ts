@@ -8,7 +8,7 @@ type FeatureFlags = {
     // Ny versjon av Personalia oppsummering
     nyOppsummering: boolean;
 
-    // Ny NAV-kontor-visning i oppsummering
+    // Ny Nav-kontor-visning i oppsummering
     oppsummeringNavEnhet: boolean;
 
     // Vis valg for søknadstype ved opprettelse
