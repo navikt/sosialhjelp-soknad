@@ -30,7 +30,7 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
 
     return (
         <SkjemaSteg>
-            <SkjemaStegStepper page={2} onStepChange={gotoPage} />
+            <SkjemaStegStepper page={3} onStepChange={gotoPage} />
             <SkjemaStegBlock className={"lg:space-y-12"}>
                 <SkjemaStegTitle
                     className={"lg:mb-12"}
