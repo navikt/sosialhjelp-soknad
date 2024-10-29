@@ -5,6 +5,7 @@ import {AvbrytSoknadModal} from "../modals/AvbrytSoknadModal.tsx";
 import {Button} from "@navikt/ds-react";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude.tsx";
 import digisosConfig from "../../config.ts";
+import {FloppydiskIcon, TrashIcon} from "@navikt/aksel-icons";
 
 export const SkjemaStegCancelButtons = () => {
     const [avbrytModalOpen, setAvbrytModalOpen] = useState<boolean>(false);
@@ -15,6 +16,7 @@ export const SkjemaStegCancelButtons = () => {
             <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
             <Button
                 variant="tertiary"
+                icon={<FloppydiskIcon />}
                 onClick={async () => {
                     await logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"});
                     window.location.assign(digisosConfig.minSideURL);
@@ -22,7 +24,7 @@ export const SkjemaStegCancelButtons = () => {
             >
                 {t("avbryt.fortsettsenere")}
             </Button>
-            <Button variant="tertiary" onClick={() => setAvbrytModalOpen(true)}>
+            <Button variant="tertiary" icon={<TrashIcon />} onClick={() => setAvbrytModalOpen(true)}>
                 {t("avbryt.slett")}
             </Button>
         </div>
