@@ -25,7 +25,7 @@ export const SkattbarInntekt = ({legend}: Props) => {
             <YesNoInput
                 key={`skattbar-inntekt-samtykke-${samtykke}`}
                 legend={legend}
-                defaultValue={samtykke}
+                value={samtykke}
                 onChange={setSamtykke}
                 name={"skattbar-inntekt-samtykke"}
                 trueLabel={t("utbetalinger.inntekt.skattbar.avbryt.ja")}

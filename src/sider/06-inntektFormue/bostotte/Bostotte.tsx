@@ -40,7 +40,7 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
                 <YesNoInput
                     name={"bostotte-bekreftelse"}
                     legend={t("inntekt.bostotte.sporsmal.sporsmal")}
-                    defaultValue={bekreftelse}
+                    value={bekreftelse}
                     onChange={(checked) => setBekreftelse(checked)}
                     trueLabel={t("avbryt.ja")}
                     falseLabel={t("avbryt.nei")}
@@ -56,6 +56,7 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
                             setSamtykke(checked);
                         }}
                         defaultValue={bostotte?.samtykke}
+                        value={dataHentet}
                     />
                     {dataHentet && <BostotteData />}
                 </>

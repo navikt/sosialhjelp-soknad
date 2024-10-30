@@ -174,7 +174,7 @@ export const skjema = {
             "Your application has been saved up to this point - you can return and submit the form later. The application will only be saved for two weeks before being deleted. If you choose to delete the application now, all information will be deleted.",
         fortsettsenere: "Continue later",
         ja: "Yes",
-        lenkenavn: "Back to your NAV",
+        lenkenavn: "Back to your Nav",
         navigasjon: {
             forklaring:
                 "Before you close the application, you must select whether you wish us to save it so that you can continue later, or whether you wish to delete all of the content in the application. Please note that if you choose to complete the application later, it will be saved for two weeks before it is deleted.",
@@ -500,7 +500,7 @@ export const skjema = {
         mineinnsedinger: {
             lenketekst: "My submissions",
         },
-        tps: "NAV’s system for personal data is unfortunately not available. Please try again later.",
+        tps: "Nav’s system for personal data is unfortunately not available. Please try again later.",
         stringValue: "Oops, something went wrong...",
     },
     feilside: {
@@ -536,7 +536,7 @@ export const skjema = {
                     "The application has been set up, but no responses have been saved. You can continue with the application later.",
                 stringValue: "The application was last saved {{0}} and you can continue with your application later.",
             },
-            knapp: "Contact your NAV office",
+            knapp: "Contact your Nav office",
             lenke: {
                 meldfra: "Send bug report",
                 minside: "Go to My Page",
@@ -545,14 +545,14 @@ export const skjema = {
             loggUt: "Log out ",
             loggfort: "The incident has been logged and the problem will be rectified as soon as possible.",
             nodsituasjon: {
-                tekst: "If you do not have money for necessary things such as food, you must contact your NAV office. NAV will also help you to find a temporary place of residence if you have nowhere to sleep or to stay in the next 24 hours.",
+                tekst: "If you do not have money for necessary things such as food, you must contact your Nav office. Nav will also help you to find a temporary place of residence if you have nowhere to sleep or to stay in the next 24 hours.",
                 tittel: "Do you need immediate help?",
             },
             opprett: {
                 informasjon:
                     "Something went wrong - we were unable to set up the application. You can try again now, or wait until later.",
             },
-            papir: "You can also <lenke>apply for financial assistance on paper</lenke> at your NAV office.",
+            papir: "You can also <lenke>apply for financial assistance on paper</lenke> at your Nav office.",
             prov: {
                 igjen: "We recommend that you try again.",
             },
@@ -619,7 +619,7 @@ export const skjema = {
             send: "Send",
         },
         fortsettlink: "Continue with application",
-        info: "All of your entered data has been saved; however, the application has not been submitted to NAV. You can continue with submission later by logging into My Page. We can also send you an e-mail with a link back to the submission.",
+        info: "All of your entered data has been saved; however, the application has not been submitted to Nav. You can continue with submission later by logging into My Page. We can also send you an e-mail with a link back to the submission.",
         kvittering: {
             inngangsportenlink: "Portal",
             sendpaanyttlink: "Resend e-mail",
@@ -630,7 +630,7 @@ export const skjema = {
         oppsummeringlinktekst: "To summary",
         sendEpost: {
             epostInnhold:
-                "You have chosen to continue submitting the application later. You can do so via this link: {{0}} . The application has not been submitted to NAV. Applications you have started on, but not submitted, will be automatically deleted if you do not continue them within eight weeks. Yours sincerely, NAV",
+                "You have chosen to continue submitting the application later. You can do so via this link: {{0}} . The application has not been submitted to Nav. Applications you have started on, but not submitted, will be automatically deleted if you do not continue them within eight weeks. Yours sincerely, Nav",
             epostTittel: "Link to started application",
         },
         sidetittel: "Continue with submission later - www.nav.no",
@@ -675,12 +675,12 @@ export const skjema = {
         ikketilgang: {
             bruker: {
                 tekst: {
-                    v2: "Unfortunately, you cannot use the digital application for financial assistance. People with code 6 or 7 cannot apply for financial assistance digitally. Contact your local <lenke>NAV office</lenke> to receive help applying.",
+                    v2: "Unfortunately, you cannot use the digital application for financial assistance. People with code 6 or 7 cannot apply for financial assistance digitally. Contact your local <lenke>Nav office</lenke> to receive help applying.",
                 },
                 tittel: "Sorry",
             },
             tekst: {
-                v2: "You have now come to a digital service for applying for financial assistance. The service is under development, and at present, only residents with an address in Horten, Skien, Bergen, Oslo, Trondheim and Askøy municipalities can use the service. If you require financial assistance you must contact your <lenke>local NAV office.</lenke>",
+                v2: "You have now come to a digital service for applying for financial assistance. The service is under development, and at present, only residents with an address in Horten, Skien, Bergen, Oslo, Trondheim and Askøy municipalities can use the service. If you require financial assistance you must contact your <lenke>local Nav office.</lenke>",
             },
             tittel: "Sorry",
         },
@@ -717,7 +717,7 @@ export const skjema = {
                     v2: "If you are a student, you generally do not have the right to financial assistance. You can check if you can apply for a loan or grant at <lenke>lanekassen.no</lenke>.",
                 },
                 number2:
-                    "There are some exceptions to the right to financial assistance. This might be if you have a temporary need for help before receiving payments from Lånekassen, or are in an emergency situation. Contact your NAV office to clarify your needs and to receive information, advice and guidance.",
+                    "There are some exceptions to the right to financial assistance. This might be if you have a temporary need for help before receiving payments from Lånekassen, or are in an emergency situation. Contact your Nav office to clarify your needs and to receive information, advice and guidance.",
                 tittel: "Information for students",
                 url: "https://lanekassen.no",
             },
@@ -737,7 +737,7 @@ export const skjema = {
                     tittel: "Before you submit the application",
                 },
                 innhenting: {
-                    tekst: 'You must enter your own information in the application. In addition, we obtain information from public registers to which we have legitimate access. Examples are family information from the National Population Register, information about your work situation from the State Register of Employers and Employees and information about state support from NAV. <br></br><br></br>If you do not want us to obtain this personal information automatically, you can use a paper form to apply for financial assistance. You can download the paper form at <a href="https://nav.no" target="_blank">nav.no</a> or pick it up at the NAV-office.',
+                    tekst: 'You must enter your own information in the application. In addition, we obtain information from public registers to which we have legitimate access. Examples are family information from the National Population Register, information about your work situation from the State Register of Employers and Employees and information about state support from Nav. <br></br><br></br>If you do not want us to obtain this personal information automatically, you can use a paper form to apply for financial assistance. You can download the paper form at <a href="https://nav.no" target="_blank">nav.no</a> or pick it up at the Nav-office.',
                     tittel: "Obtaining personal information",
                 },
                 rettigheter: {
@@ -745,7 +745,7 @@ export const skjema = {
                     tekst: "You have the right to receive information about and access to your own personal information. If the information contains errors, or is incomplete or unnecessary, you can request that the information be corrected or supplemented.",
                     tittel: "Your rights",
                 },
-                sporsmal: "If you have any questions about personal information, please contact your NAV office.",
+                sporsmal: "If you have any questions about personal information, please contact your Nav office.",
                 tittel: "How we process your personal information",
             },
         },
@@ -876,7 +876,7 @@ export const skjema = {
                 tekst: "By other income, we mean in the form of dividends on shares, funds, the sale of assets or other.",
             },
             lesmer: "Examples of other income",
-            sporsmal: "Have you received money, other than wages or benefits from NAV, the last three months?",
+            sporsmal: "Have you received money, other than wages or benefits from Nav, the last three months?",
             tittel: "Other income",
             true: {
                 type: {
@@ -905,13 +905,13 @@ export const skjema = {
             },
         },
         mottarytelser: {
-            feilmelding: "You must respond to whether you receive benefits from NAV",
-            sporsmal: "Do you receive benefits from NAV?",
+            feilmelding: "You must respond to whether you receive benefits from Nav",
+            sporsmal: "Do you receive benefits from Nav?",
         },
         soktytelser: {
             feilmelding:
-                "You must respond to whether you have applied for benefits from NAV, and this is not fully processed",
-            sporsmal: "Have you applied for benefits from NAV, and this is not fully processed?",
+                "You must respond to whether you have applied for benefits from Nav, and this is not fully processed",
+            sporsmal: "Have you applied for benefits from Nav, and this is not fully processed?",
         },
         studielan: {
             sporsmal: "Do you receive loans/grants from Lånekassen?",
@@ -961,7 +961,7 @@ export const skjema = {
         statsborger: {
             feilmelding: "Citizenship must be selected",
             hjelpetekst: {
-                tekst: "Nordic citizens include Swedish, Danish, Finnish or Icelandic citizens. If you are an EEA citizen and have not previously received social support, you must contact the NAV office before you apply.",
+                tekst: "Nordic citizens include Swedish, Danish, Finnish or Icelandic citizens. If you are an EEA citizen and have not previously received social support, you must contact the Nav office before you apply.",
             },
         },
         system: {
@@ -1020,7 +1020,7 @@ export const skjema = {
             kontaktinfo: {
                 infotekst: {
                     ekstratekst:
-                        "Write the address where you are staying. If you do not know the address, you can write the address of the NAV office in the municipality or district where you live. <lenke>Look up NAV office.</lenke>",
+                        "Write the address where you are staying. If you do not know the address, you can write the address of the Nav office in the municipality or district where you live. <lenke>Look up Nav office.</lenke>",
                 },
                 sporsmal: "Address",
             },

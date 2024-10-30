@@ -35,11 +35,11 @@ const midlertidigDeaktivertNavEnhet: NavEnhetFrontend = {
     valgt: true,
 };
 
-test("erAktiv returnerer true ved aktive NAV-kontorer", () => {
+test("erAktiv returnerer true ved aktive Nav-kontorer", () => {
     expect(erAktiv(aktivNavEnhet)).toBe(true);
 });
 
-test("erAktiv returnerer false ved alle inaktive NAV-kontorer", () => {
+test("erAktiv returnerer false ved alle inaktive Nav-kontorer", () => {
     expect(erAktiv(deaktivertNavEnhet)).toBe(false);
     expect(erAktiv(midlertidigDeaktivertNavEnhet)).toBe(false);
 });

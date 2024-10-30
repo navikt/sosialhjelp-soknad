@@ -2,7 +2,7 @@ import * as React from "react";
 import {useState} from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {ArrowRightIcon} from "@navikt/aksel-icons";
+import {ArrowLeftIcon, ArrowRightIcon, PaperplaneIcon} from "@navikt/aksel-icons";
 import {SkjemaStegCancelButtons} from "./SkjemaStegCancelButtons.tsx";
 
 export const SkjemaStegButtons = ({
@@ -18,7 +18,7 @@ export const SkjemaStegButtons = ({
     const [isPending, setIsPending] = useState<boolean>(false);
 
     const nextButtonText = isFinalStep ? "skjema.knapper.send" : "skjema.knapper.neste";
-    const nextButtonIcon = isPending ? <Loader /> : <ArrowRightIcon />;
+    const nextButtonIcon = isPending ? <Loader /> : isFinalStep ? <PaperplaneIcon /> : <ArrowRightIcon />;
 
     const onClickNext = async () => {
         setIsPending(true);
@@ -28,8 +28,14 @@ export const SkjemaStegButtons = ({
 
     return (
         <div>
-            <div className={"!mt-12 md:!mt-16 lg:!mt-24 !mb-8 lg:!mb-16 space-x-3"}>
-                <Button variant="secondary" onClick={onPrevious} disabled={onPrevious === undefined}>
+            <div className={"flex !mt-12 md:!mt-16 lg:!mt-24 !mb-8 lg:!mb-16 gap-3"}>
+                <Button
+                    variant="secondary"
+                    onClick={onPrevious}
+                    disabled={onPrevious === undefined}
+                    icon={<ArrowLeftIcon />}
+                    iconPosition={"left"}
+                >
                     {t("skjema.knapper.forrige")}
                 </Button>
                 <Button

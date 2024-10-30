@@ -76,4 +76,10 @@ export const BACKEND_FRONTEND_KEY_MAP: Record<string, DigisosLanguageKey> = {
     "utgifter.boutgift.false": "avbryt.nei",
     "utgifter.boutgift.true": "avbryt.ja",
     "utgifter.boutgift.true.type.annenBoutgift": "utgifter.boutgift.true.type.annenBoutgift.stringValue",
+    "bosituasjon.annet.botype.foreldre": "bosituasjon.annenBotype.foreldre",
+    "bosituasjon.annet.botype.familie": "bosituasjon.annenBotype.familie",
+    "bosituasjon.annet.botype.venner": "bosituasjon.annenBotype.venner",
+    "bosituasjon.annet.botype.institusjon": "bosituasjon.annenBotype.institusjon",
+    "bosituasjon.annet.botype.fengsel": "bosituasjon.annenBotype.fengsel",
+    "bosituasjon.annet.botype.krisesenter": "bosituasjon.annenBotype.krisesenter",
 } as const;

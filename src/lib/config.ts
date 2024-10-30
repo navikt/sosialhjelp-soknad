@@ -8,7 +8,7 @@ type FeatureFlags = {
     // Ny versjon av Personalia oppsummering
     nyOppsummering: boolean;
 
-    // Ny NAV-kontor-visning i oppsummering
+    // Ny Nav-kontor-visning i oppsummering
     oppsummeringNavEnhet: boolean;
 
     // Vis valg for søknadstype ved opprettelse
@@ -147,6 +147,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
 };
 
 const getConfig = (miljo: unknown): SoknadConfig => {
+    if (process.env.NODE_ENV === "test") return configMap.localhost;
     if (!isValidDigisosEnvironment(miljo)) throw new Error(`Unknown SoknadMiljo: "${miljo}"`);
     return configMap[miljo];
 };
