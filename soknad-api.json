@@ -3004,9 +3004,7 @@
             "post": {
                 "tags": ["soknad-lifecycle-controller"],
                 "operationId": "createSoknad",
-                "parameters": [
-                    {"name": "Authorization", "in": "header", "required": true, "schema": {"type": "string"}}
-                ],
+                "parameters": [{"name": "soknadstype", "in": "query", "required": false, "schema": {"type": "string"}}],
                 "responses": {
                     "413": {
                         "description": "Payload Too Large",
@@ -3299,6 +3297,36 @@
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Oppsummering"}}}
                     }
+                }
+            }
+        },
+        "/soknader/{behandlingsId}/isNyDatamodell": {
+            "get": {
+                "tags": ["soknad-ressurs"],
+                "operationId": "isNyDatamodell",
+                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
             }
         },
@@ -4728,15 +4756,14 @@
                 }
             },
             "IkkeStudentInput": {
-                "required": ["verdi"],
+                "required": ["erStudent"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/UtdanningInput"},
-                    {"type": "object", "properties": {"verdi": {"type": "integer", "format": "int32"}}}
+                    {"type": "object", "properties": {"erStudent": {"type": "boolean"}}}
                 ]
             },
             "StudentgradInput": {
-                "required": ["studentgrad"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/UtdanningInput"},
@@ -4909,8 +4936,8 @@
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
-                    "dokumentasjonForventet": {"type": "boolean"},
                     "group": {"type": "string"},
+                    "dokumentasjonForventet": {"type": "boolean"},
                     "type": {"type": "string"}
                 },
                 "discriminator": {"propertyName": "type"}
@@ -5350,7 +5377,20 @@
                     "harFastStilling": {"type": "boolean"}
                 }
             },
-            "Adresse": {"type": "object"},
+            "Adresse": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {"type": {"type": "string"}},
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "VegAdresse": "#/components/schemas/VegAdresse",
+                        "MatrikkelAdresse": "#/components/schemas/MatrikkelAdresse",
+                        "PostboksAdresse": "#/components/schemas/PostboksAdresse",
+                        "UstrukturertAdresse": "#/components/schemas/UstrukturertAdresse"
+                    }
+                }
+            },
             "AdresserInput": {
                 "required": ["adresseValg"],
                 "type": "object",
@@ -5466,7 +5506,9 @@
                     "orgnummer": {"type": "string"},
                     "enhetsnummer": {"type": "string"},
                     "kommunenummer": {"type": "string"},
-                    "kommunenavn": {"type": "string"}
+                    "kommunenavn": {"type": "string"},
+                    "isMottakMidlertidigDeaktivert": {"type": "boolean"},
+                    "isMottakDeaktivert": {"type": "boolean"}
                 }
             },
             "BekreftelseRessurs": {
@@ -5636,12 +5678,13 @@
                 }
             },
             "NavnDto": {
-                "required": ["etternavn", "fornavn"],
+                "required": ["etternavn", "fornavn", "fulltNavn"],
                 "type": "object",
                 "properties": {
                     "fornavn": {"type": "string"},
                     "mellomnavn": {"type": "string"},
-                    "etternavn": {"type": "string"}
+                    "etternavn": {"type": "string"},
+                    "fulltNavn": {"type": "string"}
                 }
             },
             "PersonaliaDto": {

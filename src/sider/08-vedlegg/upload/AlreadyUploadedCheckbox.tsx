@@ -10,7 +10,7 @@ import * as React from "react";
 import {ChangeEvent} from "react";
 import {Checkbox} from "@navikt/ds-react";
 import cx from "classnames";
-import {VedleggFrontendVedleggStatus} from "../../../generated/model";
+import {VedleggFrontend, VedleggFrontends, VedleggFrontendVedleggStatus} from "../../../generated/model";
 
 export const AlreadyUploadedCheckbox = ({opplysning, disabled}: {opplysning: Opplysning; disabled: boolean}) => {
     const behandlingsId = useBehandlingsId();
@@ -23,16 +23,21 @@ export const AlreadyUploadedCheckbox = ({opplysning, disabled}: {opplysning: Opp
 
         await queryClient.refetchQueries({queryKey});
 
-        await updateOkonomiskOpplysning(behandlingsId, {
-            ...{
-                ...opplysning,
-                filer: [...(opplysning.filer ?? [])],
-                vedleggStatus: undefined,
-                slettet: undefined,
-                pendingLasterOppFil: undefined,
-            },
+        const latestData = queryClient.getQueryData<VedleggFrontends>(queryKey);
+
+        const updatedRader =
+            latestData?.okonomiskeOpplysninger?.find((item) => item.type === opplysning.type)?.rader ||
+            opplysning.rader;
+
+        const updatedOpplysning: VedleggFrontend = {
+            ...opplysning,
+            vedleggStatus: undefined,
+            rader: updatedRader,
+            filer: [...(opplysning.filer ?? [])],
             alleredeLevert,
-        });
+        };
+
+        await updateOkonomiskOpplysning(behandlingsId, updatedOpplysning);
 
         await queryClient.invalidateQueries({queryKey});
     };
