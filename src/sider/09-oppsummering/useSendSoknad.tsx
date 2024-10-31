@@ -4,11 +4,14 @@ import digisosConfig from "../../lib/config";
 import {faro} from "@grafana/faro-react";
 import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude.tsx";
 import {useAdresser} from "../01-personalia/adresse/useAdresser.tsx";
+import {useFeatureToggles} from "../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
 
 export const useSendSoknad = (behandlingsId: string) => {
     const [isError, setIsError] = useState<boolean>(false);
     const {brukerdefinert} = useAdresser();
     const [endretAdresse, setEndretAdresse] = useState<boolean>(false);
+
+    const {data: featureFlagData} = useFeatureToggles();
 
     useEffect(() => {
         if (brukerdefinert) {
@@ -25,6 +28,7 @@ export const useSendSoknad = (behandlingsId: string) => {
     ) => {
         setIsError(false);
         const {id, antallDokumenter, forrigeSoknadSendt} = await sendSoknad(behandlingsId);
+        const shouldAddParam = featureFlagData?.["sosialhjelp.innsyn.uxsignals_kort_soknad"] && isKortSoknad;
         try {
             await logAmplitudeEvent("Søknad sendt", {
                 AntallDokumenterSendt: antallDokumenter,
@@ -35,7 +39,7 @@ export const useSendSoknad = (behandlingsId: string) => {
                 valgteKategorier: selectedKategorier?.length ? selectedKategorier : "Ikke utfylt",
                 situasjonEndret: situasjonEndret !== "Ikke utfylt" ? "Ja" : "Ikke utfylt",
             });
-            window.location.assign(`${digisosConfig.innsynURL}${id}/status`);
+            window.location.assign(`${digisosConfig.innsynURL}${id}/status${shouldAddParam ? "?kortSoknad=true" : ""}`);
         } catch (e: any) {
             faro.api.pushError(e);
             setIsError(true);
