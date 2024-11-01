@@ -237,7 +237,7 @@ export const skjema = {
                 description: 'Døme på tekst: "Eg søkjer om pengar til livsopphald, husleige og straum."',
                 dokumentasjon: {
                     beskrivelse:
-                        "Her kan du laste opp dokumentasjon for det du søkjer om pengar til.  Viss du legg ved dokumentasjon saman med søknaden din, kan det hjelpe oss med å behandle søknaden raskare.",
+                        "Her kan du laste opp dokumentasjon for det du søkjer om pengar til. Viss du legg ved dokumentasjon saman med søknaden din, kan det hjelpe oss med å behandle søknaden raskare.",
                     tittel: "Dokumentasjon",
                 },
                 oppsummeringstittel: "Ditt behov",
