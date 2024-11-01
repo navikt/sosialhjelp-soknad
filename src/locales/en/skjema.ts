@@ -239,7 +239,14 @@ export const skjema = {
                 description: 'Example: "I\'m applying for money for everyday living expenses, rent and electricity."',
                 dokumentasjon: {
                     beskrivelse:
-                        "Here you can upload documentation about your situation and expenses. You can take photos and screenshots.",
+                        "Here you can upload documentation for what you are applying for money for. If you include documentation with your application, it can help us process it more quickly.
+
+
+
+
+
+
+",
                     tittel: "Documentation",
                 },
                 oppsummeringstittel: "Your needs",
@@ -1608,7 +1615,7 @@ export const skjema = {
         kort: {
             dokumentasjon: {
                 description:
-                    "Here you can upload any other documentation you consider important. You can take photos and screenshots.",
+                    "Here you can upload any other documentation you consider important for the application.",
                 title: "Documentation of the change",
             },
             endring: {
