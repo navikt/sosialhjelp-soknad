@@ -131,17 +131,18 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             soknadstypeValg: false,
         },
 
-        dekoratorMiljo: "prod",
+        dekoratorMiljo: "dev",
         showDevPanel: false,
         logLocally: false,
         withCredentials: false,
-        driftsmeldingUrl: "https://www.nav.no/sosialhjelp/driftsmeldinger",
-        baseURL: "https://www.nav.no/sosialhjelp/login-api/soknad-api/",
-        innsynURL: "https://www.nav.no/sosialhjelp/innsyn/",
+        driftsmeldingUrl: "https://digisos.ekstern.dev.nav.no/sosialhjelp/driftsmeldinger",
+        baseURL: "https://digisos-preprod.ekstern.dev.nav.no/sosialhjelp/login-api/soknad-api/",
+        // NB: Denne ble satt til digisos.ekstern, fordi da denne ble skrevet var det ikke innsyn i preprod enda.
+        innsynURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn/",
         minSideURL: "https://www.nav.no/minside/",
         logoutURL: "https://loginservice.nav.no/slo",
         faro: {
-            url: "https://telemetry.nav.no/collect",
+            url: "https://telemetry.ekstern.dev.nav.no/collect",
         },
     },
 };
