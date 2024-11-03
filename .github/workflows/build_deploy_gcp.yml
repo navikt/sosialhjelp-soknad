@@ -1,6 +1,6 @@
 # Denne filen vil erstatte build_prod, build_deploy_mock, etc.
 
-name: "Deploy after push to main"
+name: "Build and deploy to GCP"
 
 on:
   push:
