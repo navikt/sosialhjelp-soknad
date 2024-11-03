@@ -6,3 +6,5 @@ externalOutboundAccesses:
   - "dekoratoren.ekstern.dev.nav.no"
   - "digisos.ekstern.dev.nav.no"
   - "www.dev.nav.no"
+env:
+  DEKORATOREN_MILJO: dev
