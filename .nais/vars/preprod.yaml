@@ -1,6 +1,6 @@
 postfix: preprod
 ingresses:
-  - "https://digisos-preprod.ekstern.dev.nav.no/sosialhjelp/soknad"
+  - "https://www-preprod.ekstern.dev.nav.no/sosialhjelp/soknad"
 externalOutboundAccesses:
   - "dekoratoren.dev.nav.no"
   - "dekoratoren.ekstern.dev.nav.no"
