@@ -1,8 +1,8 @@
 import {redirect} from "next/navigation";
-import {BASE_PATH} from "../../lib/constants";
+import {getUrlFromGoto} from "./getUrlFromGoto.ts";
 
 export async function GET(request: Request) {
     const {searchParams} = new URL(request.url);
-    const gotoParam = searchParams.get("goto");
-    redirect(gotoParam ?? BASE_PATH);
+
+    redirect(getUrlFromGoto(searchParams.get("goto")));
 }
