@@ -7,6 +7,10 @@ import {logger} from "@navikt/next-logger";
 configureLogger({basePath: "/sosialhjelp/soknad", apiPath: "/sosialhjelp/soknad/api"});
 
 export async function middleware({url, cookies}: NextRequest) {
+    if (process.env.NEXT_PUBLIC_DIGISOS_ENV === "preprod") {
+        logger.warn("Running in preprod, skipping auth check");
+        return NextResponse.next();
+    }
     try {
         return await verifyOrRedirectToLogin({url, cookies});
     } catch (e: any) {

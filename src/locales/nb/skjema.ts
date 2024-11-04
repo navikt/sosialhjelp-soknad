@@ -219,7 +219,7 @@ export const skjema = {
                 description: 'Eksempel på tekst: "Jeg søker om penger til livsopphold, husleie og strøm."',
                 dokumentasjon: {
                     beskrivelse:
-                        "Her kan du laste opp dokumentasjon om situasjonen din og utgiftene dine. Du kan ta bilder og skjermbilder.",
+                        "Her kan du laste opp dokumentasjon for det du søker om penger til. Hvis du legger ved dokumentasjon sammen med søknaden din, kan det hjelpe oss med å behandle søknaden raskere.",
                     tittel: "Dokumentasjon",
                 },
                 oppsummeringstittel: "Ditt behov",
@@ -1583,7 +1583,7 @@ export const skjema = {
         kort: {
             dokumentasjon: {
                 description:
-                    "Her kan du laste opp annen dokumentasjon du tenker er viktig. Du kan ta bilder og skjermbilder.",
+                    "Her kan du laste opp annen dokumentasjon du tenker er viktig for søknaden.",
                 title: "Dokumentasjon",
             },
             endring: {
