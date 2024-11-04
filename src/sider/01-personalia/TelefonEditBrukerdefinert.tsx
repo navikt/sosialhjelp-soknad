@@ -27,9 +27,9 @@ const TelefonnummerFormSchema = z
 type TelefonnummerFormType = z.infer<typeof TelefonnummerFormSchema>;
 
 export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
-    const {data, setTelefonnummer} = useTelefonnummer();
+    const {setTelefonnummer, fraBruker} = useTelefonnummer();
 
-    const number = data?.brukerutfyltVerdi ? parsePhoneNumber(data?.brukerutfyltVerdi) : null;
+    const number = fraBruker ? parsePhoneNumber(fraBruker) : null;
 
     const {handleSubmit, register, formState} = useForm<TelefonnummerFormType>({
         defaultValues: {

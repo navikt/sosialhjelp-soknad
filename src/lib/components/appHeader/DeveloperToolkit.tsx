@@ -33,7 +33,7 @@ export const DeveloperToolkit = () => {
                 <button
                     className={"text-[#0c0] hover:text-[#0f0]"}
                     onClick={async () => {
-                        navigate(`/informasjon`);
+                        navigate(`/`);
                     }}
                 >
                     [ hovedmeny ]

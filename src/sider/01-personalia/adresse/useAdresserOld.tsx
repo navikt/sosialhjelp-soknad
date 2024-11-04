@@ -15,17 +15,18 @@ import {
 } from "../../../generated/model/index.ts";
 import {useQueryClient} from "@tanstack/react-query";
 
-export const useAdresser = () => {
+export const useAdresserOld = (enabled: boolean) => {
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
     const [state, dispatch] = useReducer(adresseReducer, {mode: "uninitialized"});
-
     useEffect(() => {
-        hentAdresser(behandlingsId).then((backendState) => {
-            dispatch({type: "synchronize", backendState});
-            setQueryDataNavEnhet(backendState.navEnhet);
-        });
-    }, [behandlingsId]);
+        if (enabled) {
+            hentAdresser(behandlingsId).then((backendState) => {
+                dispatch({type: "synchronize", backendState});
+                setQueryDataNavEnhet(backendState.navEnhet);
+            });
+        }
+    }, [behandlingsId, enabled]);
 
     const setQueryDataNavEnhet = (navEnhet: NavEnhetFrontend | undefined) => {
         const queryKey = getHentAdresserQueryKey(behandlingsId);
@@ -70,7 +71,9 @@ export const useAdresser = () => {
         dispatch({type: "adresseSoknadChange", soknad, navEnhet});
         setQueryDataNavEnhet(navEnhet);
     };
-
+    if (!enabled) {
+        return null;
+    }
     switch (state.mode) {
         case "uninitialized":
             return {isPending: true};
