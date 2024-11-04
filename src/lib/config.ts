@@ -136,9 +136,9 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         logLocally: false,
         withCredentials: false,
         driftsmeldingUrl: "https://digisos.ekstern.dev.nav.no/sosialhjelp/driftsmeldinger",
-        baseURL: "https://www-preprod.ekstern.dev.nav.no/sosialhjelp/login-api/soknad-api/",
+        baseURL: "https://sosialhjelp-soknad-api.dev.intern.nav.no/sosialhjelp/soknad-api",
         // NB: Denne ble satt til digisos.ekstern, fordi da denne ble skrevet var det ikke innsyn i preprod enda.
-        innsynURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn/",
+        innsynURL: "https://www-preprod.ekstern.dev.nav.no/sosialhjelp/innsyn/",
         minSideURL: "https://www.nav.no/minside/",
         logoutURL: "https://loginservice.nav.no/slo",
         faro: {
