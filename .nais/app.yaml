@@ -42,6 +42,7 @@ spec:
     enabled: true
     sidecar:
       enabled: true
+      autoLogin: true
   {{/if}}
   replicas:
     min: 1
