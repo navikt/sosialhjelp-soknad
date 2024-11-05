@@ -16,6 +16,8 @@ spec:
     {{/each}}
   accessPolicy:
     outbound:
+      rules:
+        - application: sosialhjelp-soknad-api
       external:
         {{#each externalOutboundAccesses as |url|}}
         - host: {{url}}
