@@ -16,6 +16,8 @@ spec:
     {{/each}}
   accessPolicy:
     outbound:
+      rules:
+        - application: sosialhjelp-soknad-api
       external:
         {{#each externalOutboundAccesses as |url|}}
         - host: {{url}}
@@ -37,6 +39,13 @@ spec:
     requests:
       cpu: 1m
       memory: 50Mi
+  {{#if idportenEnabled}}
+  idporten:
+    enabled: true
+    sidecar:
+      enabled: true
+      autoLogin: true
+  {{/if}}
   replicas:
     min: 1
     max: 1
