@@ -15,22 +15,53 @@ export const Boutgifter = () => {
 
     if (!boutgifter) return null;
 
-    console.log("boutgifter.skalViseInfoVedBekreftelse", boutgifter.skalViseInfoVedBekreftelse);
-    console.log("boutgifter.bekreftelse", boutgifter.bekreftelse);
-    const bosituasjonen = bosituasjon?.botype === "leier" || bosituasjon?.botype === "kommunal";
-    const bostottenBek = bostotte?.bekreftelse;
-    const bostottenSam = bostotte?.samtykke;
-    console.log("bosituasjonen", bosituasjonen);
-    console.log("bostottenBek", bostottenBek);
-    console.log("bostottenSam", bostottenSam);
+    // Determine if the GuidePanel should be shown
+    const shouldShowGuidePanel = () => {
+        const filteredBoutgifter = Object.fromEntries(
+            Object.entries(boutgifter || {}).filter(
+                ([key]) => key !== "skalViseInfoVedBekreftelse" && key !== "bekreftelse"
+            )
+        );
+        const leieBosituasjon = bosituasjon?.botype === "leier" || bosituasjon?.botype === "kommunal";
+
+        const bostotteIkkeBesvartEllerNei = !bostotte?.bekreftelse && !bostotte?.samtykke;
+        const bostotteBesvartJaDeretterNei = bostotte?.bekreftelse && !bostotte?.samtykke;
+
+        const harUtgifter = Object.values(filteredBoutgifter).some((value) => value === true);
+
+        if (!harUtgifter && leieBosituasjon) {
+            return true;
+        }
+        if (harUtgifter && !leieBosituasjon) {
+            return true;
+        }
+        if (harUtgifter && bostotteIkkeBesvartEllerNei) {
+            return true;
+        }
+        if (harUtgifter && bostotteBesvartJaDeretterNei) {
+            return true;
+        }
+        if (bostotteBesvartJaDeretterNei) {
+            return true;
+        }
+        if (harUtgifter) {
+            return true;
+        }
+        return false;
+    };
+
+    // Event handler to update boutgifter when checkboxes change
+    const handleCheckboxChange = (
+        selectedOptions: (keyof Omit<BoutgifterFrontend, "bekreftelse" | "skalViseInfoVedBekreftelse">)[]
+    ) => {
+        setBoutgifter(selectedOptions);
+    };
 
     return (
         <div className="skjema-sporsmal">
             <CheckboxGroup
                 legend={t("utgifter.boutgift.true.type.sporsmal")}
-                onChange={(navn: (keyof Omit<BoutgifterFrontend, "bekreftelse" | "skalViseInfoVedBekreftelse">)[]) =>
-                    setBoutgifter(navn)
-                }
+                onChange={handleCheckboxChange}
                 value={Object.keys(boutgifter).filter((key) => boutgifter[key as keyof BoutgifterFrontend])}
             >
                 <Checkbox value={"husleie"}>{t("utgifter.boutgift.true.type.husleie")}</Checkbox>
@@ -40,7 +71,7 @@ export const Boutgifter = () => {
                 <Checkbox value={"boliglan"}>{t("utgifter.boutgift.true.type.boliglan")}</Checkbox>
                 <Checkbox value={"annet"}>{t("utgifter.boutgift.true.type.andreutgifter.stringValue")}</Checkbox>
             </CheckboxGroup>
-            {!boutgifter?.skalViseInfoVedBekreftelse && ((bostottenBek && !bostottenSam) || bosituasjon) && (
+            {shouldShowGuidePanel() && (
                 <GuidePanel poster>
                     <Trans
                         t={t}
