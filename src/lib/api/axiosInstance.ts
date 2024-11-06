@@ -89,7 +89,9 @@ export const axiosInstance = <T>(
                 return axiosInstance<T>(config, options, retry + 1);
             }
 
-            await logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url}: ${status} ${data}`);
+            await logWarning(
+                `Nettverksfeil i axiosInstance: ${config.method} ${config.url}: ${status} ${JSON.stringify(data)}`
+            );
             throw e;
         });
 
