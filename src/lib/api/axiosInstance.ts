@@ -89,6 +89,10 @@ export const axiosInstance = <T>(
                 return axiosInstance<T>(config, options, retry + 1);
             }
 
+            // Additional logging for debugging
+            console.error("Full error object:", e);
+            console.error("Response object:", response);
+
             await logWarning(
                 `Nettverksfeil i axiosInstance: ${config.method} ${config.url}: ${status} ${JSON.stringify(data)}`
             );
