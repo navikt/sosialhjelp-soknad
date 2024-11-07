@@ -18,24 +18,22 @@ export const Boutgifter = () => {
     // Determine if the GuidePanel should be shown
     const shouldShowGuidePanel = () => {
         const filteredBoutgifter = Object.fromEntries(
-            Object.entries(boutgifter || {}).filter(
-                ([key]) => key !== "skalViseInfoVedBekreftelse" && key !== "bekreftelse"
-            )
+            Object.entries(boutgifter || {}).filter(([key]) => key === "husleie")
         );
         const leieBosituasjon = bosituasjon?.botype === "leier" || bosituasjon?.botype === "kommunal";
 
         const bostotteIkkeBesvart = !bostotte?.bekreftelse && !bostotte?.samtykke;
         const bostotteBesvartJaDeretterNei = bostotte?.bekreftelse && !bostotte?.samtykke;
 
-        const harUtgifter = Object.values(filteredBoutgifter).some((value) => value === true);
+        const harUtgiftHusleie = Object.values(filteredBoutgifter).some((value) => value === true);
 
-        if (leieBosituasjon && bostotteIkkeBesvart && harUtgifter) {
+        if (leieBosituasjon && bostotteIkkeBesvart && harUtgiftHusleie) {
             return true;
         }
-        if (bostotteBesvartJaDeretterNei && harUtgifter) {
+        if (bostotteBesvartJaDeretterNei && harUtgiftHusleie) {
             return true;
         }
-        if (bostotteIkkeBesvart && harUtgifter) {
+        if (bostotteIkkeBesvart && harUtgiftHusleie) {
             return true;
         }
         return false;
