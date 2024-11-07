@@ -24,27 +24,18 @@ export const Boutgifter = () => {
         );
         const leieBosituasjon = bosituasjon?.botype === "leier" || bosituasjon?.botype === "kommunal";
 
-        const bostotteIkkeBesvartEllerNei = !bostotte?.bekreftelse && !bostotte?.samtykke;
+        const bostotteIkkeBesvart = !bostotte?.bekreftelse && !bostotte?.samtykke;
         const bostotteBesvartJaDeretterNei = bostotte?.bekreftelse && !bostotte?.samtykke;
 
         const harUtgifter = Object.values(filteredBoutgifter).some((value) => value === true);
 
-        if (!harUtgifter && leieBosituasjon) {
+        if (leieBosituasjon && bostotteIkkeBesvart && harUtgifter) {
             return true;
         }
-        if (harUtgifter && !leieBosituasjon) {
+        if (bostotteBesvartJaDeretterNei && harUtgifter) {
             return true;
         }
-        if (harUtgifter && bostotteIkkeBesvartEllerNei) {
-            return true;
-        }
-        if (harUtgifter && bostotteBesvartJaDeretterNei) {
-            return true;
-        }
-        if (bostotteBesvartJaDeretterNei) {
-            return true;
-        }
-        if (harUtgifter) {
+        if (bostotteIkkeBesvart && harUtgifter) {
             return true;
         }
         return false;
