@@ -9,8 +9,19 @@ export const NySoknadVelkomst = () => {
     const {data: sessionInfo} = useGetSessionInfo();
     const {t, i18n} = useTranslation("skjema");
 
-    const baseUrl = "https://www.nav.no/personopplysninger-sosialhjelp";
-    const href = i18n.language === "nb" ? baseUrl : `${baseUrl}/${i18n.language}`;
+    type SupportedLanguage = "nb" | "nn" | "en";
+
+    const sokUrl = "https://www.nav.no/okonomisk-sosialhjelp";
+
+    const urlFragments: Record<SupportedLanguage, string> = {
+        nb: "#sok",
+        nn: "/nn#sok",
+        en: "/en#apply",
+    };
+    const sokHref = `${sokUrl}${urlFragments[i18n.language as SupportedLanguage] || urlFragments.nb}`;
+
+    const personUrl = "https://www.nav.no/personopplysninger-sosialhjelp";
+    const personHref = i18n.language === "nb" ? personUrl : `${personUrl}/${i18n.language}`;
 
     return (
         <div className={"p-8 lg:py-12 lg:px-24 flex flex-col"}>
@@ -28,7 +39,7 @@ export const NySoknadVelkomst = () => {
                     components={{
                         lenke: (
                             <a
-                                href="https://www.nav.no/okonomisk-sosialhjelp#sok"
+                                href={sokHref}
                                 target="_blank"
                                 rel="noreferrer"
                                 onClick={async () => {
@@ -60,7 +71,7 @@ export const NySoknadVelkomst = () => {
                     i18nKey={"informasjon.innhenting.tekst_del2"}
                     components={{
                         lenke: (
-                            <a href={href} target="_blank" rel="noreferrer">
+                            <a href={personHref} target="_blank" rel="noreferrer">
                                 {null}
                             </a>
                         ),
