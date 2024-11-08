@@ -3,21 +3,54 @@ import {Checkbox, CheckboxGroup, GuidePanel, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {useBoutgifter} from "../../lib/hooks/data/useBoutgifter";
 import {BoutgifterFrontend} from "../../generated/model";
+import {useBosituasjon} from "../../lib/hooks/data/useBosituasjon.tsx";
+import {useInntekterBostotte} from "../../lib/hooks/data/useInntekterBostotte.tsx";
 
 export const Boutgifter = () => {
     const {t} = useTranslation("skjema");
 
     const {boutgifter, setBoutgifter} = useBoutgifter();
+    const {bosituasjon} = useBosituasjon();
+    const {bostotte} = useInntekterBostotte();
 
     if (!boutgifter) return null;
+
+    // Determine if the GuidePanel should be shown
+    const shouldShowGuidePanel = () => {
+        const filteredBoutgifter = Object.fromEntries(
+            Object.entries(boutgifter || {}).filter(([key]) => key === "husleie")
+        );
+        const leieBosituasjon = bosituasjon?.botype === "leier" || bosituasjon?.botype === "kommunal";
+
+        const bostotteIkkeBesvart = !bostotte?.bekreftelse && !bostotte?.samtykke;
+        const bostotteBesvartJaDeretterNei = bostotte?.bekreftelse && !bostotte?.samtykke;
+
+        const harUtgiftHusleie = Object.values(filteredBoutgifter).some((value) => value === true);
+
+        if (leieBosituasjon && bostotteIkkeBesvart && harUtgiftHusleie) {
+            return true;
+        }
+        if (bostotteBesvartJaDeretterNei && harUtgiftHusleie) {
+            return true;
+        }
+        if (bostotteIkkeBesvart && harUtgiftHusleie) {
+            return true;
+        }
+        return false;
+    };
+
+    // Event handler to update boutgifter when checkboxes change
+    const handleCheckboxChange = (
+        selectedOptions: (keyof Omit<BoutgifterFrontend, "bekreftelse" | "skalViseInfoVedBekreftelse">)[]
+    ) => {
+        setBoutgifter(selectedOptions);
+    };
 
     return (
         <div className="skjema-sporsmal">
             <CheckboxGroup
                 legend={t("utgifter.boutgift.true.type.sporsmal")}
-                onChange={(navn: (keyof Omit<BoutgifterFrontend, "bekreftelse" | "skalViseInfoVedBekreftelse">)[]) =>
-                    setBoutgifter(navn)
-                }
+                onChange={handleCheckboxChange}
                 value={Object.keys(boutgifter).filter((key) => boutgifter[key as keyof BoutgifterFrontend])}
             >
                 <Checkbox value={"husleie"}>{t("utgifter.boutgift.true.type.husleie")}</Checkbox>
@@ -27,7 +60,7 @@ export const Boutgifter = () => {
                 <Checkbox value={"boliglan"}>{t("utgifter.boutgift.true.type.boliglan")}</Checkbox>
                 <Checkbox value={"annet"}>{t("utgifter.boutgift.true.type.andreutgifter.stringValue")}</Checkbox>
             </CheckboxGroup>
-            {!boutgifter?.skalViseInfoVedBekreftelse && boutgifter?.bekreftelse && (
+            {shouldShowGuidePanel() && (
                 <GuidePanel poster>
                     <Trans
                         t={t}
