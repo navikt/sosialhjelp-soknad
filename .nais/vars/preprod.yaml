@@ -1,6 +1,5 @@
 postfix: preprod
-ingresses:
-  - "https://www-preprod.ekstern.dev.nav.no/sosialhjelp/soknad"
+ingresses: []
 externalOutboundAccesses:
   - "dekoratoren.dev.nav.no"
   - "dekoratoren.ekstern.dev.nav.no"
