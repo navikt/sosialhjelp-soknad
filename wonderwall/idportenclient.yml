@@ -1,0 +1,22 @@
+apiVersion: nais.io/v1
+kind: IDPortenClient
+metadata:
+  labels:
+    team: teamdigisos
+  name: idporten-sso-soknad
+  namespace: teamdigisos
+spec:
+  accessTokenLifetime: 3600
+  clientURI: https://www-preprod.ekstern.dev.nav.no/sosialhjelp/soknad
+  frontchannelLogoutURI: https://www-preprod.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/logout/frontchannel
+  integrationType: idporten
+  postLogoutRedirectURIs:
+    - https://www-preprod.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/logout/callback
+  redirectURIs:
+    - https://www-preprod.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/callback
+  scopes:
+    - openid
+    - ks:fiks
+    - husbanken:minbostotte
+  secretName: idporten-sso-soknad
+  sessionLifetime: 21600
