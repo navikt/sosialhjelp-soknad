@@ -9,7 +9,7 @@ spec:
   accessTokenLifetime: 3600
   clientURI: https://www-preprod.ekstern.dev.nav.no/sosialhjelp/soknad
   frontchannelLogoutURI: https://www-preprod.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/logout/frontchannel
-  integrationType: idporten
+  integrationType: api_klient
   postLogoutRedirectURIs:
     - https://www-preprod.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/logout/callback
   redirectURIs:
