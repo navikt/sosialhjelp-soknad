@@ -5,6 +5,7 @@ export const GET = proxyMyBackend;
 export const POST = proxyMyBackend;
 export const PUT = proxyMyBackend;
 export const DELETE = proxyMyBackend;
+export const OPTIONS = proxyMyBackend;
 
 // Remember to export the HTTP verb you want Next to expose
 async function proxyMyBackend(request: Request, {params}: {params: Promise<{path: string[]}>}): Promise<Response> {
