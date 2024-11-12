@@ -1,4 +1,4 @@
-postfix: mock
+appName: sosialhjelp-soknad-mock
 ingresses:
   - "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad"
 externalOutboundAccesses:

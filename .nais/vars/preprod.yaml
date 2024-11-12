@@ -1,4 +1,4 @@
-postfix: preprod
+appName: sosialhjelp-soknad
 ingresses: []
 externalOutboundAccesses:
   - "dekoratoren.dev.nav.no"
