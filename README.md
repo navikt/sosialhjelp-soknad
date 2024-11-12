@@ -79,6 +79,40 @@ Deploy til dev-gcp gjøres via Github Actions, se: https://github.com/navikt/sos
 
 Da må appen gå via proxy. Url er https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad
 
+## Wonderwall
+
+Vi bruker en litt custom Wonderwall-setup for at scope for KS og Husbanken skal være inkludert.
+
+### Oppsett
+
+Først, bekreft at en nøkkel eksisterer for kryptering av Wonderwall-sessions i Redis:
+
+```sh
+# Denne er trygg å kjøre uansett, ettersom den vil feile om secret alt eksisterer
+kubectl create secret generic sosialhjelp-soknad-wonderwall-sessions --from-literal=WONDERWALL_ENCRYPTION_KEY=$(openssl rand -base64 32)
+```
+
+Deretter, sørg for at en passende IDPorten-klient er provisjonert via NAIS:
+
+```shell
+kubectl apply -f wonderwall/idportenclient.yml
+```
+
+Dette vil føre til opprettelsen av en secret med miljøvariabler for IDporten:
+`IDPORTEN_CLIENT_ID`, `IDPORTEN_CLIENT_JWK`, `IDPORTEN_ISSUER, IDPORTEN_JWKS_URI`, `IDPORTEN_REDIRECT_URI`, `IDPORTEN_TOKEN_ENDPOINT` og `IDPORTEN_WELL_KNOWN_URL`.
+
+Nå kan Wonderwall provisjoneres:
+
+```shell
+kubectl apply -f wonderwall/wonderwall.yml
+```
+
+Notér at i påvente av mer offisiell støtte for ekstra scopes i Wonderwall, er det mulig at `wonderwall.yml` kan måtte tilpasses for det aktuelle miljøet (ingress, env/WONDERWALL_INGRESS og accesspolicy/outbound).
+
+Merk også at accesspolicy må settes på innkommende side i frontend.
+
+Når disse ressursene først er opprettet og konfigurert, trengs ingen fornying for senere deploys.
+
 ## Henvendelser
 
 Spørsmål knyttet til koden eller prosjektet kan rettes mot:
