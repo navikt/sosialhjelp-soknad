@@ -11,7 +11,7 @@ export const OPTIONS = proxyMyBackend;
 async function proxyMyBackend(request: Request, {params}: {params: Promise<{path: string[]}>}): Promise<Response> {
     const path = `/sosialhjelp/soknad-api/${(await params).path.join("/")}`;
     const hostname = "sosialhjelp-soknad-api.teamdigisos";
-    logger.info("Proxying request to sosialhjelp-soknad-api.teamdigisos");
+    logger.info(`Proxying request to ${hostname}`);
     logger.info("Authorization: " + request.headers.get("Authorization"));
     logger.info("Path: " + path);
 
