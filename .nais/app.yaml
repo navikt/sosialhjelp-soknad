@@ -21,6 +21,8 @@ spec:
     outbound:
       rules:
         - application: sosialhjelp-soknad-api
+        - application: nav-dekoratoren
+          namespace: personbruker
       external:
         {{#each externalOutboundAccesses as |url|}}
         - host: {{url}}
