@@ -15,6 +15,9 @@ spec:
     - {{url}}
     {{/each}}
   accessPolicy:
+    inbound:
+      rules:
+        - application: sosialhjelp-soknad-wonderwall
     outbound:
       rules:
         - application: sosialhjelp-soknad-api
