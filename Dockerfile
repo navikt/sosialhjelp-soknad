@@ -23,6 +23,7 @@ COPY . .
 
 RUN npm run orval
 RUN npm run build
+RUN npm run prune --production
 
 
 FROM node:20-slim AS release
