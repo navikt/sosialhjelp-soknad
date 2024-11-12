@@ -1,7 +1,7 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: sosialhjelp-soknad-{{postfix}}
+  name: {{ appName }}
   namespace: teamdigisos
   labels:
     team: teamdigisos
@@ -15,6 +15,9 @@ spec:
     - {{url}}
     {{/each}}
   accessPolicy:
+    inbound:
+      rules:
+        - application: wonderwall-soknad
     outbound:
       rules:
         - application: sosialhjelp-soknad-api
