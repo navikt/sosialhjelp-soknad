@@ -3,7 +3,7 @@ kind: IDPortenClient
 metadata:
   labels:
     team: teamdigisos
-  name: idporten-sso-soknad
+  name: idporten-soknad
   namespace: teamdigisos
 spec:
   accessTokenLifetime: 3600
@@ -18,5 +18,5 @@ spec:
     - openid
     - ks:fiks
     - husbanken:minbostotte
-  secretName: idporten-sso-soknad
+  secretName: idporten-soknad
   sessionLifetime: 21600

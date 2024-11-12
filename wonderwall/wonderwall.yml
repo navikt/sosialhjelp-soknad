@@ -1,7 +1,7 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: sosialhjelp-soknad-wonderwall
+  name: wonderwall-soknad
   namespace: teamdigisos
   labels:
     team: teamdigisos
@@ -25,7 +25,7 @@ spec:
       memory: 50Mi
   redis:
     - access: readwrite
-      instance: sessions
+      instance: wonderwall
   liveness:
     initialDelay: 20
     path: /sosialhjelp/soknad/oauth2/ping
@@ -36,8 +36,8 @@ spec:
     min: 1
     max: 1
   envFrom:
-    - secret: idporten-sso-soknad
-    - secret: idporten-sso-soknad-redis
+    - secret: idporten-soknad
+    - secret: wonderwall-redis
   env:
     - name: WONDERWALL_AUTO_LOGIN
       value: "true"
@@ -48,7 +48,7 @@ spec:
     - name: WONDERWALL_INGRESS
       value: https://www-preprod.ekstern.dev.nav.no/sosialhjelp/soknad
     - name: WONDERWALL_UPSTREAM_HOST
-      value: sosialhjelp-soknad-preprod:80
+      value: sosialhjelp-soknad:80
     - name: WONDERWALL_BIND_ADDRESS
       value: 0.0.0.0:8080
     - name: WONDERWALL_METRICS_BIND_ADDRESS
@@ -60,8 +60,8 @@ spec:
     - name: WONDERWALL_LOG_LEVEL
       value: debug
     - name: WONDERWALL_REDIS_URI
-      value: $(REDIS_URI_SESSIONS)
+      value: $(REDIS_URI_WONDERWALL)
     - name: WONDERWALL_REDIS_USERNAME
-      value: $(REDIS_USERNAME_SESSIONS)
+      value: $(REDIS_USERNAME_WONDERWALL)
     - name: WONDERWALL_REDIS_PASSWORD
-      value: $(REDIS_PASSWORD_SESSIONS)
+      value: $(REDIS_PASSWORD_WONDERWALL)

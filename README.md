@@ -89,7 +89,7 @@ Først, bekreft at en nøkkel eksisterer for kryptering av Wonderwall-sessions i
 
 ```sh
 # Denne er trygg å kjøre uansett, ettersom den vil feile om secret alt eksisterer
-kubectl create secret generic idporten-sso-soknad-redis --from-literal=WONDERWALL_ENCRYPTION_KEY=$(openssl rand -base64 32)
+kubectl create secret generic wonderwall-redis --from-literal=WONDERWALL_ENCRYPTION_KEY=$(openssl rand -base64 32)
 ```
 
 Deretter, sørg for at en passende IDPorten-klient er provisjonert via NAIS:

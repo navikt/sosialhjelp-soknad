@@ -17,7 +17,7 @@ spec:
   accessPolicy:
     inbound:
       rules:
-        - application: sosialhjelp-soknad-wonderwall
+        - application: wonderwall-soknad
     outbound:
       rules:
         - application: sosialhjelp-soknad-api
