@@ -37,7 +37,7 @@ spec:
     max: 1
   envFrom:
     - secret: idporten-sso-soknad
-    - secret: sosialhjelp-soknad-wonderwall-sessions
+    - secret: idporten-sso-soknad-redis
   env:
     - name: WONDERWALL_AUTO_LOGIN
       value: "true"
