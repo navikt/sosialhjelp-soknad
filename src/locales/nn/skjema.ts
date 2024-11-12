@@ -269,7 +269,7 @@ export const skjema = {
         },
         annet: "Annan busituasjon",
         antallpersoner: {
-            label: "Tal",
+            label: "Tal. Ikkje tel med deg sjølv.",
             sporsmal: "Kor mange personar bur du saman med?",
         },
         eier: "Eg bur i ein bustad eg eig sjølv",
@@ -375,7 +375,7 @@ export const skjema = {
                 barnebidrag: {
                     begge: "Eg betaler og får barnebidrag",
                     betaler: "Eg betaler barnebidrag",
-                    ingen: "Ingen av delane",
+                    ingen: "Nei",
                     mottar: "Eg får barnebidrag",
                     sporsmal: "Får eller betaler du barnebidrag for eitt eller fleire av barna?",
                 },
@@ -1873,7 +1873,7 @@ export const skjema = {
                         skatteetaten: "Hent informasjonen frå Skatteetaten",
                     },
                 },
-                ingen: "Du er ikkje registrert med skattbar inntekt hos Skatteetaten for siste månad.",
+                ingen: "Du er ikkje registrert med inntekt hos Skatteetaten for siste månad.",
                 inntekt: {
                     tittel: "Inntekt henta frå Skatteetaten",
                 },
@@ -1888,8 +1888,8 @@ export const skjema = {
                 skatteetaten: "Sjå detaljar hjå Skatteetaten.",
                 ta_bort_samtykke: "Fjern informasjon frå Skatteetaten",
                 tidspunkt: "Informasjonen blei henta",
-                tittel: "Skattbar inntekt",
-                undertittel: "Innrapportert skattbar inntekt til Skatteetaten",
+                tittel: "Inntekt",
+                undertittel: "Innrapportert inntekt til Skatteetaten",
             },
             til: "til",
         },
