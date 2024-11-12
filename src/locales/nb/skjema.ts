@@ -363,7 +363,7 @@ export const skjema = {
                 barnebidrag: {
                     begge: "Jeg betaler og mottar barnebidrag",
                     betaler: "Jeg betaler barnebidrag",
-                    ingen: "Ingen av delene",
+                    ingen: "Nei",
                     mottar: "Jeg mottar barnebidrag",
                     sporsmal: "Mottar eller betaler du barnebidrag for ett eller flere av barna?",
                 },
@@ -1862,7 +1862,7 @@ export const skjema = {
                         skatteetaten: "Hent informasjonen fra Skatteetaten",
                     },
                 },
-                ingen: "Du har ingen skattbar inntekt registrert hos Skatteetaten for siste måned.",
+                ingen: "Du har ingen inntekt registrert hos Skatteetaten for siste måned.",
                 inntekt: {
                     tittel: "Inntekt hentet fra Skatteetaten",
                 },
@@ -1877,8 +1877,8 @@ export const skjema = {
                 skatteetaten: "Se detaljer hos Skatteetaten.",
                 ta_bort_samtykke: "Fjern informasjon fra Skatteetaten",
                 tidspunkt: "Informasjonen ble hentet",
-                tittel: "Skattbar inntekt",
-                undertittel: "Innrapportert skattbar inntekt til Skatteetaten",
+                tittel: "Inntekt",
+                undertittel: "Innrapportert inntekt til Skatteetaten",
             },
             til: "til",
         },
