@@ -8,12 +8,12 @@ metadata:
 spec:
   accessTokenLifetime: 3600
   clientURI: https://www.nav.no/okonomisk-sosialhjelp
-  frontchannelLogoutURI: https://www-preprod.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/logout/frontchannel
+  frontchannelLogoutURI: https://www.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/logout/frontchannel
   integrationType: api_klient
   postLogoutRedirectURIs:
-    - https://www-preprod.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/logout/callback
+    - https://www.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/logout/callback
   redirectURIs:
-    - https://www-preprod.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/callback
+    - https://www.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/callback
   scopes:
     - openid
     - ks:fiks
