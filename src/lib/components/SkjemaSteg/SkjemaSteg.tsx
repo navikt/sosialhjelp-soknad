@@ -53,7 +53,7 @@ export const SkjemaSteg = ({children}: {children?: ReactNode | ReactNode[]}) => 
                     {t("hoppTilHovedinnhold")}
                 </Link>
                 <AppHeader />
-                <Box as={"main"} id={"main-content"} className={"max-w-3xl w-full"}>
+                <Box id={"main-content"} className={"max-w-3xl w-full"}>
                     {children}
                 </Box>
             </div>

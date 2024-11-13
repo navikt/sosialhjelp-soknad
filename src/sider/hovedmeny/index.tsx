@@ -12,7 +12,7 @@ import digisosConfig from "../../lib/config.ts";
 import DeveloperToolkit from "../../lib/components/appHeader/DeveloperToolkit.tsx";
 
 const PanelStack = ({open}: {open: PabegyntSoknad[]}) => (
-    <VStack as={"main"} gap={"5"}>
+    <VStack gap={"5"}>
         <NySoknadPanel defaultOpen={open?.length === 0} />
         <PabegynteSoknaderPanel />
         <EttersendDokuPanel />

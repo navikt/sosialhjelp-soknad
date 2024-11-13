@@ -59,44 +59,46 @@ export default function App() {
         <Suspense fallback={<ApplicationSpinner />}>
             <ValideringsContextProvider>
                 <QueryClientProvider client={queryClient}>
-                    <BrowserRouter basename={BASE_PATH}>
-                        <AnalyticsProvider>
-                            <Routes>
-                                <Route errorElement={<SideIkkeFunnet />}>
-                                    <Route index path={`/`} element={<Informasjon />} />
-                                    <Route path={`informasjon`} loader={() => redirect("/", 301)} />
-                                    <Route path={`feil`} element={<ServerFeil />} />
-                                    <Route path={`kastException`} element={<ExceptionThrower />} />
-                                    <Route path={"skjema"}>
-                                        <Route path="kort/:behandlingsId">
-                                            <Route element={<SwitchSoknadType />}>
-                                                <Route path="1" element={<RedirectToStandard />} />
-                                                <Route path="2" element={<Behov />} />
-                                                <Route path="3" element={<ArbeidOgFamilie />} />
-                                                <Route path="4" element={<Inntekt />} />
-                                                <Route path="5" element={<Oppsummering />} />
+                    <main>
+                        <BrowserRouter basename={BASE_PATH}>
+                            <AnalyticsProvider>
+                                <Routes>
+                                    <Route errorElement={<SideIkkeFunnet />}>
+                                        <Route index path={`/`} element={<Informasjon />} />
+                                        <Route path={`informasjon`} loader={() => redirect("/", 301)} />
+                                        <Route path={`feil`} element={<ServerFeil />} />
+                                        <Route path={`kastException`} element={<ExceptionThrower />} />
+                                        <Route path={"skjema"}>
+                                            <Route path="kort/:behandlingsId">
+                                                <Route element={<SwitchSoknadType />}>
+                                                    <Route path="1" element={<RedirectToStandard />} />
+                                                    <Route path="2" element={<Behov />} />
+                                                    <Route path="3" element={<ArbeidOgFamilie />} />
+                                                    <Route path="4" element={<Inntekt />} />
+                                                    <Route path="5" element={<Oppsummering />} />
+                                                </Route>
                                             </Route>
-                                        </Route>
-                                        <Route path=":behandlingsId">
-                                            <Route index path="1" element={<Personopplysninger shortSpacing />} />
-                                            <Route element={<SwitchSoknadType />}>
-                                                <Route path="2" element={<Begrunnelse />} />
-                                                <Route path="3" element={<ArbeidOgUtdanning />} />
-                                                <Route path="4" element={<Familie />} />
-                                                <Route path="5" element={<Bosituasjon />} />
-                                                <Route path="6" element={<InntektFormue />} />
-                                                <Route path="7" element={<UtgifterGjeld />} />
-                                                <Route path="8" element={<OkonomiskeOpplysningerView />} />
-                                                <Route path="9" element={<Oppsummering />} />
-                                                <Route element={<SideIkkeFunnet />} />
+                                            <Route path=":behandlingsId">
+                                                <Route index path="1" element={<Personopplysninger shortSpacing />} />
+                                                <Route element={<SwitchSoknadType />}>
+                                                    <Route path="2" element={<Begrunnelse />} />
+                                                    <Route path="3" element={<ArbeidOgUtdanning />} />
+                                                    <Route path="4" element={<Familie />} />
+                                                    <Route path="5" element={<Bosituasjon />} />
+                                                    <Route path="6" element={<InntektFormue />} />
+                                                    <Route path="7" element={<UtgifterGjeld />} />
+                                                    <Route path="8" element={<OkonomiskeOpplysningerView />} />
+                                                    <Route path="9" element={<Oppsummering />} />
+                                                    <Route element={<SideIkkeFunnet />} />
+                                                </Route>
                                             </Route>
                                         </Route>
                                     </Route>
-                                </Route>
-                            </Routes>
-                        </AnalyticsProvider>
-                    </BrowserRouter>
-                    <ReactQueryDevtools initialIsOpen={false} />
+                                </Routes>
+                            </AnalyticsProvider>
+                        </BrowserRouter>
+                        <ReactQueryDevtools initialIsOpen={false} />
+                    </main>
                 </QueryClientProvider>
             </ValideringsContextProvider>
         </Suspense>
