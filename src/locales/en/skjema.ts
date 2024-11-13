@@ -1046,7 +1046,7 @@ export const skjema = {
                     feilmelding: "You must select your address and NAV office",
                     folkeregistrert: "Registered address",
                     midlertidig: "Temporary address registered in NAV address register",
-                    soknad: "I live on another address",
+                    soknad: "I live at another address",
                     sporsmal: "What is your address?",
                 },
                 velgKontor: "The address generated several NAV offices. Select your local office.",
