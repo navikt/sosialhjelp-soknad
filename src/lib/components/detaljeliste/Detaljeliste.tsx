@@ -15,16 +15,14 @@ export const DetaljelisteElement: React.FunctionComponent<ElementProps> = ({
         return null;
     }
     return (
-        <li className="detaljeliste__element">
-            <div>
-                <strong className="detaljeliste__tittel" key="tittel">
-                    {tittel}:
-                </strong>
-                <span className={"detaljeliste__verdi"} key="verdi">
-                    {verdi}
-                </span>
-            </div>
-        </li>
+        <div>
+            <strong className="detaljeliste__tittel" key="tittel">
+                {tittel}:
+            </strong>
+            <span className={"detaljeliste__verdi"} key="verdi">
+                {verdi}
+            </span>
+        </div>
     );
 };
 
@@ -32,6 +30,9 @@ interface Props {
     children: React.ReactNode;
 }
 
-const Detaljeliste: React.FunctionComponent<Props> = ({children}) => <ul className="detaljeliste">{children}</ul>;
-
+const Detaljeliste: React.FunctionComponent<Props> = ({children}) => (
+    <ul className="detaljeliste">
+        <li className="detaljeliste__element">{children}</li>
+    </ul>
+);
 export default Detaljeliste;

@@ -16,11 +16,13 @@ export const BasisPersonalia = () => {
                 {t("kontakt.system.personalia.sporsmal")}
             </Heading>
             <Systeminfo>
-                <SysteminfoItem label={t("kontakt.system.personalia.navn")}>{navn?.fulltNavn}</SysteminfoItem>
-                <SysteminfoItem label={t("kontakt.system.personalia.fnr")}>
+                <SysteminfoItem as="div" label={t("kontakt.system.personalia.navn")}>
+                    {navn?.fulltNavn}
+                </SysteminfoItem>
+                <SysteminfoItem as="div" label={t("kontakt.system.personalia.fnr")}>
                     {formatFodselsnummer(fodselsnummer ?? "")}
                 </SysteminfoItem>
-                <SysteminfoItem label={t("kontakt.system.personalia.statsborgerskap")}>
+                <SysteminfoItem as="div" label={t("kontakt.system.personalia.statsborgerskap")}>
                     {statsborgerskap}
                 </SysteminfoItem>
                 <BodyShort className={"pt-3"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>

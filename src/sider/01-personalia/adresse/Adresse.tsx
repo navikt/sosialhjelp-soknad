@@ -32,7 +32,13 @@ export const AdresseData = () => {
             </Heading>
             <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.tekst")}</BodyLong>
             <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.ingress")}</BodyLong>
-            <HorizontalRadioGroup legend={""} value={valg} className={"!mb-4"} onChange={setAdresseValg}>
+            <HorizontalRadioGroup
+                legend={"Addressevalg"}
+                hideLegend={true}
+                value={valg}
+                className={"!mb-4"}
+                onChange={setAdresseValg}
+            >
                 <Radio value={"folkeregistrert"} className={cx({hidden: !folkeregistrert})} data-testid="addresse-valg">
                     {t("kontakt.system.oppholdsadresse.folkeregistrertAdresse")}
                     <AdresseVisning adresse={folkeregistrert} />
