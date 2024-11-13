@@ -9,7 +9,7 @@ export const PersonaliaEditKnapp = ({onClick}: {onClick: () => void}) => {
     return (
         <Button variant={"tertiary"} onClick={onClick} data-testid="personalia-rediger-knapp">
             <div className={"flex flex-row gap-1 text-small items-center"}>
-                <PencilIcon className={"h-[24px] w-[24px]"} />
+                <PencilIcon className={"h-[24px] w-[24px]"} aria-hidden={true} />
                 <BodyShort size={"small"}>{t("kontakt.system.telefon.endreknapp.label")}</BodyShort>
             </div>
         </Button>

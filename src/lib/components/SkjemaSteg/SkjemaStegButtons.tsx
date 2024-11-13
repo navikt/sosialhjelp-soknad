@@ -18,7 +18,13 @@ export const SkjemaStegButtons = ({
     const [isPending, setIsPending] = useState<boolean>(false);
 
     const nextButtonText = isFinalStep ? "skjema.knapper.send" : "skjema.knapper.neste";
-    const nextButtonIcon = isPending ? <Loader /> : isFinalStep ? <PaperplaneIcon /> : <ArrowRightIcon />;
+    const nextButtonIcon = isPending ? (
+        <Loader />
+    ) : isFinalStep ? (
+        <PaperplaneIcon aria-hidden={true} />
+    ) : (
+        <ArrowRightIcon aria-hidden={true} />
+    );
 
     const onClickNext = async () => {
         setIsPending(true);
@@ -33,7 +39,7 @@ export const SkjemaStegButtons = ({
                     variant="secondary"
                     onClick={onPrevious}
                     disabled={onPrevious === undefined}
-                    icon={<ArrowLeftIcon />}
+                    icon={<ArrowLeftIcon aria-hidden={true} />}
                     iconPosition={"left"}
                 >
                     {t("skjema.knapper.forrige")}

@@ -22,12 +22,12 @@ export const SysteminfoItem = ({
 );
 
 export const Systeminfo = ({children, className}: {children: React.ReactNode; className?: string}) => (
-    <ul
+    <div
         className={cx(
             "flex flex-col items-between gap-1 p-3 bg-lightblue-50 border-l-surface-info rounded-md",
             className
         )}
     >
         {children}
-    </ul>
+    </div>
 );
