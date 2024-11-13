@@ -1060,7 +1060,7 @@ export const skjema = {
                 fnr: "National identity number",
                 fodselsdato: "Date of birth",
                 infotekst: {
-                    tekst: "(Retrieved from My Page)",
+                    tekst: "(Retrieved from the National Population Register)",
                 },
                 navn: "Name",
                 sporsmal: "Personal details",
