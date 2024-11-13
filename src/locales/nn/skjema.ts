@@ -75,14 +75,14 @@ export const skjema = {
         },
         opprettsoknadfeilet: "Det oppstod ein feil då søknaden skulle opprettast. Prøv igjen seinare.",
         paabegynt: {
+            soknader_one: "{{count}} påbyrja søknad",
+            soknader_other: "{{count}} påbyrja søknader",
             soknad: {
-                flertall: "påbyrja søknader",
                 informasjon: "Ver merksam på at påbyrja søknader blir sletta etter {{DAYS_BEFORE_DELETION}} dagar.",
                 sist: {
                     oppdatert: "Sist oppdatert",
                 },
                 slettes: "Blir sletta",
-                stringValue: "påbyrja søknad",
             },
         },
         sidetittel: {
@@ -1599,8 +1599,7 @@ export const skjema = {
         },
         kort: {
             dokumentasjon: {
-                description:
-                    "Her kan du laste opp annan dokumentasjon du tenkjar er viktig for søknaden.",
+                description: "Her kan du laste opp annan dokumentasjon du tenkjar er viktig for søknaden.",
                 title: "Dokumentasjon av endringa",
             },
             endring: {

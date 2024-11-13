@@ -4,12 +4,9 @@ import {BodyShort, ExpansionCard, Heading, Label, LinkPanel} from "@navikt/ds-re
 import React from "react";
 import {addDays, formatDistance} from "date-fns";
 import {useTranslation} from "react-i18next";
-import cx from "classnames";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate";
 import {getDateFnLocale} from "../../../lib/i18n";
-import {useAlgebraic} from "../../../lib/hooks/common/useAlgebraic";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
-import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlaceholder";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 
 export const DAYS_BEFORE_DELETION = 14;
@@ -24,10 +21,14 @@ interface Props {
 const PabegyntSoknad = ({behandlingsId, sistOppdatert, antallPabegynteSoknader, isKort}: Props) => {
     const {t} = useTranslation("skjema");
     const expiryDate = addDays(new Date(sistOppdatert), DAYS_BEFORE_DELETION);
+    const timeUntilDeletion = formatDistance(expiryDate, new Date(), {locale: getDateFnLocale(), addSuffix: true});
+    const deletionLabel = `${t("applikasjon.paabegynt.soknad.slettes")} ${timeUntilDeletion}`;
+
     return (
         <li>
             <LinkPanel
-                href={`/sosialhjelp/soknad/skjema${isKort ? "/kort" : ""}/${behandlingsId}/1`}
+                href={`
+    }/sosialhjelp/soknad/skjema${isKort ? "/kort" : ""}/${behandlingsId}/1`}
                 onClick={() => logAmplitudeEvent("Klikk på påbegynt søknad", {antallPabegynteSoknader})}
                 border
                 className={"!p-4 group !text-[#222] hover:!text-[#000]"}
@@ -40,31 +41,10 @@ const PabegyntSoknad = ({behandlingsId, sistOppdatert, antallPabegynteSoknader, 
                     <Label style={{marginRight: "1rem"}}>
                         {t("applikasjon.paabegynt.soknad.sist.oppdatert")} <LocalizedDate date={sistOppdatert} />
                     </Label>
-                    <BodyShort className={"!active:no-underline"}>
-                        {t("applikasjon.paabegynt.soknad.slettes")}{" "}
-                        {formatDistance(expiryDate, new Date(), {
-                            locale: getDateFnLocale(),
-                            addSuffix: true,
-                        })}
-                    </BodyShort>
+                    <BodyShort className={"!active:no-underline"}>{deletionLabel}</BodyShort>
                 </LinkPanel.Title>
             </LinkPanel>
         </li>
-    );
-};
-
-const PabegynteSoknaderCount = ({className}: {className?: string}) => {
-    const {expectOK} = useAlgebraic(useGetSessionInfo(), <TextPlaceholder lines={1} />);
-    const {t} = useTranslation("skjema");
-
-    return expectOK(({open}) =>
-        open.length ? (
-            <span className={cx("opacity-70 font-normal", className)}>
-                {open.length === 1
-                    ? `1 ${t("applikasjon.paabegynt.soknad.stringValue")}`
-                    : `${open.length} ${t("applikasjon.paabegynt.soknad.flertall")}`}
-            </span>
-        ) : null
     );
 };
 
@@ -84,14 +64,17 @@ export const PabegynteSoknaderPanel = () => {
                         className={
                             "rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"
                         }
+                        aria-hidden="true"
                     >
-                        <FileContent className={"w-6 h-6"} aria-hidden="true" />
+                        <FileContent className={"w-6 h-6"} />
                     </div>
                     <div className={""}>
                         <Heading level={"2"} size={"small"}>
                             {t("applikasjon.fortsett.soknad")}
                         </Heading>
-                        <PabegynteSoknaderCount />
+                        <span className={"opacity-70"}>
+                            {t("applikasjon.paabegynt.soknader", {count: openSoknader.length})}
+                        </span>
                     </div>
                 </div>
             </ExpansionCard.Header>
@@ -101,7 +84,7 @@ export const PabegynteSoknaderPanel = () => {
                         DAYS_BEFORE_DELETION,
                     })}
                 </BodyShort>
-                <ul className={"space-y-4"}>
+                <ul className={"space-y-4"} aria-label={"Påbegynte søknader"}>
                     {openSoknader?.map(({behandlingsId, sistOppdatert, isKort}) => (
                         <PabegyntSoknad
                             key={behandlingsId}

@@ -57,14 +57,14 @@ export const skjema = {
         },
         opprettsoknadfeilet: "Det oppstod en feil under opprettelsen av søknaden. Vennligst prøv igjen senere",
         paabegynt: {
+            soknader_one: "{{count}} påbegynt søknad",
+            soknader_other: "{{count}} påbegynte søknader",
             soknad: {
-                flertall: "påbegynte søknader",
                 informasjon: "Vær oppmerksom på at påbegynte søknader slettes etter {{DAYS_BEFORE_DELETION}} dager.",
                 sist: {
                     oppdatert: "Sist oppdatert",
                 },
                 slettes: "Slettes",
-                stringValue: "påbegynt søknad",
             },
         },
         sidetittel: {
@@ -1582,8 +1582,7 @@ export const skjema = {
         },
         kort: {
             dokumentasjon: {
-                description:
-                    "Her kan du laste opp annen dokumentasjon du tenker er viktig for søknaden.",
+                description: "Her kan du laste opp annen dokumentasjon du tenker er viktig for søknaden.",
                 title: "Dokumentasjon",
             },
             endring: {

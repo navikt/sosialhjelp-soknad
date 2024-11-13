@@ -76,15 +76,15 @@ export const skjema = {
         },
         opprettsoknadfeilet: "An error occurred when setting up the application. Please try later",
         paabegynt: {
+            soknader_one: "{{count}} started application",
+            soknader_other: "{{count}} started applications",
             soknad: {
-                flertall: "started applications",
                 informasjon:
                     "Please note that the started applications will be deleted after {{DAYS_BEFORE_DELETION}} days.",
                 sist: {
                     oppdatert: "Last updated",
                 },
                 slettes: "Deleted",
-                stringValue: "application started",
             },
         },
         sidetittel: {
@@ -1607,8 +1607,7 @@ export const skjema = {
         },
         kort: {
             dokumentasjon: {
-                description:
-                    "Here you can upload any other documentation you consider important for the application.",
+                description: "Here you can upload any other documentation you consider important for the application.",
                 title: "Documentation of the change",
             },
             endring: {
