@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {BodyShort, Button, Heading, Modal} from "@navikt/ds-react";
+import {BodyShort, Button, Heading, Modal, Select} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 
 import {pdfjs} from "react-pdf";
@@ -75,6 +75,15 @@ export const ForhandsvisningVedleggModal = ({
             </Modal.Body>
             <Modal.Footer className={"!block space-y-4"}>
                 <BodyShort>{t("vedlegg.forhandsvisning.info")}</BodyShort>
+                <div>
+                    <Select label="Hva har du lastet opp?">
+                        <option value="">Velg beskrivelse</option>
+                        <option value="norge">Norge</option>
+                        <option value="sverige">Sverige</option>
+                        <option value="danmark">Danmark</option>
+                    </Select>
+                </div>
+                <div />
                 <div className={"w-fit space-x-4"}>
                     <Button variant="primary" onClick={onAccept}>
                         {t("vedlegg.forhandsvisning.opplast")}
