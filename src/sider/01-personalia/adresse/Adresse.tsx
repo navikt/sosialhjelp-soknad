@@ -26,8 +26,8 @@ export const AdresseData = () => {
     if (isPending) return null;
 
     return (
-        <div className={"space-y-2"} id={"adressefelt"}>
-            <Heading size={"small"} level={"3"}>
+        <section aria-labelledby={"soknadsmottaker-label"} className={"space-y-2"} id={"adressefelt"}>
+            <Heading id={"soknadsmottaker-label"} size={"small"} level={"3"}>
                 {t("soknadsmottaker.sporsmal")}
             </Heading>
             <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.tekst")}</BodyLong>
@@ -58,6 +58,6 @@ export const AdresseData = () => {
                 )}
             </HorizontalRadioGroup>
             <NavEnhet navEnhet={navEnhet} />
-        </div>
+        </section>
     );
 };

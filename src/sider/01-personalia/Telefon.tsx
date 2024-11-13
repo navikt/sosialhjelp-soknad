@@ -10,8 +10,8 @@ export const TelefonData = () => {
     const [editMode, setEditMode] = useState<boolean>(false);
     const {t} = useTranslation("skjema");
     return (
-        <div className={"space-y-2"}>
-            <Heading size={"small"} level={"3"}>
+        <section aria-labelledby={"telefon-heading"} className={"space-y-2"}>
+            <Heading id={"telefon-heading"} size={"small"} level={"3"}>
                 {t("kontakt.telefon.sporsmal")}
             </Heading>
             {editMode ? (
@@ -24,6 +24,6 @@ export const TelefonData = () => {
                     <TelefonShow onEdit={() => setEditMode(true)} />
                 </Systeminfo>
             )}
-        </div>
+        </section>
     );
 };

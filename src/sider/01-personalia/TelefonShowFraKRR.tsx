@@ -7,12 +7,14 @@ import {PersonaliaEditKnapp} from "./PersonaliaEditKnapp.tsx";
 
 export const TelefonShowFraKRR = ({systemverdi, onEdit}: {systemverdi: string; onEdit?: () => void}) => {
     const {t} = useTranslation("skjema", {keyPrefix: "kontakt.system"});
-    const telefonNummer = systemverdi && parsePhoneNumber(systemverdi);
+    const telefonNummer = systemverdi && parsePhoneNumber(systemverdi).formatInternational();
 
     return (
-        <div>
-            <SysteminfoItem as="div">{telefonNummer && telefonNummer.formatInternational()}</SysteminfoItem>
-            <BodyShort className={"pt-2"}>{t("telefoninfo.infotekst.tekst")}</BodyShort>
+        <div role={"none"}>
+            <SysteminfoItem as="div">{telefonNummer}</SysteminfoItem>
+            <BodyShort className={"pt-2"} role={"note"}>
+                {t("telefoninfo.infotekst.tekst")}
+            </BodyShort>
             {onEdit && <PersonaliaEditKnapp onClick={onEdit} />}
         </div>
     );

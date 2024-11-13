@@ -15,7 +15,7 @@ export const SysteminfoItem = ({
     className?: string;
     as?: ElementType;
 }) => (
-    <Cmp className={cx("!leading-5 ", className)}>
+    <Cmp className={cx("!leading-5 ", className)} aria-label={label}>
         {label && <Label className="pr-1.5 after:content-[':']">{label}</Label>}
         <BodyShort className={cx({inline: !multiline, "!font-bold": !label})}>{children}</BodyShort>
     </Cmp>
@@ -27,6 +27,7 @@ export const Systeminfo = ({children, className}: {children: React.ReactNode; cl
             "flex flex-col items-between gap-1 p-3 bg-lightblue-50 border-l-surface-info rounded-md",
             className
         )}
+        role={"none"}
     >
         {children}
     </div>
