@@ -59,13 +59,9 @@ export const skjema = {
         paabegynt: {
             soknader_one: "{{count}} påbegynt søknad",
             soknader_other: "{{count}} påbegynte søknader",
-            soknad: {
-                informasjon: "Vær oppmerksom på at påbegynte søknader slettes etter {{DAYS_BEFORE_DELETION}} dager.",
-                sist: {
-                    oppdatert: "Sist oppdatert",
-                },
-                slettes: "Slettes",
-            },
+            sistOppdatert: "Sist oppdatert",
+            informasjon: "Vær oppmerksom på at påbegynte søknader slettes etter {{DAYS_BEFORE_DELETION}} dager.",
+            slettes: "Slettes",
         },
         sidetittel: {
             kortnavn: "Søknad",

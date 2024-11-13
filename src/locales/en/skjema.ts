@@ -78,14 +78,10 @@ export const skjema = {
         paabegynt: {
             soknader_one: "{{count}} started application",
             soknader_other: "{{count}} started applications",
-            soknad: {
-                informasjon:
-                    "Please note that the started applications will be deleted after {{DAYS_BEFORE_DELETION}} days.",
-                sist: {
-                    oppdatert: "Last updated",
-                },
-                slettes: "Deleted",
-            },
+            sistOppdatert: "Last updated",
+            slettes: "Will be deleted",
+            informasjon:
+                "Please note that the started applications will be deleted after {{DAYS_BEFORE_DELETION}} days.",
         },
         sidetittel: {
             kortnavn: "Application",
