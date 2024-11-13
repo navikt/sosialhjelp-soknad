@@ -1038,7 +1038,7 @@ export const skjema = {
                 fnr: "Fødselsnummer",
                 fodselsdato: "Fødselsdato",
                 infotekst: {
-                    tekst: "(Hentet fra Min Side)",
+                    tekst: "(Hentet fra Folkeregisteret)",
                 },
                 navn: "Navn",
                 sporsmal: "Personalia",
