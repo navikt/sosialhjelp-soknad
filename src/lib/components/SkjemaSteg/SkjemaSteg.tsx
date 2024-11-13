@@ -53,7 +53,12 @@ export const SkjemaSteg = ({children}: {children?: ReactNode | ReactNode[]}) => 
             </Link>
             <div className="pb-4 lg:pb-40 flex gap-10 items-center flex-col">
                 <AppHeader />
-                <Box id={"main-content"} className={"max-w-3xl w-full"}>
+                <Box
+                    as={"main"}
+                    id={"main-content"}
+                    className={"max-w-3xl w-full"}
+                    aria-labelledby={"skjemasteg-title"}
+                >
                     {children}
                 </Box>
             </div>
