@@ -32,12 +32,20 @@ const ArbeidsforholdDetalj = ({arbeidsforhold}: {arbeidsforhold: ArbeidsforholdF
     return (
         <Systeminfo>
             <BodyShort className={"pb-3"}>{t("arbeidsforhold.infotekst_del1")}</BodyShort>
-            <SysteminfoItem label={t("arbeidsforhold.arbeidsgivernavn.label")}>{arbeidsgivernavn}</SysteminfoItem>
-            <SysteminfoItem label={t("arbeidsforhold.fom.label")}>
+            <SysteminfoItem as="div" label={t("arbeidsforhold.arbeidsgivernavn.label")}>
+                {arbeidsgivernavn}
+            </SysteminfoItem>
+            <SysteminfoItem as="div" label={t("arbeidsforhold.fom.label")}>
                 <LocalizedDate date={fom} />
             </SysteminfoItem>
-            {tom?.length && <SysteminfoItem label={t("arbeidsforhold.tom.label")}>{tom}</SysteminfoItem>}
-            <SysteminfoItem label={t("arbeidsforhold.stillingsprosent.label")}>{stillingsprosent} %</SysteminfoItem>
+            {tom?.length && (
+                <SysteminfoItem as="div" label={t("arbeidsforhold.tom.label")}>
+                    {tom}
+                </SysteminfoItem>
+            )}
+            <SysteminfoItem as="div" label={t("arbeidsforhold.stillingsprosent.label")}>
+                {stillingsprosent} %
+            </SysteminfoItem>
             <BodyShort className={"pt-3"}>{t("arbeidsforhold.infotekst_del2")}</BodyShort>
         </Systeminfo>
     );
