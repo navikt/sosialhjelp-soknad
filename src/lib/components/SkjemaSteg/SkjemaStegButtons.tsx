@@ -33,7 +33,7 @@ export const SkjemaStegButtons = ({
     };
 
     return (
-        <div>
+        <nav>
             <div className={"flex !mt-12 md:!mt-16 lg:!mt-24 !mb-8 lg:!mb-16 gap-3"}>
                 <Button
                     variant="secondary"
@@ -55,6 +55,6 @@ export const SkjemaStegButtons = ({
                 </Button>
             </div>
             <SkjemaStegCancelButtons />
-        </div>
+        </nav>
     );
 };

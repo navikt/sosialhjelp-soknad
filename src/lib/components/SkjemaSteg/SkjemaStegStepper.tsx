@@ -13,22 +13,17 @@ export const SkjemaStegStepper = ({
 }) => {
     const {t} = useTranslation("skjema");
     const kort = useCurrentSoknadIsKort();
+    const numSteps = kort ? 4 : 8;
 
     return (
-        <div className={"max-w-md w-full mx-auto pb-10"}>
-            <Stepper
-                className={"top-stepper"}
-                aria-label="Søknadssteg"
-                activeStep={page}
-                orientation={"horizontal"}
-                onStepChange={onStepChange}
-            >
-                {[...Array(kort ? 4 : 8).keys()].map((key) => (
-                    <Stepper.Step aria-label={`steg ${key}`} key={key} as="button">
+        <nav className={"max-w-md w-full mx-auto pb-10"} aria-label={`hopp til søknadssteg (${numSteps} steg)`}>
+            <Stepper className={"top-stepper"} activeStep={page} orientation={"horizontal"} onStepChange={onStepChange}>
+                {[...Array(numSteps).keys()].map((key) => (
+                    <Stepper.Step aria-label={`steg ${key + 1}`} key={key} as="button">
                         {t(SkjemaHeadings[page].tittel)}
                     </Stepper.Step>
                 ))}
             </Stepper>
-        </div>
+        </nav>
     );
 };
