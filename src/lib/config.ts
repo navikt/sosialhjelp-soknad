@@ -15,6 +15,12 @@ type FeatureFlags = {
     soknadstypeValg: boolean;
 };
 
+type SoknadApiProxyOptions = {
+    hostname: string;
+    basePath: string; // no trailing slash
+    https: boolean;
+};
+
 type SoknadConfig = {
     showDevPanel: boolean;
     logLocally: boolean;
@@ -28,6 +34,7 @@ type SoknadConfig = {
     logoutURL: string;
 
     featureFlags: FeatureFlags;
+    proxy?: SoknadApiProxyOptions;
 
     faro: {
         url: string | undefined;
@@ -129,6 +136,12 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
+        },
+
+        proxy: {
+            hostname: "sosialhjelp-soknad-api.teamdigisos",
+            basePath: "/sosialhjelp/soknad-api",
+            https: false,
         },
 
         dekoratorMiljo: "dev",
