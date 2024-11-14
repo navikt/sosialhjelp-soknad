@@ -51,6 +51,11 @@ spec:
       enabled: true
       autoLogin: true
   {{/if}}
+  observability:
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki
   replicas:
     min: 1
     max: 1
