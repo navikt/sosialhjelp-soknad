@@ -140,6 +140,12 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             soknadstypeValg: false,
         },
 
+        proxy: {
+            hostname: "sosialhjelp-soknad-api.prod-fss-pub.nais.io",
+            basePath: "/sosialhjelp/soknad-api",
+            https: false,
+        },
+
         dekoratorMiljo: "prod",
         showDevPanel: false,
         logLocally: false,
