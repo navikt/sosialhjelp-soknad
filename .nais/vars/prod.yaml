@@ -3,4 +3,4 @@ ingresses: null
 externalOutboundAccesses: null
 idportenEnabled: false
 env:
-  DEKORATOREN_MILJO: dev
+  DEKORATOREN_MILJO: prod
