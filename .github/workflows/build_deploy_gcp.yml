@@ -16,8 +16,8 @@ jobs:
             cluster: dev-gcp
           - environment: mock
             cluster: dev-gcp
-          #- environment: prod
-          #  cluster: prod-gcp
+          - environment: prod
+            cluster: prod-gcp
 
     runs-on: ubuntu-latest
     permissions:

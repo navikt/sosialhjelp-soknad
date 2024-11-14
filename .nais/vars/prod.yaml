@@ -1,0 +1,7 @@
+appName: sosialhjelp-soknad
+ingresses: null
+externalOutboundAccesses:
+  - "sosialhjelp-soknad-api.prod-fss-pub.nais.io"
+idportenEnabled: false
+env:
+  DEKORATOREN_MILJO: prod

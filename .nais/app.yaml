@@ -10,10 +10,12 @@ metadata:
 spec:
   image: {{image}}
   port: 8080
+  {{#if ingresses}}
   ingresses:
     {{#each ingresses as |url|}}
     - {{url}}
     {{/each}}
+  {{/if}}
   accessPolicy:
     inbound:
       rules:
@@ -23,10 +25,12 @@ spec:
         - application: sosialhjelp-soknad-api
         - application: nav-dekoratoren
           namespace: personbruker
+      {{#if externalOutboundAccesses.length}}
       external:
         {{#each externalOutboundAccesses as |url|}}
         - host: {{url}}
         {{/each}}
+      {{/if}}
   liveness:
     path: /sosialhjelp/soknad/internal/isAlive
     initialDelay: 5
