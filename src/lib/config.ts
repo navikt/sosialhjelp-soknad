@@ -21,11 +21,15 @@ type SoknadApiProxyOptions = {
     https: boolean;
 };
 
+type DekoratorOptions = {
+    serviceDiscovery: boolean;
+    env: "dev" | "prod";
+};
+
 type SoknadConfig = {
     showDevPanel: boolean;
     logLocally: boolean;
     withCredentials: boolean;
-    dekoratorMiljo: "dev" | "prod";
 
     driftsmeldingUrl?: string;
     baseURL: string;
@@ -35,6 +39,7 @@ type SoknadConfig = {
 
     featureFlags: FeatureFlags;
     proxy?: SoknadApiProxyOptions;
+    dekorator: DekoratorOptions;
 
     faro: {
         url: string | undefined;
@@ -53,7 +58,10 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             soknadstypeValg: true,
         },
 
-        dekoratorMiljo: "dev",
+        dekorator: {
+            env: "dev",
+            serviceDiscovery: false,
+        },
         logLocally: true,
         showDevPanel: true,
         withCredentials: true,
@@ -74,8 +82,10 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
         },
-
-        dekoratorMiljo: "dev",
+        dekorator: {
+            env: "dev",
+            serviceDiscovery: false,
+        },
         showDevPanel: false,
         logLocally: false,
         withCredentials: true,
@@ -95,8 +105,10 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
         },
-
-        dekoratorMiljo: "dev",
+        dekorator: {
+            env: "dev",
+            serviceDiscovery: false,
+        },
         showDevPanel: true,
         logLocally: false,
         withCredentials: false,
@@ -116,8 +128,10 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
         },
-
-        dekoratorMiljo: "prod",
+        dekorator: {
+            env: "prod",
+            serviceDiscovery: false,
+        },
         showDevPanel: false,
         logLocally: false,
         withCredentials: false,
@@ -140,13 +154,17 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             soknadstypeValg: false,
         },
 
+        dekorator: {
+            env: "prod",
+            serviceDiscovery: true,
+        },
+
         proxy: {
             hostname: "sosialhjelp-soknad-api.prod-fss-pub.nais.io",
             basePath: "/sosialhjelp/soknad-api",
             https: true,
         },
 
-        dekoratorMiljo: "prod",
         showDevPanel: false,
         logLocally: false,
         withCredentials: false,
@@ -167,13 +185,17 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             soknadstypeValg: false,
         },
 
+        dekorator: {
+            env: "dev",
+            serviceDiscovery: true,
+        },
+
         proxy: {
             hostname: "sosialhjelp-soknad-api.teamdigisos",
             basePath: "/sosialhjelp/soknad-api",
             https: false,
         },
 
-        dekoratorMiljo: "dev",
         showDevPanel: false,
         logLocally: false,
         withCredentials: false,
