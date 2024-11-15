@@ -76,16 +76,12 @@ export const skjema = {
         },
         opprettsoknadfeilet: "An error occurred when setting up the application. Please try later",
         paabegynt: {
-            soknad: {
-                flertall: "started applications",
-                informasjon:
-                    "Please note that the started applications will be deleted after {{DAYS_BEFORE_DELETION}} days.",
-                sist: {
-                    oppdatert: "Last updated",
-                },
-                slettes: "Deleted",
-                stringValue: "application started",
-            },
+            soknader_one: "{{count}} started application",
+            soknader_other: "{{count}} started applications",
+            sistOppdatert: "Last updated",
+            slettes: "Will be deleted",
+            informasjon:
+                "Please note that the started applications will be deleted after {{DAYS_BEFORE_DELETION}} days.",
         },
         sidetittel: {
             kortnavn: "Application",
@@ -1050,7 +1046,7 @@ export const skjema = {
                     feilmelding: "You must select your address and NAV office",
                     folkeregistrert: "Registered address",
                     midlertidig: "Temporary address registered in NAV address register",
-                    soknad: "I live on another address",
+                    soknad: "I live at another address",
                     sporsmal: "What is your address?",
                 },
                 velgKontor: "The address generated several NAV offices. Select your local office.",
@@ -1060,7 +1056,7 @@ export const skjema = {
                 fnr: "National identity number",
                 fodselsdato: "Date of birth",
                 infotekst: {
-                    tekst: "(Retrieved from My Page)",
+                    tekst: "(Retrieved from the National Population Register)",
                 },
                 navn: "Name",
                 sporsmal: "Personal details",
@@ -1607,8 +1603,7 @@ export const skjema = {
         },
         kort: {
             dokumentasjon: {
-                description:
-                    "Here you can upload any other documentation you consider important for the application.",
+                description: "Here you can upload any other documentation you consider important for the application.",
                 title: "Documentation of the change",
             },
             endring: {
@@ -1698,7 +1693,7 @@ export const skjema = {
         },
         forstesiden: {
             bekreftInfoModal: {
-                body: '<h3>Information</h3><p>When you apply for financial assistance digitally, you must provide your personal information so that the NAV office can process your application. Examples of information are your living situation, assets and expenses.</p></br><p>In addition, NAV will obtain information from public registers on behalf of the municipality that will process your application.</p><p>You can be confident that your personal information will be processed in a secure, correct manner:</p></br><ul><li>We will not obtain any more information than is necessary.</li><li>NAV has a duty of non-disclosure in respect of all information that we process. If public agencies or others wish to obtain your personal information, they must have legal access or you must provide your consent.</li></ul><h4>Obtaining your personal information</h4><p>You enter information about yourself in your application. In addition, we obtain information that NAV holds in registers that we are permitted to use:</p></br><ul><li>Information concerning citizenship, address and family situation from the National Population Register.</li><li>Information concerning account numbers.</li><li>Information concerning telephone numbers from the contact and reservation register.</li></br><li>Information concerning your work situation from the State Register of Employers and Employees.</li><li>Information about state benefits from NAV.</li></ul><p>If you give your consent in the application, we will also obtain information concerning taxable income from the Tax Administration and information concerning housing allowance from Husbanken.</p><h4>Purpose of compiling and using personal information</h4><p>The purpose of the application is to compile sufficient information so that the municipality can process your application for financial assistance. The information you provide in the digital application and information we obtain, will be sent digitally from nav.no to your NAV office. It will be easier for you to apply and your NAV office receives the application fully completed with the necessary attachments.</p></br><p>The information in your application will be used to evaluate whether you comply with requirements regarding financial assistance and will not be stored for any longer than necessary. If the information is not to be stored according to the Archive Act or other legislation, it must be deleted after use.</p><h4>Legal basis</h4><p>The legal basis for collecting information in connection with your application is the Act relating to social services in the Labour and Welfare Administration.</p><h4>Data controller</h4><p>The municipality in which you are resident is responsible for processing the application and for handling your personal information.</p><p>Contact the municipality if you have any questions regarding personal information. The municipality also has a Data Protection Officer you can contact.</p><p>The Labour and Welfare Administration is responsible for nav.no and is the data processor on behalf of the municipality. Here you can read more about <a href="https://www.nav.no/personvern-sikkerhet-navno" class="lenke" target="_blank" rel="noreferrer noopener">personal data protection and security at nav.no</a>.</p><h4>Storing your personal data</h4><h5>Before you submit the application, your information is stored at nav.no.</h5><p>Applications that have been started but not completed are stored by the Labour and Welfare Administration for two weeks. Thereafter, they are deleted.</p><h5>After you have submitted the application, the municipality is responsible for your personal information </h5><p>When you submit your application, we use KS’ (Norwegian Association of Local and Regional Authorities’) cloud service for digital post (Svarut). The municipality obtains your application in Svarut and stores the information in municipal administrative systems. Your municipality is responsible for storage and deletion of your information, both in Svarut and the administrative system. The Archive Act determines how long information can be stored. Contact your municipality if you have any questions regarding storage periods.</p><h4>Rights as a registered person</h4><p>Everyone has the right to information about and access to their own personal information according to the Personal Data Act. </p><p>If information about you is incorrect, incomplete or unnecessary, you can request that the information be corrected or supplemented. In special cases, you can request that the information be deleted. In certain cases, the municipality has a legal obligation to store the information as documentation. Such demands must be responded to at no charge and at the latest within 30 days.</p></br><p>You also have other personal data protection rights, including so-called <strong>the right to limitation.</strong>: In certain cases, you also have the right to have a limited processing of your personal information. If you have this right, the information will be stored, but not used.</p></br><p>You also have <strong>the right to object</strong> against processing of personal information: This means that in certain cases you can have the right to object against the municipality’s otherwise lawful processing of personal information. In such case, processing must cease and if your case is upheld the personal information will be deleted.</p></br><p>The Data Protection Authority\'s website has an overview of <a href="https://www.datatilsynet.no/rettigheter-og-plikter/den-registrertes-rettigheter/" class="lenke" target="_blank" rel="noreferrer noopener">your rights</a>. Your municipality also has information concerning processing of personal information on its website.</p><p>Any enquiries you have regarding processing of your personal information must be made to your NAV office.</p><h4>Right of appeal to the Data Protection Authority</h4><p>You have the right to complain to the Data Protection Authority if you are not satisfied with how we process your personal information, or if you believe the processing violates the personal data protection rules, Information about <a href="https://www.datatilsynet.no/om-datatilsynet/kontakt-oss/klage-til-datatilsynet/" class="lenke" target="_blank" rel="noreferrer noopener">how to submit a complaint</a> is available on the Data Protection Authority\'s website.</p>',
+                body: '<h3>Information</h3><p>When you apply for financial assistance digitally, you must provide your personal information so that the NAV office can process your application. Examples of information are your living situation, assets and expenses.</p></br><p>In addition, NAV will obtain information from public registers on behalf of the municipality that will process your application.</p><p>You can be confident that your personal information will be processed in a secure, correct manner:</p></br><ul><li>We will not obtain any more information than is necessary.</li><li>NAV has a duty of non-disclosure in respect of all information that we process. If public agencies or others wish to obtain your personal information, they must have legal access or you must provide your consent.</li></ul><h4>Obtaining your personal information</h4><p>You enter information about yourself in your application. In addition, we obtain information that NAV holds in registers that we are permitted to use:</p></br><ul><li>Information concerning citizenship, address and family situation from the National Population Register.</li><li>Information concerning account numbers.</li><li>Information concerning telephone numbers from the contact and reservation register.</li></br><li>Information concerning your work situation from the State Register of Employers and Employees.</li><li>Information about state benefits from NAV.</li></ul><p>If you give your consent in the application, we will also obtain information concerning income from the Tax Administration and information concerning housing allowance from Husbanken.</p><h4>Purpose of compiling and using personal information</h4><p>The purpose of the application is to compile sufficient information so that the municipality can process your application for financial assistance. The information you provide in the digital application and information we obtain, will be sent digitally from nav.no to your NAV office. It will be easier for you to apply and your NAV office receives the application fully completed with the necessary attachments.</p></br><p>The information in your application will be used to evaluate whether you comply with requirements regarding financial assistance and will not be stored for any longer than necessary. If the information is not to be stored according to the Archive Act or other legislation, it must be deleted after use.</p><h4>Legal basis</h4><p>The legal basis for collecting information in connection with your application is the Act relating to social services in the Labour and Welfare Administration.</p><h4>Data controller</h4><p>The municipality in which you are resident is responsible for processing the application and for handling your personal information.</p><p>Contact the municipality if you have any questions regarding personal information. The municipality also has a Data Protection Officer you can contact.</p><p>The Labour and Welfare Administration is responsible for nav.no and is the data processor on behalf of the municipality. Here you can read more about <a href="https://www.nav.no/personvern-sikkerhet-navno" class="lenke" target="_blank" rel="noreferrer noopener">personal data protection and security at nav.no</a>.</p><h4>Storing your personal data</h4><h5>Before you submit the application, your information is stored at nav.no.</h5><p>Applications that have been started but not completed are stored by the Labour and Welfare Administration for two weeks. Thereafter, they are deleted.</p><h5>After you have submitted the application, the municipality is responsible for your personal information </h5><p>When you submit your application, we use KS’ (Norwegian Association of Local and Regional Authorities’) cloud service for digital post (Svarut). The municipality obtains your application in Svarut and stores the information in municipal administrative systems. Your municipality is responsible for storage and deletion of your information, both in Svarut and the administrative system. The Archive Act determines how long information can be stored. Contact your municipality if you have any questions regarding storage periods.</p><h4>Rights as a registered person</h4><p>Everyone has the right to information about and access to their own personal information according to the Personal Data Act. </p><p>If information about you is incorrect, incomplete or unnecessary, you can request that the information be corrected or supplemented. In special cases, you can request that the information be deleted. In certain cases, the municipality has a legal obligation to store the information as documentation. Such demands must be responded to at no charge and at the latest within 30 days.</p></br><p>You also have other personal data protection rights, including so-called <strong>the right to limitation.</strong>: In certain cases, you also have the right to have a limited processing of your personal information. If you have this right, the information will be stored, but not used.</p></br><p>You also have <strong>the right to object</strong> against processing of personal information: This means that in certain cases you can have the right to object against the municipality’s otherwise lawful processing of personal information. In such case, processing must cease and if your case is upheld the personal information will be deleted.</p></br><p>The Data Protection Authority\'s website has an overview of <a href="https://www.datatilsynet.no/rettigheter-og-plikter/den-registrertes-rettigheter/" class="lenke" target="_blank" rel="noreferrer noopener">your rights</a>. Your municipality also has information concerning processing of personal information on its website.</p><p>Any enquiries you have regarding processing of your personal information must be made to your NAV office.</p><h4>Right of appeal to the Data Protection Authority</h4><p>You have the right to complain to the Data Protection Authority if you are not satisfied with how we process your personal information, or if you believe the processing violates the personal data protection rules, Information about <a href="https://www.datatilsynet.no/om-datatilsynet/kontakt-oss/klage-til-datatilsynet/" class="lenke" target="_blank" rel="noreferrer noopener">how to submit a complaint</a> is available on the Data Protection Authority\'s website.</p>',
             },
             bekreftOpplysninger: "I confirm that I have read and understood the information regarding consent",
             rettigheterPlikter:
@@ -1882,14 +1877,14 @@ export const skjema = {
                         skatteetaten: "Retrieve the information from the Tax Administration",
                     },
                 },
-                ingen: "You have no taxable income registered with the Tax Administration for the last month.",
+                ingen: "You have no income registered with the Tax Administration for the last month.",
                 inntekt: {
                     tittel: "Income retrieved from the Tax Administration",
                 },
                 mangler_samtykke: "You have not obtained information from the Tax Administration",
                 nettoinntekt: "Income after tax",
                 oppsummering:
-                    "We have registered that you{ antall, plural,=0 { have not had }other {have had{ antall, plural,=1 {{en}}=2 {{to}}=3 {{tre}}=4 {{fire}}=5 {{fem}}=6 {{seks}}=7 {{sju}}=8 {{åtte}}=9 {{ni}}=10 {{ti}}=11 {{elleve}}=12 {{tolv}}other {{#}}}}}taxable incomes.",
+                    "We have registered that you{ antall, plural,=0 { have not had }other {have had{ antall, plural,=1 {{en}}=2 {{to}}=3 {{tre}}=4 {{fire}}=5 {{fem}}=6 {{seks}}=7 {{sju}}=8 {{åtte}}=9 {{ni}}=10 {{ti}}=11 {{elleve}}=12 {{tolv}}other {{#}}}}} incomes.",
                 samtykke_info:
                     "This information can be necessary to process the application. If you do not wish us to obtain this personal information, you can upload documentation in the last stage of the application.",
                 samtykke_sporsmal_v1:
@@ -1899,8 +1894,8 @@ export const skjema = {
                 skatteetaten: "See details from the Tax Administration",
                 ta_bort_samtykke: "Remove information from the Tax Administration",
                 tidspunkt: "Information was obtained",
-                tittel: "Taxable income",
-                undertittel: "Reported taxable income to the Tax Administration",
+                tittel: "Income",
+                undertittel: "Reported income to the Tax Administration",
             },
             til: "to",
         },

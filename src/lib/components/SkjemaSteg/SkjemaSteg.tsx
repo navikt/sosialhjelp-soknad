@@ -48,12 +48,17 @@ export const SkjemaSteg = ({children}: {children?: ReactNode | ReactNode[]}) => 
 
     return (
         <RequireXsrfCookie>
+            <Link href="#main-content" className="sr-only sr-only-focusable">
+                {t("hoppTilHovedinnhold")}
+            </Link>
             <div className="pb-4 lg:pb-40 flex gap-10 items-center flex-col">
-                <Link href="#main-content" className="sr-only sr-only-focusable">
-                    {t("hoppTilHovedinnhold")}
-                </Link>
                 <AppHeader />
-                <Box as={"main"} id={"main-content"} className={"max-w-3xl w-full"}>
+                <Box
+                    as={"main"}
+                    id={"main-content"}
+                    className={"max-w-3xl w-full"}
+                    aria-labelledby={"skjemasteg-title"}
+                >
                     {children}
                 </Box>
             </div>

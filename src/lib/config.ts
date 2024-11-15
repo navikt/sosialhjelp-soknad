@@ -1,4 +1,4 @@
-export const DigisosEnvironments = ["localhost", "dev-sbs", "mock", "prod-sbs", "preprod"] as const;
+export const DigisosEnvironments = ["localhost", "dev-sbs", "mock", "prod-sbs", "prod", "preprod"] as const;
 export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 
 type FeatureFlags = {
@@ -15,11 +15,21 @@ type FeatureFlags = {
     soknadstypeValg: boolean;
 };
 
+type SoknadApiProxyOptions = {
+    hostname: string;
+    basePath: string; // no trailing slash
+    https: boolean;
+};
+
+type DekoratorOptions = {
+    serviceDiscovery: boolean;
+    env: "dev" | "prod";
+};
+
 type SoknadConfig = {
     showDevPanel: boolean;
     logLocally: boolean;
     withCredentials: boolean;
-    dekoratorMiljo: "dev" | "prod";
 
     driftsmeldingUrl?: string;
     baseURL: string;
@@ -28,6 +38,8 @@ type SoknadConfig = {
     logoutURL: string;
 
     featureFlags: FeatureFlags;
+    proxy?: SoknadApiProxyOptions;
+    dekorator: DekoratorOptions;
 
     faro: {
         url: string | undefined;
@@ -46,7 +58,10 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             soknadstypeValg: true,
         },
 
-        dekoratorMiljo: "dev",
+        dekorator: {
+            env: "dev",
+            serviceDiscovery: false,
+        },
         logLocally: true,
         showDevPanel: true,
         withCredentials: true,
@@ -67,8 +82,10 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
         },
-
-        dekoratorMiljo: "dev",
+        dekorator: {
+            env: "dev",
+            serviceDiscovery: false,
+        },
         showDevPanel: false,
         logLocally: false,
         withCredentials: true,
@@ -88,8 +105,10 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
         },
-
-        dekoratorMiljo: "dev",
+        dekorator: {
+            env: "dev",
+            serviceDiscovery: false,
+        },
         showDevPanel: true,
         logLocally: false,
         withCredentials: false,
@@ -109,13 +128,48 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
         },
-
-        dekoratorMiljo: "prod",
+        dekorator: {
+            env: "prod",
+            serviceDiscovery: false,
+        },
         showDevPanel: false,
         logLocally: false,
         withCredentials: false,
         driftsmeldingUrl: "https://www.nav.no/sosialhjelp/driftsmeldinger",
         baseURL: "https://www.nav.no/sosialhjelp/login-api/soknad-api/",
+        innsynURL: "https://www.nav.no/sosialhjelp/innsyn/",
+        minSideURL: "https://www.nav.no/minside/",
+        logoutURL: "https://loginservice.nav.no/slo",
+        faro: {
+            url: "https://telemetry.nav.no/collect",
+        },
+    },
+    // Når prod-fss faller bort, blir -gcp som postfix meningsløst, så
+    // dette blir prod i GCP når det er kjørt inn.
+    prod: {
+        featureFlags: {
+            begrunnelseNyTekst: false,
+            nyOppsummering: false,
+            oppsummeringNavEnhet: false,
+            soknadstypeValg: false,
+        },
+
+        dekorator: {
+            env: "prod",
+            serviceDiscovery: true,
+        },
+
+        proxy: {
+            hostname: "sosialhjelp-soknad-api.prod-fss-pub.nais.io",
+            basePath: "/sosialhjelp/soknad-api",
+            https: true,
+        },
+
+        showDevPanel: false,
+        logLocally: false,
+        withCredentials: false,
+        driftsmeldingUrl: "https://www.nav.no/sosialhjelp/driftsmeldinger",
+        baseURL: "https://www.ansatt.nav.no/sosialhjelp/soknad/soknad-api/",
         innsynURL: "https://www.nav.no/sosialhjelp/innsyn/",
         minSideURL: "https://www.nav.no/minside/",
         logoutURL: "https://loginservice.nav.no/slo",
@@ -131,7 +185,17 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             soknadstypeValg: false,
         },
 
-        dekoratorMiljo: "dev",
+        dekorator: {
+            env: "dev",
+            serviceDiscovery: true,
+        },
+
+        proxy: {
+            hostname: "sosialhjelp-soknad-api.teamdigisos",
+            basePath: "/sosialhjelp/soknad-api",
+            https: false,
+        },
+
         showDevPanel: false,
         logLocally: false,
         withCredentials: false,

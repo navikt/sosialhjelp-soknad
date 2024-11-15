@@ -17,7 +17,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             <body>
                 <Decorator.Header />
                 <Driftsmeldinger />
-                <div id="root" className={"bg-digisosGronnBakgrunn"}>
+                <div id="root" className={"bg-digisosGronnBakgrunn"} role={"none"}>
                     {children}
                 </div>
                 <Decorator.Footer />

@@ -1,25 +1,23 @@
 import {proxyRouteHandler} from "@navikt/next-api-proxy";
-import {logger} from "@navikt/next-logger";
+import digisosConfig from "../../../lib/config.ts";
 
-export const GET = proxyMyBackend;
-export const POST = proxyMyBackend;
-export const PUT = proxyMyBackend;
-export const DELETE = proxyMyBackend;
-export const OPTIONS = proxyMyBackend;
+type RouteHandlerProxyTarget = {hostname: string; path: string; https: boolean; bearerToken?: string};
+type ProxyRequestContext = {params: Promise<{path: string[]}>};
+type ProxyRequestHandler = (request: Request, context: ProxyRequestContext) => Promise<Response>;
 
-// Remember to export the HTTP verb you want Next to expose
-async function proxyMyBackend(request: Request, {params}: {params: Promise<{path: string[]}>}): Promise<Response> {
-    const path = `/sosialhjelp/soknad-api/${(await params).path.join("/")}`;
-    const hostname = "sosialhjelp-soknad-api.teamdigisos";
-    logger.info(`Proxying request to ${hostname}`);
-    logger.info("Authorization: " + request.headers.get("Authorization"));
-    logger.info("Path: " + path);
+const getRouteHandlerProxyTarget = (headers: Headers, requestPath: string[]): RouteHandlerProxyTarget => {
+    if (!digisosConfig.proxy) throw new Error("Proxy not configured");
+    const {hostname, basePath, https} = digisosConfig.proxy;
+    const path = `${basePath}/${requestPath.join("/")}`;
+    const bearerToken = `${headers.get("Authorization")?.split(" ")[1]}`;
+    return {hostname, path, bearerToken, https};
+};
 
-    return proxyRouteHandler(request, {
-        hostname,
-        path,
-        bearerToken: `${request.headers.get("Authorization")?.split(" ")[1]}`,
-        // use https: false if you are going through service discovery
-        https: false,
-    });
-}
+const soknadApiProxy: ProxyRequestHandler = async (request, {params}): Promise<Response> =>
+    proxyRouteHandler(request, getRouteHandlerProxyTarget(request.headers, (await params).path));
+
+export const DELETE = soknadApiProxy;
+export const GET = soknadApiProxy;
+export const OPTIONS = soknadApiProxy;
+export const POST = soknadApiProxy;
+export const PUT = soknadApiProxy;

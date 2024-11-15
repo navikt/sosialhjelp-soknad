@@ -26,13 +26,19 @@ export const AdresseData = () => {
     if (isPending) return null;
 
     return (
-        <div className={"space-y-2"} id={"adressefelt"}>
-            <Heading size={"small"} level={"3"}>
+        <section aria-labelledby={"soknadsmottaker-label"} className={"space-y-2"} id={"adressefelt"}>
+            <Heading id={"soknadsmottaker-label"} size={"small"} level={"3"}>
                 {t("soknadsmottaker.sporsmal")}
             </Heading>
             <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.tekst")}</BodyLong>
             <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.ingress")}</BodyLong>
-            <HorizontalRadioGroup legend={""} value={valg} className={"!mb-4"} onChange={setAdresseValg}>
+            <HorizontalRadioGroup
+                legend={"Addressevalg"}
+                hideLegend={true}
+                value={valg}
+                className={"!mb-4"}
+                onChange={setAdresseValg}
+            >
                 <Radio value={"folkeregistrert"} className={cx({hidden: !folkeregistrert})} data-testid="addresse-valg">
                     {t("kontakt.system.oppholdsadresse.folkeregistrertAdresse")}
                     <AdresseVisning adresse={folkeregistrert} />
@@ -52,6 +58,6 @@ export const AdresseData = () => {
                 )}
             </HorizontalRadioGroup>
             <NavEnhet navEnhet={navEnhet} />
-        </div>
+        </section>
     );
 };

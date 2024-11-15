@@ -96,7 +96,9 @@ export default function App() {
                             </Routes>
                         </AnalyticsProvider>
                     </BrowserRouter>
-                    <ReactQueryDevtools initialIsOpen={false} />
+                    <div aria-hidden={"true"}>
+                        <ReactQueryDevtools initialIsOpen={false} />
+                    </div>
                 </QueryClientProvider>
             </ValideringsContextProvider>
         </Suspense>

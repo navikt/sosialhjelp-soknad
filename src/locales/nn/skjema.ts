@@ -75,15 +75,11 @@ export const skjema = {
         },
         opprettsoknadfeilet: "Det oppstod ein feil då søknaden skulle opprettast. Prøv igjen seinare.",
         paabegynt: {
-            soknad: {
-                flertall: "påbyrja søknader",
-                informasjon: "Ver merksam på at påbyrja søknader blir sletta etter {{DAYS_BEFORE_DELETION}} dagar.",
-                sist: {
-                    oppdatert: "Sist oppdatert",
-                },
-                slettes: "Blir sletta",
-                stringValue: "påbyrja søknad",
-            },
+            soknader_one: "{{count}} påbyrja søknad",
+            soknader_other: "{{count}} påbyrja søknader",
+            sistOppdatert: "Sist oppdatert",
+            slettes: "Blir sletta",
+            informasjon: "Ver merksam på at påbyrja søknader blir sletta etter {{DAYS_BEFORE_DELETION}} dagar.",
         },
         sidetittel: {
             kortnavn: "Søknad",
@@ -1051,7 +1047,7 @@ export const skjema = {
                 fnr: "Fødselsnummer",
                 fodselsdato: "Fødselsdato",
                 infotekst: {
-                    tekst: "(Henta frå Mi Side)",
+                    tekst: "(Henta frå Folkeregisteret)",
                 },
                 navn: "Namn",
                 sporsmal: "Personalia",
@@ -1599,8 +1595,7 @@ export const skjema = {
         },
         kort: {
             dokumentasjon: {
-                description:
-                    "Her kan du laste opp annan dokumentasjon du tenkjar er viktig for søknaden.",
+                description: "Her kan du laste opp annan dokumentasjon du tenkjar er viktig for søknaden.",
                 title: "Dokumentasjon av endringa",
             },
             endring: {

@@ -17,12 +17,17 @@ export const TelefonShow = ({onEdit}: {onEdit?: () => void}) => {
             return <TelefonShowBrukerdefinert brukerutfyltVerdi={brukerutfyltVerdi} onEdit={onEdit} />;
         if (systemverdi?.length) return <TelefonShowFraKRR systemverdi={systemverdi} onEdit={onEdit} />;
 
-        if (!onEdit) return <SysteminfoItem label={"Telefonnummer"}>{t("kontakt.telefon.feilmelding")}</SysteminfoItem>;
+        if (!onEdit)
+            return (
+                <SysteminfoItem as="div" label={"Telefonnummer"}>
+                    {t("kontakt.telefon.feilmelding")}
+                </SysteminfoItem>
+            );
         return (
-            <li>
+            <>
                 {t("kontakt.system.telefoninfo.ingeninfo")} <br />
                 {onEdit && <PersonaliaEditKnapp onClick={onEdit} />}
-            </li>
+            </>
         );
     });
 };

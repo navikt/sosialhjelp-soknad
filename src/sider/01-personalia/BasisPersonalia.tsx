@@ -11,20 +11,22 @@ export const BasisPersonalia = () => {
     const {expectOK} = useAlgebraic(useHentBasisPersonalia(useBehandlingsId()));
     const {t} = useTranslation("skjema");
     return expectOK(({navn, fodselsnummer, statsborgerskap = "Ukjent/statsløs"}) => (
-        <div>
-            <Heading level={"3"} size={"small"} spacing>
+        <section aria-labelledby={"basispersonalia-heading"}>
+            <Heading id="basispersonalia-heading" level={"3"} size={"small"} spacing>
                 {t("kontakt.system.personalia.sporsmal")}
             </Heading>
             <Systeminfo>
-                <SysteminfoItem label={t("kontakt.system.personalia.navn")}>{navn?.fulltNavn}</SysteminfoItem>
-                <SysteminfoItem label={t("kontakt.system.personalia.fnr")}>
+                <SysteminfoItem as="div" label={t("kontakt.system.personalia.navn")}>
+                    {navn?.fulltNavn}
+                </SysteminfoItem>
+                <SysteminfoItem as="div" label={t("kontakt.system.personalia.fnr")}>
                     {formatFodselsnummer(fodselsnummer ?? "")}
                 </SysteminfoItem>
-                <SysteminfoItem label={t("kontakt.system.personalia.statsborgerskap")}>
+                <SysteminfoItem as="div" label={t("kontakt.system.personalia.statsborgerskap")}>
                     {statsborgerskap}
                 </SysteminfoItem>
                 <BodyShort className={"pt-3"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
             </Systeminfo>
-        </div>
+        </section>
     ));
 };

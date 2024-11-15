@@ -14,7 +14,7 @@ export const TelefonShowBrukerdefinert = ({
 
     return (
         <div>
-            <SysteminfoItem>{telefonNummer && telefonNummer.formatInternational()}</SysteminfoItem>
+            <SysteminfoItem as="div">{telefonNummer && telefonNummer.formatInternational()}</SysteminfoItem>
             {onEdit && <PersonaliaEditKnapp onClick={onEdit} />}
         </div>
     );

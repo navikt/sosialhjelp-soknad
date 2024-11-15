@@ -23,12 +23,11 @@ import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaSte
 import {useAnalyticsContext} from "../../../lib/AnalyticsContextProvider.tsx";
 import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
 
-const MAX_LEN_HVA = 150;
 const MAX_LEN_HVA_ER_ENDRET = 500;
 const MAX_LEN_HVA_SOKES_OM = 500;
 
 const behovSchema = z.object({
-    hvaSokesOm: z.string().max(MAX_LEN_HVA, "validering.maksLengde").nullable().optional(),
+    hvaSokesOm: z.string().max(MAX_LEN_HVA_SOKES_OM, "validering.maksLengde").nullable().optional(),
     hvaErEndret: z.string().max(MAX_LEN_HVA_ER_ENDRET, "validering.maksLengde").nullable(),
 });
 

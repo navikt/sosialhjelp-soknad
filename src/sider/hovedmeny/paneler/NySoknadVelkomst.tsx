@@ -28,7 +28,7 @@ export const NySoknadVelkomst = () => {
             <div className={"flex flex-col items-center mb-12"}>
                 <StartNySoknadIllustrasjon />
             </div>
-            <Heading level="2" size="small">
+            <Heading level="3" size="small">
                 {t("informasjon.start.undertittel")}
             </Heading>
             <BodyLong className={"pb-4"}>{t("informasjon.start.tekst_del1")}</BodyLong>
@@ -57,11 +57,11 @@ export const NySoknadVelkomst = () => {
                 />
             </BodyLong>
             <BodyLong>{t("informasjon.start.tekst_del3")}</BodyLong>
-            <Heading level="2" size="small" className={"pt-10"}>
+            <Heading level="3" size="small" className={"pt-10"}>
                 {t("informasjon.nodsituasjon.undertittel")}
             </Heading>
             <BodyLong>{t("informasjon.nodsituasjon.tekst")}</BodyLong>
-            <Heading level="2" size="small" className={"pt-10"}>
+            <Heading level="3" size="small" className={"pt-10"}>
                 {t("informasjon.innhenting.undertittel")}
             </Heading>
             <BodyLong className={"pb-4"}>{t("informasjon.innhenting.tekst_del1")}</BodyLong>

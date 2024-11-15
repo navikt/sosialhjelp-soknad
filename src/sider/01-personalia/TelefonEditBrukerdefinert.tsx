@@ -91,7 +91,7 @@ export const TelefonEditBrukerdefinert = ({onClose}: {onClose: () => void}) => {
                     htmlSize={12}
                     type={"tel"}
                     className={"inline"}
-                    autoComplete={"tel-national"}
+                    autoComplete={"tel"}
                     label={t("kontakt.telefon.telefonnummerFelt")}
                     hideLabel={true}
                     error={

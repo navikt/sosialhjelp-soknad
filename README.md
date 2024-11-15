@@ -92,10 +92,10 @@ Først, bekreft at en nøkkel eksisterer for kryptering av Wonderwall-sessions i
 kubectl create secret generic wonderwall-redis --from-literal=WONDERWALL_ENCRYPTION_KEY=$(openssl rand -base64 32)
 ```
 
-Deretter, sørg for at en passende IDPorten-klient er provisjonert via NAIS:
+Deretter, sørg for at en passende IDPorten-klient er provisjonert via NAIS (DIGISOS_ENV er pt. enten prod eller preprod)
 
 ```shell
-kubectl apply -f wonderwall/idportenclient.yml
+kubectl apply -f wonderwall/${DIGISOS_ENV}/idportenclient.yml
 ```
 
 Dette vil føre til opprettelsen av en secret med miljøvariabler for IDporten:
@@ -104,7 +104,7 @@ Dette vil føre til opprettelsen av en secret med miljøvariabler for IDporten:
 Nå kan Wonderwall provisjoneres:
 
 ```shell
-kubectl apply -f wonderwall/wonderwall.yml
+kubectl apply -f wonderwall/${DIGISOS_ENV}/wonderwall.yml
 ```
 
 Notér at i påvente av mer offisiell støtte for ekstra scopes i Wonderwall, er det mulig at `wonderwall.yml` kan måtte tilpasses for det aktuelle miljøet (ingress, env/WONDERWALL_INGRESS og accesspolicy/outbound).

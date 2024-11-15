@@ -13,7 +13,7 @@ export const KontonrShowBrukerdefinert = ({onEdit}: {onEdit?: () => void}) => {
     const {t} = useTranslation("skjema");
 
     return expectOK(({brukerutfyltVerdi}) => (
-        <li className={"flex flex-row place-content-between"}>
+        <div className={"flex flex-row place-content-between"}>
             <div>
                 <BodyShort className={"pb-3"}>{t("kontakt.kontonummer.bruker.stringValue")}</BodyShort>
                 <SysteminfoItem as="div" label={t(`kontakt.kontonummer.sporsmal`)}>
@@ -21,7 +21,7 @@ export const KontonrShowBrukerdefinert = ({onEdit}: {onEdit?: () => void}) => {
                 </SysteminfoItem>
             </div>
             {onEdit && <PersonaliaEditKnapp onClick={onEdit} />}
-        </li>
+        </div>
     ));
 };
 export const KontonrShowSysteminfo = ({onEdit}: {onEdit?: () => void}) => {
@@ -29,11 +29,11 @@ export const KontonrShowSysteminfo = ({onEdit}: {onEdit?: () => void}) => {
     const {expectOK} = useAlgebraic(useHentKontonummer(useBehandlingsId()));
 
     return expectOK(({systemverdi}) => (
-        <li>
+        <div>
             <SysteminfoItem as="div">{formatKontonummer(systemverdi ?? "")}</SysteminfoItem>
             <BodyShort className={"pt-2"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
             {onEdit && <PersonaliaEditKnapp onClick={onEdit} />}
-        </li>
+        </div>
     ));
 };
 
@@ -59,10 +59,10 @@ export const KontonrShow = ({onEdit}: {onEdit?: () => void}) => {
         if (systemverdi) return <KontonrShowSysteminfo onEdit={onEdit} />;
 
         return (
-            <li>
+            <div>
                 {t("kontakt.kontonummer.ingeninfo")} <br />
                 {onEdit && <PersonaliaEditKnapp onClick={onEdit} />}
-            </li>
+            </div>
         );
     });
 };

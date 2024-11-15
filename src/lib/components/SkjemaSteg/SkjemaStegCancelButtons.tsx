@@ -16,7 +16,7 @@ export const SkjemaStegCancelButtons = () => {
             <AvbrytSoknadModal open={avbrytModalOpen} onClose={() => setAvbrytModalOpen(false)} />
             <Button
                 variant="tertiary"
-                icon={<FloppydiskIcon />}
+                icon={<FloppydiskIcon aria-hidden={true} />}
                 onClick={async () => {
                     await logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"});
                     window.location.assign(digisosConfig.minSideURL);
@@ -24,7 +24,7 @@ export const SkjemaStegCancelButtons = () => {
             >
                 {t("avbryt.fortsettsenere")}
             </Button>
-            <Button variant="tertiary" icon={<TrashIcon />} onClick={() => setAvbrytModalOpen(true)}>
+            <Button variant="tertiary" icon={<TrashIcon aria-hidden={true} />} onClick={() => setAvbrytModalOpen(true)}>
                 {t("avbryt.slett")}
             </Button>
         </div>

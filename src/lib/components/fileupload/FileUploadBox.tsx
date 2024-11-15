@@ -118,7 +118,7 @@ const DokumentUploader = ({
                 className="last-opp-vedlegg-knapp !bg-[var(--a-surface-default)]"
             >
                 <div className={"flex gap-1 items-center"}>
-                    <PlusIcon aria-label={""} /> {t("opplysninger.vedlegg.knapp.tekst")}
+                    <PlusIcon aria-hidden={true} /> {t("opplysninger.vedlegg.knapp.tekst")}
                     {isPending && <Loader className={"ml-1"} />}
                 </div>
             </Button>

@@ -38,7 +38,7 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 COPY --from=builder --chown=1069:1069 /app/build build
-COPY --from=dependencies /app/node_modules/ node_modules/
+COPY --from=builder /app/node_modules/ node_modules/
 COPY package.json .
 COPY . .
 

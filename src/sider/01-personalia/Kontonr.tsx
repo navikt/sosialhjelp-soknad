@@ -18,8 +18,8 @@ export const Kontonr = () => {
     const {mutate} = useDigisosMutation(useHentKontonummer, updateKontonummer);
 
     return expectOK((data) => (
-        <div className={"space-y-2"}>
-            <Heading size={"small"} level={"3"}>
+        <section aria-labelledby={"kontonummer-heading"} className={"space-y-2"}>
+            <Heading id={"kontonummer-heading"} size={"small"} level={"3"}>
                 {t("kontakt.kontonummer.sporsmal")}
             </Heading>
             {editMode ? (
@@ -39,6 +39,6 @@ export const Kontonr = () => {
                     <KontonrShow onEdit={() => setEditMode(true)} />
                 </Systeminfo>
             )}
-        </div>
+        </section>
     ));
 };
