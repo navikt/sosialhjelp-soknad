@@ -84,7 +84,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         },
         dekorator: {
             env: "dev",
-            serviceDiscovery: false,
+            serviceDiscovery: true,
         },
         showDevPanel: false,
         logLocally: false,
