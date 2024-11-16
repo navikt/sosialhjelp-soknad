@@ -1,4 +1,4 @@
 appName: sosialhjelp-soknad
-ingresses: null
-externalOutboundAccesses: null
 idportenEnabled: false
+ingresses: []
+outboundExternalHosts: []

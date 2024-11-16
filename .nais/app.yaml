@@ -13,8 +13,7 @@ spec:
   {{#if ingresses}}
   ingresses:
     {{#each ingresses as |url|}}
-    - {{url}}
-    {{/each}}
+    - {{url}}{{/each}}
   {{/if}}
   accessPolicy:
     inbound:
@@ -25,12 +24,11 @@ spec:
         - application: sosialhjelp-soknad-api
         - application: nav-dekoratoren
           namespace: personbruker
-      {{#if externalOutboundAccesses.length}}
+{{#if outboundExternalHosts}}
       external:
-        {{#each externalOutboundAccesses as |url|}}
-        - host: {{url}}
-        {{/each}}
-      {{/if}}
+        {{#each outboundExternalHosts as |url|}}
+        - host: {{url}}{{/each}}
+{{/if}}
   liveness:
     path: /sosialhjelp/soknad/internal/isAlive
     initialDelay: 5
@@ -48,13 +46,13 @@ spec:
     requests:
       cpu: 1m
       memory: 50Mi
-  {{#if idportenEnabled}}
+{{#if idportenEnabled}}
   idporten:
     enabled: true
     sidecar:
       enabled: true
       autoLogin: true
-  {{/if}}
+{{/if}}
   observability:
     logging:
       destinations:
@@ -63,8 +61,10 @@ spec:
   replicas:
     min: 1
     max: 1
+{{#if env}}
   env:
   {{#each env as |env|}}
   - name: {{@key}}
     value: {{env}}
   {{/each}}
+{{/if}}

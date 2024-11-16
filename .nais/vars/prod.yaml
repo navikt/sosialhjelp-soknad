@@ -1,5 +1,4 @@
 appName: sosialhjelp-soknad
-ingresses: null
-externalOutboundAccesses:
-  - "sosialhjelp-soknad-api.prod-fss-pub.nais.io"
 idportenEnabled: false
+ingresses: []
+outboundExternalHosts: [sosialhjelp-soknad-api.prod-fss-pub.nais.io]
