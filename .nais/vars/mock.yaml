@@ -7,5 +7,3 @@ externalOutboundAccesses:
   - "digisos.ekstern.dev.nav.no"
   - "www.dev.nav.no"
 idportenEnabled: false
-env:
-  DEKORATOREN_MILJO: dev
