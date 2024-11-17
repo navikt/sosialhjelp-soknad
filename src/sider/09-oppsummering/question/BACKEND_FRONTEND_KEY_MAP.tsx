@@ -1,4 +1,4 @@
-import {DigisosLanguageKey} from "../../../lib/i18n";
+import {DigisosLanguageKey} from "../../../lib/i18n/common.ts";
 export const BACKEND_FRONTEND_KEY_MAP: Record<string, DigisosLanguageKey> = {
     "arbeidsforhold.infotekst": "arbeidsforhold.infotekst_del1",
     "begrunnelse.hva.sporsmal": "begrunnelse.hva.label",

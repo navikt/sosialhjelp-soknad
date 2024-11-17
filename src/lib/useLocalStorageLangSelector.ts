@@ -5,7 +5,8 @@ import {DIGISOS_LANGUAGE_STORAGE_KEY} from "./constants.ts";
 import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
 import {DecoratorLocale} from "@navikt/nav-dekoratoren-moduler/ssr";
 import {logAmplitudeEvent} from "./amplitude/Amplitude.tsx";
-import i18n, {fallbackLng, isSupportedLanguage} from "./i18n.ts";
+import i18n from "./i18n/reacti18Next.ts";
+import {fallbackLng, isSupportedLanguage} from "./i18n/common.ts";
 /** Sets language for i18next, nav-dekorator, and localStorage */
 const setLanguage = async (language: string) => {
     if (!isSupportedLanguage(language)) {

@@ -10,7 +10,7 @@ import {scrollToTop} from "../../utils";
 import {HusIllustrasjon} from "../svg/illustrasjoner/HusIllustrasjon.tsx";
 import {MynterIllustrasjon} from "../svg/illustrasjoner/MynterIllustrasjon.tsx";
 import {RequireXsrfCookie} from "../RequireXsrfCookie.tsx";
-import {DigisosLanguageKey} from "../../i18n.ts";
+import {DigisosLanguageKey} from "../../i18n/common.ts";
 import {SparegrisIllustrasjon} from "../svg/illustrasjoner/SparegrisIllustrasjon.tsx";
 import FamilieIllustrasjon from "../svg/illustrasjoner/FamilieIllustrasjon.tsx";
 import BoligIllustrasjon from "../svg/illustrasjoner/BoligIllustrasjon.tsx";

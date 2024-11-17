@@ -1,6 +1,6 @@
 import {format, isValid} from "date-fns";
 import {logWarning} from "../log/loggerUtils";
-import {getDateFnLocale} from "../i18n";
+import {getDateFnLocale} from "../i18n/dateFns.ts";
 
 /**
  * Formats a date to the current language (i18next.language)

@@ -12,7 +12,7 @@ import KategorierChips from "../../../lib/components/KategorierChips";
 import {SkjemaStegErrorSummary} from "../../../lib/components/SkjemaSteg/SkjemaStegErrorSummary.tsx";
 import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
-import {DigisosLanguageKey} from "../../../lib/i18n.ts";
+import {DigisosLanguageKey} from "../../../lib/i18n/common.ts";
 import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
 import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";

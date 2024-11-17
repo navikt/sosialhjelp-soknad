@@ -8,7 +8,7 @@ import {useFeatureFlags} from "../../lib/config";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {useBegrunnelse} from "../../lib/hooks/data/useBegrunnelse";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
-import {DigisosLanguageKey} from "../../lib/i18n";
+import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 import useKategorier from "../../lib/hooks/data/useKategorier";
 import KategorierChips from "../../lib/components/KategorierChips";
 import {useFeatureToggles} from "../../generated/feature-toggle-ressurs/feature-toggle-ressurs";

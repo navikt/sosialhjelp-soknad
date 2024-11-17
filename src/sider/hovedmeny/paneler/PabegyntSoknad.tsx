@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {addDays, formatDistance} from "date-fns";
-import {getDateFnLocale} from "../../../lib/i18n.ts";
+import {getDateFnLocale} from "../../../lib/i18n/dateFns.ts";
 import {Label, LinkPanel} from "@navikt/ds-react";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude.tsx";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate.tsx";

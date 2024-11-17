@@ -3,7 +3,7 @@ import {Heading, VStack} from "@navikt/ds-react";
 import {Avsnitt} from "../../../generated/model";
 import {OppsummeringSporsmal} from "./OppsummeringSporsmal";
 import {useTranslation} from "react-i18next";
-import {DigisosLanguageKey} from "../../../lib/i18n";
+import {DigisosLanguageKey} from "../../../lib/i18n/common.ts";
 
 export const OppsummeringAvsnitt = ({avsnitt: {tittel, sporsmal}}: {avsnitt: Avsnitt}) => {
     const {t} = useTranslation();

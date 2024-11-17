@@ -1,4 +1,4 @@
-import {DigisosLanguageKey} from "./i18n";
+import {DigisosLanguageKey} from "./i18n/common.ts";
 
 export type ValideringActionTypes =
     | {type: "visValideringsfeilPanel"}

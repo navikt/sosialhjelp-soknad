@@ -2,7 +2,7 @@ import {useHentBegrunnelse} from "../../../generated/begrunnelse-ressurs/begrunn
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useEffect, useReducer} from "react";
 import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs";
-import {DigisosLanguageKey} from "../../i18n";
+import {DigisosLanguageKey} from "../../i18n/common.ts";
 import {
     TrainIcon,
     ChildEyesIcon,

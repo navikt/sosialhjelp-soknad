@@ -1,6 +1,7 @@
 import "i18next";
 
-import {resources, defaultNS} from "../lib/i18n";
+import {resources} from "../lib/i18n/resources.ts";
+import {defaultNS} from "../lib/i18n/common.ts";
 
 // Added January 2023 by Tore Sinding Bekkedal
 // For compatibility with legacy design components, we make t() return string,

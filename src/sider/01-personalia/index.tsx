@@ -17,7 +17,7 @@ import {useTranslation} from "react-i18next";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {scrollToTop} from "../../lib/utils";
 import {useNavigate} from "react-router";
-import {DigisosLanguageKey} from "../../lib/i18n.ts";
+import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {

@@ -3,7 +3,7 @@ import {useContext} from "react";
 import {ValideringsContext} from "../../valideringContextProvider";
 
 import {ValidationArea} from "../../ValidationArea";
-import {DigisosLanguageKey} from "../../i18n";
+import {DigisosLanguageKey} from "../../i18n/common.ts";
 
 export const useValidering = (faktumKey: ValidationArea) => {
     const {t} = useTranslation("skjema");
