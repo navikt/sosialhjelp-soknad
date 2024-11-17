@@ -5,6 +5,7 @@ import React from "react";
 import {Trans, useTranslation} from "react-i18next";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import digisosConfig from "../../../lib/config";
+import {HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
 
 export const EttersendDokuPanel = () => {
     const {data} = useGetSessionInfo();
@@ -14,20 +15,11 @@ export const EttersendDokuPanel = () => {
 
     return (
         <ExpansionCard aria-label={t("applikasjon.dokumentasjon.tittel")}>
-            <ExpansionCard.Header className={"!border-0 [&>button]:my-auto"}>
-                <div className={"flex items-center gap-6"}>
-                    <div
-                        className={
-                            "rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"
-                        }
-                    >
-                        <Attachment className={"w-6 h-6 block"} aria-hidden="true" />
-                    </div>
-                    <Heading level={"2"} size={"small"}>
-                        {t("applikasjon.dokumentasjon.tittel")}
-                    </Heading>
-                </div>
-            </ExpansionCard.Header>
+            <HovedmenyCardHeader icon={<Attachment className={"w-6 h-6"} />}>
+                <Heading level={"2"} size={"small"}>
+                    {t("applikasjon.dokumentasjon.tittel")}
+                </Heading>
+            </HovedmenyCardHeader>
             <ExpansionCard.Content className={"!border-0"}>
                 <BodyShort spacing>{t("applikasjon.dokumentasjon.informasjon.del1")}</BodyShort>
                 <ul className={"list-disc list-inside py-2"}>

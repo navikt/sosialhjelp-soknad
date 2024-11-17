@@ -13,6 +13,7 @@ import {NedetidPanel} from "../../../lib/components/NedetidPanel";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 import {SoknadstypeValg} from "./SoknadstypeValg.tsx";
 import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
+import {HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
 
 export const NySoknadInfo = () => {
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
@@ -77,24 +78,15 @@ export const NySoknadInfo = () => {
     );
 };
 
-const NySoknadIkon = () => (
-    <div className={"rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"}>
-        <FillForms className={"w-6 h-6 block"} aria-hidden="true" />
-    </div>
-);
-
 export const NySoknadPanel = ({defaultOpen}: {defaultOpen?: boolean}) => {
     const {t} = useTranslation("skjema");
     return (
         <ExpansionCard aria-label={t("applikasjon.start.ny.soknad")} defaultOpen={defaultOpen}>
-            <ExpansionCard.Header className={"!border-0 [&>button]:my-auto"}>
-                <div className={"flex items-center gap-6 h-full"}>
-                    <NySoknadIkon />
-                    <Heading level={"2"} size={"small"}>
-                        {t("applikasjon.start.ny.soknad")}
-                    </Heading>
-                </div>
-            </ExpansionCard.Header>
+            <HovedmenyCardHeader icon={<FillForms className={"w-6 h-6"} />}>
+                <Heading level={"2"} size={"small"}>
+                    {t("applikasjon.start.ny.soknad")}
+                </Heading>
+            </HovedmenyCardHeader>
             <ExpansionCard.Content className={"!border-0"}>
                 <NySoknadInfo />
             </ExpansionCard.Content>

@@ -5,6 +5,7 @@ import React from "react";
 import {useTranslation} from "react-i18next";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {PabegyntSoknad} from "./PabegyntSoknad.tsx";
+import {HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
 
 export const DAYS_BEFORE_DELETION = 14;
 
@@ -19,26 +20,14 @@ export const PabegynteSoknaderPanel = () => {
 
     return (
         <ExpansionCard aria-label={t("applikasjon.fortsett.soknad")}>
-            <ExpansionCard.Header className={"!border-0 [&>button]:my-auto"}>
-                <div className={"flex flex-row items-center gap-6"}>
-                    <div
-                        className={
-                            "rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex"
-                        }
-                        aria-hidden="true"
-                    >
-                        <FileContent className={"w-6 h-6"} />
-                    </div>
-                    <div>
-                        <ExpansionCard.Title as={"h2"} className={"!m-0"} size={"small"}>
-                            {t("applikasjon.fortsett.soknad")}
-                        </ExpansionCard.Title>
-                        <ExpansionCard.Description className={"opacity-70"}>
-                            {t("applikasjon.paabegynt.soknader", {count})}
-                        </ExpansionCard.Description>
-                    </div>
-                </div>
-            </ExpansionCard.Header>
+            <HovedmenyCardHeader icon={<FileContent className={"w-6 h-6"} />}>
+                <ExpansionCard.Title as={"h2"} className={"!m-0"} size={"small"}>
+                    {t("applikasjon.fortsett.soknad")}
+                </ExpansionCard.Title>
+                <ExpansionCard.Description className={"opacity-70"}>
+                    {t("applikasjon.paabegynt.soknader", {count})}
+                </ExpansionCard.Description>
+            </HovedmenyCardHeader>
             <ExpansionCard.Content
                 className={"!border-0"}
                 aria-describedby={"pabegynt-description"}
