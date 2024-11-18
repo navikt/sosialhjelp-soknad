@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const path = require("path");
-const dotenv = require("dotenv");
+import path from "path";
+import dotenv from "dotenv";
 
 const loadDotenv = async () => {
     dotenv.config({path: path.resolve(__dirname, "../../.env.local")});
