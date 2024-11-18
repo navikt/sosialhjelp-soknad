@@ -113,7 +113,7 @@ export default defineConfig({
  * schemas for our Spring Boot backends, and springdoc - at least as configured
  * in soknad-api at the time of writing - always generates an operationId.
  *
- * If we're not using those operations in SSR code, we don't have to care them.
+ * If we're not using those operations, we don't have to care if one pops up unnamed.
  * So if the schema some day happens to include operations where operationId is missing,
  * we generate eye-catchingly implausible names for them rather than breaking the build.
  *
