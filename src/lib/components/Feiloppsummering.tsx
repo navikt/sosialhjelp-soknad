@@ -1,7 +1,7 @@
 import {Alert, Heading} from "@navikt/ds-react";
 import React, {useContext} from "react";
 import {useTranslation} from "react-i18next";
-import {ValideringsContext} from "../valideringContextProvider.tsx";
+import {ValideringsContext} from "../providers/ValideringContextProvider.tsx";
 
 const Feiloppsummering = () => {
     const {t} = useTranslation("skjema");

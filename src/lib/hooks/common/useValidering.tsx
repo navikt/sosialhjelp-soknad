@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {useContext} from "react";
-import {ValideringsContext} from "../../valideringContextProvider";
+import {ValideringsContext} from "../../providers/ValideringContextProvider.tsx";
 
 import {ValidationArea} from "../../ValidationArea";
 import {DigisosLanguageKey} from "../../i18n/common.ts";

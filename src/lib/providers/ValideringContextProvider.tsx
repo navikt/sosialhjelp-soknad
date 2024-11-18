@@ -1,5 +1,5 @@
 import {createContext, Dispatch, useReducer} from "react";
-import {initialValideringState, ValideringActionTypes, valideringsReducer, ValideringState} from "./validering";
+import {initialValideringState, ValideringActionTypes, valideringsReducer, ValideringState} from "../validering.ts";
 
 export const ValideringsContextProvider = ({children}: {children: React.ReactNode}) => {
     const [state, dispatch] = useReducer(valideringsReducer, initialValideringState);
