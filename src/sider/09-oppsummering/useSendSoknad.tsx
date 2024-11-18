@@ -39,7 +39,9 @@ export const useSendSoknad = (behandlingsId: string) => {
                 valgteKategorier: selectedKategorier?.length ? selectedKategorier : "Ikke utfylt",
                 situasjonEndret: situasjonEndret !== "Ikke utfylt" ? "Ja" : "Ikke utfylt",
             });
-            window.location.assign(`${digisosConfig.innsynURL}${id}/status${shouldAddParam ? "?kortSoknad=true" : ""}`);
+            window.location.assign(
+                `${digisosConfig.innsynURL}/${id}/status${shouldAddParam ? "?kortSoknad=true" : ""}`
+            );
         } catch (e: any) {
             faro.api.pushError(e);
             setIsError(true);

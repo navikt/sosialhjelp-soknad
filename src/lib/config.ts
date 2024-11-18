@@ -68,7 +68,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
 
         driftsmeldingUrl: "http://localhost:3005/sosialhjelp/driftsmeldinger",
         baseURL: "http://localhost:8181/sosialhjelp/soknad-api/",
-        innsynURL: "http://localhost:3000/sosialhjelp/innsyn/",
+        innsynURL: "http://localhost:3000/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         logoutURL: "http://localhost:3008/",
         faro: {
@@ -91,7 +91,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         withCredentials: true,
         driftsmeldingUrl: "https://digisos.ekstern.dev.nav.no/sosialhjelp/driftsmeldinger",
         baseURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad-api/",
-        innsynURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn/",
+        innsynURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://sosialhjelp-mock-alt-mock.ekstern.dev.nav.no/sosialhjelp/mock-alt/",
         logoutURL: "https://sosialhjelp-mock-alt-mock.ekstern.dev.nav.no/sosialhjelp/mock-alt/",
         faro: {
@@ -114,7 +114,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         withCredentials: false,
         driftsmeldingUrl: "https://digisos.ekstern.dev.nav.no/sosialhjelp/driftsmeldinger",
         baseURL: "https://www-q0.dev.nav.no/sosialhjelp/login-api/soknad-api/",
-        innsynURL: "https://www-q0.dev.nav.no/sosialhjelp/innsyn/",
+        innsynURL: "https://www-q0.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.dev.nav.no/minside/",
         logoutURL: "https://loginservice.dev.nav.no/slo",
         faro: {
@@ -137,7 +137,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         withCredentials: false,
         driftsmeldingUrl: "https://www.nav.no/sosialhjelp/driftsmeldinger",
         baseURL: "https://www.nav.no/sosialhjelp/login-api/soknad-api/",
-        innsynURL: "https://www.nav.no/sosialhjelp/innsyn/",
+        innsynURL: "https://www.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         logoutURL: "https://loginservice.nav.no/slo",
         faro: {
@@ -170,7 +170,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         withCredentials: false,
         driftsmeldingUrl: "https://www.nav.no/sosialhjelp/driftsmeldinger",
         baseURL: "https://www.ansatt.nav.no/sosialhjelp/soknad/soknad-api/",
-        innsynURL: "https://www.nav.no/sosialhjelp/innsyn/",
+        innsynURL: "https://www.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         logoutURL: "https://loginservice.nav.no/slo",
         faro: {
@@ -202,7 +202,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         driftsmeldingUrl: "https://digisos.ekstern.dev.nav.no/sosialhjelp/driftsmeldinger",
         baseURL: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/soknad-api/",
         // NB: Denne ble satt til digisos.ekstern, fordi da denne ble skrevet var det ikke innsyn i preprod enda.
-        innsynURL: "https://www.ekstern.dev.nav.no/sosialhjelp/innsyn/",
+        innsynURL: "https://www.ekstern.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         logoutURL: "https://loginservice.nav.no/slo",
         faro: {
