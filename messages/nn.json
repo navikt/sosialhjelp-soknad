@@ -1,5 +1,14 @@
 {
   "Informasjon": {
     "title": "Søknad om økonomisk sosialhjelp"
+  },
+  "EttersendDokuPanel": {
+    "title": "Send dokumentasjon til ein søknad du har sendt inn",
+    "text": {
+      "p1": "Dokumentasjon kan sendast til søknader du har sendt inn tidlegare.",
+      "p2": "Gå til lista over <lenke>sosialhjelpssøknadene dine</lenke>",
+      "p3": "Opne søknaden du ønskjer å ettersenda dokument til",
+      "p4": "Last opp dokumenta du skal ettersenda under “vedlegga dine”"
+    }
   }
 }

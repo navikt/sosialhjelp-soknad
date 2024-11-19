@@ -42,16 +42,6 @@ export const skjema = {
             gjenopptatt:
                 "Vi jobber med å gjøre søknaden bedre, og det kan derfor ha skjedd endringer siden sist du var innlogget. Det betyr at spørsmål og informasjon kan være lagt til eller fjernet.",
         },
-        dokumentasjon: {
-            informasjon: {
-                del1: "Dokumentasjon kan sendes til søknader du har sendt inn tidligere.",
-                del2: "Gå til listen over <lenke>dine sosialhjelpssøknader</lenke>",
-                del3: "Åpne søknaden du ønsker å ettersende dokumenter til",
-                del4: "Last opp dokumentene du skal ettersende under “dine vedlegg”",
-                url: "dine sosialhjelpssøknader",
-            },
-            tittel: "Send dokumentasjon til en søknad du har sendt inn",
-        },
         fortsett: {
             soknad: "Fortsett på en søknad du har begynt på",
         },

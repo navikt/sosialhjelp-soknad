@@ -1,5 +1,14 @@
 {
   "Informasjon": {
     "title": "Application for financial assistance"
+  },
+  "EttersendDokuPanel": {
+    "title": "Send documentation for an application you have submitted",
+    "text": {
+      "p1": "Documentation can be sent to applications you have previously submitted.",
+      "p2": "Go to the list of <lenke>your social assistance applications</lenke>",
+      "p3": "Open the application that you would like to forward documentation to",
+      "p4": "Upload the documents you are going to send under “Your documents”"
+    }
   }
 }

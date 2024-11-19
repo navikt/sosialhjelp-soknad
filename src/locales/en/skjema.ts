@@ -61,16 +61,6 @@ export const skjema = {
             gjenopptatt:
                 "We are working to improve the application, therefore some changes may have been made since the last time you were logged in. Some questions and information may have been added or deleted.",
         },
-        dokumentasjon: {
-            informasjon: {
-                del1: "Documentation can be sent to applications you have previously submitted.",
-                del2: "Go to the list of <lenke>your social assistance applications</lenke>",
-                del3: "Open the application that you would like to forward documentation to",
-                del4: "Upload the documents you are going to send under “Your documents”",
-                url: "your social assistance applications",
-            },
-            tittel: "Send documentation for an application you have submitted",
-        },
         fortsett: {
             soknad: "Continue with an application you have started",
         },
