@@ -20,7 +20,7 @@ import {useNavigate} from "react-router";
 import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
-import {useAnalyticsContext} from "../../../lib/providers/AnalyticsContextProvider.tsx";
+import {useAnalyticsContext} from "../../../lib/providers/useAnalyticsContext.tsx";
 import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
 
 const MAX_LEN_HVA_ER_ENDRET = 500;
