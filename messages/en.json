@@ -1,14 +1,14 @@
 {
   "Informasjon": {
-    "title": "Søknad om økonomisk sosialhjelp"
+    "title": "Application for financial assistance"
   },
   "EttersendDokuPanel": {
-    "title": "Send dokumentasjon til en søknad du har sendt inn",
+    "title": "Send documentation for an application you have submitted",
     "text": {
-      "p1": "Dokumentasjon kan sendes til søknader du har sendt inn tidligere.",
-      "p2": "Gå til listen over <lenke>dine sosialhjelpssøknader</lenke>",
-      "p3": "Åpne søknaden du ønsker å ettersende dokumenter til",
-      "p4": "Last opp dokumentene du skal ettersende under “dine vedlegg”"
+      "p1": "Documentation can be sent to applications you have previously submitted.",
+      "p2": "Go to the list of <lenke>your social assistance applications</lenke>",
+      "p3": "Open the application that you would like to forward documentation to",
+      "p4": "Upload the documents you are going to send under “Your documents”"
     }
   },
   "PabegynteSoknaderPanel": {
