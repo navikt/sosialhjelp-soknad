@@ -497,7 +497,6 @@ export const skjema = {
             fantIkkeSide: "We could not find the page you are trying to open.",
         },
         serverfeil: {
-            beklager: "We are sorry!",
             feilmelding:
                 "Sorry, we have technical problems. An application for financial assistance is not possible to complete. We recommend that you try again a little later.",
             informasjon: {
@@ -506,33 +505,12 @@ export const skjema = {
                 stringValue: "The application was last saved {{0}} and you can continue with your application later.",
             },
             knapp: "Contact your Nav office",
-            lenke: {
-                meldfra: "Send bug report",
-                minside: "Go to My Page",
-                nav: "Go to nav.no",
-            },
             loggUt: "Log out ",
-            loggfort: "The incident has been logged and the problem will be rectified as soon as possible.",
-            nodsituasjon: {
-                tekst: "If you do not have money for necessary things such as food, you must contact your Nav office. Nav will also help you to find a temporary place of residence if you have nowhere to sleep or to stay in the next 24 hours.",
-                tittel: "Do you need immediate help?",
-            },
             opprett: {
                 informasjon:
                     "Something went wrong - we were unable to set up the application. You can try again now, or wait until later.",
             },
-            papir: "You can also <lenke>apply for financial assistance on paper</lenke> at your Nav office.",
-            prov: {
-                igjen: "We recommend that you try again.",
-            },
             provIgjen: "Try again",
-            startside: "Go to the front page for financial assistance",
-            teknisk: {
-                feil: "A technical error has occurred.",
-            },
-            til: {
-                startsiden: "To the home page for the application",
-            },
             tittel: "Sorry, we have a fault on our side.",
         },
         soknadikkefunnet: {

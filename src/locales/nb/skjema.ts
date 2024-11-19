@@ -477,7 +477,6 @@ export const skjema = {
             fantIkkeSide: "Vi fant ikke siden du prøvde å åpne.",
         },
         serverfeil: {
-            beklager: "Vi beklager!",
             feilmelding:
                 "Beklager, vi har tekniske problemer. Søknad om økonomisk sosialhjelp er ikke mulig å gjennomføre. Vi anbefaler at du prøver på nytt igjen litt senere.",
             informasjon: {
@@ -486,33 +485,12 @@ export const skjema = {
                 stringValue: "Søknaden er sist lagret {{0}} og du kan fortsette på søknaden din senere.",
             },
             knapp: "Kontakt Nav-Kontoret ditt",
-            lenke: {
-                meldfra: "Send feilrapport",
-                minside: "Gå til Min Side",
-                nav: "Gå til nav.no",
-            },
             loggUt: "Logg ut",
-            loggfort: "Hendelsen har blitt loggført og problemet utbedres så fort som mulig.",
-            nodsituasjon: {
-                tekst: "Hvis du ikke har penger til det aller mest nødvendige som mat, må du kontakte Nav-kontoret ditt.\n\nNav skal også hjelpe deg med å finne et midlertidig botilbud hvis du ikke har et sted å sove eller oppholde deg det nærmeste døgnet.",
-                tittel: "Trenger du rask hjelp?",
-            },
             opprett: {
                 informasjon:
                     "Noe gikk galt så vi ikke kunne opprette søknaden. Du kan prøve igjen nå, eller vente til senere.",
             },
-            papir: "Du kan også <lenke>søke om økonomisk sosialhjelp på papir</lenke> hos ditt Nav-kontor.",
-            prov: {
-                igjen: "Vi anbefaler at du prøver på nytt.",
-            },
             provIgjen: "Prøv på nytt",
-            startside: "Gå til forsiden for sosialhjelp",
-            teknisk: {
-                feil: "En teknisk feil har oppstått.",
-            },
-            til: {
-                startsiden: "Til startsiden for søknad",
-            },
             tittel: "Beklager, vi har en feil hos oss",
         },
         soknadikkefunnet: {

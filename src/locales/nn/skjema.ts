@@ -490,7 +490,6 @@ export const skjema = {
             fantIkkeSide: "Vi finn ikkje sida du prøver å opne.",
         },
         serverfeil: {
-            beklager: "Me beklagar!",
             feilmelding:
                 "Beklagar, men vi har tekniske problem. Søknad om økonomisk sosialhjelp er ikkje tilgjengeleg akkurat no. Vi anbefaler at du prøver på nytt litt seinare.",
             informasjon: {
@@ -499,33 +498,12 @@ export const skjema = {
                 stringValue: "Søknaden blei sist lagra {{0}}, og du kan jobbe vidare med han seinare.",
             },
             knapp: "Kontakt Nav-Kontoret ditt",
-            lenke: {
-                meldfra: "Send feilrapport",
-                minside: "Gå til Mi Side",
-                nav: "Gå til nav.no",
-            },
             loggUt: "Logg ut",
-            loggfort: "Hendinga har vorte loggført og problemet blir utbetra så fort som mogleg.",
-            nodsituasjon: {
-                tekst: "Kontakt Nav-kontoret dersom du ikkje har pengar til det aller mest nødvendige (t.d. mat). Nav skal også hjelpe deg å finne eit mellombels butilbod dersom du ikkje har ein stad å sove eller opphalde deg på det nærmaste døgnet.",
-                tittel: "Treng du rask hjelp?",
-            },
             opprett: {
                 informasjon:
                     "Eit teknisk problem gjorde at vi ikkje kunne opprette søknaden. Prøv igjen eller vent til seinare.",
             },
-            papir: "Du kan òg <lenke>søkje om økonomisk sosialhjelp på papir</lenke> hos Nav-kontoret ditt.",
-            prov: {
-                igjen: "Me tilrår at du prøver på nytt.",
-            },
             provIgjen: "Prøv på nytt",
-            startside: "Gå til framsida for sosialhjelp",
-            teknisk: {
-                feil: "Ein teknisk feil har oppstått.",
-            },
-            til: {
-                startsiden: "Til startsida for søknad",
-            },
             tittel: "Beklagar, men det har oppstått ein feil på vår side.",
         },
         soknadikkefunnet: {

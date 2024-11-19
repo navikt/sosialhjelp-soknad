@@ -53,5 +53,23 @@
   "PersonbeskyttelseFeilmelding": {
     "title": "Beklagar",
     "text": "Du kan diverre ikkje bruke den digitale søknaden om økonomisk sosialhjelp. \nPersoner med kode 6 eller 7 kan ikkje søke om økonomisk sosialhjelp digitalt. \nTa kontakt med <lenke>det lokale Nav-kontoret ditt</lenke> for å få hjelp til å søkja."
+  },
+  "ServerFeil": {
+    "title": "Me beklagar!",
+    "feilmelding": "Ein teknisk feil har oppstått.",
+    "anbefaling": "Me tilrår at du prøver på nytt.",
+    "lenkeTilHovedmeny": "Til startsida for søknad",
+    "problemetErLogget": "Hendinga har vorte loggført og problemet blir utbetra så fort som mogleg."
+  },
+  "TrengerDuRaskHjelp": {
+    "title": "Treng du rask hjelp?",
+    "kontaktKontoret": "Kontakt Nav-kontoret dersom du ikkje har pengar til det aller mest nødvendige (t.d. mat). Nav skal også hjelpe deg å finne eit mellombels butilbod dersom du ikkje har ein stad å sove eller opphalde deg på det nærmaste døgnet.",
+    "papirAlternativ": "Du kan òg <lenke>søkje om økonomisk sosialhjelp på papir</lenke> hos Nav-kontoret ditt.",
+    "papirAlternativUrl": "https://www.nav.no/okonomisk-sosialhjelp/nn#soknad-papir",
+    "lenkeTilHovedmeny": "Gå til framsida for sosialhjelp",
+    "lenkeTilNavForside": "Gå til nav.no",
+    "lenkeTilMinSide": "Gå til Mi Side",
+    "sendBugRapport": "Send feilrapport",
+    "bugRapportUrl": "https://www.nav.no/person/kontakt-oss/nn/tilbakemeldinger/feil-og-mangler"
   }
 }

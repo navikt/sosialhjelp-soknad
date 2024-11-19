@@ -17,7 +17,7 @@
     "slettesEtter": "Please note that the started applications will be deleted after {DAYS_BEFORE_DELETION} days."
   },
   "PabegyntSoknadView": {
-    "sistOppdatert":  "Last updated",
+    "sistOppdatert": "Last updated",
     "slettes": "Will be deleted"
   },
   "NySoknadPanel": {
@@ -53,5 +53,23 @@
   "PersonbeskyttelseFeilmelding": {
     "title": "Sorry",
     "text": "Unfortunately, you cannot use the digital application for financial assistance. People with code 6 or 7 cannot apply for financial assistance digitally. Contact your local <lenke>Nav office</lenke> to receive help applying."
+  },
+  "ServerFeil": {
+    "title": "We're sorry!",
+    "feilmelding": "A technical error has occurred.",
+    "anbefaling": "We recommend that you try again.",
+    "lenkeTilHovedmeny": "To the home page for the application",
+    "problemetErLogget": "The issue has been logged and the problem will be rectified as soon as possible."
+  },
+  "TrengerDuRaskHjelp": {
+    "title": "Do you need immediate help?",
+    "kontaktKontoret": "If you do not have money for necessary things such as food, you must contact your Nav office. Nav will also help you to find a temporary place of residence if you have nowhere to sleep or to stay in the next 24 hours.",
+    "papirAlternativ": "You can also <lenke>apply for financial assistance on paper</lenke> at your Nav office.",
+    "papirAlternativUrl": "https://www.nav.no/okonomisk-sosialhjelp/en#soknad-papir",
+    "lenkeTilHovedmeny": "Go to the front page for financial assistance",
+    "lenkeTilNavForside": "Go to nav.no",
+    "lenkeTilMinSide": "Go to My Page",
+    "sendBugRapport": "Send bug report",
+    "bugRapportUrl": "https://www.nav.no/person/kontakt-oss/en/tilbakemeldinger/feil-og-mangler"
   }
 }
