@@ -15,5 +15,9 @@
     "title": "Fortsett på en søknad du har begynt på",
     "pabegynte": "{count, plural, =1 {1 påbegynt søknad} other {# påbegynte søknader}}",
     "slettesEtter": "Vær oppmerksom på at påbegynte søknader slettes etter {DAYS_BEFORE_DELETION} dager."
+  },
+  "PabegyntSoknadView": {
+    "sistOppdatert": "Sist oppdatert",
+    "slettes": "Slettes"
   }
 }

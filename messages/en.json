@@ -1,5 +1,5 @@
 {
-  "Hovedmeny": {
+  "Informasjon": {
     "title": "Søknad om økonomisk sosialhjelp"
   },
   "EttersendDokuPanel": {
@@ -14,7 +14,11 @@
   },
   "PabegynteSoknaderPanel": {
     "title": "Continue with an application you have started",
-    "pabegynte": "{count, plural, =1 {one started application} other {# started applications}}",
+    "pabegynte": "{count, plural, =1 {One started application} other {# started applications}}",
     "slettesEtter": "Please note that the started applications will be deleted after {DAYS_BEFORE_DELETION} days."
+  },
+  "PabegyntSoknadView": {
+    "sistOppdatert":  "Last updated",
+    "slettes": "Will be deleted"
   }
 }

@@ -1,4 +1,4 @@
-import {useTranslation} from "react-i18next";
+import {useTranslations} from "next-intl";
 import {addDays, formatDistance} from "date-fns";
 import {getDateFnLocale} from "../../../lib/i18n/dateFns.ts";
 import {Label, LinkPanel} from "@navikt/ds-react";
@@ -16,7 +16,7 @@ const getTimeBeforeDeletion = (sistOppdatert: string) =>
 const getSoknadUri = (behandlingsId: string, isKort: boolean) =>
     `/sosialhjelp/soknad/skjema${isKort ? "/kort" : ""}/${behandlingsId}/1`;
 
-export const PabegyntSoknad = ({
+export const PabegyntSoknadView = ({
     behandlingsId,
     sistOppdatert,
     antallPabegynteSoknader,
@@ -27,7 +27,7 @@ export const PabegyntSoknad = ({
     antallPabegynteSoknader: number;
     isKort: boolean;
 }) => {
-    const {t} = useTranslation("skjema");
+    const t = useTranslations("PabegyntSoknadView");
     return (
         <LinkPanel
             href={getSoknadUri(behandlingsId, isKort)}
@@ -37,10 +37,10 @@ export const PabegyntSoknad = ({
         >
             <LinkPanel.Title as={"h3"} className={"flex flex-col lg:flex-row align-center"}>
                 <Label style={{marginRight: "1rem"}}>
-                    {t("applikasjon.paabegynt.sistOppdatert")} <LocalizedDate date={sistOppdatert} />
+                    {t("sistOppdatert")} <LocalizedDate date={sistOppdatert} />
                 </Label>
             </LinkPanel.Title>
-            <LinkPanel.Description>{`${t("applikasjon.paabegynt.slettes")} ${getTimeBeforeDeletion(sistOppdatert)}`}</LinkPanel.Description>
+            <LinkPanel.Description>{`${t("slettes")} ${getTimeBeforeDeletion(sistOppdatert)}`}</LinkPanel.Description>
         </LinkPanel>
     );
 };

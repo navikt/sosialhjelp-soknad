@@ -4,7 +4,7 @@ import {BodyShort, ExpansionCard} from "@navikt/ds-react";
 import React from "react";
 import {useTranslations} from "next-intl";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
-import {PabegyntSoknad} from "./PabegyntSoknad.tsx";
+import {PabegyntSoknadView} from "./PabegyntSoknadView.tsx";
 import {HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
 
 export const DAYS_BEFORE_DELETION = 14;
@@ -38,7 +38,7 @@ export const PabegynteSoknaderPanel = () => {
                 </BodyShort>
                 <div className={"flex gap-2 flex-col"}>
                     {openSoknader?.map(({behandlingsId, sistOppdatert, isKort}) => (
-                        <PabegyntSoknad
+                        <PabegyntSoknadView
                             key={behandlingsId}
                             behandlingsId={behandlingsId}
                             sistOppdatert={sistOppdatert}
