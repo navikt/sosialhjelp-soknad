@@ -49,5 +49,9 @@
       "title": "Er du i en nødssituasjon?",
       "text": "Hvis du ikke har penger til mat eller et sted å overnatte det neste døgnet, bør du opplyse om dette i søknaden."
     }
+  },
+  "PersonbeskyttelseFeilmelding": {
+    "title": "Beklagar",
+    "text": "Du kan diverre ikkje bruke den digitale søknaden om økonomisk sosialhjelp. \nPersoner med kode 6 eller 7 kan ikkje søke om økonomisk sosialhjelp digitalt. \nTa kontakt med <lenke>det lokale Nav-kontoret ditt</lenke> for å få hjelp til å søkja."
   }
 }

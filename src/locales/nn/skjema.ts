@@ -633,18 +633,6 @@ export const skjema = {
                     'Bustøtte frå Husbanken er ei statleg støtteordning for dei som har låg inntekt og høge buutgifter. Bustøtta skal vere ei hjelp til å betale buutgifter. Du har svart at du har buutgifter, men ikkje får bustøtte. Vi anbefaler deg å sjekke om du kan få <a href="https://husbanken.no/bostotte" target="_blank" rel="noreferrer noopener">støtte frå Husbanken</lenke>.',
             },
         },
-        ikketilgang: {
-            bruker: {
-                tekst: {
-                    v2: "Du kan diverre ikkje bruke den digitale søknaden om økonomisk sosialhjelp. \nPersoner med kode 6 eller 7 kan ikkje søke om økonomisk sosialhjelp digitalt. \nTa kontakt med <lenke>det lokale Nav-kontoret ditt</lenke> for å få hjelp til å søkja.",
-                },
-                tittel: "Beklagar",
-            },
-            tekst: {
-                v2: "Du er no komen til ei digital teneste for å søkje om økonomisk stønad. Tenesta er under utvikling, og er på noverande tidspunkt berre tilgjengeleg for innbyggjarar med adresse i Horten, Skien, Bergen, Oslo, Trondheim eller Askøy kommune. Dersom du har behov for økonomisk stønad, kontaktar du <lenke>ditt lokale Nav-kontor.</lenke>",
-            },
-            tittel: "Beklagar",
-        },
         samtykke: {
             bostotte_samtykke: "Husbanken",
             info_del1: "Då du starta søknaden, valde du å hente informasjon frå",

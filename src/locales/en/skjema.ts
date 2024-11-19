@@ -641,18 +641,6 @@ export const skjema = {
                     'If you have low income and high housing expences you can apply for housing allowance (bostøtte) from Husbanken. We recommend that you check if you can get <a href="https://husbanken.no/bostotte"  target="_blank" rel="noreferrer noopener">support from Husbanken</lenke>.',
             },
         },
-        ikketilgang: {
-            bruker: {
-                tekst: {
-                    v2: "Unfortunately, you cannot use the digital application for financial assistance. People with code 6 or 7 cannot apply for financial assistance digitally. Contact your local <lenke>Nav office</lenke> to receive help applying.",
-                },
-                tittel: "Sorry",
-            },
-            tekst: {
-                v2: "You have now come to a digital service for applying for financial assistance. The service is under development, and at present, only residents with an address in Horten, Skien, Bergen, Oslo, Trondheim and Askøy municipalities can use the service. If you require financial assistance you must contact your <lenke>local Nav office.</lenke>",
-            },
-            tittel: "Sorry",
-        },
         samtykke: {
             bostotte_samtykke: "Husbanken",
             info_del1: "When you started the application, you chose to obtain information from",

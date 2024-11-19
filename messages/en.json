@@ -49,5 +49,9 @@
       "title": "Are you in an emergency situation?",
       "text": "If you do not have money for food or a place to stay for the next 24 hours, you should mention this in your application."
     }
+  },
+  "PersonbeskyttelseFeilmelding": {
+    "title": "Sorry",
+    "text": "Unfortunately, you cannot use the digital application for financial assistance. People with code 6 or 7 cannot apply for financial assistance digitally. Contact your local <lenke>Nav office</lenke> to receive help applying."
   }
 }

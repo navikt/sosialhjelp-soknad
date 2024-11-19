@@ -621,18 +621,6 @@ export const skjema = {
                     'Bostøtte fra Husbanken er en statlig støtteordning for de som har lave inntekter og høye boutgifter. Bostøtte skal bidra til å betale boutgifter. Du har svart at du har boutgifter, men mottar ikke bostøtte. Vi anbefaler deg å sjekke om du kan få <a href="https://husbanken.no/bostotte"  target="_blank" rel="noreferrer noopener">støtte fra Husbanken</lenke>.',
             },
         },
-        ikketilgang: {
-            bruker: {
-                tekst: {
-                    v2: "Du kan dessverre ikke bruke den digitale søknaden om økonomisk sosialhjelp.\nPersoner med kode 6 eller 7 kan ikke søke om økonomisk sosialhjelp digitalt.\nTa kontakt med <lenke>ditt lokale Nav-kontor</lenke> for å få hjelp til å søke.",
-                },
-                tittel: "Beklager",
-            },
-            tekst: {
-                v2: "Du har nå kommet til en digital tjeneste for å søke om økonomisk stønad. Tjenesten er under utvikling, og det er kun innbyggere med adresse i Horten, Skien, Bergen, Oslo, Trondheim og Askøy kommune som kan bruke tjenesten på nåværende tidspunkt.\n\nHvis du har behov for økonomisk stønad må du henvende deg til <lenke>ditt lokale Nav-kontor.</lenke>",
-            },
-            tittel: "Beklager",
-        },
         samtykke: {
             bostotte_samtykke: "Husbanken",
             info_del1: "Da du startet søknaden valgte du å hente informasjon fra",
