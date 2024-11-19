@@ -1,5 +1,5 @@
 import {NextRequest, NextResponse} from "next/server";
-import {BASE_PATH} from "../../lib/constants.ts";
+import {BASE_PATH} from "../../../lib/constants.ts";
 import {logger} from "@navikt/next-logger";
 
 export async function GET({nextUrl, headers}: NextRequest) {
