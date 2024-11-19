@@ -61,18 +61,9 @@ export const skjema = {
                 "Vi jobbar med å gjere søknaden betre, og det kan difor ha skjedd endringar sidan sist du var logga inn. Dette betyr at spørsmål og informasjon kan ha blitt lagt til eller fjerna.",
         },
         opprettsoknadfeilet: "Det oppstod ein feil då søknaden skulle opprettast. Prøv igjen seinare.",
-        paabegynt: {
-            sistOppdatert: "Sist oppdatert",
-            slettes: "Blir sletta",
-        },
         sidetittel: {
             kortnavn: "Søknad",
             stringValue: "Søknad om økonomisk sosialhjelp",
-        },
-        start: {
-            ny: {
-                soknad: "Start ein ny søknad",
-            },
         },
         ukjentfeilunderhentdata: "Det oppstod ein feil då det skulle hentast inn informasjon.",
     },

@@ -4,12 +4,11 @@
   },
   "EttersendDokuPanel": {
     "title": "Send dokumentasjon til en søknad du har sendt inn",
-    "informasjon": {
-      "del1": "Dokumentasjon kan sendes til søknader du har sendt inn tidligere.",
-      "del2": "Gå til listen over <lenke>dine sosialhjelpssøknader</lenke>",
-      "del3": "Åpne søknaden du ønsker å ettersende dokumenter til",
-      "del4": "Last opp dokumentene du skal ettersende under “dine vedlegg”",
-      "url": "dine sosialhjelpssøknader"
+    "text": {
+      "p1": "Dokumentasjon kan sendes til søknader du har sendt inn tidligere.",
+      "p2": "Gå til listen over <lenke>dine sosialhjelpssøknader</lenke>",
+      "p3": "Åpne søknaden du ønsker å ettersende dokumenter til",
+      "p4": "Last opp dokumentene du skal ettersende under “dine vedlegg”"
     }
   },
   "PabegynteSoknaderPanel": {
@@ -20,5 +19,8 @@
   "PabegyntSoknadView": {
     "sistOppdatert":  "Last updated",
     "slettes": "Will be deleted"
+  },
+  "NySoknadPanel": {
+    "title": "Start a new application"
   }
 }

@@ -1,8 +1,7 @@
 "use client";
-import {Alert, Button, ExpansionCard, Heading, Loader} from "@navikt/ds-react";
+import {Alert, Button, Loader} from "@navikt/ds-react";
 import * as React from "react";
 import {useState} from "react";
-import {FillForms} from "@navikt/ds-icons";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
 import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
@@ -13,7 +12,6 @@ import {NedetidPanel} from "../../../lib/components/NedetidPanel";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 import {SoknadstypeValg} from "./SoknadstypeValg.tsx";
 import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
-import {HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
 
 export const NySoknadInfo = () => {
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
@@ -75,21 +73,5 @@ export const NySoknadInfo = () => {
                 </Button>
             </div>
         </>
-    );
-};
-
-export const NySoknadPanel = ({defaultOpen}: {defaultOpen?: boolean}) => {
-    const {t} = useTranslation("skjema");
-    return (
-        <ExpansionCard aria-label={t("applikasjon.start.ny.soknad")} defaultOpen={defaultOpen}>
-            <HovedmenyCardHeader icon={<FillForms className={"w-6 h-6"} />}>
-                <Heading level={"2"} size={"small"}>
-                    {t("applikasjon.start.ny.soknad")}
-                </Heading>
-            </HovedmenyCardHeader>
-            <ExpansionCard.Content className={"!border-0"}>
-                <NySoknadInfo />
-            </ExpansionCard.Content>
-        </ExpansionCard>
     );
 };

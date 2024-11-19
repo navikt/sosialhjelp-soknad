@@ -19,5 +19,8 @@
   "PabegyntSoknadView": {
     "sistOppdatert": "Sist oppdatert",
     "slettes": "Blir sletta"
+  },
+  "NySoknadPanel": {
+    "title": "Start ein ny søknad"
   }
 }

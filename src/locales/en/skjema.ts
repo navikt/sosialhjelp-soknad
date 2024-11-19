@@ -62,18 +62,9 @@ export const skjema = {
                 "We are working to improve the application, therefore some changes may have been made since the last time you were logged in. Some questions and information may have been added or deleted.",
         },
         opprettsoknadfeilet: "An error occurred when setting up the application. Please try later",
-        paabegynt: {
-            sistOppdatert: "Last updated",
-            slettes: "Will be deleted",
-        },
         sidetittel: {
             kortnavn: "Application",
             stringValue: "Application for financial assistance",
-        },
-        start: {
-            ny: {
-                soknad: "Start a new application",
-            },
         },
         ukjentfeilunderhentdata: "An error occurred when obtaining information",
     },

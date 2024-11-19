@@ -1,6 +1,6 @@
 import * as React from "react";
 import {PersonbeskyttelseFeilmelding} from "./PersonbeskyttelseFeilmelding";
-import {NySoknadPanel} from "./paneler/NySoknad";
+import {NySoknadPanel} from "./paneler/NySoknadPanel.tsx";
 import {PabegynteSoknaderPanel} from "./paneler/PabegynteSoknader";
 import {EttersendDokuPanel} from "./paneler/EttersendDokuPanel";
 import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs";
