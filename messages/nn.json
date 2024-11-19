@@ -1,5 +1,57 @@
 {
   "Informasjon": {
     "title": "Søknad om økonomisk sosialhjelp"
+  },
+  "EttersendDokuPanel": {
+    "title": "Send dokumentasjon til ein søknad du har sendt inn",
+    "text": {
+      "p1": "Dokumentasjon kan sendast til søknader du har sendt inn tidlegare.",
+      "p2": "Gå til lista over <lenke>sosialhjelpssøknadene dine</lenke>",
+      "p3": "Opne søknaden du ønskjer å ettersenda dokument til",
+      "p4": "Last opp dokumenta du skal ettersenda under “vedlegga dine”"
+    }
+  },
+  "PabegynteSoknaderPanel": {
+    "title": "Hald fram på ein søknad du har byrja på",
+    "pabegynte": "{count, plural, =1 {1 påbyrja søknad} other {# påbyrja søknader}}",
+    "slettesEtter": "Ver merksam på at påbyrja søknader blir sletta etter {DAYS_BEFORE_DELETION} dagar."
+  },
+  "PabegyntSoknadView": {
+    "sistOppdatert": "Sist oppdatert",
+    "slettes": "Blir sletta"
+  },
+  "NySoknadPanel": {
+    "title": "Start ein ny søknad"
+  },
+  "NySoknadInfo": {
+    "feilet": "Det oppstod ein feil då søknaden skulle opprettast. Prøv igjen seinare.",
+    "start": "Start søknaden"
+  },
+  "NySoknadVelkomst": {
+    "intro": {
+      "title": "Opplysningar og dokumentasjon",
+      "text": {
+        "p1": "Ver vennleg og fyll ut søknaden såg godt du kan. Legg ved relevant dokumentasjon.",
+        "p2": "Sjå døme på <lenke>kva dokumentasjon vi kan be om</lenke>.",
+        "p3": "Viss du med vilje held tilbake eller gir uriktige opplysningar, kan du måtte betala tilbake stønaden."
+      },
+      "soknadUrl": "https://www.nav.no/okonomisk-sosialhjelp/nn"
+    },
+    "innhenting": {
+      "title": "Innhenting og behandling av personopplysningar",
+      "text": {
+        "p1": "Vi innhentar automatisk opplysningar frå offentlige registre. Ved å trykkja \"Start søknad\" godtek du dette.",
+        "p2": "<lenke>Les meir om innhenting og behandling av dine personopplysningane</lenke>."
+      },
+      "persondataUrl": "https://www.nav.no/personopplysninger-sosialhjelp/nn"
+    },
+    "nodsituasjon": {
+      "title": "Er du i en nødssituasjon?",
+      "text": "Hvis du ikke har penger til mat eller et sted å overnatte det neste døgnet, bør du opplyse om dette i søknaden."
+    }
+  },
+  "PersonbeskyttelseFeilmelding": {
+    "title": "Beklagar",
+    "text": "Du kan diverre ikkje bruke den digitale søknaden om økonomisk sosialhjelp. \nPersoner med kode 6 eller 7 kan ikkje søke om økonomisk sosialhjelp digitalt. \nTa kontakt med <lenke>det lokale Nav-kontoret ditt</lenke> for å få hjelp til å søkja."
   }
 }

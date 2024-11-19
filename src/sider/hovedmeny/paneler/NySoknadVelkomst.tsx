@@ -1,27 +1,31 @@
 import {BodyLong, Heading} from "@navikt/ds-react";
 import * as React from "react";
-import {Trans, useTranslation} from "react-i18next";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs.ts";
 import StartNySoknadIllustrasjon from "../../../lib/components/svg/illustrasjoner/StartNySoknadIllustrasjon.tsx";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude.tsx";
+import {useTranslations} from "next-intl";
+import {ReactNode} from "react";
 
 export const NySoknadVelkomst = () => {
     const {data: sessionInfo} = useGetSessionInfo();
-    const {t, i18n} = useTranslation("skjema");
+    const t = useTranslations("NySoknadVelkomst");
 
-    type SupportedLanguage = "nb" | "nn" | "en";
-
-    const sokUrl = "https://www.nav.no/okonomisk-sosialhjelp";
-
-    const urlFragments: Record<SupportedLanguage, string> = {
-        nb: "#sok",
-        nn: "/nn#sok",
-        en: "/en#apply",
-    };
-    const sokHref = `${sokUrl}${urlFragments[i18n.language as SupportedLanguage] || urlFragments.nb}`;
-
-    const personUrl = "https://www.nav.no/personopplysninger-sosialhjelp";
-    const personHref = i18n.language === "nb" ? personUrl : `${personUrl}/${i18n.language}`;
+    const amplitudeLenke = (chunks: ReactNode) => (
+        <a
+            href={t("intro.soknadUrl")}
+            target="_blank"
+            rel="noreferrer"
+            onClick={async () => {
+                await logAmplitudeEvent("navigere", {
+                    lenkeTekst: "opplysninger du kan bli bedt om å levere",
+                    destinasjon: "https://www.nav.no/okonomisk-sosialhjelp#soknad",
+                    antallNyligInnsendteSoknader: sessionInfo?.numRecentlySent ?? 0,
+                });
+            }}
+        >
+            {chunks}
+        </a>
+    );
 
     return (
         <div className={"p-8 lg:py-12 lg:px-24 flex flex-col"}>
@@ -29,54 +33,27 @@ export const NySoknadVelkomst = () => {
                 <StartNySoknadIllustrasjon />
             </div>
             <Heading level="3" size="small">
-                {t("informasjon.start.undertittel")}
+                {t("intro.title")}
             </Heading>
-            <BodyLong className={"pb-4"}>{t("informasjon.start.tekst_del1")}</BodyLong>
-            <BodyLong className={"pb-4"}>
-                <Trans
-                    t={t}
-                    i18nKey={"informasjon.start.tekst_del2"}
-                    components={{
-                        lenke: (
-                            <a
-                                href={sokHref}
-                                target="_blank"
-                                rel="noreferrer"
-                                onClick={async () => {
-                                    await logAmplitudeEvent("navigere", {
-                                        lenkeTekst: "opplysninger du kan bli bedt om å levere",
-                                        destinasjon: "https://www.nav.no/okonomisk-sosialhjelp#soknad",
-                                        antallNyligInnsendteSoknader: sessionInfo?.numRecentlySent ?? 0,
-                                    });
-                                }}
-                            >
-                                {null}
-                            </a>
-                        ),
-                    }}
-                />
-            </BodyLong>
-            <BodyLong>{t("informasjon.start.tekst_del3")}</BodyLong>
+            <BodyLong className={"pb-4"}>{t("intro.text.p1")}</BodyLong>
+            <BodyLong className={"pb-4"}>{t.rich("intro.text.p2", {lenke: amplitudeLenke})}</BodyLong>
+            <BodyLong>{t("intro.text.p3")}</BodyLong>
             <Heading level="3" size="small" className={"pt-10"}>
-                {t("informasjon.nodsituasjon.undertittel")}
+                {t("nodsituasjon.title")}
             </Heading>
-            <BodyLong>{t("informasjon.nodsituasjon.tekst")}</BodyLong>
+            <BodyLong>{t("nodsituasjon.text")}</BodyLong>
             <Heading level="3" size="small" className={"pt-10"}>
-                {t("informasjon.innhenting.undertittel")}
+                {t("innhenting.title")}
             </Heading>
-            <BodyLong className={"pb-4"}>{t("informasjon.innhenting.tekst_del1")}</BodyLong>
+            <BodyLong className={"pb-4"}>{t("innhenting.text.p1")}</BodyLong>
             <BodyLong>
-                <Trans
-                    t={t}
-                    i18nKey={"informasjon.innhenting.tekst_del2"}
-                    components={{
-                        lenke: (
-                            <a href={personHref} target="_blank" rel="noreferrer">
-                                {null}
-                            </a>
-                        ),
-                    }}
-                />
+                {t.rich("innhenting.text.p2", {
+                    lenke: (chunks) => (
+                        <a href={t("innhenting.persondataUrl")} target="_blank" rel="noreferrer">
+                            {chunks}
+                        </a>
+                    ),
+                })}
             </BodyLong>
         </div>
     );

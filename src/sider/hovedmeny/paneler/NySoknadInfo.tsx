@@ -1,11 +1,10 @@
 "use client";
-import {Alert, Button, ExpansionCard, Heading, Loader} from "@navikt/ds-react";
+import {Alert, Button, Loader} from "@navikt/ds-react";
 import * as React from "react";
 import {useState} from "react";
-import {FillForms} from "@navikt/ds-icons";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
 import {useNavigate} from "react-router";
-import {useTranslation} from "react-i18next";
+import {useTranslations} from "next-intl";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {createSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
@@ -13,7 +12,6 @@ import {NedetidPanel} from "../../../lib/components/NedetidPanel";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 import {SoknadstypeValg} from "./SoknadstypeValg.tsx";
 import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
-import {HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
 
 export const NySoknadInfo = () => {
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
@@ -29,7 +27,7 @@ export const NySoknadInfo = () => {
     const qualifiesForKortSoknad = sessionInfo?.qualifiesForKortSoknad ?? false;
 
     const navigate = useNavigate();
-    const {t} = useTranslation("skjema");
+    const t = useTranslations("NySoknadInfo");
 
     const onSokSosialhjelpButtonClick = async (event: React.SyntheticEvent) => {
         setStartSoknadPending(true);
@@ -61,7 +59,7 @@ export const NySoknadInfo = () => {
         <>
             <NySoknadVelkomst />
             <NedetidPanel varselType={"infoside"} />
-            {startSoknadError && <Alert variant="error">{t("applikasjon.opprettsoknadfeilet")}</Alert>}
+            {startSoknadError && <Alert variant="error">{t("feilet")}</Alert>}
             <div className={"text-center"}>
                 <SoknadstypeValg valg={soknadstype} setValg={setSoknadstype} />
                 <Button
@@ -70,26 +68,10 @@ export const NySoknadInfo = () => {
                     disabled={startSoknadPending}
                     onClick={onSokSosialhjelpButtonClick}
                 >
-                    {t("skjema.knapper.start")}
+                    {t("start")}
                     {startSoknadPending && <Loader />}
                 </Button>
             </div>
         </>
-    );
-};
-
-export const NySoknadPanel = ({defaultOpen}: {defaultOpen?: boolean}) => {
-    const {t} = useTranslation("skjema");
-    return (
-        <ExpansionCard aria-label={t("applikasjon.start.ny.soknad")} defaultOpen={defaultOpen}>
-            <HovedmenyCardHeader icon={<FillForms className={"w-6 h-6"} />}>
-                <Heading level={"2"} size={"small"}>
-                    {t("applikasjon.start.ny.soknad")}
-                </Heading>
-            </HovedmenyCardHeader>
-            <ExpansionCard.Content className={"!border-0"}>
-                <NySoknadInfo />
-            </ExpansionCard.Content>
-        </ExpansionCard>
     );
 };

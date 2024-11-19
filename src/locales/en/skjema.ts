@@ -61,36 +61,9 @@ export const skjema = {
             gjenopptatt:
                 "We are working to improve the application, therefore some changes may have been made since the last time you were logged in. Some questions and information may have been added or deleted.",
         },
-        dokumentasjon: {
-            informasjon: {
-                del1: "Documentation can be sent to applications you have previously submitted.",
-                del2: "Go to the list of <lenke>your social assistance applications</lenke>",
-                del3: "Open the application that you would like to forward documentation to",
-                del4: "Upload the documents you are going to send under “Your documents”",
-                url: "your social assistance applications",
-            },
-            tittel: "Send documentation for an application you have submitted",
-        },
-        fortsett: {
-            soknad: "Continue with an application you have started",
-        },
-        opprettsoknadfeilet: "An error occurred when setting up the application. Please try later",
-        paabegynt: {
-            soknader_one: "{{count}} started application",
-            soknader_other: "{{count}} started applications",
-            sistOppdatert: "Last updated",
-            slettes: "Will be deleted",
-            informasjon:
-                "Please note that the started applications will be deleted after {{DAYS_BEFORE_DELETION}} days.",
-        },
         sidetittel: {
             kortnavn: "Application",
             stringValue: "Application for financial assistance",
-        },
-        start: {
-            ny: {
-                soknad: "Start a new application",
-            },
         },
         ukjentfeilunderhentdata: "An error occurred when obtaining information",
     },
@@ -668,28 +641,6 @@ export const skjema = {
                     'If you have low income and high housing expences you can apply for housing allowance (bostøtte) from Husbanken. We recommend that you check if you can get <a href="https://husbanken.no/bostotte"  target="_blank" rel="noreferrer noopener">support from Husbanken</lenke>.',
             },
         },
-        ikketilgang: {
-            bruker: {
-                tekst: {
-                    v2: "Unfortunately, you cannot use the digital application for financial assistance. People with code 6 or 7 cannot apply for financial assistance digitally. Contact your local <lenke>Nav office</lenke> to receive help applying.",
-                },
-                tittel: "Sorry",
-            },
-            tekst: {
-                v2: "You have now come to a digital service for applying for financial assistance. The service is under development, and at present, only residents with an address in Horten, Skien, Bergen, Oslo, Trondheim and Askøy municipalities can use the service. If you require financial assistance you must contact your <lenke>local Nav office.</lenke>",
-            },
-            tittel: "Sorry",
-        },
-        innhenting: {
-            tekst_del1:
-                'We automatically collect information from public registers. By pressing "Start application" you accept this.',
-            tekst_del2: "<lenke>Read more about collecting and processing of your personal data</lenke>.",
-            undertittel: "Collecting and processing of personal data",
-        },
-        nodsituasjon: {
-            tekst: "If you do not have money for food or a place to stay for the next 24 hours, you should mention this in your application.",
-            undertittel: "Are you in an emergency situation?",
-        },
         samtykke: {
             bostotte_samtykke: "Husbanken",
             info_del1: "When you started the application, you chose to obtain information from",
@@ -698,14 +649,6 @@ export const skjema = {
             knapp: "Continue with application",
             skatteetaten_samtykke: "Tax Administration",
             sporsmal: "Update information from",
-        },
-        start: {
-            tekst_del1: "Please complete the application as best you can. Attach relevant documentation.",
-            tekst_del2: "See examples of <lenke>what documentation we might ask for</lenke>.",
-            tekst_del3:
-                "If you intentionally withhold or provide incorrect information, you may have to pay back the benefit.",
-            tittel: "Before you start your application",
-            undertittel: "Information and documentation",
         },
         student: {
             studielan: {
@@ -1647,7 +1590,6 @@ export const skjema = {
             forrige: "Previous step",
             neste: "Next step",
             send: "Submit application",
-            start: "Start application",
         },
         sensitivadvarsel: "Do not submit health information or other sensitive personal information",
         tittel: "Application for financial assistance",

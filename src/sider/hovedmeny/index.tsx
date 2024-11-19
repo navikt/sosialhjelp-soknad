@@ -1,6 +1,6 @@
 import * as React from "react";
 import {PersonbeskyttelseFeilmelding} from "./PersonbeskyttelseFeilmelding";
-import {NySoknadPanel} from "./paneler/NySoknad";
+import {NySoknadPanel} from "./paneler/NySoknadPanel.tsx";
 import {PabegynteSoknaderPanel} from "./paneler/PabegynteSoknader";
 import {EttersendDokuPanel} from "./paneler/EttersendDokuPanel";
 import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs";
@@ -11,7 +11,8 @@ import DeveloperToolkit from "../../lib/components/appHeader/DeveloperToolkit.ts
 import {useTranslations} from "next-intl";
 
 export const Informasjon = () => {
-    const {data: {userBlocked, open} = {userBlocked: false, open: []}, isPending} = useGetSessionInfo();
+    const {data: {userBlocked, open, numRecentlySent} = {userBlocked: false, open: []}, isPending} =
+        useGetSessionInfo();
     const t = useTranslations("Informasjon");
 
     if (userBlocked) return <PersonbeskyttelseFeilmelding />;
@@ -38,7 +39,7 @@ export const Informasjon = () => {
                     <VStack gap={"5"}>
                         <NySoknadPanel defaultOpen={open?.length === 0} />
                         <PabegynteSoknaderPanel />
-                        <EttersendDokuPanel />
+                        {!!numRecentlySent && <EttersendDokuPanel />}
                     </VStack>
                 )}
             </div>
