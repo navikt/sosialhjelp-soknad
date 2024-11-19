@@ -60,7 +60,7 @@
     "devDependencies": {
         "@babel/preset-env": "^7.26.0",
         "@babel/preset-react": "^7.25.9",
-        "@eslint/js": "9.14.0",
+        "@eslint/js": "9.15.0",
         "@faker-js/faker": "^9.2.0",
         "@tanstack/react-query-devtools": "^5.60",
         "@testing-library/dom": "^10.4.0",
