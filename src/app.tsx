@@ -12,7 +12,6 @@ import InntektFormue from "./sider/06-inntektFormue";
 import UtgifterGjeld from "./sider/07-utgifterGjeld";
 import OkonomiskeOpplysningerView from "./sider/08-vedlegg";
 import Oppsummering from "./sider/09-oppsummering/Oppsummering";
-import ExceptionThrower from "./sider/feilsider/ExceptionThrower";
 import ServerFeil from "./sider/feilsider/ServerFeil";
 import SideIkkeFunnet from "./sider/feilsider/SideIkkeFunnet";
 import Informasjon from "./sider/hovedmeny";
@@ -67,7 +66,6 @@ export default function App() {
                             <Route index path={`/`} element={<Informasjon />} />
                             <Route path={`informasjon`} loader={() => redirect("/", 301)} />
                             <Route path={`feil`} element={<ServerFeil />} />
-                            <Route path={`kastException`} element={<ExceptionThrower />} />
                             <Route path={"skjema"}>
                                 <Route path="kort/:behandlingsId">
                                     <Route element={<SwitchSoknadType />}>
