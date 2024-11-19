@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router";
-import {useValideringContext} from "../../providers/useValideringContext.tsx";
+import {useValideringContext} from "../../providers/useValideringContext.ts";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 
 /**

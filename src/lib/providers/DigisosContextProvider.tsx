@@ -1,6 +1,6 @@
 import {ReactNode, useReducer, useState} from "react";
 import {initialValideringState, valideringsReducer} from "../validering.ts";
-import {AnalyticsData, DigisosContext} from "./DigisosContext.tsx";
+import {AnalyticsData, DigisosContext} from "./DigisosContext.ts";
 
 export const DigisosContextProvider = ({children}: {children: ReactNode}) => {
     const [state, dispatch] = useReducer(valideringsReducer, initialValideringState);
