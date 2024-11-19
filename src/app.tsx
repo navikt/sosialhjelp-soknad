@@ -27,7 +27,7 @@ import {initAmplitude} from "./lib/amplitude/Amplitude.tsx";
 import {Providers} from "./lib/providers/Providers.tsx";
 import {isSupportedLanguage} from "./lib/i18n/common.ts";
 import i18n from "./lib/i18n/reacti18Next.ts";
-import {i18nPathPrefixBrowserRouterAdapter} from "./i18nPathPrefixBrowserRouterAdapter.ts";
+import {getPathPrefixIncludingLocale} from "./getPathPrefixIncludingLocale.ts";
 
 configureLogger({basePath: BASE_PATH});
 
@@ -56,12 +56,10 @@ export default function App() {
         };
     }
 
-    const {pathPrefix} = i18nPathPrefixBrowserRouterAdapter();
-
     return (
         <Suspense fallback={<ApplicationSpinner />}>
             <Providers>
-                <BrowserRouter basename={pathPrefix}>
+                <BrowserRouter basename={getPathPrefixIncludingLocale()}>
                     <Routes>
                         <Route errorElement={<SideIkkeFunnet />}>
                             <Route index path={`/`} element={<Informasjon />} />
