@@ -60,7 +60,6 @@ export const skjema = {
             gjenopptatt:
                 "Vi jobbar med å gjere søknaden betre, og det kan difor ha skjedd endringar sidan sist du var logga inn. Dette betyr at spørsmål og informasjon kan ha blitt lagt til eller fjerna.",
         },
-        opprettsoknadfeilet: "Det oppstod ein feil då søknaden skulle opprettast. Prøv igjen seinare.",
         sidetittel: {
             kortnavn: "Søknad",
             stringValue: "Søknad om økonomisk sosialhjelp",
@@ -646,16 +645,6 @@ export const skjema = {
             },
             tittel: "Beklagar",
         },
-        innhenting: {
-            tekst_del1:
-                'Vi innhentar automatisk opplysningar frå offentlige registre. Ved å trykkja "Start søknad" godtek du dette.',
-            tekst_del2: "<lenke>Les meir om innhenting og behandling av dine personopplysningane</lenke>.",
-            undertittel: "Innhenting og behandling av personopplysningar",
-        },
-        nodsituasjon: {
-            tekst: "Viss du ikkje har pengar til mat eller ein stad å overnatte det neste døgnet, bør du opplyse om dette i søknaden.",
-            undertittel: "Er du i ein nødssituasjon?",
-        },
         samtykke: {
             bostotte_samtykke: "Husbanken",
             info_del1: "Då du starta søknaden, valde du å hente informasjon frå",
@@ -664,14 +653,6 @@ export const skjema = {
             knapp: "Hald fram på søknaden",
             skatteetaten_samtykke: "Skatteetaten",
             sporsmal: "Oppdater opplysningane frå",
-        },
-        start: {
-            tekst_del1: "Ver vennleg og fyll ut søknaden såg godt du kan. Legg ved relevant dokumentasjon.",
-            tekst_del2: "Sjå døme på <lenke>kva dokumentasjon vi kan be om</lenke>.",
-            tekst_del3:
-                "Viss du med vilje held tilbake eller gir uriktige opplysningar, kan du måtte betala tilbake stønaden.",
-            tittel: "Før du går i gang med søknaden",
-            undertittel: "Opplysningar og dokumentasjon",
         },
         student: {
             studielan: {
@@ -1614,7 +1595,6 @@ export const skjema = {
             forrige: "Førre steg",
             neste: "Neste steg",
             send: "Send søknaden",
-            start: "Start søknaden",
         },
         sensitivadvarsel: "Ikkje legg inn helseopplysningar eller andre sensitive personopplysningar",
         tittel: "Søknad om økonomisk sosialhjelp",

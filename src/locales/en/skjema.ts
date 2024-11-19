@@ -61,7 +61,6 @@ export const skjema = {
             gjenopptatt:
                 "We are working to improve the application, therefore some changes may have been made since the last time you were logged in. Some questions and information may have been added or deleted.",
         },
-        opprettsoknadfeilet: "An error occurred when setting up the application. Please try later",
         sidetittel: {
             kortnavn: "Application",
             stringValue: "Application for financial assistance",
@@ -654,16 +653,6 @@ export const skjema = {
             },
             tittel: "Sorry",
         },
-        innhenting: {
-            tekst_del1:
-                'We automatically collect information from public registers. By pressing "Start application" you accept this.',
-            tekst_del2: "<lenke>Read more about collecting and processing of your personal data</lenke>.",
-            undertittel: "Collecting and processing of personal data",
-        },
-        nodsituasjon: {
-            tekst: "If you do not have money for food or a place to stay for the next 24 hours, you should mention this in your application.",
-            undertittel: "Are you in an emergency situation?",
-        },
         samtykke: {
             bostotte_samtykke: "Husbanken",
             info_del1: "When you started the application, you chose to obtain information from",
@@ -672,14 +661,6 @@ export const skjema = {
             knapp: "Continue with application",
             skatteetaten_samtykke: "Tax Administration",
             sporsmal: "Update information from",
-        },
-        start: {
-            tekst_del1: "Please complete the application as best you can. Attach relevant documentation.",
-            tekst_del2: "See examples of <lenke>what documentation we might ask for</lenke>.",
-            tekst_del3:
-                "If you intentionally withhold or provide incorrect information, you may have to pay back the benefit.",
-            tittel: "Before you start your application",
-            undertittel: "Information and documentation",
         },
         student: {
             studielan: {
@@ -1621,7 +1602,6 @@ export const skjema = {
             forrige: "Previous step",
             neste: "Next step",
             send: "Submit application",
-            start: "Start application",
         },
         sensitivadvarsel: "Do not submit health information or other sensitive personal information",
         tittel: "Application for financial assistance",

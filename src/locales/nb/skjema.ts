@@ -42,7 +42,6 @@ export const skjema = {
             gjenopptatt:
                 "Vi jobber med å gjøre søknaden bedre, og det kan derfor ha skjedd endringer siden sist du var innlogget. Det betyr at spørsmål og informasjon kan være lagt til eller fjernet.",
         },
-        opprettsoknadfeilet: "Det oppstod en feil under opprettelsen av søknaden. Vennligst prøv igjen senere",
         sidetittel: {
             kortnavn: "Søknad",
             stringValue: "Søknad om økonomisk sosialhjelp",
@@ -634,16 +633,6 @@ export const skjema = {
             },
             tittel: "Beklager",
         },
-        innhenting: {
-            tekst_del1:
-                'Vi innhenter automatisk opplysninger fra offentlige registre. Ved å trykke "Start søknad" godtar du dette.',
-            tekst_del2: "<lenke>Les mer om innhenting og behandling av dine personopplysninger</lenke>.",
-            undertittel: "Innhenting og behandling av personopplysninger",
-        },
-        nodsituasjon: {
-            tekst: "Hvis du ikke har penger til mat eller et sted å overnatte det neste døgnet, bør du opplyse om dette i søknaden.",
-            undertittel: "Er du i en nødssituasjon?",
-        },
         samtykke: {
             bostotte_samtykke: "Husbanken",
             info_del1: "Da du startet søknaden valgte du å hente informasjon fra",
@@ -652,14 +641,6 @@ export const skjema = {
             knapp: "Fortsett søknad",
             skatteetaten_samtykke: "Skatteetaten",
             sporsmal: "Oppdater opplysningene fra",
-        },
-        start: {
-            tekst_del1: "Vennligst fyll ut søknaden så godt du kan. Legg ved relevant dokumentasjon.",
-            tekst_del2: "Se eksempler på <lenke>hvilken dokumentasjon vi kan be om</lenke>.",
-            tekst_del3:
-                "Hvis du med vilje holder tilbake eller gir uriktige opplysninger, kan du måtte betale tilbake stønaden.",
-            tittel: "Før du starter på søknaden",
-            undertittel: "Opplysninger og dokumentasjon",
         },
         student: {
             studielan: {
@@ -1597,7 +1578,6 @@ export const skjema = {
             forrige: "Forrige steg",
             neste: "Neste steg",
             send: "Send søknaden",
-            start: "Start søknaden",
         },
         navigering: {
             feil: "Beklager, et teknisk problem oppstod ved innsending. Prøv gjerne igjen.",

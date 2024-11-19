@@ -4,7 +4,7 @@ import * as React from "react";
 import {useState} from "react";
 import {NySoknadVelkomst} from "./NySoknadVelkomst";
 import {useNavigate} from "react-router";
-import {useTranslation} from "react-i18next";
+import {useTranslations} from "next-intl";
 import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {createSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
@@ -27,7 +27,7 @@ export const NySoknadInfo = () => {
     const qualifiesForKortSoknad = sessionInfo?.qualifiesForKortSoknad ?? false;
 
     const navigate = useNavigate();
-    const {t} = useTranslation("skjema");
+    const t = useTranslations("NySoknadInfo");
 
     const onSokSosialhjelpButtonClick = async (event: React.SyntheticEvent) => {
         setStartSoknadPending(true);
@@ -59,7 +59,7 @@ export const NySoknadInfo = () => {
         <>
             <NySoknadVelkomst />
             <NedetidPanel varselType={"infoside"} />
-            {startSoknadError && <Alert variant="error">{t("applikasjon.opprettsoknadfeilet")}</Alert>}
+            {startSoknadError && <Alert variant="error">{t("feilet")}</Alert>}
             <div className={"text-center"}>
                 <SoknadstypeValg valg={soknadstype} setValg={setSoknadstype} />
                 <Button
@@ -68,7 +68,7 @@ export const NySoknadInfo = () => {
                     disabled={startSoknadPending}
                     onClick={onSokSosialhjelpButtonClick}
                 >
-                    {t("skjema.knapper.start")}
+                    {t("start")}
                     {startSoknadPending && <Loader />}
                 </Button>
             </div>

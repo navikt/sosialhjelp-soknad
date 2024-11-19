@@ -22,5 +22,32 @@
   },
   "NySoknadPanel": {
     "title": "Start ein ny søknad"
+  },
+  "NySoknadInfo": {
+    "feilet": "Det oppstod ein feil då søknaden skulle opprettast. Prøv igjen seinare.",
+    "start": "Start søknaden"
+  },
+  "NySoknadVelkomst": {
+    "intro": {
+      "title": "Opplysningar og dokumentasjon",
+      "text": {
+        "p1": "Ver vennleg og fyll ut søknaden såg godt du kan. Legg ved relevant dokumentasjon.",
+        "p2": "Sjå døme på <lenke>kva dokumentasjon vi kan be om</lenke>.",
+        "p3": "Viss du med vilje held tilbake eller gir uriktige opplysningar, kan du måtte betala tilbake stønaden."
+      },
+      "soknadUrl": "https://www.nav.no/okonomisk-sosialhjelp/nn"
+    },
+    "innhenting": {
+      "title": "Innhenting og behandling av personopplysningar",
+      "text": {
+        "p1": "Vi innhentar automatisk opplysningar frå offentlige registre. Ved å trykkja \"Start søknad\" godtek du dette.",
+        "p2": "<lenke>Les meir om innhenting og behandling av dine personopplysningane</lenke>."
+      },
+      "persondataUrl": "https://www.nav.no/personopplysninger-sosialhjelp/nn"
+    },
+    "nodsituasjon": {
+      "title": "Er du i en nødssituasjon?",
+      "text": "Hvis du ikke har penger til mat eller et sted å overnatte det neste døgnet, bør du opplyse om dette i søknaden."
+    }
   }
 }

@@ -1,8 +1,8 @@
 import {ExpansionCard, Heading} from "@navikt/ds-react";
-import {NySoknadInfo} from "./NySoknad.tsx";
 import {HovedmenyCardHeader} from "./HovedmenyCardHeader";
 import {FillForms} from "@navikt/ds-icons";
 import {useTranslations} from "next-intl";
+import {NySoknadInfo} from "./NySoknadInfo.tsx";
 
 export const NySoknadPanel = ({defaultOpen}: {defaultOpen?: boolean}) => (
     <ExpansionCard aria-labelledby={"nysoknad-heading"} defaultOpen={defaultOpen}>

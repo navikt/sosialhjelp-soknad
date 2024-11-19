@@ -22,5 +22,32 @@
   },
   "NySoknadPanel": {
     "title": "Start a new application"
+  },
+  "NySoknadInfo": {
+    "feilet": "An error occurred when setting up the application. Please try later",
+    "start": "Start application"
+  },
+  "NySoknadVelkomst": {
+    "intro": {
+      "title": "Information and documentation",
+      "text": {
+        "p1": "Please complete the application as best you can. Attach relevant documentation.",
+        "p2": "See examples of <lenke>what documentation we might ask for</lenke>.",
+        "p3": "If you intentionally withhold or provide incorrect information, you may have to pay back the benefit."
+      },
+      "soknadUrl": "https://www.nav.no/okonomisk-sosialhjelp/en"
+    },
+    "innhenting": {
+      "title": "Collecting and processing of personal data",
+      "text": {
+        "p1": "We automatically collect information from public registers. By pressing \"Start application\" you accept this.",
+        "p2": "<lenke>Read more about collecting and processing of your personal data</lenke>."
+      },
+      "persondataUrl": "https://www.nav.no/personopplysninger-sosialhjelp/en"
+    },
+    "nodsituasjon": {
+      "title": "Are you in an emergency situation?",
+      "text": "If you do not have money for food or a place to stay for the next 24 hours, you should mention this in your application."
+    }
   }
 }
