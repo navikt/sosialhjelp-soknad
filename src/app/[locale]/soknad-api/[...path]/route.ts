@@ -1,5 +1,5 @@
 import {proxyRouteHandler} from "@navikt/next-api-proxy";
-import digisosConfig from "../../../lib/config.ts";
+import digisosConfig from "../../../../lib/config.ts";
 
 type RouteHandlerProxyTarget = {hostname: string; path: string; https: boolean; bearerToken?: string};
 type ProxyRequestContext = {params: Promise<{path: string[]}>};

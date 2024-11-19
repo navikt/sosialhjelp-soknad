@@ -67,9 +67,10 @@ export const NySoknadInfo = () => {
                     id="start_soknad_button"
                     disabled={startSoknadPending}
                     onClick={onSokSosialhjelpButtonClick}
+                    icon={startSoknadPending && <Loader />}
+                    iconPosition={"right"}
                 >
                     {t("start")}
-                    {startSoknadPending && <Loader />}
                 </Button>
             </div>
         </>
