@@ -39,7 +39,7 @@ export const Informasjon = () => {
                     <VStack gap={"5"}>
                         <NySoknadPanel defaultOpen={open?.length === 0} />
                         <PabegynteSoknaderPanel />
-                        {numRecentlySent && <EttersendDokuPanel />}
+                        {!!numRecentlySent && <EttersendDokuPanel />}
                     </VStack>
                 )}
             </div>
