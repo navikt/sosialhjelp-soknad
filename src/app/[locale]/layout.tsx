@@ -8,6 +8,7 @@ import {getMessages} from "next-intl/server";
 import {NextIntlClientProvider} from "next-intl";
 import "../../index.css";
 import "@navikt/ds-css";
+import {DigisosContextProvider} from "../../lib/providers/DigisosContextProvider.tsx";
 
 export const dynamic = "force-dynamic";
 
@@ -40,7 +41,9 @@ export default async function RootLayout({
                 <Decorator.Header />
                 <Driftsmeldinger />
                 <div id="root" className={"bg-digisosGronnBakgrunn"} role={"none"}>
-                    <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+                    <NextIntlClientProvider messages={messages}>
+                        <DigisosContextProvider>{children}</DigisosContextProvider>
+                    </NextIntlClientProvider>
                 </div>
                 <Decorator.Footer />
                 <Decorator.Scripts loader={Script} />

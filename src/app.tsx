@@ -24,11 +24,13 @@ import {configureLogger} from "@navikt/next-logger";
 import "./faro";
 import "./lib/i18n/reacti18Next.ts";
 import {initAmplitude} from "./lib/amplitude/Amplitude.tsx";
-import {Providers} from "./lib/providers/Providers.tsx";
 import {getPathPrefixIncludingLocale} from "./getPathPrefixIncludingLocale.ts";
 import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 
 configureLogger({basePath: BASE_PATH});
+const queryClient = new QueryClient();
 
 const RedirectToStandard = () => {
     const location = useLocation();
@@ -59,7 +61,7 @@ export default function App() {
 
     return (
         <Suspense fallback={<ApplicationSpinner />}>
-            <Providers>
+            <QueryClientProvider client={queryClient}>
                 <BrowserRouter basename={basename}>
                     <Routes>
                         <Route errorElement={<SideIkkeFunnet />}>
@@ -94,7 +96,10 @@ export default function App() {
                         </Route>
                     </Routes>
                 </BrowserRouter>
-            </Providers>
+                <div aria-hidden={"true"}>
+                    <ReactQueryDevtools initialIsOpen={false} />
+                </div>
+            </QueryClientProvider>
         </Suspense>
     );
 }
