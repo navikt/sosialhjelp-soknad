@@ -61,17 +61,10 @@ export const skjema = {
             gjenopptatt:
                 "We are working to improve the application, therefore some changes may have been made since the last time you were logged in. Some questions and information may have been added or deleted.",
         },
-        fortsett: {
-            soknad: "Continue with an application you have started",
-        },
         opprettsoknadfeilet: "An error occurred when setting up the application. Please try later",
         paabegynt: {
-            soknader_one: "{{count}} started application",
-            soknader_other: "{{count}} started applications",
             sistOppdatert: "Last updated",
             slettes: "Will be deleted",
-            informasjon:
-                "Please note that the started applications will be deleted after {{DAYS_BEFORE_DELETION}} days.",
         },
         sidetittel: {
             kortnavn: "Application",

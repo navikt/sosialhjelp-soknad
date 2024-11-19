@@ -42,15 +42,9 @@ export const skjema = {
             gjenopptatt:
                 "Vi jobber med å gjøre søknaden bedre, og det kan derfor ha skjedd endringer siden sist du var innlogget. Det betyr at spørsmål og informasjon kan være lagt til eller fjernet.",
         },
-        fortsett: {
-            soknad: "Fortsett på en søknad du har begynt på",
-        },
         opprettsoknadfeilet: "Det oppstod en feil under opprettelsen av søknaden. Vennligst prøv igjen senere",
         paabegynt: {
-            soknader_one: "{{count}} påbegynt søknad",
-            soknader_other: "{{count}} påbegynte søknader",
             sistOppdatert: "Sist oppdatert",
-            informasjon: "Vær oppmerksom på at påbegynte søknader slettes etter {{DAYS_BEFORE_DELETION}} dager.",
             slettes: "Slettes",
         },
         sidetittel: {

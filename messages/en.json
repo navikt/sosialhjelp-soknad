@@ -1,14 +1,20 @@
 {
-  "Informasjon": {
-    "title": "Application for financial assistance"
+  "Hovedmeny": {
+    "title": "Søknad om økonomisk sosialhjelp"
   },
   "EttersendDokuPanel": {
-    "title": "Send documentation for an application you have submitted",
-    "text": {
-      "p1": "Documentation can be sent to applications you have previously submitted.",
-      "p2": "Go to the list of <lenke>your social assistance applications</lenke>",
-      "p3": "Open the application that you would like to forward documentation to",
-      "p4": "Upload the documents you are going to send under “Your documents”"
+    "title": "Send dokumentasjon til en søknad du har sendt inn",
+    "informasjon": {
+      "del1": "Dokumentasjon kan sendes til søknader du har sendt inn tidligere.",
+      "del2": "Gå til listen over <lenke>dine sosialhjelpssøknader</lenke>",
+      "del3": "Åpne søknaden du ønsker å ettersende dokumenter til",
+      "del4": "Last opp dokumentene du skal ettersende under “dine vedlegg”",
+      "url": "dine sosialhjelpssøknader"
     }
+  },
+  "PabegynteSoknaderPanel": {
+    "title": "Continue with an application you have started",
+    "pabegynte": "{count, plural, =1 {one started application} other {# started applications}}",
+    "slettesEtter": "Please note that the started applications will be deleted after {DAYS_BEFORE_DELETION} days."
   }
 }

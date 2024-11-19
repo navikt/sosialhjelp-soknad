@@ -60,16 +60,10 @@ export const skjema = {
             gjenopptatt:
                 "Vi jobbar med å gjere søknaden betre, og det kan difor ha skjedd endringar sidan sist du var logga inn. Dette betyr at spørsmål og informasjon kan ha blitt lagt til eller fjerna.",
         },
-        fortsett: {
-            soknad: "Hald fram på ein søknad du har byrja på",
-        },
         opprettsoknadfeilet: "Det oppstod ein feil då søknaden skulle opprettast. Prøv igjen seinare.",
         paabegynt: {
-            soknader_one: "{{count}} påbyrja søknad",
-            soknader_other: "{{count}} påbyrja søknader",
             sistOppdatert: "Sist oppdatert",
             slettes: "Blir sletta",
-            informasjon: "Ver merksam på at påbyrja søknader blir sletta etter {{DAYS_BEFORE_DELETION}} dagar.",
         },
         sidetittel: {
             kortnavn: "Søknad",
