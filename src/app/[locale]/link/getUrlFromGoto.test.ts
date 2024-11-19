@@ -1,5 +1,5 @@
 import {describe, it, expect, vi} from "vitest";
-import {BASE_PATH} from "../../lib/constants";
+import {BASE_PATH} from "../../../lib/constants.ts";
 import {logger} from "@navikt/next-logger";
 import {getUrlFromGoto} from "./getUrlFromGoto.ts";
 

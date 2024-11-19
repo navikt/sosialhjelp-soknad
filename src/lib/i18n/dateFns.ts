@@ -1,4 +1,4 @@
-import {fallbackLng, isSupportedLanguage, SupportedLanguage} from "./common.ts";
+import {DEFAULT_LANGUAGE, isSupportedLanguage, SupportedLanguage} from "./common.ts";
 import {enGB, Locale, nb, nn} from "date-fns/locale";
 import i18n from "i18next";
 import {logWarning} from "../log/loggerUtils.ts";
@@ -17,8 +17,8 @@ export const getDateFnLocale = () => {
 
     // Ensure that the current language is supported
     if (!isSupportedLanguage(language)) {
-        logWarning(`getDateFnLocale: Unsupported language "${language}", falling back to ${fallbackLng}`);
-        return dateFnLocales[fallbackLng];
+        logWarning(`getDateFnLocale: Unsupported language "${language}", falling back to ${DEFAULT_LANGUAGE}`);
+        return dateFnLocales[DEFAULT_LANGUAGE];
     }
 
     return dateFnLocales[language];

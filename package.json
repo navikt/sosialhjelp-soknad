@@ -40,6 +40,7 @@
         "libphonenumber-js": "^1.11.14",
         "markdown-to-jsx": "^7.6.2",
         "next": "^15",
+        "next-intl": "^3.25.1",
         "next-logger": "^5.0.1",
         "pino": "^9.5.0",
         "postcss-import": "^16.1.0",
