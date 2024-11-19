@@ -6,6 +6,8 @@ import {notFound} from "next/navigation";
 import {isSupportedLanguage} from "../../lib/i18n/common.ts";
 import {getMessages} from "next-intl/server";
 import {NextIntlClientProvider} from "next-intl";
+import "../../index.css";
+import "@navikt/ds-css";
 
 export const dynamic = "force-dynamic";
 
