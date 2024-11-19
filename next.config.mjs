@@ -7,7 +7,7 @@ const nextConfig = {
     // FIXME: Use environment variables
     basePath: "/sosialhjelp/soknad",
     // For å unngå issues med nginx
-    trailingSlash: true,
+    trailingSlash: false,
     experimental: {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
     },
