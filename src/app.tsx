@@ -28,6 +28,7 @@ import {Providers} from "./lib/providers/Providers.tsx";
 import {isSupportedLanguage} from "./lib/i18n/common.ts";
 import i18n from "./lib/i18n/reacti18Next.ts";
 import {getPathPrefixIncludingLocale} from "./getPathPrefixIncludingLocale.ts";
+import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
 
 configureLogger({basePath: BASE_PATH});
 
@@ -56,10 +57,16 @@ export default function App() {
         };
     }
 
+    const [basename, path] = getPathPrefixIncludingLocale();
+
+    onLanguageSelect(({locale: language, url}) =>
+        setParams({language}).then(() => window.location.assign(`${url}/${path}`))
+    );
+
     return (
         <Suspense fallback={<ApplicationSpinner />}>
             <Providers>
-                <BrowserRouter basename={getPathPrefixIncludingLocale()}>
+                <BrowserRouter basename={basename}>
                     <Routes>
                         <Route errorElement={<SideIkkeFunnet />}>
                             <Route index path={`/`} element={<Informasjon />} />
