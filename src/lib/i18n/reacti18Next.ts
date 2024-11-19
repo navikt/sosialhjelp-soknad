@@ -10,6 +10,7 @@ i18n.use(Backend)
     .use(initReactI18next)
     // for all options read: https://www.i18next.com/overview/configuration-options
     .init({
+        lng: document.documentElement.lang,
         // Added January 2023 by Tore Sinding Bekkedal
         // For compatibility with legacy design components, we make t() return string,
         // and not string | null. Might be irrelevant at some future point.

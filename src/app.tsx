@@ -25,8 +25,6 @@ import {configureLogger} from "@navikt/next-logger";
 import "./faro";
 import {initAmplitude} from "./lib/amplitude/Amplitude.tsx";
 import {Providers} from "./lib/providers/Providers.tsx";
-import {isSupportedLanguage} from "./lib/i18n/common.ts";
-import i18n from "./lib/i18n/reacti18Next.ts";
 import {getPathPrefixIncludingLocale} from "./getPathPrefixIncludingLocale.ts";
 import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
 
@@ -38,10 +36,6 @@ const RedirectToStandard = () => {
 };
 
 export default function App() {
-    const htmlLang = document.documentElement.lang;
-    if (!isSupportedLanguage(htmlLang)) throw new Error(`Unsupported language: ${htmlLang}`);
-    i18n.changeLanguage(htmlLang);
-
     initAmplitude();
 
     // @ts-expect-error Polyfill for react-pdf, se https://github.com/wojtekmaj/react-pdf/issues/1831
