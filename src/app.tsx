@@ -23,6 +23,7 @@ import Inntekt from "./sider/kort/04-inntekt";
 import {BASE_PATH} from "./lib/constants";
 import {configureLogger} from "@navikt/next-logger";
 import "./faro";
+import "./lib/i18n/reacti18Next.ts";
 import {initAmplitude} from "./lib/amplitude/Amplitude.tsx";
 import {Providers} from "./lib/providers/Providers.tsx";
 import {getPathPrefixIncludingLocale} from "./getPathPrefixIncludingLocale.ts";
