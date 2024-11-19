@@ -41,8 +41,8 @@ type SoknadConfig = {
     proxy?: SoknadApiProxyOptions;
     dekorator: DekoratorOptions;
 
-    faro: {
-        url: string | undefined;
+    faro?: {
+        url: string;
     };
 };
 
@@ -71,9 +71,9 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         innsynURL: "http://localhost:3000/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         logoutURL: "http://localhost:3008/",
-        faro: {
-            url: undefined, //"http://localhost:12347/collect",
-        },
+        // faro: {
+        //     url: "http://localhost:12347/collect",
+        // },
     },
     mock: {
         featureFlags: {
