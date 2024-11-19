@@ -1,7 +1,7 @@
 // This function derives the goto parameter from a Request.url string.
 // To mitigate circular redirect bugs, it will redirect to the base path if the goto parameter is "/link".
 // @returns BASE_PATH if the goto parameter is null or "/link". Otherwise, the goto parameter minus the trailing slash.
-import {BASE_PATH} from "../../lib/constants.ts";
+import {BASE_PATH} from "../../../lib/constants.ts";
 import {logger} from "@navikt/next-logger";
 
 export const getUrlFromGoto = (gotoParam: string | null) => {

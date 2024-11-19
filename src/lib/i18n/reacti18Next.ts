@@ -3,7 +3,7 @@ import {initReactI18next} from "react-i18next";
 import Backend from "i18next-http-backend";
 import {ENABLE_DEBUG_I18N} from "../constants.ts";
 import {resources} from "./resources.ts";
-import {defaultNS, fallbackLng} from "./common.ts";
+import {defaultNS, DEFAULT_LANGUAGE} from "./common.ts";
 
 i18n.use(Backend)
     // pass the i18n instance to react-i18next.
@@ -15,7 +15,7 @@ i18n.use(Backend)
         // and not string | null. Might be irrelevant at some future point.
         // See also src/@types/i18next.d.ts
         returnNull: false,
-        fallbackLng,
+        fallbackLng: DEFAULT_LANGUAGE,
         ns: ["skjema"],
         defaultNS,
         resources,

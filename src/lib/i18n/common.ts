@@ -7,7 +7,7 @@ export type DigisosLanguageKey<Ns extends Namespace = DefaultNamespace, TPrefix 
     TPrefix
 >;
 export const SUPPORTED_LANGUAGES = ["en", "nb", "nn"] as const;
-export const fallbackLng = "nb";
+export const DEFAULT_LANGUAGE = "nb";
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 export const isSupportedLanguage = (lang: string): lang is SupportedLanguage =>
     SUPPORTED_LANGUAGES.includes(lang as SupportedLanguage);
