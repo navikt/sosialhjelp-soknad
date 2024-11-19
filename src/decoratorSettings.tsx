@@ -9,9 +9,9 @@ export const DECORATOR_SETTINGS: DecoratorFetchProps = {
     serviceDiscovery,
     params: {
         availableLanguages: [
-            {locale: "nb", url: `${BASE_PATH}/nb/`, handleInApp: true},
-            {locale: "nn", url: `${BASE_PATH}/nn/`, handleInApp: true},
-            {locale: "en", url: `${BASE_PATH}/en/`, handleInApp: true},
+            {locale: "nb", url: `${BASE_PATH}/nb`, handleInApp: true},
+            {locale: "nn", url: `${BASE_PATH}/nn`, handleInApp: true},
+            {locale: "en", url: `${BASE_PATH}/en`, handleInApp: true},
         ],
         simple: true,
         feedback: false,

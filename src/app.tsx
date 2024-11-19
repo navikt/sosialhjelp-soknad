@@ -55,7 +55,7 @@ export default function App() {
     const [basename, path] = getPathPrefixIncludingLocale();
 
     onLanguageSelect(({locale: language, url}) =>
-        setParams({language}).then(() => window.location.assign(`${url}/${path}`))
+        setParams({language}).then(() => window.location.assign(`${url}${path}`))
     );
 
     return (
