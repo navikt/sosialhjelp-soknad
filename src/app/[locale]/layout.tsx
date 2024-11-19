@@ -1,7 +1,7 @@
 import {fetchDecoratorReact} from "@navikt/nav-dekoratoren-moduler/ssr";
 import Script from "next/script";
 import {DECORATOR_SETTINGS} from "../../decoratorSettings.tsx";
-import {Driftsmeldinger} from "../Driftsmeldinger.tsx";
+import {Driftsmeldinger} from "../../lib/driftsmeldinger/Driftsmeldinger.tsx";
 import {notFound} from "next/navigation";
 import {isSupportedLanguage} from "../../lib/i18n/common.ts";
 import {getMessages} from "next-intl/server";
@@ -26,6 +26,8 @@ export default async function RootLayout({
 
     const messages = await getMessages();
 
+    // locale blir hentet via middleware.ts,
+    // og html lang leses (som document.documentElement.lang) av både analytics og klientside i18n
     return (
         <html lang={locale}>
             <head>
