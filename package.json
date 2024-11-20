@@ -54,6 +54,7 @@
         "react-scroll": "^1.9.0",
         "react-use": "^17.5.1",
         "server-only": "^0.0.1",
+        "stacktracey": "^2.1.8",
         "styled-components": "^6.1.13",
         "zod": "^3.23.8"
     },
