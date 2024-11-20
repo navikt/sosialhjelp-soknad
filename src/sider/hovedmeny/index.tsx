@@ -4,8 +4,6 @@ import {NySoknadPanel} from "./paneler/NySoknadPanel.tsx";
 import {PabegynteSoknaderPanel} from "./paneler/PabegynteSoknader";
 import {EttersendDokuPanel} from "./paneler/EttersendDokuPanel";
 import {Heading, VStack} from "@navikt/ds-react";
-import digisosConfig from "../../lib/config.ts";
-import DeveloperToolkit from "../../lib/components/appHeader/DeveloperToolkit.tsx";
 import {useTranslations} from "next-intl";
 import {useContextSessionInfo} from "../../lib/providers/useContextSessionInfo.ts";
 
@@ -18,7 +16,7 @@ export const Informasjon = () => {
     return (
         <main aria-labelledby={"app-heading"}>
             <title>{t("title")}</title>
-            {digisosConfig.showDevPanel && <DeveloperToolkit />}
+            {/*{digisosConfig.showDevPanel && <DeveloperToolkit />}*/}
             <div
                 className="max-w-lg lg:max-w-3xl w-full mx-auto gap-6 max-lg:px-2 py-6 lg:gap-16 lg:py-16 flex flex-col grow"
                 role={"none"}
