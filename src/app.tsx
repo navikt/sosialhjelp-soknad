@@ -62,7 +62,14 @@ export default function App() {
     return (
         <Suspense fallback={<ApplicationSpinner />}>
             <QueryClientProvider client={queryClient}>
-                <BrowserRouter basename={basename}>
+                <BrowserRouter
+                    basename={basename}
+                    future={{
+                        // these are just to stop react-router-dom from spamming
+                        v7_relativeSplatPath: true,
+                        v7_startTransition: true,
+                    }}
+                >
                     <Routes>
                         <Route errorElement={<SideIkkeFunnet />}>
                             <Route index path={`/`} element={<Informasjon />} />
