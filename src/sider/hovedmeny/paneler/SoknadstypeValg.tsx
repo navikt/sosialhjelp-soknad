@@ -1,4 +1,4 @@
-import {useFeatureFlags} from "../../../lib/config.ts";
+import {useLegacyFeatureFlags} from "../../../lib/config.ts";
 import {Box, Radio, RadioGroup} from "@navikt/ds-react";
 import * as React from "react";
 
@@ -8,7 +8,7 @@ interface SoknadstypeValgProps {
 }
 
 export const SoknadstypeValg = ({valg, setValg}: SoknadstypeValgProps) => {
-    if (!useFeatureFlags().soknadstypeValg) return null;
+    if (!useLegacyFeatureFlags().soknadstypeValg) return null;
 
     return (
         <Box className={"flex justify-center mb-8"}>
