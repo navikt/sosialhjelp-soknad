@@ -21,6 +21,9 @@ const Inntekt = () => {
         navigate(`../${page}`);
     };
 
+    console.log("t(begrunnelse.kort.behov.dokumentasjon.tittel)}", t("begrunnelse.kort.behov.dokumentasjon.tittel"));
+    console.log("t(situasjon.kort.dokumentasjon.description)", t("situasjon.kort.dokumentasjon.description"));
+
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={4} onStepChange={gotoPage} />
@@ -36,7 +39,7 @@ const Inntekt = () => {
                 <FileUploadBox
                     sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                     undertekst={t("situasjon.kort.dokumentasjon.description")}
-                    dokumentasjonType={"annet|annet"}
+                    steg={"4"}
                 />
                 <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
             </SkjemaStegBlock>

@@ -24,6 +24,9 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
 
+    console.log("dokumentasjonType", dokumentasjonType);
+    console.log("documents", documents);
+
     const handleApiError = (reason: any) =>
         setError(t(isSoknadApiError(reason) ? DigisosApiErrorMap[reason.error] : REST_FEIL.GENERELL_FEIL));
 

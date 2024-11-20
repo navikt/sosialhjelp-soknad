@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {BodyShort, Button, Heading, Modal, Select} from "@navikt/ds-react";
+import {Alert, BodyShort, Button, Heading, Modal, Select} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 
 import {pdfjs} from "react-pdf";
@@ -8,6 +8,8 @@ import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import {FilePreviewButtons} from "./FilePreviewButtons";
 import {FilePreviewDisplay} from "./FilePreviewDisplay";
+import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
+import {useValgtKategoriContext} from "../../../KortKategorierContextProvider.tsx";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 
@@ -17,6 +19,7 @@ interface ForhandsvisningModalProps {
     onAccept: () => void;
     onClose: () => void;
     onDelete: () => void;
+    steg: any;
 }
 
 export const ForhandsvisningVedleggModal = ({
@@ -25,10 +28,15 @@ export const ForhandsvisningVedleggModal = ({
     onAccept,
     onClose,
     //onDelete,
+    steg,
 }: ForhandsvisningModalProps) => {
     const [isFullscreen, setFullscreen] = useState<boolean>(false);
     const {t} = useTranslation();
+    const isKortSoknad = useCurrentSoknadIsKort();
+    const {valgtKategoriData, setValgtKategoriData} = useValgtKategoriContext();
+    const [valgkat, setvalgkat] = useState("");
 
+    console.log("valgkat", valgkat);
     return (
         <Modal
             open={true}
@@ -75,14 +83,37 @@ export const ForhandsvisningVedleggModal = ({
             </Modal.Body>
             <Modal.Footer className={"!block space-y-4"}>
                 <BodyShort>{t("vedlegg.forhandsvisning.info")}</BodyShort>
-                <div>
-                    <Select label="Hva har du lastet opp?">
-                        <option value="">Velg beskrivelse</option>
-                        <option value="norge">Norge</option>
-                        <option value="sverige">Sverige</option>
-                        <option value="danmark">Danmark</option>
-                    </Select>
-                </div>
+                {isKortSoknad && steg.steg === "4" && (
+                    <div>
+                        <div>
+                            <Select
+                                label={"Velg en kategori for dokumentet"}
+                                onChange={(event: any) => {
+                                    setvalgkat(event);
+                                    setValgtKategoriData(event);
+                                }}
+                            >
+                                <option value="">Velg kategori</option>
+                                <option value="faktura|barnehage">Barnehage</option>
+                                <option value="faktura|sfo">SFO/AKS</option>
+                                <option value="husbanken|vedtak">Bostøtte fra Husbanken</option>
+                                <option value="husleiekontrakt|husleiekontrakt">Husleie</option>
+                                <option value="kontooversikt">Kontooversikt</option>
+                                <option value="lonnslipp">Lønnslipp</option>
+                                <option value="faktura|strom">Strøm og oppvarming</option>
+                                <option value="stipendOgLan">Stipend og lån fra Lånekassen</option>
+                                <option value="annet|annet">Annet</option>
+                            </Select>
+                        </div>
+                        <div>
+                            {valgtKategoriData && valgtKategoriData.valgtKategorier === "annet|annet" && (
+                                <Alert variant="info" className={"justify-center"}>
+                                    Om du ikke velger en kategori blir dokumentet lastet opp som "Annet".
+                                </Alert>
+                            )}
+                        </div>
+                    </div>
+                )}
                 <div />
                 <div className={"w-fit space-x-4"}>
                     <Button variant="primary" onClick={onAccept}>

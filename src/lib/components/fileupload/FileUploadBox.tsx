@@ -13,27 +13,31 @@ import {
 } from "../../../sider/08-vedlegg/upload/DokumentUploader";
 import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
 import {VedleggFrontendType} from "../../../generated/model";
+import {useValgtKategoriContext} from "../../../KortKategorierContextProvider.tsx";
 
 interface Props {
     sporsmal: string;
     undertekst: string;
-    dokumentasjonType: VedleggFrontendType;
+    steg: string;
 }
 
-const FileUploadBox = ({sporsmal, undertekst, dokumentasjonType}: Props): React.JSX.Element => {
+const FileUploadBox = ({sporsmal, undertekst, steg}: Props): React.JSX.Element => {
     return (
         <div className={"rounded-md bg-surface-action-subtle p-8"}>
             <Heading level={"4"} size={"small"} spacing>
                 {sporsmal}
             </Heading>
             <BodyShort spacing>{undertekst}</BodyShort>
-            <Dokumenter dokumentasjonType={dokumentasjonType} />
+            <Dokumenter steg={steg} />
         </div>
     );
 };
 
-const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType}) => {
+const Dokumenter = (steg: any) => {
     const {t} = useTranslation();
+    const {valgtKategoriData} = useValgtKategoriContext();
+    const dokumentasjonType = valgtKategoriData.valgtKategorier as VedleggFrontendType;
+
     const {
         deleteDocument,
         documents,
@@ -45,6 +49,7 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType
     const {conversionPending} = usePDFConverter();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
     const isPending = conversionPending || conversionPending;
+
     return (
         <div className={"space-y-2"}>
             <FaroErrorBoundary fallback={(error, resetError) => <UploadError error={error} resetError={resetError} />}>
@@ -56,6 +61,7 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType
                         setShowSuccessAlert(true);
                     }}
                     resetAlerts={() => setShowSuccessAlert(false)}
+                    steg={steg}
                 />
             </FaroErrorBoundary>
 
@@ -78,17 +84,20 @@ const DokumentUploader = ({
     visSpinner,
     isLoading,
     resetAlerts,
+    steg,
 }: {
     isLoading: boolean;
     visSpinner: boolean;
     doUpload: (document: File) => Promise<void>;
     resetAlerts: () => void;
+    steg: string;
 }) => {
     const {t} = useTranslation();
     const vedleggElement = React.useRef<HTMLInputElement>(null);
     const [previewFile, setPreviewFile] = React.useState<File | null>(null);
     const {conversionPending, conversionError, convertToPDF} = usePDFConverter();
     const isPending = visSpinner || conversionPending;
+    //const { setValgtKategoriData } = useValgtKategoriContext();
 
     if (conversionError) throw new PdfConversionError(`conversion error: ${conversionError}`);
 
@@ -133,7 +142,7 @@ const DokumentUploader = ({
             />
             {previewFile && (
                 <ForhandsvisningVedleggModal
-                    header={"abc"}
+                    header={"Dokumentasjon"}
                     file={previewFile}
                     onAccept={async () => {
                         if (!previewFile) return;
@@ -145,6 +154,7 @@ const DokumentUploader = ({
                     onDelete={() => {
                         setPreviewFile(null);
                     }}
+                    steg={steg}
                 />
             )}
         </div>
