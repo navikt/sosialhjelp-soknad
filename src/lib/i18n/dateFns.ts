@@ -1,6 +1,5 @@
 import {DEFAULT_LANGUAGE, isSupportedLanguage, SupportedLanguage} from "./common.ts";
 import {enGB, Locale, nb, nn} from "date-fns/locale";
-import i18n from "i18next";
 import {logWarning} from "../log/loggerUtils.ts";
 
 const dateFnLocales: Record<SupportedLanguage, Locale> = {
@@ -13,7 +12,8 @@ const dateFnLocales: Record<SupportedLanguage, Locale> = {
  * Logs a warning if the language is not supported, and falls back to "nb".
  */
 export const getDateFnLocale = () => {
-    const {language} = i18n;
+    // FIXME: will inhibit SSR with i18next
+    const language = document.documentElement.lang;
 
     // Ensure that the current language is supported
     if (!isSupportedLanguage(language)) {
