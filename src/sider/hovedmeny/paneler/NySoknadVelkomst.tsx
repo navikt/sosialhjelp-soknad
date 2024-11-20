@@ -1,13 +1,13 @@
 import {BodyLong, Heading} from "@navikt/ds-react";
 import * as React from "react";
-import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs.ts";
 import StartNySoknadIllustrasjon from "../../../lib/components/svg/illustrasjoner/StartNySoknadIllustrasjon.tsx";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude.tsx";
 import {useTranslations} from "next-intl";
 import {ReactNode} from "react";
+import {useContextSessionInfo} from "../../../lib/providers/useContextSessionInfo.ts";
 
 export const NySoknadVelkomst = () => {
-    const {data: sessionInfo} = useGetSessionInfo();
+    const sessionInfo = useContextSessionInfo();
     const t = useTranslations("NySoknadVelkomst");
 
     const amplitudeLenke = (chunks: ReactNode) => (

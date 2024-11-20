@@ -3,16 +3,14 @@ import {PersonbeskyttelseFeilmelding} from "./PersonbeskyttelseFeilmelding";
 import {NySoknadPanel} from "./paneler/NySoknadPanel.tsx";
 import {PabegynteSoknaderPanel} from "./paneler/PabegynteSoknader";
 import {EttersendDokuPanel} from "./paneler/EttersendDokuPanel";
-import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs";
-import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner.tsx";
 import {Heading, VStack} from "@navikt/ds-react";
 import digisosConfig from "../../lib/config.ts";
 import DeveloperToolkit from "../../lib/components/appHeader/DeveloperToolkit.tsx";
 import {useTranslations} from "next-intl";
+import {useContextSessionInfo} from "../../lib/providers/useContextSessionInfo.ts";
 
 export const Informasjon = () => {
-    const {data: {userBlocked, open, numRecentlySent} = {userBlocked: false, open: []}, isPending} =
-        useGetSessionInfo();
+    const {userBlocked, open, numRecentlySent} = useContextSessionInfo();
     const t = useTranslations("Informasjon");
 
     if (userBlocked) return <PersonbeskyttelseFeilmelding />;
@@ -33,15 +31,11 @@ export const Informasjon = () => {
                 >
                     {t("title")}
                 </Heading>
-                {isPending ? (
-                    <ApplicationSpinner />
-                ) : (
-                    <VStack gap={"5"}>
-                        <NySoknadPanel defaultOpen={open?.length === 0} />
-                        <PabegynteSoknaderPanel />
-                        {!!numRecentlySent && <EttersendDokuPanel />}
-                    </VStack>
-                )}
+                <VStack gap={"5"}>
+                    <NySoknadPanel defaultOpen={open?.length === 0} />
+                    <PabegynteSoknaderPanel />
+                    {!!numRecentlySent && <EttersendDokuPanel />}
+                </VStack>
             </div>
         </main>
     );

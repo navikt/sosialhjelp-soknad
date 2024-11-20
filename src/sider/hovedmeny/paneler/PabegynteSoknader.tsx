@@ -3,16 +3,15 @@ import {FileContent} from "@navikt/ds-icons";
 import {BodyShort, ExpansionCard} from "@navikt/ds-react";
 import React from "react";
 import {useTranslations} from "next-intl";
-import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {PabegyntSoknadView} from "./PabegyntSoknadView.tsx";
 import {HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
+import {useContextSessionInfo} from "../../../lib/providers/useContextSessionInfo.ts";
 
 export const DAYS_BEFORE_DELETION = 14;
 
 export const PabegynteSoknaderPanel = () => {
-    const {data: session} = useGetSessionInfo();
-    const openSoknader = session?.open;
-    const count = openSoknader?.length;
+    const {open} = useContextSessionInfo();
+    const count = open?.length;
 
     const t = useTranslations("PabegynteSoknaderPanel");
 
@@ -37,13 +36,13 @@ export const PabegynteSoknaderPanel = () => {
                     {t("slettesEtter", {DAYS_BEFORE_DELETION})}
                 </BodyShort>
                 <div className={"flex gap-2 flex-col"}>
-                    {openSoknader?.map(({behandlingsId, sistOppdatert, isKort}) => (
+                    {open?.map(({behandlingsId, sistOppdatert, isKort}) => (
                         <PabegyntSoknadView
                             key={behandlingsId}
                             behandlingsId={behandlingsId}
                             sistOppdatert={sistOppdatert}
                             isKort={isKort}
-                            antallPabegynteSoknader={openSoknader.length}
+                            antallPabegynteSoknader={open.length}
                         />
                     ))}
                 </div>

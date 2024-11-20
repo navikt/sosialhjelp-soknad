@@ -7,12 +7,12 @@ import {useTranslation} from "react-i18next";
 import {isSoknadApiError} from "../../api/error/isSoknadApiError";
 import {DigisosApiErrorMap} from "../../api/error/DigisosApiErrorMap";
 import {REST_FEIL} from "../../api/error/restFeil";
-import {useGetSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
 import {useHentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useDeleteDokument} from "../../../generated/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
 import {humanizeFilesize} from "../../../sider/08-vedlegg/lib/humanizeFilesize";
 import {axiosInstance} from "../../api/axiosInstance";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
+import {useContextSessionInfo} from "../../providers/useContextSessionInfo.ts";
 
 const TEN_MEGABYTE_COMPAT_FALLBACK = 10 * 1024 * 1024;
 
@@ -27,11 +27,11 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
     const handleApiError = (reason: any) =>
         setError(t(isSoknadApiError(reason) ? DigisosApiErrorMap[reason.error] : REST_FEIL.GENERELL_FEIL));
 
-    const {data: sessionInfo, isPending: isSessionInfoPending} = useGetSessionInfo();
+    const sessionInfo = useContextSessionInfo();
     const {data: dokumentasjon, isPending: isDokumentasjonPending} = useHentOkonomiskeOpplysninger(behandlingsId, {});
     const {mutate: mutateDelete, isPending: isDeletionPending} = useDeleteDokument();
 
-    const isPending = isSessionInfoPending || isDokumentasjonPending || isDeletionPending || uploadPercent !== null;
+    const isPending = isDokumentasjonPending || isDeletionPending || uploadPercent !== null;
 
     /**
      * When the data on the server has changed, we automatically update the client-side list.

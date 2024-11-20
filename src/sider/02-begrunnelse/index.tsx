@@ -11,7 +11,6 @@ import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSp
 import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 import useKategorier from "../../lib/hooks/data/useKategorier";
 import KategorierChips from "../../lib/components/KategorierChips";
-import {useFeatureToggles} from "../../generated/feature-toggle-ressurs/feature-toggle-ressurs";
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/SkjemaStegErrorSummary.tsx";
 import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
@@ -21,6 +20,7 @@ import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepp
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {useNavigate} from "react-router";
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
+import {useContextFeatureToggles} from "../../lib/providers/useContextFeatureToggles.ts";
 
 const MAX_LEN_HVA = 500;
 const MAX_LEN_HVORFOR = 600;
@@ -57,7 +57,7 @@ export const Begrunnelse = () => {
     const {t} = useTranslation("skjema");
     // TODO: Avklare denne. Er det behov lenger?
     const {begrunnelseNyTekst} = useLegacyFeatureFlags();
-    const {data: featureFlagData, isPending: featureFlagsPending} = useFeatureToggles();
+    const featureFlagData = useContextFeatureToggles();
     const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
     const {forsorgerplikt} = useForsorgerplikt();
     const {
@@ -96,7 +96,7 @@ export const Begrunnelse = () => {
             <SkjemaStegBlock>
                 <SkjemaStegTitle title={t(SkjemaHeadings[2].tittel)} icon={SkjemaHeadings[2].ikon} />
                 <SkjemaStegErrorSummary errors={errors} />
-                {isPending || featureFlagsPending ? (
+                {isPending ? (
                     <ApplicationSpinner />
                 ) : (
                     <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>

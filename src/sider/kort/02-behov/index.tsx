@@ -21,7 +21,7 @@ import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegSt
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {useAnalyticsContext} from "../../../lib/providers/useAnalyticsContext.ts";
-import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
+import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
 
 const MAX_LEN_HVA_ER_ENDRET = 500;
 const MAX_LEN_HVA_SOKES_OM = 500;
@@ -64,16 +64,7 @@ const mapToTextOrSubcategoriesText = ({subCategories, text}: SelectableCategory)
 const Behov = () => {
     const {t} = useTranslation("skjema");
 
-    // Don't have to fetch feature flags more than once
-    const {data: featureFlagData, isPending: featureFlagsPending} = useFeatureToggles({
-        query: {
-            refetchOnWindowFocus: false,
-            refetchOnMount: false,
-            refetchOnReconnect: false,
-            retry: false,
-            staleTime: 24 * 60 * 60,
-        },
-    });
+    const featureFlagData = useContextFeatureToggles();
     const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
 
     const {forsorgerplikt} = useForsorgerplikt();
@@ -128,7 +119,7 @@ const Behov = () => {
             navigate(`../${page}`);
         })();
 
-    const isPending = kategorierPending || situasjonPending || featureFlagsPending;
+    const isPending = kategorierPending || situasjonPending;
     const isError = kategorierError || situasjonError;
 
     return (

@@ -1,7 +1,6 @@
 import {useHentBegrunnelse} from "../../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useEffect, useReducer} from "react";
-import {useFeatureToggles} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs";
 import {DigisosLanguageKey} from "../../i18n/common.ts";
 import {
     TrainIcon,
@@ -19,6 +18,7 @@ import {useBegrunnelse} from "./useBegrunnelse";
 import Tann from "../../components/svg/illustrasjoner/Tann.tsx";
 import Eple from "../../components/svg/illustrasjoner/Eple.tsx";
 import TSkjorte from "../../components/svg/illustrasjoner/TSkjorte.tsx";
+import {useContextFeatureToggles} from "../../providers/useContextFeatureToggles.ts";
 
 interface Category {
     key: DigisosLanguageKey;
@@ -162,7 +162,7 @@ const useKategorier = <T extends KategorierFormValues>(
     const toggle = (category: string, subCategory?: string) => {
         return dispatch({type: "toggle", category, subCategory});
     };
-    const {data: featureFlagData} = useFeatureToggles();
+    const featureFlagData = useContextFeatureToggles();
     const {put: doPut, isPending, isError} = useBegrunnelse();
     const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"];
 
