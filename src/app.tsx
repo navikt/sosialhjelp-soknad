@@ -71,7 +71,7 @@ export default function App() {
                     }}
                 >
                     <Routes>
-                        <Route errorElement={<SideIkkeFunnet />}>
+                        <Route>
                             <Route index path={`/`} element={<Informasjon />} />
                             <Route path={`informasjon`} loader={() => redirect("/", 301)} />
                             <Route path={`feil`} element={<ServerFeil />} />
