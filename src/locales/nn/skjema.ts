@@ -467,14 +467,6 @@ export const skjema = {
     },
     feilside: {
         feilkode: "Feilkode",
-        ikkefunnet: {
-            feilmelding:
-                "Dersom det gjeld ein søknad som allereie er innsend/sletta, går du <lenke>tilbake til startsida</lenke>.",
-            returner: {
-                knapp: "Gå til startside for sosialhjelp",
-            },
-            tittel: "Sida blei ikkje funnen",
-        },
         lenke: {
             meldfra: {
                 tekst: "Meld frå om feil",

@@ -474,14 +474,6 @@ export const skjema = {
     },
     feilside: {
         feilkode: "Error code",
-        ikkefunnet: {
-            feilmelding:
-                "If this concerns a completed submitted/deleted application, <lenke>return to start page</lenke>.",
-            returner: {
-                knapp: "Return to the start page",
-            },
-            tittel: "Page not found",
-        },
         lenke: {
             meldfra: {
                 tekst: "Report error",

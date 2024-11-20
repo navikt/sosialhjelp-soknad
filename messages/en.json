@@ -74,5 +74,10 @@
   },
   "AppHeader": {
     "title": "Application for financial assistance"
+  },
+  "IkkeFunnet": {
+    "title": "Page not found",
+    "feilmelding": "If this concerns a submitted/deleted application, return to the home page.",
+    "lenkeTilHovedmeny": "To the home page for the application"
   }
 }

@@ -74,5 +74,10 @@
   },
   "AppHeader": {
     "title": "Søknad om økonomisk sosialhjelp"
+  },
+  "IkkeFunnet": {
+    "title": "Sida blei ikkje funnen",
+    "feilmelding": "Dersom det gjeld ein søknad som allereie er innsend/sletta, går du tilbake til startsida.",
+    "lenkeTilHovedmeny": "Til startsida for søknad"
   }
 }
