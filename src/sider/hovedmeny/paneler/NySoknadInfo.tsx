@@ -7,7 +7,6 @@ import {useNavigate} from "react-router";
 import {useTranslations} from "next-intl";
 import {hentXsrfCookie, opprettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import {createSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
-import {NedetidPanel} from "../../../lib/components/NedetidPanel";
 import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude";
 import {SoknadstypeValg} from "./SoknadstypeValg.tsx";
 import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
@@ -57,7 +56,6 @@ export const NySoknadInfo = () => {
     return (
         <>
             <NySoknadVelkomst />
-            <NedetidPanel varselType={"infoside"} />
             {startSoknadError && <Alert variant="error">{t("feilet")}</Alert>}
             <div className={"text-center"}>
                 <SoknadstypeValg valg={soknadstype} setValg={setSoknadstype} />
