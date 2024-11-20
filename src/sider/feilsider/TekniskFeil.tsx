@@ -1,28 +1,15 @@
 import * as React from "react";
-import {useMemo} from "react";
-import {useTitle} from "../../lib/hooks/common/useTitle";
+import {useTitle} from "../../lib/hooks/common/useTitle.ts";
 import {SystemError} from "@navikt/ds-icons";
 import {BodyShort, Button, Heading} from "@navikt/ds-react";
-import {useLocation} from "react-router-dom";
-import {AppHeader} from "../../lib/components/appHeader/AppHeader";
-import {logError} from "../../lib/log/loggerUtils";
-import {logger} from "@navikt/next-logger";
+import {AppHeader} from "../../lib/components/appHeader/AppHeader.tsx";
 import {TrengerDuRaskHjelp} from "./TrengerDuRaskHjelp.tsx";
 import {useTranslations} from "next-intl";
 import {ErrorPageColumnarLayout} from "./ErrorPageColumnarLayout.tsx";
+import {ErrorDump} from "./ErrorDump.tsx";
 
-const useQuery = ({search}: Pick<Location, "search">) => useMemo(() => new URLSearchParams(search), [search]);
-
-export const ServerFeil = () => {
-    const t = useTranslations("ServerFeil");
-    const reason = useQuery(useLocation()).get("reason");
-
-    if (process.env.NEXT_PUBLIC_DIGISOS_ENV !== "localhost") {
-        // TODO: Gi mer kontekst til dette, men det er nyttig bare å flagge dette
-        logger.error(`En bruker har sett ServerFeil - error: ${reason}, referrer: ${document.referrer}`);
-
-        logError(`Viser feilside, error: ${reason}, referrer: ${document.referrer}`);
-    }
+export const TekniskFeil = ({error}: {error: Error}) => {
+    const t = useTranslations("TekniskFeil");
 
     useTitle(`Feilside - ${document.location.hostname}`);
     return (
@@ -49,9 +36,12 @@ export const ServerFeil = () => {
                     </Button>
                 </div>
                 <BodyShort spacing>{t("problemetErLogget")}</BodyShort>
+                {["localhost", "dev-fss", "dev-gcp"].includes(process.env.NEXT_PUBLIC_DIGISOS_ENV!) && error && (
+                    <ErrorDump error={error} />
+                )}
             </ErrorPageColumnarLayout>
             <TrengerDuRaskHjelp />
         </section>
     );
 };
-export default ServerFeil;
+export default TekniskFeil;

@@ -54,7 +54,7 @@
     "title": "Beklager",
     "text": "Du kan dessverre ikke bruke den digitale søknaden om økonomisk sosialhjelp.\nPersoner med kode 6 eller 7 kan ikke søke om økonomisk sosialhjelp digitalt.\nTa kontakt med <lenke>ditt lokale Nav-kontor</lenke> for å få hjelp til å søke."
   },
-  "ServerFeil": {
+  "TekniskFeil": {
     "title": "Vi beklager!",
     "feilmelding": "En teknisk feil har oppstått.",
     "anbefaling": "Vi anbefaler at du prøver på nytt.",
@@ -71,5 +71,8 @@
     "lenkeTilMinSide": "Gå til Min Side",
     "sendBugRapport": "Send feilrapport",
     "bugRapportUrl": "https://www.nav.no/person/kontakt-oss/nb/tilbakemeldinger/feil-og-mangler"
+  },
+  "AppHeader": {
+    "title": "Søknad om økonomisk sosialhjelp"
   }
 }
