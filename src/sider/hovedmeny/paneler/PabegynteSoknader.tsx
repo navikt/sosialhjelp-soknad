@@ -4,7 +4,7 @@ import {BodyShort, ExpansionCard} from "@navikt/ds-react";
 import React from "react";
 import {useTranslations} from "next-intl";
 import {PabegyntSoknadView} from "./PabegyntSoknadView.tsx";
-import {HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
+import {EXPANSION_CARD_BORDER_STYLE_HACK, HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
 import {useContextSessionInfo} from "../../../lib/providers/useContextSessionInfo.ts";
 
 export const DAYS_BEFORE_DELETION = 14;
@@ -18,12 +18,12 @@ export const PabegynteSoknaderPanel = () => {
     if (!count) return null;
 
     return (
-        <ExpansionCard aria-labelledby={"pabegyntesoknader-title"}>
+        <ExpansionCard style={EXPANSION_CARD_BORDER_STYLE_HACK} aria-labelledby={"pabegyntesoknader-title"}>
             <HovedmenyCardHeader icon={<FileContent className={"w-6 h-6"} />}>
                 <ExpansionCard.Title id={"pabegyntesoknader-title"} as={"h2"} className={"!m-0"} size={"small"}>
                     {t("title")}
                 </ExpansionCard.Title>
-                <ExpansionCard.Description className={"opacity-70"}>
+                <ExpansionCard.Description className={"opacity-70 !m-0"}>
                     {t("pabegynte", {count})}
                 </ExpansionCard.Description>
             </HovedmenyCardHeader>
