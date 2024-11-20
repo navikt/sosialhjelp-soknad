@@ -1,7 +1,7 @@
 "use client";
 
 import {Suspense} from "react";
-import {BrowserRouter, Navigate, redirect, Route, Routes, useLocation} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes, useLocation} from "react-router-dom";
 import {ApplicationSpinner} from "./lib/components/animasjoner/ApplicationSpinner";
 import Personopplysninger from "./sider/01-personalia";
 import Begrunnelse from "./sider/02-begrunnelse";
@@ -72,7 +72,6 @@ export default function App() {
                     <Routes>
                         <Route>
                             <Route index path={`/`} element={<Informasjon />} />
-                            <Route path={`informasjon`} loader={() => redirect("/", 301)} />
                             <Route path={"skjema"}>
                                 <Route path="kort/:behandlingsId">
                                     <Route element={<SwitchSoknadType />}>
