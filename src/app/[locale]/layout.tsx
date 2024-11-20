@@ -20,7 +20,3 @@ export default async function Layout({
         </NextIntlClientProvider>
     );
 }
-
-export async function generateStaticParams() {
-    return [{locale: "nb"}, {locale: "nn"}, {locale: "en"}];
-}
