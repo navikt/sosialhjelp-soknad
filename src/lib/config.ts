@@ -220,4 +220,4 @@ const getConfig = (miljo: unknown): SoknadConfig => {
 export const digisosConfig = getConfig(process.env.NEXT_PUBLIC_DIGISOS_ENV);
 
 export default digisosConfig;
-export const useLegacyFeatureFlags = (): FeatureFlags => digisosConfig.featureFlags;
+export const useConfigFeatureFlags = (): FeatureFlags => digisosConfig.featureFlags;

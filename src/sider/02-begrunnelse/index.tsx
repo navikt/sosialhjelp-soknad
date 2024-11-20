@@ -4,7 +4,7 @@ import {Alert, BodyShort} from "@navikt/ds-react";
 import {FieldError, useForm} from "react-hook-form";
 import {useTranslation} from "react-i18next";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {useLegacyFeatureFlags} from "../../lib/config";
+import {useConfigFeatureFlags} from "../../lib/config";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {useBegrunnelse} from "../../lib/hooks/data/useBegrunnelse";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
@@ -56,7 +56,7 @@ export const Begrunnelse = () => {
     const {get: defaultValues} = useBegrunnelse();
     const {t} = useTranslation("skjema");
     // TODO: Avklare denne. Er det behov lenger?
-    const {begrunnelseNyTekst} = useLegacyFeatureFlags();
+    const {begrunnelseNyTekst} = useConfigFeatureFlags();
     const featureFlagData = useContextFeatureToggles();
     const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
     const {forsorgerplikt} = useForsorgerplikt();
