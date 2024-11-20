@@ -2,7 +2,7 @@ import * as React from "react";
 import {ExpansionCard} from "@navikt/ds-react";
 
 export const HovedmenyCardHeader = ({children, icon}: {children: React.ReactNode; icon: React.ReactNode}) => (
-    <ExpansionCard.Header className={"!border-0 [&>button]:my-auto"}>
+    <ExpansionCard.Header className={"!border-0 [&>button]:my-auto !ring-0"}>
         <div className={"flex items-center h-full"} role={"none"}>
             <HovedmenyCardIcon>{icon}</HovedmenyCardIcon>
             <div role={"none"}>{children}</div>
