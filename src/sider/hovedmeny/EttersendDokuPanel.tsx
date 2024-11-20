@@ -3,7 +3,7 @@
 import {Attachment} from "@navikt/ds-icons";
 import {BodyShort, ExpansionCard, Heading} from "@navikt/ds-react";
 import React, {ReactNode} from "react";
-import digisosConfig from "../../../lib/config";
+import digisosConfig from "../../lib/config.ts";
 import {EXPANSION_CARD_BORDER_STYLE_HACK, HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
 import {useTranslations} from "next-intl";
 

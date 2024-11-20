@@ -1,9 +1,9 @@
 import {useTranslations} from "next-intl";
 import {addDays, formatDistance} from "date-fns";
-import {getDateFnLocale} from "../../../lib/i18n/dateFns.ts";
+import {getDateFnLocale} from "../../lib/i18n/dateFns.ts";
 import {Label, LinkPanel} from "@navikt/ds-react";
-import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude.tsx";
-import {LocalizedDate} from "../../../lib/components/LocalizedDate.tsx";
+import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude.tsx";
+import {LocalizedDate} from "../../lib/components/LocalizedDate.tsx";
 import React from "react";
 import {DAYS_BEFORE_DELETION} from "./PabegynteSoknader.tsx";
 

@@ -15,7 +15,7 @@ export const getAttributesForSkjemaFullfortEvent = (oppsummering: Oppsummering |
         )
     );
 
-    attr.language = localStorage.getItem("digisos-language");
+    attr.language = document.documentElement.lang;
 
     return attr;
 };

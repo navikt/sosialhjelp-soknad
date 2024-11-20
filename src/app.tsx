@@ -13,7 +13,6 @@ import UtgifterGjeld from "./sider/07-utgifterGjeld";
 import OkonomiskeOpplysningerView from "./sider/08-vedlegg";
 import Oppsummering from "./sider/09-oppsummering/Oppsummering";
 import IkkeFunnet from "./sider/feilsider/IkkeFunnet.tsx";
-import Informasjon from "./sider/hovedmeny";
 import Behov from "./sider/kort/02-behov";
 import ArbeidOgFamilie from "./sider/kort/03-arbeid-og-familie";
 import {SwitchSoknadType} from "./SwitchSoknadType.tsx";
@@ -71,7 +70,6 @@ export default function App() {
                 >
                     <Routes>
                         <Route>
-                            <Route index path={`/`} element={<Informasjon />} />
                             <Route path={"skjema"}>
                                 <Route path="kort/:behandlingsId">
                                     <Route element={<SwitchSoknadType />}>

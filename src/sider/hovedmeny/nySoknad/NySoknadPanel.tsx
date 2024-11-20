@@ -1,5 +1,5 @@
 import {ExpansionCard, Heading} from "@navikt/ds-react";
-import {EXPANSION_CARD_BORDER_STYLE_HACK, HovedmenyCardHeader} from "./HovedmenyCardHeader";
+import {EXPANSION_CARD_BORDER_STYLE_HACK, HovedmenyCardHeader} from "../HovedmenyCardHeader.tsx";
 import {FillForms} from "@navikt/ds-icons";
 import {useTranslations} from "next-intl";
 import {NySoknadInfo} from "./NySoknadInfo.tsx";

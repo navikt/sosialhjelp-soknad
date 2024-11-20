@@ -5,7 +5,7 @@ import React from "react";
 import {useTranslations} from "next-intl";
 import {PabegyntSoknadView} from "./PabegyntSoknadView.tsx";
 import {EXPANSION_CARD_BORDER_STYLE_HACK, HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
-import {useContextSessionInfo} from "../../../lib/providers/useContextSessionInfo.ts";
+import {useContextSessionInfo} from "../../lib/providers/useContextSessionInfo.ts";
 
 export const DAYS_BEFORE_DELETION = 14;
 

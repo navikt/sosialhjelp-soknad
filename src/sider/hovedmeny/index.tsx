@@ -1,8 +1,8 @@
 import * as React from "react";
 import {PersonbeskyttelseFeilmelding} from "./PersonbeskyttelseFeilmelding";
-import {NySoknadPanel} from "./paneler/NySoknadPanel.tsx";
-import {PabegynteSoknaderPanel} from "./paneler/PabegynteSoknader";
-import {EttersendDokuPanel} from "./paneler/EttersendDokuPanel";
+import {NySoknadPanel} from "./nySoknad/NySoknadPanel.tsx";
+import {PabegynteSoknaderPanel} from "./PabegynteSoknader.tsx";
+import {EttersendDokuPanel} from "./EttersendDokuPanel.tsx";
 import {Heading, VStack} from "@navikt/ds-react";
 import {useTranslations} from "next-intl";
 import {useContextSessionInfo} from "../../lib/providers/useContextSessionInfo.ts";
