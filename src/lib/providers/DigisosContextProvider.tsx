@@ -6,8 +6,9 @@ import {getSessionInfo} from "../../generated/informasjon-ressurs/informasjon-re
 import {featureToggles as getFeatureToggles} from "../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
 import {SessionResponse} from "../../generated/model/sessionResponse.ts";
 import {FeatureToggles200} from "../../generated/model/featureToggles200.ts";
+import {SupportedLanguage} from "../i18n/common.ts";
 
-export const DigisosContextProvider = ({children}: {children: ReactNode}) => {
+export const DigisosContextProvider = ({children, locale}: {children: ReactNode; locale: SupportedLanguage}) => {
     const [state, dispatch] = useReducer(valideringsReducer, initialValideringState);
 
     const [analyticsData, setAnalyticsDataState] = useState<AnalyticsData>({});
@@ -41,6 +42,7 @@ export const DigisosContextProvider = ({children}: {children: ReactNode}) => {
                 },
                 featureToggles: featureToggles!,
                 sessionInfo: sessionInfo!,
+                locale,
             }}
         >
             {children}

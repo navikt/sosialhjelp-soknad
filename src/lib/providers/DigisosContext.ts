@@ -1,6 +1,7 @@
 import {createContext, Dispatch} from "react";
 import {ValideringActionTypes, ValideringState} from "../validering.ts";
 import {FeatureToggles200, SessionResponse} from "../../generated/model/index.ts";
+import {SupportedLanguage} from "../i18n/common.ts";
 
 type TDigisosContext = {
     analytics: {
@@ -13,6 +14,7 @@ type TDigisosContext = {
     };
     featureToggles: FeatureToggles200;
     sessionInfo: SessionResponse;
+    locale: SupportedLanguage;
 };
 
 export const DigisosContext = createContext<TDigisosContext | undefined>(undefined);

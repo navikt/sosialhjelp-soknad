@@ -8,7 +8,7 @@ import {useTranslations} from "next-intl";
 import {ErrorPageColumnarLayout} from "./ErrorPageColumnarLayout.tsx";
 import {ErrorDump} from "./ErrorDump.tsx";
 
-export const TekniskFeil = ({error}: {error: Error}) => {
+export const TekniskFeil = ({error, reset}: {error: Error; reset: () => void}) => {
     const t = useTranslations("TekniskFeil");
 
     useTitle(`Feilside - ${document.location.hostname}`);
@@ -29,6 +29,12 @@ export const TekniskFeil = ({error}: {error: Error}) => {
                 <Heading level={"2"} size={"medium"} spacing>
                     {t("anbefaling")}
                 </Heading>
+
+                <div className={"my-4"}>
+                    <Button variant="secondary" onClick={reset}>
+                        Reset
+                    </Button>
+                </div>
 
                 <div className={"my-4"}>
                     <Button variant="secondary" onClick={() => (window.location.href = "/sosialhjelp/soknad")}>

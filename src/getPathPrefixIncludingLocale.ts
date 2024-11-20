@@ -8,7 +8,7 @@ import {BASE_PATH} from "./lib/constants.ts";
  * Denne adapteren tilpasser BrowserRouter dette ved å forlenge basename med locale,
  * sånn at BrowserRouter kan ignorere locale-prefixet.
  */
-export const getPathPrefixIncludingLocale = (): [string, string] => {
+export const getPathPrefixIncludingLocale = (): {prefix: string; path: string} => {
     const {pathname} = window.location;
     const pathMinusBasepath = pathname.startsWith(BASE_PATH) ? pathname.slice(BASE_PATH.length) : pathname;
     const locale = getFirstSegmentOfPath(pathMinusBasepath);
@@ -18,11 +18,11 @@ export const getPathPrefixIncludingLocale = (): [string, string] => {
     if (isSupportedLanguage(locale)) {
         const pathMinusLocaleToo = pathMinusBasepath.slice(locale.length + 1);
 
-        return [`${BASE_PATH}/${locale}`, pathMinusLocaleToo];
+        return {prefix: `${BASE_PATH}/${locale}`, path: pathMinusLocaleToo};
     }
 
     // Return the original BASE_PATH if no locale is found
-    return [BASE_PATH, pathMinusBasepath];
+    return {prefix: BASE_PATH, path: pathMinusBasepath};
 };
 
 // Gets the first segment of a path, ignoring leading/trailing slashes

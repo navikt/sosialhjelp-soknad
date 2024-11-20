@@ -11,9 +11,13 @@ import {
 import {TracingInstrumentation} from "@grafana/faro-web-tracing";
 import digisosConfig from "./lib/config";
 import {logger} from "@navikt/next-logger";
+let userHasBeenToldFaroIsDisabled = false;
 
 if (!digisosConfig.faro) {
-    logger.debug("faro is disabled!");
+    if (!userHasBeenToldFaroIsDisabled) {
+        logger.debug("faro is disabled!");
+        userHasBeenToldFaroIsDisabled = true;
+    }
 } else
     initializeFaro({
         url: digisosConfig.faro.url,

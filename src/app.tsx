@@ -17,17 +17,12 @@ import Behov from "./sider/kort/02-behov";
 import ArbeidOgFamilie from "./sider/kort/03-arbeid-og-familie";
 import {SwitchSoknadType} from "./SwitchSoknadType.tsx";
 import Inntekt from "./sider/kort/04-inntekt";
-import {BASE_PATH} from "./lib/constants";
-import {configureLogger} from "@navikt/next-logger";
 import "./faro";
 import "./lib/i18n/reacti18Next.ts";
-import {initAmplitude} from "./lib/amplitude/Amplitude.tsx";
 import {getPathPrefixIncludingLocale} from "./getPathPrefixIncludingLocale.ts";
-import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 
-configureLogger({basePath: BASE_PATH});
 const queryClient = new QueryClient();
 
 const RedirectToStandard = () => {
@@ -36,8 +31,6 @@ const RedirectToStandard = () => {
 };
 
 export default function App() {
-    initAmplitude();
-
     // @ts-expect-error Polyfill for react-pdf, se https://github.com/wojtekmaj/react-pdf/issues/1831
     if (typeof Promise.withResolvers === "undefined") {
         // @ts-expect-error this is expected to not work
@@ -51,17 +44,12 @@ export default function App() {
         };
     }
 
-    const [basename, path] = getPathPrefixIncludingLocale();
-
-    onLanguageSelect(({locale: language, url}) =>
-        setParams({language}).then(() => window.location.assign(`${url}${path}`))
-    );
-
+    const {prefix} = getPathPrefixIncludingLocale();
     return (
         <Suspense fallback={<ApplicationSpinner />}>
             <QueryClientProvider client={queryClient}>
                 <BrowserRouter
-                    basename={basename}
+                    basename={prefix}
                     future={{
                         // these are just to stop react-router-dom from spamming
                         v7_relativeSplatPath: true,
@@ -69,32 +57,30 @@ export default function App() {
                     }}
                 >
                     <Routes>
-                        <Route>
-                            <Route path={"skjema"}>
-                                <Route path="kort/:behandlingsId">
-                                    <Route element={<SwitchSoknadType />}>
-                                        <Route path="1" element={<RedirectToStandard />} />
-                                        <Route path="2" element={<Behov />} />
-                                        <Route path="3" element={<ArbeidOgFamilie />} />
-                                        <Route path="4" element={<Inntekt />} />
-                                        <Route path="5" element={<Oppsummering />} />
-                                    </Route>
-                                </Route>
-                                <Route path=":behandlingsId">
-                                    <Route index path="1" element={<Personopplysninger shortSpacing />} />
-                                    <Route element={<SwitchSoknadType />}>
-                                        <Route path="2" element={<Begrunnelse />} />
-                                        <Route path="3" element={<ArbeidOgUtdanning />} />
-                                        <Route path="4" element={<Familie />} />
-                                        <Route path="5" element={<Bosituasjon />} />
-                                        <Route path="6" element={<InntektFormue />} />
-                                        <Route path="7" element={<UtgifterGjeld />} />
-                                        <Route path="8" element={<OkonomiskeOpplysningerView />} />
-                                        <Route path="9" element={<Oppsummering />} />
-                                        <Route element={<IkkeFunnet />} />
-                                    </Route>
+                        <Route path={"skjema"}>
+                            <Route path="kort/:behandlingsId">
+                                <Route element={<SwitchSoknadType />}>
+                                    <Route path="1" element={<RedirectToStandard />} />
+                                    <Route path="2" element={<Behov />} />
+                                    <Route path="3" element={<ArbeidOgFamilie />} />
+                                    <Route path="4" element={<Inntekt />} />
+                                    <Route path="5" element={<Oppsummering />} />
                                 </Route>
                             </Route>
+                            <Route path=":behandlingsId">
+                                <Route index path="1" element={<Personopplysninger shortSpacing />} />
+                                <Route element={<SwitchSoknadType />}>
+                                    <Route path="2" element={<Begrunnelse />} />
+                                    <Route path="3" element={<ArbeidOgUtdanning />} />
+                                    <Route path="4" element={<Familie />} />
+                                    <Route path="5" element={<Bosituasjon />} />
+                                    <Route path="6" element={<InntektFormue />} />
+                                    <Route path="7" element={<UtgifterGjeld />} />
+                                    <Route path="8" element={<OkonomiskeOpplysningerView />} />
+                                    <Route path="9" element={<Oppsummering />} />
+                                </Route>
+                            </Route>
+                            <Route path="*" element={<IkkeFunnet />} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

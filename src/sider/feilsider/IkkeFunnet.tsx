@@ -9,7 +9,7 @@ import {useTranslations} from "next-intl";
 const IkkeFunnet = () => {
     const tN = useTranslations("IkkeFunnet");
     return (
-        <section className={"bg-white grow"}>
+        <section className={"bg-white grow flex flex-col"}>
             <AppHeader />
             <ErrorPageColumnarLayout
                 leftMargin={<SystemError className={"text-[var(--a-surface-danger)] w-20 h-20"} />}
