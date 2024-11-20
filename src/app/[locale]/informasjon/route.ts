@@ -13,6 +13,6 @@ export async function GET({nextUrl, headers}: NextRequest) {
     url.pathname = BASE_PATH;
     url.host = headers.get("host") ?? url.host;
     url.port = process.env.NEXT_PUBLIC_DIGISOS_ENV === "localhost" ? "3000" : "";
-    logger.info(`Redirecting from /informasjon to ${url.toString()};`);
+    logger.info(`Redirecting from /informasjon to ${url.toString()}`);
     return NextResponse.redirect(url);
 }

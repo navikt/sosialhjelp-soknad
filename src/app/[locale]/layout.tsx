@@ -9,7 +9,6 @@ import {NextIntlClientProvider} from "next-intl";
 import "../../index.css";
 import "@navikt/ds-css";
 import {DigisosContextProvider} from "../../lib/providers/DigisosContextProvider.tsx";
-import {ssrFeatureToggles, ssrGetSessionInfo} from "../../generated/old-ssr/openAPIDefinition.ts";
 
 export const dynamic = "force-dynamic";
 
@@ -30,9 +29,6 @@ export default async function RootLayout({
 
     const messages = await getMessages();
 
-    const {data: sessionInfo} = await ssrGetSessionInfo();
-    const {data: featureToggles} = await ssrFeatureToggles();
-
     // locale blir hentet via middleware.ts,
     // og html lang leses (som document.documentElement.lang) av både analytics og klientside i18n
     return (
@@ -46,9 +42,7 @@ export default async function RootLayout({
                 <Driftsmeldinger />
                 <div id="root" className={"bg-digisosGronnBakgrunn"} role={"none"}>
                     <NextIntlClientProvider messages={messages}>
-                        <DigisosContextProvider initialData={{sessionInfo, featureToggles}}>
-                            {children}
-                        </DigisosContextProvider>
+                        <DigisosContextProvider>{children}</DigisosContextProvider>
                     </NextIntlClientProvider>
                 </div>
                 <Decorator.Footer />
