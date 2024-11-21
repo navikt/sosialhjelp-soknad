@@ -23,6 +23,7 @@ import {getPathPrefixIncludingLocale} from "./getPathPrefixIncludingLocale.ts";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
+import {Driftsmeldinger} from "./lib/driftsmeldinger/Driftsmeldinger.tsx";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,7 @@ export default function App() {
     return (
         <Suspense fallback={<ApplicationSpinner />}>
             <QueryClientProvider client={queryClient}>
+                <Driftsmeldinger />
                 <BrowserRouter
                     basename={prefix}
                     future={{

@@ -9,14 +9,16 @@ export const getDriftsmeldinger = async () => {
     driftsmeldingUrl.searchParams.set(DriftsmeldingAudienceParam, DriftsmeldingAudience.soknad);
 
     try {
-        const res = await fetch(driftsmeldingUrl.toString(), {signal: AbortSignal.timeout(500)});
+        const res = await fetch(driftsmeldingUrl.toString(), {
+            signal: AbortSignal.timeout(500),
+        });
         if (!res.ok) {
             logger.warn(`fetching driftsmeldinger: HTTP error response: ${res.status} ${res.statusText}`);
             return [];
         }
         return (await res.json()) as Driftsmelding[];
     } catch (e: any) {
-        logger.warn("fetching driftsmeldinger: error", e);
+        logger.warn({error: e?.message}, "fetching driftsmeldinger: error");
         return [];
     }
 };
