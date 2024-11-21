@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./overrides.css";
 import {PersonbeskyttelseFeilmelding} from "./PersonbeskyttelseFeilmelding";
 import {NySoknadPanel} from "./nySoknad/NySoknadPanel.tsx";
 import {PabegynteSoknaderPanel} from "./PabegynteSoknader.tsx";
