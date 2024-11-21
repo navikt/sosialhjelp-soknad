@@ -1,15 +1,9 @@
-"use client";
 import {Alert} from "@navikt/ds-react";
 import Markdown from "markdown-to-jsx";
 import {getDriftsmeldinger} from "./getDriftsmeldinger.ts";
-import {useEffect, useState} from "react";
-import {Driftsmelding} from "./types.ts";
 
-export const Driftsmeldinger = () => {
-    const [driftsmeldinger, setDriftsmeldinger] = useState<Driftsmelding[] | null>(null);
-    useEffect(() => {
-        getDriftsmeldinger().then(setDriftsmeldinger);
-    }, []);
+export const Driftsmeldinger = async () => {
+    const driftsmeldinger = await getDriftsmeldinger();
     return driftsmeldinger?.map(({severity, text}) => (
         <Alert
             variant={severity}

@@ -2,6 +2,7 @@ import {isSupportedLanguage} from "../../lib/i18n/common.ts";
 import {DigisosContextProvider} from "../../lib/providers/DigisosContextProvider.tsx";
 import {NextIntlClientProvider} from "next-intl";
 import {getMessages} from "next-intl/server";
+import {Driftsmeldinger} from "../../lib/driftsmeldinger/Driftsmeldinger.tsx";
 
 export default async function Layout({
     children,
@@ -16,7 +17,10 @@ export default async function Layout({
     const locale = isSupportedLanguage(localeParam) ? localeParam : "nb";
     return (
         <NextIntlClientProvider messages={messages} locale={locale}>
-            <DigisosContextProvider locale={locale}>{children}</DigisosContextProvider>
+            <DigisosContextProvider locale={locale}>
+                <Driftsmeldinger />
+                {children}
+            </DigisosContextProvider>
         </NextIntlClientProvider>
     );
 }

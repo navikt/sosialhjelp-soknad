@@ -7,7 +7,6 @@ import {DigisosContext} from "../../lib/providers/DigisosContext.ts";
 import {BASE_PATH} from "../../lib/constants.ts";
 import {configureLogger} from "@navikt/next-logger";
 import {initAmplitude} from "../../lib/amplitude/Amplitude.tsx";
-import {Driftsmeldinger} from "../../lib/driftsmeldinger/Driftsmeldinger.tsx";
 
 const Page = () => {
     configureLogger({basePath: BASE_PATH});
@@ -21,12 +20,7 @@ const Page = () => {
     onLanguageSelect(({locale: language, url}) =>
         setParams({language}).then(() => window.location.assign(`${url}${path}`))
     );
-    return (
-        <>
-            <Driftsmeldinger />
-            <Informasjon />
-        </>
-    );
+    return <Informasjon />;
 };
 
 export default Page;
