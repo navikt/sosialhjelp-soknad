@@ -1,6 +1,7 @@
 import i18n from "i18next";
 import {initReactI18next} from "react-i18next";
-import Backend from "i18next-http-backend";
+// For å forhindre top-level await errors fra i18next-http-backend
+import Backend from "i18next-http-backend/cjs";
 import {ENABLE_DEBUG_I18N} from "../constants.ts";
 import {resources} from "./resources.ts";
 import {defaultNS, DEFAULT_LANGUAGE} from "./common.ts";
