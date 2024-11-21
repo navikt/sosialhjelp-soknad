@@ -8,6 +8,7 @@ import {hentXsrfCookie} from "../../../generated/soknad-ressurs/soknad-ressurs.t
 import {SoknadstypeValg} from "./SoknadstypeValg.tsx";
 import {useCreateSoknad} from "./useCreateSoknad.tsx";
 import {useAmplitudeSkjemaStartet} from "./useAmplitudeSkjemaStartet.tsx";
+import {BASE_PATH} from "../../../lib/constants.ts";
 
 export const NySoknadInfo = () => {
     const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
@@ -26,7 +27,7 @@ export const NySoknadInfo = () => {
         try {
             const {soknadId} = await createSoknad(soknadstype);
             await hentXsrfCookie(soknadId);
-            window.location.assign(`skjema/${soknadId}/1`);
+            window.location.assign(`${BASE_PATH}/skjema/${soknadId}/1`);
         } catch (e: any) {
             setStartSoknadError(e);
             setStartSoknadPending(false);
