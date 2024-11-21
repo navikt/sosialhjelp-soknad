@@ -25,10 +25,6 @@ export default tseslint.config(
         rules: {
             ...nextPlugin.configs.recommended.rules,
             ...nextPlugin.configs["core-web-vitals"].rules,
-        },
-    },
-    {
-        rules: {
             "@typescript-eslint/no-explicit-any": "off",
             "@typescript-eslint/no-unused-vars": ["error", {argsIgnorePattern: "^_"}],
             "@next/next/no-img-element": "off",
