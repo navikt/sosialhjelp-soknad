@@ -71,6 +71,7 @@
         "@testing-library/react": "^16.0.1",
         "@testing-library/react-hooks": "^8.0.1",
         "@tsconfig/create-react-app": "^2.0.5",
+        "@tsconfig/next": "^2.0.3",
         "@types/deep-equal": "^1.0.4",
         "@types/node": "^20",
         "@types/react": "^18.3.12",
