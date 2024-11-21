@@ -8,6 +8,8 @@ const nextConfig = {
     basePath: "/sosialhjelp/soknad",
     // For å unngå issues med nginx
     trailingSlash: false,
+    output: "standalone",
+    assetPrefix: process.env.DIGISOS_ENV === "localhost" ? undefined : "https://cdn.nav.no/teamdigisos/sosialhjelp-soknad",
     experimental: {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
     },
