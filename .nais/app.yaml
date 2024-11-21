@@ -21,6 +21,7 @@ spec:
         - application: wonderwall-soknad
     outbound:
       rules:
+        - application: sosialhjelp-driftsmeldinger
         - application: sosialhjelp-soknad-api
         - application: nav-dekoratoren
           namespace: personbruker
