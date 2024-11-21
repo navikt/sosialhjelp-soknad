@@ -22,6 +22,7 @@ import "./lib/i18n/reacti18Next.ts";
 import {getPathPrefixIncludingLocale} from "./getPathPrefixIncludingLocale.ts";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
+import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
 
 const queryClient = new QueryClient();
 
@@ -44,7 +45,10 @@ export default function App() {
         };
     }
 
-    const {prefix} = getPathPrefixIncludingLocale();
+    const {prefix, path} = getPathPrefixIncludingLocale();
+    onLanguageSelect(({locale: language, url}) =>
+        setParams({language}).then(() => window.location.assign(`${url}${path}`))
+    );
     return (
         <Suspense fallback={<ApplicationSpinner />}>
             <QueryClientProvider client={queryClient}>
