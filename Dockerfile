@@ -3,7 +3,8 @@
 # - .github/dependabot.yml (fjern versjonspin for docker)
 # - packages.json under "engines" (her leter dependabot npm)
 # - .ncurc.js (automatiske oppdateringer for node-types)
-FROM node:20-alpine AS dependencies
+# pt er vi på node 18 fordi ellers plager dekoratoren oss med "body has already been consumed"
+FROM node:18-alpine AS dependencies
 
 WORKDIR /app
 COPY package.json .
@@ -13,7 +14,7 @@ COPY .npmrc.dockerbuild .npmrc
 RUN --mount=type=secret,id=NODE_AUTH_TOKEN NODE_AUTH_TOKEN=$(cat /run/secrets/NODE_AUTH_TOKEN) \
     npm ci --prefer-offline --no-audit
 
-FROM node:20-alpine AS builder
+FROM node:18-alpine AS builder
 
 ARG DIGISOS_ENV
 ENV NEXT_PUBLIC_DIGISOS_ENV=${DIGISOS_ENV}
@@ -26,7 +27,7 @@ RUN npm run build
 RUN npm prune --production
 
 
-FROM node:20-slim AS release
+FROM gcr.io/distroless/nodejs18-debian12 AS runner
 
 ARG DIGISOS_ENV
 
@@ -42,4 +43,4 @@ COPY --from=builder /app/node_modules/ node_modules/
 COPY package.json .
 COPY . .
 
-CMD ["npm", "start"]
+CMD ["./node_modules/next/dist/bin/next", "start"]
