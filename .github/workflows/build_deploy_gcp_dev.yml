@@ -1,0 +1,50 @@
+# Denne filen vil erstatte build_prod, build_deploy_mock, etc.
+
+name: "Build and deploy to dev-gcp"
+
+on:
+  push:
+    branches:
+      - "dev"
+
+jobs:
+  deploy-gcp:
+    strategy:
+      matrix:
+        include:
+          - environment: preprod
+            cluster: dev-gcp
+          - environment: mock
+            cluster: dev-gcp
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and push docker image to GAR
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: teamdigisos
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          image_suffix: ${{ matrix.environment }}
+          build_args: |
+            DIGISOS_ENV=${{ matrix.environment }}
+          build_secrets: |
+            NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
+
+      - name: "Deploy to ${{ matrix.environment }}"
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          RESOURCE: .nais/app.yaml
+          CLUSTER: ${{ matrix.cluster }}
+          REF: ${{ github.sha }}
+          PRINT_PAYLOAD: true
+          IMAGE: ${{ steps.docker-build-push.outputs.image }}
+          VARS: .nais/vars/${{ matrix.environment }}.yaml

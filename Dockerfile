@@ -17,7 +17,12 @@ RUN --mount=type=secret,id=NODE_AUTH_TOKEN NODE_AUTH_TOKEN=$(cat /run/secrets/NO
 FROM node:18-alpine AS builder
 
 ARG DIGISOS_ENV
+ARG LOGIN_SESSION_API_URL
+ARG LOGOUT_URL
 ENV NEXT_PUBLIC_DIGISOS_ENV=${DIGISOS_ENV}
+ENV LOGIN_SESSION_API_URL=${LOGIN_SESSION_API_URL}
+ENV LOGOUT_URL=${LOGOUT_URL}
+
 WORKDIR /app
 COPY --from=dependencies /app/node_modules/ node_modules/
 COPY . .
