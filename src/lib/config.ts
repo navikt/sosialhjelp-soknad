@@ -13,6 +13,10 @@ type FeatureFlags = {
 
     // Vis valg for søknadstype ved opprettelse
     soknadstypeValg: boolean;
+
+    // Dette er en testversjon som er blitt gitt en ingress på nav.no.
+    // Forhindrer at siden blir indeksert, og viser en synlig advarsel.
+    publicFacingTestVersion?: true;
 };
 
 type SoknadApiProxyOptions = {
@@ -56,6 +60,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
+            publicFacingTestVersion: true,
         },
 
         dekorator: {
@@ -152,6 +157,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
+            publicFacingTestVersion: true,
         },
 
         dekorator: {
