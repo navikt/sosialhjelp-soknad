@@ -26,7 +26,7 @@ export const NySoknadInfo = () => {
         try {
             const {soknadId} = await createSoknad(soknadstype);
             await hentXsrfCookie(soknadId);
-            window.location.assign(`../skjema/${soknadId}/1`);
+            window.location.assign(`skjema/${soknadId}/1`);
         } catch (e: any) {
             setStartSoknadError(e);
             setStartSoknadPending(false);
