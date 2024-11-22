@@ -16,6 +16,7 @@ jobs:
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
       WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - uses: actions/checkout@v4
       - name: 'Build npm project'
         uses: navikt/sosialhjelp-ci/actions/build-npm@main
         with:
