@@ -3,6 +3,7 @@
 name: "Build and deploy to prod-gcp"
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - "master"
