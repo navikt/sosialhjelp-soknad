@@ -16,6 +16,7 @@ jobs:
       contents: write
       packages: write
       actions: write
+      id-token: write
     env:
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
       WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
