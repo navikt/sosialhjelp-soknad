@@ -14,8 +14,6 @@ outputs:
 runs:
   using: 'composite'
   steps:
-  - uses: actions/checkout@v4
-
   - name: 'Create artifact version'
     id: artifact-version
     uses: navikt/sosialhjelp-ci/actions/create-artifact-version@main

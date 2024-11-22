@@ -7,7 +7,7 @@ ENV NEXT_PUBLIC_DIGISOS_ENV=${DIGISOS_ENV}
 WORKDIR /app
 
 COPY package.json /app/
-COPY next-logger.config.js /app/
+COPY src/next-logger.config.js /app/
 COPY build/standalone /app/
 COPY public /app/public/
 
