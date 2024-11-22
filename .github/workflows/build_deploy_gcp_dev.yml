@@ -3,10 +3,9 @@
 name: "Build and deploy to dev-gcp"
 
 on:
-  workflow_dispatch:
   push:
     branches:
-      - "master"
+      - "dev"
 
 jobs:
   deploy-gcp:
@@ -22,29 +21,9 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    env:
-      NEXT_PUBLIC_DIGISOS_ENV: ${{ matrix.environment }}
+
     steps:
       - uses: actions/checkout@v4
-
-      - name: 'Build npm project'
-        uses: navikt/sosialhjelp-ci/actions/build-npm@main
-        with:
-          node-version: 22
-          build-less: 'false'
-          reader-token: ${{ secrets.READER_TOKEN }}
-          run-test: 'false'
-          run-orval: 'true'
-
-      - name: 'Upload static files to cdn'
-        id: upload
-        uses: nais/deploy/actions/cdn-upload/v2@master
-        with:
-          team: teamdigisos
-          source: ./build/static
-          destination: "/sosialhjelp-soknad/_next"
-          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
-          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
 
       - name: Build and push docker image to GAR
         uses: nais/docker-build-push@v0
