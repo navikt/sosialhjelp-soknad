@@ -10,6 +10,7 @@ import {FilePreviewButtons} from "./FilePreviewButtons";
 import {FilePreviewDisplay} from "./FilePreviewDisplay";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useValgtKategoriContext} from "../../../KortKategorierContextProvider.tsx";
+import {VedleggFrontendType} from "../../../generated/model";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 
@@ -19,7 +20,7 @@ interface ForhandsvisningModalProps {
     onAccept: () => void;
     onClose: () => void;
     onDelete: () => void;
-    steg: any;
+    //steg: any;
 }
 
 export const ForhandsvisningVedleggModal = ({
@@ -28,15 +29,14 @@ export const ForhandsvisningVedleggModal = ({
     onAccept,
     onClose,
     //onDelete,
-    steg,
+    //steg,
 }: ForhandsvisningModalProps) => {
     const [isFullscreen, setFullscreen] = useState<boolean>(false);
     const {t} = useTranslation();
     const isKortSoknad = useCurrentSoknadIsKort();
     const {valgtKategoriData, setValgtKategoriData} = useValgtKategoriContext();
-    const [valgkat, setvalgkat] = useState("");
+    const [ingenKat, setIngenKat] = useState(false);
 
-    console.log("valgkat", valgkat);
     return (
         <Modal
             open={true}
@@ -83,14 +83,21 @@ export const ForhandsvisningVedleggModal = ({
             </Modal.Body>
             <Modal.Footer className={"!block space-y-4"}>
                 <BodyShort>{t("vedlegg.forhandsvisning.info")}</BodyShort>
-                {isKortSoknad && steg.steg === "4" && (
+                {isKortSoknad && (
                     <div>
                         <div>
                             <Select
                                 label={"Velg en kategori for dokumentet"}
+                                defaultValue={""}
+                                value={valgtKategoriData.valgtKategorier}
                                 onChange={(event: any) => {
-                                    setvalgkat(event);
-                                    setValgtKategoriData(event);
+                                    console.log("before selectedCategory");
+                                    const selectedCategory = event.target.value as VedleggFrontendType; // Ensure correct type
+                                    console.log("after selectedCategory, but before setIngenKat");
+                                    setIngenKat(selectedCategory.length === 0);
+                                    console.log("after setIngenKat, but before seetvalgtKategoriData");
+                                    setValgtKategoriData({valgtKategorier: selectedCategory});
+                                    console.log("after setvalgtKategoriData");
                                 }}
                             >
                                 <option value="">Velg kategori</option>
@@ -98,15 +105,15 @@ export const ForhandsvisningVedleggModal = ({
                                 <option value="faktura|sfo">SFO/AKS</option>
                                 <option value="husbanken|vedtak">Bostøtte fra Husbanken</option>
                                 <option value="husleiekontrakt|husleiekontrakt">Husleie</option>
-                                <option value="kontooversikt">Kontooversikt</option>
-                                <option value="lonnslipp">Lønnslipp</option>
+                                <option value="kontooversikt|annet">Kontooversikt</option>
+                                <option value="lonnslipp|arbeid">Lønnslipp</option>
                                 <option value="faktura|strom">Strøm og oppvarming</option>
-                                <option value="stipendOgLan">Stipend og lån fra Lånekassen</option>
+                                <option value="oppholdstillatel|oppholdstillatel">Stipend og lån fra Lånekassen</option>
                                 <option value="annet|annet">Annet</option>
                             </Select>
                         </div>
                         <div>
-                            {valgtKategoriData && valgtKategoriData.valgtKategorier === "annet|annet" && (
+                            {ingenKat && (
                                 <Alert variant="info" className={"justify-center"}>
                                     Om du ikke velger en kategori blir dokumentet lastet opp som "Annet".
                                 </Alert>
