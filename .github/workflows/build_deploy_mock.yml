@@ -25,7 +25,7 @@ jobs:
       - name: 'Build npm project'
         uses: navikt/sosialhjelp-ci/actions/build-npm@main
         with:
-          node-version: 20
+          node-version: 22
           build-less: 'false'
           reader-token: ${{ secrets.READER_TOKEN }}
           run-test: 'false'

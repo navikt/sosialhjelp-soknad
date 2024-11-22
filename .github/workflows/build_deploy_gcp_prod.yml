@@ -29,7 +29,7 @@ jobs:
         env:
           NEXT_PUBLIC_DIGISOS_ENV: prod
         with:
-          node-version: 20
+          node-version: 22
           build-less: 'false'
           reader-token: ${{ secrets.READER_TOKEN }}
           run-test: 'false'
