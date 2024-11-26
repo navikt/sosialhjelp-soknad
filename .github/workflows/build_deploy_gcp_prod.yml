@@ -38,8 +38,8 @@ jobs:
             NAIS_MANAGEMENT_PROJECT_ID=${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
 
           build_secrets: |
-            NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
             NAIS_WORKLOAD_IDENTITY_PROVIDER=${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+            NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
 
       - name: "Deploy to ${{ matrix.environment }}"
         uses: nais/deploy/actions/deploy@v2
