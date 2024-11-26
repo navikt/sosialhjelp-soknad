@@ -40,8 +40,6 @@ SA_EMAIL="${PRINCIPAL}@${NAIS_MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com"
 
 # Authenticate with Google Cloud
 echo "Authenticating with Google Cloud..."
-gcloud components install workload-identity-federation
-
 gcloud auth workload-identity-federation login \
     --workload-provider="${NAIS_WORKLOAD_IDENTITY_PROVIDER}" \
     --service-account-email="${SA_EMAIL}"
