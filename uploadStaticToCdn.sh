@@ -38,12 +38,6 @@ PRINCIPAL=$(slug_hash_prefix_truncate "$TEAM" "cdn" 30)
 BUCKET_NAME=$(slug_hash_prefix_truncate "${TENANT}-${TEAM}" "nais-cdn" 63)
 SA_EMAIL="${PRINCIPAL}@${NAIS_MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com"
 
-# Authenticate with Google Cloud
-echo "Authenticating with Google Cloud..."
-gcloud auth workload-identity-federation login \
-    --workload-provider="${NAIS_WORKLOAD_IDENTITY_PROVIDER}" \
-    --service-account-email="${SA_EMAIL}"
-
 # Upload files to GCS
 UPLOAD_DEST="gs://${BUCKET_NAME}/${TEAM}/${DESTINATION}"
 echo "Uploading files from ${SOURCE} to ${UPLOAD_DEST}..."
