@@ -30,6 +30,23 @@ RUN npm run orval
 RUN npm run build
 RUN npm prune --production
 
+# Upload static assets to GCS
+FROM google/cloud-sdk:latest AS uploader
+
+ARG NAIS_PROJECT_ID
+ENV PROJECT_ID=${NAIS_PROJECT_ID}
+
+# Copy the upload script into the container
+WORKDIR /app
+COPY uploadStaticToCdn.sh /app/uploadStaticToCdn.sh
+COPY --from=builder /app/build/static static
+
+# Make the script executable
+RUN chmod +x /app/uploadStaticToCdn.sh
+
+RUN --mount=type=secret,id=NAIS_IDENTITY_PROVIDER \
+    IDENTITY_PROVIDER=$(cat /run/secrets/NAIS_IDENTITY_PROVIDER) \
+    /app/uploadStaticToCdn.sh $PROJECT_ID
 
 FROM gcr.io/distroless/nodejs22-debian12 AS runner
 
@@ -42,6 +59,9 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
+# for å forhindre uploader-steget fra å bli optimalisert vekk, lager
+# vi en falsk avhengighet
+COPY --from=uploader /app/static /dev/null
 COPY --from=builder --chown=1069:1069 /app/build build
 COPY --from=builder /app/node_modules/ node_modules/
 COPY package.json .
