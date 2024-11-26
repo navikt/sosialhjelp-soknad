@@ -46,7 +46,7 @@ RUN chmod +x /app/uploadStaticToCdn.sh
 
 RUN --mount=type=secret,id=NAIS_IDENTITY_PROVIDER \
     IDENTITY_PROVIDER=$(cat /run/secrets/NAIS_IDENTITY_PROVIDER) \
-    /app/uploadStaticToCdn.sh $PROJECT_ID
+    /app/uploadStaticToCdn.sh $NAIS_PROJECT_ID
 
 FROM gcr.io/distroless/nodejs22-debian12 AS runner
 
