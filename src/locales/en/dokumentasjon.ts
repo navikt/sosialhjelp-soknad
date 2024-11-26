@@ -1,7 +1,20 @@
 import {VedleggFrontendType} from "../../generated/model";
 import {DokumentasjonTexts} from "../types";
 
-export type VedleggFrontendTypeMinusUferdig = Exclude<VedleggFrontendType, "kort|behov" | "kort|situasjonsendring">;
+export type VedleggFrontendTypeMinusUferdig = Exclude<
+    VedleggFrontendType,
+    | "kort|behov"
+    | "kort|situasjonsendring"
+    | "kort|barnebidrag"
+    | "kort|barnehageSFO"
+    | "kort|bostotte"
+    | "kort|husleie"
+    | "kort|kontoroversikt"
+    | "kort|lonnslipp"
+    | "kort|stromOppvarming"
+    | "kort|stipendLan"
+    | "kort|annet"
+>;
 
 export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, DokumentasjonTexts> = {
     "lonnslipp|arbeid": {

@@ -2586,6 +2586,15 @@
                             "sluttoppgjor|arbeid",
                             "student|vedtak",
                             "kort|behov",
+                            "kort|barnebidrag",
+                            "kort|barnehageSFO",
+                            "kort|bostotte",
+                            "kort|husleie",
+                            "kort|kontoroversikt",
+                            "kort|lonnslipp",
+                            "kort|stromOppvarming",
+                            "kort|stipendLan",
+                            "kort|annet",
                             "kort|situasjonsendring"
                         ]
                     },

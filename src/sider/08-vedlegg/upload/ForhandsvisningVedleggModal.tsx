@@ -101,15 +101,15 @@ export const ForhandsvisningVedleggModal = ({
                                 }}
                             >
                                 <option value="">Velg kategori</option>
-                                <option value="faktura|barnehage">Barnehage</option>
-                                <option value="faktura|sfo">SFO/AKS</option>
-                                <option value="husbanken|vedtak">Bostøtte fra Husbanken</option>
-                                <option value="husleiekontrakt|husleiekontrakt">Husleie</option>
-                                <option value="kontooversikt|annet">Kontooversikt</option>
-                                <option value="lonnslipp|arbeid">Lønnslipp</option>
-                                <option value="faktura|strom">Strøm og oppvarming</option>
-                                <option value="oppholdstillatel|oppholdstillatel">Stipend og lån fra Lånekassen</option>
-                                <option value="annet|annet">Annet</option>
+                                <option value="kort|barnebidrag">Barnehage</option>
+                                <option value="kort|barnehageSFO">SFO/AKS</option>
+                                <option value="kort|husleie">Husleie</option>
+                                <option value="kort|bostotte">Bostøtte fra Husbanken</option>
+                                <option value="kort|kontooversikt">Kontooversikt</option>
+                                <option value="kort|lonnslipp">Lønnslipp</option>
+                                <option value="kort|stromOppvarming">Strøm og oppvarming</option>
+                                <option value="kort|stipendLan">Stipend og lån fra Lånekassen</option>
+                                <option value="kort|annet">Annet</option>
                             </Select>
                         </div>
                         <div>

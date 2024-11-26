@@ -1,4 +1,4 @@
-import React, {/*createContext,*/ useContext /*, useEffect, useState*/} from "react";
+import React, {/*createContext,*/ useContext, useEffect /*, useState*/} from "react";
 import {VedleggFrontendType} from "./generated/model";
 
 //interface ValgtKategoriData {
@@ -19,11 +19,11 @@ export const ValgtKategoriContext = React.createContext<{
 export const ValgtKategoriProvider = ({children}: {children: React.ReactNode}) => {
     const [valgtKategoriData, setValgtKategoriData] = React.useState<{
         valgtKategorier: VedleggFrontendType;
-    }>({valgtKategorier: "annet|annet"});
+    }>({valgtKategorier: "kort|annet"});
 
-    //useEffect(() => {
-    //    console.log("updated valgtKategoriData", valgtKategoriData);
-    //}, [valgtKategoriData]);
+    useEffect(() => {
+        console.log("updated valgtKategoriData", valgtKategoriData);
+    }, [valgtKategoriData]);
 
     return (
         <ValgtKategoriContext.Provider value={{valgtKategoriData, setValgtKategoriData}}>

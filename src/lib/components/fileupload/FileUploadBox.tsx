@@ -13,6 +13,7 @@ import {
 } from "../../../sider/08-vedlegg/upload/DokumentUploader";
 import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
 import {VedleggFrontendType} from "../../../generated/model";
+import {useValgtKategoriContext} from "../../../KortKategorierContextProvider.tsx";
 //import {useValgtKategoriContext} from "../../../KortKategorierContextProvider.tsx";
 
 interface Props {
@@ -35,8 +36,9 @@ const FileUploadBox = ({sporsmal, undertekst, dokumentasjonType}: Props): React.
 
 const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType}) => {
     const {t} = useTranslation();
-    //const {valgtKategoriData} = useValgtKategoriContext();
-    //const dokumentasjonType = valgtKategoriData.valgtKategorier as VedleggFrontendType;
+    const {valgtKategoriData} = useValgtKategoriContext();
+    const dokumentasjonType1 = valgtKategoriData.valgtKategorier as VedleggFrontendType;
+    console.log("documentasjonType:", dokumentasjonType);
 
     const {
         deleteDocument,
@@ -45,13 +47,14 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType
         error,
         isPending: uploadPending,
         currentUpload,
-    } = useVedlegg(dokumentasjonType);
+        //} = useVedlegg(dokumentasjonType);
+    } = useVedlegg(dokumentasjonType1);
     const {conversionPending} = usePDFConverter();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
     const isPending = conversionPending || conversionPending;
 
-    //console.log("Dokumenter dokumentasjonType: ", dokumentasjonType);
-    //console.log("Dokumenter documents: ", documents);
+    console.log("Dokumenter dokumentasjonType: ", dokumentasjonType1);
+    console.log("Dokumenter documents: ", documents);
 
     return (
         <div className={"space-y-2"}>
@@ -102,9 +105,9 @@ const DokumentUploader = ({
     const [previewFile, setPreviewFile] = React.useState<File | null>(null);
     const {conversionPending, conversionError, convertToPDF} = usePDFConverter();
     const isPending = visSpinner || conversionPending;
-    //const { valgtKategoriData, setValgtKategoriData } = useValgtKategoriContext();
+    const {valgtKategoriData} = useValgtKategoriContext();
 
-    //console.log("DokumentUploader valgtKategoriData: ",valgtKategoriData)
+    console.log("DokumentUploader valgtKategoriData: ", valgtKategoriData);
 
     if (conversionError) throw new PdfConversionError(`conversion error: ${conversionError}`);
 
@@ -174,7 +177,7 @@ const DokumentUploader = ({
                         console.log("after setPreviewFile, before doUpload");
                         await doUpload(upload);
                         console.log("after doUpload, before setValgtKategoriData");
-                        //setValgtKategoriData({ valgtKategorier: "annet|annet" });
+                        //setValgtKategoriData({ valgtKategorier: "kort|annet" });
                         //console.log("after setValgtKategoriData")
                     }}
                     onClose={() => setPreviewFile(null)}
