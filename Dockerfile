@@ -10,7 +10,7 @@ COPY package.json .
 COPY package-lock.json .
 COPY .npmrc.dockerbuild .npmrc
 
-RUN --mount=type=secret,id=NODE_AUTH_TOKEN NODE_AUTH_TOKEN=$(cat /run/secrets/NODE_AUTH_TOKEN) \
+RUN --mount=type=secret,id=NODE_AUTH_TOKEN,env=NODE_AUTH_TOKEN \
     npm ci --prefer-offline --no-audit
 
 FROM node:22-alpine AS builder
@@ -44,7 +44,7 @@ COPY --from=builder /app/build/static static
 # Make the script executable
 RUN chmod +x /app/uploadStaticToCdn.sh
 
-RUN --mount=type=secret,id=NAIS_WORKLOAD_IDENTITY_PROVIDER NAIS_WORKLOAD_IDENTITY_PROVIDER=$(cat /run/secrets/NAIS_WORKLOAD_IDENTITY_PROVIDER) \
+RUN --mount=type=secret,id=NAIS_WORKLOAD_IDENTITY_PROVIDER,env=NAIS_WORKLOAD_IDENTITY_PROVIDER \
     /app/uploadStaticToCdn.sh $NAIS_MANAGEMENT_PROJECT_ID
 
 FROM gcr.io/distroless/nodejs22-debian12 AS runner
