@@ -15,7 +15,6 @@ TENANT="nav"
 SOURCE=".next/static"
 DESTINATION="soknad"
 HEADERS="Cache-Control: public, max-age=31536000, immutable"
-PROJECT_ID=${1:?"PROJECT_ID is not provided as the first argument"}
 
 # Function to compute slug hash prefix
 slug_hash_prefix_truncate() {
@@ -37,7 +36,7 @@ slug_hash_prefix_truncate() {
 # Compute Service Account Email and Bucket Name
 PRINCIPAL=$(slug_hash_prefix_truncate "$TEAM" "cdn" 30)
 BUCKET_NAME=$(slug_hash_prefix_truncate "${TENANT}-${TEAM}" "nais-cdn" 63)
-SA_EMAIL="${PRINCIPAL}@${PROJECT_ID}.iam.gserviceaccount.com"
+SA_EMAIL="${PRINCIPAL}@${NAIS_MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com"
 
 # Authenticate with Google Cloud
 echo "Authenticating with Google Cloud..."

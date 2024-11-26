@@ -33,8 +33,8 @@ RUN npm prune --production
 # Upload static assets to GCS
 FROM google/cloud-sdk:latest AS uploader
 
-ARG NAIS_PROJECT_ID
-ENV PROJECT_ID=${NAIS_PROJECT_ID}
+ARG NAIS_MANAGEMENT_PROJECT_ID
+ENV NAIS_MANAGEMENT_PROJECT_ID=${NAIS_MANAGEMENT_PROJECT_ID}
 
 # Copy the upload script into the container
 WORKDIR /app
@@ -45,7 +45,7 @@ COPY --from=builder /app/build/static static
 RUN chmod +x /app/uploadStaticToCdn.sh
 
 RUN --mount=type=secret,id=NAIS_WORKLOAD_IDENTITY_PROVIDER,env=NAIS_WORKLOAD_IDENTITY_PROVIDER \
-    /app/uploadStaticToCdn.sh $NAIS_MANAGEMENT_PROJECT_ID
+    /app/uploadStaticToCdn.sh
 
 FROM gcr.io/distroless/nodejs22-debian12 AS runner
 
