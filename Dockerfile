@@ -44,8 +44,7 @@ COPY --from=builder /app/build/static static
 # Make the script executable
 RUN chmod +x /app/uploadStaticToCdn.sh
 
-RUN --mount=type=secret,id=NAIS_WORKLOAD_IDENTITY_PROVIDER \
-    NAIS_WORKLOAD_IDENTITY_PROVIDER=$(cat /run/secrets/NAIS_WORKLOAD_IDENTITY_PROVIDER) \
+RUN --mount=type=secret,id=NAIS_WORKLOAD_IDENTITY_PROVIDER NAIS_WORKLOAD_IDENTITY_PROVIDER=$(cat /run/secrets/NAIS_WORKLOAD_IDENTITY_PROVIDER) \
     /app/uploadStaticToCdn.sh $NAIS_MANAGEMENT_PROJECT_ID
 
 FROM gcr.io/distroless/nodejs22-debian12 AS runner
