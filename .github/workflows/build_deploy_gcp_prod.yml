@@ -31,13 +31,13 @@ jobs:
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           image_suffix: ${{ matrix.environment }}
-          build_args: >-
+          build_args: |
             DIGISOS_ENV=${{ matrix.environment }}
             LOGIN_SESSION_API_URL=https://www.nav.no/sosialhjelp/soknad/oauth2/session
             LOGOUT_URL=https://www.nav.no/sosialhjelp/soknad/oauth2/logout
             NAIS_MANAGEMENT_PROJECT_ID=${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
 
-          build_secrets: >-
+          build_secrets: |
             NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
             NAIS_WORKLOAD_IDENTITY_PROVIDER=${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
 
