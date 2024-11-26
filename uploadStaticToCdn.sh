@@ -5,8 +5,8 @@ set -euo pipefail
 START_HILIGHT="\x1b[1;31m"
 END_HILIGHT="\x1b[0m"
 
-if [ -z "${IDENTITY_PROVIDER}" ]; then
-  echo -e "${START_HILIGHT}Warning${END_HILIGHT}: NAIS_IDENTITY_PROVIDER is not provided as a secret, skipping CDN upload";
+if [ -z "${NAIS_WORKLOAD_IDENTITY_PROVIDER}" ]; then
+  echo -e "${START_HILIGHT}Warning${END_HILIGHT}: NAIS_WORKLOAD_IDENTITY_PROVIDER is not provided as a secret, skipping CDN upload";
   exit 0
 fi
 
@@ -42,7 +42,7 @@ SA_EMAIL="${PRINCIPAL}@${PROJECT_ID}.iam.gserviceaccount.com"
 # Authenticate with Google Cloud
 echo "Authenticating with Google Cloud..."
 gcloud auth workload-identity-federation login \
-    --workload-provider="${IDENTITY_PROVIDER}" \
+    --workload-provider="${NAIS_WORKLOAD_IDENTITY_PROVIDER}" \
     --service-account-email="${SA_EMAIL}"
 
 # Upload files to GCS

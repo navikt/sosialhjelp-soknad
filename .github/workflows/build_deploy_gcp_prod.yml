@@ -35,11 +35,11 @@ jobs:
             DIGISOS_ENV=${{ matrix.environment }}
             LOGIN_SESSION_API_URL="https://www.nav.no/sosialhjelp/soknad/oauth2/session"
             LOGOUT_URL="https://www.nav.no/sosialhjelp/soknad/oauth2/logout"
-            NAIS_PROJECT_ID: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+            NAIS_MANAGEMENT_PROJECT_ID: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
 
           build_secrets: |
             NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
-            NAIS_IDENTITY_PROVIDER=${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+            NAIS_WORKLOAD_IDENTITY_PROVIDER=${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
 
       - name: "Deploy to ${{ matrix.environment }}"
         uses: nais/deploy/actions/deploy@v2
