@@ -1,13 +1,12 @@
 import {Alert, Heading} from "@navikt/ds-react";
-import React, {useContext} from "react";
 import {useTranslation} from "react-i18next";
-import {ValideringsContext} from "../valideringContextProvider.tsx";
+import {useValideringContext} from "../providers/useValideringContext.ts";
 
 const Feiloppsummering = () => {
     const {t} = useTranslation("skjema");
     const {
         state: {feil, visValideringsfeil},
-    } = useContext(ValideringsContext);
+    } = useValideringContext();
     if (!visValideringsfeil || !feil?.length) return null;
 
     return (

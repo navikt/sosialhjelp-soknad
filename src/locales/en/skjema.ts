@@ -61,36 +61,9 @@ export const skjema = {
             gjenopptatt:
                 "We are working to improve the application, therefore some changes may have been made since the last time you were logged in. Some questions and information may have been added or deleted.",
         },
-        dokumentasjon: {
-            informasjon: {
-                del1: "Documentation can be sent to applications you have previously submitted.",
-                del2: "Go to the list of <lenke>your social assistance applications</lenke>",
-                del3: "Open the application that you would like to forward documentation to",
-                del4: "Upload the documents you are going to send under “Your documents”",
-                url: "your social assistance applications",
-            },
-            tittel: "Send documentation for an application you have submitted",
-        },
-        fortsett: {
-            soknad: "Continue with an application you have started",
-        },
-        opprettsoknadfeilet: "An error occurred when setting up the application. Please try later",
-        paabegynt: {
-            soknader_one: "{{count}} started application",
-            soknader_other: "{{count}} started applications",
-            sistOppdatert: "Last updated",
-            slettes: "Will be deleted",
-            informasjon:
-                "Please note that the started applications will be deleted after {{DAYS_BEFORE_DELETION}} days.",
-        },
         sidetittel: {
             kortnavn: "Application",
             stringValue: "Application for financial assistance",
-        },
-        start: {
-            ny: {
-                soknad: "Start a new application",
-            },
         },
         ukjentfeilunderhentdata: "An error occurred when obtaining information",
     },
@@ -514,14 +487,6 @@ export const skjema = {
     },
     feilside: {
         feilkode: "Error code",
-        ikkefunnet: {
-            feilmelding:
-                "If this concerns a completed submitted/deleted application, <lenke>return to start page</lenke>.",
-            returner: {
-                knapp: "Return to the start page",
-            },
-            tittel: "Page not found",
-        },
         lenke: {
             meldfra: {
                 tekst: "Report error",
@@ -537,7 +502,6 @@ export const skjema = {
             fantIkkeSide: "We could not find the page you are trying to open.",
         },
         serverfeil: {
-            beklager: "We are sorry!",
             feilmelding:
                 "Sorry, we have technical problems. An application for financial assistance is not possible to complete. We recommend that you try again a little later.",
             informasjon: {
@@ -546,33 +510,12 @@ export const skjema = {
                 stringValue: "The application was last saved {{0}} and you can continue with your application later.",
             },
             knapp: "Contact your Nav office",
-            lenke: {
-                meldfra: "Send bug report",
-                minside: "Go to My Page",
-                nav: "Go to nav.no",
-            },
             loggUt: "Log out ",
-            loggfort: "The incident has been logged and the problem will be rectified as soon as possible.",
-            nodsituasjon: {
-                tekst: "If you do not have money for necessary things such as food, you must contact your Nav office. Nav will also help you to find a temporary place of residence if you have nowhere to sleep or to stay in the next 24 hours.",
-                tittel: "Do you need immediate help?",
-            },
             opprett: {
                 informasjon:
                     "Something went wrong - we were unable to set up the application. You can try again now, or wait until later.",
             },
-            papir: "You can also <lenke>apply for financial assistance on paper</lenke> at your Nav office.",
-            prov: {
-                igjen: "We recommend that you try again.",
-            },
             provIgjen: "Try again",
-            startside: "Go to the front page for financial assistance",
-            teknisk: {
-                feil: "A technical error has occurred.",
-            },
-            til: {
-                startsiden: "To the home page for the application",
-            },
             tittel: "Sorry, we have a fault on our side.",
         },
         soknadikkefunnet: {
@@ -681,28 +624,6 @@ export const skjema = {
                     'If you have low income and high housing expences you can apply for housing allowance (bostøtte) from Husbanken. We recommend that you check if you can get <a href="https://husbanken.no/bostotte"  target="_blank" rel="noreferrer noopener">support from Husbanken</lenke>.',
             },
         },
-        ikketilgang: {
-            bruker: {
-                tekst: {
-                    v2: "Unfortunately, you cannot use the digital application for financial assistance. People with code 6 or 7 cannot apply for financial assistance digitally. Contact your local <lenke>Nav office</lenke> to receive help applying.",
-                },
-                tittel: "Sorry",
-            },
-            tekst: {
-                v2: "You have now come to a digital service for applying for financial assistance. The service is under development, and at present, only residents with an address in Horten, Skien, Bergen, Oslo, Trondheim and Askøy municipalities can use the service. If you require financial assistance you must contact your <lenke>local Nav office.</lenke>",
-            },
-            tittel: "Sorry",
-        },
-        innhenting: {
-            tekst_del1:
-                'We automatically collect information from public registers. By pressing "Start application" you accept this.',
-            tekst_del2: "<lenke>Read more about collecting and processing of your personal data</lenke>.",
-            undertittel: "Collecting and processing of personal data",
-        },
-        nodsituasjon: {
-            tekst: "If you do not have money for food or a place to stay for the next 24 hours, you should mention this in your application.",
-            undertittel: "Are you in an emergency situation?",
-        },
         samtykke: {
             bostotte_samtykke: "Husbanken",
             info_del1: "When you started the application, you chose to obtain information from",
@@ -711,14 +632,6 @@ export const skjema = {
             knapp: "Continue with application",
             skatteetaten_samtykke: "Tax Administration",
             sporsmal: "Update information from",
-        },
-        start: {
-            tekst_del1: "Please complete the application as best you can. Attach relevant documentation.",
-            tekst_del2: "See examples of <lenke>what documentation we might ask for</lenke>.",
-            tekst_del3:
-                "If you intentionally withhold or provide incorrect information, you may have to pay back the benefit.",
-            tittel: "Before you start your application",
-            undertittel: "Information and documentation",
         },
         student: {
             studielan: {
@@ -1660,7 +1573,6 @@ export const skjema = {
             forrige: "Previous step",
             neste: "Next step",
             send: "Submit application",
-            start: "Start application",
         },
         sensitivadvarsel: "Do not submit health information or other sensitive personal information",
         tittel: "Application for financial assistance",

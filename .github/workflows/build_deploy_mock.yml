@@ -7,39 +7,49 @@ env:
   NEXT_PUBLIC_DIGISOS_ENV: mock
 
 jobs:
-  build-image:
-    name: "Build Artifact and Image"
+  build-deploy:
+    name: "Build image and deploy"
     runs-on: ubuntu-latest
     outputs:
       docker-tag: ${{ steps.docker-image.outputs.full-tag }}
-      artifact-version: ${{ steps.docker-image.outputs.artifact-version }}
     permissions:
       contents: write
       packages: write
       actions: write
+      id-token: write
     env:
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
       WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - uses: actions/checkout@v4
+      - name: 'Build npm project'
+        uses: navikt/sosialhjelp-ci/actions/build-npm@main
+        with:
+          node-version: 22
+          build-less: 'false'
+          reader-token: ${{ secrets.READER_TOKEN }}
+          run-test: 'false'
+          run-orval: 'true'
+
       - name: "Build Docker Image"
         id: docker-image
         uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
         with:
           prefix: ${{ env.NEXT_PUBLIC_DIGISOS_ENV }}
 
-  deploy-app:
-    name: "Deploy Application"
-    runs-on: ubuntu-latest
-    needs: build-image
-    permissions:
-      packages: write
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
+      - name: 'Upload static files to cdn'
+        id: upload
+        uses: nais/deploy/actions/cdn-upload/v2@master
+        with:
+          team: teamdigisos
+          source: ./build/static
+          destination: "/sosialhjelp-soknad/_next"
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
 
       - id: docker-image-tag
         run: |
-          echo "IMAGE_TAG=${{ env.DOCKER_IMAGE }}:${{ needs.build-image.outputs.docker-tag }}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${{ env.DOCKER_IMAGE }}:${{ steps.docker-image.outputs.full-tag }}" >> $GITHUB_ENV
 
       - name: Deploy til ${{ env.NEXT_PUBLIC_DIGISOS_ENV }}
         uses: nais/deploy/actions/deploy@v2

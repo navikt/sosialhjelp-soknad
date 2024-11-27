@@ -42,35 +42,9 @@ export const skjema = {
             gjenopptatt:
                 "Vi jobber med å gjøre søknaden bedre, og det kan derfor ha skjedd endringer siden sist du var innlogget. Det betyr at spørsmål og informasjon kan være lagt til eller fjernet.",
         },
-        dokumentasjon: {
-            informasjon: {
-                del1: "Dokumentasjon kan sendes til søknader du har sendt inn tidligere.",
-                del2: "Gå til listen over <lenke>dine sosialhjelpssøknader</lenke>",
-                del3: "Åpne søknaden du ønsker å ettersende dokumenter til",
-                del4: "Last opp dokumentene du skal ettersende under “dine vedlegg”",
-                url: "dine sosialhjelpssøknader",
-            },
-            tittel: "Send dokumentasjon til en søknad du har sendt inn",
-        },
-        fortsett: {
-            soknad: "Fortsett på en søknad du har begynt på",
-        },
-        opprettsoknadfeilet: "Det oppstod en feil under opprettelsen av søknaden. Vennligst prøv igjen senere",
-        paabegynt: {
-            soknader_one: "{{count}} påbegynt søknad",
-            soknader_other: "{{count}} påbegynte søknader",
-            sistOppdatert: "Sist oppdatert",
-            informasjon: "Vær oppmerksom på at påbegynte søknader slettes etter {{DAYS_BEFORE_DELETION}} dager.",
-            slettes: "Slettes",
-        },
         sidetittel: {
             kortnavn: "Søknad",
             stringValue: "Søknad om økonomisk sosialhjelp",
-        },
-        start: {
-            ny: {
-                soknad: "Start en ny søknad",
-            },
         },
         ukjentfeilunderhentdata: "Det oppstod en feil under informasjonshentingen",
     },
@@ -494,13 +468,6 @@ export const skjema = {
     },
     feilside: {
         feilkode: "Feilkode",
-        ikkefunnet: {
-            feilmelding: "Om det gjelder en ferdig innsendt/slettet søknad, <lenke>returner til startsiden</lenke>.",
-            returner: {
-                knapp: "Gå til startside sosialhjelp",
-            },
-            tittel: "Side ikke funnet",
-        },
         lenke: {
             meldfra: {
                 tekst: "Meld fra om feil",
@@ -516,7 +483,6 @@ export const skjema = {
             fantIkkeSide: "Vi fant ikke siden du prøvde å åpne.",
         },
         serverfeil: {
-            beklager: "Vi beklager!",
             feilmelding:
                 "Beklager, vi har tekniske problemer. Søknad om økonomisk sosialhjelp er ikke mulig å gjennomføre. Vi anbefaler at du prøver på nytt igjen litt senere.",
             informasjon: {
@@ -525,33 +491,12 @@ export const skjema = {
                 stringValue: "Søknaden er sist lagret {{0}} og du kan fortsette på søknaden din senere.",
             },
             knapp: "Kontakt Nav-Kontoret ditt",
-            lenke: {
-                meldfra: "Send feilrapport",
-                minside: "Gå til Min Side",
-                nav: "Gå til nav.no",
-            },
             loggUt: "Logg ut",
-            loggfort: "Hendelsen har blitt loggført og problemet utbedres så fort som mulig.",
-            nodsituasjon: {
-                tekst: "Hvis du ikke har penger til det aller mest nødvendige som mat, må du kontakte Nav-kontoret ditt.\n\nNav skal også hjelpe deg med å finne et midlertidig botilbud hvis du ikke har et sted å sove eller oppholde deg det nærmeste døgnet.",
-                tittel: "Trenger du rask hjelp?",
-            },
             opprett: {
                 informasjon:
                     "Noe gikk galt så vi ikke kunne opprette søknaden. Du kan prøve igjen nå, eller vente til senere.",
             },
-            papir: "Du kan også <lenke>søke om økonomisk sosialhjelp på papir</lenke> hos ditt Nav-kontor.",
-            prov: {
-                igjen: "Vi anbefaler at du prøver på nytt.",
-            },
             provIgjen: "Prøv på nytt",
-            startside: "Gå til forsiden for sosialhjelp",
-            teknisk: {
-                feil: "En teknisk feil har oppstått.",
-            },
-            til: {
-                startsiden: "Til startsiden for søknad",
-            },
             tittel: "Beklager, vi har en feil hos oss",
         },
         soknadikkefunnet: {
@@ -660,28 +605,6 @@ export const skjema = {
                     'Bostøtte fra Husbanken er en statlig støtteordning for de som har lave inntekter og høye boutgifter. Bostøtte skal bidra til å betale boutgifter. Du har svart at du har boutgifter, men mottar ikke bostøtte. Vi anbefaler deg å sjekke om du kan få <a href="https://husbanken.no/bostotte"  target="_blank" rel="noreferrer noopener">støtte fra Husbanken</lenke>.',
             },
         },
-        ikketilgang: {
-            bruker: {
-                tekst: {
-                    v2: "Du kan dessverre ikke bruke den digitale søknaden om økonomisk sosialhjelp.\nPersoner med kode 6 eller 7 kan ikke søke om økonomisk sosialhjelp digitalt.\nTa kontakt med <lenke>ditt lokale Nav-kontor</lenke> for å få hjelp til å søke.",
-                },
-                tittel: "Beklager",
-            },
-            tekst: {
-                v2: "Du har nå kommet til en digital tjeneste for å søke om økonomisk stønad. Tjenesten er under utvikling, og det er kun innbyggere med adresse i Horten, Skien, Bergen, Oslo, Trondheim og Askøy kommune som kan bruke tjenesten på nåværende tidspunkt.\n\nHvis du har behov for økonomisk stønad må du henvende deg til <lenke>ditt lokale Nav-kontor.</lenke>",
-            },
-            tittel: "Beklager",
-        },
-        innhenting: {
-            tekst_del1:
-                'Vi innhenter automatisk opplysninger fra offentlige registre. Ved å trykke "Start søknad" godtar du dette.',
-            tekst_del2: "<lenke>Les mer om innhenting og behandling av dine personopplysninger</lenke>.",
-            undertittel: "Innhenting og behandling av personopplysninger",
-        },
-        nodsituasjon: {
-            tekst: "Hvis du ikke har penger til mat eller et sted å overnatte det neste døgnet, bør du opplyse om dette i søknaden.",
-            undertittel: "Er du i en nødssituasjon?",
-        },
         samtykke: {
             bostotte_samtykke: "Husbanken",
             info_del1: "Da du startet søknaden valgte du å hente informasjon fra",
@@ -690,14 +613,6 @@ export const skjema = {
             knapp: "Fortsett søknad",
             skatteetaten_samtykke: "Skatteetaten",
             sporsmal: "Oppdater opplysningene fra",
-        },
-        start: {
-            tekst_del1: "Vennligst fyll ut søknaden så godt du kan. Legg ved relevant dokumentasjon.",
-            tekst_del2: "Se eksempler på <lenke>hvilken dokumentasjon vi kan be om</lenke>.",
-            tekst_del3:
-                "Hvis du med vilje holder tilbake eller gir uriktige opplysninger, kan du måtte betale tilbake stønaden.",
-            tittel: "Før du starter på søknaden",
-            undertittel: "Opplysninger og dokumentasjon",
         },
         student: {
             studielan: {
@@ -1635,7 +1550,6 @@ export const skjema = {
             forrige: "Forrige steg",
             neste: "Neste steg",
             send: "Send søknaden",
-            start: "Start søknaden",
         },
         navigering: {
             feil: "Beklager, et teknisk problem oppstod ved innsending. Prøv gjerne igjen.",

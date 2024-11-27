@@ -8,7 +8,7 @@ import {isValidNumber, parsePhoneNumber} from "libphonenumber-js";
 import {useForm} from "react-hook-form";
 import * as z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {DigisosLanguageKey} from "../../lib/i18n";
+import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 
 const TelefonnummerFormSchema = z
     .object({

@@ -1,5 +1,5 @@
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {useFeatureFlags} from "../../config";
+import {useConfigFeatureFlags} from "../../config";
 import * as React from "react";
 import {useEffect} from "react";
 import {
@@ -16,7 +16,7 @@ export const useBegrunnelse = () => {
     const behandlingsId = useBehandlingsId();
 
     // TODO: Avklare denne. Er det behov lenger?
-    const {begrunnelseNyTekst} = useFeatureFlags();
+    const {begrunnelseNyTekst} = useConfigFeatureFlags();
     const [isError, setIsError] = React.useState(false);
     const queryClient = useQueryClient();
     const {isPending, queryKey} = useHentBegrunnelse(behandlingsId);

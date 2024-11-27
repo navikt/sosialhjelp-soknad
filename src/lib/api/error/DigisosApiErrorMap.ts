@@ -1,7 +1,7 @@
 import {ValideringsFeilKode} from "../../validering";
 import {SoknadApiErrorError} from "../../../generated/model";
 import {REST_FEIL} from "./restFeil";
-import {DigisosLanguageKey} from "../../i18n";
+import {DigisosLanguageKey} from "../../i18n/common.ts";
 
 /**
  * Oversikt mellom FeilmeldingFeilType fra backend og språknøkkel på frontend.

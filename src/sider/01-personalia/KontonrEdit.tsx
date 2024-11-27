@@ -6,7 +6,7 @@ import {KontonummerFrontend, KontonummerInputDto} from "../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {formatKontonummer, registerWithMasks} from "@fremtind/jkl-formatters-util";
-import {DigisosLanguageKey} from "../../lib/i18n";
+import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 
 const KontonummerRegex = new RegExp("^\\d{11}$");
 

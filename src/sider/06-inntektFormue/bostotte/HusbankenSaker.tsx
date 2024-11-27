@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import {Table} from "@navikt/ds-react";
 import {format} from "date-fns";
 import * as React from "react";
-import {DigisosLanguageKey} from "../../../lib/i18n";
+import {DigisosLanguageKey} from "../../../lib/i18n/common.ts";
 
 // Denne blir forenklet til String et eller annet sted upstream...
 type HusbankenStatus = "UNDER_BEHANDLING" | "VEDTATT";

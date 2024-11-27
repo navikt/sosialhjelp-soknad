@@ -16,7 +16,7 @@ import React from "react";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
-import {useAnalyticsContext} from "../../lib/AnalyticsContextProvider.tsx";
+import {useAnalyticsContext} from "../../lib/providers/useAnalyticsContext.ts";
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");

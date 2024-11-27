@@ -1,26 +1,11 @@
-import {type NextRequest, NextResponse} from "next/server";
-import {verifyOrRedirectToLogin} from "./lib/middleware/verifyOrRedirectToLogin.ts";
-import {configureLogger} from "@navikt/next-logger";
+import createMiddleware from "next-intl/middleware";
+import {routing} from "./i18n/routing.ts";
+import {NextRequest} from "next/server";
 
-import {logger} from "@navikt/next-logger";
-
-configureLogger({basePath: "/sosialhjelp/soknad", apiPath: "/sosialhjelp/soknad/api"});
-
-export async function middleware({url, cookies}: NextRequest) {
-    if (process.env.NEXT_PUBLIC_DIGISOS_ENV === "preprod") {
-        logger.warn("Running in preprod, skipping auth check");
-        return NextResponse.next();
-    }
-    try {
-        return await verifyOrRedirectToLogin({url, cookies});
-    } catch (e: any) {
-        // It's not a big deal if the above fails, because we do the same
-        // redirect on the client side. so we set this up fail-safe.
-        logger.warn("Could not check auth on server side, falling back to client", e);
-        return NextResponse.next();
-    }
+export default async function middleware(request: NextRequest) {
+    return createMiddleware(routing)(request);
 }
 
 export const config = {
-    matcher: [`/((?!api|internal|_next/static|_next/image|favicon.ico).*)`, "/"],
+    matcher: ["/", "/(nb|nn|en)/:path*", "/((?!api|_next|_vercel|.*\\..*).*)"],
 };

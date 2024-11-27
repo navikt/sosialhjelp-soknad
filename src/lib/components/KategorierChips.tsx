@@ -3,7 +3,7 @@ import {BodyShort, Box, Checkbox, HStack, Label, VStack} from "@navikt/ds-react"
 import {SelectableCategory} from "../hooks/data/useKategorier";
 import {useTranslation} from "react-i18next";
 import {FormState, UseFormReturn} from "react-hook-form";
-import {DigisosLanguageKey} from "../i18n";
+import {DigisosLanguageKey} from "../i18n/common.ts";
 import {XMarkIcon} from "@navikt/aksel-icons";
 import LocalizedTextArea from "./LocalizedTextArea";
 

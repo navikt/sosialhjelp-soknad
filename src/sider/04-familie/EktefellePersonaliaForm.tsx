@@ -10,7 +10,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {EktefelleFrontend, SivilstatusFrontend} from "../../generated/model";
 
 import {ValideringsFeilKode} from "../../lib/validering";
-import {DigisosLanguageKey} from "../../lib/i18n";
+import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 
 const SivilstatusSchema = z.object({
     ektefelle: z.object({

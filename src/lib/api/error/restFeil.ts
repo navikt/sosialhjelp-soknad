@@ -1,4 +1,4 @@
-import {DigisosLanguageKey} from "../../i18n";
+import {DigisosLanguageKey} from "../../i18n/common.ts";
 
 export const REST_FEIL: Record<string, DigisosLanguageKey> = {
     SAMLET_VEDLEGG_STORRELSE_FOR_STOR: "vedlegg.opplasting.feil.samletStorrelseForStor",

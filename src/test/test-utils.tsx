@@ -1,7 +1,7 @@
 import {render, RenderOptions} from "@testing-library/react";
 import {ReactElement, Suspense} from "react";
 import * as React from "react";
-import i18n from "../lib/i18n";
+import i18n from "../lib/i18n/reacti18Next";
 import {I18nextProvider} from "react-i18next";
 
 const Wrapper = ({children}: {children: React.ReactNode}) => (

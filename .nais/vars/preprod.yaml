@@ -1,6 +1,4 @@
 appName: sosialhjelp-soknad
-ingresses: null
-externalOutboundAccesses: null
 idportenEnabled: false
-env:
-  DEKORATOREN_MILJO: dev
+ingresses: []
+outboundExternalHosts: []

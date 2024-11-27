@@ -28,21 +28,16 @@ export const initAmplitude = () => {
     }
 };
 
-export async function logAmplitudeEvent(eventName: string, eventData?: Record<string, unknown>) {
-    if (amplitude) {
-        const platform = buildLocationString();
-        const result = await amplitude.logEvent(eventName, {
-            ...eventData,
-            skjemaId: "sosialhjelpsoknad",
-            platform,
-            origin: "sosialhjelpsoknad",
-            originVersion: eventData?.originVersion || "unknown",
-        }).promise;
-        if (result.code !== 200) {
-            logger.warn(result, "Got non-200 code from amplitude.logEvent");
-        }
-    }
-}
+export const logAmplitudeEvent = async (eventName: string, eventData?: Record<string, unknown>) =>
+    amplitude
+        ? amplitude.logEvent(eventName, {
+              ...eventData,
+              skjemaId: "sosialhjelpsoknad",
+              platform: buildLocationString(),
+              origin: "sosialhjelpsoknad",
+              originVersion: eventData?.originVersion || "unknown",
+          }).promise
+        : logger.info("Amplitude not initialized");
 
 const buildLocationString = () => {
     const {origin, pathname, hash} = window.location;

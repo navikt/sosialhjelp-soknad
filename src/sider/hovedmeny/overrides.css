@@ -1,0 +1,5 @@
+/* kjapp fiks for å fjerne border på expansioncard. Hovedmenyen er eneste
+    sted vi bruker den, så vi hacker vekk border her. */
+.navds-expansioncard--open > :where(.navds-expansioncard__header)::after {
+    display: none;
+}

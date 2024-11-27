@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import {Heading} from "@navikt/ds-react";
 import {Opplysning} from "../../lib/opplysninger";
 import {VedleggFrontendGruppe} from "../../generated/model";
-import {DigisosLanguageKey} from "../../lib/i18n";
+import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 
 const Gruppetittel: Record<VedleggFrontendGruppe, DigisosLanguageKey> = {
     statsborgerskap: "opplysninger.statsborgerskap.sporsmal",

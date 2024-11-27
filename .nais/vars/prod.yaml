@@ -1,7 +1,6 @@
 appName: sosialhjelp-soknad
-ingresses: null
-externalOutboundAccesses:
-  - "sosialhjelp-soknad-api.prod-fss-pub.nais.io"
 idportenEnabled: false
+ingresses: []
+outboundExternalHosts: [sosialhjelp-soknad-api.prod-fss-pub.nais.io]
 env:
-  DEKORATOREN_MILJO: prod
+  LOGIN_SESSION_API_URL: "https://www.nav.no/sosialhjelp/soknad/oauth2/session"

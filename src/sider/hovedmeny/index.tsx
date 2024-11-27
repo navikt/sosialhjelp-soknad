@@ -1,25 +1,23 @@
 import * as React from "react";
+import "./overrides.css";
 import {PersonbeskyttelseFeilmelding} from "./PersonbeskyttelseFeilmelding";
-import {NySoknadPanel} from "./paneler/NySoknad";
-import {PabegynteSoknaderPanel} from "./paneler/PabegynteSoknader";
-import {EttersendDokuPanel} from "./paneler/EttersendDokuPanel";
-import {useTranslation} from "react-i18next";
-import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs";
-import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner.tsx";
+import {NySoknadPanel} from "./nySoknad/NySoknadPanel.tsx";
+import {PabegynteSoknaderPanel} from "./PabegynteSoknader.tsx";
+import {EttersendDokuPanel} from "./EttersendDokuPanel.tsx";
 import {Heading, VStack} from "@navikt/ds-react";
-import digisosConfig from "../../lib/config.ts";
-import DeveloperToolkit from "../../lib/components/appHeader/DeveloperToolkit.tsx";
+import {useTranslations} from "next-intl";
+import {useContextSessionInfo} from "../../lib/providers/useContextSessionInfo.ts";
 
 export const Informasjon = () => {
-    const {data: {userBlocked, open} = {userBlocked: false, open: []}, isPending} = useGetSessionInfo();
-    const {t} = useTranslation();
+    const {userBlocked, open, numRecentlySent} = useContextSessionInfo();
+    const t = useTranslations("Informasjon");
 
     if (userBlocked) return <PersonbeskyttelseFeilmelding />;
 
     return (
         <main aria-labelledby={"app-heading"}>
-            <title>{t("applikasjon.sidetittel.stringValue")}</title>
-            {digisosConfig.showDevPanel && <DeveloperToolkit />}
+            <title>{t("title")}</title>
+            {/*{digisosConfig.showDevPanel && <DeveloperToolkit />}*/}
             <div
                 className="max-w-lg lg:max-w-3xl w-full mx-auto gap-6 max-lg:px-2 py-6 lg:gap-16 lg:py-16 flex flex-col grow"
                 role={"none"}
@@ -30,17 +28,13 @@ export const Informasjon = () => {
                     size="small"
                     className={"lg:!text-heading-xlarge !w-full !p-0 !text-left"}
                 >
-                    {t("skjema.tittel")}
+                    {t("title")}
                 </Heading>
-                {isPending ? (
-                    <ApplicationSpinner />
-                ) : (
-                    <VStack gap={"5"}>
-                        <NySoknadPanel defaultOpen={open?.length === 0} />
-                        <PabegynteSoknaderPanel />
-                        <EttersendDokuPanel />
-                    </VStack>
-                )}
+                <VStack gap={"5"}>
+                    <NySoknadPanel defaultOpen={open?.length === 0} />
+                    <PabegynteSoknaderPanel />
+                    {!!numRecentlySent && <EttersendDokuPanel />}
+                </VStack>
             </div>
         </main>
     );
