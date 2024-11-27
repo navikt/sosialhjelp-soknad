@@ -25,6 +25,7 @@ import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
 import digisosConfig from "./lib/config.ts";
 import {useRouter} from "next/navigation";
+import {ValgtKategoriProvider} from "./KortKategorierContextProvider.tsx";
 
 const queryClient = new QueryClient();
 
@@ -87,33 +88,35 @@ export default function App() {
                             v7_startTransition: true,
                         }}
                     >
-                        <Routes>
-                            <Route path={"skjema"}>
-                                <Route path="kort/:behandlingsId">
-                                    <Route element={<SwitchSoknadType />}>
-                                        <Route path="1" element={<RedirectToStandard />} />
-                                        <Route path="2" element={<Behov />} />
-                                        <Route path="3" element={<ArbeidOgFamilie />} />
-                                        <Route path="4" element={<Inntekt />} />
-                                        <Route path="5" element={<Oppsummering />} />
+                        <ValgtKategoriProvider>
+                            <Routes>
+                                <Route path={"skjema"}>
+                                    <Route path="kort/:behandlingsId">
+                                        <Route element={<SwitchSoknadType />}>
+                                            <Route path="1" element={<RedirectToStandard />} />
+                                            <Route path="2" element={<Behov />} />
+                                            <Route path="3" element={<ArbeidOgFamilie />} />
+                                            <Route path="4" element={<Inntekt />} />
+                                            <Route path="5" element={<Oppsummering />} />
+                                        </Route>
                                     </Route>
-                                </Route>
-                                <Route path=":behandlingsId">
-                                    <Route index path="1" element={<Personopplysninger shortSpacing />} />
-                                    <Route element={<SwitchSoknadType />}>
-                                        <Route path="2" element={<Begrunnelse />} />
-                                        <Route path="3" element={<ArbeidOgUtdanning />} />
-                                        <Route path="4" element={<Familie />} />
-                                        <Route path="5" element={<Bosituasjon />} />
-                                        <Route path="6" element={<InntektFormue />} />
-                                        <Route path="7" element={<UtgifterGjeld />} />
-                                        <Route path="8" element={<OkonomiskeOpplysningerView />} />
-                                        <Route path="9" element={<Oppsummering />} />
+                                    <Route path=":behandlingsId">
+                                        <Route index path="1" element={<Personopplysninger shortSpacing />} />
+                                        <Route element={<SwitchSoknadType />}>
+                                            <Route path="2" element={<Begrunnelse />} />
+                                            <Route path="3" element={<ArbeidOgUtdanning />} />
+                                            <Route path="4" element={<Familie />} />
+                                            <Route path="5" element={<Bosituasjon />} />
+                                            <Route path="6" element={<InntektFormue />} />
+                                            <Route path="7" element={<UtgifterGjeld />} />
+                                            <Route path="8" element={<OkonomiskeOpplysningerView />} />
+                                            <Route path="9" element={<Oppsummering />} />
+                                        </Route>
                                     </Route>
+                                    <Route path="*" element={<IkkeFunnet />} />
                                 </Route>
-                                <Route path="*" element={<IkkeFunnet />} />
-                            </Route>
-                        </Routes>
+                            </Routes>
+                        </ValgtKategoriProvider>
                     </BrowserRouter>
                     <div aria-hidden={"true"}>
                         <ReactQueryDevtools initialIsOpen={false} />
