@@ -17,10 +17,6 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
     //TODO: multirow knappen skjules for lonnslipp|arbeid
     //TODO: dette på grunn av det kan skap forvirringer for søkeren på grunn av kor uoversiktlig det kan bli
 
-    /*
-    type er en sånn kategori mens tilleggsinfo er beskrivlese, så om søker velger en kategor istedefor kort så blir det "bsu" og deretter blir teksten "hei hei hei" tiøeggsinfo
-     */
-
     return (
         <form onSubmit={(e) => e.preventDefault()}>
             {entries.length > 0 && (
