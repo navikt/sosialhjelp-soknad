@@ -19,7 +19,7 @@ import {useValgtKategoriContext} from "../../../KortKategorierContextProvider.ts
 interface Props {
     sporsmal: string;
     undertekst: string;
-    dokumentasjonType: VedleggFrontendType;
+    dokumentasjonType?: VedleggFrontendType;
 }
 
 const FileUploadBox = ({sporsmal, undertekst, dokumentasjonType}: Props): React.JSX.Element => {
@@ -34,11 +34,11 @@ const FileUploadBox = ({sporsmal, undertekst, dokumentasjonType}: Props): React.
     );
 };
 
-const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType}) => {
+const Dokumenter = ({dokumentasjonType}: {dokumentasjonType?: VedleggFrontendType}) => {
     const {t} = useTranslation();
     const {valgtKategoriData} = useValgtKategoriContext();
-    const dokumentasjonType1 = valgtKategoriData.valgtKategorier as VedleggFrontendType;
-    console.log("documentasjonType:", dokumentasjonType);
+    const type =
+        dokumentasjonType === "kort|behov" ? "kort|behov" : (valgtKategoriData.valgtKategorier as VedleggFrontendType);
 
     const {
         deleteDocument,
@@ -47,14 +47,10 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType
         error,
         isPending: uploadPending,
         currentUpload,
-        //} = useVedlegg(dokumentasjonType);
-    } = useVedlegg(dokumentasjonType1);
+    } = useVedlegg(type);
     const {conversionPending} = usePDFConverter();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
     const isPending = conversionPending || conversionPending;
-
-    console.log("Dokumenter dokumentasjonType: ", dokumentasjonType1);
-    console.log("Dokumenter documents: ", documents);
 
     return (
         <div className={"space-y-2"}>
@@ -63,11 +59,8 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType
                     isLoading={isPending}
                     visSpinner={uploadPending}
                     doUpload={async (file) => {
-                        console.log("before uploadDocument");
                         await uploadDocument(file);
-                        console.log("after uploadDocument before setShowSuccessAlert");
                         setShowSuccessAlert(true);
-                        console.log("after setShowSuccessAlert");
                     }}
                     resetAlerts={() => setShowSuccessAlert(false)}
                 />
@@ -105,37 +98,20 @@ const DokumentUploader = ({
     const [previewFile, setPreviewFile] = React.useState<File | null>(null);
     const {conversionPending, conversionError, convertToPDF} = usePDFConverter();
     const isPending = visSpinner || conversionPending;
-    const {valgtKategoriData} = useValgtKategoriContext();
-
-    console.log("DokumentUploader valgtKategoriData: ", valgtKategoriData);
 
     if (conversionError) throw new PdfConversionError(`conversion error: ${conversionError}`);
 
     const handleFileSelect = async ({target: {files}}: ChangeEvent<HTMLInputElement>) => {
-        console.log("inside handleFileSelect before !files?.length");
         if (!files?.length) return;
-        console.log("inside handleFileSelect after !files?.length");
 
-        console.log("inside handleFileSelect before file");
         const file = files[0];
-        console.log("inside handleFileSelect after file");
 
-        console.log("inside handleFileSelect before SUPPORTED_WITHOUT_CONVERSION.includes");
         if (SUPPORTED_WITHOUT_CONVERSION.includes(file.type)) {
-            console.log("inside handleFileSelect inside SUPPORTED_WITHOUT_CONVERSION.includes");
             setPreviewFile(file);
         } else {
-            console.log(
-                "inside handleFileSelect inside SUPPORTED_WITHOUT_CONVERSION.includes else befor setPreviewFile"
-            );
             setPreviewFile(await convertToPDF(file));
-            console.log(
-                "inside handleFileSelect inside SUPPORTED_WITHOUT_CONVERSION.includes else after setPreviewFile"
-            );
         }
-        console.log("inside handleFileSelect before vedleggElement?.current");
         if (vedleggElement?.current) vedleggElement.current.value = "";
-        console.log("inside handleFileSelect after vedleggElement?.current");
     };
 
     return (
@@ -168,17 +144,10 @@ const DokumentUploader = ({
                     header={"Dokumentasjon"}
                     file={previewFile}
                     onAccept={async () => {
-                        console.log("before previewFile");
                         if (!previewFile) return;
-                        console.log("after previewFile, before upload");
                         const upload = previewFile;
-                        console.log("after upload, before setPreviewFile");
                         setPreviewFile(null);
-                        console.log("after setPreviewFile, before doUpload");
                         await doUpload(upload);
-                        console.log("after doUpload, before setValgtKategoriData");
-                        //setValgtKategoriData({ valgtKategorier: "kort|annet" });
-                        //console.log("after setValgtKategoriData")
                     }}
                     onClose={() => setPreviewFile(null)}
                     onDelete={() => {

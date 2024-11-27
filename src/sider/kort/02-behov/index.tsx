@@ -180,7 +180,6 @@ const Behov = () => {
                                 sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                                 undertekst={t("begrunnelse.kort.behov.dokumentasjon.beskrivelse")}
                                 dokumentasjonType={"kort|behov"}
-                                //steg={"2"}
                             />
                         </form>
                     )}

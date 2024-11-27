@@ -20,7 +20,6 @@ interface ForhandsvisningModalProps {
     onAccept: () => void;
     onClose: () => void;
     onDelete: () => void;
-    //steg: any;
 }
 
 export const ForhandsvisningVedleggModal = ({
@@ -29,13 +28,13 @@ export const ForhandsvisningVedleggModal = ({
     onAccept,
     onClose,
     //onDelete,
-    //steg,
 }: ForhandsvisningModalProps) => {
     const [isFullscreen, setFullscreen] = useState<boolean>(false);
     const {t} = useTranslation();
     const isKortSoknad = useCurrentSoknadIsKort();
-    const {valgtKategoriData, setValgtKategoriData} = useValgtKategoriContext();
-    const [ingenKat, setIngenKat] = useState(false);
+    const {setValgtKategoriData} = useValgtKategoriContext();
+    const [selectedCategory, setSelectedCategory] = useState<string>("");
+    const showAlert = !selectedCategory;
 
     return (
         <Modal
@@ -89,33 +88,46 @@ export const ForhandsvisningVedleggModal = ({
                             <Select
                                 label={"Velg en kategori for dokumentet"}
                                 defaultValue={""}
-                                value={valgtKategoriData.valgtKategorier}
+                                value={selectedCategory}
                                 onChange={(event: any) => {
-                                    console.log("before selectedCategory");
-                                    const selectedCategory = event.target.value as VedleggFrontendType; // Ensure correct type
-                                    console.log("after selectedCategory, but before setIngenKat");
-                                    setIngenKat(selectedCategory.length === 0);
-                                    console.log("after setIngenKat, but before seetvalgtKategoriData");
-                                    setValgtKategoriData({valgtKategorier: selectedCategory});
-                                    console.log("after setvalgtKategoriData");
+                                    setSelectedCategory(event.target.value);
                                 }}
                             >
                                 <option value="">Velg kategori</option>
-                                <option value="kort|barnebidrag">Barnehage</option>
-                                <option value="kort|barnehageSFO">SFO/AKS</option>
-                                <option value="kort|husleie">Husleie</option>
-                                <option value="kort|bostotte">Bostøtte fra Husbanken</option>
-                                <option value="kort|kontooversikt">Kontooversikt</option>
-                                <option value="kort|lonnslipp">Lønnslipp</option>
-                                <option value="kort|stromOppvarming">Strøm og oppvarming</option>
-                                <option value="kort|stipendLan">Stipend og lån fra Lånekassen</option>
-                                <option value="kort|annet">Annet</option>
+                                <option value="kort|barnebidrag">
+                                    {t("begrunnelse.kategorier.kortKategorier.barnebidrag")}
+                                </option>
+                                <option value="kort|Barnehage">
+                                    {t("begrunnelse.kategorier.kortKategorier.barnehage")}
+                                </option>
+                                <option value="kort|barnehageSFO">
+                                    {t("begrunnelse.kategorier.kortKategorier.barnehageSFO")}
+                                </option>
+                                <option value="kort|bostotte">
+                                    {t("begrunnelse.kategorier.kortKategorier.bostotte")}
+                                </option>
+                                <option value="kort|husleie">
+                                    {t("begrunnelse.kategorier.kortKategorier.husleie")}
+                                </option>
+                                <option value="kort|kontooversikt">
+                                    {t("begrunnelse.kategorier.kortKategorier.kontooversikt")}
+                                </option>
+                                <option value="kort|lonnslipp">
+                                    {t("begrunnelse.kategorier.kortKategorier.lonnslipp")}
+                                </option>
+                                <option value="kort|stromOppvarming">
+                                    {t("begrunnelse.kategorier.kortKategorier.stromOppvarming")}
+                                </option>
+                                <option value="kort|stipendLan">
+                                    {t("begrunnelse.kategorier.kortKategorier.stipendLan")}
+                                </option>
+                                <option value="kort|annet">{t("begrunnelse.kategorier.kortKategorier.annet")}</option>
                             </Select>
                         </div>
-                        <div>
-                            {ingenKat && (
+                        <div className={"mt-8"}>
+                            {showAlert && selectedCategory !== "kort|behov" && (
                                 <Alert variant="info" className={"justify-center"}>
-                                    Om du ikke velger en kategori blir dokumentet lastet opp som "Annet".
+                                    {t("vedlegg.forhandsvisning.kategori")}
                                 </Alert>
                             )}
                         </div>
@@ -123,7 +135,14 @@ export const ForhandsvisningVedleggModal = ({
                 )}
                 <div />
                 <div className={"w-fit space-x-4"}>
-                    <Button variant="primary" onClick={onAccept}>
+                    <Button
+                        variant="primary"
+                        onClick={() => {
+                            const finalCategory = selectedCategory || "kort|annet";
+                            setValgtKategoriData({valgtKategorier: finalCategory as VedleggFrontendType});
+                            onAccept();
+                        }}
+                    >
                         {t("vedlegg.forhandsvisning.opplast")}
                     </Button>
                     <Button variant="secondary" onClick={onClose}>

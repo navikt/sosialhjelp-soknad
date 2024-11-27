@@ -24,9 +24,6 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
 
-    //console.log("useVedlegg dokumentasjonType:", dokumentasjonType);
-    //console.log("useVedlegg documents:", documents);
-
     const handleApiError = (reason: any) =>
         setError(t(isSoknadApiError(reason) ? DigisosApiErrorMap[reason.error] : REST_FEIL.GENERELL_FEIL));
 
@@ -78,55 +75,36 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
      * @param file The file to upload
      */
     const uploadDocument = async (file: File) => {
-        console.log("before setError");
         setError(null);
-        console.log("after setError");
 
-        console.log("before maxUploadSize");
         if (maxUploadSize != null && file.size > maxUploadSize) {
-            console.log("inside maxUploadSize");
             setError(t(REST_FEIL.FOR_STOR, "", {maxUploadSize: humanizeFilesize(maxUploadSize)}));
-            console.log("after setError REST_FEIL");
             return Promise.reject(new Error("for stor"));
         }
 
         try {
-            console.log("before data");
             const data = new FormData();
-            console.log("after data before data.append");
             data.append("file", file);
-            console.log("after data.append");
-
-            console.log("before dokument");
             const dokument = await axiosInstance<DokumentUpload>({
                 url: `/opplastetVedlegg/${behandlingsId}/${encodeURI(dokumentasjonType)}`,
                 method: "POST",
                 headers: {"Content-Type": "multipart/form-data"},
                 data,
                 onUploadProgress: ({loaded, total}) => {
-                    console.log("inside onUploadProgress, before presentCompleted");
                     const percentCompleted = Math.round((loaded * 100) / total!);
-                    console.log("inside onUploadProgress, after presentCompleted before setUploadPercent");
                     setUploadPercent(percentCompleted);
-                    console.log("inside onUploadProgress, after presentCompleted after setUploadPercent");
                 },
             });
-            console.log("after dokument");
 
             setUploadPercent(null);
             dispatch({type: "insert", dokument});
             await logAmplitudeEvent("dokument lastet opp", {opplysningType: dokumentasjonType});
         } catch (e: any) {
-            console.log("inside catch before handleApiError");
             handleApiError(e);
-            console.log("inside catch after handleApiError");
         } finally {
-            console.log("inside finally before setUploadPercent");
             setUploadPercent(null);
-            console.log("inside finally after setUploadPercent");
         }
     };
-    console.log("after uploadDocument");
 
     return {
         uploadDocument,

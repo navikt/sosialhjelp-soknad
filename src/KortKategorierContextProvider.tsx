@@ -1,15 +1,5 @@
-import React, {/*createContext,*/ useContext, useEffect /*, useState*/} from "react";
+import React, {useContext} from "react";
 import {VedleggFrontendType} from "./generated/model";
-
-//interface ValgtKategoriData {
-//    valgtKategorier?: VedleggFrontendType;
-//    sokersTekst?: string;
-//}
-
-//interface KategoriContextProviderProps {
-//    valgtKategoriData: ValgtKategoriData;
-//    setValgtKategoriData: (data: Partial<ValgtKategoriData>) => void;
-//}
 
 export const ValgtKategoriContext = React.createContext<{
     valgtKategoriData: {valgtKategorier: VedleggFrontendType};
@@ -20,10 +10,6 @@ export const ValgtKategoriProvider = ({children}: {children: React.ReactNode}) =
     const [valgtKategoriData, setValgtKategoriData] = React.useState<{
         valgtKategorier: VedleggFrontendType;
     }>({valgtKategorier: "kort|annet"});
-
-    useEffect(() => {
-        console.log("updated valgtKategoriData", valgtKategoriData);
-    }, [valgtKategoriData]);
 
     return (
         <ValgtKategoriContext.Provider value={{valgtKategoriData, setValgtKategoriData}}>
