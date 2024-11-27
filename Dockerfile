@@ -3,7 +3,7 @@
 # - .github/dependabot.yml (fjern versjonspin for docker)
 # - packages.json under "engines" (her leter dependabot npm)
 # - .ncurc.js (automatiske oppdateringer for node-types)
-FROM node:22-alpine AS dependencies
+FROM node:23-alpine AS dependencies
 
 WORKDIR /app
 COPY package.json .
@@ -13,7 +13,7 @@ COPY .npmrc.dockerbuild .npmrc
 RUN --mount=type=secret,id=NODE_AUTH_TOKEN,env=NODE_AUTH_TOKEN \
     npm ci --prefer-offline --no-audit
 
-FROM node:22-alpine AS builder
+FROM node:23-alpine AS builder
 
 ARG DIGISOS_ENV
 ARG LOGIN_SESSION_API_URL
