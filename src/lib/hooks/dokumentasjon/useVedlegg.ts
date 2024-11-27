@@ -79,12 +79,14 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
 
         if (maxUploadSize != null && file.size > maxUploadSize) {
             setError(t(REST_FEIL.FOR_STOR, "", {maxUploadSize: humanizeFilesize(maxUploadSize)}));
+
             return Promise.reject(new Error("for stor"));
         }
 
         try {
             const data = new FormData();
             data.append("file", file);
+
             const dokument = await axiosInstance<DokumentUpload>({
                 url: `/opplastetVedlegg/${behandlingsId}/${encodeURI(dokumentasjonType)}`,
                 method: "POST",

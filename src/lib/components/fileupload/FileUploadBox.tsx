@@ -85,13 +85,11 @@ const DokumentUploader = ({
     visSpinner,
     isLoading,
     resetAlerts,
-    //steg,
 }: {
     isLoading: boolean;
     visSpinner: boolean;
     doUpload: (document: File) => Promise<void>;
     resetAlerts: () => void;
-    //steg: string;
 }) => {
     const {t} = useTranslation();
     const vedleggElement = React.useRef<HTMLInputElement>(null);
