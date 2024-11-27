@@ -40,6 +40,7 @@ type SoknadConfig = {
     innsynURL: string;
     minSideURL: string;
     logoutURL: string;
+    dekoratorLoginBaseUrl: string;
 
     featureFlags: FeatureFlags;
     proxy?: SoknadApiProxyOptions;
@@ -76,6 +77,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         innsynURL: "http://localhost:3000/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         logoutURL: "http://localhost:3008/",
+        dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
         // faro: {
         //     url: "http://localhost:12347/collect",
         // },
@@ -99,6 +101,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         innsynURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://sosialhjelp-mock-alt-mock.ekstern.dev.nav.no/sosialhjelp/mock-alt/",
         logoutURL: "https://sosialhjelp-mock-alt-mock.ekstern.dev.nav.no/sosialhjelp/mock-alt/",
+        dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
         faro: {
             url: "http://localhost:12347/collect", // FIXME
         },
@@ -122,6 +125,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         innsynURL: "https://www-q0.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.dev.nav.no/minside/",
         logoutURL: "https://loginservice.dev.nav.no/slo",
+        dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
         faro: {
             url: "https://telemetry.ekstern.dev.nav.no/collect",
         },
@@ -145,6 +149,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         innsynURL: "https://www.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         logoutURL: "https://loginservice.nav.no/slo",
+        dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
         faro: {
             url: "https://telemetry.nav.no/collect",
         },
@@ -179,6 +184,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         innsynURL: "https://www.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         logoutURL: "https://loginservice.nav.no/slo",
+        dekoratorLoginBaseUrl: "https://login.nav.no",
         faro: {
             url: "https://telemetry.nav.no/collect",
         },
@@ -211,6 +217,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         innsynURL: "https://www.ekstern.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         logoutURL: "https://loginservice.nav.no/slo",
+        dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
         faro: {
             url: "https://telemetry.ekstern.dev.nav.no/collect",
         },

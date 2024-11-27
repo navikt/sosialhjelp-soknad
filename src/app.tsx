@@ -1,6 +1,6 @@
 "use client";
 
-import {Suspense} from "react";
+import {PropsWithChildren, Suspense} from "react";
 import {BrowserRouter, Navigate, Route, Routes, useLocation} from "react-router-dom";
 import {ApplicationSpinner} from "./lib/components/animasjoner/ApplicationSpinner";
 import Personopplysninger from "./sider/01-personalia";
@@ -20,15 +20,41 @@ import Inntekt from "./sider/kort/04-inntekt";
 import "./faro";
 import "./lib/i18n/reacti18Next.ts";
 import {getPathPrefixIncludingLocale} from "./getPathPrefixIncludingLocale.ts";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {QueryClient, QueryClientProvider, useSuspenseQuery} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
+import digisosConfig from "./lib/config.ts";
+import {useRouter} from "next/navigation";
 
 const queryClient = new QueryClient();
 
 const RedirectToStandard = () => {
     const location = useLocation();
     return <Navigate to={location.pathname.replace("skjema/kort/", "skjema/")} replace />;
+};
+
+const sessionUrl = digisosConfig.dekoratorLoginBaseUrl + "/oauth2/session";
+const loginUrl = digisosConfig.dekoratorLoginBaseUrl + "/oauth2/login";
+
+const DecoratorLogin = ({children}: PropsWithChildren) => {
+    const router = useRouter();
+    const sessionQuery = useSuspenseQuery({
+        queryKey: ["dekorator-login"],
+        queryFn: async () => {
+            const result = await fetch(sessionUrl, {
+                method: "get",
+            });
+            const data: {session: {active: boolean}} | undefined =
+                result.status === 200 ? await result.json() : undefined;
+            return {status: result.status, ...data};
+        },
+    });
+
+    if (sessionQuery.data.status === 401 || sessionQuery.data.session?.active === false) {
+        router.replace(loginUrl + "?redirect=" + window.location.href);
+    }
+
+    return children;
 };
 
 export default function App() {
@@ -44,53 +70,55 @@ export default function App() {
             return {promise, resolve, reject};
         };
     }
-
     const {prefix, path} = getPathPrefixIncludingLocale();
     onLanguageSelect(({locale: language, url}) =>
         setParams({language}).then(() => window.location.assign(`${url}${path}`))
     );
+
     return (
         <Suspense fallback={<ApplicationSpinner />}>
             <QueryClientProvider client={queryClient}>
-                <BrowserRouter
-                    basename={prefix}
-                    future={{
-                        // these are just to stop react-router-dom from spamming
-                        v7_relativeSplatPath: true,
-                        v7_startTransition: true,
-                    }}
-                >
-                    <Routes>
-                        <Route path={"skjema"}>
-                            <Route path="kort/:behandlingsId">
-                                <Route element={<SwitchSoknadType />}>
-                                    <Route path="1" element={<RedirectToStandard />} />
-                                    <Route path="2" element={<Behov />} />
-                                    <Route path="3" element={<ArbeidOgFamilie />} />
-                                    <Route path="4" element={<Inntekt />} />
-                                    <Route path="5" element={<Oppsummering />} />
+                <DecoratorLogin>
+                    <BrowserRouter
+                        basename={prefix}
+                        future={{
+                            // these are just to stop react-router-dom from spamming
+                            v7_relativeSplatPath: true,
+                            v7_startTransition: true,
+                        }}
+                    >
+                        <Routes>
+                            <Route path={"skjema"}>
+                                <Route path="kort/:behandlingsId">
+                                    <Route element={<SwitchSoknadType />}>
+                                        <Route path="1" element={<RedirectToStandard />} />
+                                        <Route path="2" element={<Behov />} />
+                                        <Route path="3" element={<ArbeidOgFamilie />} />
+                                        <Route path="4" element={<Inntekt />} />
+                                        <Route path="5" element={<Oppsummering />} />
+                                    </Route>
                                 </Route>
-                            </Route>
-                            <Route path=":behandlingsId">
-                                <Route index path="1" element={<Personopplysninger shortSpacing />} />
-                                <Route element={<SwitchSoknadType />}>
-                                    <Route path="2" element={<Begrunnelse />} />
-                                    <Route path="3" element={<ArbeidOgUtdanning />} />
-                                    <Route path="4" element={<Familie />} />
-                                    <Route path="5" element={<Bosituasjon />} />
-                                    <Route path="6" element={<InntektFormue />} />
-                                    <Route path="7" element={<UtgifterGjeld />} />
-                                    <Route path="8" element={<OkonomiskeOpplysningerView />} />
-                                    <Route path="9" element={<Oppsummering />} />
+                                <Route path=":behandlingsId">
+                                    <Route index path="1" element={<Personopplysninger shortSpacing />} />
+                                    <Route element={<SwitchSoknadType />}>
+                                        <Route path="2" element={<Begrunnelse />} />
+                                        <Route path="3" element={<ArbeidOgUtdanning />} />
+                                        <Route path="4" element={<Familie />} />
+                                        <Route path="5" element={<Bosituasjon />} />
+                                        <Route path="6" element={<InntektFormue />} />
+                                        <Route path="7" element={<UtgifterGjeld />} />
+                                        <Route path="8" element={<OkonomiskeOpplysningerView />} />
+                                        <Route path="9" element={<Oppsummering />} />
+                                    </Route>
                                 </Route>
+                                <Route path="*" element={<IkkeFunnet />} />
                             </Route>
-                            <Route path="*" element={<IkkeFunnet />} />
-                        </Route>
-                    </Routes>
-                </BrowserRouter>
-                <div aria-hidden={"true"}>
-                    <ReactQueryDevtools initialIsOpen={false} />
-                </div>
+                        </Routes>
+                    </BrowserRouter>
+                    <div aria-hidden={"true"}>
+                        <ReactQueryDevtools initialIsOpen={false} />
+                    </div>
+                </DecoratorLogin>
             </QueryClientProvider>
         </Suspense>
     );
