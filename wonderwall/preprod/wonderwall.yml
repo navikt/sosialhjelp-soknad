@@ -47,6 +47,8 @@ spec:
       value: ks:fiks,husbanken:minbostotte
     - name: WONDERWALL_INGRESS
       value: https://www.ekstern.dev.nav.no/sosialhjelp/soknad
+    - name: WONDERWALL_COOKIE_PREFIX
+      value: "sosialhjelp.soknad.wonderwall"
     - name: WONDERWALL_UPSTREAM_HOST
       value: sosialhjelp-soknad:80
     - name: WONDERWALL_BIND_ADDRESS

@@ -7,6 +7,8 @@ import {DigisosContext} from "../../lib/providers/DigisosContext.ts";
 import {BASE_PATH} from "../../lib/constants.ts";
 import {configureLogger} from "@navikt/next-logger";
 import {initAmplitude} from "../../lib/amplitude/Amplitude.tsx";
+import useDecoratorLogin from "../../lib/hooks/auth/useDecoratorLogin.ts";
+import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner.tsx";
 
 const Page = () => {
     // @ts-expect-error production hack
@@ -24,6 +26,13 @@ const Page = () => {
     onLanguageSelect(({locale: language, url}) =>
         setParams({language}).then(() => window.location.assign(`${url}${path}`))
     );
+
+    const isLoading = useDecoratorLogin();
+
+    if (isLoading) {
+        return <ApplicationSpinner />;
+    }
+
     return <Informasjon />;
 };
 
