@@ -4,15 +4,6 @@ name: "Build and deploy to dev-gcp"
 
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to deploy to'
-        required: true
-        type: choice
-        default: 'preprod'
-        options:
-          - 'preprod'
-          - 'mock'
   push:
     branches:
       - "dev"
@@ -51,6 +42,7 @@ jobs:
       - name: "Deploy to ${{ matrix.environment }}"
         uses: nais/deploy/actions/deploy@v2
         env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: .nais/app.yaml
           CLUSTER: ${{ matrix.cluster }}
           REF: ${{ github.sha }}
