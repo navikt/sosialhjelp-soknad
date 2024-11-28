@@ -14,6 +14,8 @@ outputs:
 runs:
   using: 'composite'
   steps:
+  - uses: actions/checkout@v4
+
   - name: 'Create artifact version'
     id: artifact-version
     uses: navikt/sosialhjelp-ci/actions/create-artifact-version@main
@@ -34,7 +36,6 @@ runs:
   - name: Build and push
     uses: docker/build-push-action@v6
     with:
-      context: .
       push: true
       tags: "${{ env.DOCKER_IMAGE }}:latest,${{ env.DOCKER_IMAGE }}:${{ steps.final-tag.outputs.tag }}"
       secrets: "NODE_AUTH_TOKEN=${{ env.READER_TOKEN }}"
