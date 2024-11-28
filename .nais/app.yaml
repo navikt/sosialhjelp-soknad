@@ -31,13 +31,13 @@ spec:
         - host: {{url}}{{/each}}
 {{/if}}
   liveness:
-    path: /sosialhjelp/soknad/internal/isAlive
+    path: {{ livenessPath }}
     initialDelay: 5
     timeout: 1
     periodSeconds: 10
     failureThreshold: 10
   readiness:
-    path: /sosialhjelp/soknad/internal/isAlive
+    path: {{ livenessPath }}
     initialDelay: 5
     timeout: 1
   resources:

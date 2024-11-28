@@ -2,3 +2,4 @@ appName: sosialhjelp-soknad
 idportenEnabled: false
 ingresses: []
 outboundExternalHosts: []
+livenessPath: /sosialhjelp/soknad/internal/isAlive
