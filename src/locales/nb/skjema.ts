@@ -167,22 +167,13 @@ export const skjema = {
             labelOld: "Gi en kort begrunnelse for søknaden",
         },
         kategorier: {
-            annet: "Annet",
-            barn: "Andre utgifter til barn",
-            barnehage: "Barnehage og SFO/AKS",
-            bolig: "Husleie",
-            hoytid: "Høytid og merkedager",
-            klaer: "Klær og utstyr",
             label: "Hva søker du om penger til?",
             description:
                 "Her er noen utgifter det er vanlig å søke om. Du kan skrive inn andre under “Annet”. Du kan velge flere av kategoriene.",
-            lege: "Lege og medisiner",
-            mat: "Mat",
+            bolig: "Husleie",
+            livsopphold: "Livsopphold",
             nodhjelp: "Nødhjelp",
             strom: "Strøm og oppvarming",
-            tannlege: "Tannlege",
-            transport: "Transport",
-            fritidsaktiviteter: "Fritidsaktiviteter for barn",
         },
         kort: {
             behov: {
@@ -197,6 +188,10 @@ export const skjema = {
         },
         nødhjelp: {
             beskrivelse: "Nødhjelp kan du søke om hvis du ikke har penger til det mest nødvendige det neste døgnet.",
+        },
+        livsopphold: {
+            beskrivelse:
+                "Livsopphold er penger du trenger for å leve. Det kan for eksempel være mat, klær, transport, lege og medisin.",
         },
         underkategorier: {
             nodhjelp: {

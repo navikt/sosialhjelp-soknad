@@ -14,14 +14,14 @@ import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/SkjemaStegBloc
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import {DigisosLanguageKey} from "../../../lib/i18n/common.ts";
 import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
-import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {useAnalyticsContext} from "../../../lib/providers/useAnalyticsContext.ts";
-import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
+import {useFeatureToggle} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
+import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId.ts";
 
 const MAX_LEN_HVA_ER_ENDRET = 500;
 const MAX_LEN_HVA_SOKES_OM = 500;
@@ -63,11 +63,13 @@ const mapToTextOrSubcategoriesText = ({subCategories, text}: SelectableCategory)
 
 const Behov = () => {
     const {t} = useTranslation("skjema");
+    const behandlingsId = useBehandlingsId();
+    const {data} = useFeatureToggle({
+        toggleName: "sosialhjelp.soknad.kategorier",
+        soknadId: behandlingsId,
+    });
 
-    const featureFlagData = useContextFeatureToggles();
-    const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
-
-    const {forsorgerplikt} = useForsorgerplikt();
+    const isKategorierEnabled = data ?? false;
 
     const {
         get: defaultValues,
@@ -82,7 +84,6 @@ const Behov = () => {
         formState: {errors},
         setValue,
         getValues,
-        watch,
         reset,
     } = useForm<FormValues>({
         resolver: zodResolver(behovSchema),
@@ -96,7 +97,7 @@ const Behov = () => {
         isError: kategorierError,
         reducer,
         toggle,
-    } = useKategorier(!!forsorgerplikt?.harForsorgerplikt, setValue, getValues);
+    } = useKategorier(setValue, getValues);
     const {setAnalyticsData} = useAnalyticsContext();
     const navigate = useNavigate();
 
@@ -147,7 +148,6 @@ const Behov = () => {
                                     toggle={toggle}
                                     register={register}
                                     categories={reducer}
-                                    hvaSokesOm={watch("hvaSokesOm")}
                                 />
                             ) : (
                                 <LocalizedTextArea

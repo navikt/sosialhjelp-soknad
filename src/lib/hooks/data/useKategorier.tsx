@@ -2,23 +2,11 @@ import {useHentBegrunnelse} from "../../../generated/begrunnelse-ressurs/begrunn
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useEffect, useReducer} from "react";
 import {DigisosLanguageKey} from "../../i18n/common.ts";
-import {
-    TrainIcon,
-    ChildEyesIcon,
-    ExclamationmarkTriangleIcon,
-    FirstAidIcon,
-    HouseIcon,
-    LightningIcon,
-    CalendarIcon,
-    PencilWritingIcon,
-    CarIcon,
-} from "@navikt/aksel-icons";
+import {ExclamationmarkTriangleIcon, HouseIcon, LightningIcon} from "@navikt/aksel-icons";
 import {UseFormGetValues, UseFormSetValue} from "react-hook-form";
 import {useBegrunnelse} from "./useBegrunnelse";
-import Tann from "../../components/svg/illustrasjoner/Tann.tsx";
 import Eple from "../../components/svg/illustrasjoner/Eple.tsx";
-import TSkjorte from "../../components/svg/illustrasjoner/TSkjorte.tsx";
-import {useContextFeatureToggles} from "../../providers/useContextFeatureToggles.ts";
+import {useFeatureToggle} from "../../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
 
 interface Category {
     key: DigisosLanguageKey;
@@ -40,15 +28,13 @@ interface CategoryAction {
     categories?: SelectableCategory[];
 }
 
-const addIf = <T,>(bool: boolean, items: T[]) => {
-    if (bool) {
-        return items;
-    }
-    return [];
-};
-
-export const createCategories = (hasChildren: boolean): Category[] => [
-    {key: "begrunnelse.kategorier.mat", icons: [Eple], text: "Mat"},
+export const categories: Category[] = [
+    {
+        key: "begrunnelse.kategorier.livsopphold",
+        icons: [Eple],
+        text: "Livsopphold",
+        ingressKey: "begrunnelse.livsopphold.beskrivelse",
+    },
     {
         key: "begrunnelse.kategorier.bolig",
         icons: [HouseIcon],
@@ -58,6 +44,7 @@ export const createCategories = (hasChildren: boolean): Category[] => [
     {
         key: "begrunnelse.kategorier.nodhjelp",
         ingressKey: "begrunnelse.nødhjelp.beskrivelse",
+        icons: [ExclamationmarkTriangleIcon],
         subCategories: [
             {key: "begrunnelse.underkategorier.nodhjelp.mat", text: "Har ikke penger til mat i dag"},
             {key: "begrunnelse.underkategorier.nodhjelp.bosted", text: "Har ikke et sted å bo i natt"},
@@ -66,36 +53,7 @@ export const createCategories = (hasChildren: boolean): Category[] => [
                 text: "Strømmen er stengt / stenges i dag eller i morgen",
             },
         ],
-        icons: [ExclamationmarkTriangleIcon],
         text: "Nødhjelp",
-    },
-    {key: "begrunnelse.kategorier.lege", icons: [FirstAidIcon], text: "Lege og medisiner"},
-    {key: "begrunnelse.kategorier.tannlege", icons: [Tann], text: "Tannlege"},
-    {key: "begrunnelse.kategorier.klaer", icons: [TSkjorte], text: "Klær og utstyr"},
-    ...addIf<Category>(hasChildren, [
-        {
-            key: "begrunnelse.kategorier.barnehage",
-            icons: [ChildEyesIcon],
-            text: "Barnehage og SFO/AKS",
-        },
-        {
-            key: "begrunnelse.kategorier.fritidsaktiviteter",
-            icons: [ChildEyesIcon],
-            text: "Fritidsaktiviteter til barn",
-        },
-        {
-            key: "begrunnelse.kategorier.barn",
-            icons: [ChildEyesIcon],
-            text: "Andre utgifter til barn",
-        },
-    ]),
-    {key: "begrunnelse.kategorier.transport", icons: [CarIcon, TrainIcon], text: "Transport"},
-    {key: "begrunnelse.kategorier.hoytid", icons: [CalendarIcon], text: "Høytid og merkedager"},
-    {
-        key: "begrunnelse.kategorier.annet",
-        ingressKey: "begrunnelse.annet.beskrivelse",
-        icons: [PencilWritingIcon],
-        text: "Annet",
     },
 ];
 
@@ -109,7 +67,6 @@ interface KategorierFormValues {
     hva som kommer inn i hvaSokesOm.
 */
 const useKategorier = <T extends KategorierFormValues>(
-    hasChildren: boolean,
     setValue: UseFormSetValue<T | KategorierFormValues>,
     getValues: UseFormGetValues<T | KategorierFormValues>
 ) => {
@@ -151,7 +108,7 @@ const useKategorier = <T extends KategorierFormValues>(
                     return state;
             }
         },
-        createCategories(hasChildren),
+        categories,
         (initialState) =>
             initialState.map((category) => ({
                 ...category,
@@ -162,9 +119,11 @@ const useKategorier = <T extends KategorierFormValues>(
     const toggle = (category: string, subCategory?: string) => {
         return dispatch({type: "toggle", category, subCategory});
     };
-    const featureFlagData = useContextFeatureToggles();
     const {put: doPut, isPending, isError} = useBegrunnelse();
-    const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"];
+    const {data: isKategorierEnabled, isPending: isFeatureToggePending} = useFeatureToggle({
+        toggleName: "sosialhjelp.soknad.kategorier",
+        soknadId: behandlingsId,
+    });
 
     /**
         Kommer i json-format
@@ -178,7 +137,7 @@ const useKategorier = <T extends KategorierFormValues>(
             if (annetText) {
                 setValue("hvaSokesOm", annetText);
             }
-            const categories = createCategories(hasChildren).map((category) => {
+            const _categories = categories.map((category) => {
                 const previouslySelectedCategory = hvaSokesOm.find((it) => it.text === category.text);
                 if (previouslySelectedCategory) {
                     return {
@@ -197,9 +156,9 @@ const useKategorier = <T extends KategorierFormValues>(
                 }
                 return category;
             }) as SelectableCategory[];
-            dispatch({type: "set", categories});
+            dispatch({type: "set", categories: _categories});
         }
-    }, [data, dispatch, hasChildren, isKategorierEnabled, setValue]);
+    }, [data, dispatch, isKategorierEnabled, setValue]);
     const put = (begrunnelseFrontend: T) => {
         if (isKategorierEnabled) {
             const jsonString = reducer
@@ -227,7 +186,7 @@ const useKategorier = <T extends KategorierFormValues>(
             });
         }
     };
-    return {put, isPending, isError, reducer, dispatch, toggle};
+    return {put, isPending: isPending || isFeatureToggePending, isError, reducer, dispatch, toggle};
 };
 
 export default useKategorier;

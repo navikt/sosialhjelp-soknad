@@ -25,12 +25,14 @@ const TranslatedError = ({error}: {error?: string | null}) => {
     return <>{t(error as DigisosLanguageKey)}</>;
 };
 
-interface CategoriesSummaryProps {
+interface CategoriesSummaryProps<T extends HvaSokesOm> {
     categories: SelectableCategory[];
     hvaSokesOm?: string | null;
+    register: UseFormReturn<T | HvaSokesOm>["register"];
+    errors: FormState<T | HvaSokesOm>["errors"];
 }
 
-const CategoriesSummary = ({categories, hvaSokesOm}: CategoriesSummaryProps) => {
+const CategoriesSummary = <T extends HvaSokesOm>({categories, register, errors}: CategoriesSummaryProps<T>) => {
     const {t} = useTranslation("skjema");
     const annet = categories.find((cat) => cat.text === "Annet");
     const nodhjelp = categories.find((category) => category.text === "Nødhjelp");
@@ -44,50 +46,33 @@ const CategoriesSummary = ({categories, hvaSokesOm}: CategoriesSummaryProps) => 
                   ?.join(", ")
                   ?.toLowerCase()
             : null;
-    const annetText = annet && annet.selected ? t(annet.key) : null;
+    const annetText = annet ? t(annet.key) : null;
     const theRest = categories
         .filter((cat) => cat.text !== "Nødhjelp" && cat.text !== "Annet" && cat.selected)
         .map((cat) => t(cat.key))
         .join(", ")
         .toLowerCase();
-    if (!nodhjelpText && !hvaSokesOm && theRest.length === 0) {
-        return null;
-    }
+    const antallTegn = (nodhjelpText?.length ?? 0) + theRest.length + (annetText?.length ?? 0);
     return (
-        <VStack className="mt-6">
-            <Label htmlFor={"kategorier"} id={"kategorier-label"}>
-                {t("situasjon.kategorier.oppsummeringstekst.label")}
-            </Label>
-            <Box background="surface-action-subtle" padding="4">
-                <VStack gap="4">
-                    {nodhjelpText && <BodyShort className="whitespace-pre-wrap">{nodhjelpText}.</BodyShort>}
-                    {theRest.length > 0 ? (
-                        <Box>
-                            <BodyShort>{t("situasjon.kategorier.oppsummeringstekst.resten")}</BodyShort>
-                            <BodyShort>{theRest}.</BodyShort>
-                        </Box>
-                    ) : null}
-                    {annetText && hvaSokesOm && (
-                        <Box>
-                            <BodyShort>{annetText}:</BodyShort>
-                            <BodyShort style={{whiteSpace: "pre-wrap", overflowWrap: "anywhere"}}>
-                                {hvaSokesOm}
-                            </BodyShort>
-                        </Box>
-                    )}
-                </VStack>
-            </Box>
-        </VStack>
+        <LocalizedTextArea
+            {...register("hvaSokesOm")}
+            className={"w-full"}
+            id={"hvaSokesOm"}
+            onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            }}
+            maxLength={MAX_LEN_ANNET - antallTegn <= 200 ? MAX_LEN_ANNET - antallTegn : undefined}
+            error={
+                errors.hvaSokesOm && <TranslatedError error={errors.hvaSokesOm?.message as string | null | undefined} />
+            }
+            label={"Her kan du skrive hva annet du søker om"}
+            description={<BodyShort>{t("begrunnelse.hva.description")}</BodyShort>}
+        />
     );
 };
 
-const KategorierChips = <T extends HvaSokesOm>({
-    categories,
-    toggle,
-    register,
-    errors,
-    hvaSokesOm,
-}: Props<T>): React.JSX.Element => {
+const KategorierChips = <T extends HvaSokesOm>({categories, toggle, register, errors}: Props<T>): React.JSX.Element => {
     const {t} = useTranslation("skjema");
     return (
         <div>
@@ -103,61 +88,37 @@ const KategorierChips = <T extends HvaSokesOm>({
                             categories.findIndex((cat) => cat.text === "Nødhjelp")
                         )
                         .map((category) => (
-                            <Category category={category} toggle={toggle} register={register} errors={errors} />
+                            <Category category={category} toggle={toggle} />
                         ))}
                 </HStack>
                 <HStack align="start" gap="2" id={"kategorier"} aria-labelledby={"kategorier-label"} className={"pt-2"}>
-                    {categories
-                        .slice(
-                            categories.findIndex((cat) => cat.text === "Nødhjelp"),
-                            categories.findIndex((cat) => cat.text === "Annet")
-                        )
-                        .map((category) => (
-                            <Category
-                                category={category}
-                                toggle={toggle}
-                                register={register}
-                                errors={errors}
-                                showXMark={
-                                    category.selected &&
-                                    Boolean(category.subCategories?.length) &&
-                                    category.subCategories?.every((it) => !it.selected)
-                                }
-                            />
-                        ))}
+                    {[categories[categories.length - 1]].map((category) => (
+                        <Category category={category} toggle={toggle} />
+                    ))}
                 </HStack>
-                <Box className={`pt-2 ${categories[categories.length - 1]?.selected ? "min-w-full" : ""}`}>
-                    <Category
-                        category={categories[categories.length - 1]}
-                        toggle={toggle}
-                        register={register}
-                        errors={errors}
-                        showXMark={categories[categories.length - 1]?.selected && !hvaSokesOm}
-                    />
-                </Box>
             </VStack>
-            <CategoriesSummary categories={categories} hvaSokesOm={hvaSokesOm} />
+            <CategoriesSummary categories={categories} register={register} errors={errors} />
         </div>
     );
 };
 
-interface CategoryProps<T extends HvaSokesOm> {
+interface CategoryProps {
     category: SelectableCategory;
     toggle: (category: string, subCategory?: string) => void;
-    register: UseFormReturn<T | HvaSokesOm>["register"];
-    errors: FormState<T | HvaSokesOm>["errors"];
     showXMark?: boolean;
 }
 
-const MAX_LEN_ANNET = 150;
+const MAX_LEN_ANNET = 600;
 
-const Category = <T extends HvaSokesOm>({category, toggle, register, errors, showXMark}: CategoryProps<T>) => {
+const Category = ({category, toggle}: CategoryProps) => {
     const {t} = useTranslation("skjema");
+    const hasMoreContent =
+        (category.subCategories?.length && category.subCategories?.every((it) => !it.selected)) || category.ingressKey;
     return (
         <Box
             role="button"
             className={`flex rounded-lg cursor-pointer ${category.selected ? (category.text === "Nødhjelp" ? "bg-surface-warning-subtle" : "bg-blue-200") : "bg-blue-50"} ${
-                category.selected && ["Annet", "Nødhjelp"].includes(category.text) ? "w-full min-w-full" : ""
+                category.selected && hasMoreContent ? "w-full min-w-full" : ""
             }`}
             key={category.text}
             onClick={() => toggle(category.text)}
@@ -172,32 +133,12 @@ const Category = <T extends HvaSokesOm>({category, toggle, register, errors, sho
                         </HStack>
                         {t(category.key)}
                     </HStack>
-                    {showXMark && <XMarkIcon />}
+                    {category.selected && hasMoreContent && <XMarkIcon />}
                 </HStack>
-                {category.selected && <SubCategories category={category} toggle={toggle} />}
-                {category.text === "Annet" && category.selected && (
-                    <VStack className="w-full" align="start" gap="2">
-                        <BodyShort>{t("begrunnelse.annet.beskrivelse")}</BodyShort>
-                        <LocalizedTextArea
-                            {...register("hvaSokesOm")}
-                            id={"hvaSokesOm"}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                            }}
-                            maxLength={MAX_LEN_ANNET}
-                            className="w-full"
-                            error={
-                                errors.hvaSokesOm && (
-                                    <TranslatedError error={errors.hvaSokesOm?.message as string | null | undefined} />
-                                )
-                            }
-                            label={t("begrunnelse.hva.label")}
-                            hideLabel
-                            description={<BodyShort>{t("begrunnelse.hva.description")}</BodyShort>}
-                        />
-                    </VStack>
+                {category.selected && category.ingressKey && (
+                    <BodyShort align="start">{t(category.ingressKey)}</BodyShort>
                 )}
+                {category.selected && <SubCategories category={category} toggle={toggle} />}
             </VStack>
         </Box>
     );
@@ -215,7 +156,6 @@ const SubCategories = ({category, toggle}: SubCategoriesProps) => {
     }
     return (
         <VStack gap="4">
-            {category.ingressKey && <BodyShort align="start">{t(category.ingressKey)}</BodyShort>}
             <Box
                 style={
                     category.text === "Nødhjelp"

@@ -185,22 +185,13 @@ export const skjema = {
             labelOld: "Grunngi kort søknaden",
         },
         kategorier: {
-            annet: "Anna",
-            barn: "Andre utgifter til barn",
-            barnehage: "Barnehage og SFO/AKS",
-            bolig: "Husleige",
-            hoytid: "Høgtid og merkedagar",
-            klaer: "Klede og utstyr",
             label: "Kva søkjer du om penger til?",
             description:
                 "Her er nokre utgifter det er vanleg å søkje om. Du kan skrive inn andre under “Anna”. Du kan velje fleire av kategoriane.",
-            lege: "Lege og medisin",
-            mat: "Mat",
+            livsopphold: "Livsopphold",
+            bolig: "Husleige",
             nodhjelp: "Nødhjelp",
             strom: "Straum og oppvarming",
-            tannlege: "Tannlege",
-            transport: "Transport",
-            fritidsaktiviteter: "Fritidsaktivitetar for barn",
         },
         kort: {
             behov: {
@@ -215,6 +206,10 @@ export const skjema = {
         },
         nødhjelp: {
             beskrivelse: "Nødhjelp kan du søkje om viss du ikkje har pengar til det mest nødvendige det neste døgnet.",
+        },
+        livsopphold: {
+            beskrivelse:
+                "Livsopphald er pengar du treng for å leve. Det kan til dømes vere mat, klede, transport, lege og medisin.",
         },
         underkategorier: {
             nodhjelp: {

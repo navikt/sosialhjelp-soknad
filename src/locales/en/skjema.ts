@@ -186,22 +186,13 @@ export const skjema = {
             labelOld: "Give a brief reason for the application",
         },
         kategorier: {
-            annet: "Other",
-            barn: "Other expenses for children",
-            barnehage: "Kindergarten and SFO/AKS",
-            bolig: "Rent",
-            hoytid: "Holidays and special occasions",
-            klaer: "Clothes and equipment",
             label: "What are you applying for money for?",
             description:
                 'Here are some common expenses to apply for. You can enter others under "Other". You can select multiple categories.',
-            lege: "Medical help and medicine",
-            mat: "Food",
+            bolig: "Rent",
+            livsopphold: "Life expenses",
             nodhjelp: "Emergency assistance",
             strom: "Electricity and heating",
-            tannlege: "Dental treatment",
-            transport: "Transport",
-            fritidsaktiviteter: "Leisure activities for children",
         },
         kort: {
             behov: {
@@ -217,6 +208,10 @@ export const skjema = {
         nødhjelp: {
             beskrivelse:
                 "You can apply for emergency assistance if you do not have money for the most necessary things in the next 24 hours.",
+        },
+        livsopphold: {
+            description:
+                "Living expenses are money you need to live. This can include, for example, food, clothing, transportation, doctor, and medicine.",
         },
         underkategorier: {
             nodhjelp: {

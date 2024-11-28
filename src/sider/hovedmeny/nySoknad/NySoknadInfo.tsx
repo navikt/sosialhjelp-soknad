@@ -23,7 +23,6 @@ export const NySoknadInfo = () => {
         event.preventDefault();
 
         await logAmplitudeStartSoknad();
-        console.log("Hi");
         try {
             const {soknadId} = await createSoknad(soknadstype);
             await hentXsrfCookie(soknadId);
