@@ -93,7 +93,7 @@ export const ForhandsvisningVedleggModal = ({
                                     setSelectedCategory(event.target.value);
                                 }}
                             >
-                                <option value="">Velg kategori</option>
+                                <option value="">{t("begrunnelse.kategorier.kortKategorier.kategoriValg")}</option>
                                 <option value="kort|barnebidrag">
                                     {t("begrunnelse.kategorier.kortKategorier.barnebidrag")}
                                 </option>
