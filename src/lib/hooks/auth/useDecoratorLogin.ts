@@ -10,7 +10,11 @@ const loginUrl = digisosConfig.dekoratorLoginBaseUrl + "/oauth2/login";
 const useDecoratorLogin = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
+    const isEnabled = ["prod", "preprod"].includes(process.env.NEXT_PUBLIC_DIGISOS_ENV!);
     useEffect(() => {
+        if (!isEnabled) {
+            return;
+        }
         setIsLoading(true);
         try {
             fetch(sessionUrl, {
@@ -37,7 +41,7 @@ const useDecoratorLogin = () => {
             logger.error(e);
         }
         setIsLoading(false);
-    }, []);
+    }, [isEnabled]);
     return isLoading;
 };
 
