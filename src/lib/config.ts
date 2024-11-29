@@ -28,6 +28,7 @@ type SoknadApiProxyOptions = {
 type DekoratorOptions = {
     serviceDiscovery: boolean;
     env: "dev" | "prod";
+    logoutRedirectUrl?: string;
 };
 
 type SoknadConfig = {
@@ -168,6 +169,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         dekorator: {
             env: "prod",
             serviceDiscovery: true,
+            logoutRedirectUrl: "https://www.nav.no/sosialhjelp/soknad/oauth2/logout",
         },
 
         proxy: {
@@ -200,6 +202,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         dekorator: {
             env: "dev",
             serviceDiscovery: true,
+            logoutRedirectUrl: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/logout",
         },
 
         proxy: {

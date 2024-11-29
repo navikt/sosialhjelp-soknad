@@ -1,9 +1,9 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
 import {logError, logInfo, logWarning} from "../log/loggerUtils";
 import digisosConfig from "../config";
+import {LINK_PAGE_PATH, XSRF_COOKIE_NAME, XSRF_HEADER_NAME} from "../constants";
 import {isLoginError} from "./error/isLoginError";
 import {getGotoParameter} from "./auth/getGotoParameter";
-import {LINK_PAGE_PATH, XSRF_COOKIE_NAME, XSRF_HEADER_NAME} from "../constants";
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL: digisosConfig.baseURL,

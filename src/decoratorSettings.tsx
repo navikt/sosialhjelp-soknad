@@ -2,7 +2,7 @@ import {DecoratorFetchProps} from "@navikt/nav-dekoratoren-moduler/ssr";
 import {BASE_PATH} from "./lib/constants.ts";
 import {digisosConfig} from "./lib/config.ts";
 
-const {env, serviceDiscovery} = digisosConfig.dekorator;
+const {env, serviceDiscovery, logoutRedirectUrl} = digisosConfig.dekorator;
 
 export const DECORATOR_SETTINGS: DecoratorFetchProps = {
     env,
@@ -18,5 +18,6 @@ export const DECORATOR_SETTINGS: DecoratorFetchProps = {
         chatbot: false,
         shareScreen: false,
         logoutWarning: true,
+        redirectToUrlLogout: logoutRedirectUrl,
     },
 };
