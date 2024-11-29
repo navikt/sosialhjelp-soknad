@@ -11,10 +11,6 @@ import useDecoratorLogin from "../../lib/hooks/auth/useDecoratorLogin.ts";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner.tsx";
 
 const Page = () => {
-    // @ts-expect-error production hack
-    window.__DECORATOR_DATA__.env.LOGIN_SESSION_API_URL = "https://www.nav.no/sosialhjelp/soknad/oauth2/session";
-    // @ts-expect-error production hack
-    window.__DECORATOR_DATA__.env.LOGOUT_URL = "https://www.nav.no/sosialhjelp/soknad/oauth2/logout";
     configureLogger({basePath: BASE_PATH});
     initAmplitude();
     const {path} = getPathPrefixIncludingLocale();

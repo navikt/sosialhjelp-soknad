@@ -45,6 +45,8 @@ spec:
       value: idporten
     - name: WONDERWALL_OPENID_SCOPES
       value: ks:fiks,husbanken:minbostotte
+    - name: WONDERWALL_OPENID_POST_LOGOUT_REDIRECT_URI
+      value: https://login.ekstern.dev.nav.no/oauth2/logout
     - name: WONDERWALL_INGRESS
       value: https://www.ekstern.dev.nav.no/sosialhjelp/soknad
     - name: WONDERWALL_COOKIE_PREFIX
