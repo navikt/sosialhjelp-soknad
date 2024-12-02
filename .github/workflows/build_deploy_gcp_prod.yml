@@ -33,8 +33,8 @@ jobs:
           image_suffix: ${{ matrix.environment }}
           build_args: |
             DIGISOS_ENV=${{ matrix.environment }}
-            LOGIN_SESSION_API_URL="https://www.nav.no/sosialhjelp/soknad/oauth2/session"
-            LOGOUT_URL="https://www.nav.no/sosialhjelp/soknad/oauth2/logout"
+            LOGIN_SESSION_API_URL="https://www.nav.no/sosialhjelpBeta/soknad/oauth2/session"
+            LOGOUT_URL="https://www.nav.no/sosialhjelpBeta/soknad/oauth2/logout"
           build_secrets: |
             NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
 

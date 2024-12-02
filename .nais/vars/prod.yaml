@@ -2,6 +2,7 @@ appName: sosialhjelp-soknad
 idportenEnabled: false
 ingresses: []
 outboundExternalHosts: [sosialhjelp-soknad-api.prod-fss-pub.nais.io]
-livenessPath: /sosialhjelp/soknad/internal/isAlive
+livenessPath: /sosialhjelpBeta/soknad/internal/isAlive
 env:
-  LOGIN_SESSION_API_URL: "https://www.nav.no/sosialhjelp/soknad/oauth2/session"
+  LOGIN_SESSION_API_URL: "https://www.nav.no/sosialhjelpBeta/soknad/oauth2/session"
+  NEXT_PUBLIC_BASE_PATH: "/sosialhjelpBeta/soknad"
