@@ -112,7 +112,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             begrunnelseNyTekst: false,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
-            soknadstypeValg: true,
+            soknadstypeValg: false,
         },
         dekorator: {
             env: "dev",
