@@ -65,3 +65,7 @@ spec:
       value: $(REDIS_USERNAME_WONDERWALL)
     - name: WONDERWALL_REDIS_PASSWORD
       value: $(REDIS_PASSWORD_WONDERWALL)
+    - name: WONDERWALL_SESSION_MAX_LIFETIME
+      value: 59m
+    - name: WONDERWALL_SESSION_REFRESH_AUTO
+      value: "false"
