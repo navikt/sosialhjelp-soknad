@@ -175,14 +175,11 @@ export const skjema = {
         },
         hva: {
             description: 'Døme på tekst: "Eg søkjer om pengar til mat, husleige og straum."',
-            descriptionOld: "Til dømes pengar til/utgifter husleige og for å leve",
             label: "Kva søkjer du om?",
-            labelOld: "Skriv i stikkordsform kva du søkjer om",
         },
         hvorfor: {
             description: "om situasjonen din og kva du søkjer om.",
             label: "Fortel oss mer",
-            labelOld: "Grunngi kort søknaden",
         },
         kategorier: {
             annet: "Anna",

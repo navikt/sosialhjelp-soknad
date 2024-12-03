@@ -176,14 +176,11 @@ export const skjema = {
         },
         hva: {
             description: 'Example of text: "I am applying for support for food, rent and electricity."',
-            descriptionOld: "For example, money for living expenses and rent",
             label: "What are you applying for?",
-            labelOld: "Using key words, state what you are applying for",
         },
         hvorfor: {
             description: "about your situation and what you are applying for.",
             label: "Tell us more",
-            labelOld: "Give a brief reason for the application",
         },
         kategorier: {
             annet: "Other",

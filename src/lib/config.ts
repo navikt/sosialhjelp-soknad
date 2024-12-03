@@ -2,9 +2,6 @@ export const DigisosEnvironments = ["localhost", "dev-sbs", "mock", "prod-sbs", 
 export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 
 type FeatureFlags = {
-    // Bruk ny tekst i Begrunnelse
-    begrunnelseNyTekst: boolean;
-
     // Ny versjon av Personalia oppsummering
     nyOppsummering: boolean;
 
@@ -58,7 +55,6 @@ const isValidDigisosEnvironment = (miljo: unknown): miljo is DigisosEnvironment 
 const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     localhost: {
         featureFlags: {
-            begrunnelseNyTekst: true,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
@@ -85,7 +81,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     mock: {
         featureFlags: {
-            begrunnelseNyTekst: true,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
@@ -109,7 +104,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     "dev-sbs": {
         featureFlags: {
-            begrunnelseNyTekst: false,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
@@ -133,7 +127,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     "prod-sbs": {
         featureFlags: {
-            begrunnelseNyTekst: false,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
@@ -159,7 +152,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     // dette blir prod i GCP når det er kjørt inn.
     prod: {
         featureFlags: {
-            begrunnelseNyTekst: false,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
@@ -193,7 +185,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     preprod: {
         featureFlags: {
-            begrunnelseNyTekst: false,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
