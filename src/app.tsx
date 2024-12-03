@@ -50,7 +50,7 @@ export default function App() {
         setParams({language}).then(() => window.location.assign(`${url}${path}`))
     );
 
-    const isLoading = useDecoratorLogin();
+    const {isLoading} = useDecoratorLogin();
 
     if (isLoading) {
         return <ApplicationSpinner />;
