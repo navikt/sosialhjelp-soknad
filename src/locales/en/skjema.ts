@@ -19,25 +19,6 @@ export const skjema = {
             suksess: "Your application will be sent to:",
         },
     },
-    adresse_med_fylke: {
-        alertstripe: {
-            advarsel: {
-                utenurl: "{{kommuneNavn}} municipality ({{fylkeNavn}}) cannot accept digital applications.",
-                v2: "{{kommuneNavn}} municipality ({{fylkeNavn}}) cannot accept digital applications. You can <lenke>apply using a paper form</lenke>.",
-                stringValue:
-                    '{{kommuneNavn}} municipality ({{fylkeNavn}}) cannot accept digital applications. You can <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">apply using a paper form</lenke>.',
-            },
-            feil: {
-                utenurl:
-                    "{{kommuneNavn}} municipality ({{fylkeNavn}}) cannot accept digital applications right now. Apply using a paper form, or try again later.",
-                v2: "{{kommuneNavn}} municipality ({{fylkeNavn}}) cannot accept digital applications right now. <lenke>Apply using a paper form</lenke>, or try again later.",
-                stringValue:
-                    '{{kommuneNavn}} municipality ({{fylkeNavn}}) cannot accept digital applications right now. <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">Apply using a paper form</lenke>, or try again later.',
-            },
-            suksess:
-                "Your application will be sent to: {{navkontorNavn}}, {{kommuneNavn}} municipality ({{fylkeNavn}}).",
-        },
-    },
     antallvelger: {
         feilmeldinger: {
             forlite: "The number cannot be smaller than {{0}}.",

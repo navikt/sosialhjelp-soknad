@@ -19,24 +19,6 @@ export const skjema = {
             suksess: "Søknaden din vil bli sendt til:",
         },
     },
-    adresse_med_fylke: {
-        alertstripe: {
-            advarsel: {
-                utenurl: "{{kommuneNavn}} kommune ({{fylkeNavn}}) kan ikkje ta imot digitale søknader.",
-                v2: "{{kommuneNavn}} kommune ({{fylkeNavn}}) kan ikkje ta imot digitale søknader. Du kan <lenke>søkje på papirskjema</lenke>.",
-                stringValue:
-                    '{{kommuneNavn}} kommune ({{fylkeNavn}}) kan ikkje ta imot digitale søknader. Du kan <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">søkje på papirskjema</lenke>.',
-            },
-            feil: {
-                utenurl:
-                    "{{kommuneNavn}} kommune ({{fylkeNavn}}) kan diverre ikkje ta imot digitale søknader akkurat no. Søk på papirskjema, eller prøv igjen seinare.",
-                v2: "{{kommuneNavn}} kommune ({{fylkeNavn}}) kan diverre ikkje ta imot digitale søknader akkurat no. <lenke>Søk på papirskjema</lenke>, eller prøv igjen seinare.",
-                stringValue:
-                    '{{kommuneNavn}} kommune ({{fylkeNavn}}) kan diverre ikkje ta imot digitale søknader akkurat no. <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">Søk på papirskjema</lenke>, eller prøv igjen seinare.',
-            },
-            suksess: "Søknaden blir send til: {{navkontorNavn}}, {{kommuneNavn}} kommune ({{fylkeNavn}}).",
-        },
-    },
     antallvelger: {
         feilmeldinger: {
             forlite: "Talet kan ikkje vere mindre enn {{0}}.",
