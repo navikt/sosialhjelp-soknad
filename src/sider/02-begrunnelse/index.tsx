@@ -1,13 +1,11 @@
 import * as React from "react";
-import * as z from "zod";
 import {Alert, BodyShort} from "@navikt/ds-react";
-import {FieldError, useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import {useTranslation} from "react-i18next";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {useBegrunnelse} from "../../lib/hooks/data/useBegrunnelse";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
-import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 import useKategorier from "../../lib/hooks/data/useKategorier";
 import KategorierChips from "../../lib/components/KategorierChips";
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/SkjemaStegErrorSummary.tsx";
@@ -20,36 +18,8 @@ import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButto
 import {useNavigate} from "react-router";
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {useContextFeatureToggles} from "../../lib/providers/useContextFeatureToggles.ts";
-
-const MAX_LEN_HVA = 500;
-const MAX_LEN_HVORFOR = 600;
-
-const feilmeldinger: Record<string, DigisosLanguageKey> = {
-    maksLengde: "validering.maksLengde",
-} as const;
-
-export interface FormValues {
-    hvaSokesOm?: string | null;
-    hvorforSoke?: string | null;
-}
-
-const begrunnelseSchema = z.object({
-    hvaSokesOm: z.string().max(MAX_LEN_HVA, feilmeldinger.maksLengde).optional(),
-    hvorforSoke: z.string().max(MAX_LEN_HVORFOR, feilmeldinger.maksLengde),
-});
-
-export const TranslatedError = ({error}: {error: Pick<FieldError, "message">}) => {
-    const {t} = useTranslation("skjema");
-
-    if (!error?.message) return null;
-
-    return <>{t(error.message as DigisosLanguageKey)}</>;
-};
-
-const Feilmelding = () => {
-    const {t} = useTranslation("skjema");
-    return <Alert variant={"error"}>{t("skjema.navigering.feil")}</Alert>;
-};
+import {TranslatedError} from "../../lib/components/TranslatedError.tsx";
+import {begrunnelseSchema, FormValues, MAX_LEN_HVA, MAX_LEN_HVORFOR} from "./schema.ts";
 
 export const Begrunnelse = () => {
     const {get: defaultValues} = useBegrunnelse();
@@ -98,7 +68,7 @@ export const Begrunnelse = () => {
                     <ApplicationSpinner />
                 ) : (
                     <form className={"space-y-12 lg:space-y-24"} onSubmit={(e) => e.preventDefault()}>
-                        {isError && <Feilmelding />}
+                        {isError && <Alert variant={"error"}>{t("skjema.navigering.feil")}</Alert>}
                         {isKategorierEnabled ? (
                             <KategorierChips
                                 errors={errors}
