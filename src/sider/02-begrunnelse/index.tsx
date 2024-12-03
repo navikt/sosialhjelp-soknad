@@ -24,7 +24,6 @@ import {begrunnelseSchema, FormValues, MAX_LEN_HVA, MAX_LEN_HVORFOR} from "./sch
 export const Begrunnelse = () => {
     const {get: defaultValues} = useBegrunnelse();
     const {t} = useTranslation("skjema");
-    // TODO: Avklare denne. Er det behov lenger?
     const featureFlagData = useContextFeatureToggles();
     const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
     const {forsorgerplikt} = useForsorgerplikt();
