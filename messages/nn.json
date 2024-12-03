@@ -91,7 +91,7 @@
     }
   },
   "NavEnhet": {
-    "kontor": "{{enhetsnavn}}, {{kommunenavn}} kommune.",
+    "kontor": "{enhetsnavn}, {kommunenavn} kommune.",
     "blirSendtTil": "Søknaden din vil bli sendt til:"
   }
 }

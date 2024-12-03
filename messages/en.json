@@ -91,7 +91,7 @@
     }
   },
   "NavEnhet": {
-    "kontor": "{{enhetsnavn}}, {{kommunenavn}} municipality.",
+    "kontor": "{enhetsnavn}, {kommunenavn} municipality.",
     "blirSendtTil": "Your application will be sent to:"
   }
 }
