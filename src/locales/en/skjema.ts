@@ -15,17 +15,6 @@ export const skjema = {
     start: "Start",
     adresse: {
         alertstripe: {
-            advarsel: {
-                fixme: "Your municipality cannot accept digital applications.",
-                utenurl: "{{kommuneNavn}} municipality cannot accept digital applications.",
-                v2: "{{kommuneNavn}} municipality cannot accept digital applications.<br/>You can <lenke>apply using a paper form</lenke>.",
-            },
-            feil: {
-                fixme: "Unfortunately, we cannot accept digital applications right now. Apply using a paper form, or try again later.",
-                utenurl:
-                    "{{kommuneNavn}} municipality cannot accept digital applications right now. Apply using a paper form, or try again later.",
-                v2: "{{kommuneNavn}} municipality cannot accept digital applications right now. <lenke>Apply using a paper form</lenke>, or try again later.",
-            },
             navKontor: "{{enhetsnavn}}, {{kommunenavn}} municipality.",
             suksess: "Your application will be sent to:",
         },

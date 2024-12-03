@@ -15,17 +15,6 @@ export const skjema = {
     start: "Start",
     adresse: {
         alertstripe: {
-            advarsel: {
-                fixme: "Kommunen din kan ikkje ta imot digitale søknader.",
-                utenurl: "{{kommuneNavn}} kommune kan ikkje ta imot digitale søknader.",
-                v2: "{{kommuneNavn}} kommune kan ikkje ta imot digitale søknader.<br/>Du kan <lenke>søkje på papirskjema</lenke>.",
-            },
-            feil: {
-                fixme: "Vi kan diverre ikkje ta imot digitale søknader akkurat no. Søk på papirskjema, eller prøv igjen seinare.",
-                utenurl:
-                    "{{kommuneNavn}} kommune kan diverre ikkje ta imot digitale søknader akkurat no. Søk på papirskjema, eller prøv igjen seinare.",
-                v2: "{{kommuneNavn}} kommune kan diverre ikkje ta imot digitale søknader akkurat no. <lenke>Søk på papirskjema</lenke>, eller prøv igjen seinare.",
-            },
             navKontor: "{{enhetsnavn}}, {{kommunenavn}} kommune.",
             suksess: "Søknaden din vil bli sendt til:",
         },

@@ -79,5 +79,15 @@
     "title": "Side ikke funnet",
     "feilmelding": "Om det gjelder en ferdig innsendt/slettet søknad, returner til startsiden.",
     "lenkeTilHovedmeny": "Til startsiden for søknad"
+  },
+  "NavEnhetInaktiv": {
+    "varig": {
+      "melding": "{{kommunenavn}} kommune kan ikke ta i mot digitale søknader.",
+      "forslag": "Du kan <lenke>søke på papirskjema</lenke>."
+    },
+    "midlertidig": {
+      "melding": "{{kommuneNavn}} kommune kan dessverre ikke ta i mot digitale søknader akkurat nå.",
+      "forslag": "<lenke>Søk på papirskjema</lenke>, eller prøv igjen senere."
+    }
   }
 }

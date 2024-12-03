@@ -79,5 +79,15 @@
     "title": "Page not found",
     "feilmelding": "If this concerns a submitted/deleted application, return to the home page.",
     "lenkeTilHovedmeny": "To the home page for the application"
+  },
+  "NavEnhetInaktiv": {
+    "varig": {
+      "melding": "{kommunenavn} municipality cannot accept digital applications.",
+      "forslag": "You can <lenke>apply using a paper form</lenke>."
+    },
+    "midlertidig": {
+      "melding": "{kommunenavn} municipality cannot accept digital applications right now.",
+      "forslag": "<lenke>Apply using a paper form</lenke>, or try again later."
+    }
   }
 }
