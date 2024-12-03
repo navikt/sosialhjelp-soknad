@@ -13,12 +13,6 @@ export const skjema = {
     prosent: "%",
     send: "Send",
     start: "Start",
-    adresse: {
-        alertstripe: {
-            navKontor: "{{enhetsnavn}}, {{kommunenavn}} kommune.",
-            suksess: "Din søknad vil bli sendt til:",
-        },
-    },
     antallvelger: {
         feilmeldinger: {
             forlite: "Tallet kan ikke være mindre enn {{0}}.",

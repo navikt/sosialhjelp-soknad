@@ -89,5 +89,9 @@
       "melding": "{kommunenavn} municipality cannot accept digital applications right now.",
       "forslag": "<lenke>Apply using a paper form</lenke>, or try again later."
     }
+  },
+  "NavEnhet": {
+    "kontor": "{{enhetsnavn}}, {{kommunenavn}} municipality.",
+    "blirSendtTil": "Your application will be sent to:"
   }
 }

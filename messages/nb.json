@@ -89,5 +89,9 @@
       "melding": "{{kommuneNavn}} kommune kan dessverre ikke ta i mot digitale søknader akkurat nå.",
       "forslag": "<lenke>Søk på papirskjema</lenke>, eller prøv igjen senere."
     }
+  },
+  "NavEnhet": {
+    "kontor": "{{enhetsnavn}}, {{kommunenavn}} kommune.",
+    "blirSendtTil": "Din søknad vil bli sendt til:"
   }
 }

@@ -13,12 +13,6 @@ export const skjema = {
     prosent: "%",
     send: "Submit",
     start: "Start",
-    adresse: {
-        alertstripe: {
-            navKontor: "{{enhetsnavn}}, {{kommunenavn}} municipality.",
-            suksess: "Your application will be sent to:",
-        },
-    },
     antallvelger: {
         feilmeldinger: {
             forlite: "The number cannot be smaller than {{0}}.",
