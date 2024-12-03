@@ -4,7 +4,7 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     distDir: "./build", // Changes the build output directory to `./build/`.
-    basePath: process.env.NEXT_PUBLIC_BASE_PATH,
+    basePath: process.env.NEXT_PUBLIC_BASE_PATH ?? "/sosialhjelp/soknad",
     // For å unngå issues med nginx
     trailingSlash: false,
     experimental: {
