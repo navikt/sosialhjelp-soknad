@@ -209,7 +209,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         baseURL: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/soknad-api/",
         // NB: Denne ble satt til digisos.ekstern, fordi da denne ble skrevet var det ikke innsyn i preprod enda.
         innsynURL: "https://www.ekstern.dev.nav.no/sosialhjelp/innsyn",
-        minSideURL: "https://www.nav.no/minside/",
+        minSideURL: "https://www.ansatt.dev.nav.no/minside/",
         logoutURL: "https://loginservice.nav.no/slo",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
         faro: {
