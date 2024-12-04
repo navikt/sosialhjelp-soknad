@@ -2123,7 +2123,7 @@ export const skjema = {
     },
     arbeidOgFamilie: {
         tittel: "Arbeid og familie",
-        alert: "Du får ein ny og kortare søknad sidan du har søkt før. Gi gjerne tilbakemeldingar om søknaden til rettleiaren din.",
+        alert: "Du får ein ny og kortare søknad sidan du har søkt før.",
     },
 };
 

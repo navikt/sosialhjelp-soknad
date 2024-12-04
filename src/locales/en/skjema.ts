@@ -2196,7 +2196,7 @@ export const skjema = {
     },
     arbeidOgFamilie: {
         tittel: "Work and family",
-        alert: "You are getting a new and shorter application since you have applied before. Feel free to provide feedback on the application to your advisor.",
+        alert: "You are getting a new and shorter application because you have applied before.",
     },
 };
 
