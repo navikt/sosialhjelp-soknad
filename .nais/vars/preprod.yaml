@@ -3,3 +3,11 @@ idportenEnabled: false
 ingresses: []
 outboundExternalHosts: []
 livenessPath: /sosialhjelp/soknad/internal/isAlive
+requests:
+  cpu: 50m
+  memory: 100Mi
+limts:
+  memory: 400Mi
+replicas:
+  min: 1
+  max: 2
