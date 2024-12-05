@@ -45,6 +45,8 @@ spec:
       value: idporten
     - name: WONDERWALL_OPENID_SCOPES
       value: ks:fiks,husbanken:minbostotte
+    - name: WONDERWALL_OPENID_POST_LOGOUT_REDIRECT_URI
+      value: https://login.nav.no/oauth2/logout
     - name: WONDERWALL_INGRESS
       value: https://www.nav.no/sosialhjelp/soknad
     - name: WONDERWALL_UPSTREAM_HOST
@@ -69,3 +71,5 @@ spec:
       value: 59m
     - name: WONDERWALL_SESSION_REFRESH_AUTO
       value: "false"
+    - name: WONDERWALL_COOKIE_PREFIX
+      value: "sosialhjelp.soknad.wonderwall"
