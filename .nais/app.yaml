@@ -42,10 +42,10 @@ spec:
     timeout: 1
   resources:
     limits:
-      memory: 500Mi
+      memory: {{ limits.memory }}
     requests:
-      cpu: 100m
-      memory: 200Mi
+      cpu: {{ requests.cpu }}
+      memory: {{ requests.memory }}
 {{#if idportenEnabled}}
   idporten:
     enabled: true
@@ -59,8 +59,8 @@ spec:
         - id: elastic
         - id: loki
   replicas:
-    min: 2
-    max: 4
+    min: {{ replicas.min }}
+    max: {{ replicas.max }}
 {{#if env}}
   env:
   {{#each env as |env|}}

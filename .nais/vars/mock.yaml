@@ -3,3 +3,11 @@ idportenEnabled: false
 ingresses: ["https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad"]
 outboundExternalHosts: []
 livenessPath: /sosialhjelp/soknad/internal/isAlive
+requests:
+  cpu: 50m
+  memory: 100Mi
+limts:
+  memory: 200Mi
+replicas:
+  min: 1
+  max: 2

@@ -5,3 +5,11 @@ outboundExternalHosts: [sosialhjelp-soknad-api.prod-fss-pub.nais.io]
 livenessPath: /sosialhjelp/soknad/internal/isAlive
 env:
   LOGIN_SESSION_API_URL: "https://www.nav.no/sosialhjelp/soknad/oauth2/session"
+limits:
+  memory: 800Mi
+requests:
+  cpu: 500m
+  memory: 400Mi
+replicas:
+  min: 2
+  max: 4
