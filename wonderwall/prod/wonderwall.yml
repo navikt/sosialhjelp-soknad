@@ -9,7 +9,7 @@ spec:
   image: europe-north1-docker.pkg.dev/nais-io/nais/images/wonderwall:latest
   port: 8080
   ingresses:
-    - "https://www.nav.no/sosialhjelpBeta/soknad"
+    - "https://www.nav.no/sosialhjelp/soknad"
   accessPolicy:
     outbound:
       external:
@@ -46,7 +46,7 @@ spec:
     - name: WONDERWALL_OPENID_SCOPES
       value: ks:fiks,husbanken:minbostotte
     - name: WONDERWALL_INGRESS
-      value: https://www.nav.no/sosialhjelpBeta/soknad
+      value: https://www.nav.no/sosialhjelp/soknad
     - name: WONDERWALL_UPSTREAM_HOST
       value: sosialhjelp-soknad:80
     - name: WONDERWALL_BIND_ADDRESS
