@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {Alert, BodyShort, Button, Heading, Modal, Select} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-
 import {pdfjs} from "react-pdf";
 import cx from "classnames";
 import "react-pdf/dist/Page/AnnotationLayer.css";
@@ -32,14 +31,32 @@ export const ForhandsvisningVedleggModal = ({
     const [isFullscreen, setFullscreen] = useState<boolean>(false);
     const {t} = useTranslation();
     const isKortSoknad = useCurrentSoknadIsKort();
-    const {setValgtKategoriData} = useValgtKategoriContext();
+
+    const {valgtKategoriData, setValgtKategoriData} = useValgtKategoriContext();
     const [selectedCategory, setSelectedCategory] = useState<string>("");
-    const showAlert = !selectedCategory;
+
+    console.log("ForhandsvisningVedleggModal valgtKategoriData", valgtKategoriData);
+    console.log("ForhandsvisningVedleggModal selectedCategory", selectedCategory);
+
+    const handleAccept = () => {
+        console.log("handleAccept selectedCategory", selectedCategory);
+        const categoryToSet = selectedCategory === "annet|annet" || !selectedCategory ? "kort|annet" : selectedCategory;
+        console.log("handleAccept categoryToSet", categoryToSet);
+        setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
+        onAccept();
+        setSelectedCategory(""); // Reset the selected category
+    };
+
+    const handleClose = () => {
+        setSelectedCategory("annet|annet"); // Reset the selected category
+        setValgtKategoriData({valgtKategorier: "annet|annet"});
+        onClose();
+    };
 
     return (
         <Modal
             open={true}
-            onClose={onClose}
+            onClose={handleClose}
             closeOnBackdropClick={false}
             className={"bg-white"}
             aria-label={header ?? ""}
@@ -61,20 +78,12 @@ export const ForhandsvisningVedleggModal = ({
                 >
                     {file.type === "application/pdf" ? (
                         <>
-                            <FilePreviewButtons
-                                //onDelete={onDelete}
-                                isFullscreen={isFullscreen}
-                                setFullscreen={setFullscreen}
-                            />
+                            <FilePreviewButtons isFullscreen={isFullscreen} setFullscreen={setFullscreen} />
                             <FilePreviewDisplay file={file} width={isFullscreen ? window.innerWidth - 200 : 600} />
                         </>
                     ) : (
                         <>
-                            <FilePreviewButtons
-                                //onDelete={onDelete}
-                                isFullscreen={isFullscreen}
-                                setFullscreen={setFullscreen}
-                            />
+                            <FilePreviewButtons isFullscreen={isFullscreen} setFullscreen={setFullscreen} />
                             <img className={"w-full"} src={URL.createObjectURL(file)} alt={"preview"} />
                         </>
                     )}
@@ -87,17 +96,20 @@ export const ForhandsvisningVedleggModal = ({
                         <div>
                             <Select
                                 label={"Velg en kategori for dokumentet"}
-                                defaultValue={""}
                                 value={selectedCategory}
                                 onChange={(event: any) => {
-                                    setSelectedCategory(event.target.value);
+                                    const newCategory = event.target.value;
+                                    setSelectedCategory(newCategory);
+                                    setValgtKategoriData({valgtKategorier: newCategory as VedleggFrontendType});
                                 }}
                             >
-                                <option value="">{t("begrunnelse.kategorier.kortKategorier.kategoriValg")}</option>
+                                <option value="annet|annet">
+                                    {t("begrunnelse.kategorier.kortKategorier.kategoriValg")}
+                                </option>
                                 <option value="kort|barnebidrag">
                                     {t("begrunnelse.kategorier.kortKategorier.barnebidrag")}
                                 </option>
-                                <option value="kort|Barnehage">
+                                <option value="kort|barnehage">
                                     {t("begrunnelse.kategorier.kortKategorier.barnehage")}
                                 </option>
                                 <option value="kort|barnehageSFO">
@@ -125,7 +137,7 @@ export const ForhandsvisningVedleggModal = ({
                             </Select>
                         </div>
                         <div className={"mt-8"}>
-                            {showAlert && selectedCategory !== "kort|behov" && (
+                            {(selectedCategory === "annet|annet" || selectedCategory === "") && (
                                 <Alert variant="info" className={"justify-center"}>
                                     {t("vedlegg.forhandsvisning.kategori")}
                                 </Alert>
@@ -135,17 +147,10 @@ export const ForhandsvisningVedleggModal = ({
                 )}
                 <div />
                 <div className={"w-fit space-x-4"}>
-                    <Button
-                        variant="primary"
-                        onClick={() => {
-                            const finalCategory = selectedCategory || "kort|annet";
-                            setValgtKategoriData({valgtKategorier: finalCategory as VedleggFrontendType});
-                            onAccept();
-                        }}
-                    >
+                    <Button variant="primary" onClick={handleAccept}>
                         {t("vedlegg.forhandsvisning.opplast")}
                     </Button>
-                    <Button variant="secondary" onClick={onClose}>
+                    <Button variant="secondary" onClick={handleClose}>
                         {t("vedlegg.forhandsvisning.avbryt")}
                     </Button>
                 </div>

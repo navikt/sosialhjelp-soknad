@@ -38,7 +38,13 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType?: VedleggFrontendTyp
     const {t} = useTranslation();
     const {valgtKategoriData} = useValgtKategoriContext();
     const type =
-        dokumentasjonType === "kort|behov" ? "kort|behov" : (valgtKategoriData.valgtKategorier as VedleggFrontendType);
+        dokumentasjonType === "kort|behov"
+            ? "kort|behov"
+            : valgtKategoriData.valgtKategorier === "annet|annet"
+              ? "kort|annet"
+              : (valgtKategoriData.valgtKategorier as VedleggFrontendType);
+
+    console.log("Dokumenter type", type);
 
     const {
         deleteDocument,
@@ -96,6 +102,7 @@ const DokumentUploader = ({
     const [previewFile, setPreviewFile] = React.useState<File | null>(null);
     const {conversionPending, conversionError, convertToPDF} = usePDFConverter();
     const isPending = visSpinner || conversionPending;
+    const {setValgtKategoriData} = useValgtKategoriContext();
 
     if (conversionError) throw new PdfConversionError(`conversion error: ${conversionError}`);
 
@@ -103,7 +110,7 @@ const DokumentUploader = ({
         if (!files?.length) return;
 
         const file = files[0];
-
+        setValgtKategoriData({valgtKategorier: "annet|annet"});
         if (SUPPORTED_WITHOUT_CONVERSION.includes(file.type)) {
             setPreviewFile(file);
         } else {

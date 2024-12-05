@@ -9,7 +9,7 @@ export const ValgtKategoriContext = React.createContext<{
 export const ValgtKategoriProvider = ({children}: {children: React.ReactNode}) => {
     const [valgtKategoriData, setValgtKategoriData] = React.useState<{
         valgtKategorier: VedleggFrontendType;
-    }>({valgtKategorier: "kort|annet"});
+    }>({valgtKategorier: "annet|annet"});
 
     return (
         <ValgtKategoriContext.Provider value={{valgtKategoriData, setValgtKategoriData}}>
