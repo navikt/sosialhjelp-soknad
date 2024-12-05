@@ -45,8 +45,8 @@ spec:
       cpu: 300m
       memory: 256Mi
     requests:
-      cpu: 1m
-      memory: 50Mi
+      cpu: 100m
+      memory: 200Mi
 {{#if idportenEnabled}}
   idporten:
     enabled: true
@@ -60,8 +60,8 @@ spec:
         - id: elastic
         - id: loki
   replicas:
-    min: 1
-    max: 1
+    min: 2
+    max: 4
 {{#if env}}
   env:
   {{#each env as |env|}}
