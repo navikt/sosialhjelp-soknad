@@ -7,8 +7,10 @@ type ProxyRequestHandler = (request: Request, context: ProxyRequestContext) => P
 
 const getRouteHandlerProxyTarget = (headers: Headers, requestPath: string[]): RouteHandlerProxyTarget => {
     if (!digisosConfig.proxy) throw new Error("Proxy not configured");
+    console.log("arg", requestPath);
     const {hostname, basePath, https} = digisosConfig.proxy;
     const path = `${basePath}/${requestPath.join("/")}`;
+    console.log("path", path);
     const bearerToken = `${headers.get("Authorization")?.split(" ")[1]}`;
     return {hostname, path, bearerToken, https};
 };
