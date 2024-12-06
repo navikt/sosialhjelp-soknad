@@ -12,7 +12,7 @@ const getRouteHandlerProxyTarget = (headers: Headers, requestPath: string[]): Ro
     const path = `${basePath}/${requestPath.join("/")}`;
     console.log("path", path);
     const bearerToken = `${headers.get("Authorization")?.split(" ")[1]}`;
-    return {hostname, path, bearerToken, https};
+    return {hostname, path: encodeURI(path), bearerToken, https};
 };
 
 const soknadApiProxy: ProxyRequestHandler = async (request, {params}): Promise<Response> =>
