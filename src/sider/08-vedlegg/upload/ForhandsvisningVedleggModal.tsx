@@ -34,12 +34,14 @@ export const ForhandsvisningVedleggModal = ({
 
     const {valgtKategoriData, setValgtKategoriData} = useValgtKategoriContext();
     const [selectedCategory, setSelectedCategory] = useState<string>("");
+    console.log("ForhandsvisningVedleggModal selectedCategory", selectedCategory);
+    console.log("ForhandsvisningVedleggModal valgtKategoriData", valgtKategoriData);
 
     const handleAccept = () => {
         // Ensure `kort|annet` is set when no valid category is selected
         const categoryToSet =
             selectedCategory === "annet|annet" || selectedCategory === "" ? "kort|annet" : selectedCategory;
-
+        console.log("ForhandsvisningVedleggModal categoryToSet", categoryToSet);
         setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
         setSelectedCategory(""); // Reset after accept
         onAccept();

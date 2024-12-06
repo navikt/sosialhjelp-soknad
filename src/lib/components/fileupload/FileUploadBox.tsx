@@ -36,12 +36,23 @@ const FileUploadBox = ({sporsmal, undertekst, dokumentasjonType}: Props): React.
 const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType}) => {
     const {t} = useTranslation();
 
-    const {valgtKategoriData} = useValgtKategoriContext();
+    const {valgtKategoriData, setValgtKategoriData} = useValgtKategoriContext();
+
+    console.log("dokuemntasjonType used in FileUploadBox:", dokumentasjonType);
 
     // Determine final type: use context-selected value if available, fallback to prop
-    const finalDokumentasjonType = valgtKategoriData.valgtKategorier || dokumentasjonType || "kort|annet";
+    const finalDokumentasjonType =
+        dokumentasjonType === "kort|behov" // Explicitly prioritize "kort|behov"
+            ? "kort|behov"
+            : valgtKategoriData.valgtKategorier || dokumentasjonType || "kort|annet";
 
     console.log("Final dokumentasjonType used in FileUploadBox:", finalDokumentasjonType);
+
+    React.useEffect(() => {
+        if (dokumentasjonType === "kort|behov") {
+            setValgtKategoriData({valgtKategorier: finalDokumentasjonType});
+        }
+    }, [finalDokumentasjonType, dokumentasjonType]);
 
     const {
         deleteDocument,
