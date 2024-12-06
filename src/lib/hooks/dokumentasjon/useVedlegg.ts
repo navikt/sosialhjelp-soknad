@@ -13,6 +13,7 @@ import {humanizeFilesize} from "../../../sider/08-vedlegg/lib/humanizeFilesize";
 import {axiosInstance} from "../../api/axiosInstance";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 import {useContextSessionInfo} from "../../providers/useContextSessionInfo.ts";
+import {useValgtKategoriContext} from "../../../KortKategorierContextProvider.tsx";
 
 const TEN_MEGABYTE_COMPAT_FALLBACK = 10 * 1024 * 1024;
 
@@ -24,8 +25,6 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
 
-    console.log("useVedlegg dokumentasjonType", dokumentasjonType);
-
     const handleApiError = (reason: any) =>
         setError(t(isSoknadApiError(reason) ? DigisosApiErrorMap[reason.error] : REST_FEIL.GENERELL_FEIL));
 
@@ -34,6 +33,8 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
     const {mutate: mutateDelete, isPending: isDeletionPending} = useDeleteDokument();
 
     const isPending = isDokumentasjonPending || isDeletionPending || uploadPercent !== null;
+    console.log("useVedlegg dokumentasjonType", dokumentasjonType);
+    const {setValgtKategoriData} = useValgtKategoriContext();
 
     /**
      * When the data on the server has changed, we automatically update the client-side list.
@@ -59,12 +60,15 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
      * @param dokumentId The dokumentId to delete
      */
     const deleteDocument = (dokumentId: string) => {
+        console.log("useVedlegg deleteDocument dokumentasjonType", dokumentasjonType);
         mutateDelete(
             {behandlingsId, dokumentId},
             {
                 onError: handleApiError,
                 onSuccess: () => {
                     dispatch({type: "remove", dokumentId});
+                    setValgtKategoriData({valgtKategorier: "kort|annet"});
+
                     logAmplitudeEvent("dokument slettet", {opplysningType: dokumentasjonType}).then();
                 },
             }
@@ -77,6 +81,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
      * @param file The file to upload
      */
     const uploadDocument = async (file: File) => {
+        console.log("useVedlegg uploadDocument dokumentasjonType", dokumentasjonType);
         setError(null);
 
         if (maxUploadSize != null && file.size > maxUploadSize) {
@@ -86,6 +91,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
         }
 
         try {
+            console.log("useVedlegg try uploadDocument dokumentasjonType", dokumentasjonType);
             const data = new FormData();
             data.append("file", file);
 
@@ -102,6 +108,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
 
             setUploadPercent(null);
             dispatch({type: "insert", dokument});
+            setValgtKategoriData({valgtKategorier: "kort|annet"});
             await logAmplitudeEvent("dokument lastet opp", {opplysningType: dokumentasjonType});
         } catch (e: any) {
             handleApiError(e);

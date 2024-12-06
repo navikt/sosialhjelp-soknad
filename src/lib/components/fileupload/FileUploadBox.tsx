@@ -14,12 +14,11 @@ import {
 import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
 import {VedleggFrontendType} from "../../../generated/model";
 import {useValgtKategoriContext} from "../../../KortKategorierContextProvider.tsx";
-//import {useValgtKategoriContext} from "../../../KortKategorierContextProvider.tsx";
 
 interface Props {
     sporsmal: string;
     undertekst: string;
-    dokumentasjonType?: VedleggFrontendType;
+    dokumentasjonType: VedleggFrontendType;
 }
 
 const FileUploadBox = ({sporsmal, undertekst, dokumentasjonType}: Props): React.JSX.Element => {
@@ -34,17 +33,15 @@ const FileUploadBox = ({sporsmal, undertekst, dokumentasjonType}: Props): React.
     );
 };
 
-const Dokumenter = ({dokumentasjonType}: {dokumentasjonType?: VedleggFrontendType}) => {
+const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType}) => {
     const {t} = useTranslation();
-    const {valgtKategoriData} = useValgtKategoriContext();
-    const type =
-        dokumentasjonType === "kort|behov"
-            ? "kort|behov"
-            : valgtKategoriData.valgtKategorier === "annet|annet"
-              ? "kort|annet"
-              : (valgtKategoriData.valgtKategorier as VedleggFrontendType);
 
-    console.log("Dokumenter type", type);
+    const {valgtKategoriData} = useValgtKategoriContext();
+
+    // Determine final type: use context-selected value if available, fallback to prop
+    const finalDokumentasjonType = valgtKategoriData.valgtKategorier || dokumentasjonType || "kort|annet";
+
+    console.log("Final dokumentasjonType used in FileUploadBox:", finalDokumentasjonType);
 
     const {
         deleteDocument,
@@ -53,7 +50,7 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType?: VedleggFrontendTyp
         error,
         isPending: uploadPending,
         currentUpload,
-    } = useVedlegg(type);
+    } = useVedlegg(finalDokumentasjonType);
     const {conversionPending} = usePDFConverter();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
     const isPending = conversionPending || conversionPending;
@@ -102,15 +99,12 @@ const DokumentUploader = ({
     const [previewFile, setPreviewFile] = React.useState<File | null>(null);
     const {conversionPending, conversionError, convertToPDF} = usePDFConverter();
     const isPending = visSpinner || conversionPending;
-    const {setValgtKategoriData} = useValgtKategoriContext();
-
     if (conversionError) throw new PdfConversionError(`conversion error: ${conversionError}`);
 
     const handleFileSelect = async ({target: {files}}: ChangeEvent<HTMLInputElement>) => {
         if (!files?.length) return;
 
         const file = files[0];
-        setValgtKategoriData({valgtKategorier: "annet|annet"});
         if (SUPPORTED_WITHOUT_CONVERSION.includes(file.type)) {
             setPreviewFile(file);
         } else {

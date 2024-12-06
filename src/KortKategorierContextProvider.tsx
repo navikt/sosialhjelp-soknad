@@ -1,15 +1,28 @@
 import React, {useContext} from "react";
 import {VedleggFrontendType} from "./generated/model";
 
-export const ValgtKategoriContext = React.createContext<{
-    valgtKategoriData: {valgtKategorier: VedleggFrontendType};
-    setValgtKategoriData: React.Dispatch<React.SetStateAction<{valgtKategorier: VedleggFrontendType}>>;
-} | null>(null);
+interface ValgtKategoriData {
+    valgtKategorier?: VedleggFrontendType;
+    sokersTekst?: string;
+}
+
+interface KategoriContextProviderProps {
+    valgtKategoriData: ValgtKategoriData;
+    setValgtKategoriData: (data: Partial<ValgtKategoriData>) => void;
+}
+
+const ValgtKategoriContext = React.createContext<KategoriContextProviderProps | undefined>(undefined);
 
 export const ValgtKategoriProvider = ({children}: {children: React.ReactNode}) => {
-    const [valgtKategoriData, setValgtKategoriData] = React.useState<{
-        valgtKategorier: VedleggFrontendType;
-    }>({valgtKategorier: "annet|annet"});
+    const [valgtKategoriData, setKategoriDataState] = React.useState<ValgtKategoriData>({});
+
+    const setValgtKategoriData = (data: Partial<ValgtKategoriData>) => {
+        setKategoriDataState((prevData) => ({
+            ...prevData,
+            ...data,
+            valgtKategorier: data.valgtKategorier || "kort|annet", // Always ensure fallback
+        }));
+    };
 
     return (
         <ValgtKategoriContext.Provider value={{valgtKategoriData, setValgtKategoriData}}>

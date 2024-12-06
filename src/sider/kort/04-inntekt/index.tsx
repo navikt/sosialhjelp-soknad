@@ -36,7 +36,7 @@ const Inntekt = () => {
                 <FileUploadBox
                     sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                     undertekst={t("situasjon.kort.dokumentasjon.description")}
-                    dokumentasjonType={"annet|annet"}
+                    dokumentasjonType={"kort|annet"}
                 />
                 <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
             </SkjemaStegBlock>

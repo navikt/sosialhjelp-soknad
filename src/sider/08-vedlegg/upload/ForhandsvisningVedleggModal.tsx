@@ -35,21 +35,19 @@ export const ForhandsvisningVedleggModal = ({
     const {valgtKategoriData, setValgtKategoriData} = useValgtKategoriContext();
     const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-    console.log("ForhandsvisningVedleggModal valgtKategoriData", valgtKategoriData);
-    console.log("ForhandsvisningVedleggModal selectedCategory", selectedCategory);
-
     const handleAccept = () => {
-        console.log("handleAccept selectedCategory", selectedCategory);
-        const categoryToSet = selectedCategory === "annet|annet" || !selectedCategory ? "kort|annet" : selectedCategory;
-        console.log("handleAccept categoryToSet", categoryToSet);
+        // Ensure `kort|annet` is set when no valid category is selected
+        const categoryToSet =
+            selectedCategory === "annet|annet" || selectedCategory === "" ? "kort|annet" : selectedCategory;
+
         setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
+        setSelectedCategory(""); // Reset after accept
         onAccept();
-        setSelectedCategory(""); // Reset the selected category
     };
 
     const handleClose = () => {
-        setSelectedCategory("annet|annet"); // Reset the selected category
-        setValgtKategoriData({valgtKategorier: "annet|annet"});
+        setValgtKategoriData({valgtKategorier: "kort|annet"}); // Reset context
+        setSelectedCategory(""); // Reset local state
         onClose();
     };
 
@@ -91,7 +89,7 @@ export const ForhandsvisningVedleggModal = ({
             </Modal.Body>
             <Modal.Footer className={"!block space-y-4"}>
                 <BodyShort>{t("vedlegg.forhandsvisning.info")}</BodyShort>
-                {isKortSoknad && (
+                {valgtKategoriData.valgtKategorier !== "kort|behov" && isKortSoknad && (
                     <div>
                         <div>
                             <Select
@@ -99,8 +97,12 @@ export const ForhandsvisningVedleggModal = ({
                                 value={selectedCategory}
                                 onChange={(event: any) => {
                                     const newCategory = event.target.value;
+
+                                    // Map "annet|annet" (placeholder) to "kort|annet" when no specific category is selected
+                                    const categoryToSet = newCategory === "annet|annet" ? "kort|annet" : newCategory;
+
                                     setSelectedCategory(newCategory);
-                                    setValgtKategoriData({valgtKategorier: newCategory as VedleggFrontendType});
+                                    setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
                                 }}
                             >
                                 <option value="annet|annet">
