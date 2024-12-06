@@ -5,6 +5,8 @@ metadata:
   namespace: teamdigisos
   labels:
     team: teamdigisos
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "150M"
 spec:
   image: europe-north1-docker.pkg.dev/nais-io/nais/images/wonderwall:latest
   port: 8080

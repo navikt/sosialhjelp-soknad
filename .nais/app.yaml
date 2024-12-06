@@ -6,6 +6,7 @@ metadata:
   labels:
     team: teamdigisos
   annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "150M"
     nais.io/read-only-file-system: "false"
 spec:
   image: {{image}}
