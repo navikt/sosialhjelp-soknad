@@ -88,7 +88,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
             data.append("file", file);
 
             const dokument = await axiosInstance<DokumentUpload>({
-                url: `/opplastetVedlegg/${behandlingsId}/${encodeURI(dokumentasjonType)}`,
+                url: `/opplastetVedlegg/${behandlingsId}/${dokumentasjonType}`,
                 method: "POST",
                 headers: {"Content-Type": "multipart/form-data"},
                 data,
