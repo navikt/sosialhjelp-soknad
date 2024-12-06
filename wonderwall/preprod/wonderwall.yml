@@ -5,6 +5,8 @@ metadata:
   namespace: teamdigisos
   labels:
     team: teamdigisos
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "150M"
 spec:
   image: europe-north1-docker.pkg.dev/nais-io/nais/images/wonderwall:latest
   port: 8080
@@ -13,7 +15,7 @@ spec:
   accessPolicy:
     outbound:
       external:
-        - host: test.idporten.no
+        - host: www.ekstern.dev.nav.no
       rules:
         - application: sosialhjelp-soknad
   resources:
@@ -24,7 +26,7 @@ spec:
       cpu: "20m"
       memory: 50Mi
   redis:
-    - access: readwrite
+    - access: read
       instance: wonderwall
   liveness:
     initialDelay: 20
@@ -36,21 +38,16 @@ spec:
     min: 1
     max: 2
   envFrom:
-    - secret: idporten-soknad
     - secret: wonderwall-redis
   env:
+    - name: WONDERWALL_SSO_ENABLED
+      value: "true"
+    - name: WONDERWALL_SSO_MODE
+      value: proxy
     - name: WONDERWALL_AUTO_LOGIN
       value: "true"
-    - name: WONDERWALL_OPENID_PROVIDER
-      value: idporten
-    - name: WONDERWALL_OPENID_SCOPES
-      value: ks:fiks,husbanken:minbostotte
-    - name: WONDERWALL_OPENID_POST_LOGOUT_REDIRECT_URI
-      value: https://login.ekstern.dev.nav.no/oauth2/logout
     - name: WONDERWALL_INGRESS
       value: https://www.ekstern.dev.nav.no/sosialhjelp/soknad
-    - name: WONDERWALL_COOKIE_PREFIX
-      value: "sosialhjelp.soknad.wonderwall"
     - name: WONDERWALL_UPSTREAM_HOST
       value: sosialhjelp-soknad:80
     - name: WONDERWALL_BIND_ADDRESS
@@ -63,13 +60,15 @@ spec:
       value: 7s
     - name: WONDERWALL_LOG_LEVEL
       value: debug
+    - name: WONDERWALL_SSO_SESSION_COOKIE_NAME
+      value: no.sosialhjelp.wonderwall.session
+    - name: WONDERWALL_SSO_SERVER_URL
+      value: https://www.ekstern.dev.nav.no/sosialhjelp/wonderwall
     - name: WONDERWALL_REDIS_URI
       value: $(REDIS_URI_WONDERWALL)
     - name: WONDERWALL_REDIS_USERNAME
       value: $(REDIS_USERNAME_WONDERWALL)
     - name: WONDERWALL_REDIS_PASSWORD
       value: $(REDIS_PASSWORD_WONDERWALL)
-    - name: WONDERWALL_SESSION_MAX_LIFETIME
-      value: 59m
     - name: WONDERWALL_SESSION_REFRESH_AUTO
       value: "false"
