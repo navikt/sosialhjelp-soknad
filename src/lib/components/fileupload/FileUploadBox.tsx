@@ -49,10 +49,12 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType
     console.log("Final dokumentasjonType used in FileUploadBox:", finalDokumentasjonType);
 
     React.useEffect(() => {
-        if (dokumentasjonType === "kort|behov") {
+        if (dokumentasjonType === "kort|behov" && valgtKategoriData.valgtKategorier !== "kort|behov") {
+            setValgtKategoriData({valgtKategorier: "kort|behov"});
+        } else {
             setValgtKategoriData({valgtKategorier: finalDokumentasjonType});
         }
-    }, [finalDokumentasjonType, dokumentasjonType]);
+    }, [finalDokumentasjonType]);
 
     const {
         deleteDocument,
