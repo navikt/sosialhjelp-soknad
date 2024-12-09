@@ -32,10 +32,10 @@ export const ForhandsvisningVedleggModal = ({
     const {t} = useTranslation();
     const isKortSoknad = useCurrentSoknadIsKort();
 
-    const {valgtKategoriData, setValgtKategoriData} = useValgtKategoriContext();
+    const {setValgtKategoriData} = useValgtKategoriContext();
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     console.log("ForhandsvisningVedleggModal selectedCategory", selectedCategory);
-    console.log("ForhandsvisningVedleggModal valgtKategoriData", valgtKategoriData);
+    //console.log("ForhandsvisningVedleggModal valgtKategoriData", valgtKategoriData);
 
     const handleAccept = () => {
         // Ensure `kort|annet` is set when no valid category is selected
@@ -91,7 +91,7 @@ export const ForhandsvisningVedleggModal = ({
             </Modal.Body>
             <Modal.Footer className={"!block space-y-4"}>
                 <BodyShort>{t("vedlegg.forhandsvisning.info")}</BodyShort>
-                {valgtKategoriData.valgtKategorier !== "kort|behov" && isKortSoknad && (
+                {isKortSoknad && (
                     <div>
                         <div>
                             <Select

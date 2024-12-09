@@ -12,49 +12,47 @@ import {
     SUPPORTED_WITHOUT_CONVERSION,
 } from "../../../sider/08-vedlegg/upload/DokumentUploader";
 import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
-import {VedleggFrontendType} from "../../../generated/model";
 import {useValgtKategoriContext} from "../../../KortKategorierContextProvider.tsx";
 
 interface Props {
     sporsmal: string;
     undertekst: string;
-    dokumentasjonType: VedleggFrontendType;
 }
 
-const FileUploadBox = ({sporsmal, undertekst, dokumentasjonType}: Props): React.JSX.Element => {
+const FileUploadBox = ({sporsmal, undertekst}: Props): React.JSX.Element => {
     return (
         <div className={"rounded-md bg-surface-action-subtle p-8"}>
             <Heading level={"4"} size={"small"} spacing>
                 {sporsmal}
             </Heading>
             <BodyShort spacing>{undertekst}</BodyShort>
-            <Dokumenter dokumentasjonType={dokumentasjonType} />
+            <Dokumenter />
         </div>
     );
 };
 
-const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType}) => {
+const Dokumenter = () => {
     const {t} = useTranslation();
 
-    const {valgtKategoriData, setValgtKategoriData} = useValgtKategoriContext();
+    const {valgtKategoriData} = useValgtKategoriContext();
 
-    console.log("dokuemntasjonType used in FileUploadBox:", dokumentasjonType);
+    console.log("dokuemntasjonType used in FileUploadBox:", valgtKategoriData.valgtKategorier);
+
+    /***
+
+
+
+     TA Å TEST I q0 OG ELLER PRE-PROD FOR Å SE OM ALT FUNKER OM DET FUNKER LOKALT OG I MOCK
+
+
+
+
+     */
 
     // Determine final type: use context-selected value if available, fallback to prop
-    const finalDokumentasjonType =
-        dokumentasjonType === "kort|behov" // Explicitly prioritize "kort|behov"
-            ? "kort|behov"
-            : valgtKategoriData.valgtKategorier || dokumentasjonType || "kort|annet";
+    const finalDokumentasjonType = valgtKategoriData.valgtKategorier || "kort|annet";
 
     console.log("Final dokumentasjonType used in FileUploadBox:", finalDokumentasjonType);
-
-    React.useEffect(() => {
-        if (dokumentasjonType === "kort|behov" && valgtKategoriData.valgtKategorier !== "kort|behov") {
-            setValgtKategoriData({valgtKategorier: "kort|behov"});
-        } else {
-            setValgtKategoriData({valgtKategorier: finalDokumentasjonType});
-        }
-    }, [finalDokumentasjonType]);
 
     const {
         deleteDocument,
