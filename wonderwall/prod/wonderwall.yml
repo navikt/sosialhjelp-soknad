@@ -15,7 +15,7 @@ spec:
   accessPolicy:
     outbound:
       external:
-        - host: idporten.no
+        - host: www.nav.no
       rules:
         - application: sosialhjelp-soknad
   resources:
@@ -26,7 +26,7 @@ spec:
       cpu: "20m"
       memory: 50Mi
   redis:
-    - access: readwrite
+    - access: read
       instance: wonderwall
   liveness:
     initialDelay: 20
@@ -38,9 +38,12 @@ spec:
     min: 1
     max: 2
   envFrom:
-    - secret: idporten-soknad
     - secret: wonderwall-redis
   env:
+    - name: WONDERWALL_SSO_ENABLED
+      value: "true"
+    - name: WONDERWALL_SSO_MODE
+      value: proxy
     - name: WONDERWALL_AUTO_LOGIN
       value: "true"
     - name: WONDERWALL_OPENID_PROVIDER
@@ -63,6 +66,10 @@ spec:
       value: 7s
     - name: WONDERWALL_LOG_LEVEL
       value: debug
+    - name: WONDERWALL_SSO_SESSION_COOKIE_NAME
+      value: no.sosialhjelp.wonderwall.session
+    - name: WONDERWALL_SSO_SERVER_URL
+      value: https://www.nav.no/sosialhjelp/wonderwall
     - name: WONDERWALL_REDIS_URI
       value: $(REDIS_URI_WONDERWALL)
     - name: WONDERWALL_REDIS_USERNAME
@@ -73,5 +80,3 @@ spec:
       value: 59m
     - name: WONDERWALL_SESSION_REFRESH_AUTO
       value: "false"
-    - name: WONDERWALL_COOKIE_PREFIX
-      value: "sosialhjelp.soknad.wonderwall"
