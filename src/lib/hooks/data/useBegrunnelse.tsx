@@ -1,5 +1,4 @@
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {useConfigFeatureFlags} from "../../config";
 import * as React from "react";
 import {useEffect} from "react";
 import {
@@ -15,8 +14,6 @@ import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 export const useBegrunnelse = () => {
     const behandlingsId = useBehandlingsId();
 
-    // TODO: Avklare denne. Er det behov lenger?
-    const {begrunnelseNyTekst} = useConfigFeatureFlags();
     const [isError, setIsError] = React.useState(false);
     const queryClient = useQueryClient();
     const {isPending, queryKey} = useHentBegrunnelse(behandlingsId);
@@ -31,7 +28,6 @@ export const useBegrunnelse = () => {
         logAmplitudeEvent("begrunnelse fullført", {
             hvaLengde: (Math.round((begrunnelse?.hvaSokesOm?.length ?? 0) / 20) - 1) * 20,
             hvorforLengde: (Math.round((begrunnelse?.hvorforSoke?.length ?? 0) / 20) - 1) * 20,
-            begrunnelseNyTekst,
         });
 
         try {
@@ -45,8 +41,8 @@ export const useBegrunnelse = () => {
     };
 
     useEffect(() => {
-        logAmplitudeEvent("begrunnelse åpnet", {begrunnelseNyTekst}).then();
-    }, [begrunnelseNyTekst]);
+        logAmplitudeEvent("begrunnelse åpnet").then();
+    }, [true]);
 
     return {get, put, isPending, isError};
 };

@@ -2,9 +2,6 @@ export const DigisosEnvironments = ["localhost", "dev-sbs", "mock", "prod-sbs", 
 export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 
 type FeatureFlags = {
-    // Bruk ny tekst i Begrunnelse
-    begrunnelseNyTekst: boolean;
-
     // Ny versjon av Personalia oppsummering
     nyOppsummering: boolean;
 
@@ -58,7 +55,6 @@ const isValidDigisosEnvironment = (miljo: unknown): miljo is DigisosEnvironment 
 const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     localhost: {
         featureFlags: {
-            begrunnelseNyTekst: true,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
@@ -85,7 +81,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     mock: {
         featureFlags: {
-            begrunnelseNyTekst: true,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
@@ -109,10 +104,9 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     "dev-sbs": {
         featureFlags: {
-            begrunnelseNyTekst: false,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
-            soknadstypeValg: true,
+            soknadstypeValg: false,
         },
         dekorator: {
             env: "dev",
@@ -133,7 +127,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     "prod-sbs": {
         featureFlags: {
-            begrunnelseNyTekst: false,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
@@ -159,7 +152,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     // dette blir prod i GCP når det er kjørt inn.
     prod: {
         featureFlags: {
-            begrunnelseNyTekst: false,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
@@ -193,7 +185,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     preprod: {
         featureFlags: {
-            begrunnelseNyTekst: false,
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
@@ -218,7 +209,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         baseURL: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/soknad-api/",
         // NB: Denne ble satt til digisos.ekstern, fordi da denne ble skrevet var det ikke innsyn i preprod enda.
         innsynURL: "https://www.ekstern.dev.nav.no/sosialhjelp/innsyn",
-        minSideURL: "https://www.nav.no/minside/",
+        minSideURL: "https://www.ansatt.dev.nav.no/minside/",
         logoutURL: "https://loginservice.nav.no/slo",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
         faro: {

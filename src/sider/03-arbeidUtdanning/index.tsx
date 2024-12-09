@@ -7,7 +7,6 @@ import {ArbeidsforholdResponse, UtdanningFrontend} from "../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {ArbeidsforholdListe} from "./ArbeidsforholdListe";
-import {TranslatedError} from "../02-begrunnelse";
 import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {UnmountClosed} from "react-collapse";
 import {faro} from "@grafana/faro-react";
@@ -20,6 +19,7 @@ import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepp
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
+import {TranslatedError} from "../../lib/components/TranslatedError.tsx";
 
 const MAX_LENGTH = 500;
 

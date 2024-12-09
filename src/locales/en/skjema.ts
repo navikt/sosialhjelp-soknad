@@ -13,42 +13,6 @@ export const skjema = {
     prosent: "%",
     send: "Submit",
     start: "Start",
-    adresse: {
-        alertstripe: {
-            advarsel: {
-                fixme: "Your municipality cannot accept digital applications.",
-                utenurl: "{{kommuneNavn}} municipality cannot accept digital applications.",
-                v2: "{{kommuneNavn}} municipality cannot accept digital applications.<br/>You can <lenke>apply using a paper form</lenke>.",
-            },
-            feil: {
-                fixme: "Unfortunately, we cannot accept digital applications right now. Apply using a paper form, or try again later.",
-                utenurl:
-                    "{{kommuneNavn}} municipality cannot accept digital applications right now. Apply using a paper form, or try again later.",
-                v2: "{{kommuneNavn}} municipality cannot accept digital applications right now. <lenke>Apply using a paper form</lenke>, or try again later.",
-            },
-            navKontor: "{{enhetsnavn}}, {{kommunenavn}} municipality.",
-            suksess: "Your application will be sent to:",
-        },
-    },
-    adresse_med_fylke: {
-        alertstripe: {
-            advarsel: {
-                utenurl: "{{kommuneNavn}} municipality ({{fylkeNavn}}) cannot accept digital applications.",
-                v2: "{{kommuneNavn}} municipality ({{fylkeNavn}}) cannot accept digital applications. You can <lenke>apply using a paper form</lenke>.",
-                stringValue:
-                    '{{kommuneNavn}} municipality ({{fylkeNavn}}) cannot accept digital applications. You can <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">apply using a paper form</lenke>.',
-            },
-            feil: {
-                utenurl:
-                    "{{kommuneNavn}} municipality ({{fylkeNavn}}) cannot accept digital applications right now. Apply using a paper form, or try again later.",
-                v2: "{{kommuneNavn}} municipality ({{fylkeNavn}}) cannot accept digital applications right now. <lenke>Apply using a paper form</lenke>, or try again later.",
-                stringValue:
-                    '{{kommuneNavn}} municipality ({{fylkeNavn}}) cannot accept digital applications right now. <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">Apply using a paper form</lenke>, or try again later.',
-            },
-            suksess:
-                "Your application will be sent to: {{navkontorNavn}}, {{kommuneNavn}} municipality ({{fylkeNavn}}).",
-        },
-    },
     antallvelger: {
         feilmeldinger: {
             forlite: "The number cannot be smaller than {{0}}.",
@@ -176,14 +140,11 @@ export const skjema = {
         },
         hva: {
             description: 'Example of text: "I am applying for support for food, rent and electricity."',
-            descriptionOld: "For example, money for living expenses and rent",
             label: "What are you applying for?",
-            labelOld: "Using key words, state what you are applying for",
         },
         hvorfor: {
             description: "about your situation and what you are applying for.",
             label: "Tell us more",
-            labelOld: "Give a brief reason for the application",
         },
         kategorier: {
             annet: "Other",
@@ -2249,7 +2210,7 @@ export const skjema = {
     },
     arbeidOgFamilie: {
         tittel: "Work and family",
-        alert: "You are getting a new and shorter application since you have applied before. Feel free to provide feedback on the application to your advisor.",
+        alert: "You are getting a new and shorter application because you have applied before.",
     },
 };
 

@@ -13,41 +13,6 @@ export const skjema = {
     prosent: "%",
     send: "Send",
     start: "Start",
-    adresse: {
-        alertstripe: {
-            advarsel: {
-                fixme: "Kommunen din kan ikkje ta imot digitale søknader.",
-                utenurl: "{{kommuneNavn}} kommune kan ikkje ta imot digitale søknader.",
-                v2: "{{kommuneNavn}} kommune kan ikkje ta imot digitale søknader.<br/>Du kan <lenke>søkje på papirskjema</lenke>.",
-            },
-            feil: {
-                fixme: "Vi kan diverre ikkje ta imot digitale søknader akkurat no. Søk på papirskjema, eller prøv igjen seinare.",
-                utenurl:
-                    "{{kommuneNavn}} kommune kan diverre ikkje ta imot digitale søknader akkurat no. Søk på papirskjema, eller prøv igjen seinare.",
-                v2: "{{kommuneNavn}} kommune kan diverre ikkje ta imot digitale søknader akkurat no. <lenke>Søk på papirskjema</lenke>, eller prøv igjen seinare.",
-            },
-            navKontor: "{{enhetsnavn}}, {{kommunenavn}} kommune.",
-            suksess: "Søknaden din vil bli sendt til:",
-        },
-    },
-    adresse_med_fylke: {
-        alertstripe: {
-            advarsel: {
-                utenurl: "{{kommuneNavn}} kommune ({{fylkeNavn}}) kan ikkje ta imot digitale søknader.",
-                v2: "{{kommuneNavn}} kommune ({{fylkeNavn}}) kan ikkje ta imot digitale søknader. Du kan <lenke>søkje på papirskjema</lenke>.",
-                stringValue:
-                    '{{kommuneNavn}} kommune ({{fylkeNavn}}) kan ikkje ta imot digitale søknader. Du kan <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">søkje på papirskjema</lenke>.',
-            },
-            feil: {
-                utenurl:
-                    "{{kommuneNavn}} kommune ({{fylkeNavn}}) kan diverre ikkje ta imot digitale søknader akkurat no. Søk på papirskjema, eller prøv igjen seinare.",
-                v2: "{{kommuneNavn}} kommune ({{fylkeNavn}}) kan diverre ikkje ta imot digitale søknader akkurat no. <lenke>Søk på papirskjema</lenke>, eller prøv igjen seinare.",
-                stringValue:
-                    '{{kommuneNavn}} kommune ({{fylkeNavn}}) kan diverre ikkje ta imot digitale søknader akkurat no. <a href="https://www.nav.no/sosialhjelp/sok-papir" target="_blank">Søk på papirskjema</lenke>, eller prøv igjen seinare.',
-            },
-            suksess: "Søknaden blir send til: {{navkontorNavn}}, {{kommuneNavn}} kommune ({{fylkeNavn}}).",
-        },
-    },
     antallvelger: {
         feilmeldinger: {
             forlite: "Talet kan ikkje vere mindre enn {{0}}.",
@@ -175,14 +140,11 @@ export const skjema = {
         },
         hva: {
             description: 'Døme på tekst: "Eg søkjer om pengar til mat, husleige og straum."',
-            descriptionOld: "Til dømes pengar til/utgifter husleige og for å leve",
             label: "Kva søkjer du om?",
-            labelOld: "Skriv i stikkordsform kva du søkjer om",
         },
         hvorfor: {
             description: "om situasjonen din og kva du søkjer om.",
             label: "Fortel oss mer",
-            labelOld: "Grunngi kort søknaden",
         },
         kategorier: {
             annet: "Anna",
@@ -2175,7 +2137,7 @@ export const skjema = {
     },
     arbeidOgFamilie: {
         tittel: "Arbeid og familie",
-        alert: "Du får ein ny og kortare søknad sidan du har søkt før. Gi gjerne tilbakemeldingar om søknaden til rettleiaren din.",
+        alert: "Du får ein ny og kortare søknad sidan du har søkt før.",
     },
 };
 

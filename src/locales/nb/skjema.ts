@@ -13,23 +13,6 @@ export const skjema = {
     prosent: "%",
     send: "Send",
     start: "Start",
-    adresse: {
-        alertstripe: {
-            advarsel: {
-                fixme: "Din kommune kan ikke ta i mot digitale søknader.",
-                utenurl: "{{kommuneNavn}} kommune kan ikke ta i mot digitale søknader.",
-                v2: "{{kommuneNavn}} kommune kan ikke ta i mot digitale søknader.<br/>Du kan <lenke>søke på papirskjema</lenke>.",
-            },
-            feil: {
-                fixme: "Vi kan dessverre ikke ta i mot digitale søknader akkurat nå. Søk på papirskjema, eller prøv igjen senere.",
-                utenurl:
-                    "{{kommuneNavn}} kommune kan dessverre ikke ta i mot digitale søknader akkurat nå. Søk på papirskjema, eller prøv igjen senere.",
-                v2: "{{kommuneNavn}} kommune kan dessverre ikke ta i mot digitale søknader akkurat nå. <lenke>Søk på papirskjema</lenke>, eller prøv igjen senere.",
-            },
-            navKontor: "{{enhetsnavn}}, {{kommunenavn}} kommune.",
-            suksess: "Din søknad vil bli sendt til:",
-        },
-    },
     antallvelger: {
         feilmeldinger: {
             forlite: "Tallet kan ikke være mindre enn {{0}}.",
@@ -157,14 +140,11 @@ export const skjema = {
         },
         hva: {
             description: 'Eksempel på tekst: "Jeg søker om penger til mat, husleie og strøm."',
-            descriptionOld: "For eksempel penger til/utgifter for å leve og husleie",
             label: "Hva søker du om?",
-            labelOld: "Skriv med stikkord hva du søker om",
         },
         hvorfor: {
             description: "om situasjonen din og hva du søker om.",
             label: "Fortell oss mer",
-            labelOld: "Gi en kort begrunnelse for søknaden",
         },
         kategorier: {
             annet: "Annet",
@@ -2165,7 +2145,7 @@ export const skjema = {
     },
     arbeidOgFamilie: {
         tittel: "Arbeid og familie",
-        alert: "Du får en ny og kortere søknad siden du har søkt før. Gi gjerne tilbakemeldinger om søknaden til veilederen din.",
+        alert: "Du får en ny og kortere søknad siden du har søkt før.",
     },
 };
 
