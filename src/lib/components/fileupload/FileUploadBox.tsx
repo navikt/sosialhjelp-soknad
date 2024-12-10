@@ -133,7 +133,7 @@ const DokumentUploader = ({
             />
             {previewFile && (
                 <ForhandsvisningVedleggModal
-                    header={"abc"}
+                    header={"Er det lesbart?"}
                     file={previewFile}
                     onAccept={async () => {
                         if (!previewFile) return;
