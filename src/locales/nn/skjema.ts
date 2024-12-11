@@ -163,6 +163,19 @@ export const skjema = {
             tannlege: "Tannlege",
             transport: "Transport",
             fritidsaktiviteter: "Fritidsaktivitetar for barn",
+            kortKategorier: {
+                kategoriValg: "Vel kategori",
+                barnebidrag: "Barnebidrag",
+                Barnehage: "Barnehage",
+                barnehageSFO: "SFO/AKS",
+                bostotte: "Bustøtte frå Husbanken",
+                husleie: "Husleige",
+                kontooversikt: "Kontooversikt",
+                lonnslipp: "Lønsslipp",
+                stromOppvarming: "Straum og oppvarming",
+                stipendLan: "Stipend og lån fra Lånekassen",
+                annet: "Anna",
+            },
         },
         kort: {
             behov: {
@@ -1994,6 +2007,7 @@ export const skjema = {
                 stringValue: "Fullskjerm",
             },
             info: "Sørg for at dokumenta er leselege og viser rett informasjon",
+            kategori: 'Om du ikkje vel ein kategori blir dokumentet lasta opp som "Anna".',
             opplast: "Last opp dokument",
             slett: "Slett",
             tilbake: {
