@@ -24,10 +24,10 @@ export const TelefonShow = ({onEdit}: {onEdit?: () => void}) => {
                 </SysteminfoItem>
             );
         return (
-            <>
+            <div>
                 {t("kontakt.system.telefoninfo.ingeninfo")} <br />
                 {onEdit && <PersonaliaEditKnapp onClick={onEdit} />}
-            </>
+            </div>
         );
     });
 };
