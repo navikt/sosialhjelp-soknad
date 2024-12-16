@@ -12,7 +12,7 @@ export const initAmplitude = () => {
         amplitude.identify(identify);
 
         amplitude.init("default", {
-            serverUrl: "https://amplitude.nav.no/collect-auto",
+            serverUrl: "https://amplitude.nav.no/collect",
             ingestionMetadata: {
                 sourceName: buildLocationString(),
             },
