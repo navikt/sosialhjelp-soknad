@@ -31,7 +31,7 @@ export const KontonrShowSysteminfo = ({onEdit}: {onEdit?: () => void}) => {
     return expectOK(({systemverdi}) => (
         <div>
             <SysteminfoItem as="div">{formatKontonummer(systemverdi ?? "")}</SysteminfoItem>
-            <BodyShort className={"pt-2"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
+            <BodyShort className={"pt-2"}>{t("kontakt.system.kontonummer.infotekst.tekst")}</BodyShort>
             {onEdit && <PersonaliaEditKnapp onClick={onEdit} />}
         </div>
     ));
