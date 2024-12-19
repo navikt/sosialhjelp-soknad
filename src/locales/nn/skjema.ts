@@ -892,7 +892,7 @@ export const skjema = {
                     label: "Rediger",
                 },
                 infotekst: {
-                    tekst: "Henta frå Mi Side",
+                    tekst: "(Henta frå Mi Side)",
                 },
                 label: "Kontonummer",
                 sporsmal: "Kontonummer",
