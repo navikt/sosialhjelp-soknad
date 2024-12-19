@@ -899,7 +899,7 @@ export const skjema = {
                     label: "Edit",
                 },
                 infotekst: {
-                    tekst: "(Obtained from My Page)",
+                    tekst: "(Obtained from My page)",
                 },
                 label: "Account number",
                 sporsmal: "Account number",
