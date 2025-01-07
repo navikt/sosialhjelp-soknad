@@ -905,7 +905,7 @@ export const skjema = {
                     label: "Rediger",
                 },
                 infotekst: {
-                    tekst: "Vi har henta følgjande opplysningar frå Mi Side:",
+                    tekst: "(Henta frå Mi side)",
                 },
                 label: "Kontonummer",
                 sporsmal: "Kontonummer",

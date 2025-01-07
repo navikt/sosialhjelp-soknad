@@ -35,7 +35,7 @@ spec:
     initialDelay: 20
     path: /sosialhjelp/soknad/oauth2/ping
   replicas:
-    min: 1
+    min: 2
     max: 2
   envFrom:
     - secret: wonderwall-redis
@@ -46,12 +46,6 @@ spec:
       value: proxy
     - name: WONDERWALL_AUTO_LOGIN
       value: "true"
-    - name: WONDERWALL_OPENID_PROVIDER
-      value: idporten
-    - name: WONDERWALL_OPENID_SCOPES
-      value: ks:fiks,husbanken:minbostotte
-    - name: WONDERWALL_OPENID_POST_LOGOUT_REDIRECT_URI
-      value: https://login.nav.no/oauth2/logout
     - name: WONDERWALL_INGRESS
       value: https://www.nav.no/sosialhjelp/soknad
     - name: WONDERWALL_UPSTREAM_HOST
