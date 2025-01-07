@@ -164,7 +164,7 @@ export const skjema = {
             transport: "Transport",
             fritidsaktiviteter: "Fritidsaktiviteter for barn",
             kortKategorier: {
-                kategoriValg: "Velg kategori",
+                kategoriValg: "Velg besrkivelse",
                 barnebidrag: "Barnebidrag",
                 barnehage: "Barnehage",
                 barnehageSFO: "SFO/AKS",
@@ -2015,7 +2015,7 @@ export const skjema = {
                 stringValue: "Fullskjerm",
             },
             info: "Sørg for at dokumentene er leselige og viser riktig informasjon",
-            kategori: 'Om du ikke velger en kategori blir dokumentet lastet opp som "Annet".',
+            kategori: 'Om du ikke velger en beskrivelse blir dokumentet lastet opp som "Annet".',
             opplast: "Last opp dokument",
             slett: "Slett",
             tilbake: {

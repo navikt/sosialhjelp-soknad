@@ -95,7 +95,7 @@ export const ForhandsvisningVedleggModal = ({
                     <div>
                         <div>
                             <Select
-                                label={"Velg en kategori for dokumentet"}
+                                label={"Hva har du lastet opp?"}
                                 value={selectedCategory}
                                 onChange={(event: any) => {
                                     const newCategory = event.target.value;
