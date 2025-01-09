@@ -2402,8 +2402,8 @@
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
-                    "dokumentasjonForventet": {"type": "boolean"},
                     "group": {"type": "string"},
+                    "dokumentasjonForventet": {"type": "boolean"},
                     "type": {"type": "string"}
                 },
                 "discriminator": {"propertyName": "type"}
