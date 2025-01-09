@@ -50,7 +50,7 @@ const Dokumenter = () => {
      */
 
     // Determine final type: use context-selected value if available, fallback to prop
-    const finalDokumentasjonType = valgtKategoriData.valgtKategorier || "kort|annet";
+    const finalDokumentasjonType = valgtKategoriData.valgtKategorier || "annet|annet";
 
     console.log("Final dokumentasjonType used in FileUploadBox:", finalDokumentasjonType);
 

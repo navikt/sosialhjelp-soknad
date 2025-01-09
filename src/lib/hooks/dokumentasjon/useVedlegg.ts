@@ -67,7 +67,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
                 onError: handleApiError,
                 onSuccess: () => {
                     dispatch({type: "remove", dokumentId});
-                    setValgtKategoriData({valgtKategorier: "kort|annet"});
+                    setValgtKategoriData({valgtKategorier: "annet|annet"});
 
                     logAmplitudeEvent("dokument slettet", {opplysningType: dokumentasjonType}).then();
                 },
@@ -108,7 +108,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
 
             setUploadPercent(null);
             dispatch({type: "insert", dokument});
-            setValgtKategoriData({valgtKategorier: "kort|annet"});
+            setValgtKategoriData({valgtKategorier: "annet|annet"});
             await logAmplitudeEvent("dokument lastet opp", {opplysningType: dokumentasjonType});
         } catch (e: any) {
             handleApiError(e);

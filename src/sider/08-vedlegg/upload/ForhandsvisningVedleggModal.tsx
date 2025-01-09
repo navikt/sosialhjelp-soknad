@@ -39,8 +39,7 @@ export const ForhandsvisningVedleggModal = ({
 
     const handleAccept = () => {
         // Ensure `kort|annet` is set when no valid category is selected
-        const categoryToSet =
-            selectedCategory === "annet|annet" || selectedCategory === "" ? "kort|annet" : selectedCategory;
+        const categoryToSet = selectedCategory || "annet|annet";
         console.log("ForhandsvisningVedleggModal categoryToSet", categoryToSet);
         setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
         setSelectedCategory(""); // Reset after accept
@@ -101,7 +100,7 @@ export const ForhandsvisningVedleggModal = ({
                                     const newCategory = event.target.value;
 
                                     // Map "annet|annet" (placeholder) to "kort|annet" when no specific category is selected
-                                    const categoryToSet = newCategory === "annet|annet" ? "kort|annet" : newCategory;
+                                    const categoryToSet = newCategory;
 
                                     setSelectedCategory(newCategory);
                                     setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
@@ -137,7 +136,7 @@ export const ForhandsvisningVedleggModal = ({
                                 <option value="kort|stipendLan">
                                     {t("begrunnelse.kategorier.kortKategorier.stipendLan")}
                                 </option>
-                                <option value="kort|annet">{t("begrunnelse.kategorier.kortKategorier.annet")}</option>
+                                <option value="annet|annet">{t("begrunnelse.kategorier.kortKategorier.annet")}</option>
                             </Select>
                         </div>
                         <div className={"mt-8"}>
