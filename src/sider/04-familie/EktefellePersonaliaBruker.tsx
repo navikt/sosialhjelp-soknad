@@ -17,15 +17,15 @@ export const EktefellePersonaliaBruker = () => {
         ektefelle?.navn ? (
             <>
                 <BodyShort className={"pb-3"}>{t("system.familie.sivilstatus.label")}</BodyShort>
-                <SysteminfoItem label={t(`system.familie.sivilstatus.gift.ektefelle.navn`)}>
+                <SysteminfoItem as="div" label={t(`system.familie.sivilstatus.gift.ektefelle.navn`)}>
                     <FullName name={ektefelle.navn} />
                 </SysteminfoItem>
                 {ektefelle?.fodselsdato && (
-                    <SysteminfoItem label={t(`system.familie.sivilstatus.gift.ektefelle.fodselsdato`)}>
+                    <SysteminfoItem as="div" label={t(`system.familie.sivilstatus.gift.ektefelle.fodselsdato`)}>
                         <LocalizedDate date={ektefelle.fodselsdato} />
                     </SysteminfoItem>
                 )}
-                <SysteminfoItem label={t(`familie.sivilstatus.gift.borsammen.sporsmal`)}>
+                <SysteminfoItem as="div" label={t(`familie.sivilstatus.gift.borsammen.sporsmal`)}>
                     {borSammenMed ? t("avbryt.ja") : t("avbryt.nei")}
                 </SysteminfoItem>
             </>
