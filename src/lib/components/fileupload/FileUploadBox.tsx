@@ -36,23 +36,12 @@ const Dokumenter = () => {
 
     const {valgtKategoriData} = useValgtKategoriContext();
 
-    console.log("dokuemntasjonType used in FileUploadBox:", valgtKategoriData.valgtKategorier);
-
-    /***
-
-
-
-     TA Å TEST I q0 OG ELLER PRE-PROD FOR Å SE OM ALT FUNKER OM DET FUNKER LOKALT OG I MOCK
-
-
-
-
-     */
+    //console.log("dokuemntasjonType used in FileUploadBox:", valgtKategoriData.valgtKategorier);
 
     // Determine final type: use context-selected value if available, fallback to prop
     const finalDokumentasjonType = valgtKategoriData.valgtKategorier || "annet|annet";
 
-    console.log("Final dokumentasjonType used in FileUploadBox:", finalDokumentasjonType);
+    //console.log("Final dokumentasjonType used in FileUploadBox:", finalDokumentasjonType);
 
     const {
         deleteDocument,
@@ -65,6 +54,9 @@ const Dokumenter = () => {
     const {conversionPending} = usePDFConverter();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
     const isPending = conversionPending || conversionPending;
+
+    console.log("FileUploadBox documents", documents);
+    console.log("FileUploadBox currentUpload", currentUpload);
 
     return (
         <div className={"space-y-2"}>
@@ -112,10 +104,15 @@ const DokumentUploader = ({
     const isPending = visSpinner || conversionPending;
     if (conversionError) throw new PdfConversionError(`conversion error: ${conversionError}`);
 
+    console.log("FileUploadBox DokumentUploader doUpload", doUpload);
+    console.log("FileUploadBox DokumentUploader vedleggElement", vedleggElement);
+
     const handleFileSelect = async ({target: {files}}: ChangeEvent<HTMLInputElement>) => {
         if (!files?.length) return;
+        console.log("DokumentUploader handleFileSelect files", files);
 
         const file = files[0];
+        console.log("DokumentUploader handleFileSelect file", file);
         if (SUPPORTED_WITHOUT_CONVERSION.includes(file.type)) {
             setPreviewFile(file);
         } else {

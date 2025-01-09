@@ -31,17 +31,18 @@ export const ForhandsvisningVedleggModal = ({
     const [isFullscreen, setFullscreen] = useState<boolean>(false);
     const {t} = useTranslation();
     const isKortSoknad = useCurrentSoknadIsKort();
+    console.log("forhansvisningVedleggModal file", file);
 
     const {setValgtKategoriData} = useValgtKategoriContext();
     const [selectedCategory, setSelectedCategory] = useState<string>("");
-    console.log("ForhandsvisningVedleggModal selectedCategory", selectedCategory);
+    //console.log("ForhandsvisningVedleggModal selectedCategory", selectedCategory);
     //console.log("ForhandsvisningVedleggModal valgtKategoriData", valgtKategoriData);
 
     const handleAccept = () => {
         // Ensure `kort|annet` is set when no valid category is selected
         const categoryToSet =
             selectedCategory === "annet|annet" || selectedCategory === "" ? "annet|annet" : selectedCategory;
-        console.log("ForhandsvisningVedleggModal categoryToSet", categoryToSet);
+        //console.log("ForhandsvisningVedleggModal categoryToSet", categoryToSet);
         setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
         setSelectedCategory(""); // Reset after accept
         onAccept();

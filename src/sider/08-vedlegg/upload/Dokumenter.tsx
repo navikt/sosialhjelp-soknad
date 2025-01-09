@@ -14,6 +14,7 @@ export const Dokumenter = ({opplysning}: {opplysning: Opplysning}) => {
     const {t} = useTranslation();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
     const {dokumentBeskrivelse} = useDokumentasjonTekster(opplysning.type);
+    console.log("Dokumenter opplysning.type", opplysning.type);
     const {deleteDocument, documents, uploadDocument, error, isPending, currentUpload} = useVedlegg(opplysning.type);
 
     return (

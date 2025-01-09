@@ -82,18 +82,24 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
      */
     const uploadDocument = async (file: File) => {
         console.log("useVedlegg uploadDocument dokumentasjonType", dokumentasjonType);
+        console.log("useVedlegg uploadDocument file", file);
         setError(null);
 
         if (maxUploadSize != null && file.size > maxUploadSize) {
             setError(t(REST_FEIL.FOR_STOR, "", {maxUploadSize: humanizeFilesize(maxUploadSize)}));
+            console.log("useVedlegg uploadDocument inne i if");
 
             return Promise.reject(new Error("for stor"));
         }
 
         try {
+            console.log("useVedlegg uploadDocument try");
             console.log("useVedlegg try uploadDocument dokumentasjonType", dokumentasjonType);
             const data = new FormData();
+            console.log("useVedlegg uploadDocument data før", data);
+            //console.log("useVedlegg uploadDocument file", file);
             data.append("file", file);
+            console.log("useVedlegg uploadDocument data etter", data);
 
             const dokument = await axiosInstance<DokumentUpload>({
                 url: `/opplastetVedlegg/${behandlingsId}/${encodeURI(dokumentasjonType)}`,
@@ -105,14 +111,17 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
                     setUploadPercent(percentCompleted);
                 },
             });
+            console.log("useVedlegg uploadDocument dokument", dokument);
 
             setUploadPercent(null);
             dispatch({type: "insert", dokument});
             setValgtKategoriData({valgtKategorier: "annet|annet"});
             await logAmplitudeEvent("dokument lastet opp", {opplysningType: dokumentasjonType});
         } catch (e: any) {
+            console.log("useVedlegg uploadDocument catch");
             handleApiError(e);
         } finally {
+            console.log("useVedlegg uploadDocument finally");
             setUploadPercent(null);
         }
     };
