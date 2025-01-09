@@ -164,7 +164,7 @@ export const skjema = {
             transport: "Transport",
             fritidsaktiviteter: "Fritidsaktiviteter for barn",
             kortKategorier: {
-                kategoriValg: "Velg besrkivelse",
+                kategoriValg: "Velg beskrivelse",
                 barnebidrag: "Barnebidrag",
                 barnehage: "Barnehage",
                 barnehageSFO: "SFO/AKS",

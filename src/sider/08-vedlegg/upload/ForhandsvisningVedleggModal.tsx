@@ -112,28 +112,28 @@ export const ForhandsvisningVedleggModal = ({
                                 <option value="kort|barnebidrag">
                                     {t("begrunnelse.kategorier.kortKategorier.barnebidrag")}
                                 </option>
-                                <option value="kort|barnehage">
+                                <option value="faktura|barnehage">
                                     {t("begrunnelse.kategorier.kortKategorier.barnehage")}
                                 </option>
-                                <option value="kort|barnehageSFO">
+                                <option value="faktura|sfo">
                                     {t("begrunnelse.kategorier.kortKategorier.barnehageSFO")}
                                 </option>
-                                <option value="kort|bostotte">
+                                <option value="husbanken|vedtak">
                                     {t("begrunnelse.kategorier.kortKategorier.bostotte")}
                                 </option>
-                                <option value="kort|husleie">
+                                <option value="husleiekontrakt|husleiekontrakt">
                                     {t("begrunnelse.kategorier.kortKategorier.husleie")}
                                 </option>
-                                <option value="kort|kontooversikt">
+                                <option value="kontooversikt|annet">
                                     {t("begrunnelse.kategorier.kortKategorier.kontooversikt")}
                                 </option>
-                                <option value="kort|lonnslipp">
+                                <option value="lonnslipp|arbeid">
                                     {t("begrunnelse.kategorier.kortKategorier.lonnslipp")}
                                 </option>
-                                <option value="kort|stromOppvarming">
+                                <option value="faktura|strom">
                                     {t("begrunnelse.kategorier.kortKategorier.stromOppvarming")}
                                 </option>
-                                <option value="kort|stipendLan">
+                                <option value="student|vedtak">
                                     {t("begrunnelse.kategorier.kortKategorier.stipendLan")}
                                 </option>
                                 <option value="annet|annet">{t("begrunnelse.kategorier.kortKategorier.annet")}</option>

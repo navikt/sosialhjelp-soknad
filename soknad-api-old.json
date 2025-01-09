@@ -31,10 +31,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BoutgifterFrontend"}}}
@@ -72,10 +69,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -108,10 +102,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -151,10 +142,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -187,10 +175,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UtdanningFrontend"}}}
@@ -228,10 +213,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -264,10 +246,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -309,10 +288,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -345,10 +321,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -388,10 +361,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -429,10 +399,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontonummerFrontend"}}}
@@ -470,10 +437,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontonummerFrontend"}}}
@@ -509,10 +473,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AdresserFrontend"}}}
@@ -550,10 +511,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -593,10 +551,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/VedleggFrontends"}}}
@@ -634,10 +589,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -670,10 +622,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/VerdierFrontend"}}}
@@ -711,10 +660,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -747,10 +693,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -790,10 +733,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -826,10 +766,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudielanFrontend"}}}
@@ -867,10 +804,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudielanFrontend"}}}
@@ -906,10 +840,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -951,10 +882,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -992,10 +920,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FormueFrontend"}}}
@@ -1033,10 +958,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -1069,10 +991,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BostotteFrontend"}}}
@@ -1110,10 +1029,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -1146,10 +1062,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -1189,10 +1102,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -1225,10 +1135,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -1270,10 +1177,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -1306,10 +1210,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -1349,10 +1250,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -1390,10 +1288,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -1433,10 +1328,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -1469,10 +1361,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -1512,10 +1401,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -1564,10 +1450,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "Vedlegg konvertert til PDF",
                         "content": {"application/pdf": {"schema": {"type": "string", "format": "binary"}}}
@@ -1614,10 +1497,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -1651,10 +1531,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 },
                 "deprecated": true
@@ -1692,10 +1569,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -1731,10 +1605,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SendTilUrlFrontend"}}}
@@ -1773,10 +1644,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -1828,10 +1696,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DokumentUpload"}}}
@@ -1870,10 +1735,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -1911,10 +1773,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
             }
@@ -1947,10 +1806,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
             }
@@ -1983,10 +1839,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -2024,10 +1877,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Oppsummering"}}}
@@ -2063,10 +1913,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
             }
@@ -2099,10 +1946,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
             }
@@ -2135,10 +1979,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -2179,10 +2020,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -2228,10 +2066,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
             }
@@ -2268,10 +2103,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "Dokumentets innhold sendes til klienten",
                         "content": {"application/octet-stream": {"schema": {"type": "string", "format": "binary"}}}
@@ -2306,10 +2138,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/NedetidFrontend"}}}
@@ -2344,10 +2173,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "string"}}}}
                 }
             }
@@ -2379,10 +2205,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -2421,10 +2244,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SelftestResult"}}}
@@ -2459,10 +2279,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK", "content": {"text/plain": {"schema": {"type": "string"}}}}
                 }
             }
@@ -2494,10 +2311,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SessionResponse"}}}
@@ -2533,10 +2347,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -2575,10 +2386,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -2617,10 +2425,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -2659,10 +2464,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {
                         "description": "OK",
                         "content": {
@@ -2705,10 +2507,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -2744,10 +2543,7 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
+                    "401": {"description": "Unauthorized", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "200": {"description": "OK"}
                 }
             }
@@ -2791,11 +2587,6 @@
                     "propertyName": "responseType",
                     "mapping": {"SoknadApiError": "#/components/schemas/SoknadApiError"}
                 }
-            },
-            "UnauthorizedMelding": {
-                "required": ["loginUrl"],
-                "type": "object",
-                "properties": {"loginUrl": {"type": "string", "format": "uri"}}
             },
             "BoutgifterFrontend": {
                 "required": [
