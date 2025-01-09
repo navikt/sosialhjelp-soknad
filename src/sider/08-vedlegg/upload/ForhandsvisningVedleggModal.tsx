@@ -48,7 +48,7 @@ export const ForhandsvisningVedleggModal = ({
     };
 
     const handleClose = () => {
-        setValgtKategoriData({valgtKategorier: "kort|annet"}); // Reset context
+        setValgtKategoriData({valgtKategorier: "annet|annet"}); // Reset context
         setSelectedCategory(""); // Reset local state
         onClose();
     };
