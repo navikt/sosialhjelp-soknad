@@ -39,7 +39,8 @@ export const ForhandsvisningVedleggModal = ({
 
     const handleAccept = () => {
         // Ensure `kort|annet` is set when no valid category is selected
-        const categoryToSet = selectedCategory || "annet|annet";
+        const categoryToSet =
+            selectedCategory === "annet|annet" || selectedCategory === "" ? "annet|annet" : selectedCategory;
         console.log("ForhandsvisningVedleggModal categoryToSet", categoryToSet);
         setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
         setSelectedCategory(""); // Reset after accept
@@ -99,17 +100,14 @@ export const ForhandsvisningVedleggModal = ({
                                 onChange={(event: any) => {
                                     const newCategory = event.target.value;
 
-                                    // Map "annet|annet" (placeholder) to "kort|annet" when no specific category is selected
-                                    const categoryToSet = newCategory;
-
                                     setSelectedCategory(newCategory);
-                                    setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
+                                    setValgtKategoriData({valgtKategorier: newCategory as VedleggFrontendType});
                                 }}
                             >
                                 <option value="annet|annet">
                                     {t("begrunnelse.kategorier.kortKategorier.kategoriValg")}
                                 </option>
-                                <option value="kort|barnebidrag">
+                                <option value="barnebidrag|betaler">
                                     {t("begrunnelse.kategorier.kortKategorier.barnebidrag")}
                                 </option>
                                 <option value="faktura|barnehage">
