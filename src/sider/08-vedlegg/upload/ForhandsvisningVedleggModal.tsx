@@ -31,18 +31,13 @@ export const ForhandsvisningVedleggModal = ({
     const [isFullscreen, setFullscreen] = useState<boolean>(false);
     const {t} = useTranslation();
     const isKortSoknad = useCurrentSoknadIsKort();
-    console.log("forhansvisningVedleggModal file", file);
 
     const {setValgtKategoriData} = useValgtKategoriContext();
     const [selectedCategory, setSelectedCategory] = useState<string>("");
-    //console.log("ForhandsvisningVedleggModal selectedCategory", selectedCategory);
-    //console.log("ForhandsvisningVedleggModal valgtKategoriData", valgtKategoriData);
 
     const handleAccept = () => {
-        // Ensure `kort|annet` is set when no valid category is selected
-        const categoryToSet =
-            selectedCategory === "annet|annet" || selectedCategory === "" ? "annet|annet" : selectedCategory;
-        //console.log("ForhandsvisningVedleggModal categoryToSet", categoryToSet);
+        // Ensure `annet|annet` is set when no valid category is selected
+        const categoryToSet = selectedCategory || "annet|annet";
         setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
         setSelectedCategory(""); // Reset after accept
         onAccept();
@@ -101,11 +96,12 @@ export const ForhandsvisningVedleggModal = ({
                                 onChange={(event: any) => {
                                     const newCategory = event.target.value;
 
+                                    const categoryToSet = newCategory === "kort|annet" ? "annet|annet" : newCategory;
                                     setSelectedCategory(newCategory);
-                                    setValgtKategoriData({valgtKategorier: newCategory as VedleggFrontendType});
+                                    setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
                                 }}
                             >
-                                <option value="annet|annet">
+                                <option value="kort|annet">
                                     {t("begrunnelse.kategorier.kortKategorier.kategoriValg")}
                                 </option>
                                 <option value="barnebidrag|barnebidrag">
@@ -139,7 +135,7 @@ export const ForhandsvisningVedleggModal = ({
                             </Select>
                         </div>
                         <div className={"mt-8"}>
-                            {(selectedCategory === "annet|annet" || selectedCategory === "") && (
+                            {(selectedCategory === "kort|annet" || selectedCategory === "") && (
                                 <Alert variant="info" className={"justify-center"}>
                                     {t("vedlegg.forhandsvisning.kategori")}
                                 </Alert>
