@@ -17,13 +17,16 @@ spec:
     - {{url}}{{/each}}
   {{/if}}
   accessPolicy:
+{{#if wonderwallInstance}}
     inbound:
       rules:
-        - application: wonderwall-soknad
+        - application: {{ wonderwallInstance }}
+{{/if}}
     outbound:
       rules:
+        {{#each outboundRules as |rule|}}
+        - application: {{rule}}{{/each}}
         - application: sosialhjelp-driftsmeldinger
-        - application: sosialhjelp-soknad-api
         - application: nav-dekoratoren
           namespace: personbruker
 {{#if outboundExternalHosts}}
