@@ -1,4 +1,4 @@
-export const DigisosEnvironments = ["localhost", "dev-sbs", "mock", "prod-sbs", "prod", "preprod"] as const;
+export const DigisosEnvironments = ["localhost", "dev-sbs", "mock", "prod-sbs", "prod", "preprod", "dev"] as const;
 export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 
 type FeatureFlags = {
@@ -193,11 +193,44 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         dekorator: {
             env: "dev",
             serviceDiscovery: true,
-            logoutRedirectUrl: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/logout",
+            logoutRedirectUrl: "https://www.ansatt.dev.nav.no/sosialhjelp/soknad/oauth2/logout",
         },
 
         proxy: {
             hostname: "sosialhjelp-soknad-api.teamdigisos",
+            basePath: "/sosialhjelp/soknad-api",
+            https: false,
+        },
+
+        showDevPanel: false,
+        logLocally: false,
+        withCredentials: false,
+        driftsmeldingUrl: "http://sosialhjelp-driftsmeldinger/sosialhjelp/driftsmeldinger/api",
+        baseURL: "https://www.ansatt.dev.nav.no/sosialhjelp/soknad/soknad-api/",
+        // NB: Denne ble satt til digisos.ekstern, fordi da denne ble skrevet var det ikke innsyn i preprod enda.
+        innsynURL: "https://www.ekstern.dev.nav.no/sosialhjelp/innsyn",
+        minSideURL: "https://www.ansatt.dev.nav.no/minside/",
+        logoutURL: "https://loginservice.nav.no/slo",
+        dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
+        faro: {
+            url: "https://telemetry.ekstern.dev.nav.no/collect",
+        },
+    },
+    dev: {
+        featureFlags: {
+            nyOppsummering: false,
+            oppsummeringNavEnhet: false,
+            soknadstypeValg: false,
+        },
+
+        dekorator: {
+            env: "dev",
+            serviceDiscovery: true,
+            logoutRedirectUrl: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/logout",
+        },
+
+        proxy: {
+            hostname: "sosialhjelp-soknad-api-dev.teamdigisos",
             basePath: "/sosialhjelp/soknad-api",
             https: false,
         },
