@@ -17,6 +17,8 @@ jobs:
             cluster: dev-gcp
           - environment: mock
             cluster: dev-gcp
+          - environment: dev
+            cluster: dev-gcp
 
     runs-on: ubuntu-latest
     permissions:
