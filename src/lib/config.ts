@@ -193,7 +193,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         dekorator: {
             env: "dev",
             serviceDiscovery: true,
-            logoutRedirectUrl: "https://www.ansatt.dev.nav.no/sosialhjelp/soknad/oauth2/logout",
+            logoutRedirectUrl: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/logout",
         },
 
         proxy: {
@@ -206,7 +206,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         logLocally: false,
         withCredentials: false,
         driftsmeldingUrl: "http://sosialhjelp-driftsmeldinger/sosialhjelp/driftsmeldinger/api",
-        baseURL: "https://www.ansatt.dev.nav.no/sosialhjelp/soknad/soknad-api/",
+        baseURL: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/soknad-api/",
         // NB: Denne ble satt til digisos.ekstern, fordi da denne ble skrevet var det ikke innsyn i preprod enda.
         innsynURL: "https://www.ekstern.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.ansatt.dev.nav.no/minside/",
@@ -226,7 +226,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         dekorator: {
             env: "dev",
             serviceDiscovery: true,
-            logoutRedirectUrl: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/logout",
+            logoutRedirectUrl: "https://www.ansatt.dev.nav.no/sosialhjelp/soknad/oauth2/logout",
         },
 
         proxy: {
@@ -235,13 +235,13 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             https: false,
         },
 
-        showDevPanel: false,
+        showDevPanel: true,
         logLocally: false,
         withCredentials: false,
         driftsmeldingUrl: "http://sosialhjelp-driftsmeldinger/sosialhjelp/driftsmeldinger/api",
-        baseURL: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/soknad-api/",
+        baseURL: "https://www.ansatt.dev.nav.no/sosialhjelp/soknad/soknad-api/",
         // NB: Denne ble satt til digisos.ekstern, fordi da denne ble skrevet var det ikke innsyn i preprod enda.
-        innsynURL: "https://www.ekstern.dev.nav.no/sosialhjelp/innsyn",
+        innsynURL: "https://www.ansatt.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.ansatt.dev.nav.no/minside/",
         logoutURL: "https://loginservice.nav.no/slo",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
