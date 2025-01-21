@@ -13,7 +13,7 @@ const loginUrl = `${dekoratorLoginBaseUrl}/oauth2/login`;
 const useDecoratorLogin = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const isEnabled = ["prod", "preprod", "dev"].includes(process.env.NEXT_PUBLIC_DIGISOS_ENV!);
+    const isEnabled = ["prod", "preprod", "dev", "prod-intern"].includes(process.env.NEXT_PUBLIC_DIGISOS_ENV!);
     const redirectUrl = `${loginUrl}?redirect=${window.location.href}`;
 
     useEffect(() => {
