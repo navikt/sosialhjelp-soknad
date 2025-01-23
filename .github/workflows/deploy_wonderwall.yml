@@ -29,7 +29,7 @@ jobs:
             echo "CLUSTER=dev-gcp" >> $GITHUB_ENV
           fi
 
-      - name: "Deploy to ${{ inputs.env }}"
+      - name: "Deploy ${{ inputs.env }} to ${{ env.CLUSTER }}"
         uses: nais/deploy/actions/deploy@v2
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
