@@ -13,7 +13,7 @@ export const EktefellePersonaliaBruker = () => {
     const {expectOK} = useAlgebraic(useHentSivilstatus(useBehandlingsId()));
 
     // FIXME: Handle the reverse case of this if clause
-    return expectOK(({ektefelle, borSammenMed}) =>
+    return expectOK(({ektefelle, erFolkeregistrertSammen}) =>
         ektefelle?.navn ? (
             <>
                 <BodyShort className={"pb-3"}>{t("system.familie.sivilstatus.label")}</BodyShort>
@@ -26,7 +26,7 @@ export const EktefellePersonaliaBruker = () => {
                     </SysteminfoItem>
                 )}
                 <SysteminfoItem as="div" label={t(`familie.sivilstatus.gift.borsammen.sporsmal`)}>
-                    {borSammenMed ? t("avbryt.ja") : t("avbryt.nei")}
+                    {erFolkeregistrertSammen ? t("avbryt.ja") : t("avbryt.nei")}
                 </SysteminfoItem>
             </>
         ) : null
