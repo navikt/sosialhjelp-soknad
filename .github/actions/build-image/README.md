@@ -15,7 +15,7 @@ bygge et docker image.
 
 ```yaml
 - name: "Build Docker Image"
-  uses: navikt/sosialhjelp-soknad/.github/actions/build-image@master
+  uses: navikt/sosialhjelp-soknad/.github/actions/build-image@main
   with:
       prefix: ${{ env.NEXT_PUBLIC_DIGISOS_ENV }}
 ```

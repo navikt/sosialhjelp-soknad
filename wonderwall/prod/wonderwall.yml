@@ -34,7 +34,7 @@ spec:
     initialDelay: 20
     path: /sosialhjelp/soknad/oauth2/ping
   replicas:
-    min: 1
+    min: 2
     max: 3
   envFrom:
     - secret: wonderwall-redis
