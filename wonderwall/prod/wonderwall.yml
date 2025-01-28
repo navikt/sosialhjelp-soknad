@@ -20,10 +20,9 @@ spec:
         - application: sosialhjelp-soknad
   resources:
     limits:
-      cpu: "2"
       memory: 256Mi
     requests:
-      cpu: "20m"
+      cpu: 20m
       memory: 50Mi
   redis:
     - access: read
@@ -36,7 +35,7 @@ spec:
     path: /sosialhjelp/soknad/oauth2/ping
   replicas:
     min: 2
-    max: 2
+    max: 3
   envFrom:
     - secret: wonderwall-redis
   env:
