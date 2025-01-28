@@ -5,7 +5,7 @@ bygge et docker image.
 
 ## Inputs
 
--   `prefix`: sosialhjelp-soknad lager tags basert på config. (prod-sbs, dev-sbs, mock)
+-   `prefix`: sosialhjelp-soknad lager tags basert på config. (prod, dev, mock)
 
 ## Outputs
 
