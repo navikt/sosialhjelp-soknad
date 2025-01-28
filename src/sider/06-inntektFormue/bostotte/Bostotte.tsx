@@ -49,8 +49,7 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
             {bekreftelse && (
                 <>
                     <YesNoInput
-                        name={"skattbar-inntekt-samtykke"}
-                        key={"bostotte-samtykke"}
+                        name={"bostotte-samtykke"}
                         legend={t("inntekt.bostotte.gi_samtykke.overskrift")}
                         description={!hideSamtykkeDescription && t("inntekt.bostotte.gi_samtykke.tekst")}
                         onChange={setSamtykke}
