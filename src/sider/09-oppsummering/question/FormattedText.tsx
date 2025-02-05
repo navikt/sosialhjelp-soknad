@@ -1,4 +1,3 @@
-import {BodyShort} from "@navikt/ds-react";
 import {formatTidspunkt} from "../../../lib/utils";
 import {SvarType} from "../../../generated/model";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate";
@@ -39,9 +38,9 @@ export const FormattedText = ({
     const {tBackend} = useBackendTranslation();
 
     return (
-        <BodyShort>
+        <div>
             {labelBackendKey && <span className={"pr-1 after:content-[':']"}>{tBackend(labelBackendKey)}</span>}
             <FormatAsType type={type}>{value}</FormatAsType>
-        </BodyShort>
+        </div>
     );
 };

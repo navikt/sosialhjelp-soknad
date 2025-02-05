@@ -1,46 +1,54 @@
+import {useGetBostotte, useUpdateBostotte} from "../../../generated/new/bostotte-controller/bostotte-controller";
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {updateBostotte, updateSamtykke1, useHentBostotte} from "../../../generated/bostotte-ressurs/bostotte-ressurs";
 import {useQueryClient} from "@tanstack/react-query";
 
-export const useInntekterBostotte = (skipFirstStep?: boolean) => {
+export const useInntekterBostotte = () => {
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
-    const {data: bostotte, queryKey} = useHentBostotte(behandlingsId);
+    const {data: bostotte, queryKey, isPending} = useGetBostotte(behandlingsId);
+    const {
+        mutate,
+        isPending: isUpdatePending,
+        variables,
+    } = useUpdateBostotte({
+        mutation: {
+            onSettled: () => queryClient.invalidateQueries({queryKey}),
+        },
+    });
 
-    const isLoading = false;
     const setSamtykke = async (nyttHarSamtykke: boolean) => {
         if (!bostotte) return;
         // FIXME: Replace with contentful PUT
-        await updateSamtykke1(behandlingsId, nyttHarSamtykke);
+        mutate({soknadId: behandlingsId, data: {hasSamtykke: nyttHarSamtykke}});
         await queryClient.invalidateQueries({queryKey});
     };
 
     const setBekreftelse = async (harInntektHusbanken: boolean) => {
-        if (!bostotte) return;
-
-        const samtykke = skipFirstStep ? undefined : harInntektHusbanken ? bostotte.samtykke : false;
-        const oppdatert = {
-            ...bostotte,
-            bekreftelse: harInntektHusbanken,
-            samtykke,
-        };
-
-        if (!harInntektHusbanken) await updateSamtykke1(behandlingsId, false);
-
-        await updateBostotte(behandlingsId, oppdatert);
-        await queryClient.invalidateQueries({queryKey});
+        mutate({soknadId: behandlingsId, data: {hasBostotte: harInntektHusbanken}});
     };
-    if (skipFirstStep) {
-        setBekreftelse(true);
-    }
 
-    const bekreftelse = bostotte?.bekreftelse;
+    const setBostotte = async (harBekreftelse: boolean, harSamtykke?: boolean) => {
+        mutate({soknadId: behandlingsId, data: {hasBostotte: harBekreftelse, hasSamtykke: harSamtykke}});
+    };
+
+    const bekreftelse = bostotte?.hasBostotte;
 
     // Tidspunkt for mottatt samtykke ellers false
     const tidSamtykkeMottatt =
-        !!bostotte?.samtykke && !!bostotte?.samtykkeTidspunkt && new Date(bostotte.samtykkeTidspunkt);
+        !!bostotte?.hasSamtykke && !!bostotte?.samtykkeTidspunkt && new Date(bostotte.samtykkeTidspunkt);
 
-    const dataHentet = !!bostotte?.samtykke; //&& !bostotte?.stotteFraHusbankenFeilet;
+    const dataHentet = !!bostotte?.hasSamtykke; //&& !bostotte?.stotteFraHusbankenFeilet;
 
-    return {bostotte, bekreftelse, tidSamtykkeMottatt, dataHentet, setSamtykke, setBekreftelse, isLoading};
+    return {
+        bostotte,
+        bekreftelse,
+        tidSamtykkeMottatt,
+        dataHentet,
+        setSamtykke,
+        setBekreftelse,
+        isUpdatePending,
+        isQueryPending: isPending,
+        setBostotte,
+        variables,
+    };
 };
