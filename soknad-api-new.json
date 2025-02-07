@@ -1679,7 +1679,13 @@
                 "tags": ["soknad-lifecycle-controller"],
                 "operationId": "sendSoknad",
                 "parameters": [
-                    {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
+                    {
+                        "name": "soknadId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {"type": "string", "format": "uuid"}
+                    },
+                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
                     "400": {
@@ -2402,7 +2408,19 @@
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
-                    "group": {"type": "string"},
+                    "group": {
+                        "type": "string",
+                        "enum": [
+                            "andre utgifter",
+                            "arbeid",
+                            "bosituasjon",
+                            "familie",
+                            "generelle vedlegg",
+                            "inntekt",
+                            "statsborgerskap",
+                            "utgifter"
+                        ]
+                    },
                     "dokumentasjonForventet": {"type": "boolean"},
                     "type": {"type": "string"}
                 },
@@ -2445,7 +2463,19 @@
                             {"$ref": "#/components/schemas/UtgiftType"}
                         ]
                     },
-                    "gruppe": {"type": "string"},
+                    "gruppe": {
+                        "type": "string",
+                        "enum": [
+                            "andre utgifter",
+                            "arbeid",
+                            "bosituasjon",
+                            "familie",
+                            "generelle vedlegg",
+                            "inntekt",
+                            "statsborgerskap",
+                            "utgifter"
+                        ]
+                    },
                     "detaljer": {
                         "type": "array",
                         "items": {
@@ -2716,15 +2746,17 @@
                 }
             },
             "Navn": {
-                "required": ["etternavn", "fornavn"],
+                "required": ["etternavn", "fornavn", "fulltNavn"],
                 "type": "object",
                 "properties": {
                     "fornavn": {"type": "string"},
                     "mellomnavn": {"type": "string"},
-                    "etternavn": {"type": "string"}
+                    "etternavn": {"type": "string"},
+                    "fulltNavn": {"type": "string"}
                 }
             },
             "SivilstandInput": {
+                "required": ["sivilstatus"],
                 "type": "object",
                 "properties": {
                     "sivilstatus": {
@@ -2742,7 +2774,8 @@
                     "fodselsdato": {"type": "string"},
                     "harDiskresjonskode": {"type": "boolean"},
                     "folkeregistrertMedEktefelle": {"type": "boolean"},
-                    "borSammen": {"type": "boolean"}
+                    "borSammen": {"type": "boolean"},
+                    "kildeErSystem": {"type": "boolean"}
                 }
             },
             "SivilstandDto": {

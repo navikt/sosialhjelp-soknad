@@ -1878,47 +1878,6 @@
                 }
             }
         },
-        "/dittnav/pabegynte/lest": {
-            "post": {
-                "tags": ["ditt-nav-metadata-ressurs"],
-                "operationId": "settLestForPabegyntSoknad",
-                "requestBody": {
-                    "content": {
-                        "application/json": {"schema": {"$ref": "#/components/schemas/MarkerPabegyntSoknadSomLestDto"}}
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
-                }
-            }
-        },
         "/soknader/{behandlingsId}/xsrfCookie": {
             "get": {
                 "tags": ["soknad-ressurs"],
@@ -2584,48 +2543,6 @@
                         "content": {
                             "application/json": {
                                 "schema": {"type": "object", "additionalProperties": {"type": "boolean"}}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/dittnav/pabegynte/inaktive": {
-            "get": {
-                "tags": ["ditt-nav-metadata-ressurs"],
-                "operationId": "hentPabegynteSoknaderForBrukerSomErLest",
-                "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/PabegyntSoknadDto"}}
                             }
                         }
                     }
@@ -3339,11 +3256,6 @@
                     "url": {"type": "string"},
                     "userAgent": {"type": "string"}
                 }
-            },
-            "MarkerPabegyntSoknadSomLestDto": {
-                "required": ["eventId", "grupperingsId"],
-                "type": "object",
-                "properties": {"eventId": {"type": "string"}, "grupperingsId": {"type": "string"}}
             },
             "BasisPersonaliaFrontend": {
                 "type": "object",
