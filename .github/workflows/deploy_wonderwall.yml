@@ -1,0 +1,41 @@
+name: "Deploy Wonderwall for App"
+run-name: "Deploy Wonderwall for '${{ github.event.inputs.app-name }}'"
+
+on:
+  workflow_dispatch:
+    inputs:
+      app-name:
+        description: 'Wonderwall prod, preprod eller dev?'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - 'dev'
+          - 'preprod'
+          - 'prod'
+
+jobs:
+  deploy-wonderwall:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Set cluster based on env"
+        run: |
+          if [ "${{ inputs.app-name }}" == "prod" ]; then
+            echo "CLUSTER=prod-gcp" >> $GITHUB_ENV
+          else
+            echo "CLUSTER=dev-gcp" >> $GITHUB_ENV
+          fi
+
+      - name: "Deploy ${{ inputs.app-name }} to ${{ env.CLUSTER }}"
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          RESOURCE: wonderwall/${{ inputs.app-name }}/wonderwall.yml
+          CLUSTER: ${{ env.CLUSTER }}
+          REF: ${{ github.sha }}
+          PRINT_PAYLOAD: true

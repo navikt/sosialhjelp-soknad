@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import {useInntekterBostotte} from "../../../lib/hooks/data/useInntekterBostotte";
 import {FaroErrorBoundary} from "@grafana/faro-react";
 import {BostotteDataVisning} from "./BostotteDataVisning";
-import {BaseBooleanInputProps, BooleanInput} from "../../../lib/components/form/BooleanInput.tsx";
+import {YesNoInput} from "../../../lib/components/form/YesNoInput.tsx";
 
 const BostotteData = () => {
     const {t} = useTranslation("skjema");
@@ -52,11 +52,10 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
                         name={"bostotte-samtykke"}
                         legend={t("inntekt.bostotte.gi_samtykke.overskrift")}
                         description={!hideSamtykkeDescription && t("inntekt.bostotte.gi_samtykke.tekst")}
-                        onChange={(checked) => {
-                            setSamtykke(checked);
-                        }}
-                        defaultValue={bostotte?.samtykke}
-                        value={dataHentet}
+                        onChange={setSamtykke}
+                        value={bostotte?.samtykke}
+                        trueLabel={t("inntekt.bostotte.gi_samtykke.ja")}
+                        falseLabel={t("inntekt.bostotte.gi_samtykke.nei")}
                     />
                     {dataHentet && <BostotteData />}
                 </>
@@ -64,14 +63,3 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
         </div>
     );
 };
-
-const YesNoInput = React.forwardRef((baseprops: BaseBooleanInputProps, ref: React.ForwardedRef<HTMLInputElement>) => {
-    const {t} = useTranslation("skjema");
-    return (
-        <BooleanInput
-            ref={ref}
-            {...baseprops}
-            radioLabels={[t("inntekt.bostotte.gi_samtykke.ja"), t("inntekt.bostotte.gi_samtykke.nei")]}
-        />
-    );
-});

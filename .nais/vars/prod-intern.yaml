@@ -1,0 +1,17 @@
+appName: sosialhjelp-soknad-intern
+idportenEnabled: false
+ingresses: []
+outboundExternalHosts: []
+livenessPath: /sosialhjelp/soknad/internal/isAlive
+env:
+  LOGIN_SESSION_API_URL: "https://www.ansatt.nav.no/sosialhjelp/soknad/oauth2/session"
+limits:
+  memory: 800Mi
+requests:
+  cpu: 500m
+  memory: 400Mi
+replicas:
+  min: 2
+  max: 4
+wonderwallInstance: wonderwall-soknad-intern
+outboundRules: [sosialhjelp-soknad-api]

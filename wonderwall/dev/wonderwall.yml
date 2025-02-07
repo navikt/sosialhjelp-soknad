@@ -1,7 +1,7 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: wonderwall-soknad
+  name: wonderwall-soknad-dev
   namespace: teamdigisos
   labels:
     team: teamdigisos
@@ -11,18 +11,19 @@ spec:
   image: europe-north1-docker.pkg.dev/nais-io/nais/images/wonderwall:latest
   port: 8080
   ingresses:
-    - "https://www.nav.no/sosialhjelp/soknad"
+    - "https://www.ansatt.dev.nav.no/sosialhjelp/soknad"
   accessPolicy:
     outbound:
       external:
-        - host: www.nav.no
+        - host: www.ekstern.dev.nav.no
       rules:
-        - application: sosialhjelp-soknad
+        - application: sosialhjelp-soknad-dev
   resources:
     limits:
+      cpu: "2"
       memory: 256Mi
     requests:
-      cpu: 20m
+      cpu: "20m"
       memory: 50Mi
   redis:
     - access: read
@@ -34,8 +35,8 @@ spec:
     initialDelay: 20
     path: /sosialhjelp/soknad/oauth2/ping
   replicas:
-    min: 2
-    max: 3
+    min: 1
+    max: 2
   envFrom:
     - secret: wonderwall-redis
   env:
@@ -46,9 +47,9 @@ spec:
     - name: WONDERWALL_AUTO_LOGIN
       value: "true"
     - name: WONDERWALL_INGRESS
-      value: https://www.nav.no/sosialhjelp/soknad
+      value: https://www.ansatt.dev.nav.no/sosialhjelp/soknad
     - name: WONDERWALL_UPSTREAM_HOST
-      value: sosialhjelp-soknad:80
+      value: sosialhjelp-soknad-dev:80
     - name: WONDERWALL_BIND_ADDRESS
       value: 0.0.0.0:8080
     - name: WONDERWALL_METRICS_BIND_ADDRESS
@@ -62,14 +63,12 @@ spec:
     - name: WONDERWALL_SSO_SESSION_COOKIE_NAME
       value: no.sosialhjelp.wonderwall.session
     - name: WONDERWALL_SSO_SERVER_URL
-      value: https://www.nav.no/sosialhjelp/wonderwall
+      value: https://www.ekstern.dev.nav.no/sosialhjelp/wonderwall
     - name: WONDERWALL_REDIS_URI
       value: $(REDIS_URI_WONDERWALL)
     - name: WONDERWALL_REDIS_USERNAME
       value: $(REDIS_USERNAME_WONDERWALL)
     - name: WONDERWALL_REDIS_PASSWORD
       value: $(REDIS_PASSWORD_WONDERWALL)
-    - name: WONDERWALL_SESSION_MAX_LIFETIME
-      value: 59m
     - name: WONDERWALL_SESSION_REFRESH_AUTO
       value: "false"

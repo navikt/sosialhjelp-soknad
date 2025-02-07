@@ -1,6 +1,4 @@
-![](https://github.com/navikt/sosialhjelp-soknad/workflows/Build%20image/badge.svg?branch=master)
-![](https://github.com/navikt/sosialhjelp-soknad/workflows/Deploy%20til%20dev/badge.svg?)
-![](https://github.com/navikt/sosialhjelp-soknad/workflows/Deploy%20til%20prod-sbs/badge.svg?)
+![](https://github.com/navikt/sosialhjelp-soknad/workflows/Build%20and%20deploy%20to%20prod-gcp/badge.svg?)
 
 # Søknadsosialhjelp
 
@@ -17,7 +15,7 @@ NEXT_PUBLIC_DIGISOS_ENV="localhost"
 Miljøvariabelen NEXT_PUBLIC_DIGISOS_ENV velger konfigurasjonsprofiler.
 
 Gyldige profiler er "localhost" til lokal utvikling, "mock" til mock-ekstern,
-"dev-sbs" til dev og "prod-sbs" til prod.
+"dev" til dev og "prod" til prod.
 
 Konfigurasjonsprofiler og feature-toggles utledes fra disse modi i src/lib/config.ts.
 
