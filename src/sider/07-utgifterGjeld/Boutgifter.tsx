@@ -22,8 +22,8 @@ export const Boutgifter = () => {
         );
         const leieBosituasjon = bosituasjon?.botype === "leier" || bosituasjon?.botype === "kommunal";
 
-        const bostotteIkkeBesvart = !bostotte?.bekreftelse && !bostotte?.samtykke;
-        const bostotteBesvartJaDeretterNei = bostotte?.bekreftelse && !bostotte?.samtykke;
+        const bostotteIkkeBesvart = !bostotte?.hasBostotte && !bostotte?.hasSamtykke;
+        const bostotteBesvartJaDeretterNei = bostotte?.hasBostotte && !bostotte?.hasSamtykke;
 
         const harUtgiftHusleie = Object.values(filteredBoutgifter).some((value) => value === true);
 

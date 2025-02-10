@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import {useInntekterBostotte} from "../../../lib/hooks/data/useInntekterBostotte";
 import {FaroErrorBoundary} from "@grafana/faro-react";
 import {BostotteDataVisning} from "./BostotteDataVisning";
-import {BaseBooleanInputProps, BooleanInput} from "../../../lib/components/form/BooleanInput.tsx";
+import {YesNoInput} from "../../../lib/components/form/YesNoInput.tsx";
 
 const BostotteData = () => {
     const {t} = useTranslation("skjema");
@@ -27,7 +27,8 @@ interface Props {
 
 export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: Props) => {
     const {t} = useTranslation("skjema");
-    const {bekreftelse, dataHentet, bostotte, setBekreftelse, setSamtykke} = useInntekterBostotte(skipFirstStep);
+    const {bekreftelse, dataHentet, bostotte, setBekreftelse, setSamtykke, setBostotte, variables, isUpdatePending} =
+        useInntekterBostotte();
 
     return (
         <div className={"space-y-4"}>
@@ -40,23 +41,28 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
                 <YesNoInput
                     name={"bostotte-bekreftelse"}
                     legend={t("inntekt.bostotte.sporsmal.sporsmal")}
-                    value={bekreftelse}
+                    value={isUpdatePending ? variables?.data.hasBostotte : bekreftelse}
                     onChange={(checked) => setBekreftelse(checked)}
                     trueLabel={t("avbryt.ja")}
                     falseLabel={t("avbryt.nei")}
                 />
             )}
-            {bekreftelse && (
+            {(bekreftelse || skipFirstStep) && (
                 <>
                     <YesNoInput
                         name={"bostotte-samtykke"}
                         legend={t("inntekt.bostotte.gi_samtykke.overskrift")}
                         description={!hideSamtykkeDescription && t("inntekt.bostotte.gi_samtykke.tekst")}
-                        onChange={(checked) => {
-                            setSamtykke(checked);
+                        onChange={(value) => {
+                            if (skipFirstStep) {
+                                setBostotte(true, value);
+                            } else {
+                                setSamtykke(value);
+                            }
                         }}
-                        defaultValue={bostotte?.samtykke}
-                        value={dataHentet}
+                        value={isUpdatePending ? variables?.data.hasSamtykke : bostotte?.hasSamtykke}
+                        trueLabel={t("inntekt.bostotte.gi_samtykke.ja")}
+                        falseLabel={t("inntekt.bostotte.gi_samtykke.nei")}
                     />
                     {dataHentet && <BostotteData />}
                 </>
@@ -64,14 +70,3 @@ export const Bostotte = ({hideHeading, skipFirstStep, hideSamtykkeDescription}: 
         </div>
     );
 };
-
-const YesNoInput = React.forwardRef((baseprops: BaseBooleanInputProps, ref: React.ForwardedRef<HTMLInputElement>) => {
-    const {t} = useTranslation("skjema");
-    return (
-        <BooleanInput
-            ref={ref}
-            {...baseprops}
-            radioLabels={[t("inntekt.bostotte.gi_samtykke.ja"), t("inntekt.bostotte.gi_samtykke.nei")]}
-        />
-    );
-});

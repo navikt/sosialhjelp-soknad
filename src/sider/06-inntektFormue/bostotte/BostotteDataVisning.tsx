@@ -1,13 +1,13 @@
-import {BostotteFrontend} from "../../../generated/model";
 import {useTranslation} from "react-i18next";
 import {HusbankenUtbetalinger} from "./HusbankenUtbetalinger";
 import {Heading, Link} from "@navikt/ds-react";
 import {HusbankenSaker, MonkeypatchedJsonBostotteSak} from "./HusbankenSaker";
 import * as React from "react";
+import {BostotteDto} from "../../../generated/new/model";
 
-export const BostotteDataVisning = ({bostotte}: {bostotte: BostotteFrontend}) => {
+export const BostotteDataVisning = ({bostotte}: {bostotte: BostotteDto}) => {
     const {t} = useTranslation("skjema");
-    if (bostotte.samtykkeTidspunkt && bostotte.stotteFraHusbankenFeilet) throw new Error("Feil ved nedlasting av data");
+    if (bostotte.samtykkeTidspunkt && bostotte.fetchHusbankenFeilet) throw new Error("Feil ved nedlasting av data");
 
     return (
         <div className={"bg-lightblue-50 border-l-[var(--a-surface-info)] p-4 space-y-4 rounded-md"}>

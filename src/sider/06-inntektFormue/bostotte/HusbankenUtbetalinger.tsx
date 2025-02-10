@@ -3,18 +3,18 @@ import {BodyShort, Table} from "@navikt/ds-react";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate";
 import {LocalizedCurrency} from "../../../lib/components/LocalizedCurrency";
 import * as React from "react";
-import {JsonOkonomiOpplysningUtbetaling} from "../../../generated/model";
+import {UtbetalingBostotteDto, UtbetalingBostotteDtoMottaker} from "../../../generated/new/model";
 
 // FIXME: Should not initialize with empty list; empty list should be returned from API
-export const HusbankenUtbetalinger = ({utbetalinger}: {utbetalinger?: JsonOkonomiOpplysningUtbetaling[]}) => {
+export const HusbankenUtbetalinger = ({utbetalinger}: {utbetalinger?: UtbetalingBostotteDto[]}) => {
     const {t} = useTranslation("skjema");
 
     if (!utbetalinger) return null;
     if (!utbetalinger.length) return <BodyShort>{t("inntekt.bostotte.husbanken.ingenutbetalingerfunnet")}</BodyShort>;
 
-    const getMottakerText = (mottaker: JsonOkonomiOpplysningUtbetaling["mottaker"]) => {
-        if (mottaker === "Husstand") return "inntekt.bostotte.husbanken.mottaker.husstand";
-        if (mottaker === "Kommune") return "inntekt.bostotte.husbanken.mottaker.kommune";
+    const getMottakerText = (mottaker: UtbetalingBostotteDto["mottaker"]) => {
+        if (mottaker === UtbetalingBostotteDtoMottaker.HUSSTAND) return "inntekt.bostotte.husbanken.mottaker.husstand";
+        if (mottaker === UtbetalingBostotteDtoMottaker.KOMMUNE) return "inntekt.bostotte.husbanken.mottaker.kommune";
         throw new Error(`Ukjent mottaker: ${mottaker}`);
     };
 

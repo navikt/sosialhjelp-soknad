@@ -15,7 +15,7 @@ jobs:
             packages: read
 
         env:
-            NEXT_PUBLIC_DIGISOS_ENV: dev-sbs # tester er pr. nå avhengig av denne
+            NEXT_PUBLIC_DIGISOS_ENV: dev # tester er pr. nå avhengig av denne
         steps:
             - uses: actions/checkout@v4
 
