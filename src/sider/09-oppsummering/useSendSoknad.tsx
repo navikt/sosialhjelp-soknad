@@ -8,18 +8,18 @@ import {useContextFeatureToggles} from "../../lib/providers/useContextFeatureTog
 
 export const useSendSoknad = (behandlingsId: string) => {
     const [isError, setIsError] = useState<boolean>(false);
-    const {brukerdefinert} = useAdresser();
+    const {brukerAdresse} = useAdresser();
     const [endretAdresse, setEndretAdresse] = useState<boolean>(false);
 
     const featureFlagData = useContextFeatureToggles();
 
     useEffect(() => {
-        if (brukerdefinert) {
+        if (brukerAdresse) {
             setEndretAdresse(true);
         } else {
             setEndretAdresse(false);
         }
-    }, [brukerdefinert]);
+    }, [brukerAdresse]);
 
     const sendSoknaden = async (
         isKortSoknad: boolean,

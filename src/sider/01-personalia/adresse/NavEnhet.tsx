@@ -1,11 +1,11 @@
 import * as React from "react";
 import {Alert, BodyShort, Heading} from "@navikt/ds-react";
-import {NavEnhetFrontend} from "../../../generated/model";
 import {erAktiv} from "../../../lib/navEnhetStatus";
 import {NavEnhetInaktiv} from "./NavEnhetInaktiv";
 import {useTranslations} from "next-intl";
+import {NavEnhetDto} from "../../../generated/new/model";
 
-export const NavEnhet = ({navEnhet}: {navEnhet: NavEnhetFrontend | undefined}) => {
+export const NavEnhet = ({navEnhet}: {navEnhet: NavEnhetDto | undefined}) => {
     const t = useTranslations("NavEnhet");
     if (!navEnhet) return null;
     const {enhetsnavn, kommunenavn} = navEnhet;

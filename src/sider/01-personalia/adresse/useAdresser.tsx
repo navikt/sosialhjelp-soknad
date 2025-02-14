@@ -1,100 +1,60 @@
 import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId.ts";
-import {useEffect, useReducer} from "react";
-import {adresseReducer} from "./adresseReducer.tsx";
-import {logAmplitudeEvent} from "../../../lib/amplitude/Amplitude.tsx";
-import {
-    getHentAdresserQueryKey,
-    hentAdresser,
-    updateAdresse,
-} from "../../../generated/adresse-ressurs/adresse-ressurs.ts";
-import {
-    AdresseFrontend,
-    AdresserFrontend,
-    AdresserFrontendValg,
-    NavEnhetFrontend,
-} from "../../../generated/model/index.ts";
 import {useQueryClient} from "@tanstack/react-query";
+import {
+    getGetAdresserQueryKey,
+    useGetAdresser,
+    useUpdateAdresser,
+} from "../../../generated/new/adresse-controller/adresse-controller.ts";
+import {
+    AdresserDtoAdresseValg,
+    AdresserInputAdresseValg,
+    AdresserInputBrukerAdresse,
+} from "../../../generated/new/model";
+import {useState} from "react";
+
+export const mutationKey = (soknadId: string) => ["updateAdresser", soknadId];
 
 export const useAdresser = () => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useBehandlingsId();
+    const {data, isLoading, error} = useGetAdresser(soknadId);
     const queryClient = useQueryClient();
-    const [state, dispatch] = useReducer(adresseReducer, {mode: "uninitialized"});
+    const [showSpinner, setShowSpinner] = useState(false);
+    const {
+        mutate,
+        variables,
+        isPending: isUpdatePending,
+    } = useUpdateAdresser({
+        mutation: {
+            mutationKey: mutationKey(soknadId),
+            onMutate: () => {
+                setTimeout(() => {
+                    setShowSpinner(true);
+                }, 500);
+            },
+            onSettled: () => {
+                setShowSpinner(false);
+                return queryClient.invalidateQueries({queryKey: getGetAdresserQueryKey(soknadId)});
+            },
+        },
+    });
 
-    useEffect(() => {
-        hentAdresser(behandlingsId).then((backendState) => {
-            dispatch({type: "synchronize", backendState});
-            setQueryDataNavEnhet(backendState.navEnhet);
-        });
-    }, [behandlingsId]);
+    const setAdressevalg = (value: AdresserDtoAdresseValg) => mutate({soknadId, data: {adresseValg: value}});
 
-    const setQueryDataNavEnhet = (navEnhet: NavEnhetFrontend | undefined) => {
-        const queryKey = getHentAdresserQueryKey(behandlingsId);
-        const cachedData = queryClient.getQueryData<AdresserFrontend>(queryKey);
+    const setAdresse = (value: AdresserInputBrukerAdresse | null) =>
+        mutate({soknadId, data: {adresseValg: AdresserInputAdresseValg.SOKNAD, brukerAdresse: value ?? undefined}});
 
-        const updated = {
-            ...(cachedData || {}),
-            navEnhet,
-        };
-
-        queryClient.setQueryData(queryKey, updated);
+    return {
+        setAdressevalg,
+        setAdresse,
+        variables,
+        error,
+        isUpdatePending,
+        folkeregistrert: data?.folkeregistrertAdresse,
+        midlertidig: data?.midlertidigAdresse,
+        brukerAdresse: data?.brukerAdresse,
+        adresseValg: data?.adresseValg,
+        navenhet: data?.navenhet,
+        isLoading,
+        showSpinner: showSpinner && isUpdatePending,
     };
-
-    const setAdresseValg = async (addresseValgt: AdresserFrontendValg) => {
-        if (state.mode === "uninitialized")
-            throw new Error("Cannot set adresseValg while uninitialized, UI should be disabled");
-
-        dispatch({type: "setNavEnhet", navEnhet: undefined});
-        setQueryDataNavEnhet(undefined);
-
-        await logAmplitudeEvent("adresseValg", {addresseValgt});
-
-        dispatch({type: "adresseValg", adresseValg: addresseValgt});
-
-        if (addresseValgt !== AdresserFrontendValg.soknad) {
-            const [navEnhet] = await updateAdresse(behandlingsId, {valg: addresseValgt});
-            dispatch({type: "setNavEnhet", navEnhet});
-            setQueryDataNavEnhet(navEnhet);
-        }
-    };
-
-    const setBrukerdefinertAdresse = async (soknad: AdresseFrontend) => {
-        if (state.mode === "uninitialized")
-            throw new Error("Cannot set adresseValg while uninitialized, UI should be disabled");
-
-        // Backend surprise: Denne returnerer en liste med én eller null navenheter.
-        const [navEnhet] = await updateAdresse(behandlingsId, {
-            ...state,
-            soknad,
-        });
-
-        dispatch({type: "adresseSoknadChange", soknad, navEnhet});
-        setQueryDataNavEnhet(navEnhet);
-    };
-
-    switch (state.mode) {
-        case "uninitialized":
-            return {isPending: true};
-        case "uncommittedChanges":
-            return {
-                isPending: false,
-                valg: "soknad",
-                midlertidig: state.midlertidig,
-                folkeregistrert: state.folkeregistrert,
-                navEnhet: undefined,
-                brukerdefinert: state.soknad,
-                setAdresseValg,
-                setBrukerdefinertAdresse,
-            };
-        case "synchronized":
-            return {
-                isPending: false,
-                valg: state.valg,
-                midlertidig: state.midlertidig,
-                folkeregistrert: state.folkeregistrert,
-                navEnhet: state.navEnhet,
-                brukerdefinert: state.soknad,
-                setAdresseValg,
-                setBrukerdefinertAdresse,
-            };
-    }
 };

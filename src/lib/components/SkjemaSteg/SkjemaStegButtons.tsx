@@ -5,26 +5,26 @@ import {useTranslation} from "react-i18next";
 import {ArrowLeftIcon, ArrowRightIcon, PaperplaneIcon} from "@navikt/aksel-icons";
 import {SkjemaStegCancelButtons} from "./SkjemaStegCancelButtons.tsx";
 
-export const SkjemaStegButtons = ({
-    onNext,
-    onPrevious,
-    isFinalStep,
-}: {
+interface Props {
     isFinalStep?: boolean;
     onNext: () => Promise<any>;
     onPrevious?: () => Promise<any>;
-}) => {
+    isNextPending?: boolean;
+}
+
+export const SkjemaStegButtons = ({onNext, onPrevious, isFinalStep, isNextPending}: Props) => {
     const {t} = useTranslation("skjema");
     const [isPending, setIsPending] = useState<boolean>(false);
 
     const nextButtonText = isFinalStep ? "skjema.knapper.send" : "skjema.knapper.neste";
-    const nextButtonIcon = isPending ? (
-        <Loader />
-    ) : isFinalStep ? (
-        <PaperplaneIcon aria-hidden={true} />
-    ) : (
-        <ArrowRightIcon aria-hidden={true} />
-    );
+    const nextButtonIcon =
+        isPending || isNextPending ? (
+            <Loader />
+        ) : isFinalStep ? (
+            <PaperplaneIcon aria-hidden={true} />
+        ) : (
+            <ArrowRightIcon aria-hidden={true} />
+        );
 
     const onClickNext = async () => {
         setIsPending(true);
@@ -47,7 +47,7 @@ export const SkjemaStegButtons = ({
                 <Button
                     variant="primary"
                     onClick={onClickNext}
-                    disabled={isPending}
+                    disabled={isPending || isNextPending}
                     icon={nextButtonIcon}
                     iconPosition={"right"}
                 >

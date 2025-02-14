@@ -2218,7 +2218,18 @@
                     {"type": "object", "properties": {"harIkkeKonto": {"type": "boolean"}}}
                 ]
             },
-            "KontoInput": {"type": "object"},
+            "KontoInput": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {"type": {"type": "string"}},
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "HarIkkeKonto": "#/components/schemas/HarIkkeKontoInput",
+                        "KontonummerBruker": "#/components/schemas/KontonummerBrukerInput"
+                    }
+                }
+            },
             "KontonummerBrukerInput": {
                 "type": "object",
                 "allOf": [
@@ -2775,7 +2786,7 @@
                     "harFastStilling": {"type": "boolean"}
                 }
             },
-            "Adresse": {
+            "AdresseInput": {
                 "required": ["type"],
                 "type": "object",
                 "properties": {"type": {"type": "string"}},
@@ -2783,9 +2794,7 @@
                     "propertyName": "type",
                     "mapping": {
                         "VegAdresse": "#/components/schemas/VegAdresse",
-                        "MatrikkelAdresse": "#/components/schemas/MatrikkelAdresse",
-                        "PostboksAdresse": "#/components/schemas/PostboksAdresse",
-                        "UstrukturertAdresse": "#/components/schemas/UstrukturertAdresse"
+                        "MatrikkelAdresse": "#/components/schemas/MatrikkelAdresse"
                     }
                 }
             },
@@ -2797,8 +2806,6 @@
                     "brukerAdresse": {
                         "oneOf": [
                             {"$ref": "#/components/schemas/MatrikkelAdresse"},
-                            {"$ref": "#/components/schemas/PostboksAdresse"},
-                            {"$ref": "#/components/schemas/UstrukturertAdresse"},
                             {"$ref": "#/components/schemas/VegAdresse"}
                         ]
                     }
@@ -2808,7 +2815,7 @@
                 "required": ["bruksnummer", "gaardsnummer", "kommunenummer"],
                 "type": "object",
                 "allOf": [
-                    {"$ref": "#/components/schemas/Adresse"},
+                    {"$ref": "#/components/schemas/AdresseInput"},
                     {
                         "type": "object",
                         "properties": {
@@ -2819,37 +2826,15 @@
                             "seksjonsnummer": {"type": "string"},
                             "undernummer": {"type": "string"}
                         }
-                    }
-                ]
-            },
-            "PostboksAdresse": {
-                "required": ["postboks", "postnummer", "poststed"],
-                "type": "object",
-                "allOf": [
-                    {"$ref": "#/components/schemas/Adresse"},
-                    {
-                        "type": "object",
-                        "properties": {
-                            "postboks": {"type": "string"},
-                            "postnummer": {"type": "string"},
-                            "poststed": {"type": "string"}
-                        }
-                    }
-                ]
-            },
-            "UstrukturertAdresse": {
-                "required": ["adresse"],
-                "type": "object",
-                "allOf": [
-                    {"$ref": "#/components/schemas/Adresse"},
-                    {"type": "object", "properties": {"adresse": {"type": "array", "items": {"type": "string"}}}}
+                    },
+                    {"$ref": "#/components/schemas/Adresse"}
                 ]
             },
             "VegAdresse": {
                 "required": ["adresselinjer", "landkode"],
                 "type": "object",
                 "allOf": [
-                    {"$ref": "#/components/schemas/Adresse"},
+                    {"$ref": "#/components/schemas/AdresseInput"},
                     {
                         "type": "object",
                         "properties": {
@@ -2863,8 +2848,23 @@
                             "husnummer": {"type": "string"},
                             "husbokstav": {"type": "string"}
                         }
-                    }
+                    },
+                    {"$ref": "#/components/schemas/Adresse"}
                 ]
+            },
+            "Adresse": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {"type": {"type": "string"}},
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "VegAdresse": "#/components/schemas/VegAdresse",
+                        "MatrikkelAdresse": "#/components/schemas/MatrikkelAdresse",
+                        "PostboksAdresse": "#/components/schemas/PostboksAdresse",
+                        "UstrukturertAdresse": "#/components/schemas/UstrukturertAdresse"
+                    }
+                }
             },
             "AdresserDto": {
                 "type": "object",
@@ -2908,6 +2908,29 @@
                     "isMottakMidlertidigDeaktivert": {"type": "boolean"},
                     "isMottakDeaktivert": {"type": "boolean"}
                 }
+            },
+            "PostboksAdresse": {
+                "required": ["postboks", "postnummer", "poststed"],
+                "type": "object",
+                "allOf": [
+                    {"$ref": "#/components/schemas/Adresse"},
+                    {
+                        "type": "object",
+                        "properties": {
+                            "postboks": {"type": "string"},
+                            "postnummer": {"type": "string"},
+                            "poststed": {"type": "string"}
+                        }
+                    }
+                ]
+            },
+            "UstrukturertAdresse": {
+                "required": ["adresse"],
+                "type": "object",
+                "allOf": [
+                    {"$ref": "#/components/schemas/Adresse"},
+                    {"type": "object", "properties": {"adresse": {"type": "array", "items": {"type": "string"}}}}
+                ]
             },
             "SoknadSendtDto": {
                 "required": ["digisosId", "tidspunkt"],
@@ -2988,6 +3011,7 @@
                 "type": "object",
                 "properties": {
                     "navn": {"$ref": "#/components/schemas/NavnDto"},
+                    "fodselsnummer": {"type": "string"},
                     "statsborgerskap": {"type": "string"},
                     "nordiskBorger": {"type": "boolean"}
                 }
