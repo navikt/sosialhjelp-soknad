@@ -17,7 +17,7 @@ export const DECORATOR_SETTINGS: DecoratorFetchProps = {
         feedback: false,
         chatbot: false,
         shareScreen: false,
-        logoutWarning: true,
+        logoutWarning: false,
         redirectToUrlLogout: logoutRedirectUrl,
     },
 };
