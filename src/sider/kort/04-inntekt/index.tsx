@@ -35,7 +35,8 @@ const Inntekt = () => {
                 <NavYtelser />
                 <FileUploadBox
                     sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
-                    undertekst={t("situasjon.kort.dokumentasjon.description")}
+                    undertekst="situasjon.kort.dokumentasjon.description"
+                    liste="situasjon.kort.dokumentasjon.liste"
                     dokumentasjonType={"annet|annet"}
                 />
                 <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
