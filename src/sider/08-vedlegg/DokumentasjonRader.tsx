@@ -14,6 +14,17 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
 
     const {leggtil} = useDokumentasjonTekster(opplysning.type);
 
+    //console.log("---------------------");
+    //console.log("dokumentasjonrader opplysning", opplysning);
+    //console.log("dokumentasjonrader multirow", multirow);
+    //console.log("dokumentasjonrader inputs", inputs);
+    //console.log("dokumentasjonrader control", control);
+    //console.log("dokumentasjonrader entries", entries);
+    //console.log("dokumentasjonrader append", append);
+    //console.log("dokumentasjonrader remove", remove);
+    //console.log("dokumentasjonrader leggtil", leggtil);
+    //console.log("---------------------");
+
     //TODO: multirow knappen skjules for lonnslipp|arbeid
     //TODO: dette på grunn av det kan skap forvirringer for søkeren på grunn av kor uoversiktlig det kan bli
 

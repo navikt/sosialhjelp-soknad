@@ -6,6 +6,9 @@ import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokument
 
 export const Dokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
     const {sporsmal, undertekst} = useDokumentasjonTekster(opplysning.type);
+    //console.log("Dokumentasjon opplysning", opplysning);
+    //console.log("Dokumentasjon sporsmal", sporsmal);
+    //console.log("Dokumentasjon undertekst", undertekst);
 
     return (
         <div className={"rounded-md bg-surface-action-subtle p-8"}>

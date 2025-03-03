@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {useTranslation} from "react-i18next";
 import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
@@ -11,6 +11,39 @@ import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegSt
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
+//import {VedleggFrontend} from "../../../generated/model";
+//import {Dokumentasjon} from "../../08-vedlegg/Dokumentasjon.tsx";
+//import {useOpplysning} from "../../../lib/hooks/dokumentasjon/useOpplysning.ts";
+import {useOpplysninger} from "../../../lib/hooks/dokumentasjon/useOpplysninger.ts";
+import {useFormue} from "../../../lib/hooks/data/useFormue.tsx";
+import {Gruppe} from "../../08-vedlegg/Gruppe.tsx";
+//import {Gruppe} from "../../08-vedlegg/Gruppe.tsx";
+
+const InntektDokumentasjon = () => {
+    const {formue, setFormue} = useFormue();
+    const {sorterte, grupper} = useOpplysninger(); // 🔥 Fetch all opplysninger
+    const firstGroup = grupper[0];
+
+    useEffect(() => {
+        console.log("Automatically selecting brukskonto for Kort Søknad");
+
+        setFormue(["brukskonto"]); // ✅ Automatically set brukskonto as selected
+    }, []);
+
+    console.log("formue", formue);
+
+    //const firstGroup = grupper[0];
+    // 🔍 Find the opplysning that has type "kontooversikt|brukskonto"
+    //const opplysning = sorterte.find((item) => item.type === "kontooversikt|brukskonto");
+    //const opplysning = sorterte.find((opplysning) => opplysning.type === "kontooversikt|brukskonto");
+    //
+    //if (!opplysning) {
+    //    console.warn("Fant ingen opplysning med type kontooversikt|brukskonto");
+    //    return null; // Avoid rendering if no opplysning is found
+    //}
+
+    return <Gruppe gruppeKey={firstGroup} opplysninger={sorterte.filter((x) => x.gruppe === firstGroup)} />;
+};
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
@@ -33,6 +66,7 @@ const Inntekt = () => {
                 <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
                 <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
                 <NavYtelser />
+                <InntektDokumentasjon />
                 <FileUploadBox
                     sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                     undertekst="situasjon.kort.dokumentasjon.description"
