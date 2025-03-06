@@ -7,6 +7,7 @@ import cx from "classnames";
 import {VedleggRadFrontendForm} from "../../lib/hooks/dokumentasjon/vedleggRadFormSchema.ts";
 import {VedleggFrontendType} from "../../generated/model";
 import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
+import useIsKort from "../../lib/hooks/data/useIsKort.ts";
 
 export const OpplysningInputRad = ({
     fields,
@@ -25,6 +26,7 @@ export const OpplysningInputRad = ({
 }) => {
     const {t} = useTranslation();
     const {t: tDok} = useTranslation("dokumentasjon");
+    const isKort = useIsKort();
 
     return (
         <li className={className}>
@@ -35,13 +37,19 @@ export const OpplysningInputRad = ({
                         <>
                             <TextField
                                 label={
-                                    <span style={{fontSize: 16, fontWeight: "normal"}}>
-                                        {
-                                            tDok(
-                                                `${textKey}.${fieldName}.label` as DigisosLanguageKey<"dokumentasjon">
-                                            ) as string
-                                        }
-                                    </span>
+                                    isKort ? (
+                                        <span style={{fontSize: 16, fontWeight: "normal"}}>
+                                            {t("utbetalinger.inntekt.skattbar.kort_saldo_saldo")}
+                                        </span>
+                                    ) : (
+                                        <span style={{fontSize: 16, fontWeight: "normal"}}>
+                                            {
+                                                tDok(
+                                                    `${textKey}.${fieldName}.label` as DigisosLanguageKey<"dokumentasjon">
+                                                ) as string
+                                            }
+                                        </span>
+                                    )
                                 }
                                 className={cx("pb-2")}
                                 error={
