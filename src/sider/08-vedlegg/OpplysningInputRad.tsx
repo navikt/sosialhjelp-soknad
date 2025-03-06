@@ -26,14 +26,6 @@ export const OpplysningInputRad = ({
     const {t} = useTranslation();
     const {t: tDok} = useTranslation("dokumentasjon");
 
-    //console.log("---------------------");
-    //console.log("opplysninginputrad fields", fields);
-    //console.log("opplysninginputrad index", index);
-    //console.log("opplysninginputrad control", control);
-    //console.log("opplysninginputrad textKey", textKey);
-    //console.log("opplysninginputrad onDelete", onDelete);
-    //console.log("opplysninginputrad className", className);
-
     return (
         <li className={className}>
             {fields.map((fieldName) => (

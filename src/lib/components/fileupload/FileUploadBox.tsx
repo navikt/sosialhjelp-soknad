@@ -19,22 +19,58 @@ type TranslationKeys = "begrunnelse.kort.behov.dokumentasjon.beskrivelse" | "sit
 type ListeKeys = "situasjon.kort.dokumentasjon.liste" | "begrunnelse.kort.behov.dokumentasjon.liste";
 
 interface Props {
-    sporsmal: string;
-    undertekst: TranslationKeys;
-    liste: ListeKeys;
+    sporsmal?: string;
+    undertekst?: TranslationKeys;
+    liste?: ListeKeys;
+    bunntekst?: string;
     dokumentasjonType: VedleggFrontendType;
 }
 
+export const FileUploadBoxNoStyle = ({
+    sporsmal,
+    undertekst,
+    liste,
+    bunntekst,
+    dokumentasjonType,
+}: Props): React.JSX.Element => {
+    const {t} = useTranslation("skjema");
+    const forslag = liste ? (t(liste, {returnObjects: true}) as string[]) : [];
+
+    return (
+        <>
+            {sporsmal && (
+                <Heading level={"4"} size={"small"} spacing>
+                    {sporsmal}
+                </Heading>
+            )}
+            {undertekst && <Trans i18nKey={undertekst} components={{br: <br />}} />}
+            {forslag.length > 0 && (
+                <ul className="list-disc pl-5">
+                    {forslag.map((item, index) => (
+                        <li key={index}>
+                            <BodyShort>{item}</BodyShort>
+                        </li>
+                    ))}
+                </ul>
+            )}
+            <BodyShort spacing>{bunntekst}</BodyShort>
+            <Dokumenter dokumentasjonType={dokumentasjonType} />
+        </>
+    );
+};
+
 const FileUploadBox = ({sporsmal, undertekst, liste, dokumentasjonType}: Props): React.JSX.Element => {
     const {t} = useTranslation("skjema");
-    const forslag = t(liste, {returnObjects: true}) as string[];
+    const forslag = liste ? (t(liste, {returnObjects: true}) as string[]) : [];
 
     return (
         <div className={"rounded-md bg-surface-action-subtle p-8"}>
-            <Heading level={"4"} size={"small"} spacing>
-                {sporsmal}
-            </Heading>
-            <Trans i18nKey={undertekst} components={{br: <br />}} />
+            {sporsmal && (
+                <Heading level={"4"} size={"small"} spacing>
+                    {sporsmal}
+                </Heading>
+            )}
+            {undertekst && <Trans i18nKey={undertekst} components={{br: <br />}} />}
             {forslag.length > 0 && (
                 <ul className="list-disc pl-5">
                     {forslag.map((item, index) => (

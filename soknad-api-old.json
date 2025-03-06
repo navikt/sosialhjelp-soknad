@@ -9,6 +9,10 @@
                 "operationId": "hentBoutgifter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -30,10 +34,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -50,6 +50,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -71,10 +75,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -86,6 +86,10 @@
                 "operationId": "hentBarneutgifter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -107,10 +111,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -129,6 +129,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -150,10 +154,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -165,6 +165,10 @@
                 "operationId": "hentUtdanning",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -186,10 +190,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -206,6 +206,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -227,10 +231,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -242,6 +242,10 @@
                 "operationId": "hentSituasjonsendring",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -263,10 +267,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -287,6 +287,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -308,10 +312,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -323,6 +323,10 @@
                 "operationId": "hentTelefonnummer",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -344,10 +348,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -366,6 +366,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -387,10 +391,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -407,6 +407,10 @@
                 "operationId": "hentKontonummer",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -428,10 +432,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -448,6 +448,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -469,10 +473,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -487,6 +487,10 @@
                 "operationId": "hentAdresser",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -508,10 +512,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -528,6 +528,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -549,10 +553,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -571,6 +571,10 @@
                 "operationId": "hentOkonomiskeOpplysninger",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -592,10 +596,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -612,6 +612,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -633,10 +637,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -648,6 +648,10 @@
                 "operationId": "hentVerdier",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -669,10 +673,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -689,6 +689,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -710,10 +714,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -725,6 +725,10 @@
                 "operationId": "hentUtbetalinger",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -746,10 +750,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -768,6 +768,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -789,10 +793,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -804,6 +804,10 @@
                 "operationId": "hentStudielanBekreftelse",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -825,10 +829,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -845,6 +845,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -866,10 +870,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -884,6 +884,10 @@
                 "operationId": "hentSkattbareInntekter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -905,10 +909,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -929,6 +929,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -950,10 +954,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -970,6 +970,10 @@
                 "operationId": "hentFormue",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -991,10 +995,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1011,6 +1011,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1032,10 +1036,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -1047,6 +1047,10 @@
                 "operationId": "hentBostotte",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1068,10 +1072,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1088,6 +1088,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1109,10 +1113,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -1124,6 +1124,10 @@
                 "operationId": "hentSivilstatus",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1145,10 +1149,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1167,6 +1167,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1188,10 +1192,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -1203,6 +1203,10 @@
                 "operationId": "hentForsorgerplikt",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1224,10 +1228,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1248,6 +1248,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1269,10 +1273,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -1284,6 +1284,10 @@
                 "operationId": "hentBosituasjon",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1305,10 +1309,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1327,6 +1327,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1348,10 +1352,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1368,6 +1368,10 @@
                 "operationId": "hentBegrunnelse",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1389,10 +1393,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1411,6 +1411,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1432,10 +1436,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -1447,6 +1447,10 @@
                 "operationId": "hentArbeid",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1468,10 +1472,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1490,6 +1490,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1511,10 +1515,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1542,6 +1542,10 @@
                     }
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1563,10 +1567,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "Vedlegg konvertert til PDF",
@@ -1592,6 +1592,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1613,10 +1617,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -1629,6 +1629,10 @@
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "requestBody": {"content": {"application/json": {"schema": {"type": "boolean"}}}, "required": true},
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1650,10 +1654,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 },
@@ -1670,6 +1670,10 @@
                 ],
                 "requestBody": {"content": {"application/json": {"schema": {"type": "boolean"}}}, "required": true},
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1691,10 +1695,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -1709,6 +1709,10 @@
                     {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1730,10 +1734,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1751,6 +1751,10 @@
                     {"name": "soknadstype", "in": "query", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1772,10 +1776,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1806,6 +1806,10 @@
                     }
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1827,10 +1831,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1848,6 +1848,10 @@
                     "required": true
                 },
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1869,10 +1873,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -1884,6 +1884,10 @@
                 "operationId": "hentXsrfCookie",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1905,10 +1909,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
@@ -1920,6 +1920,10 @@
                 "operationId": "hentBasisPersonalia",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1941,10 +1945,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -1961,6 +1961,10 @@
                 "operationId": "getOppsummering",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -1982,10 +1986,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -2000,6 +2000,10 @@
                 "operationId": "isNyDatamodell",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2021,10 +2025,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
@@ -2036,6 +2036,10 @@
                 "operationId": "isKortSoknad",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2057,10 +2061,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
@@ -2072,6 +2072,10 @@
                 "operationId": "hentSystemregistrerteInntekter",
                 "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2093,10 +2097,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -2116,6 +2116,10 @@
                     {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2137,10 +2141,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -2165,6 +2165,10 @@
                     {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2186,10 +2190,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
@@ -2205,6 +2205,10 @@
                     {"name": "dokumentId", "in": "path", "required": true, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2226,10 +2230,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "Dokumentets innhold sendes til klienten",
@@ -2243,6 +2243,10 @@
                 "tags": ["nedetid-ressurs"],
                 "operationId": "hentNedetidInformasjon",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2264,10 +2268,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -2281,6 +2281,10 @@
                 "tags": ["mine-saker-metadata-ressurs"],
                 "operationId": "ping",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2302,10 +2306,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "string"}}}}
                 }
@@ -2316,6 +2316,10 @@
                 "tags": ["mine-saker-metadata-ressurs"],
                 "operationId": "hentInnsendteSoknaderForBruker",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2337,10 +2341,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -2358,6 +2358,10 @@
                 "tags": ["internal-ressurs"],
                 "operationId": "getSelftest",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2379,10 +2383,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -2396,6 +2396,10 @@
                 "tags": ["internal-ressurs"],
                 "operationId": "isAlive",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2417,10 +2421,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK", "content": {"text/plain": {"schema": {"type": "string"}}}}
                 }
@@ -2431,6 +2431,10 @@
                 "tags": ["informasjon-ressurs"],
                 "operationId": "getSessionInfo",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2452,10 +2456,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -2470,6 +2470,10 @@
                 "operationId": "adresseSok",
                 "parameters": [{"name": "sokestreng", "in": "query", "required": false, "schema": {"type": "string"}}],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2491,10 +2495,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -2512,6 +2512,10 @@
                 "tags": ["feature-toggle-ressurs"],
                 "operationId": "featureToggles",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2533,10 +2537,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -2554,6 +2554,10 @@
                 "tags": ["ditt-nav-metadata-ressurs"],
                 "operationId": "hentPabegynteSoknaderForBruker",
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2575,10 +2579,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {
                         "description": "OK",
@@ -2600,6 +2600,10 @@
                     {"name": "Referer", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2621,10 +2625,6 @@
                     "404": {
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
                     },
                     "200": {"description": "OK"}
                 }
@@ -2639,6 +2639,10 @@
                     {"name": "dokumentId", "in": "path", "required": true, "schema": {"type": "string"}}
                 ],
                 "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
                     "400": {
                         "description": "Bad Request",
                         "content": {
@@ -2661,10 +2665,6 @@
                         "description": "Not Found",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
                     "200": {"description": "OK"}
                 }
             }
@@ -2672,6 +2672,11 @@
     },
     "components": {
         "schemas": {
+            "UnauthorizedMelding": {
+                "required": ["loginUrl"],
+                "type": "object",
+                "properties": {"loginUrl": {"type": "string", "format": "uri"}}
+            },
             "SoknadApiError": {
                 "required": ["error", "responseType"],
                 "type": "object",
@@ -2708,11 +2713,6 @@
                     "propertyName": "responseType",
                     "mapping": {"SoknadApiError": "#/components/schemas/SoknadApiError"}
                 }
-            },
-            "UnauthorizedMelding": {
-                "required": ["loginUrl"],
-                "type": "object",
-                "properties": {"loginUrl": {"type": "string", "format": "uri"}}
             },
             "BoutgifterFrontend": {
                 "required": [

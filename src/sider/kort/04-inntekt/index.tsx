@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {useTranslation} from "react-i18next";
 import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
@@ -6,47 +6,49 @@ import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/SkjemaStegBloc
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import {NavYtelser} from "../../06-inntektFormue/navytelser";
 import {SkattbarInntekt} from "../../06-inntektFormue/skattbarInntekt";
-import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox.tsx";
+import FileUploadBox, {FileUploadBoxNoStyle} from "../../../lib/components/fileupload/FileUploadBox.tsx";
 import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
-//import {VedleggFrontend} from "../../../generated/model";
-//import {Dokumentasjon} from "../../08-vedlegg/Dokumentasjon.tsx";
-//import {useOpplysning} from "../../../lib/hooks/dokumentasjon/useOpplysning.ts";
 import {useOpplysninger} from "../../../lib/hooks/dokumentasjon/useOpplysninger.ts";
+import {Opplysning} from "../../../lib/opplysninger.ts";
+import {BodyShort, Heading} from "@navikt/ds-react";
+import {DokumentasjonRader} from "../../08-vedlegg/DokumentasjonRader.tsx";
 import {useFormue} from "../../../lib/hooks/data/useFormue.tsx";
-import {Gruppe} from "../../08-vedlegg/Gruppe.tsx";
-//import {Gruppe} from "../../08-vedlegg/Gruppe.tsx";
+import useIsKort from "../../../lib/hooks/data/useIsKort.ts";
 
-const InntektDokumentasjon = () => {
-    const {formue, setFormue} = useFormue();
-    const {sorterte, grupper} = useOpplysninger(); // 🔥 Fetch all opplysninger
-    const firstGroup = grupper[0];
-
-    useEffect(() => {
-        console.log("Automatically selecting brukskonto for Kort Søknad");
-
-        setFormue(["brukskonto"]); // ✅ Automatically set brukskonto as selected
-    }, []);
-
-    console.log("formue", formue);
-
-    //const firstGroup = grupper[0];
-    // 🔍 Find the opplysning that has type "kontooversikt|brukskonto"
-    //const opplysning = sorterte.find((item) => item.type === "kontooversikt|brukskonto");
-    //const opplysning = sorterte.find((opplysning) => opplysning.type === "kontooversikt|brukskonto");
-    //
-    //if (!opplysning) {
-    //    console.warn("Fant ingen opplysning med type kontooversikt|brukskonto");
-    //    return null; // Avoid rendering if no opplysning is found
-    //}
-
-    return <Gruppe gruppeKey={firstGroup} opplysninger={sorterte.filter((x) => x.gruppe === firstGroup)} />;
+const Dokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
+    const {t} = useTranslation("skjema");
+    return (
+        <div className={"rounded-md bg-surface-action-subtle p-8"}>
+            <Heading level={"4"} size={"small"} spacing>
+                {t("utbetalinger.inntekt.skattbar.kort_saldo_tittel")}
+            </Heading>
+            <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.kort_saldo_undertekst")}</BodyShort>
+            <DokumentasjonRader opplysning={opplysning} />
+            <FileUploadBoxNoStyle
+                bunntekst={t("utbetalinger.inntekt.skattbar.kort_saldo_lastOpp")}
+                dokumentasjonType={opplysning.type}
+            />
+        </div>
+    );
 };
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
+    const {sorterte} = useOpplysninger();
+    const brukskontoOpplysning = sorterte.find((opplysning) => opplysning.type === "kontooversikt|brukskonto");
+    const {setFormue, formue} = useFormue();
+    const isKortSoknad = useIsKort();
+    const [hasInitialized, setHasInitialized] = useState(false);
+
+    useEffect(() => {
+        if (!hasInitialized && isKortSoknad && formue && !formue.brukskonto) {
+            setFormue(["brukskonto"]);
+            setHasInitialized(true);
+        }
+    }, [isKortSoknad, formue, hasInitialized]);
 
     const navigate = useNavigate();
     const gotoPage = async (page: number) => {
@@ -66,7 +68,7 @@ const Inntekt = () => {
                 <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
                 <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
                 <NavYtelser />
-                <InntektDokumentasjon />
+                {brukskontoOpplysning && <Dokumentasjon opplysning={brukskontoOpplysning} />}
                 <FileUploadBox
                     sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                     undertekst="situasjon.kort.dokumentasjon.description"

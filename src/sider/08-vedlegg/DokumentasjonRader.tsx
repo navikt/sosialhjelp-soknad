@@ -3,6 +3,8 @@ import {OpplysningInputRad} from "./OpplysningInputRad";
 import {VedleggFrontend} from "../../generated/model";
 import {useOpplysning} from "../../lib/hooks/dokumentasjon/useOpplysning";
 import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokumentasjonTekster";
+import useIsKort from "../../lib/hooks/data/useIsKort.ts";
+import {useTranslation} from "react-i18next";
 
 export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) => {
     const {
@@ -11,19 +13,11 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
         form: {control},
         rows: {entries, append, remove},
     } = useOpplysning(opplysning);
+    const {t} = useTranslation("skjema");
+
+    const isKort = useIsKort();
 
     const {leggtil} = useDokumentasjonTekster(opplysning.type);
-
-    //console.log("---------------------");
-    //console.log("dokumentasjonrader opplysning", opplysning);
-    //console.log("dokumentasjonrader multirow", multirow);
-    //console.log("dokumentasjonrader inputs", inputs);
-    //console.log("dokumentasjonrader control", control);
-    //console.log("dokumentasjonrader entries", entries);
-    //console.log("dokumentasjonrader append", append);
-    //console.log("dokumentasjonrader remove", remove);
-    //console.log("dokumentasjonrader leggtil", leggtil);
-    //console.log("---------------------");
 
     //TODO: multirow knappen skjules for lonnslipp|arbeid
     //TODO: dette på grunn av det kan skap forvirringer for søkeren på grunn av kor uoversiktlig det kan bli
@@ -46,7 +40,7 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
                         <li className={`pt-3 pb-4`}>
                             <LinkButton onClick={() => append({})}>
                                 <span aria-hidden={true}>+ </span>
-                                {leggtil}
+                                {isKort ? t("utbetalinger.inntekt.skattbar.kort_saldo_leggTil") : leggtil}
                             </LinkButton>
                         </li>
                     )}

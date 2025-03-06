@@ -1476,9 +1476,8 @@ export const skjema = {
         kort: {
             dokumentasjon: {
                 title: "Dokumentasjon",
-                description:
-                    "Her kan du laste opp annen dokumentasjon du tenker er viktig for søknaden. <br/> Forslag:",
-                liste: ["Lønnslipp", "Saldo", "Introduksjonsstønad", "Annen inntekt"],
+                description: "Her kan du laste opp dokumentasjon du tenker er viktig for søknaden din.<br/> Forslag:",
+                liste: ["Saldo", "Lønnslipp", "Introduksjonsstønad", "Annet inntekt"],
             },
             endring: {
                 description: "For eksempel inntekter, utgifter, familiesituasjon eller bosituasjon.",
@@ -1772,6 +1771,11 @@ export const skjema = {
                 tidspunkt: "Informasjonen ble hentet",
                 tittel: "Inntekt",
                 undertittel: "Innrapportert inntekt til Skatteetaten",
+                kort_saldo_tittel: "Legg gjerne ved opplysninger om saldo på dine kontoer",
+                kort_saldo_undertekst: "Oppgi saldo for hver konto",
+                kort_saldo_saldo: "Saldo",
+                kort_saldo_leggTil: "Legg til konto",
+                kort_saldo_lastOpp: "Last opp kontooversikt (på søknadstidspunkt)",
             },
             til: "til",
         },

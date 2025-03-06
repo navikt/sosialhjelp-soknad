@@ -101,7 +101,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
     },
     "kontooversikt|brukskonto": {
         belop: {
-            label: "Saldo",
+            label: "Saldo brukskonto",
         },
         leggtil: "Legg til brukskonto",
         saldo: {
