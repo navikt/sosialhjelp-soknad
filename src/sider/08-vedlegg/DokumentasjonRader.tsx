@@ -40,7 +40,7 @@ export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) 
                         <li className={`pt-3 pb-4`}>
                             <LinkButton onClick={() => append({})}>
                                 <span aria-hidden={true}>+ </span>
-                                {isKort ? t("utbetalinger.inntekt.skattbar.kort_saldo_leggTil") : leggtil}
+                                {isKort.data ? t("utbetalinger.inntekt.skattbar.kort_saldo_leggTil") : leggtil}
                             </LinkButton>
                         </li>
                     )}

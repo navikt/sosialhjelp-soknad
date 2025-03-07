@@ -27,6 +27,7 @@ export const OpplysningInputRad = ({
     const {t} = useTranslation();
     const {t: tDok} = useTranslation("dokumentasjon");
     const isKort = useIsKort();
+    console.log("isKort", isKort.data);
 
     return (
         <li className={className}>
@@ -37,7 +38,7 @@ export const OpplysningInputRad = ({
                         <>
                             <TextField
                                 label={
-                                    isKort ? (
+                                    isKort.data ? (
                                         <span style={{fontSize: 16, fontWeight: "normal"}}>
                                             {t("utbetalinger.inntekt.skattbar.kort_saldo_saldo")}
                                         </span>
