@@ -27,7 +27,6 @@ export const OpplysningInputRad = ({
     const {t} = useTranslation();
     const {t: tDok} = useTranslation("dokumentasjon");
     const isKort = useIsKort();
-    console.log("isKort", isKort.data);
 
     return (
         <li className={className}>
