@@ -1,8 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {BodyShort, Button, Checkbox, TextField} from "@navikt/ds-react";
-import * as React from "react";
-import {KontonummerFrontend, KontonummerInputDto} from "../../generated/model";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {formatKontonummer, registerWithMasks} from "@fremtind/jkl-formatters-util";
@@ -21,13 +19,18 @@ const KontonummerSchema = z.object({
     harIkkeKonto: z.boolean().optional(),
 });
 
+interface FormValues {
+    brukerutfyltVerdi?: string;
+    harIkkeKonto?: boolean;
+}
+
 export const KontonrEdit = ({
     defaultValues,
     onSave,
     onCancel,
 }: {
-    defaultValues: KontonummerFrontend;
-    onSave: SubmitHandler<KontonummerInputDto>;
+    defaultValues: FormValues;
+    onSave: SubmitHandler<FormValues>;
     onCancel: () => void;
 }) => {
     const {t} = useTranslation("skjema");
@@ -38,7 +41,7 @@ export const KontonrEdit = ({
         defaultValues.brukerutfyltVerdi = formatKontonummer(defaultValues.brukerutfyltVerdi);
     }
 
-    const form = useForm<KontonummerInputDto>({
+    const form = useForm<FormValues>({
         defaultValues: defaultValues,
         resolver: zodResolver(KontonummerSchema),
     });
