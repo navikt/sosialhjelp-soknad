@@ -1,16 +1,17 @@
-import {AdresseForslag, AdresseFrontend} from "../../../generated/model";
+import {AdresseForslag} from "../../../generated/model";
 import {AdresseTypeahead} from "./AdresseTypeaheadDownshift";
 import * as React from "react";
 import styled from "styled-components";
+import {AdresserInputBrukerAdresse} from "../../../generated/new/model";
 
 // TODO: Make this unnecessary by making the input type on the backend to soknad
 //       equal to the output type from adressesok
-export const adresseForslagTilAdresse = ({adresse, ...rest}: AdresseForslag): AdresseFrontend => ({
-    type: "gateadresse",
-    gateadresse: {
-        ...rest,
-        gatenavn: adresse,
-    },
+export const adresseForslagTilAdresse = ({adresse, ...rest}: AdresseForslag): AdresserInputBrukerAdresse => ({
+    ...rest,
+    type: "VegAdresse",
+    gatenavn: adresse,
+    adresselinjer: [],
+    landkode: "NO",
 });
 
 const Triangle = styled.div`
@@ -28,7 +29,7 @@ export const AdresseSok = ({
 }: {
     className?: string;
     defaultValue?: string;
-    onChange: (nyAdresse: AdresseFrontend | null) => Promise<void>;
+    onChange: (nyAdresse: AdresserInputBrukerAdresse | null) => void;
 }) => {
     return (
         <div className={className}>

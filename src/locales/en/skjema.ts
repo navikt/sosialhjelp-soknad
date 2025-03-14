@@ -1403,6 +1403,7 @@ export const skjema = {
             oppsummering: "When you have completed the application it will be sent to",
         },
         bostedsadresse: "Residential address",
+        adressefeil: "We encountered an error fetching your address information. Please try again later.",
         bydel: {
             default: "Select district",
             label: "In which district?",

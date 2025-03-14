@@ -58,7 +58,7 @@ spec:
     - name: WONDERWALL_SHUTDOWN_WAIT_BEFORE_PERIOD
       value: 7s
     - name: WONDERWALL_LOG_LEVEL
-      value: debug
+      value: info
     - name: WONDERWALL_SSO_SESSION_COOKIE_NAME
       value: no.sosialhjelp.wonderwall.session
     - name: WONDERWALL_SSO_SERVER_URL

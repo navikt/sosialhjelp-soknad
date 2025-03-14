@@ -1397,6 +1397,7 @@ export const skjema = {
             oppsummering: "Når du har fylt ut søknaden, blir han send til",
         },
         bostedsadresse: "Bustadsadresse",
+        adressefeil: "Vi har problem med å hente adressa di. Ver venleg og prøv igjen seinare",
         bydel: {
             default: "Vel bydel",
             label: "I kva bydel?",

@@ -2,13 +2,13 @@ import * as React from "react";
 import {Systeminfo, SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
-import {useHentBasisPersonalia} from "../../generated/basis-personalia-ressurs/basis-personalia-ressurs";
 import {useTranslation} from "react-i18next";
 import {formatFodselsnummer} from "@fremtind/jkl-formatters-util";
 import {BodyShort, Heading} from "@navikt/ds-react";
+import {useGetBasisPersonalia} from "../../generated/new/basis-personalia-controller/basis-personalia-controller.ts";
 
 export const BasisPersonalia = () => {
-    const {expectOK} = useAlgebraic(useHentBasisPersonalia(useBehandlingsId()));
+    const {expectOK} = useAlgebraic(useGetBasisPersonalia(useBehandlingsId()));
     const {t} = useTranslation("skjema");
     return expectOK(({navn, fodselsnummer, statsborgerskap = "Ukjent/statsløs"}) => (
         <section aria-labelledby={"basispersonalia-heading"}>
