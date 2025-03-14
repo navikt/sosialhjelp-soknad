@@ -40,6 +40,7 @@ export const useKontonummer = () => {
         ? getKontonummerFromVariables(variables?.data, data?.kontonummerRegister)
         : data?.kontonummerBruker || data?.kontonummerRegister;
 
+    // Will be undefined if user har submitted nothing (blank input)
     const isBrukerUtfylt = isPending ? getIsBrukerUtfylt(variables?.data) : toBoolOrUndefined(data?.kontonummerBruker);
 
     const harIkkeKonto = isPending ? variables?.data.type === HarIkkeKontoInputType.HarIkkeKonto : data?.harIkkeKonto;
