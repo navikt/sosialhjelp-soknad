@@ -30,8 +30,8 @@ export const useKontonummer = () => {
         ? getKontonummerFromVariables(variables?.data, data?.kontonummerRegister)
         : data?.kontonummerBruker || data?.kontonummerRegister;
 
-    const isBrukerUtfylt = isPending
-        ? variables?.data.type === KontonummerBrukerInputType.KontonummerBruker && variables?.data.kontonummer
+    const isBrukerUtfylt: boolean = isPending
+        ? variables?.data.type === KontonummerBrukerInputType.KontonummerBruker && !!variables?.data.kontonummer
         : !!data?.kontonummerBruker;
 
     const harIkkeKonto = isPending ? variables?.data.type === HarIkkeKontoInputType.HarIkkeKonto : data?.harIkkeKonto;
