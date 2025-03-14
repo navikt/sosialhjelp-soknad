@@ -12,9 +12,9 @@ import {
     UpdateKontoInformasjonBrukerBody,
 } from "../../../generated/new/model";
 
-const getKontonummerFromVariables = (kontoInput: HarIkkeKontoInput | KontonummerBrukerInput) => {
+const getKontonummerFromVariables = (kontoInput: HarIkkeKontoInput | KontonummerBrukerInput, fallback?: string) => {
     if (kontoInput.type === KontonummerBrukerInputType.KontonummerBruker) {
-        return kontoInput.kontonummer;
+        return kontoInput.kontonummer ?? fallback;
     }
 };
 
@@ -27,7 +27,7 @@ export const useKontonummer = () => {
     });
 
     const kontonummer = isPending
-        ? getKontonummerFromVariables(variables?.data)
+        ? getKontonummerFromVariables(variables?.data, data?.kontonummerRegister)
         : data?.kontonummerBruker || data?.kontonummerRegister;
 
     const isBrukerUtfylt = isPending
@@ -36,10 +36,10 @@ export const useKontonummer = () => {
 
     const harIkkeKonto = isPending ? variables?.data.type === HarIkkeKontoInputType.HarIkkeKonto : data?.harIkkeKonto;
 
-    const updateKontoInformasjon = (kontonummer: string | undefined, harIkkeKonto: boolean) => {
+    const updateKontoInformasjon = (harIkkeKonto?: boolean | null, kontonummer?: string | null) => {
         const data: UpdateKontoInformasjonBrukerBody = harIkkeKonto
             ? {type: HarIkkeKontoInputType.HarIkkeKonto, harIkkeKonto}
-            : {type: KontonummerBrukerInputType.KontonummerBruker, kontonummer};
+            : {type: KontonummerBrukerInputType.KontonummerBruker, kontonummer: kontonummer ?? undefined};
 
         return mutate({soknadId: behandlingsId, data});
     };

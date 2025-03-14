@@ -36,9 +36,9 @@ export const Kontonr = () => {
                         kontonummer={kontonummer}
                     />
                     <KontonrEdit
-                        defaultValues={{brukerutfyltVerdi: kontonummer, harIkkeKonto}}
+                        defaultValues={{brukerutfyltVerdi: null, harIkkeKonto: harIkkeKonto ?? null}}
                         onSave={(data) => {
-                            updateKontoInformasjon(data.brukerutfyltVerdi, Boolean(data.harIkkeKonto));
+                            updateKontoInformasjon(data.harIkkeKonto, data.brukerutfyltVerdi);
                             setEditMode(false);
                         }}
                         onCancel={() => setEditMode(false)}

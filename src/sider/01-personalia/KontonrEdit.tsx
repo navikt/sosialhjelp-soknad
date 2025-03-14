@@ -16,12 +16,12 @@ const KontonummerSchema = z.object({
         .regex(KontonummerRegex, "kontakt.kontonummer.feilmelding")
         .optional()
         .or(transformEmptyStringToNull),
-    harIkkeKonto: z.boolean().optional(),
+    harIkkeKonto: z.boolean().optional().nullable(),
 });
 
 interface FormValues {
-    brukerutfyltVerdi?: string;
-    harIkkeKonto?: boolean;
+    brukerutfyltVerdi?: string | null;
+    harIkkeKonto?: boolean | null;
 }
 
 export const KontonrEdit = ({
