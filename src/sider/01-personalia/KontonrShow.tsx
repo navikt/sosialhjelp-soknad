@@ -54,7 +54,7 @@ export const KontonrShow = ({onEdit, harIkkeKonto, kontonummer, isBrukerUtfylt}:
 
     if (isBrukerUtfylt && kontonummer) return <KontonrShowBrukerdefinert onEdit={onEdit} kontonummer={kontonummer} />;
 
-    if (isBrukerUtfylt === false) return <KontonrShowSysteminfo onEdit={onEdit} kontonummer={kontonummer} />;
+    if (!isBrukerUtfylt && kontonummer) return <KontonrShowSysteminfo onEdit={onEdit} kontonummer={kontonummer} />;
 
     return (
         <div>

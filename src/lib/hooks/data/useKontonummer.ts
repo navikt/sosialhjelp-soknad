@@ -18,14 +18,11 @@ const getKontonummerFromVariables = (kontoInput: HarIkkeKontoInput | Kontonummer
     }
 };
 
-const getIsBrukerUtfylt = (kontoInput: HarIkkeKontoInput | KontonummerBrukerInput): boolean | undefined => {
+const getIsBrukerUtfylt = (kontoInput: HarIkkeKontoInput | KontonummerBrukerInput): boolean => {
     if (kontoInput.type === KontonummerBrukerInputType.KontonummerBruker && kontoInput.kontonummer) {
         return true;
     }
-};
-
-const toBoolOrUndefined = (value?: string): boolean | undefined => {
-    return value ? !!value : undefined;
+    return false;
 };
 
 export const useKontonummer = () => {
@@ -40,8 +37,7 @@ export const useKontonummer = () => {
         ? getKontonummerFromVariables(variables?.data, data?.kontonummerRegister)
         : data?.kontonummerBruker || data?.kontonummerRegister;
 
-    // Will be undefined if user har submitted nothing (blank input)
-    const isBrukerUtfylt = isPending ? getIsBrukerUtfylt(variables?.data) : toBoolOrUndefined(data?.kontonummerBruker);
+    const isBrukerUtfylt = isPending ? getIsBrukerUtfylt(variables?.data) : !!data?.kontonummerBruker;
 
     const harIkkeKonto = isPending ? variables?.data.type === HarIkkeKontoInputType.HarIkkeKonto : data?.harIkkeKonto;
 
