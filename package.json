@@ -100,7 +100,7 @@
     "scripts": {
         "build": "next build",
         "tsc": "tsc",
-        "dev": "next dev | pino-pretty",
+        "dev": "next dev -p 3001 -H 0.0.0.0 | pino-pretty",
         "start": "next start -H 0.0.0.0",
         "test": "vitest",
         "prepare": "husky",

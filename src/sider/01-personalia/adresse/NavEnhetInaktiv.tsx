@@ -1,19 +1,19 @@
 import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId";
-import {useHentAdresser} from "../../../generated/adresse-ressurs/adresse-ressurs";
 import {Alert, BodyShort, Link} from "@navikt/ds-react";
 import * as React from "react";
 import {useTranslations} from "next-intl";
+import {useGetAdresser} from "../../../generated/new/adresse-controller/adresse-controller.ts";
 
 export const NavEnhetInaktiv = () => {
     const t = useTranslations("NavEnhetInaktiv");
     const behandlingsId = useBehandlingsId();
-    const {data: adresser} = useHentAdresser(behandlingsId);
+    const {data: adresser} = useGetAdresser(behandlingsId);
 
-    if (!adresser?.navEnhet) return null;
+    if (!adresser?.navenhet) return null;
 
-    const {isMottakDeaktivert, isMottakMidlertidigDeaktivert} = adresser.navEnhet;
+    const {isMottakDeaktivert, isMottakMidlertidigDeaktivert} = adresser.navenhet;
 
-    const kommunenavn = adresser.navEnhet.kommunenavn ?? "";
+    const kommunenavn = adresser.navenhet.kommunenavn ?? "";
 
     if (isMottakDeaktivert)
         return (

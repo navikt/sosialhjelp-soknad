@@ -1,34 +1,44 @@
 import * as React from "react";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
-import {updateKontonummer, useHentKontonummer} from "../../generated/kontonummer-ressurs/kontonummer-ressurs";
 import {KontonrShow} from "./KontonrShow";
 import {KontonrEdit} from "./KontonrEdit";
-import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {Systeminfo} from "../../lib/components/systeminfo/Systeminfo";
-import {useDigisosMutation} from "../../lib/hooks/common/useDigisosMutation";
-import {Heading} from "@navikt/ds-react";
+import {Heading, Loader} from "@navikt/ds-react";
+import {useKontonummer} from "../../lib/hooks/data/useKontonummer.ts";
 
 export const Kontonr = () => {
-    const behandlingsId = useBehandlingsId();
     const [editMode, setEditMode] = useState<boolean>(false);
-    const {expectOK} = useAlgebraic(useHentKontonummer(behandlingsId));
     const {t} = useTranslation("skjema");
-    const {mutate} = useDigisosMutation(useHentKontonummer, updateKontonummer);
+    const {updateKontoInformasjon, harIkkeKonto, kontonummer, isLoading, isBrukerUtfylt} = useKontonummer();
 
-    return expectOK((data) => (
+    if (isLoading) {
+        return (
+            <section aria-labelledby={"kontonummer-heading"} className={"space-y-2"}>
+                <Heading id={"kontonummer-heading"} size={"small"} level={"3"}>
+                    {t("kontakt.kontonummer.sporsmal")}
+                </Heading>
+                <Loader />
+            </section>
+        );
+    }
+
+    return (
         <section aria-labelledby={"kontonummer-heading"} className={"space-y-2"}>
             <Heading id={"kontonummer-heading"} size={"small"} level={"3"}>
                 {t("kontakt.kontonummer.sporsmal")}
             </Heading>
             {editMode ? (
                 <Systeminfo>
-                    <KontonrShow />
+                    <KontonrShow
+                        isBrukerUtfylt={isBrukerUtfylt}
+                        harIkkeKonto={harIkkeKonto}
+                        kontonummer={kontonummer}
+                    />
                     <KontonrEdit
-                        defaultValues={data}
-                        onSave={async (data) => {
-                            await mutate(data);
+                        defaultValues={{brukerutfyltVerdi: null, harIkkeKonto: harIkkeKonto ?? null}}
+                        onSave={(data) => {
+                            updateKontoInformasjon(data.harIkkeKonto, data.brukerutfyltVerdi);
                             setEditMode(false);
                         }}
                         onCancel={() => setEditMode(false)}
@@ -36,9 +46,14 @@ export const Kontonr = () => {
                 </Systeminfo>
             ) : (
                 <Systeminfo>
-                    <KontonrShow onEdit={() => setEditMode(true)} />
+                    <KontonrShow
+                        isBrukerUtfylt={isBrukerUtfylt}
+                        harIkkeKonto={harIkkeKonto}
+                        kontonummer={kontonummer}
+                        onEdit={() => setEditMode(true)}
+                    />
                 </Systeminfo>
             )}
         </section>
-    ));
+    );
 };

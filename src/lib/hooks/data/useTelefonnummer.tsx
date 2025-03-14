@@ -1,26 +1,23 @@
-import {useQueryClient} from "@tanstack/react-query";
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {
-    updateTelefonnummer,
-    useHentTelefonnummer,
-} from "../../../generated/telefonnummer-ressurs/telefonnummer-ressurs";
+    useGetTelefonnummer,
+    useUpdateTelefonnummer,
+} from "../../../generated/new/telefonnummer-controller/telefonnummer-controller.ts";
+import {useQueryClient} from "@tanstack/react-query";
 
 export const useTelefonnummer = () => {
     const queryClient = useQueryClient();
-
     const behandlingsId = useBehandlingsId();
-    const {data, queryKey, isLoading} = useHentTelefonnummer(behandlingsId);
+    const {data, queryKey, isLoading} = useGetTelefonnummer(behandlingsId);
+    const {
+        mutate,
+        isPending: mutationIsPending,
+        variables,
+    } = useUpdateTelefonnummer({mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})}});
+    const telefonnummerBruker = mutationIsPending ? variables?.data.telefonnummerBruker : data?.telefonnummerBruker;
+    const telefonnummerRegister = data?.telefonnummerRegister;
     const setTelefonnummer = async (brukerutfyltVerdi: string | null) =>
-        queryClient.setQueryData(
-            queryKey,
-            await updateTelefonnummer(behandlingsId, {
-                brukerdefinert: !!brukerutfyltVerdi?.length,
-                brukerutfyltVerdi: brukerutfyltVerdi?.length ? `${brukerutfyltVerdi}` : null,
-            })
-        );
+        mutate({soknadId: behandlingsId, data: {telefonnummerBruker: brukerutfyltVerdi ?? undefined}});
 
-    const fraSystem = data?.systemverdi;
-    const fraBruker = data?.brukerutfyltVerdi;
-
-    return {data, fraSystem, fraBruker, setTelefonnummer, isLoading};
+    return {telefonnummerBruker, telefonnummerRegister, setTelefonnummer, isLoading};
 };

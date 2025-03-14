@@ -18,9 +18,7 @@ export const useInntekterBostotte = () => {
 
     const setSamtykke = async (nyttHarSamtykke: boolean) => {
         if (!bostotte) return;
-        // FIXME: Replace with contentful PUT
         mutate({soknadId: behandlingsId, data: {hasSamtykke: nyttHarSamtykke}});
-        await queryClient.invalidateQueries({queryKey});
     };
 
     const setBekreftelse = async (harInntektHusbanken: boolean) => {
