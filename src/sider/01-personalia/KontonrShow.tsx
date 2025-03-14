@@ -53,8 +53,6 @@ export const KontonrShow = ({onEdit, harIkkeKonto, kontonummer, isBrukerUtfylt}:
         );
 
     if (isBrukerUtfylt && kontonummer) return <KontonrShowBrukerdefinert onEdit={onEdit} kontonummer={kontonummer} />;
-    console.log("isBrukerUtfylt", isBrukerUtfylt);
-    console.log("konto", kontonummer);
 
     if (isBrukerUtfylt === false) return <KontonrShowSysteminfo onEdit={onEdit} kontonummer={kontonummer} />;
 

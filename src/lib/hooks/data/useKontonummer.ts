@@ -26,15 +26,13 @@ export const useKontonummer = () => {
         mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
     });
 
-    console.log("data", data?.kontonummerBruker);
-
     const kontonummer = isPending
         ? getKontonummerFromVariables(variables?.data)
         : data?.kontonummerBruker || data?.kontonummerRegister;
 
     const isBrukerUtfylt = isPending
-        ? variables?.data.type === KontonummerBrukerInputType.KontonummerBruker
-        : data?.kontonummerBruker;
+        ? variables?.data.type === KontonummerBrukerInputType.KontonummerBruker && !!variables?.data.kontonummer
+        : !!data?.kontonummerBruker;
 
     const harIkkeKonto = isPending ? variables?.data.type === HarIkkeKontoInputType.HarIkkeKonto : data?.harIkkeKonto;
 
