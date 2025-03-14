@@ -18,13 +18,6 @@ const getKontonummerFromVariables = (kontoInput: HarIkkeKontoInput | Kontonummer
     }
 };
 
-const getIsBrukerUtfylt = (kontoInput: HarIkkeKontoInput | KontonummerBrukerInput): boolean => {
-    if (kontoInput.type === KontonummerBrukerInputType.KontonummerBruker && kontoInput.kontonummer) {
-        return true;
-    }
-    return false;
-};
-
 export const useKontonummer = () => {
     const behandlingsId = useBehandlingsId();
     const {data, isLoading, queryKey} = useGetKontonummer(behandlingsId);
@@ -37,7 +30,9 @@ export const useKontonummer = () => {
         ? getKontonummerFromVariables(variables?.data, data?.kontonummerRegister)
         : data?.kontonummerBruker || data?.kontonummerRegister;
 
-    const isBrukerUtfylt = isPending ? getIsBrukerUtfylt(variables?.data) : !!data?.kontonummerBruker;
+    const isBrukerUtfylt = isPending
+        ? variables?.data.type === KontonummerBrukerInputType.KontonummerBruker && variables?.data.kontonummer
+        : !!data?.kontonummerBruker;
 
     const harIkkeKonto = isPending ? variables?.data.type === HarIkkeKontoInputType.HarIkkeKonto : data?.harIkkeKonto;
 
