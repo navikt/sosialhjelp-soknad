@@ -1779,7 +1779,7 @@ export const skjema = {
                 kort_saldo_leggTil: "Add account",
                 kort_saldo_lastOpp: "Upload account statement (at time of application)",
                 oppsummering_kort_saldo_tittel: "Information about the balance on your accounts",
-                oppsummering_kort_saldo_sporsmal: "Balance account",
+                oppsummering_kort_saldo_sporsmal: "Balance account:",
                 oppsummering_kort_konto_saldo_ingen: "No information",
             },
             til: "to",

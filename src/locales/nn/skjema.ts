@@ -1769,7 +1769,7 @@ export const skjema = {
                 kort_saldo_leggTil: "Legg til konto",
                 kort_saldo_lastOpp: "Last opp kontooversikt (på søknadstidspunkt)",
                 oppsummering_kort_saldo_tittel: "Opplysningar om saldo på dine brukskontoane",
-                oppsummering_kort_saldo_sporsmal: "Saldo konto",
+                oppsummering_kort_saldo_sporsmal: "Saldo konto:",
                 oppsummering_kort_konto_saldo_ingen: "Ingen informasjon",
             },
             til: "til",
