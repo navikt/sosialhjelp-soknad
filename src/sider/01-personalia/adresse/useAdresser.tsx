@@ -26,12 +26,12 @@ export const useAdresser = () => {
     } = useUpdateAdresser({
         mutation: {
             mutationKey: mutationKey(soknadId),
-            onMutate: () => {
+            onMutate: () =>
                 setTimeout(() => {
                     setShowSpinner(true);
-                }, 500);
-            },
-            onSettled: () => {
+                }, 500),
+            onSettled: (_data, _error, _variables, context) => {
+                clearTimeout(context);
                 setShowSpinner(false);
                 return queryClient.invalidateQueries({queryKey: getGetAdresserQueryKey(soknadId)});
             },
@@ -55,6 +55,6 @@ export const useAdresser = () => {
         adresseValg: data?.adresseValg,
         navenhet: data?.navenhet,
         isLoading,
-        showSpinner: showSpinner && isUpdatePending,
+        showSpinner: showSpinner,
     };
 };

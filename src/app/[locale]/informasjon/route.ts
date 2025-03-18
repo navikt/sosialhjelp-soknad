@@ -12,7 +12,7 @@ export async function GET({nextUrl, headers}: NextRequest) {
     const url = nextUrl.clone();
     url.pathname = BASE_PATH;
     url.host = headers.get("host") ?? url.host;
-    url.port = process.env.NEXT_PUBLIC_DIGISOS_ENV === "localhost" ? "3000" : "";
+    url.port = process.env.NEXT_PUBLIC_DIGISOS_ENV === "localhost" ? "3001" : "";
     logger.info(`Redirecting from /informasjon to ${url.toString()}`);
     return NextResponse.redirect(url);
 }

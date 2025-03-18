@@ -1,6 +1,5 @@
 import {useTranslation} from "react-i18next";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
-import {useHentSivilstatus} from "../../generated/sivilstatus-ressurs/sivilstatus-ressurs";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import * as React from "react";
@@ -8,13 +7,14 @@ import {LocalizedDate} from "../../lib/components/LocalizedDate";
 import {FullName} from "../01-personalia/FulltNavn";
 import {LocalizedYesNo} from "../../lib/components/LocalizedYesNo";
 import {BodyShort} from "@navikt/ds-react";
+import {useGetSivilstand} from "../../generated/new/sivilstand-controller/sivilstand-controller.ts";
 
 export const EktefellePersonaliaSystem = () => {
     const {t} = useTranslation("skjema");
-    const {expectOK} = useAlgebraic(useHentSivilstatus(useBehandlingsId()));
+    const {expectOK} = useAlgebraic(useGetSivilstand(useBehandlingsId()));
 
     // FIXME: Handle the reverse case of this if clause
-    return expectOK(({ektefelle, erFolkeregistrertSammen}) =>
+    return expectOK(({ektefelle}) =>
         ektefelle?.navn ? (
             <>
                 <BodyShort className={"pb-3"}>{t("system.familie.sivilstatus.label")} </BodyShort>
@@ -27,7 +27,7 @@ export const EktefellePersonaliaSystem = () => {
                     </SysteminfoItem>
                 )}
                 <SysteminfoItem as="div" label={t(`system.familie.sivilstatus.gift.ektefelle.folkereg`)}>
-                    <LocalizedYesNo value={erFolkeregistrertSammen} />
+                    <LocalizedYesNo value={ektefelle?.folkeregistrertMedEktefelle} />
                 </SysteminfoItem>
                 <BodyShort className={"pt-3"}>{t("system.familie.sivilstatus.stringValue")}</BodyShort>
             </>

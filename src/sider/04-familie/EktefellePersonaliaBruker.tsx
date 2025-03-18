@@ -1,34 +1,38 @@
 import {useTranslation} from "react-i18next";
-import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
-import {useHentSivilstatus} from "../../generated/sivilstatus-ressurs/sivilstatus-ressurs";
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
-import {BodyShort} from "@navikt/ds-react";
+import {BodyShort, Loader} from "@navikt/ds-react";
 import * as React from "react";
+
 import {LocalizedDate} from "../../lib/components/LocalizedDate";
 import {FullName} from "../01-personalia/FulltNavn";
+import {EktefelleDtoOrInput} from "../../lib/hooks/data/useSivilstatus.tsx";
 
-export const EktefellePersonaliaBruker = () => {
+interface Props {
+    ektefelle: EktefelleDtoOrInput;
+    isLoading?: boolean;
+}
+
+export const EktefellePersonaliaBruker = ({ektefelle, isLoading}: Props) => {
     const {t} = useTranslation("skjema");
-    const {expectOK} = useAlgebraic(useHentSivilstatus(useBehandlingsId()));
 
     // FIXME: Handle the reverse case of this if clause
-    return expectOK(({ektefelle, erFolkeregistrertSammen}) =>
-        ektefelle?.navn ? (
-            <>
-                <BodyShort className={"pb-3"}>{t("system.familie.sivilstatus.label")}</BodyShort>
-                <SysteminfoItem as="div" label={t(`system.familie.sivilstatus.gift.ektefelle.navn`)}>
-                    <FullName name={ektefelle.navn} />
+    return ektefelle?.navn ? (
+        <div>
+            <BodyShort className={"pb-3"}>
+                {t("system.familie.sivilstatus.label")}
+                {isLoading && <Loader />}
+            </BodyShort>
+            <SysteminfoItem as="div" label={t(`system.familie.sivilstatus.gift.ektefelle.navn`)}>
+                <FullName name={ektefelle.navn} />
+            </SysteminfoItem>
+            {ektefelle?.fodselsdato && (
+                <SysteminfoItem as="div" label={t(`system.familie.sivilstatus.gift.ektefelle.fodselsdato`)}>
+                    <LocalizedDate date={ektefelle.fodselsdato} />
                 </SysteminfoItem>
-                {ektefelle?.fodselsdato && (
-                    <SysteminfoItem as="div" label={t(`system.familie.sivilstatus.gift.ektefelle.fodselsdato`)}>
-                        <LocalizedDate date={ektefelle.fodselsdato} />
-                    </SysteminfoItem>
-                )}
-                <SysteminfoItem as="div" label={t(`familie.sivilstatus.gift.borsammen.sporsmal`)}>
-                    {erFolkeregistrertSammen ? t("avbryt.ja") : t("avbryt.nei")}
-                </SysteminfoItem>
-            </>
-        ) : null
-    );
+            )}
+            <SysteminfoItem as="div" label={t(`familie.sivilstatus.gift.borsammen.sporsmal`)}>
+                {ektefelle.folkeregistrertMedEktefelle ? t("avbryt.ja") : t("avbryt.nei")}
+            </SysteminfoItem>
+        </div>
+    ) : null;
 };

@@ -1,6 +1,6 @@
 import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {DigisosReadMore} from "../../lib/components/DigisosReadMore";
-import {TextField} from "@navikt/ds-react";
+import {Loader, TextField} from "@navikt/ds-react";
 import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {useAnsvar} from "../../lib/hooks/data/useAnsvar";
@@ -15,21 +15,26 @@ const SamvaersgradSchema = z.coerce
 
 export const BarnSkjema = ({barnIndex}: {barnIndex: number}) => {
     const {t} = useTranslation("skjema");
-    const {ansvar, setHarDeltBosted, setSamvaersgrad} = useAnsvar(barnIndex);
+    const {ansvar, setHarDeltBosted, setSamvaersgrad, isDelayedPending} = useAnsvar(barnIndex);
     const [samvaersgradError, setSamvaersgradError] = React.useState<string | undefined>(undefined);
     if (!ansvar) return null;
 
     return (
         <div className={"!mt-16 !mb-16"}>
-            {ansvar.erFolkeregistrertSammen ? (
+            {ansvar.folkeregistrertSammen ? (
                 <YesNoInput
-                    legend={t("system.familie.barn.true.barn.deltbosted.sporsmal")}
+                    legend={
+                        <div>
+                            {t("system.familie.barn.true.barn.deltbosted.sporsmal")}
+                            {isDelayedPending && <Loader />}
+                        </div>
+                    }
                     description={
                         <DigisosReadMore>
                             {t("system.familie.barn.true.barn.deltbosted.hjelpetekst.tekst")}
                         </DigisosReadMore>
                     }
-                    defaultValue={ansvar.harDeltBosted}
+                    defaultValue={ansvar.deltBosted}
                     name={`deltbosted_barn${barnIndex}`}
                     onChange={(checked) => setHarDeltBosted(checked)}
                 />
@@ -41,8 +46,8 @@ export const BarnSkjema = ({barnIndex}: {barnIndex: number}) => {
                     autoComplete="off"
                     htmlSize={15}
                     name={`barn${barnIndex}_samvaersgrad`}
-                    value={ansvar.samvarsgrad?.toString() ?? ""}
-                    onChange={({target: {value}}) => {
+                    defaultValue={ansvar.samvarsgrad?.toString() ?? ""}
+                    onBlur={({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
                         try {
                             const grad = SamvaersgradSchema.parse(value);
                             setSamvaersgrad(grad);
@@ -52,7 +57,12 @@ export const BarnSkjema = ({barnIndex}: {barnIndex: number}) => {
                         }
                     }}
                     error={samvaersgradError}
-                    label={t("system.familie.barn.true.barn.grad.sporsmal")}
+                    label={
+                        <div>
+                            {t("system.familie.barn.true.barn.grad.sporsmal")}
+                            {isDelayedPending && <Loader />}
+                        </div>
+                    }
                     description={t("system.familie.barn.true.barn.grad.pattern")}
                     maxLength={3}
                     required={false}
