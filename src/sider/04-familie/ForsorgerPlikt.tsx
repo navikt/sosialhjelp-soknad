@@ -3,8 +3,8 @@ import {RegistrerteBarn} from "./RegistrerteBarn";
 import {useTranslation} from "react-i18next";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {BodyShort, Heading as DSHeading} from "@navikt/ds-react";
-import {useHentForsorgerplikt} from "../../generated/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
+import {useGetForsorgerplikt} from "../../generated/new/forsorgerplikt-controller/forsorgerplikt-controller.ts";
 
 interface Props {
     heading?: JSX.Element;
@@ -23,7 +23,7 @@ const Heading = () => {
 };
 export const ForsorgerPlikt = ({skipForm, heading = <Heading />}: Props) => {
     const {t} = useTranslation("skjema");
-    const {expectOK} = useAlgebraic(useHentForsorgerplikt(useBehandlingsId()));
+    const {expectOK} = useAlgebraic(useGetForsorgerplikt(useBehandlingsId()));
 
     return expectOK(({ansvar}) => {
         if (!ansvar.length)

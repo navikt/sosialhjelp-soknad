@@ -1,9 +1,5 @@
 import {updateBegrunnelse} from "../../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
 import {updateUtdanning} from "../../../generated/utdanning-ressurs/utdanning-ressurs";
-import {
-    hentForsorgerplikt,
-    updateForsorgerplikt,
-} from "../../../generated/forsorgerplikt-ressurs/forsorgerplikt-ressurs";
 import {updateBosituasjon} from "../../../generated/bosituasjon-ressurs/bosituasjon-ressurs";
 import {putSkatteetatenSamtykke} from "../../../generated/skattbar-inntekt-ressurs/skattbar-inntekt-ressurs";
 import {updateStudielan} from "../../../generated/studielan-ressurs/studielan-ressurs";
@@ -19,6 +15,11 @@ import {
 import {opplysningSpec} from "../../opplysninger";
 import {VedleggFrontend, VedleggRadFrontend} from "../../../generated/model";
 import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
+import {
+    getForsorgerplikt,
+    updateForsorgerplikt,
+} from "../../../generated/new/forsorgerplikt-controller/forsorgerplikt-controller.ts";
+import {updateBostotte} from "../../../generated/new/bostotte-controller/bostotte-controller.ts";
 
 // Jeg har rappet disse fra Orval-boilerplate-kode for å få tilgang til ReadOnly<T> under her.
 
@@ -69,12 +70,11 @@ export const maximizeSoknad = async (soknadId: string) => {
         studengradErHeltid: true,
     });
 
-    const ansvar = await hentForsorgerplikt(soknadId);
+    const ansvar = await getForsorgerplikt(soknadId);
 
     await updateForsorgerplikt(soknadId, {
         ...ansvar,
-        barnebidrag: "begge",
-        harForsorgerplikt: true,
+        barnebidrag: "BEGGE",
     });
 
     await updateBosituasjon(soknadId, {
@@ -84,6 +84,11 @@ export const maximizeSoknad = async (soknadId: string) => {
 
     await putSkatteetatenSamtykke(soknadId, {
         samtykke: true,
+    });
+
+    await updateBostotte(soknadId, {
+        hasBostotte: true,
+        hasSamtykke: true,
     });
 
     await updateStudielan(soknadId, {

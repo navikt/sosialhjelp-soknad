@@ -24,7 +24,7 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
         navigate(`../${page}`);
     };
 
-    const {sivilstatus} = useSivilstatus();
+    const {ektefelle} = useSivilstatus();
 
     const {forsorgerplikt} = useForsorgerplikt();
 
@@ -44,9 +44,9 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
                     </Box>
                     <Box className="space-y-2">
                         <Heading size="small">{t("system.familie.sivilstatus.sporsmal")}</Heading>
-                        {sivilstatus?.ektefelle?.navn ? (
+                        {ektefelle?.navn ? (
                             <Systeminfo>
-                                <EktefellePersonaliaBruker />
+                                <EktefellePersonaliaBruker ektefelle={ektefelle} />
                             </Systeminfo>
                         ) : (
                             <>

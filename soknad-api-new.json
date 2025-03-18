@@ -2650,19 +2650,17 @@
                 "type": "object",
                 "properties": {
                     "personId": {"type": "string"},
-                    "navn": {"$ref": "#/components/schemas/Navn"},
+                    "navn": {"$ref": "#/components/schemas/NavnInput"},
                     "fodselsdato": {"type": "string"},
                     "borSammen": {"type": "boolean"}
                 }
             },
-            "Navn": {
-                "required": ["etternavn", "fornavn", "fulltNavn"],
+            "NavnInput": {
                 "type": "object",
                 "properties": {
                     "fornavn": {"type": "string"},
                     "mellomnavn": {"type": "string"},
-                    "etternavn": {"type": "string"},
-                    "fulltNavn": {"type": "string"}
+                    "etternavn": {"type": "string"}
                 }
             },
             "SivilstandInput": {
@@ -2688,6 +2686,14 @@
                     "kildeErSystem": {"type": "boolean"}
                 }
             },
+            "Navn": {
+                "type": "object",
+                "properties": {
+                    "fornavn": {"type": "string"},
+                    "mellomnavn": {"type": "string"},
+                    "etternavn": {"type": "string"}
+                }
+            },
             "SivilstandDto": {
                 "type": "object",
                 "properties": {
@@ -2703,7 +2709,9 @@
                 "properties": {
                     "uuid": {"type": "string", "format": "uuid"},
                     "personId": {"type": "string"},
-                    "deltBosted": {"type": "boolean"}
+                    "deltBosted": {"type": "boolean"},
+                    "samvarsgrad": {"type": "integer", "format": "int32"},
+                    "folkeregistrertSammen": {"type": "boolean"}
                 }
             },
             "ForsorgerInput": {

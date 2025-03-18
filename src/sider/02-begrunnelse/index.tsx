@@ -11,7 +11,6 @@ import KategorierChips from "../../lib/components/KategorierChips";
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/SkjemaStegErrorSummary.tsx";
 import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
-import {useForsorgerplikt} from "../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../lib/components/LocalizedTextArea.tsx";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
@@ -26,7 +25,6 @@ export const Begrunnelse = () => {
     const {t} = useTranslation("skjema");
     const featureFlagData = useContextFeatureToggles();
     const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
-    const {forsorgerplikt} = useForsorgerplikt();
     const {
         register,
         handleSubmit,
@@ -41,11 +39,7 @@ export const Begrunnelse = () => {
         mode: "onChange",
     });
 
-    const {put, isPending, reducer, toggle, isError} = useKategorier(
-        !!forsorgerplikt?.harForsorgerplikt,
-        setValue,
-        getValues
-    );
+    const {put, isPending, reducer, toggle, isError} = useKategorier(setValue, getValues);
 
     const navigate = useNavigate();
 

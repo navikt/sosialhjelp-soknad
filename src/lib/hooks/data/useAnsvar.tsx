@@ -1,7 +1,7 @@
 import {useForsorgerplikt} from "./useForsorgerplikt";
 
 export const useAnsvar = (barnIndex: number) => {
-    const {forsorgerplikt, setBarn, isPending} = useForsorgerplikt();
+    const {forsorgerplikt, setBarn, isLoading, isDelayedPending} = useForsorgerplikt();
 
     const ansvar = forsorgerplikt?.ansvar[barnIndex];
     const setSamvaersgrad = async (samvaersgrad?: number) => {
@@ -14,5 +14,5 @@ export const useAnsvar = (barnIndex: number) => {
         await setBarn(barnIndex, undefined, harDeltBosted);
     };
 
-    return {ansvar, setSamvaersgrad, setHarDeltBosted, isPending};
+    return {ansvar, setSamvaersgrad, setHarDeltBosted, isLoading, isDelayedPending};
 };
