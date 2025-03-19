@@ -12,7 +12,7 @@ import {
     SUPPORTED_WITHOUT_CONVERSION,
 } from "../../../sider/08-vedlegg/upload/DokumentUploader";
 import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
-import {useValgtKategoriContext} from "../../../KortKategorierContextProvider.tsx";
+import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
 
 interface Props {
     sporsmal: string;

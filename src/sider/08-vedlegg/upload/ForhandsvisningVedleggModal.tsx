@@ -8,7 +8,7 @@ import "react-pdf/dist/Page/TextLayer.css";
 import {FilePreviewButtons} from "./FilePreviewButtons";
 import {FilePreviewDisplay} from "./FilePreviewDisplay";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
-import {useValgtKategoriContext} from "../../../KortKategorierContextProvider.tsx";
+import {useValgtKategoriContext} from "../../../lib/providers/KortKategorierContextProvider.tsx";
 import {VedleggFrontendType} from "../../../generated/model";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();

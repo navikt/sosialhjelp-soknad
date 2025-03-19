@@ -24,7 +24,7 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
 import useDecoratorLogin from "./lib/hooks/auth/useDecoratorLogin.ts";
-import {ValgtKategoriProvider} from "./KortKategorierContextProvider.tsx";
+import {ValgtKategoriProvider} from "./lib/providers/KortKategorierContextProvider.tsx";
 
 const queryClient = new QueryClient();
 

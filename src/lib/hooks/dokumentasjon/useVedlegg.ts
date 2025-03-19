@@ -13,7 +13,7 @@ import {humanizeFilesize} from "../../../sider/08-vedlegg/lib/humanizeFilesize";
 import {axiosInstance} from "../../api/axiosInstance";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 import {useContextSessionInfo} from "../../providers/useContextSessionInfo.ts";
-import {useValgtKategoriContext} from "../../../KortKategorierContextProvider.tsx";
+import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
 
 const TEN_MEGABYTE_COMPAT_FALLBACK = 10 * 1024 * 1024;
 

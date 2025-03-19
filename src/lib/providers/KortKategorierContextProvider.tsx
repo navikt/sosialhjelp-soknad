@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {VedleggFrontendType} from "./generated/model";
+import {VedleggFrontendType} from "../../generated/model";
 
 interface ValgtKategoriData {
     valgtKategorier?: VedleggFrontendType;
