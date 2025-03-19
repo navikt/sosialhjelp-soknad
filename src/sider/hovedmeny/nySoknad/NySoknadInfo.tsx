@@ -4,7 +4,6 @@ import * as React from "react";
 import {useState} from "react";
 import {NySoknadVelkomst} from "./NySoknadVelkomst.tsx";
 import {useTranslations} from "next-intl";
-import {hentXsrfCookie} from "../../../generated/soknad-ressurs/soknad-ressurs.ts";
 import {SoknadstypeValg} from "./SoknadstypeValg.tsx";
 import {useCreateSoknad} from "./useCreateSoknad.tsx";
 import {useAmplitudeSkjemaStartet} from "./useAmplitudeSkjemaStartet.tsx";
@@ -25,7 +24,6 @@ export const NySoknadInfo = () => {
         await logAmplitudeStartSoknad();
         try {
             const {soknadId} = await createSoknad(soknadstype);
-            await hentXsrfCookie(soknadId);
             window.location.assign(`${BASE_PATH}/skjema/${soknadId}/1`);
         } catch (e: any) {
             setStartSoknadError(e);
