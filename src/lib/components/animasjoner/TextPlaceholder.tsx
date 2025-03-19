@@ -63,4 +63,9 @@ const bars = (lines: number): React.ReactNode[] => {
 export const TextPlaceholder: React.FunctionComponent<{
     lines?: number;
     style?: object;
-}> = ({lines = 3, style}) => <LoaderBar style={style}>{bars(lines)}</LoaderBar>;
+    className?: string;
+}> = ({lines = 3, style, className}) => (
+    <LoaderBar className={className} style={style}>
+        {bars(lines)}
+    </LoaderBar>
+);
