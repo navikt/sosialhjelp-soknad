@@ -14,6 +14,8 @@ import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegSt
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
+import {useGetArbeid} from "../../../generated/new/arbeid-controller/arbeid-controller.ts";
+import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId.ts";
 
 const ArbeidOgFamilie = (): React.JSX.Element => {
     const {t} = useTranslation("skjema");
@@ -28,6 +30,8 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
 
     const {forsorgerplikt} = useForsorgerplikt();
 
+    const {data: arbeid} = useGetArbeid(useBehandlingsId());
+
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={3} onStepChange={gotoPage} />
@@ -40,7 +44,7 @@ const ArbeidOgFamilie = (): React.JSX.Element => {
                 <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
                     <Box className="space-y-2">
                         <Heading size="small">{t("arbeidsforhold.sporsmal")}</Heading>
-                        <ArbeidsforholdListe />
+                        <ArbeidsforholdListe arbeidsforhold={arbeid?.arbeidsforholdList ?? []} />
                     </Box>
                     <Box className="space-y-2">
                         <Heading size="small">{t("system.familie.sivilstatus.sporsmal")}</Heading>
