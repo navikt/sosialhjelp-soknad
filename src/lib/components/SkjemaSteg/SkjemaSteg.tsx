@@ -9,7 +9,6 @@ import {AppHeader} from "../appHeader/AppHeader.tsx";
 import {scrollToTop} from "../../utils";
 import {HusIllustrasjon} from "../svg/illustrasjoner/HusIllustrasjon.tsx";
 import {MynterIllustrasjon} from "../svg/illustrasjoner/MynterIllustrasjon.tsx";
-import {RequireXsrfCookie} from "../RequireXsrfCookie.tsx";
 import {DigisosLanguageKey} from "../../i18n/common.ts";
 import {SparegrisIllustrasjon} from "../svg/illustrasjoner/SparegrisIllustrasjon.tsx";
 import FamilieIllustrasjon from "../svg/illustrasjoner/FamilieIllustrasjon.tsx";
@@ -47,7 +46,7 @@ export const SkjemaSteg = ({children}: {children?: ReactNode | ReactNode[]}) => 
     const {t} = useTranslation("skjema");
 
     return (
-        <RequireXsrfCookie>
+        <>
             <Link href="#main-content" className="sr-only sr-only-focusable">
                 {t("hoppTilHovedinnhold")}
             </Link>
@@ -62,6 +61,6 @@ export const SkjemaSteg = ({children}: {children?: ReactNode | ReactNode[]}) => 
                     {children}
                 </Box>
             </div>
-        </RequireXsrfCookie>
+        </>
     );
 };
