@@ -1,35 +1,60 @@
 import {useQueryClient} from "@tanstack/react-query";
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import {updateFormue, useHentFormue} from "../../../generated/formue-ressurs/formue-ressurs";
-import {FormueFrontend} from "../../../generated/model";
+import {useUpdateFormue, useGetFormue} from "../../../generated/new/formue-controller/formue-controller";
+import {FormueDto, FormueInput} from "../../../generated/new/model";
+
+function mapToDto(vars?: FormueInput): FormueDto | undefined {
+    if (!vars) {
+        return undefined;
+    }
+    return {
+        ...vars,
+        hasSparing: vars.hasBeskrivelseSparing,
+    };
+}
+
+function mapToVars(data?: FormueDto): FormueInput | undefined {
+    if (!data) {
+        return undefined;
+    }
+    return {
+        ...data,
+        hasBeskrivelseSparing: data?.hasSparing,
+        beskrivelseSparing: data?.beskrivelseSparing,
+    };
+}
 
 export const useFormue = () => {
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
-    const {data: formue, queryKey} = useHentFormue(behandlingsId);
+    const {data, queryKey} = useGetFormue(behandlingsId);
+    const {mutate, variables, isPending} = useUpdateFormue({
+        mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
+    });
 
-    const setFormue = async (valg: (keyof Omit<FormueFrontend, "beskrivelseAvAnnet">)[]) => {
+    const formue: FormueDto | undefined = isPending ? mapToDto(variables?.data) : data;
+
+    const setFormue = (valg: (keyof Omit<FormueDto, "beskrivelseAvAnnet">)[]) => {
         if (!formue) return;
 
-        const oppdatert: FormueFrontend = {
-            brukskonto: valg.includes("brukskonto"),
-            bsu: valg.includes("bsu"),
-            livsforsikring: valg.includes("livsforsikring"),
-            sparekonto: valg.includes("sparekonto"),
-            verdipapirer: valg.includes("verdipapirer"),
-            annet: valg.includes("annet"),
-            beskrivelseAvAnnet: valg.includes("annet") ? formue.beskrivelseAvAnnet : "",
+        const oppdatert: FormueInput = {
+            hasBrukskonto: valg.includes("hasBrukskonto"),
+            hasBsu: valg.includes("hasBsu"),
+            hasLivsforsikring: valg.includes("hasLivsforsikring"),
+            hasSparekonto: valg.includes("hasSparekonto"),
+            hasVerdipapirer: valg.includes("hasVerdipapirer"),
+            hasBeskrivelseSparing: valg.includes("hasSparing"),
+            beskrivelseSparing: valg.includes("hasSparing") ? formue.beskrivelseSparing : "",
         };
 
-        await updateFormue(behandlingsId, oppdatert);
-        queryClient.setQueryData(queryKey, oppdatert);
+        mutate({soknadId: behandlingsId, data: oppdatert});
     };
-    const setBeskrivelse = async (beskrivelseAvAnnet: string) => {
+    const setBeskrivelse = (beskrivelseAvAnnet: string) => {
         if (!formue) return;
-
-        const oppdatert = {...formue, beskrivelseAvAnnet};
-        await updateFormue(behandlingsId, oppdatert);
-        queryClient.setQueryData(queryKey, oppdatert);
+        const variables = mapToVars(formue);
+        if (!variables) return;
+        const oppdatert: FormueInput = {...variables, beskrivelseSparing: beskrivelseAvAnnet};
+        mutate({soknadId: behandlingsId, data: oppdatert});
     };
 
     return {formue, setFormue, setBeskrivelse};
