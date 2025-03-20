@@ -171,7 +171,6 @@ const Behov = () => {
                                 sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                                 undertekst="begrunnelse.kort.behov.dokumentasjon.beskrivelse"
                                 liste="begrunnelse.kort.behov.dokumentasjon.liste"
-                                dokumentasjonType={"kort|behov"}
                             />
                         </form>
                     )}

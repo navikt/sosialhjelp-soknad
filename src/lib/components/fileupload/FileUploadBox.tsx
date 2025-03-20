@@ -23,7 +23,6 @@ interface Props {
     undertekst?: TranslationKeys;
     liste?: ListeKeys;
     bunntekst?: string;
-    dokumentasjonType: VedleggFrontendType;
 }
 
 export const FileUploadBoxNoStyle = ({
