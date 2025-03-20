@@ -1,14 +1,14 @@
-import {Organisasjon} from "../../../generated/model";
 import {useTranslation} from "react-i18next";
 import {BodyShort, Table} from "@navikt/ds-react";
 import {SkatteetatenUtbetalingView} from "./SkatteetatenUtbetalingView";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate";
 import * as React from "react";
+import {OrganisasjonDto} from "../../../generated/new/model";
 
 export const SkatteetatenOrganisasjon = ({
     organisasjon: {fom, organisasjonsnavn, orgnr, tom, utbetalinger},
 }: {
-    organisasjon: Organisasjon;
+    organisasjon: OrganisasjonDto;
 }) => {
     const {t} = useTranslation("skjema");
 

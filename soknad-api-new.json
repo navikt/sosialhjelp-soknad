@@ -2547,7 +2547,16 @@
                     }
                 ]
             },
-            "UtbetalingerInput": {"type": "object"},
+            "UtbetalingerInput": {
+                "type": "object",
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "HarIkkeUtbetalingerInput": "#/components/schemas/HarIkkeUtbetalingerInput",
+                        "HarUtbetalingerInput": "#/components/schemas/HarUtbetalingerInput"
+                    }
+                }
+            },
             "UtbetalingerDto": {
                 "required": ["hasAnnenUtbetaling", "hasForsikring", "hasSalg", "hasUtbytte"],
                 "type": "object",

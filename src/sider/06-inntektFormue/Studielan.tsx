@@ -3,21 +3,35 @@ import {Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {SkalIkkeFinansiereStudier} from "./SkalIkkeFinansiereStudier";
-import {updateStudielan, useHentStudielanBekreftelse} from "../../generated/studielan-ressurs/studielan-ressurs";
-import {useDigisosMutation} from "../../lib/hooks/common/useDigisosMutation";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
-import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
+import {useGetHasStudielan, useUpdateStudielan} from "../../generated/new/studielan-controller/studielan-controller.ts";
+import {useQueryClient} from "@tanstack/react-query";
+import {TextPlaceholder} from "../../lib/components/animasjoner/TextPlaceholder.tsx";
 
 export const Studielan = () => {
     const {t} = useTranslation("skjema");
 
     const behandlingsId = useBehandlingsId();
-    const {mutate} = useDigisosMutation(useHentStudielanBekreftelse, updateStudielan);
-    const {expectOK, data: studielan} = useAlgebraic(useHentStudielanBekreftelse(behandlingsId));
+    const queryClient = useQueryClient();
+    const {data: studielan, queryKey, isLoading} = useGetHasStudielan(behandlingsId);
+    const {mutate, variables, isPending} = useUpdateStudielan({
+        mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
+    });
 
-    if (!studielan?.skalVises) return null;
+    if (isLoading) {
+        <div className="space-y-4">
+            <Heading size="medium" level="2">
+                {t("inntekt.studielan.tittel")}
+            </Heading>
+            <TextPlaceholder />
+        </div>;
+    }
 
-    return expectOK((studielan) => (
+    if (!studielan?.erStudent) return null;
+
+    const mottarStudielan = isPending ? variables.data?.mottarStudielan : studielan.mottarStudielan;
+
+    return (
         <div className="space-y-4">
             <Heading size="medium" level="2">
                 {t("inntekt.studielan.tittel")}
@@ -25,10 +39,10 @@ export const Studielan = () => {
             <YesNoInput
                 name={"studielan-bekreftelse"}
                 legend={t("inntekt.studielan.sporsmal")}
-                onChange={(checked) => mutate({bekreftelse: checked})}
-                defaultValue={studielan?.bekreftelse}
+                onChange={(checked) => mutate({soknadId: behandlingsId, data: {mottarStudielan: checked}})}
+                value={mottarStudielan}
             />
-            {studielan?.bekreftelse === true && <SkalIkkeFinansiereStudier />}
+            {mottarStudielan === true && <SkalIkkeFinansiereStudier />}
         </div>
-    ));
+    );
 };
