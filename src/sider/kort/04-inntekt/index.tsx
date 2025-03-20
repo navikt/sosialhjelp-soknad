@@ -73,6 +73,7 @@ const Inntekt = () => {
                     sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                     undertekst="situasjon.kort.dokumentasjon.description"
                     liste="situasjon.kort.dokumentasjon.liste"
+                    dokumentasjonType={"annet|annet"}
                 />
                 <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
             </SkjemaStegBlock>
