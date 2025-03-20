@@ -1,51 +1,87 @@
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useQueryClient} from "@tanstack/react-query";
-import {updateVerdier, useHentVerdier} from "../../../generated/verdi-ressurs/verdi-ressurs";
-import {VerdierFrontend} from "../../../generated/model";
+import {useGetVerdier, useUpdateVerdier} from "../../../generated/new/verdi-controller/verdi-controller.ts";
+import {HarVerdierInput, UpdateVerdierBody, VerdierDto} from "../../../generated/new/model";
+
+const mapToDto = (vars?: UpdateVerdierBody): Partial<VerdierDto> | undefined => {
+    if (!vars) {
+        return undefined;
+    }
+
+    if (vars.type === "HarIkkeVerdierInput") {
+        return {
+            bekreftelse: vars.hasBekreftelse,
+        };
+    }
+
+    return {
+        ...vars,
+        bekreftelse: vars?.hasBekreftelse,
+        hasAnnetVerdi: vars?.hasBeskrivelseVerdi,
+    };
+};
 
 export const useVerdier = () => {
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
-    const {data: verdier, queryKey} = useHentVerdier(behandlingsId);
+    const {data, queryKey} = useGetVerdier(behandlingsId);
+    const {mutate, variables, isPending} = useUpdateVerdier({
+        mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
+    });
+
+    const verdier: Partial<VerdierDto> | undefined = isPending ? mapToDto(variables?.data) : data;
+
     const setBekreftelse = async (verdi: boolean) => {
         if (!verdier) return;
 
-        const oppdatert = {...verdier};
-        oppdatert.bekreftelse = verdi;
         if (!verdi) {
-            oppdatert.bolig = false;
-            oppdatert.campingvogn = false;
-            oppdatert.kjoretoy = false;
-            oppdatert.fritidseiendom = false;
-            oppdatert.annet = false;
-            oppdatert.beskrivelseAvAnnet = "";
+            mutate({soknadId: behandlingsId, data: {type: "HarIkkeVerdierInput", hasBekreftelse: verdi}});
+            return;
         }
-        await updateVerdier(behandlingsId, oppdatert);
-        queryClient.setQueryData(queryKey, oppdatert);
+
+        mutate({
+            soknadId: behandlingsId,
+            data: {
+                type: "HarVerdierInput",
+                hasBekreftelse: verdi,
+                hasBeskrivelseVerdi: false,
+                hasBolig: false,
+                hasCampingvogn: false,
+                hasFritidseiendom: false,
+                hasKjoretoy: false,
+            },
+        });
     };
 
-    const setVerdier = async (checked: (keyof VerdierFrontend)[]) => {
+    const setVerdier = async (checked: (keyof VerdierDto)[]) => {
         if (!verdier) return;
 
-        const oppdatert: VerdierFrontend = {
-            ...verdier,
-            bolig: checked.includes("bolig"),
-            campingvogn: checked.includes("campingvogn"),
-            kjoretoy: checked.includes("kjoretoy"),
-            fritidseiendom: checked.includes("fritidseiendom"),
-            annet: checked.includes("annet"),
-            beskrivelseAvAnnet: checked.includes("annet") ? verdier.beskrivelseAvAnnet : "",
+        const oppdatert: HarVerdierInput = {
+            type: "HarVerdierInput",
+            hasBekreftelse: true,
+            hasBolig: checked.includes("hasBolig"),
+            hasCampingvogn: checked.includes("hasCampingvogn"),
+            hasKjoretoy: checked.includes("hasKjoretoy"),
+            hasFritidseiendom: checked.includes("hasFritidseiendom"),
+            hasBeskrivelseVerdi: checked.includes("hasAnnetVerdi"),
+            beskrivelseVerdi: checked.includes("hasAnnetVerdi") ? verdier.beskrivelseVerdi : "",
         };
-
-        await updateVerdier(behandlingsId, oppdatert);
-        queryClient.setQueryData(queryKey, oppdatert);
+        mutate({soknadId: behandlingsId, data: oppdatert});
     };
 
     const setBeskrivelseAvAnnet = async (beskrivelseAvAnnet: string) => {
         if (!verdier) return;
-        const oppdatert = {...verdier, beskrivelseAvAnnet};
-        await updateVerdier(behandlingsId, oppdatert);
-        queryClient.setQueryData(queryKey, oppdatert);
+        const oppdatert: HarVerdierInput = {
+            type: "HarVerdierInput",
+            hasBolig: verdier.hasBolig ?? false,
+            hasCampingvogn: verdier.hasCampingvogn ?? false,
+            hasFritidseiendom: verdier.hasFritidseiendom ?? false,
+            hasKjoretoy: verdier.hasKjoretoy ?? false,
+            hasBeskrivelseVerdi: verdier.hasAnnetVerdi ?? false,
+            hasBekreftelse: true,
+            beskrivelseVerdi: beskrivelseAvAnnet,
+        };
+        mutate({soknadId: behandlingsId, data: oppdatert});
     };
 
     return {verdier, setBekreftelse, setVerdier, setBeskrivelseAvAnnet};

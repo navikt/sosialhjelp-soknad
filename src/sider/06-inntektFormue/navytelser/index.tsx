@@ -4,13 +4,13 @@ import {Alert, Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {NavYtelserTable} from "./NavYtelserTable";
 import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId";
-import {useHentSystemregistrerteInntekter} from "../../../generated/systemregistrert-inntekt-ressurs/systemregistrert-inntekt-ressurs";
+import {useGetNavYtelse} from "../../../generated/new/nav-ytelse-controller/nav-ytelse-controller.ts";
 
 const useNavYtelser = () => {
     const behandlingsId = useBehandlingsId();
-    const {data, isLoading} = useHentSystemregistrerteInntekter(behandlingsId);
+    const {data, isLoading, isError} = useGetNavYtelse(behandlingsId);
 
-    return {systeminntekter: data?.systeminntekter, isError: data?.utbetalingerFraNavFeilet, isLoading};
+    return {systeminntekter: data?.utbetalinger, isError: data?.fetchUtbetalingerFeilet || isError, isLoading};
 };
 
 export const NavYtelser = () => {
