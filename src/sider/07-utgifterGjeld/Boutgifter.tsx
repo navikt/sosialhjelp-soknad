@@ -10,7 +10,7 @@ export const Boutgifter = () => {
     const {t} = useTranslation("skjema");
 
     const {boutgifter, setBoutgifter} = useBoutgifter();
-    const {bosituasjon} = useBosituasjon();
+    const {botype} = useBosituasjon();
     const {bostotte} = useInntekterBostotte();
 
     if (!boutgifter) return null;
@@ -20,7 +20,7 @@ export const Boutgifter = () => {
         const filteredBoutgifter = Object.fromEntries(
             Object.entries(boutgifter || {}).filter(([key]) => key === "husleie")
         );
-        const leieBosituasjon = bosituasjon?.botype === "leier" || bosituasjon?.botype === "kommunal";
+        const leieBosituasjon = botype === "LEIER" || botype === "KOMMUNAL";
 
         const bostotteIkkeBesvart = !bostotte?.hasBostotte && !bostotte?.hasSamtykke;
         const bostotteBesvartJaDeretterNei = bostotte?.hasBostotte && !bostotte?.hasSamtykke;
