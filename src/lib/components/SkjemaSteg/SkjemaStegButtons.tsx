@@ -8,7 +8,7 @@ import {SkjemaStegCancelButtons} from "./SkjemaStegCancelButtons.tsx";
 interface Props {
     isFinalStep?: boolean;
     onNext: () => Promise<any>;
-    onPrevious?: () => Promise<any>;
+    onPrevious?: () => Promise<any> | any;
     isNextPending?: boolean;
 }
 
