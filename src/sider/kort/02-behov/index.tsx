@@ -14,7 +14,6 @@ import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/SkjemaStegBloc
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import {DigisosLanguageKey} from "../../../lib/i18n/common.ts";
 import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
-import {useForsorgerplikt} from "../../../lib/hooks/data/useForsorgerplikt.tsx";
 import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
@@ -67,8 +66,6 @@ const Behov = () => {
     const featureFlagData = useContextFeatureToggles();
     const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
 
-    const {forsorgerplikt} = useForsorgerplikt();
-
     const {
         get: defaultValues,
         put: putSituasjon,
@@ -96,7 +93,7 @@ const Behov = () => {
         isError: kategorierError,
         reducer,
         toggle,
-    } = useKategorier(!!forsorgerplikt?.harForsorgerplikt, setValue, getValues);
+    } = useKategorier(setValue, getValues);
     const {setAnalyticsData} = useAnalyticsContext();
     const navigate = useNavigate();
 

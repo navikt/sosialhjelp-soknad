@@ -7,27 +7,25 @@ import {z} from "zod";
 import {format, isValid, parse} from "date-fns";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {EktefelleFrontend, SivilstatusFrontend} from "../../generated/model";
 
 import {ValideringsFeilKode} from "../../lib/validering";
 import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
+import {EktefelleDto, EktefelleInput, SivilstandDtoSivilstatus} from "../../generated/new/model";
 
 const SivilstatusSchema = z.object({
-    ektefelle: z.object({
-        navn: z.object({
-            fornavn: z.string().optional(),
-            mellomnavn: z.string().optional(),
-            etternavn: z.string().optional(),
-        }),
-        fodselsdato: z.coerce
-            .string()
-            .optional()
-            .transform((str) => (str?.length ? parse(str, "ddMMyyyy", 0) : undefined))
-            .refine((date) => (date ? isValid(date) : true), ValideringsFeilKode.ER_FDATO)
-            .transform((date) => date && format(date, "yyyy-MM-dd")),
-        personnummer: z.string().optional(),
+    navn: z.object({
+        fornavn: z.string().optional(),
+        mellomnavn: z.string().optional(),
+        etternavn: z.string().optional(),
     }),
-    borSammenMed: z.boolean({invalid_type_error: "validering.pakrevd"}),
+    fodselsdato: z.coerce
+        .string()
+        .optional()
+        .transform((str) => (str?.length ? parse(str, "ddMMyyyy", 0) : undefined))
+        .refine((date) => (date ? isValid(date) : true), ValideringsFeilKode.ER_FDATO)
+        .transform((date) => date && format(date, "yyyy-MM-dd")),
+    personnummer: z.string().optional(),
+    borSammen: z.boolean({invalid_type_error: "validering.pakrevd"}),
 });
 
 // Transforms dato from yyyy-MM-dd to ddMMYYYY
@@ -36,13 +34,12 @@ const reformatEktefelleDato = (fodselsdato: string) => {
     return isValid(parsed) ? format(parsed, "ddMMyyyy") : "";
 };
 
-export const EktefellePersonaliaForm = ({
-    sivilstatus,
-    setEktefelle,
-}: {
-    sivilstatus: SivilstatusFrontend | undefined;
-    setEktefelle: (ektefelle: EktefelleFrontend, borSammenMed: boolean) => Promise<void>;
-}) => {
+interface Props {
+    sivilstatus: SivilstandDtoSivilstatus | undefined;
+    ektefelle: EktefelleDto | (Partial<EktefelleInput> & {kildeErSystem: false}) | undefined;
+    setEktefelle: (ektefelle: EktefelleInput) => void;
+}
+export const EktefellePersonaliaForm = ({sivilstatus, ektefelle, setEktefelle}: Props) => {
     const {t} = useTranslation("skjema");
     const {
         register,
@@ -52,43 +49,35 @@ export const EktefellePersonaliaForm = ({
     } = useForm<z.infer<typeof SivilstatusSchema>>({
         resolver: zodResolver(SivilstatusSchema),
         defaultValues: {
-            ...sivilstatus,
-            ektefelle: {
-                ...sivilstatus?.ektefelle,
-                fodselsdato: reformatEktefelleDato(sivilstatus?.ektefelle?.fodselsdato ?? ""),
-            },
+            ...ektefelle,
+            fodselsdato: reformatEktefelleDato(ektefelle?.fodselsdato ?? ""),
         },
     });
     if (!sivilstatus) return null;
     return (
-        <Panel className={"!bg-gray-100"}>
-            <form
-                onSubmit={handleSubmit(
-                    (sivilstatus) => setEktefelle(sivilstatus.ektefelle, sivilstatus.borSammenMed),
-                    console.error
-                )}
-            >
+        <Panel className={"!bg-gray-100 mb-4"}>
+            <form onSubmit={handleSubmit(setEktefelle, console.error)}>
                 <div className="space-y-4 pb-4">
                     <Heading size={"small"} level={"3"} spacing>
                         {t("familie.sivilstatus.gift.ektefelle.sporsmal")}
                     </Heading>
                     <TextField
                         maxLength={100}
-                        {...register("ektefelle.navn.fornavn")}
+                        {...register("navn.fornavn")}
                         label={t("familie.sivilstatus.gift.ektefelle.fornavn.label")}
                         required={false}
                     />
                     <TextField
                         maxLength={100}
                         label={t("familie.sivilstatus.gift.ektefelle.mellomnavn.label")}
-                        {...register("ektefelle.navn.mellomnavn")}
+                        {...register("navn.mellomnavn")}
                         required={false}
                     />
                     <TextField
                         className="pb-4"
                         maxLength={100}
                         label={t("familie.sivilstatus.gift.ektefelle.etternavn.label")}
-                        {...register("ektefelle.navn.etternavn")}
+                        {...register("navn.etternavn")}
                         required={false}
                     />
                     <TextField
@@ -98,10 +87,10 @@ export const EktefellePersonaliaForm = ({
                         pattern="[0-9]*"
                         style={{width: "140px"}}
                         error={
-                            errors.ektefelle?.fodselsdato?.message &&
-                            t(errors.ektefelle?.fodselsdato.message.toString() as DigisosLanguageKey)
+                            errors.fodselsdato?.message &&
+                            t(errors.fodselsdato.message.toString() as DigisosLanguageKey)
                         }
-                        {...register("ektefelle.fodselsdato")}
+                        {...register("fodselsdato")}
                         label={t("familie.sivilstatus.gift.ektefelle.fnr.label")}
                         required={false}
                     />
@@ -112,20 +101,17 @@ export const EktefellePersonaliaForm = ({
                         pattern="[0-9]*"
                         style={{width: "140px"}}
                         label={t("familie.sivilstatus.gift.ektefelle.pnr.label")}
-                        {...register("ektefelle.personnummer")}
+                        {...register("personnummer")}
                         required={false}
                     />
                     <YesNoInput
                         legend={t("familie.sivilstatus.gift.ektefelle.borsammen.sporsmal")}
                         error={
-                            errors.borSammenMed?.message &&
-                            t(errors.borSammenMed.message.toString() as DigisosLanguageKey)
+                            errors.borSammen?.message && t(errors.borSammen.message.toString() as DigisosLanguageKey)
                         }
-                        name={"borSammenMed"}
-                        defaultValue={
-                            typeof sivilstatus?.borSammenMed === "boolean" ? sivilstatus?.borSammenMed : undefined
-                        }
-                        onChange={(e) => setValue("borSammenMed", e)}
+                        name={"borSammen"}
+                        defaultValue={typeof ektefelle?.borSammen === "boolean" ? ektefelle?.borSammen : undefined}
+                        onChange={(e) => setValue("borSammen", e)}
                     />
                 </div>
 

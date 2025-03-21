@@ -1,51 +1,84 @@
-import {updateSivilstatus, useHentSivilstatus} from "../../../generated/sivilstatus-ressurs/sivilstatus-ressurs";
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useQueryClient} from "@tanstack/react-query";
-import {EktefelleFrontend, SivilstatusFrontend, SivilstatusFrontendSivilstatus} from "../../../generated/model";
+import {
+    EktefelleDto,
+    EktefelleInput,
+    Navn,
+    SivilstandInput,
+    SivilstandInputSivilstatus,
+} from "../../../generated/new/model";
+import {
+    useGetSivilstand,
+    useUpdateSivilstand,
+} from "../../../generated/new/sivilstand-controller/sivilstand-controller.ts";
 import {useState} from "react";
 
-const blankPerson: EktefelleFrontend = {
-    navn: {
-        fornavn: "",
-        mellomnavn: "",
-        etternavn: "",
-    },
+const tomtNavn: Navn = {
+    fornavn: "",
+    mellomnavn: "",
+    etternavn: "",
 };
+
+export type EktefelleDtoOrInput =
+    | EktefelleDto
+    | (Partial<EktefelleInput> & {kildeErSystem: false; folkeregistrertMedEktefelle?: never})
+    | undefined;
 
 export const useSivilstatus = () => {
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
-    const {data: sivilstatus, queryKey, isPending} = useHentSivilstatus(behandlingsId);
-    const [usingPlaceholderEktefelle, setUsingPlaceholderEktefelle] = useState<boolean>(true);
+    const [isDelayedPending, setIsDelayedPending] = useState(false);
+    const {data, isLoading, queryKey} = useGetSivilstand(behandlingsId);
+    const {mutate, variables, isPending} = useUpdateSivilstand({
+        mutation: {
+            onSettled: (_data, _error, _variables, context) => {
+                clearTimeout(context);
+                setIsDelayedPending(false);
+                return queryClient.invalidateQueries({queryKey});
+            },
+            onMutate: () => setTimeout(() => setIsDelayedPending(true), 300),
+        },
+    });
 
-    const setSivilstatus = async (nySivilstatus: SivilstatusFrontendSivilstatus) => {
-        const ektefelle = sivilstatus?.ektefelle ?? {...blankPerson};
+    const setSivilstatus = (nySivilstatus: SivilstandInputSivilstatus) => {
+        const ektefelle = data?.ektefelle;
 
-        const oppdatert: SivilstatusFrontend = {
-            ...sivilstatus,
+        const ektefelleInput: EktefelleInput | undefined = ektefelle
+            ? {
+                  ...ektefelle,
+                  navn: ektefelle.navn ?? tomtNavn,
+              }
+            : undefined;
+
+        const oppdatert: SivilstandInput = {
             sivilstatus: nySivilstatus,
-            kildeErSystem: false,
-            ektefelle: nySivilstatus === "gift" ? ektefelle : undefined,
-            borSammenMed: nySivilstatus === "gift" ? sivilstatus?.borSammenMed : undefined,
+            ektefelle: nySivilstatus === "GIFT" ? ektefelleInput : undefined,
         };
 
-        await updateSivilstatus(behandlingsId, oppdatert);
-        queryClient.setQueryData(queryKey, oppdatert);
+        mutate({soknadId: behandlingsId, data: oppdatert});
     };
 
-    const setEktefelle = async (nyEktefelle: EktefelleFrontend, borSammenMed: boolean) => {
-        const oppdatert: SivilstatusFrontend = {
-            ...sivilstatus,
+    const setEktefelle = (nyEktefelle: EktefelleInput) => {
+        const oppdatert: SivilstandInput = {
             ektefelle: nyEktefelle,
-            borSammenMed,
+            sivilstatus: "GIFT",
         };
 
-        await updateSivilstatus(behandlingsId, oppdatert);
-        setUsingPlaceholderEktefelle(false);
-        queryClient.setQueryData(queryKey, oppdatert);
+        mutate({soknadId: behandlingsId, data: oppdatert});
     };
 
-    const ektefelle = usingPlaceholderEktefelle ? undefined : sivilstatus?.ektefelle;
+    const ektefelle: EktefelleDtoOrInput = isPending
+        ? {...variables?.data.ektefelle, kildeErSystem: false}
+        : data?.ektefelle;
 
-    return {sivilstatus, ektefelle, setEktefelle, setSivilstatus, isPending};
+    const sivilstand = isPending ? variables?.data.sivilstatus : data?.sivilstatus;
+
+    return {
+        sivilstatus: sivilstand,
+        ektefelle,
+        setEktefelle,
+        setSivilstatus,
+        isLoading,
+        isDelayedPending,
+    };
 };
