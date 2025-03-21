@@ -1,23 +1,58 @@
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useQueryClient} from "@tanstack/react-query";
-import {updateArbeid, useHentArbeid} from "../../../generated/arbeid-ressurs/arbeid-ressurs";
-import {updateUtdanning, useHentUtdanning} from "../../../generated/utdanning-ressurs/utdanning-ressurs";
-import {ArbeidOgUtdanningType} from "../../../sider/03-arbeidUtdanning";
+import {useGetUtdanning, useUpdateUtdanning} from "../../../generated/new/utdanning-controller/utdanning-controller.ts";
+import {
+    useGetArbeid,
+    useUpdateKommentarArbeidsforhold,
+} from "../../../generated/new/arbeid-controller/arbeid-controller.ts";
+import {ArbeidDto, ArbeidInput, UpdateUtdanningBody, UtdanningDto} from "../../../generated/new/model/index.ts";
 
 export const useArbeidOgUtdanning = () => {
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
-    const {data: arbeid, isLoading: isLoadingArbeid, queryKey: arbeidKey} = useHentArbeid(behandlingsId);
-    const {data: utdanning, isLoading: isLoadingUtdanning, queryKey: utdanningKey} = useHentUtdanning(behandlingsId);
+    const {data: arbeidData, isLoading: isLoadingArbeid, queryKey: arbeidKey} = useGetArbeid(behandlingsId);
+    const {data: utdanningData, isLoading: isLoadingUtdanning, queryKey: utdanningKey} = useGetUtdanning(behandlingsId);
+    const {
+        mutate: mutateArbeid,
+        isPending: isArbeidPending,
+        variables: arbeidVariables,
+    } = useUpdateKommentarArbeidsforhold({
+        mutation: {onSettled: () => queryClient.invalidateQueries({queryKey: arbeidKey})},
+    });
+    const {
+        mutate: mutateUtdanning,
+        isPending: isUtdanningPending,
+        variables: utdanningVariables,
+    } = useUpdateUtdanning({
+        mutation: {onSettled: () => queryClient.invalidateQueries({queryKey: utdanningKey})},
+    });
 
-    const data: ArbeidOgUtdanningType | undefined = arbeid && utdanning ? {arbeid, utdanning} : undefined;
+    const updateArbeid = (arbeid: ArbeidInput) => mutateArbeid({soknadId: behandlingsId, data: arbeid});
 
-    const mutate = async (data: ArbeidOgUtdanningType) => {
-        await updateArbeid(behandlingsId, data.arbeid);
-        queryClient.setQueryData(arbeidKey, data.arbeid);
-        await updateUtdanning(behandlingsId, data.utdanning);
-        queryClient.setQueryData(utdanningKey, data.utdanning);
-    };
+    const updateUtdanning = (utdanning: UpdateUtdanningBody) =>
+        mutateUtdanning({soknadId: behandlingsId, data: utdanning});
 
-    return {data, mutate, isLoading: isLoadingUtdanning || isLoadingArbeid};
+    const arbeid: ArbeidDto | undefined = isArbeidPending
+        ? {
+              arbeidsforholdList: arbeidData?.arbeidsforholdList ?? [],
+              kommentar: arbeidVariables?.data.kommentarTilArbeidsforhold,
+          }
+        : arbeidData;
+
+    const utdanning: UtdanningDto | undefined = isUtdanningPending
+        ? toUtdanningDto(utdanningVariables?.data, utdanningData)
+        : utdanningData;
+    return {arbeid, utdanning, updateUtdanning, updateArbeid, isLoading: isLoadingUtdanning || isLoadingArbeid};
+};
+
+const toUtdanningDto = (utdanning?: UpdateUtdanningBody, data?: UtdanningDto): UtdanningDto | undefined => {
+    switch (utdanning?.type) {
+        case "IkkeStudent":
+            return {...data, erStudent: utdanning.erStudent};
+        case "Studentgrad":
+            return {
+                erStudent: true,
+                studentgrad: utdanning.studentgrad,
+            };
+    }
 };

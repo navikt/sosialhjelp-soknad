@@ -2193,7 +2193,18 @@
                     {"type": "object", "properties": {"studentgrad": {"type": "string", "enum": ["HELTID", "DELTID"]}}}
                 ]
             },
-            "UtdanningInput": {"type": "object"},
+            "UtdanningInput": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {"type": {"type": "string"}},
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "IkkeStudent": "#/components/schemas/IkkeStudentInput",
+                        "Studentgrad": "#/components/schemas/StudentgradInput"
+                    }
+                }
+            },
             "UtdanningDto": {
                 "type": "object",
                 "properties": {
@@ -2370,7 +2381,6 @@
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
-                    "dokumentasjonForventet": {"type": "boolean"},
                     "group": {
                         "type": "string",
                         "enum": [
@@ -2384,6 +2394,7 @@
                             "utgifter"
                         ]
                     },
+                    "dokumentasjonForventet": {"type": "boolean"},
                     "type": {"type": "string"}
                 },
                 "discriminator": {"propertyName": "type"}
@@ -2650,19 +2661,17 @@
                 "type": "object",
                 "properties": {
                     "personId": {"type": "string"},
-                    "navn": {"$ref": "#/components/schemas/Navn"},
+                    "navn": {"$ref": "#/components/schemas/NavnInput"},
                     "fodselsdato": {"type": "string"},
                     "borSammen": {"type": "boolean"}
                 }
             },
-            "Navn": {
-                "required": ["etternavn", "fornavn", "fulltNavn"],
+            "NavnInput": {
                 "type": "object",
                 "properties": {
                     "fornavn": {"type": "string"},
                     "mellomnavn": {"type": "string"},
-                    "etternavn": {"type": "string"},
-                    "fulltNavn": {"type": "string"}
+                    "etternavn": {"type": "string"}
                 }
             },
             "SivilstandInput": {
@@ -2688,6 +2697,14 @@
                     "kildeErSystem": {"type": "boolean"}
                 }
             },
+            "Navn": {
+                "type": "object",
+                "properties": {
+                    "fornavn": {"type": "string"},
+                    "mellomnavn": {"type": "string"},
+                    "etternavn": {"type": "string"}
+                }
+            },
             "SivilstandDto": {
                 "type": "object",
                 "properties": {
@@ -2703,7 +2720,9 @@
                 "properties": {
                     "uuid": {"type": "string", "format": "uuid"},
                     "personId": {"type": "string"},
-                    "deltBosted": {"type": "boolean"}
+                    "deltBosted": {"type": "boolean"},
+                    "samvarsgrad": {"type": "integer", "format": "int32"},
+                    "folkeregistrertSammen": {"type": "boolean"}
                 }
             },
             "ForsorgerInput": {

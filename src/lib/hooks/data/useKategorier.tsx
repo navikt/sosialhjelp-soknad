@@ -40,14 +40,7 @@ interface CategoryAction {
     categories?: SelectableCategory[];
 }
 
-const addIf = <T,>(bool: boolean, items: T[]) => {
-    if (bool) {
-        return items;
-    }
-    return [];
-};
-
-export const createCategories = (hasChildren: boolean): Category[] => [
+export const CATEGORIES: Category[] = [
     {key: "begrunnelse.kategorier.mat", icons: [Eple], text: "Mat"},
     {
         key: "begrunnelse.kategorier.bolig",
@@ -72,23 +65,21 @@ export const createCategories = (hasChildren: boolean): Category[] => [
     {key: "begrunnelse.kategorier.lege", icons: [FirstAidIcon], text: "Lege og medisiner"},
     {key: "begrunnelse.kategorier.tannlege", icons: [Tann], text: "Tannlege"},
     {key: "begrunnelse.kategorier.klaer", icons: [TSkjorte], text: "Klær og utstyr"},
-    ...addIf<Category>(hasChildren, [
-        {
-            key: "begrunnelse.kategorier.barnehage",
-            icons: [ChildEyesIcon],
-            text: "Barnehage og SFO/AKS",
-        },
-        {
-            key: "begrunnelse.kategorier.fritidsaktiviteter",
-            icons: [ChildEyesIcon],
-            text: "Fritidsaktiviteter til barn",
-        },
-        {
-            key: "begrunnelse.kategorier.barn",
-            icons: [ChildEyesIcon],
-            text: "Andre utgifter til barn",
-        },
-    ]),
+    {
+        key: "begrunnelse.kategorier.barnehage",
+        icons: [ChildEyesIcon],
+        text: "Barnehage og SFO/AKS",
+    },
+    {
+        key: "begrunnelse.kategorier.fritidsaktiviteter",
+        icons: [ChildEyesIcon],
+        text: "Fritidsaktiviteter til barn",
+    },
+    {
+        key: "begrunnelse.kategorier.barn",
+        icons: [ChildEyesIcon],
+        text: "Andre utgifter til barn",
+    },
     {key: "begrunnelse.kategorier.transport", icons: [CarIcon, TrainIcon], text: "Transport"},
     {key: "begrunnelse.kategorier.hoytid", icons: [CalendarIcon], text: "Høytid og merkedager"},
     {
@@ -109,7 +100,6 @@ interface KategorierFormValues {
     hva som kommer inn i hvaSokesOm.
 */
 const useKategorier = <T extends KategorierFormValues>(
-    hasChildren: boolean,
     setValue: UseFormSetValue<T | KategorierFormValues>,
     getValues: UseFormGetValues<T | KategorierFormValues>
 ) => {
@@ -151,7 +141,7 @@ const useKategorier = <T extends KategorierFormValues>(
                     return state;
             }
         },
-        createCategories(hasChildren),
+        CATEGORIES,
         (initialState) =>
             initialState.map((category) => ({
                 ...category,
@@ -178,7 +168,7 @@ const useKategorier = <T extends KategorierFormValues>(
             if (annetText) {
                 setValue("hvaSokesOm", annetText);
             }
-            const categories = createCategories(hasChildren).map((category) => {
+            const categories = CATEGORIES.map((category) => {
                 const previouslySelectedCategory = hvaSokesOm.find((it) => it.text === category.text);
                 if (previouslySelectedCategory) {
                     return {
@@ -199,7 +189,7 @@ const useKategorier = <T extends KategorierFormValues>(
             }) as SelectableCategory[];
             dispatch({type: "set", categories});
         }
-    }, [data, dispatch, hasChildren, isKategorierEnabled, setValue]);
+    }, [data, dispatch, isKategorierEnabled, setValue]);
     const put = (begrunnelseFrontend: T) => {
         if (isKategorierEnabled) {
             const jsonString = reducer

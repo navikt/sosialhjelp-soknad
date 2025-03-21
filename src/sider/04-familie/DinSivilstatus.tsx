@@ -7,10 +7,10 @@ import {useSivilstatus} from "../../lib/hooks/data/useSivilstatus";
 import {Heading} from "@navikt/ds-react";
 
 export const DinSivilstatus = () => {
-    const {sivilstatus, isPending} = useSivilstatus();
+    const {sivilstatus, ektefelle, isLoading} = useSivilstatus();
     const {t} = useTranslation("skjema");
 
-    if (isPending) {
+    if (isLoading) {
         return (
             <div>
                 <Heading level={"2"} size={"medium"} spacing>
@@ -21,7 +21,7 @@ export const DinSivilstatus = () => {
         );
     }
 
-    if (sivilstatus?.sivilstatus === "gift" && sivilstatus.kildeErSystem) return <EktefelleDetaljer />;
+    if (sivilstatus === "GIFT" && ektefelle?.kildeErSystem) return <EktefelleDetaljer />;
 
     return <Sivilstatus />;
 };

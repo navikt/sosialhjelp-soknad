@@ -181,9 +181,10 @@ export const skjema = {
             behov: {
                 description: 'Example: "I\'m applying for money for everyday living expenses, rent and electricity."',
                 dokumentasjon: {
-                    beskrivelse:
-                        "Here you can upload documentation for what you are applying for money for. If you include documentation with your application, it can help us process it more quickly.",
                     tittel: "Documentation",
+                    beskrivelse: "Here you can upload documentation related to your expenses.<br />For example:",
+                    liste: ["Rent invoice", "Household expenses (home expenses)", "Electricity bill", "Other"],
+                    bunntekst: "You can take pictures and screenshots.",
                 },
                 oppsummeringstittel: "Your needs",
             },
@@ -1491,8 +1492,10 @@ export const skjema = {
         },
         kort: {
             dokumentasjon: {
-                description: "Here you can upload any other documentation you consider important for the application.",
                 title: "Documentation of the change",
+                description:
+                    "Here you can upload documentation that you think can be important for your application. <br/>  For example:",
+                liste: ["Your bank account balance", "Payslip", "Introductory benefit", "Other income"],
             },
             endring: {
                 description: "For example income, expenses, family situation or living situation.",
@@ -1783,6 +1786,14 @@ export const skjema = {
                 tidspunkt: "Information was obtained",
                 tittel: "Income",
                 undertittel: "Reported income to the Tax Administration",
+                kort_saldo_tittel: "Please attach information about the balance on your accounts",
+                kort_saldo_undertekst: "State balance for each account",
+                kort_saldo_saldo: "Balance",
+                kort_saldo_leggTil: "Add account",
+                kort_saldo_lastOpp: "Upload account statement (at time of application)",
+                oppsummering_kort_saldo_tittel: "Information about the balance on your accounts",
+                oppsummering_kort_saldo_sporsmal: "Balance account:",
+                oppsummering_kort_konto_saldo_ingen: "No information",
             },
             til: "to",
         },

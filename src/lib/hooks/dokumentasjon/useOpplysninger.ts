@@ -9,11 +9,13 @@ import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon
 export const flettOgSorter = ({okonomiskeOpplysninger, slettedeVedlegg}: VedleggFrontends): Opplysning[] => {
     const current = okonomiskeOpplysninger?.map((opplysning): Opplysning => ({...opplysning}));
     const deleted = slettedeVedlegg?.map((opplysning): Opplysning => ({...opplysning, slettet: true}));
-    return [...(current ?? []), ...(deleted ?? [])].sort(
-        (a: Opplysning, b: Opplysning) =>
-            opplysningSpec[a.type as VedleggFrontendTypeMinusUferdig].sortKey -
-            opplysningSpec[b.type as VedleggFrontendTypeMinusUferdig].sortKey
-    );
+    return [...(current ?? []), ...(deleted ?? [])]
+        .filter((opplysning) => opplysning.type !== "kort|behov")
+        .sort(
+            (a: Opplysning, b: Opplysning) =>
+                opplysningSpec[a.type as VedleggFrontendTypeMinusUferdig].sortKey -
+                opplysningSpec[b.type as VedleggFrontendTypeMinusUferdig].sortKey
+        );
 };
 
 export const useOpplysninger = () => {

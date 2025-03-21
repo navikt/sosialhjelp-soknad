@@ -181,9 +181,10 @@ export const skjema = {
             behov: {
                 description: 'Døme på tekst: "Eg søkjer om pengar til livsopphald, husleige og straum."',
                 dokumentasjon: {
-                    beskrivelse:
-                        "Her kan du laste opp dokumentasjon for det du søkjer om pengar til. Viss du legg ved dokumentasjon saman med søknaden din, kan det hjelpe oss med å behandle søknaden raskare.",
                     tittel: "Dokumentasjon",
+                    beskrivelse: "Her kan du laste opp dokumentasjon knyttet til utgiftene dine.<br />Forslag:",
+                    liste: ["Husleigefaktura", "Boutgifter", "Strømfaktura", "Annet"],
+                    bunntekst: "Du kan ta bilete og skjermbilete.",
                 },
                 oppsummeringstittel: "Ditt behov",
             },
@@ -1485,8 +1486,9 @@ export const skjema = {
         },
         kort: {
             dokumentasjon: {
-                description: "Her kan du laste opp annan dokumentasjon du tenkjar er viktig for søknaden.",
                 title: "Dokumentasjon av endringa",
+                description: "Her kan du laste opp dokumentasjon du tenkjar er viktig for søknaden din.<br/>Forslag:",
+                liste: ["Saldo", "Lønnslipp", "Introduksjonsstønad", "Annet inntekt"],
             },
             endring: {
                 description: "Til dømes inntekter, utgifter, familiesituasjon eller busituasjon.",
@@ -1774,6 +1776,14 @@ export const skjema = {
                 tidspunkt: "Informasjonen blei henta",
                 tittel: "Inntekt",
                 undertittel: "Innrapportert inntekt til Skatteetaten",
+                kort_saldo_tittel: "Legg gjerne ved opplysningar om saldo på brukskontoane dine ",
+                kort_saldo_undertekst: "Oppgi saldo for kvar konto",
+                kort_saldo_saldo: "Saldo",
+                kort_saldo_leggTil: "Legg til konto",
+                kort_saldo_lastOpp: "Last opp kontooversikt (på søknadstidspunkt)",
+                oppsummering_kort_saldo_tittel: "Opplysningar om saldo på dine brukskontoane",
+                oppsummering_kort_saldo_sporsmal: "Saldo konto:",
+                oppsummering_kort_konto_saldo_ingen: "Ingen informasjon",
             },
             til: "til",
         },
