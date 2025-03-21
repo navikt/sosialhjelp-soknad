@@ -3,7 +3,7 @@ import {Alert, BodyShort, Button, Heading, Loader} from "@navikt/ds-react";
 import {FaroErrorBoundary} from "@grafana/faro-react";
 import {PdfConversionError, UploadError} from "../../../sider/08-vedlegg/upload/UploadError";
 import {OpplastetVedlegg} from "../../../sider/08-vedlegg/OpplastetVedlegg";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 import {usePDFConverter} from "../../hooks/dokumentasjon/usePDFConverter";
 import {PlusIcon} from "@navikt/aksel-icons";
 import {ForhandsvisningVedleggModal} from "../../../sider/08-vedlegg/upload/ForhandsvisningVedleggModal";
@@ -14,19 +14,73 @@ import {
 import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
 import {VedleggFrontendType} from "../../../generated/model";
 
+type TranslationKeys = "begrunnelse.kort.behov.dokumentasjon.beskrivelse" | "situasjon.kort.dokumentasjon.description";
+
+type ListeKeys = "situasjon.kort.dokumentasjon.liste" | "begrunnelse.kort.behov.dokumentasjon.liste";
+
 interface Props {
-    sporsmal: string;
-    undertekst: string;
+    sporsmal?: string;
+    undertekst?: TranslationKeys;
+    liste?: ListeKeys;
+    bunntekst?: string;
     dokumentasjonType: VedleggFrontendType;
 }
 
-const FileUploadBox = ({sporsmal, undertekst, dokumentasjonType}: Props): React.JSX.Element => {
+export const FileUploadBoxNoStyle = ({
+    sporsmal,
+    undertekst,
+    liste,
+    bunntekst,
+    dokumentasjonType,
+}: Props): React.JSX.Element => {
+    const {t} = useTranslation("skjema");
+    const forslag = liste ? (t(liste, {returnObjects: true}) as string[]) : [];
+
+    return (
+        <>
+            {sporsmal && (
+                <Heading level={"4"} size={"small"} spacing>
+                    {sporsmal}
+                </Heading>
+            )}
+            {undertekst && <Trans i18nKey={undertekst} components={{br: <br />}} />}
+            {forslag.length > 0 && (
+                <ul className="list-disc pl-5">
+                    {forslag.map((item, index) => (
+                        <li key={index}>
+                            <BodyShort>{item}</BodyShort>
+                        </li>
+                    ))}
+                </ul>
+            )}
+            <BodyShort spacing>{bunntekst}</BodyShort>
+            <Dokumenter dokumentasjonType={dokumentasjonType} />
+        </>
+    );
+};
+
+const FileUploadBox = ({sporsmal, undertekst, liste, dokumentasjonType}: Props): React.JSX.Element => {
+    const {t} = useTranslation("skjema");
+    const forslag = liste ? (t(liste, {returnObjects: true}) as string[]) : [];
+
     return (
         <div className={"rounded-md bg-surface-action-subtle p-8"}>
-            <Heading level={"4"} size={"small"} spacing>
-                {sporsmal}
-            </Heading>
-            <BodyShort spacing>{undertekst}</BodyShort>
+            {sporsmal && (
+                <Heading level={"4"} size={"small"} spacing>
+                    {sporsmal}
+                </Heading>
+            )}
+            {undertekst && <Trans i18nKey={undertekst} components={{br: <br />}} />}
+            {forslag.length > 0 && (
+                <ul className="list-disc pl-5">
+                    {forslag.map((item, index) => (
+                        <li key={index}>
+                            <BodyShort>{item}</BodyShort>
+                        </li>
+                    ))}
+                </ul>
+            )}
+            <BodyShort spacing>{t("begrunnelse.kort.behov.dokumentasjon.bunntekst")}</BodyShort>
             <Dokumenter dokumentasjonType={dokumentasjonType} />
         </div>
     );

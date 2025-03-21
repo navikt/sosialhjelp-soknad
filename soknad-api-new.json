@@ -2381,7 +2381,6 @@
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
-                    "dokumentasjonForventet": {"type": "boolean"},
                     "group": {
                         "type": "string",
                         "enum": [
@@ -2395,6 +2394,7 @@
                             "utgifter"
                         ]
                     },
+                    "dokumentasjonForventet": {"type": "boolean"},
                     "type": {"type": "string"}
                 },
                 "discriminator": {"propertyName": "type"}

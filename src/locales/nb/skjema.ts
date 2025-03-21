@@ -168,9 +168,10 @@ export const skjema = {
             behov: {
                 description: 'Eksempel på tekst: "Jeg søker om penger til livsopphold, husleie og strøm."',
                 dokumentasjon: {
-                    beskrivelse:
-                        "Her kan du laste opp dokumentasjon for det du søker om penger til. Hvis du legger ved dokumentasjon sammen med søknaden din, kan det hjelpe oss med å behandle søknaden raskere.",
                     tittel: "Dokumentasjon",
+                    beskrivelse: "Her kan du laste opp dokumentasjon knyttet til utgiftene dine.<br />Forslag:",
+                    liste: ["Husleiefaktura", "Boutgifter", "Strømfaktura", "Annet"],
+                    bunntekst: "Du kan ta bilder og skjermbilder.",
                 },
                 oppsummeringstittel: "Ditt behov",
             },
@@ -1474,8 +1475,9 @@ export const skjema = {
         },
         kort: {
             dokumentasjon: {
-                description: "Her kan du laste opp annen dokumentasjon du tenker er viktig for søknaden.",
                 title: "Dokumentasjon",
+                description: "Her kan du laste opp dokumentasjon du tenker er viktig for søknaden din.<br/> Forslag:",
+                liste: ["Saldo", "Lønnslipp", "Introduksjonsstønad", "Annet inntekt"],
             },
             endring: {
                 description: "For eksempel inntekter, utgifter, familiesituasjon eller bosituasjon.",
@@ -1483,8 +1485,8 @@ export const skjema = {
             },
             hvaErEndret: {
                 description:
-                    "Har noe endret seg siden forrige gang du søkte, eller vil du fortelle mer om hva du søker om penger til?",
-                label: "Hva er situasjonen din?",
+                    'Beskriv hva som har endret seg og fortell mer om hvorfor du søker penger. Eksempel: "Husleien har økt."',
+                label: "Har noe endret seg i situasjonen din siden sist du søkte?",
             },
             tittel: "Inntekter",
         },
@@ -1762,13 +1764,21 @@ export const skjema = {
                     "Vi har registrert at du{ antall, plural,=0 { ikke har hatt }other {har hatt{ antall, plural,=1 {{en}}=2 {{to}}=3 {{tre}}=4 {{fire}}=5 {{fem}}=6 {{seks}}=7 {{sju}}=8 {{åtte}}=9 {{ni}}=10 {{ti}}=11 {{elleve}}=12 {{tolv}}other {{#}}}}}skattbare inntekter.",
                 samtykke_info:
                     "Disse opplysningene kan være nødvendig for å behandle søknaden. Hvis du ikke ønsker at vi henter denne informasjonen om deg, så kan du laste opp dokumentasjon i siste steg av søknaden.",
-                samtykke_sporsmal_v1: "Vil du hente informasjon om inntekten din fra Skatteetaten?",
+                samtykke_sporsmal_v1: "Vil du hente inntekten din fra Skatteetaten?",
                 samtykke_sporsmal_v2: "Vil du hente informasjon om inntekten din fra Skatteetaten automatisk?",
                 skatteetaten: "Se detaljer hos Skatteetaten.",
                 ta_bort_samtykke: "Fjern informasjon fra Skatteetaten",
                 tidspunkt: "Informasjonen ble hentet",
                 tittel: "Inntekt",
                 undertittel: "Innrapportert inntekt til Skatteetaten",
+                kort_saldo_tittel: "Legg gjerne ved opplysninger om saldo på dine brukskontoer",
+                kort_saldo_undertekst: "Oppgi saldo for hver konto",
+                kort_saldo_saldo: "Saldo",
+                kort_saldo_leggTil: "Legg til konto",
+                kort_saldo_lastOpp: "Last opp kontooversikt (på søknadstidspunkt)",
+                oppsummering_kort_saldo_tittel: "Opplysninger om saldo på dine brukskontoer",
+                oppsummering_kort_saldo_sporsmal: "Saldo konto:",
+                oppsummering_kort_konto_saldo_ingen: "Ingen informasjon",
             },
             til: "til",
         },
