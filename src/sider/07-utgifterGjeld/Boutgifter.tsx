@@ -2,9 +2,9 @@ import * as React from "react";
 import {Checkbox, CheckboxGroup, GuidePanel, Link} from "@navikt/ds-react";
 import {Trans, useTranslation} from "react-i18next";
 import {useBoutgifter} from "../../lib/hooks/data/useBoutgifter";
-import {BoutgifterFrontend} from "../../generated/model";
 import {useBosituasjon} from "../../lib/hooks/data/useBosituasjon.tsx";
 import {useInntekterBostotte} from "../../lib/hooks/data/useInntekterBostotte.tsx";
+import {BoutgifterDto} from "../../generated/new/model/index.ts";
 
 export const Boutgifter = () => {
     const {t} = useTranslation("skjema");
@@ -41,7 +41,7 @@ export const Boutgifter = () => {
 
     // Event handler to update boutgifter when checkboxes change
     const handleCheckboxChange = (
-        selectedOptions: (keyof Omit<BoutgifterFrontend, "bekreftelse" | "skalViseInfoVedBekreftelse">)[]
+        selectedOptions: (keyof Omit<BoutgifterDto, "bekreftelse" | "skalViseInfoVedBekreftelse">)[]
     ) => {
         setBoutgifter(selectedOptions);
     };
@@ -51,7 +51,7 @@ export const Boutgifter = () => {
             <CheckboxGroup
                 legend={t("utgifter.boutgift.true.type.sporsmal")}
                 onChange={handleCheckboxChange}
-                value={Object.keys(boutgifter).filter((key) => boutgifter[key as keyof BoutgifterFrontend])}
+                value={Object.keys(boutgifter).filter((key) => boutgifter[key as keyof BoutgifterDto])}
             >
                 <Checkbox value={"husleie"}>{t("utgifter.boutgift.true.type.husleie")}</Checkbox>
                 <Checkbox value={"strom"}>{t("utgifter.boutgift.true.type.strom")}</Checkbox>
