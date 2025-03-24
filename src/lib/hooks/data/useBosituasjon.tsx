@@ -4,7 +4,7 @@ import {
     useGetBosituasjon,
     useUpdateBosituasjon,
 } from "../../../generated/new/bosituasjon-controller/bosituasjon-controller.ts";
-import {BosituasjonDto, BosituasjonDtoBotype} from "../../../generated/new/model";
+import type {BosituasjonDto, BosituasjonDtoBotype} from "../../../generated/new/model";
 
 export const useBosituasjon = () => {
     const behandlingsId = useBehandlingsId();
@@ -14,18 +14,18 @@ export const useBosituasjon = () => {
         mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
     });
 
-    const setBosituasjon = async (nyBosituasjon: Partial<BosituasjonDto>) => {
-        const input = {...data, ...nyBosituasjon};
-        mutate({soknadId: behandlingsId, data: input});
+    const bosituasjon = isPending ? variables?.data : data;
+
+    const setBosituasjon = (nyBosituasjon: Partial<BosituasjonDto>) => {
+        const data = {...(bosituasjon as BosituasjonDto), ...nyBosituasjon};
+        mutate({soknadId: behandlingsId, data});
     };
 
     const setBotype = (botype: BosituasjonDtoBotype) => setBosituasjon({botype});
-
-    const botype = isPending ? variables?.data?.botype : data?.botype;
-    const antallPersoner = isPending ? variables?.data?.antallPersoner : data?.antallPersoner;
+    const {botype, antallPersoner} = bosituasjon || {};
 
     return {
-        data,
+        bosituasjon,
         botype,
         antallPersoner,
         setBosituasjon,

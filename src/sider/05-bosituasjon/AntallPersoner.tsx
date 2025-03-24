@@ -26,7 +26,7 @@ export const AntallPersoner = () => {
             defaultValue={antallPersoner}
             onBlur={async ({target: {value}}) => {
                 try {
-                    await setBosituasjon({antallPersoner: validerAntallPersoner(value)});
+                    setBosituasjon({antallPersoner: validerAntallPersoner(value)});
                     setError(null);
                 } catch {
                     setError(ValideringsFeilKode.ER_TALL);
