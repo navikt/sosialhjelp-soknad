@@ -20,7 +20,7 @@ export const ValgtKategoriProvider = ({children}: {children: React.ReactNode}) =
         setKategoriDataState((prevData) => ({
             ...prevData,
             ...data,
-            valgtKategorier: data.valgtKategorier || "annet|annet", // Always ensure fallback
+            valgtKategorier: data.valgtKategorier || "annet|annet",
         }));
     };
 
