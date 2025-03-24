@@ -5,12 +5,12 @@ import {DigisosReadMore} from "../../lib/components/DigisosReadMore";
 import {MAX_CHARS, useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";
 import {UnmountClosed} from "react-collapse";
 import {useFormue} from "../../lib/hooks/data/useFormue";
-import {FormueFrontend} from "../../generated/model";
 import LocalizedTextarea from "../../lib/components/LocalizedTextArea.tsx";
+import {FormueDto} from "../../generated/new/model";
 
 export const Formue = () => {
     const {formue, setFormue, setBeskrivelse} = useFormue();
-    const {registerAnnet} = useBeskrivelse(formue?.beskrivelseAvAnnet || "", setBeskrivelse);
+    const {registerAnnet} = useBeskrivelse(formue?.beskrivelseSparing || "", setBeskrivelse);
     const {t} = useTranslation("skjema");
 
     if (!formue) return null;
@@ -20,27 +20,27 @@ export const Formue = () => {
             legend={t("formue.type.sporsmal")}
             description={<DigisosReadMore>{t("formue.type.hjelpetekst.tekst")}</DigisosReadMore>}
             onChange={setFormue}
-            value={Object.keys(formue).filter((key) => formue[key as keyof FormueFrontend])}
+            value={Object.keys(formue).filter((key) => formue[key as keyof FormueDto])}
         >
-            <Checkbox name={"brukskonto"} value={"brukskonto"}>
+            <Checkbox name={"hasBrukskonto" satisfies keyof FormueDto} value={"hasBrukskonto"}>
                 {t("formue.type.brukskonto")}
             </Checkbox>
-            <Checkbox name={"sparekonto"} value={"sparekonto"}>
+            <Checkbox name={"hasSparekonto" satisfies keyof FormueDto} value={"hasSparekonto"}>
                 {t("formue.type.sparekonto")}
             </Checkbox>
-            <Checkbox name={"bsu"} value={"bsu"}>
+            <Checkbox name={"hasBsu" satisfies keyof FormueDto} value={"hasBsu"}>
                 {t("formue.type.bsu")}
             </Checkbox>
-            <Checkbox name={"livsforsikring"} value={"livsforsikring"}>
+            <Checkbox name={"hasLivsforsikring" satisfies keyof FormueDto} value={"hasLivsforsikring"}>
                 {t("formue.type.livsforsikring")}
             </Checkbox>
-            <Checkbox name={"verdipapirer"} value={"verdipapirer"}>
+            <Checkbox name={"hasVerdipapirer" satisfies keyof FormueDto} value={"hasVerdipapirer"}>
                 {t("formue.type.verdipapirer")}
             </Checkbox>
-            <Checkbox name={"annet"} value={"annet"}>
+            <Checkbox name={"hasSparing" satisfies keyof FormueDto} value={"hasSparing"}>
                 {t("formue.type.annet")}
             </Checkbox>
-            <UnmountClosed isOpened={formue?.annet}>
+            <UnmountClosed isOpened={formue?.hasSparing}>
                 <LocalizedTextarea {...registerAnnet} label={t("formue.annetLabel")} maxLength={MAX_CHARS} />
             </UnmountClosed>
         </CheckboxGroup>

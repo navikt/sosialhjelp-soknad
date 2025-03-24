@@ -2508,7 +2508,18 @@
                     }
                 ]
             },
-            "VerdierInput": {"type": "object"},
+            "VerdierInput": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {"type": {"type": "string"}},
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "HarIkkeVerdierInput": "#/components/schemas/HarIkkeVerdierInput",
+                        "HarVerdierInput": "#/components/schemas/HarVerdierInput"
+                    }
+                }
+            },
             "VerdierDto": {
                 "required": ["hasAnnetVerdi", "hasBolig", "hasCampingvogn", "hasFritidseiendom", "hasKjoretoy"],
                 "type": "object",
@@ -2547,7 +2558,18 @@
                     }
                 ]
             },
-            "UtbetalingerInput": {"type": "object"},
+            "UtbetalingerInput": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {"type": {"type": "string"}},
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "HarIkkeUtbetalingerInput": "#/components/schemas/HarIkkeUtbetalingerInput",
+                        "HarUtbetalingerInput": "#/components/schemas/HarUtbetalingerInput"
+                    }
+                }
+            },
             "UtbetalingerDto": {
                 "required": ["hasAnnenUtbetaling", "hasForsikring", "hasSalg", "hasUtbytte"],
                 "type": "object",
