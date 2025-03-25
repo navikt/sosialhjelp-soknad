@@ -25,6 +25,9 @@ spec:
     requests:
       cpu: "20m"
       memory: 50Mi
+  valkey:
+    - access: read
+      instance: wonderwall
   redis:
     - access: read
       instance: wonderwall
