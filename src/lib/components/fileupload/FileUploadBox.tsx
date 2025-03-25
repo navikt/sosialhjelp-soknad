@@ -76,6 +76,7 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
         error,
         isPending: uploadPending,
         currentUpload,
+        allUploadedFiles,
     } = useVedlegg(finalDokumentasjonType);
     const {conversionPending} = usePDFConverter();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
@@ -125,8 +126,13 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
                 <BodyShort>Dine Opplastede filer ({documents.length})</BodyShort>
                 <ul>
                     {currentUpload && <BodyShort>Laster opp ({currentUpload.percent}%)</BodyShort>}
-                    {documents.map((fil) => (
-                        <UploadedFileBox key={fil.dokumentId} dokument={fil} onDelete={deleteDocument} />
+                    {allUploadedFiles.map((fil) => (
+                        <UploadedFileBox
+                            key={fil.dokumentId}
+                            dokument={fil}
+                            dokumentasjonsType={fil.dokumentasjonType}
+                            onDelete={deleteDocument}
+                        />
                     ))}
                 </ul>
             </div>

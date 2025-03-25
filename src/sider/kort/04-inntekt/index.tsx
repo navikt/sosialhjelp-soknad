@@ -63,17 +63,15 @@ const Inntekt = () => {
                     title={t(KortSkjemaHeadings[4].tittel)}
                     icon={KortSkjemaHeadings[4].ikon}
                 />
-                <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
-                    <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
-                    <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
-                    <NavYtelser />
-                    {brukskontoOpplysning && <Dokumentasjon opplysning={brukskontoOpplysning} />}
-                    <FileUploadBox
-                        sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
-                        undertekst="situasjon.kort.dokumentasjon.description"
-                        liste="situasjon.kort.dokumentasjon.liste"
-                    />
-                </form>
+                <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
+                <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
+                <NavYtelser />
+                {brukskontoOpplysning && <Dokumentasjon opplysning={brukskontoOpplysning} />}
+                <FileUploadBox
+                    sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+                    undertekst="situasjon.kort.dokumentasjon.description"
+                    liste="situasjon.kort.dokumentasjon.liste"
+                />
                 <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
             </SkjemaStegBlock>
         </SkjemaSteg>

@@ -4,15 +4,17 @@ import React, {useState} from "react";
 import {BekreftSlettDokumentModal} from "../modals/BekreftSlettDokumentModal.tsx";
 import {LinkButton} from "../LinkButton.tsx";
 import digisosConfig from "../../config.ts";
-import {Button} from "@navikt/ds-react";
+import {BodyShort, Button} from "@navikt/ds-react";
 import {TrashIcon} from "@navikt/aksel-icons";
 
 export const UploadedFileBox = ({
     onDelete,
     dokument: {filename, dokumentId},
+    dokumentasjonsType,
 }: {
     dokument: DokumentUpload;
     onDelete: (dokumentId: string) => void;
+    dokumentasjonsType: string;
 }) => {
     const behandlingsId = useBehandlingsId();
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
@@ -20,14 +22,17 @@ export const UploadedFileBox = ({
 
     return (
         <li className="mt-4 flex gap-2 justify-between border-2 border-[var(--a-border-subtle)] border-solid rounded-md p-2">
-            <BekreftSlettDokumentModal
-                open={showConfirmDelete}
-                onSelect={(shouldDelete) => {
-                    if (shouldDelete) onDelete(dokumentId);
-                    setShowConfirmDelete(false);
-                }}
-            />
-            <LinkButton onClick={() => window.open(digisosConfig.baseURL + lastNedUrl)}>{filename}</LinkButton>
+            <div>
+                <BekreftSlettDokumentModal
+                    open={showConfirmDelete}
+                    onSelect={(shouldDelete) => {
+                        if (shouldDelete) onDelete(dokumentId);
+                        setShowConfirmDelete(false);
+                    }}
+                />
+                <BodyShort>{dokumentasjonsType}</BodyShort>
+                <LinkButton onClick={() => window.open(digisosConfig.baseURL + lastNedUrl)}>{filename}</LinkButton>
+            </div>
             <Button
                 size={"small"}
                 variant={"tertiary"}

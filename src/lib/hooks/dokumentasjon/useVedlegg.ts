@@ -1,6 +1,6 @@
 // When new backend has been deployed, this can be removed.
 import {DokumentUpload, VedleggFrontendType} from "../../../generated/model";
-import {useEffect, useReducer, useState} from "react";
+import {useEffect, useMemo, useReducer, useState} from "react";
 import {DocumentListReducer, initialDocumentListState} from "../../../sider/08-vedlegg/lib/DocumentListReducer";
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useTranslation} from "react-i18next";
@@ -112,9 +112,24 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
         }
     };
 
+    const allUploadedFiles = useMemo(() => {
+        return (
+            dokumentasjon?.okonomiskeOpplysninger
+                ?.filter((opplysning) => opplysning.filer?.length)
+                .flatMap(
+                    (opplysning) =>
+                        opplysning.filer?.map((fil) => ({
+                            ...fil,
+                            dokumentasjonType: opplysning.type,
+                        })) ?? []
+                ) ?? []
+        );
+    }, [dokumentasjon]);
+
     return {
         uploadDocument,
         deleteDocument,
+        allUploadedFiles,
         maxUploadSize,
         currentUpload: uploadPercent == null ? null : {percent: uploadPercent},
         documents,
