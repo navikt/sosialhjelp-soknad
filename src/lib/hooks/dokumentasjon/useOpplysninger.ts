@@ -7,16 +7,11 @@ import {logError} from "../../log/loggerUtils";
 import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
 
 export const flettOgSorter = ({okonomiskeOpplysninger, slettedeVedlegg}: VedleggFrontends): Opplysning[] => {
-    console.log("okonomiskeOpplysninger:", okonomiskeOpplysninger);
-    console.log("slettedeVedlegg:", slettedeVedlegg);
-
     const current = okonomiskeOpplysninger?.map((opplysning): Opplysning => ({...opplysning}));
     const deleted = slettedeVedlegg?.map((opplysning): Opplysning => ({...opplysning, slettet: true}));
-
     return [...(current ?? []), ...(deleted ?? [])]
         .filter((opplysning) => opplysning.type !== "kort|behov")
         .sort((a: Opplysning, b: Opplysning) => {
-            console.log("Sorting types:", a.type, b.type);
             return (
                 opplysningSpec[a.type as VedleggFrontendTypeMinusUferdig].sortKey -
                 opplysningSpec[b.type as VedleggFrontendTypeMinusUferdig].sortKey
