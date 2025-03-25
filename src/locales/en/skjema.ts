@@ -165,7 +165,8 @@ export const skjema = {
             fritidsaktiviteter: "Leisure activities for children",
             kortKategorier: {
                 kategoriValg: "Choose category",
-                barnebidrag: "Other expenses for children",
+                barnebidrag_b: "Other expenses for children - I pay",
+                barnebidrag_m: "Other expenses for children - I recieve",
                 Barnehage: "Kindergarten",
                 barnehageSFO: "SFO/AKS",
                 bostotte: "Housing allowance(bostøtte) from Norwegian State Housing Bank",

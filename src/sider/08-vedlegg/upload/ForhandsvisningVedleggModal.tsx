@@ -104,8 +104,11 @@ export const ForhandsvisningVedleggModal = ({
                                 <option value="kort|annet">
                                     {t("begrunnelse.kategorier.kortKategorier.kategoriValg")}
                                 </option>
-                                <option value="barnebidrag|barnebidrag">
-                                    {t("begrunnelse.kategorier.kortKategorier.barnebidrag")}
+                                <option value="barnebidrag|betaler">
+                                    {t("begrunnelse.kategorier.kortKategorier.barnebidrag_b")}
+                                </option>
+                                <option value="barnebidrag|mottar">
+                                    {t("begrunnelse.kategorier.kortKategorier.barnebidrag_m")}
                                 </option>
                                 <option value="faktura|barnehage">
                                     {t("begrunnelse.kategorier.kortKategorier.barnehage")}

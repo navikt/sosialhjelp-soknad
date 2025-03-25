@@ -165,7 +165,8 @@ export const skjema = {
             fritidsaktiviteter: "Fritidsaktiviteter for barn",
             kortKategorier: {
                 kategoriValg: "Velg beskrivelse",
-                barnebidrag: "Barnebidrag",
+                barnebidrag_b: "Barnebidrag - Jeg betaler",
+                barnebidrag_m: "Barnebidrag - Jeg mottar",
                 barnehage: "Barnehage",
                 barnehageSFO: "SFO/AKS",
                 bostotte: "Bostøtte fra Husbanken",
