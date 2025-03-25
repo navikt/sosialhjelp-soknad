@@ -18,11 +18,6 @@ jobs:
             cluster: prod-gcp
             session-url: "https://www.nav.no/sosialhjelp/soknad/oauth2/session"
             logout-url: "https://www.nav.no/sosialhjelp/soknad/oauth2/logout"
-          - environment: prod-intern
-            cluster: prod-gcp
-            session-url: "https://www.ansatt.nav.no/sosialhjelp/soknad/oauth2/session"
-            logout-url: "https://www.ansatt.nav.no/sosialhjelp/soknad/oauth2/logout"
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
