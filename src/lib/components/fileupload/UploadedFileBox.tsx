@@ -57,7 +57,7 @@ export const UploadedFileBox = ({
 
     const {t: tSkjema} = useTranslation("skjema");
 
-    const key = dokumentasjonsTypeTilTextKey[dokumentasjonsType]; // returns a string
+    const key = dokumentasjonsTypeTilTextKey[dokumentasjonsType];
     const kategoriTekst = key ? tSkjema(key as any) : dokumentasjonsType;
 
     return (

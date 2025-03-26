@@ -21,13 +21,7 @@ interface ForhandsvisningModalProps {
     onDelete: () => void;
 }
 
-export const ForhandsvisningVedleggModal = ({
-    header,
-    file,
-    onAccept,
-    onClose,
-    //onDelete,
-}: ForhandsvisningModalProps) => {
+export const ForhandsvisningVedleggModal = ({header, file, onAccept, onClose}: ForhandsvisningModalProps) => {
     const [isFullscreen, setFullscreen] = useState<boolean>(false);
     const {t} = useTranslation();
     const isKortSoknad = useCurrentSoknadIsKort();
@@ -36,7 +30,6 @@ export const ForhandsvisningVedleggModal = ({
     const [selectedCategory, setSelectedCategory] = useState<string>("");
 
     const handleAccept = () => {
-        // Ensure `annet|annet` is set when no valid category is selected
         const categoryToSet = selectedCategory || "annet|annet";
         setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
         setSelectedCategory(""); // Reset after accept
@@ -44,8 +37,8 @@ export const ForhandsvisningVedleggModal = ({
     };
 
     const handleClose = () => {
-        setValgtKategoriData({valgtKategorier: "annet|annet"}); // Reset context
-        setSelectedCategory(""); // Reset local state
+        setValgtKategoriData({valgtKategorier: "annet|annet"});
+        setSelectedCategory("");
         onClose();
     };
 
