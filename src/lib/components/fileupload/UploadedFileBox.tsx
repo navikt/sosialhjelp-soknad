@@ -14,8 +14,6 @@ const StyledCircle = styled.div`
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-bottom: 1rem;
-
     svg {
         height: 1.5rem;
         width: 1.5rem;
@@ -25,7 +23,6 @@ const StyledCircle = styled.div`
     border-radius: var(--a-border-radius-full);
     min-height: 3rem;
     min-width: 3rem;
-    display: grid;
     place-content: center;
     transition: background-color 250ms cubic-bezier(0, 0.3, 0.15, 1);
 `;
@@ -64,36 +61,32 @@ export const UploadedFileBox = ({
     const kategoriTekst = key ? tSkjema(key as any) : dokumentasjonsType;
 
     return (
-        <li className="mt-4 flex gap-2 justify-between border-2 border-[var(--a-border-subtle)] border-solid rounded-md p-2">
-            <div className={"flex flex-row gap-2"}>
-                <div>
-                    <BekreftSlettDokumentModal
-                        open={showConfirmDelete}
-                        onSelect={(shouldDelete) => {
-                            if (shouldDelete) onDelete(dokumentId);
-                            setShowConfirmDelete(false);
-                        }}
-                    />
-                </div>
-                <div>
-                    <StyledCircle>
-                        <FilIllustrasjon />
-                    </StyledCircle>
-                    <BodyShort>{kategoriTekst}</BodyShort>
+        <li className="mt-4 flex justify-between items-center border-2 border-[var(--a-border-subtle)] border-solid rounded-md p-4">
+            <div className="flex gap-4">
+                <StyledCircle>
+                    <FilIllustrasjon />
+                </StyledCircle>
+                <div className="flex flex-col">
+                    <BodyShort className="font-semibold">{kategoriTekst}</BodyShort>
                     <LinkButton onClick={() => window.open(digisosConfig.baseURL + lastNedUrl)}>{filename}</LinkButton>
                 </div>
-                <div>
-                    <Button
-                        size={"small"}
-                        variant={"tertiary"}
-                        onClick={() => setShowConfirmDelete(true)}
-                        aria-label={`Slett ${filename}`}
-                    >
-                        <div className={"flex items-center gap-2"}>
-                            <TrashIcon height={25} width={25} />
-                        </div>
-                    </Button>
-                </div>
+            </div>
+            <div>
+                <BekreftSlettDokumentModal
+                    open={showConfirmDelete}
+                    onSelect={(shouldDelete) => {
+                        if (shouldDelete) onDelete(dokumentId);
+                        setShowConfirmDelete(false);
+                    }}
+                />
+                <Button
+                    size="small"
+                    variant="tertiary-neutral"
+                    onClick={() => setShowConfirmDelete(true)}
+                    aria-label={`Slett ${filename}`}
+                >
+                    <TrashIcon height={25} width={25} />
+                </Button>
             </div>
         </li>
     );
