@@ -7,13 +7,17 @@ import {useTranslation} from "react-i18next";
 import {isSoknadApiError} from "../../api/error/isSoknadApiError";
 import {DigisosApiErrorMap} from "../../api/error/DigisosApiErrorMap";
 import {REST_FEIL} from "../../api/error/restFeil";
-import {useHentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {
+    getHentOkonomiskeOpplysningerQueryKey,
+    useHentOkonomiskeOpplysninger,
+} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useDeleteDokument} from "../../../generated/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
 import {humanizeFilesize} from "../../../sider/08-vedlegg/lib/humanizeFilesize";
 import {axiosInstance} from "../../api/axiosInstance";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 import {useContextSessionInfo} from "../../providers/useContextSessionInfo.ts";
 import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
+import {useQueryClient} from "@tanstack/react-query";
 
 const TEN_MEGABYTE_COMPAT_FALLBACK = 10 * 1024 * 1024;
 
@@ -34,6 +38,9 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
 
     const isPending = isDokumentasjonPending || isDeletionPending || uploadPercent !== null;
     const {setValgtKategoriData} = useValgtKategoriContext();
+
+    const queryClient = useQueryClient();
+    const dokumentasjonQueryKey = getHentOkonomiskeOpplysningerQueryKey(behandlingsId);
 
     /**
      * When the data on the server has changed, we automatically update the client-side list.
@@ -104,7 +111,11 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
             setUploadPercent(null);
             dispatch({type: "insert", dokument});
             setValgtKategoriData({valgtKategorier: "annet|annet"});
+
             await logAmplitudeEvent("dokument lastet opp", {opplysningType: dokumentasjonType});
+
+            //brukes for å tvinge en refretch av dokumentasjon slik at ting blir rendret riktig
+            await queryClient.invalidateQueries({queryKey: dokumentasjonQueryKey});
         } catch (e: any) {
             handleApiError(e);
         } finally {

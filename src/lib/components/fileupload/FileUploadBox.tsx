@@ -123,7 +123,7 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
                 </div>
             </div>
             <div>
-                <BodyShort>Dine Opplastede filer ({documents.length})</BodyShort>
+                <Heading size={"small"}>Dine Opplastede filer ({allUploadedFiles.length})</Heading>
                 <ul>
                     {currentUpload && <BodyShort>Laster opp ({currentUpload.percent}%)</BodyShort>}
                     {allUploadedFiles.map((fil) => (
