@@ -126,14 +126,18 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
                 <Heading size={"small"}>Dine Opplastede filer ({allUploadedFiles.length})</Heading>
                 <ul>
                     {currentUpload && <BodyShort>Laster opp ({currentUpload.percent}%)</BodyShort>}
-                    {allUploadedFiles.map((fil) => (
-                        <UploadedFileBox
-                            key={fil.dokumentId}
-                            dokument={fil}
-                            dokumentasjonsType={fil.dokumentasjonType}
-                            onDelete={deleteDocument}
-                        />
-                    ))}
+                    {allUploadedFiles.length === 0 ? (
+                        <p>ingen filer har blitt lastet opp</p>
+                    ) : (
+                        allUploadedFiles.map((fil) => (
+                            <UploadedFileBox
+                                key={fil.dokumentId}
+                                dokument={fil}
+                                dokumentasjonsType={fil.dokumentasjonType}
+                                onDelete={deleteDocument}
+                            />
+                        ))
+                    )}
                 </ul>
             </div>
         </>
