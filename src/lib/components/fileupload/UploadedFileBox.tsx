@@ -23,6 +23,8 @@ const StyledCircle = styled.div`
     border-radius: var(--a-border-radius-full);
     min-height: 3rem;
     min-width: 3rem;
+    max-height: 3rem;
+    max-width: 3rem;
     place-content: center;
     transition: background-color 250ms cubic-bezier(0, 0.3, 0.15, 1);
 `;
@@ -68,7 +70,9 @@ export const UploadedFileBox = ({
                 </StyledCircle>
                 <div className="flex flex-col">
                     <BodyShort className="font-semibold">{kategoriTekst}</BodyShort>
-                    <LinkButton onClick={() => window.open(digisosConfig.baseURL + lastNedUrl)}>{filename}</LinkButton>
+                    <LinkButton className="text-left" onClick={() => window.open(digisosConfig.baseURL + lastNedUrl)}>
+                        {filename}
+                    </LinkButton>
                 </div>
             </div>
             <div>

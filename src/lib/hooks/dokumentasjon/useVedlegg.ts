@@ -65,7 +65,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
      *
      * @param dokumentId The dokumentId to delete
      */
-    const deleteDocument = (dokumentId: string) => {
+    const deleteDocument = async (dokumentId: string) => {
         mutateDelete(
             {behandlingsId, dokumentId},
             {
@@ -75,6 +75,9 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
                     setValgtKategoriData({valgtKategorier: "annet|annet"});
 
                     logAmplitudeEvent("dokument slettet", {opplysningType: dokumentasjonType}).then();
+
+                    //brukes for å tvinge en refretch av dokumentasjon slik at ting blir rendret riktig
+                    queryClient.invalidateQueries({queryKey: dokumentasjonQueryKey});
                 },
             }
         );

@@ -10,6 +10,7 @@ export const FilIllustrasjon = () => (
         font-size="2rem"
         aria-hidden="true"
     >
+        <title>Fil</title>
         <path
             fill="currentColor"
             fill-rule="evenodd"
