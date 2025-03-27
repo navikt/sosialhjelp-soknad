@@ -59,19 +59,21 @@ const Inntekt = () => {
             <SkjemaStegStepper page={4} onStepChange={gotoPage} />
             <SkjemaStegBlock className={"lg:space-y-12"}>
                 <SkjemaStegTitle
-                    className={"lg:mb-16"}
+                    className={"lg:mb-12"}
                     title={t(KortSkjemaHeadings[4].tittel)}
                     icon={KortSkjemaHeadings[4].ikon}
                 />
-                <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
-                <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
-                <NavYtelser />
-                {brukskontoOpplysning && <Dokumentasjon opplysning={brukskontoOpplysning} />}
-                <FileUploadBox
-                    sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
-                    undertekst="situasjon.kort.dokumentasjon.description"
-                    liste="situasjon.kort.dokumentasjon.liste"
-                />
+                <div className={"space-y-12"}>
+                    <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
+                    <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
+                    <NavYtelser />
+                    {brukskontoOpplysning && <Dokumentasjon opplysning={brukskontoOpplysning} />}
+                    <FileUploadBox
+                        sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+                        undertekst="situasjon.kort.dokumentasjon.description"
+                        liste="situasjon.kort.dokumentasjon.liste"
+                    />
+                </div>
                 <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
             </SkjemaStegBlock>
         </SkjemaSteg>
