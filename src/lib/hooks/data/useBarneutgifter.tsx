@@ -49,6 +49,7 @@ export const useBarneutgifter = () => {
 
         if (!bekreftelse) {
             mutate({soknadId: behandlingsId, data: {type: "HarIkkeBarneutgifterInput"}});
+            return;
         }
         const oppdatert: HarBarneutgifterInput = {
             ...barneutgifter,
