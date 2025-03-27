@@ -1,4 +1,4 @@
-export const DigisosEnvironments = ["localhost", "mock", "prod", "preprod", "dev", "prod-intern"] as const;
+export const DigisosEnvironments = ["localhost", "mock", "prod", "preprod", "dev"] as const;
 export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 
 type FeatureFlags = {
@@ -124,38 +124,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         withCredentials: false,
         driftsmeldingUrl: "http://sosialhjelp-driftsmeldinger/sosialhjelp/driftsmeldinger/api",
         baseURL: "https://www.nav.no/sosialhjelp/soknad/soknad-api/",
-        innsynURL: "https://www.nav.no/sosialhjelp/innsyn",
-        minSideURL: "https://www.nav.no/minside/",
-        dekoratorLoginBaseUrl: "https://login.nav.no",
-        faro: {
-            url: "https://telemetry.nav.no/collect",
-        },
-    },
-    "prod-intern": {
-        featureFlags: {
-            nyOppsummering: false,
-            oppsummeringNavEnhet: false,
-            soknadstypeValg: false,
-            publicFacingTestVersion: true,
-        },
-
-        dekorator: {
-            env: "prod",
-            serviceDiscovery: true,
-            logoutRedirectUrl: "https://www.ansatt.nav.no/sosialhjelp/soknad/oauth2/logout",
-        },
-
-        proxy: {
-            hostname: "sosialhjelp-soknad-api",
-            basePath: "/sosialhjelp/soknad-api",
-            https: false,
-        },
-
-        showDevPanel: false,
-        logLocally: false,
-        withCredentials: false,
-        driftsmeldingUrl: "http://sosialhjelp-driftsmeldinger/sosialhjelp/driftsmeldinger/api",
-        baseURL: "https://www.ansatt.nav.no/sosialhjelp/soknad/soknad-api/",
         innsynURL: "https://www.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         dekoratorLoginBaseUrl: "https://login.nav.no",
