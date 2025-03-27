@@ -163,6 +163,20 @@ export const skjema = {
             tannlege: "Dental treatment",
             transport: "Transport",
             fritidsaktiviteter: "Leisure activities for children",
+            kortKategorier: {
+                kategoriValg: "Choose category",
+                barnebidrag_b: "Other expenses for children - I pay",
+                barnebidrag_m: "Other expenses for children - I recieve",
+                Barnehage: "Kindergarten",
+                barnehageSFO: "SFO/AKS",
+                bostotte: "Housing allowance(bostøtte) from Norwegian State Housing Bank",
+                husleie: "Rent",
+                kontooversikt: "Kontooversikt(bank account statements?)",
+                lonnslipp: "Wage slip",
+                stromOppvarming: "Electricity and heating",
+                stipendLan: "Loan or grant from Lånekassen",
+                annet: "Other",
+            },
         },
         kort: {
             behov: {
@@ -2072,6 +2086,7 @@ export const skjema = {
                 stringValue: "Full screen",
             },
             info: "Please ensure the documents can be read, and show the correct information",
+            kategori: 'If ypu do not choose a category the document will be uploaded under "Other".',
             opplast: "Upload document",
             slett: "Delete",
             tilbake: {

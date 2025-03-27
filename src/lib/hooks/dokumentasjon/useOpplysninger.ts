@@ -11,13 +11,13 @@ export const flettOgSorter = ({okonomiskeOpplysninger, slettedeVedlegg}: Vedlegg
     const deleted = slettedeVedlegg?.map((opplysning): Opplysning => ({...opplysning, slettet: true}));
     return [...(current ?? []), ...(deleted ?? [])]
         .filter((opplysning) => opplysning.type !== "kort|behov")
-        .sort(
-            (a: Opplysning, b: Opplysning) =>
+        .sort((a: Opplysning, b: Opplysning) => {
+            return (
                 opplysningSpec[a.type as VedleggFrontendTypeMinusUferdig].sortKey -
                 opplysningSpec[b.type as VedleggFrontendTypeMinusUferdig].sortKey
-        );
+            );
+        });
 };
-
 export const useOpplysninger = () => {
     const behandlingsId = useBehandlingsId();
 
