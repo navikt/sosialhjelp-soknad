@@ -1,12 +1,12 @@
 import * as React from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {Opplysning} from "../../../lib/opplysninger";
 import {ForhandsvisningVedleggModal} from "./ForhandsvisningVedleggModal";
 import {PlusIcon} from "@navikt/aksel-icons";
 import {PdfConversionError} from "./UploadError";
 import {usePDFConverter} from "../../../lib/hooks/dokumentasjon/usePDFConverter";
 import {useDokumentasjonTekster} from "../../../lib/hooks/dokumentasjon/useDokumentasjonTekster";
+import {DokumentasjonDtoType} from "../../../generated/new/model";
 
 export const SUPPORTED_WITHOUT_CONVERSION = ["image/jpeg", "image/png", "application/pdf"];
 export const SUPPORTED_WITH_CONVERSION = [
@@ -20,12 +20,12 @@ export const SUPPORTED_WITH_CONVERSION = [
 export const DokumentUploader = ({
     doUpload,
     visSpinner,
-    isLoading,
-    opplysning,
+    disabled,
+    opplysningstype,
     resetAlerts,
 }: {
-    opplysning: Opplysning;
-    isLoading: boolean;
+    opplysningstype: DokumentasjonDtoType;
+    disabled?: boolean;
     visSpinner: boolean;
     doUpload: (document: File) => Promise<void>;
     resetAlerts: () => void;
@@ -37,7 +37,7 @@ export const DokumentUploader = ({
     const isPending = visSpinner || conversionPending;
 
     if (conversionError) throw new PdfConversionError("conversion error", {cause: conversionError});
-    const {dokumentBeskrivelse} = useDokumentasjonTekster(opplysning.type);
+    const {dokumentBeskrivelse} = useDokumentasjonTekster(opplysningstype);
 
     const handleFileSelect = async ({target: {files}}: React.ChangeEvent<HTMLInputElement>) => {
         if (!files?.length) return;
@@ -57,7 +57,7 @@ export const DokumentUploader = ({
         <div className="pt-2">
             <Button
                 variant="secondary"
-                disabled={isLoading}
+                disabled={disabled}
                 onClick={() => {
                     resetAlerts();
                     vedleggElement?.current?.click();
@@ -89,9 +89,6 @@ export const DokumentUploader = ({
                         await doUpload(upload);
                     }}
                     onClose={() => setPreviewFile(null)}
-                    onDelete={() => {
-                        setPreviewFile(null);
-                    }}
                 />
             )}
         </div>

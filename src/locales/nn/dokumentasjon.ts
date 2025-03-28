@@ -1,10 +1,8 @@
-import {VedleggFrontendType} from "../../generated/model";
 import {DokumentasjonTexts} from "../types";
+import {type DokumentasjonDtoType} from "../../generated/new/model";
 
-export type VedleggFrontendTypeMinusUferdig = Exclude<VedleggFrontendType, "kort|behov" | "kort|situasjonsendring">;
-
-export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, DokumentasjonTexts> = {
-    "lonnslipp|arbeid": {
+export const dokumentasjon: Record<DokumentasjonDtoType, DokumentasjonTexts> = {
+    JOBB: {
         brutto: {
             label: "Løn før skatt siste månad",
         },
@@ -23,7 +21,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         undertekst: "Oppgi løn for alle arbeidsforhold",
         dokumentBeskrivelse: "Eller last opp lønsslipp (siste månad)",
     },
-    "sluttoppgjor|arbeid": {
+    SLUTTOPPGJOER: {
         belop: {
             label: "Beløp etter skatt",
         },
@@ -38,7 +36,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kor mykje har du fått utbetalt i sluttoppgjer/feriepengar?",
         dokumentBeskrivelse: "Sluttoppgjer",
     },
-    "student|vedtak": {
+    STUDIELAN_INNTEKT: {
         belop: {
             label: "Beløp siste månad",
         },
@@ -49,7 +47,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Last opp vedtak frå Lånekassen",
     },
-    "barnebidrag|betaler": {
+    BARNEBIDRAG_BETALER: {
         belop: {
             label: "Beløp",
         },
@@ -61,7 +59,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kor mykje betaler du i barnebidrag per månad?",
         dokumentBeskrivelse: "Last opp opplysningar om utgifter til barnebidrag",
     },
-    "barnebidrag|mottar": {
+    BARNEBIDRAG_MOTTAR: {
         belop: {
             label: "Beløp",
         },
@@ -72,22 +70,22 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kor mykje får du i barnebidrag per månad?",
         dokumentBeskrivelse: "Opplysningar om motteke bidrag",
     },
-    "samvarsavtale|barn": {
+    SAMVARSAVTALE: {
         slettet: "Vi har sletta dokumentet knytt til samværsavtale, då det ikkje lenger er relevant.",
         sporsmal: "Ettersom du har samvær med barnet ditt, ber vi deg om å laste opp",
         dokumentBeskrivelse: "Samværsavtale eller avtale om delt bustad",
     },
-    "husleiekontrakt|husleiekontrakt": {
+    HUSLEIEKONTRAKT: {
         slettet: "Vi har sletta dokumentet knytt til leigekontrakt, då du har svart at du ikkje lenger leiger.",
         sporsmal: "Husleigekontrakt",
         dokumentBeskrivelse: "",
     },
-    "husleiekontrakt|kommunal": {
+    HUSLEIEKONTRAKT_KOMMUNAL: {
         slettet: "Vi har sletta dokumentet knytt til kommunal bustad, då du har svart at du ikkje lenger har dette.",
         sporsmal: "Husleigekontrakt",
         dokumentBeskrivelse: "",
     },
-    "husbanken|vedtak": {
+    UTBETALING_HUSBANKEN: {
         belop: {
             label: "Beløp siste månad",
         },
@@ -98,7 +96,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Vedtak om bustøtte for siste 2 mnd.",
     },
-    "kontooversikt|brukskonto": {
+    FORMUE_BRUKSKONTO: {
         belop: {
             label: "Saldo brukskonto",
         },
@@ -111,7 +109,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         undertekst: "Oppgi for kvar brukskonto",
         dokumentBeskrivelse: "Last opp saldoutskrift for brukskonto (på søknadstidspunktet)",
     },
-    "kontooversikt|bsu": {
+    FORMUE_BSU: {
         belop: {
             label: "Saldo",
         },
@@ -123,7 +121,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kva er saldoen på BSU-kontoen din?",
         dokumentBeskrivelse: "Last opp saldoutskrift for BSU (på søknadstidspunktet)",
     },
-    "kontooversikt|sparekonto": {
+    FORMUE_SPAREKONTO: {
         belop: {
             label: "Saldo",
         },
@@ -136,7 +134,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         undertekst: "Oppgi saldo per sparekonto",
         dokumentBeskrivelse: "Last opp saldoutskrift for sparekonto (på søknadstidspunktet)",
     },
-    "kontooversikt|livsforsikring": {
+    FORMUE_LIVSFORSIKRING: {
         belop: {
             label: "Saldo",
         },
@@ -148,7 +146,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kva er saldoen på livsforsikringa di med sparedel?",
         dokumentBeskrivelse: "Last opp dokumentasjon på livsforsikring",
     },
-    "kontooversikt|aksjer": {
+    FORMUE_VERDIPAPIRER: {
         belop: {
             label: "Saldo",
         },
@@ -160,7 +158,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kva er saldoen på aksjane, obligasjonane eller fonda dine?",
         dokumentBeskrivelse: "Last opp saldoutskrift frå VPS-konto",
     },
-    "kontooversikt|annet": {
+    FORMUE_ANNET: {
         belop: {
             label: "Saldo",
         },
@@ -172,7 +170,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kva er saldoen på andre bankkontoar eller spareordningar du har?",
         dokumentBeskrivelse: "Last opp opplysningar om andre bankinnskot eller sparing",
     },
-    "dokumentasjon|utbytte": {
+    UTBETALING_UTBYTTE: {
         belop: {
             label: "Sum",
         },
@@ -184,7 +182,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Last opp opplysningar om utbyte",
     },
-    "salgsoppgjor|eiendom": {
+    UTBETALING_SALG: {
         belop: {
             label: "Salssum",
         },
@@ -196,7 +194,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Last opp opplysningar om salsoppgjer",
     },
-    "dokumentasjon|forsikringsutbetaling": {
+    UTBETALING_FORSIKRING: {
         belop: {
             label: "Sum",
         },
@@ -210,7 +208,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         undertekst: "Oppgi totalt beløp",
         dokumentBeskrivelse: "Dokumentasjon på forsikringsutbetaling",
     },
-    "dokumentasjon|annetinntekter": {
+    UTBETALING_ANNET: {
         belop: {
             label: "Sum",
         },
@@ -222,7 +220,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Last opp opplysningar om andre utbetalingar",
     },
-    "faktura|husleie": {
+    UTGIFTER_HUSLEIE: {
         belop: {
             label: "Beløp per månad",
         },
@@ -233,7 +231,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kor mykje betaler du i husleige per månad?",
         dokumentBeskrivelse: "Last opp kvittering/faktura på husleige",
     },
-    "faktura|strom": {
+    UTGIFTER_STROM: {
         belop: {
             label: "Beløp siste rekning",
         },
@@ -245,7 +243,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kor mykje betaler du for straum?",
         dokumentBeskrivelse: "Last opp kvittering/faktura på straum",
     },
-    "faktura|kommunaleavgifter": {
+    UTGIFTER_KOMMUNAL_AVGIFT: {
         belop: {
             label: "Beløp siste rekning",
         },
@@ -257,7 +255,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kor mykje betaler du i kommunale avgifter?",
         dokumentBeskrivelse: "Last opp kvittering/faktura på kommunale avgifter",
     },
-    "faktura|oppvarming": {
+    UTGIFTER_OPPVARMING: {
         belop: {
             label: "Beløp siste rekning",
         },
@@ -269,7 +267,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kor mykje betaler du for oppvarming (ikkje medrekna straum)?",
         dokumentBeskrivelse: "Last opp kvittering/faktura på oppvarming",
     },
-    "nedbetalingsplan|avdraglaan": {
+    UTGIFTER_BOLIGLAN: {
         avdrag: {
             label: "Månadlege avdrag",
         },
@@ -282,7 +280,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kor mykje betaler du i avdrag og renter på bustadlånet ditt?",
         dokumentBeskrivelse: "Last opp ledbetalingsplan",
     },
-    "dokumentasjon|annetboutgift": {
+    UTGIFTER_ANNET_BO: {
         belop: {
             label: "Beløp buutgift",
         },
@@ -300,7 +298,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Last opplysningar om andre buutgifter",
     },
-    "faktura|fritidsaktivitet": {
+    UTGIFTER_BARN_FRITIDSAKTIVITETER: {
         belop: {
             label: "Beløp siste rekning",
         },
@@ -319,7 +317,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Last opp kvittering/faktura på fritidsaktivitet",
     },
-    "faktura|barnehage": {
+    UTGIFTER_BARNEHAGE: {
         belop: {
             label: "Beløp siste månad",
         },
@@ -331,7 +329,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kor mykje betaler du for barnehage?",
         dokumentBeskrivelse: "Last opp kvittering/faktura på barnehage",
     },
-    "faktura|sfo": {
+    UTGIFTER_SFO: {
         belop: {
             label: "Beløp siste månad",
         },
@@ -343,7 +341,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kor mykje betaler du for SFO (skulefritidsordning)?",
         dokumentBeskrivelse: "Last opp kvittering/faktura på SFO",
     },
-    "faktura|tannbehandling": {
+    UTGIFTER_BARN_TANNREGULERING: {
         belop: {
             label: "Beløp siste rekning",
         },
@@ -356,7 +354,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "Kor mykje betaler du for tannregulering for barn?",
         dokumentBeskrivelse: "Last opp kvittering/faktura på tannregulering",
     },
-    "faktura|annetbarnutgift": {
+    UTGIFTER_ANNET_BARN: {
         belop: {
             label: "Beløp siste rekning",
         },
@@ -375,17 +373,17 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Last opp kvittering/faktura på andre barneutgifter",
     },
-    "skattemelding|skattemelding": {
+    SKATTEMELDING: {
         slettet: "Vi har sletta dokumentet knytt til skattemelding, då det ikkje lenger er relevant.",
         sporsmal: "Vi ber om at du dokumenterer skattemelding og skatteoppgjer frå det siste året",
         dokumentBeskrivelse: "Last opp skattemelding og skatteoppgjer",
     },
-    "oppholdstillatel|oppholdstillatel": {
+    OPPHOLDSTILLATELSE: {
         sporsmal: "Registreringsbevis eller opphaldsløyve",
         dokumentBeskrivelse:
             "Vi ber om at du lastar opp registreringsbevis/opphaldsløyve som dokumenterer opphaldet i Noreg.",
     },
-    "annet|annet": {
+    UTGIFTER_ANDRE_UTGIFTER: {
         belop: {
             label: "Beløp på utgift",
         },
@@ -401,6 +399,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         dokumentInfo: "Dersom du har annen dokumentasjon du vil at vi skal sjå på, kan du laste dei opp her",
         dokumentBeskrivelse: "Last opp annen dokumentasjon",
     },
+    BEHOV: {sporsmal: "", dokumentBeskrivelse: ""},
 };
 
 export default dokumentasjon;

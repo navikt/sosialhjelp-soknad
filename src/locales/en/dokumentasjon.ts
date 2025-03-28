@@ -1,10 +1,8 @@
-import {VedleggFrontendType} from "../../generated/model";
 import {DokumentasjonTexts} from "../types";
+import {type DokumentasjonDtoType} from "../../generated/new/model";
 
-export type VedleggFrontendTypeMinusUferdig = Exclude<VedleggFrontendType, "kort|behov" | "kort|situasjonsendring">;
-
-export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, DokumentasjonTexts> = {
-    "lonnslipp|arbeid": {
+export const dokumentasjon: Record<DokumentasjonDtoType, DokumentasjonTexts> = {
+    JOBB: {
         brutto: {
             label: "Income before tax last month",
         },
@@ -23,7 +21,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         undertekst: "State your income for all work situations",
         dokumentBeskrivelse: "Upload information on income",
     },
-    "sluttoppgjor|arbeid": {
+    SLUTTOPPGJOER: {
         belop: {
             label: "Amount after tax",
         },
@@ -38,7 +36,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "How much have you received in final settlement/holiday pay?",
         dokumentBeskrivelse: "Upload final settlement",
     },
-    "student|vedtak": {
+    STUDIELAN_INNTEKT: {
         belop: {
             label: "Amount",
         },
@@ -49,7 +47,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Upload letter of decision from Lånekassen",
     },
-    "barnebidrag|betaler": {
+    BARNEBIDRAG_BETALER: {
         belop: {
             label: "Amount",
         },
@@ -61,7 +59,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "How much do you pay in child support per month?",
         dokumentBeskrivelse: "Upload information concerning child support expense",
     },
-    "barnebidrag|mottar": {
+    BARNEBIDRAG_MOTTAR: {
         belop: {
             label: "Amount",
         },
@@ -73,22 +71,22 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "How much do you receive in child support per month?",
         dokumentBeskrivelse: "Upload information on received child support",
     },
-    "samvarsavtale|barn": {
+    SAMVARSAVTALE: {
         slettet: "We have deleted the documentation on visitation agreement as it is no longer relevant.",
         sporsmal: "You have visits with your child, we therefore ask that you upload",
         dokumentBeskrivelse: "Upload visitation agreement, or agreement on shared residence",
     },
-    "husleiekontrakt|husleiekontrakt": {
+    HUSLEIEKONTRAKT: {
         slettet: "We have deleted the rental agreement for private home as you have no longer responded that you rent.",
         sporsmal: "Rental agreement",
         dokumentBeskrivelse: "",
     },
-    "husleiekontrakt|kommunal": {
+    HUSLEIEKONTRAKT_KOMMUNAL: {
         slettet: "We have deleted the rental agreement for municipal home as you have no longer responded you have it.",
         sporsmal: "Rental agreement",
         dokumentBeskrivelse: "",
     },
-    "husbanken|vedtak": {
+    UTBETALING_HUSBANKEN: {
         belop: {
             label: "Amount",
         },
@@ -100,7 +98,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Upload the last letter of decision on housing allowance",
     },
-    "kontooversikt|brukskonto": {
+    FORMUE_BRUKSKONTO: {
         belop: {
             label: "Balance",
         },
@@ -113,7 +111,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         undertekst: "State the balance in each current account",
         dokumentBeskrivelse: "Upload balance statement",
     },
-    "kontooversikt|bsu": {
+    FORMUE_BSU: {
         belop: {
             label: "Balance",
         },
@@ -125,7 +123,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "What is the balance in your BSU account?",
         dokumentBeskrivelse: "Upload balance statement",
     },
-    "kontooversikt|sparekonto": {
+    FORMUE_SPAREKONTO: {
         belop: {
             label: "Balance",
         },
@@ -138,7 +136,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         undertekst: "State the balance in each savings account",
         dokumentBeskrivelse: "Upload balance statement",
     },
-    "kontooversikt|livsforsikring": {
+    FORMUE_LIVSFORSIKRING: {
         belop: {
             label: "Balance",
         },
@@ -150,7 +148,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "What is the balance in your life insurance?",
         dokumentBeskrivelse: "Upload documentation on life insurance",
     },
-    "kontooversikt|aksjer": {
+    FORMUE_VERDIPAPIRER: {
         belop: {
             label: "Balance ",
         },
@@ -162,7 +160,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "What is the balance on your shares, bonds funds?",
         dokumentBeskrivelse: "Upload balance statement",
     },
-    "kontooversikt|annet": {
+    FORMUE_ANNET: {
         belop: {
             label: "Balance",
         },
@@ -175,7 +173,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "What is the balance in other bank accounts or savings schemes?",
         dokumentBeskrivelse: "Upload information on other bank deposits or savings",
     },
-    "dokumentasjon|utbytte": {
+    UTBETALING_UTBYTTE: {
         belop: {
             label: "Amount",
         },
@@ -187,7 +185,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Upload information on dividends",
     },
-    "salgsoppgjor|eiendom": {
+    UTBETALING_SALG: {
         belop: {
             label: "Sales sum",
         },
@@ -199,7 +197,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Upload information on sale settlement",
     },
-    "dokumentasjon|forsikringsutbetaling": {
+    UTBETALING_FORSIKRING: {
         belop: {
             label: "Amount",
         },
@@ -213,7 +211,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         undertekst: "State total amount",
         dokumentBeskrivelse: "Upload information on insurance payouts",
     },
-    "dokumentasjon|annetinntekter": {
+    UTBETALING_ANNET: {
         belop: {
             label: "Amount",
         },
@@ -226,7 +224,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Upload information on other payments",
     },
-    "faktura|husleie": {
+    UTGIFTER_HUSLEIE: {
         belop: {
             label: "Amount",
         },
@@ -237,7 +235,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "How much do you pay in rent per month?",
         dokumentBeskrivelse: "Upload receipt/invoice",
     },
-    "faktura|strom": {
+    UTGIFTER_STROM: {
         belop: {
             label: "Amount on the last bill",
         },
@@ -249,7 +247,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "How much do you pay for electricity?",
         dokumentBeskrivelse: "Upload receipt/invoice",
     },
-    "faktura|kommunaleavgifter": {
+    UTGIFTER_KOMMUNAL_AVGIFT: {
         belop: {
             label: "Amount on the last bill",
         },
@@ -261,7 +259,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "How much do you pay in municipal charges?",
         dokumentBeskrivelse: "Upload receipt/invoice",
     },
-    "faktura|oppvarming": {
+    UTGIFTER_OPPVARMING: {
         belop: {
             label: "Amount on the last bill",
         },
@@ -272,7 +270,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "How much do you pay for heating (excluding electricity)?",
         dokumentBeskrivelse: "Upload receipt/invoice",
     },
-    "nedbetalingsplan|avdraglaan": {
+    UTGIFTER_BOLIGLAN: {
         avdrag: {
             label: "Monthly installments",
         },
@@ -285,7 +283,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "How much do you pay in installments and interest on your home mortage?",
         dokumentBeskrivelse: "Upload installment plan",
     },
-    "dokumentasjon|annetboutgift": {
+    UTGIFTER_ANNET_BO: {
         belop: {
             label: "Amount of housing expenses",
         },
@@ -304,7 +302,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Upload information on other housing expenses",
     },
-    "faktura|fritidsaktivitet": {
+    UTGIFTER_BARN_FRITIDSAKTIVITETER: {
         belop: {
             label: "Amount last expense",
         },
@@ -323,7 +321,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Upload receipt/invoice",
     },
-    "faktura|barnehage": {
+    UTGIFTER_BARNEHAGE: {
         belop: {
             label: "Amount",
         },
@@ -336,7 +334,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "How much do you pay for kindergarten?",
         dokumentBeskrivelse: "Upload receipt/invoice",
     },
-    "faktura|sfo": {
+    UTGIFTER_SFO: {
         belop: {
             label: "Amount",
         },
@@ -349,7 +347,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "How much do you pay for after-school program (SFO/AKS)?",
         dokumentBeskrivelse: "Upload receipt/invoice",
     },
-    "faktura|tannbehandling": {
+    UTGIFTER_BARN_TANNREGULERING: {
         belop: {
             label: "Amount on the last bill",
         },
@@ -362,7 +360,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         sporsmal: "How much do you pay for orthodontic treatment for children?",
         dokumentBeskrivelse: "Upload receipt/invoice",
     },
-    "faktura|annetbarnutgift": {
+    UTGIFTER_ANNET_BARN: {
         belop: {
             label: "Amount last expense",
         },
@@ -381,16 +379,16 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         },
         dokumentBeskrivelse: "Upload receipt/invoice",
     },
-    "skattemelding|skattemelding": {
+    SKATTEMELDING: {
         slettet: "We have deleted the documentation relating to tax return as it is no longer relevant.",
         sporsmal: "Please document tax return and tax settlement from the last year.",
         dokumentBeskrivelse: "Upload tax return and tax settlement",
     },
-    "oppholdstillatel|oppholdstillatel": {
+    OPPHOLDSTILLATELSE: {
         sporsmal: "Please document your stay in Norway with a registration certificate or residence permit",
         dokumentBeskrivelse: "Upload registration certificate/residence permit",
     },
-    "annet|annet": {
+    UTGIFTER_ANDRE_UTGIFTER: {
         belop: {
             label: "Amount",
         },
@@ -407,6 +405,7 @@ export const dokumentasjon: Record<VedleggFrontendTypeMinusUferdig, Dokumentasjo
         dokumentInfo: "If you have other attachments you wish to send, they can be uploaded here.",
         dokumentBeskrivelse: "Upload relevant documentation",
     },
+    BEHOV: {sporsmal: "", dokumentBeskrivelse: ""},
 };
 
 export default dokumentasjon;

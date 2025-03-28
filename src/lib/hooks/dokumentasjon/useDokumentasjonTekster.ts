@@ -1,8 +1,7 @@
 import {useTranslation} from "react-i18next";
-import {VedleggFrontendType} from "../../../generated/model";
-import {opplysningSpec} from "../../opplysninger";
+import {opplysningSpec, formVariants} from "../../opplysninger";
 import {DokumentasjonTexts} from "../../../locales/types";
-import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
+import type {DokumentasjonDtoType} from "../../../generated/new/model";
 
 /**
  * Skiller ut i18n-tekstbehandling til en hook slik at det lettere lar seg gjøre å
@@ -10,8 +9,9 @@ import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon
  *
  * @param opplysningType
  */
-export const useDokumentasjonTekster = (opplysningType: VedleggFrontendType): DokumentasjonTexts => {
-    const {numRows} = opplysningSpec[opplysningType as VedleggFrontendTypeMinusUferdig];
+export const useDokumentasjonTekster = (opplysningType: DokumentasjonDtoType): DokumentasjonTexts => {
+    const {formVariant} = opplysningSpec[opplysningType];
+    const {numRows} = formVariants[formVariant];
     const {t} = useTranslation("dokumentasjon");
 
     const {sporsmal, undertekst, leggtil, dokumentBeskrivelse} = t(opplysningType, "", {

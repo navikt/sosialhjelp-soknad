@@ -1,229 +1,192 @@
-import {type VedleggFrontend, VedleggFrontendGruppe} from "../generated/model";
-import {DokumentasjonAntallRader} from "../locales/types";
-import {VedleggFrontendTypeMinusUferdig} from "../locales/nb/dokumentasjon.ts";
-
-export type Opplysning = VedleggFrontend & {
-    slettet?: boolean;
-    pendingLasterOppFil?: boolean;
-};
+import {type DokumentasjonDtoType} from "../generated/new/model";
 
 export type OpplysningInputType = "beskrivelse" | "belop" | "brutto" | "netto" | "avdrag" | "renter";
 
 export type OpplysningSpec = {
-    numRows: DokumentasjonAntallRader;
-    inputs: OpplysningInputType[];
+    formVariant: keyof typeof formVariants;
     textKey: string;
     sortKey: number;
 };
 
-export const opplysningSpec: Record<VedleggFrontendTypeMinusUferdig, OpplysningSpec> = {
-    "lonnslipp|arbeid": {
-        numRows: "flere",
-        inputs: ["brutto", "netto"],
+export const formVariants = {
+    bruttonetto: {numRows: "flere"},
+    belopFlere: {numRows: "flere"},
+    belopEn: {numRows: "en"},
+    belopBeskrivelse: {numRows: "flere"},
+    avdragRenter: {numRows: "flere"},
+    ingen: {numRows: "ingen"},
+} as const;
+
+export const opplysningSpec: Record<DokumentasjonDtoType, OpplysningSpec> = {
+    JOBB: {
+        formVariant: "bruttonetto",
         textKey: "opplysninger.arbeid.jobb",
         sortKey: 0,
     },
-    "sluttoppgjor|arbeid": {
-        numRows: "flere",
-        inputs: ["belop"],
+    SLUTTOPPGJOER: {
+        formVariant: "belopFlere",
         textKey: "opplysninger.arbeid.avsluttet",
         sortKey: 1,
     },
-    "student|vedtak": {
-        numRows: "en",
-        inputs: ["belop"],
+    STUDIELAN_INNTEKT: {
+        formVariant: "belopEn",
         textKey: "opplysninger.arbeid.student",
         sortKey: 2,
     },
-    "barnebidrag|betaler": {
-        numRows: "en",
-        inputs: ["belop"],
+    BARNEBIDRAG_BETALER: {
+        formVariant: "belopEn",
         textKey: "opplysninger.familiesituasjon.barnebidrag.betaler",
         sortKey: 3,
     },
-    "barnebidrag|mottar": {
-        numRows: "en",
-        inputs: ["belop"],
+    BARNEBIDRAG_MOTTAR: {
+        formVariant: "belopEn",
         textKey: "opplysninger.familiesituasjon.barnebidrag.mottar",
         sortKey: 4,
     },
-    "samvarsavtale|barn": {
-        numRows: "ingen",
-        inputs: [],
+    SAMVARSAVTALE: {
+        formVariant: "ingen",
         textKey: "opplysninger.familiesituasjon.barn.samvarsavtale",
         sortKey: 5,
     },
-    "husleiekontrakt|husleiekontrakt": {
-        numRows: "ingen",
-        inputs: [],
+    HUSLEIEKONTRAKT: {
+        formVariant: "ingen",
         textKey: "opplysninger.bosituasjon.leier",
         sortKey: 6,
     },
-    "husleiekontrakt|kommunal": {
-        numRows: "ingen",
-        inputs: [],
+    HUSLEIEKONTRAKT_KOMMUNAL: {
+        formVariant: "ingen",
         textKey: "opplysninger.bosituasjon.kommunal",
         sortKey: 7,
     },
-    "husbanken|vedtak": {
-        numRows: "en",
-        inputs: ["belop"],
+    UTBETALING_HUSBANKEN: {
+        formVariant: "belopEn",
         textKey: "opplysninger.inntekt.bostotte",
         sortKey: 8,
     },
-    "kontooversikt|brukskonto": {
-        numRows: "flere",
-        inputs: ["belop"],
+    FORMUE_BRUKSKONTO: {
+        formVariant: "belopFlere",
         textKey: "opplysninger.inntekt.bankinnskudd.brukskonto",
         sortKey: 9,
     },
-    "kontooversikt|bsu": {
-        numRows: "flere",
-        inputs: ["belop"],
+    FORMUE_BSU: {
+        formVariant: "belopFlere",
         textKey: "opplysninger.inntekt.bankinnskudd.bsu",
         sortKey: 10,
     },
-    "kontooversikt|sparekonto": {
-        numRows: "flere",
-        inputs: ["belop"],
+    FORMUE_SPAREKONTO: {
+        formVariant: "belopFlere",
         textKey: "opplysninger.inntekt.bankinnskudd.sparekonto",
         sortKey: 11,
     },
-    "kontooversikt|livsforsikring": {
-        numRows: "flere",
-        inputs: ["belop"],
+    FORMUE_LIVSFORSIKRING: {
+        formVariant: "belopFlere",
         textKey: "opplysninger.inntekt.bankinnskudd.livsforsikring",
         sortKey: 12,
     },
-    "kontooversikt|aksjer": {
-        numRows: "flere",
-        inputs: ["belop"],
+    FORMUE_VERDIPAPIRER: {
+        formVariant: "belopFlere",
         textKey: "opplysninger.inntekt.bankinnskudd.aksjer",
         sortKey: 13,
     },
-    "kontooversikt|annet": {
-        numRows: "flere",
-        inputs: ["belop"],
+    FORMUE_ANNET: {
+        formVariant: "belopFlere",
         textKey: "opplysninger.inntekt.bankinnskudd.annet",
         sortKey: 14,
     },
-    "dokumentasjon|utbytte": {
-        numRows: "flere",
-        inputs: ["belop"],
+    UTBETALING_UTBYTTE: {
+        formVariant: "belopFlere",
         textKey: "opplysninger.inntekt.inntekter.utbytte",
         sortKey: 15,
     },
-    "salgsoppgjor|eiendom": {
-        numRows: "flere",
-        inputs: ["belop"],
+    UTBETALING_SALG: {
+        formVariant: "belopFlere",
         textKey: "opplysninger.inntekt.inntekter.salg",
         sortKey: 16,
     },
-    "dokumentasjon|forsikringsutbetaling": {
-        numRows: "flere",
-        inputs: ["belop"],
+    UTBETALING_FORSIKRING: {
+        formVariant: "belopFlere",
         textKey: "opplysninger.inntekt.inntekter.forsikringsutbetalinger",
         sortKey: 17,
     },
-    "dokumentasjon|annetinntekter": {
-        numRows: "flere",
-        inputs: ["belop"],
+    UTBETALING_ANNET: {
+        formVariant: "belopFlere",
         textKey: "opplysninger.inntekt.inntekter.annet",
         sortKey: 18,
     },
-    "faktura|husleie": {
-        numRows: "en",
-        inputs: ["belop"],
+    UTGIFTER_HUSLEIE: {
+        formVariant: "belopEn",
         textKey: "opplysninger.utgifter.boutgift.husleie",
         sortKey: 19,
     },
-    "faktura|strom": {
-        numRows: "en",
-        inputs: ["belop"],
+    UTGIFTER_STROM: {
+        formVariant: "belopEn",
         textKey: "opplysninger.utgifter.boutgift.strom",
         sortKey: 20,
     },
-    "faktura|kommunaleavgifter": {
-        numRows: "en",
-        inputs: ["belop"],
+    UTGIFTER_KOMMUNAL_AVGIFT: {
+        formVariant: "belopEn",
         textKey: "opplysninger.utgifter.boutgift.kommunaleavgifter",
         sortKey: 21,
     },
-    "faktura|oppvarming": {
-        numRows: "en",
-        inputs: ["belop"],
+    UTGIFTER_OPPVARMING: {
+        formVariant: "belopEn",
         textKey: "opplysninger.utgifter.boutgift.oppvarming",
         sortKey: 22,
     },
-    "nedbetalingsplan|avdraglaan": {
-        numRows: "flere",
-        inputs: ["avdrag", "renter"],
+    UTGIFTER_BOLIGLAN: {
+        formVariant: "avdragRenter",
         textKey: "opplysninger.utgifter.boutgift.avdraglaan",
         sortKey: 23,
     },
-    "dokumentasjon|annetboutgift": {
-        numRows: "flere",
-        inputs: ["beskrivelse", "belop"],
+    UTGIFTER_ANNET_BO: {
+        formVariant: "belopBeskrivelse",
         textKey: "opplysninger.utgifter.boutgift.andreutgifter",
         sortKey: 24,
     },
-    "faktura|fritidsaktivitet": {
-        numRows: "flere",
-        inputs: ["beskrivelse", "belop"],
+    UTGIFTER_BARN_FRITIDSAKTIVITETER: {
+        formVariant: "belopBeskrivelse",
         textKey: "opplysninger.utgifter.barn.fritidsaktivitet",
         sortKey: 25,
     },
-    "faktura|barnehage": {
-        numRows: "flere",
-        inputs: ["belop"],
+    UTGIFTER_BARNEHAGE: {
+        formVariant: "belopFlere",
         textKey: "opplysninger.utgifter.barn.barnehage",
         sortKey: 26,
     },
-    "faktura|sfo": {
-        numRows: "flere",
-        inputs: ["belop"],
+    UTGIFTER_SFO: {
+        formVariant: "belopFlere",
         textKey: "opplysninger.utgifter.barn.sfo",
         sortKey: 27,
     },
-    "faktura|tannbehandling": {
-        numRows: "flere",
-        inputs: ["belop"],
+    UTGIFTER_BARN_TANNREGULERING: {
+        formVariant: "belopFlere",
         textKey: "opplysninger.utgifter.barn.tannbehandling",
         sortKey: 28,
     },
-    "faktura|annetbarnutgift": {
-        numRows: "flere",
-        inputs: ["beskrivelse", "belop"],
+    UTGIFTER_ANNET_BARN: {
+        formVariant: "belopBeskrivelse",
         textKey: "opplysninger.utgifter.barn.annet",
         sortKey: 29,
     },
-    "skattemelding|skattemelding": {
-        numRows: "ingen",
-        inputs: [],
+    SKATTEMELDING: {
+        formVariant: "ingen",
         textKey: "opplysninger.generell.skattemelding",
         sortKey: 30,
     },
-    "oppholdstillatel|oppholdstillatel": {
-        numRows: "ingen",
-        inputs: [],
+    OPPHOLDSTILLATELSE: {
+        formVariant: "ingen",
         textKey: "opplysninger.oppholdstillatelse.oppholdstillatelse",
         sortKey: 31,
     },
-    "annet|annet": {
-        numRows: "flere",
-        inputs: ["beskrivelse", "belop"],
+    UTGIFTER_ANDRE_UTGIFTER: {
+        formVariant: "belopBeskrivelse",
         textKey: "opplysninger.ekstrainfo.utgifter",
         sortKey: 32,
     },
+    // Brukes ikke, men "må" med pga. kort søknad
+    BEHOV: {
+        formVariant: "ingen",
+        textKey: "opplysninger.oppholdstillatelse.oppholdstillatelse",
+        sortKey: 33,
+    },
 };
-
-export const vedleggGrupper: VedleggFrontendGruppe[] = [
-    "statsborgerskap",
-    "arbeid",
-    "familie",
-    "bosituasjon",
-    "inntekt",
-    "utgifter",
-    "generelle vedlegg",
-    "andre utgifter",
-];

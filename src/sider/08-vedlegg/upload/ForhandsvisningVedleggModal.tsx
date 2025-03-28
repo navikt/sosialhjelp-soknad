@@ -16,16 +16,9 @@ interface ForhandsvisningModalProps {
     header: string | undefined;
     onAccept: () => void;
     onClose: () => void;
-    onDelete: () => void;
 }
 
-export const ForhandsvisningVedleggModal = ({
-    header,
-    file,
-    onAccept,
-    onClose,
-    //onDelete,
-}: ForhandsvisningModalProps) => {
+export const ForhandsvisningVedleggModal = ({header, file, onAccept, onClose}: ForhandsvisningModalProps) => {
     const [isFullscreen, setFullscreen] = useState<boolean>(false);
     const {t} = useTranslation();
 
@@ -54,20 +47,12 @@ export const ForhandsvisningVedleggModal = ({
                 >
                     {file.type === "application/pdf" ? (
                         <>
-                            <FilePreviewButtons
-                                //onDelete={onDelete}
-                                isFullscreen={isFullscreen}
-                                setFullscreen={setFullscreen}
-                            />
+                            <FilePreviewButtons isFullscreen={isFullscreen} setFullscreen={setFullscreen} />
                             <FilePreviewDisplay file={file} width={isFullscreen ? window.innerWidth - 200 : 600} />
                         </>
                     ) : (
                         <>
-                            <FilePreviewButtons
-                                //onDelete={onDelete}
-                                isFullscreen={isFullscreen}
-                                setFullscreen={setFullscreen}
-                            />
+                            <FilePreviewButtons isFullscreen={isFullscreen} setFullscreen={setFullscreen} />
                             <img className={"w-full"} src={URL.createObjectURL(file)} alt={"preview"} />
                         </>
                     )}

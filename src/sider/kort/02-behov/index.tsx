@@ -21,6 +21,7 @@ import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegBu
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {useAnalyticsContext} from "../../../lib/providers/useAnalyticsContext.ts";
 import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
+import {DokumentasjonDtoType} from "../../../generated/new/model";
 
 const MAX_LEN_HVA_ER_ENDRET = 500;
 const MAX_LEN_HVA_SOKES_OM = 500;
@@ -168,7 +169,7 @@ const Behov = () => {
                                 sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                                 undertekst="begrunnelse.kort.behov.dokumentasjon.beskrivelse"
                                 liste="begrunnelse.kort.behov.dokumentasjon.liste"
-                                dokumentasjonType={"kort|behov"}
+                                dokumentasjonType={DokumentasjonDtoType.BEHOV}
                             />
                         </form>
                     )}

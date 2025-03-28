@@ -1,5 +1,4 @@
 // When new backend has been deployed, this can be removed.
-import {DokumentUpload, VedleggFrontendType} from "../../../generated/model";
 import {useEffect, useReducer, useState} from "react";
 import {DocumentListReducer, initialDocumentListState} from "../../../sider/08-vedlegg/lib/DocumentListReducer";
 import {useBehandlingsId} from "../common/useBehandlingsId";
@@ -7,16 +6,16 @@ import {useTranslation} from "react-i18next";
 import {isSoknadApiError} from "../../api/error/isSoknadApiError";
 import {DigisosApiErrorMap} from "../../api/error/DigisosApiErrorMap";
 import {REST_FEIL} from "../../api/error/restFeil";
-import {useHentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
-import {useDeleteDokument} from "../../../generated/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
 import {humanizeFilesize} from "../../../sider/08-vedlegg/lib/humanizeFilesize";
-import {axiosInstance} from "../../api/axiosInstance";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 import {useContextSessionInfo} from "../../providers/useContextSessionInfo.ts";
+import {DokumentasjonDtoType} from "../../../generated/new/model";
+import {saveDokument, useDeleteDokument} from "../../../generated/new/dokument-controller/dokument-controller.ts";
+import {useGetForventetDokumentasjon} from "../../../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
 
 const TEN_MEGABYTE_COMPAT_FALLBACK = 10 * 1024 * 1024;
 
-export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
+export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
     const [error, setError] = useState<string | null>(null);
     const [maxUploadSize, setMaxUploadSize] = useState<number | null>(null);
     const [uploadPercent, setUploadPercent] = useState<number | null>(null);
@@ -28,7 +27,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
         setError(t(isSoknadApiError(reason) ? DigisosApiErrorMap[reason.error] : REST_FEIL.GENERELL_FEIL));
 
     const sessionInfo = useContextSessionInfo();
-    const {data: dokumentasjon, isPending: isDokumentasjonPending} = useHentOkonomiskeOpplysninger(behandlingsId, {});
+    const {data: dokumentasjon, isPending: isDokumentasjonPending} = useGetForventetDokumentasjon(behandlingsId);
     const {mutate: mutateDelete, isPending: isDeletionPending} = useDeleteDokument();
 
     const isPending = isDokumentasjonPending || isDeletionPending || uploadPercent !== null;
@@ -36,7 +35,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
     /**
      * When the data on the server has changed, we automatically update the client-side list.
      */
-    useEffect(() => dispatch({type: "initialize", data: dokumentasjon?.okonomiskeOpplysninger}), [dokumentasjon]);
+    useEffect(() => dispatch({type: "initialize", data: dokumentasjon?.dokumentasjon}), [dokumentasjon]);
 
     /**
      * When component is mounted, we try to get the max upload size.
@@ -58,7 +57,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
      */
     const deleteDocument = (dokumentId: string) => {
         mutateDelete(
-            {behandlingsId, dokumentId},
+            {soknadId: behandlingsId, dokumentId},
             {
                 onError: handleApiError,
                 onSuccess: () => {
@@ -87,16 +86,17 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
             const data = new FormData();
             data.append("file", file);
 
-            const dokument = await axiosInstance<DokumentUpload>({
-                url: `/opplastetVedlegg/${behandlingsId}/${encodeURI(dokumentasjonType)}`,
-                method: "POST",
-                headers: {"Content-Type": "multipart/form-data"},
-                data,
-                onUploadProgress: ({loaded, total}) => {
-                    const percentCompleted = Math.round((loaded * 100) / total!);
-                    setUploadPercent(percentCompleted);
-                },
-            });
+            const dokument = await saveDokument(
+                behandlingsId,
+                dokumentasjonType,
+                {file},
+                {
+                    onUploadProgress: ({loaded, total}) => {
+                        const percentCompleted = Math.round((loaded * 100) / total!);
+                        setUploadPercent(percentCompleted);
+                    },
+                }
+            );
 
             setUploadPercent(null);
             dispatch({type: "insert", dokument});

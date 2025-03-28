@@ -12,7 +12,7 @@ import {
     SUPPORTED_WITHOUT_CONVERSION,
 } from "../../../sider/08-vedlegg/upload/DokumentUploader";
 import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
-import {VedleggFrontendType} from "../../../generated/model";
+import {DokumentasjonDtoType} from "../../../generated/new/model";
 
 type TranslationKeys = "begrunnelse.kort.behov.dokumentasjon.beskrivelse" | "situasjon.kort.dokumentasjon.description";
 
@@ -23,7 +23,7 @@ interface Props {
     undertekst?: TranslationKeys;
     liste?: ListeKeys;
     bunntekst?: string;
-    dokumentasjonType: VedleggFrontendType;
+    dokumentasjonType: DokumentasjonDtoType;
 }
 
 export const FileUploadBoxNoStyle = ({
@@ -86,7 +86,7 @@ const FileUploadBox = ({sporsmal, undertekst, liste, dokumentasjonType}: Props):
     );
 };
 
-const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType}) => {
+const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: DokumentasjonDtoType}) => {
     const {t} = useTranslation();
     const {
         deleteDocument,
@@ -196,9 +196,6 @@ const DokumentUploader = ({
                         await doUpload(upload);
                     }}
                     onClose={() => setPreviewFile(null)}
-                    onDelete={() => {
-                        setPreviewFile(null);
-                    }}
                 />
             )}
         </div>
