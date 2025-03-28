@@ -14,10 +14,11 @@ import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaSte
 import {useOpplysninger} from "../../../lib/hooks/dokumentasjon/useOpplysninger.ts";
 import {Opplysning} from "../../../lib/opplysninger.ts";
 import {BodyShort, Heading} from "@navikt/ds-react";
-import {DokumentasjonRader} from "../../08-vedlegg/DokumentasjonRader.tsx";
+//import {DokumentasjonRader} from "../../08-vedlegg/DokumentasjonRader.tsx";
 import {useFormue} from "../../../lib/hooks/data/useFormue.tsx";
+import {Dokumentasjon} from "../../08-vedlegg/Dokumentasjon.tsx";
 
-const Dokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
+const KortDokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
     const {t} = useTranslation("skjema");
     return (
         <div className={"rounded-md bg-surface-action-subtle p-8"}>
@@ -25,7 +26,8 @@ const Dokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
                 {t("utbetalinger.inntekt.skattbar.kort_saldo_tittel")}
             </Heading>
             <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.kort_saldo_undertekst")}</BodyShort>
-            <DokumentasjonRader opplysning={opplysning} />
+            <Dokumentasjon opplysning={opplysning} />
+            {/*<DokumentasjonRader opplysning={opplysning} />*/}
             <FileUploadBoxNoStyle
                 bunntekst={t("utbetalinger.inntekt.skattbar.kort_saldo_lastOpp")}
                 dokumentasjonType={opplysning.type}
@@ -37,7 +39,7 @@ const Dokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
     const {sorterte} = useOpplysninger();
-    const brukskontoOpplysning = sorterte.find((opplysning) => opplysning.type === "kontooversikt|brukskonto");
+    const brukskontoOpplysning = sorterte.find((opplysning) => opplysning.type === "FORMUE_BRUKSKONTO");
     const {setFormue, formue} = useFormue();
     const [hasInitialized, setHasInitialized] = useState(false);
 
@@ -71,7 +73,7 @@ const Inntekt = () => {
                     sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                     undertekst="situasjon.kort.dokumentasjon.description"
                     liste="situasjon.kort.dokumentasjon.liste"
-                    dokumentasjonType={"annet|annet"}
+                    dokumentasjonType={"UTGIFTER_ANDRE_UTGIFTER"}
                 />
                 <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
             </SkjemaStegBlock>

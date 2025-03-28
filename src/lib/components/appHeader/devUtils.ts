@@ -9,53 +9,10 @@ import {updateVerdier} from "../../../generated/verdi-ressurs/verdi-ressurs";
 import {updateBoutgifter} from "../../../generated/boutgift-ressurs/boutgift-ressurs";
 import {updateBarneutgifter} from "../../../generated/barneutgift-ressurs/barneutgift-ressurs";
 import {
-    hentOkonomiskeOpplysninger,
-    updateOkonomiskOpplysning,
-} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
-import {opplysningSpec} from "../../opplysninger";
-import {VedleggFrontend, VedleggRadFrontend} from "../../../generated/model";
-import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
-import {
     getForsorgerplikt,
     updateForsorgerplikt,
 } from "../../../generated/new/forsorgerplikt-controller/forsorgerplikt-controller.ts";
 import {updateBostotte} from "../../../generated/new/bostotte-controller/bostotte-controller.ts";
-
-// Jeg har rappet disse fra Orval-boilerplate-kode for å få tilgang til ReadOnly<T> under her.
-
-type IsAny<T> = 0 extends 1 & T ? true : false;
-type IsUnknown<T> = IsAny<T> extends true ? false : unknown extends T ? true : false;
-// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-type isBuiltin = Primitive | Function | Date | Error | RegExp;
-type Primitive = string | number | boolean | bigint | symbol | undefined | null;
-type NonReadonly<T> =
-    T extends Exclude<isBuiltin, Error>
-        ? T
-        : T extends Map<infer Key, infer Value>
-          ? Map<NonReadonly<Key>, NonReadonly<Value>>
-          : T extends ReadonlyMap<infer Key, infer Value>
-            ? Map<NonReadonly<Key>, NonReadonly<Value>>
-            : T extends WeakMap<infer Key, infer Value>
-              ? WeakMap<NonReadonly<Key>, NonReadonly<Value>>
-              : T extends Set<infer Values>
-                ? Set<NonReadonly<Values>>
-                : T extends ReadonlySet<infer Values>
-                  ? Set<NonReadonly<Values>>
-                  : T extends WeakSet<infer Values>
-                    ? WeakSet<NonReadonly<Values>>
-                    : T extends Promise<infer Value>
-                      ? Promise<NonReadonly<Value>>
-                      : T extends object
-                        ? {-readonly [Key in keyof T]: NonReadonly<T[Key]>}
-                        : IsUnknown<T> extends true
-                          ? unknown
-                          : T;
-
-const generateChecksum = (str1: string, str2: string): string =>
-    (Array.from(str1 + str2).reduce((sum, char) => sum + char.charCodeAt(0), 0) % 1e6).toString().padStart(6, "9");
-const rowCountFromString = (str: string): number =>
-    (Array.from(str).reduce((sum, char) => sum + char.charCodeAt(0), 0) % 20) + 1;
-const duplicateItems = <T>(items: T[], n: number): T[] => Array.from({length: n}, () => items).flat();
 
 // Oppretter en maksimal søknad med fiktive data.
 // For økonomiske opplysninger blir data generert basert på checksums
@@ -145,26 +102,4 @@ export const maximizeSoknad = async (soknadId: string) => {
         sfo: true,
         tannregulering: true,
     });
-
-    const opplysninger = await hentOkonomiskeOpplysninger(soknadId);
-
-    opplysninger.okonomiskeOpplysninger?.forEach((opplysning) => {
-        const {numRows} = opplysningSpec[opplysning.type as VedleggFrontendTypeMinusUferdig];
-
-        if (numRows === "flere" && opplysning.rader)
-            opplysning.rader = duplicateItems(opplysning.rader, rowCountFromString(opplysning.type));
-
-        opplysning.rader = opplysning.rader?.map((rad, rowNum) => {
-            return Object.entries(rad).reduce((acc, [key, _value]) => {
-                const testValue = key === "beskrivelse" ? opplysning.type : generateChecksum(opplysning.type, key);
-                return {...acc, [key]: `${testValue}${rowNum}`};
-            }, {} as VedleggRadFrontend);
-        });
-    });
-
-    await Promise.all(
-        opplysninger.okonomiskeOpplysninger!.map((opplysning) =>
-            updateOkonomiskOpplysning(soknadId, opplysning as NonReadonly<VedleggFrontend>)
-        )
-    );
 };

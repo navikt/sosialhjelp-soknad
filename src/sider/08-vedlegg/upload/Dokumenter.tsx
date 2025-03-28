@@ -13,8 +13,8 @@ import {useVedlegg} from "../../../lib/hooks/dokumentasjon/useVedlegg";
 export const Dokumenter = ({opplysning}: {opplysning: Opplysning}) => {
     const {t} = useTranslation();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
-    const {dokumentBeskrivelse} = useDokumentasjonTekster(opplysning.type);
-    const {deleteDocument, documents, uploadDocument, error, isPending, currentUpload} = useVedlegg(opplysning.type);
+    const {dokumentBeskrivelse} = useDokumentasjonTekster(opplysning.type.value);
+    const {deleteDocument, documents, uploadDocument, error, isPending, currentUpload} = useVedlegg(opplysning.type.value);
 
     return (
         <div className={"space-y-2"}>

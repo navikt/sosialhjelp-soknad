@@ -3,25 +3,25 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {useEffect, useState} from "react";
 import {useDebounce} from "react-use";
 import deepEqual from "deep-equal";
-import {VedleggFrontend} from "../../../generated/model";
-import {opplysningSpec} from "../../opplysninger";
-import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
+import {Opplysning, opplysningSpec} from "../../opplysninger";
 import {useOpplysningMutation} from "./useOpplysningMutation.ts";
 import {VedleggRadFrontendForm, VedleggRadFrontendSchema} from "./vedleggRadFormSchema.ts";
 
+type Nullable<T> = { [K in keyof T]: T[K] | null };
+
 // This is the delay we wait between keystrokes before we push changes to backend
 const DEBOUNCE_DELAY_MS = 500;
-const INITIAL_RADER: VedleggFrontend["rader"] = [
-    {beskrivelse: null, belop: null, brutto: null, netto: null, renter: null, avdrag: null},
-];
+const getInitialRader = (opplysning: Opplysning): Nullable<Required<Opplysning["detaljer"]>> => {
+    return [{beskrivelse: null, belop: null, brutto: null, netto: null, renter: null, avdrag: null}];
+};
 
-export const useOpplysning = (opplysning: VedleggFrontend) => {
-    const {textKey, inputs, numRows} = opplysningSpec[opplysning.type as VedleggFrontendTypeMinusUferdig];
+export const useOpplysning = (opplysning: Opplysning) => {
+    const {textKey, inputs, numRows} = opplysningSpec[opplysning.type];
 
     const {mutateOpplysning} = useOpplysningMutation();
 
     const {control, handleSubmit, watch} = useForm<VedleggRadFrontendForm>({
-        defaultValues: {rader: opplysning.rader},
+        defaultValues: {rader: opplysning.detaljer},
         resolver: zodResolver(VedleggRadFrontendSchema),
         mode: "onBlur",
         // Egentlig burde dette være true, men om det ikke er false så vil den
@@ -31,7 +31,7 @@ export const useOpplysning = (opplysning: VedleggFrontend) => {
     });
 
     // Initialize with all members being null
-    const [rader, setRader] = useState<VedleggFrontend["rader"] | undefined>([...INITIAL_RADER]);
+    const [rader, setRader] = useState<Opplysning["detaljer"] | undefined>(INITIAL_RADER);
 
     const submitFormIfChanged = () => {
         if (!deepEqual(rader, opplysning.rader)) mutateOpplysning({...opplysning, rader});

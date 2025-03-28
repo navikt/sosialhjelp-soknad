@@ -3,14 +3,18 @@ import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId";
 import {useTranslation} from "react-i18next";
 import {useQueryClient} from "@tanstack/react-query";
 import {
-    updateOkonomiskOpplysning,
     useHentOkonomiskeOpplysninger,
 } from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
-import * as React from "react";
 import {ChangeEvent} from "react";
 import {Checkbox} from "@navikt/ds-react";
 import cx from "classnames";
-import {VedleggFrontendVedleggStatus} from "../../../generated/model";
+import {
+    DokumentasjonDtoDokumentasjonStatus,
+} from "../../../generated/new/model";
+import {
+    useUpdateDokumentasjonStatus,
+} from "../../../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
+
 
 export const AlreadyUploadedCheckbox = ({opplysning, disabled}: {opplysning: Opplysning; disabled: boolean}) => {
     const behandlingsId = useBehandlingsId();
@@ -18,33 +22,27 @@ export const AlreadyUploadedCheckbox = ({opplysning, disabled}: {opplysning: Opp
     const queryClient = useQueryClient();
 
     const {queryKey} = useHentOkonomiskeOpplysninger(behandlingsId);
+
+    const {mutate, variables, isPending} = useUpdateDokumentasjonStatus({
+        mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
+    });
     const handleAlleredeLastetOpp = async (event: ChangeEvent<HTMLInputElement>) => {
         const alleredeLevert = event.target.checked;
-
-        await queryClient.refetchQueries({queryKey});
-
-        await updateOkonomiskOpplysning(behandlingsId, {
-            ...{
-                ...opplysning,
-                filer: [...(opplysning.filer ?? [])],
-                vedleggStatus: undefined,
-                slettet: undefined,
-                pendingLasterOppFil: undefined,
-            },
-            alleredeLevert,
-        });
-
-        await queryClient.invalidateQueries({queryKey});
+        mutate({soknadId: behandlingsId, data: {type: opplysning.type, hasLevert: alleredeLevert}});
     };
 
     return (
         <Checkbox
             id={opplysning.type + "_allerede_lastet_opp_checkbox"}
             className={cx("vedleggLastetOppCheckbox", {
-                "checkboks--disabled": opplysning.filer?.length,
+                "checkboks--disabled": opplysning.dokumenter?.length,
             })}
             onChange={handleAlleredeLastetOpp}
-            checked={opplysning.vedleggStatus === VedleggFrontendVedleggStatus.VedleggAlleredeSendt}
+            checked={
+                isPending
+                    ? variables.data?.hasLevert
+                    : opplysning.dokumentasjonStatus === DokumentasjonDtoDokumentasjonStatus.LEVERT_TIDLIGERE
+            }
             disabled={disabled}
         >
             {t("opplysninger.vedlegg.alleredelastetopp")}
