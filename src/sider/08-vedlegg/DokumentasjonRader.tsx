@@ -1,12 +1,12 @@
 import {LinkButton} from "../../lib/components/LinkButton";
 import {OpplysningInputRad} from "./OpplysningInputRad";
-import {VedleggFrontend} from "../../generated/model";
 import {useOpplysning} from "../../lib/hooks/dokumentasjon/useOpplysning";
 import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokumentasjonTekster";
 import useIsKort from "../../lib/hooks/data/useIsKort.ts";
 import {useTranslation} from "react-i18next";
+import {Opplysning} from "../../lib/opplysninger.ts";
 
-export const DokumentasjonRader = ({opplysning}: {opplysning: VedleggFrontend}) => {
+export const DokumentasjonRader = ({opplysning}: {opplysning: Opplysning}) => {
     const {
         multirow,
         inputs,

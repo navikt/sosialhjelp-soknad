@@ -2080,18 +2080,7 @@
                 "type": "object",
                 "properties": {"loginUrl": {"type": "string", "format": "uri"}}
             },
-            "BoutgifterInput": {
-                "required": ["type"],
-                "type": "object",
-                "properties": {"type": {"type": "string"}},
-                "discriminator": {
-                    "propertyName": "type",
-                    "mapping": {
-                        "HarIkkeBoutgifterInput": "#/components/schemas/HarIkkeBoutgifterInput",
-                        "HarBoutgifterInput": "#/components/schemas/HarBoutgifterInput"
-                    }
-                }
-            },
+            "BoutgifterInput": {"type": "object"},
             "HarBoutgifterInput": {
                 "required": [
                     "hasAnnenBoutgift",
@@ -2141,18 +2130,7 @@
                     "skalViseInfoVedBekreftelse": {"type": "boolean"}
                 }
             },
-            "BarneutgifterInput": {
-                "required": ["type"],
-                "type": "object",
-                "properties": {"type": {"type": "string"}},
-                "discriminator": {
-                    "propertyName": "type",
-                    "mapping": {
-                        "HarIkkeBarneutgifterInput": "#/components/schemas/HarIkkeBarneutgifterInput",
-                        "HarBarneutgifterInput": "#/components/schemas/HarBarneutgifterInput"
-                    }
-                }
-            },
+            "BarneutgifterInput": {"type": "object"},
             "HarBarneutgifterInput": {
                 "required": [
                     "hasAnnenUtgiftBarn",
@@ -2283,6 +2261,18 @@
                 "type": "object",
                 "properties": {"dokumentasjonLevert": {"type": "boolean"}}
             },
+            "AnnenDokumentasjonType": {
+                "type": "string",
+                "allOf": [{"$ref": "#/components/schemas/OpplysningType"}],
+                "enum": [
+                    "SKATTEMELDING",
+                    "SAMVARSAVTALE",
+                    "OPPHOLDSTILLATELSE",
+                    "HUSLEIEKONTRAKT",
+                    "HUSLEIEKONTRAKT_KOMMUNAL",
+                    "BEHOV"
+                ]
+            },
             "AvdragRenterDto": {
                 "type": "object",
                 "allOf": [
@@ -2350,6 +2340,7 @@
                         "properties": {
                             "opplysningType": {
                                 "oneOf": [
+                                    {"$ref": "#/components/schemas/AnnenDokumentasjonType"},
                                     {"$ref": "#/components/schemas/FormueType"},
                                     {"$ref": "#/components/schemas/InntektType"},
                                     {"$ref": "#/components/schemas/UtgiftType"}
@@ -2403,6 +2394,7 @@
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
+                    "dokumentasjonForventet": {"type": "boolean"},
                     "group": {
                         "type": "string",
                         "enum": [
@@ -2416,7 +2408,6 @@
                             "utgifter"
                         ]
                     },
-                    "dokumentasjonForventet": {"type": "boolean"},
                     "type": {"type": "string"}
                 },
                 "discriminator": {"propertyName": "type"}
@@ -2453,6 +2444,7 @@
                 "properties": {
                     "type": {
                         "oneOf": [
+                            {"$ref": "#/components/schemas/AnnenDokumentasjonType"},
                             {"$ref": "#/components/schemas/FormueType"},
                             {"$ref": "#/components/schemas/InntektType"},
                             {"$ref": "#/components/schemas/UtgiftType"}
@@ -2495,7 +2487,19 @@
                     }
                 }
             },
-            "OkonomiDetaljDto": {"type": "object"},
+            "OkonomiDetaljDto": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {"type": {"type": "string"}},
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "BelopDto": "#/components/schemas/BelopDto",
+                        "LonnsInntektDto": "#/components/schemas/LonnsInntektDto",
+                        "AvdragRenterDto": "#/components/schemas/AvdragRenterDto"
+                    }
+                }
+            },
             "HarIkkeVerdierInput": {
                 "required": ["hasBekreftelse"],
                 "type": "object",

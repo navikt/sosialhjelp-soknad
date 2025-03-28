@@ -5,14 +5,14 @@ import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useHentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {logError} from "../../log/loggerUtils";
 import {VedleggFrontendTypeMinusUferdig} from "../../../locales/nb/dokumentasjon.ts";
+import {useGetForventetDokumentasjon} from "../../../generated/new/okonomiske-opplysninger-controller/okonomiske-opplysninger-controller.ts";
+import {ForventetDokumentasjonDto, DokumentasjonDto} from "../../../generated/new/model";
 
-export const flettOgSorter = ({okonomiskeOpplysninger, slettedeVedlegg}: VedleggFrontends): Opplysning[] => {
-    const current = okonomiskeOpplysninger?.map((opplysning): Opplysning => ({...opplysning}));
-    const deleted = slettedeVedlegg?.map((opplysning): Opplysning => ({...opplysning, slettet: true}));
-    return [...(current ?? []), ...(deleted ?? [])]
+export const flettOgSorter = ({forventetDokumentasjon}: ForventetDokumentasjonDto): Opplysning[] => {
+    return forventetDokumentasjon
         .filter((opplysning) => opplysning.type !== "kort|behov")
-        .sort(
-            (a: Opplysning, b: Opplysning) =>
+        .toSorted(
+            (a: DokumentasjonDto, b: DokumentasjonDto) =>
                 opplysningSpec[a.type as VedleggFrontendTypeMinusUferdig].sortKey -
                 opplysningSpec[b.type as VedleggFrontendTypeMinusUferdig].sortKey
         );
@@ -21,7 +21,7 @@ export const flettOgSorter = ({okonomiskeOpplysninger, slettedeVedlegg}: Vedlegg
 export const useOpplysninger = () => {
     const behandlingsId = useBehandlingsId();
 
-    const {data, isLoading, error} = useHentOkonomiskeOpplysninger(behandlingsId, {});
+    const {data, isLoading, error} = useGetForventetDokumentasjon(behandlingsId);
 
     if (error) {
         logError(`Feil ved HentOkonomiskeOpplysninger: ${error}`);
