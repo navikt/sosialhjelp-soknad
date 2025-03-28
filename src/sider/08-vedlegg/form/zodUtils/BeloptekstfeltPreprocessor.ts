@@ -1,19 +1,6 @@
-import {logError} from "../../lib/log/loggerUtils";
+import {logError} from "../../../../lib/log/loggerUtils.ts";
 
-/**
- * React form hook preprocessor for tekstfelt beløp.
- *
- * Konverterer en tekststreng til number.
- *
- * Ved konverteringsfeil returnerer den en streng, som vil flagges
- * i form-hook med invalid_type_error som vi bruker til å gi en
- * vennlig feilmelding
- *
- * @param inputString Brukerdata skjemaverdi (i praksis event.target.value)
- * @returns number dersom tolkning lykkes, string dersom ikke
- * @todo Testdekning
- */
-export const belopTekstfeltPreprocessor = (inputString: unknown) => {
+const belopTekstfeltPreprocessor = (inputString: unknown) => {
     if (inputString === undefined || inputString === null) return null;
 
     if (typeof inputString === "number") return inputString;
@@ -38,3 +25,5 @@ export const belopTekstfeltPreprocessor = (inputString: unknown) => {
 
     return num;
 };
+
+export default belopTekstfeltPreprocessor;

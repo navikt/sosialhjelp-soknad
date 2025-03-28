@@ -1,25 +1,31 @@
 import {beforeEach, describe, expect, it} from "vitest";
-import {VedleggFrontend, VedleggFrontendType} from "../../../generated/model";
 import {
     DocumentListAction,
     DocumentListReducer,
     DocumentListState,
     initialDocumentListState,
 } from "./DocumentListReducer";
+import {DokumentasjonDto, DokumentasjonDtoType} from "../../../generated/new/model";
 
 // Constants for repeated values
-const DOCUMENT_TYPE = "someDocumentType" as VedleggFrontendType;
-const OTHER_DOCUMENT_TYPE = "otherType" as VedleggFrontendType;
-const INITIAL_DOCUMENTS: VedleggFrontend[] = [
+const DOCUMENT_TYPE: DokumentasjonDtoType = "FORMUE_BRUKSKONTO";
+const OTHER_DOCUMENT_TYPE: DokumentasjonDtoType = "JOBB";
+const INITIAL_DOCUMENTS: DokumentasjonDto[] = [
     {
         type: DOCUMENT_TYPE,
-        gruppe: "familie",
-        filer: [
-            {dokumentId: "1", filename: "file1"},
-            {dokumentId: "2", filename: "file2"},
+        gruppe: "generelle vedlegg",
+        dokumentasjonStatus: "FORVENTET",
+        dokumenter: [
+            {dokumentId: "1", filnavn: "file1"},
+            {dokumentId: "2", filnavn: "file2"},
         ],
     },
-    {type: OTHER_DOCUMENT_TYPE, gruppe: "familie", filer: [{dokumentId: "3", filename: "file3"}]},
+    {
+        type: OTHER_DOCUMENT_TYPE,
+        gruppe: "generelle vedlegg",
+        dokumenter: [{dokumentId: "3", filnavn: "file3"}],
+        dokumentasjonStatus: "FORVENTET",
+    },
 ];
 
 describe("initialDocumentListState", () => {
@@ -46,23 +52,30 @@ describe("DocumentListReducer", () => {
         };
         const newState = DocumentListReducer(initialState, action);
         expect(newState.documents).toEqual([
-            {dokumentId: "1", filename: "file1"},
-            {dokumentId: "2", filename: "file2"},
+            {dokumentId: "1", filnavn: "file1"},
+            {dokumentId: "2", filnavn: "file2"},
         ]);
     });
 
     it("should handle initialization when dokumentasjonType does not match any documents", () => {
         const action: DocumentListAction = {
             type: "initialize",
-            data: [{type: OTHER_DOCUMENT_TYPE, gruppe: "familie", filer: [{dokumentId: "4", filename: "file4"}]}],
+            data: [
+                {
+                    type: OTHER_DOCUMENT_TYPE,
+                    gruppe: "familie",
+                    dokumenter: [{dokumentId: "4", filnavn: "file4"}],
+                    dokumentasjonStatus: "FORVENTET",
+                },
+            ],
         };
         const newState = DocumentListReducer(initialState, action);
         expect(newState.documents).toEqual([]);
     });
 
     it("should remove a dokument by dokumentId", () => {
-        const DOC_1 = {dokumentId: "1", filename: "file1"};
-        const DOC_2 = {dokumentId: "2", filename: "file2"};
+        const DOC_1 = {dokumentId: "1", filnavn: "file1"};
+        const DOC_2 = {dokumentId: "2", filnavn: "file2"};
         initialState = {
             ...initialState,
             documents: [DOC_1, DOC_2],
@@ -76,8 +89,8 @@ describe("DocumentListReducer", () => {
         initialState = {
             ...initialState,
             documents: [
-                {dokumentId: "1", filename: "file1"},
-                {dokumentId: "2", filename: "file2"},
+                {dokumentId: "1", filnavn: "file1"},
+                {dokumentId: "2", filnavn: "file2"},
             ],
         };
         const action: DocumentListAction = {
@@ -86,13 +99,13 @@ describe("DocumentListReducer", () => {
         };
         const newState = DocumentListReducer(initialState, action);
         expect(newState.documents).toEqual([
-            {dokumentId: "1", filename: "file1"},
-            {dokumentId: "2", filename: "file2"},
+            {dokumentId: "1", filnavn: "file1"},
+            {dokumentId: "2", filnavn: "file2"},
         ]);
     });
 
     it("should insert a new dokument", () => {
-        const newDocument = {dokumentId: "3", filename: "file3"};
+        const newDocument = {dokumentId: "3", filnavn: "file3"};
         const action: DocumentListAction = {
             type: "insert",
             dokument: newDocument,
@@ -104,24 +117,24 @@ describe("DocumentListReducer", () => {
     it("should insert a new dokument into an existing documents array", () => {
         initialState = {
             ...initialState,
-            documents: [{dokumentId: "1", filename: "file1"}],
+            documents: [{dokumentId: "1", filnavn: "file1"}],
         };
-        const newDocument = {dokumentId: "2", filename: "file2"};
+        const newDocument = {dokumentId: "2", filnavn: "file2"};
         const action: DocumentListAction = {
             type: "insert",
             dokument: newDocument,
         };
         const newState = DocumentListReducer(initialState, action);
         expect(newState.documents).toEqual([
-            {dokumentId: "1", filename: "file1"},
-            {dokumentId: "2", filename: "file2"},
+            {dokumentId: "1", filnavn: "file1"},
+            {dokumentId: "2", filnavn: "file2"},
         ]);
     });
 
     it("should not mutate the original state", () => {
         const action: DocumentListAction = {
             type: "insert",
-            dokument: {dokumentId: "3", filename: "file3"},
+            dokument: {dokumentId: "3", filnavn: "file3"},
         };
         const originalState = {...initialState};
         DocumentListReducer(initialState, action);

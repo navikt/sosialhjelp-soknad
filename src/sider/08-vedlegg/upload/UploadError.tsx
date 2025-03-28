@@ -17,7 +17,6 @@ const USER_ERROR_LIST: readonly ErrorClassType[] = [PdfEncryptionError] as const
 
 export const UploadError = ({error, resetError}: {error: Error; resetError: () => void}) => {
     const {t} = useTranslation();
-
     /**
      * If the fault is on our side, we display a footer saying the problem has been logged
      * and will be adressed. If the fault is on the user's side, that doesn't make sense.

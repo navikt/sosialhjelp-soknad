@@ -11,24 +11,40 @@ import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegSt
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
-import {useOpplysninger} from "../../../lib/hooks/dokumentasjon/useOpplysninger.ts";
-import {Opplysning} from "../../../lib/opplysninger.ts";
-import {BodyShort, Heading} from "@navikt/ds-react";
-import {DokumentasjonRader} from "../../08-vedlegg/DokumentasjonRader.tsx";
+import {BodyShort, Heading, Loader} from "@navikt/ds-react";
 import {useFormue} from "../../../lib/hooks/data/useFormue.tsx";
+import BelopBeskrivelse from "../../08-vedlegg/form/BelopBeskrivelse.tsx";
+import useOkonomiskOpplysningMutation from "../../../lib/hooks/dokumentasjon/useOkonomiskOpplysningMutation.ts";
+import {BelopDto, DokumentasjonDtoType} from "../../../generated/new/model";
 
-const Dokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
+const KortDokumentasjon = ({opplysningstype}: {opplysningstype: DokumentasjonDtoType}) => {
     const {t} = useTranslation("skjema");
+    const {updateOkonomiskOpplysning, data, isLoading} = useOkonomiskOpplysningMutation<BelopDto>(opplysningstype);
+
+    if (isLoading) {
+        return <Loader />;
+    }
     return (
         <div className={"rounded-md bg-surface-action-subtle p-8"}>
             <Heading level={"4"} size={"small"} spacing>
                 {t("utbetalinger.inntekt.skattbar.kort_saldo_tittel")}
             </Heading>
             <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.kort_saldo_undertekst")}</BodyShort>
-            <DokumentasjonRader opplysning={opplysning} />
+            <BelopBeskrivelse
+                opplysningstype={opplysningstype}
+                excludeBeskrivelse
+                opplysning={data}
+                mutate={updateOkonomiskOpplysning}
+                belopLabel={
+                    <span style={{fontSize: 16, fontWeight: "normal"}}>
+                        {t("utbetalinger.inntekt.skattbar.kort_saldo_saldo")}
+                    </span>
+                }
+                leggTilTekst={t("utbetalinger.inntekt.skattbar.kort_saldo_leggTil")}
+            />
             <FileUploadBoxNoStyle
                 bunntekst={t("utbetalinger.inntekt.skattbar.kort_saldo_lastOpp")}
-                dokumentasjonType={opplysning.type}
+                dokumentasjonType={opplysningstype}
             />
         </div>
     );
@@ -36,11 +52,10 @@ const Dokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
-    const {sorterte} = useOpplysninger();
-    const brukskontoOpplysning = sorterte.find((opplysning) => opplysning.type === "kontooversikt|brukskonto");
     const {setFormue, formue} = useFormue();
     const [hasInitialized, setHasInitialized] = useState(false);
 
+    // TODO: Gjør dette i backend ved kort transition i stedet
     useEffect(() => {
         if (!hasInitialized && formue && !formue.hasBrukskonto) {
             setFormue(["hasBrukskonto"]);
@@ -66,12 +81,12 @@ const Inntekt = () => {
                 <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
                 <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
                 <NavYtelser />
-                {brukskontoOpplysning && <Dokumentasjon opplysning={brukskontoOpplysning} />}
+                <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
                 <FileUploadBox
                     sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                     undertekst="situasjon.kort.dokumentasjon.description"
                     liste="situasjon.kort.dokumentasjon.liste"
-                    dokumentasjonType={"annet|annet"}
+                    dokumentasjonType={"UTGIFTER_ANDRE_UTGIFTER"}
                 />
                 <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
             </SkjemaStegBlock>
