@@ -32,7 +32,7 @@ export const ForhandsvisningVedleggModal = ({header, file, onAccept, onClose}: F
     const handleAccept = () => {
         const categoryToSet = selectedCategory || "annet|annet";
         setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
-        setSelectedCategory(""); // Reset after accept
+        setSelectedCategory("");
         onAccept();
     };
 
