@@ -1037,6 +1037,51 @@
                 }
             }
         },
+        "/soknad/{soknadId}/inntekt/formue/updateWithoutRemoving": {
+            "put": {
+                "tags": ["formue-controller"],
+                "operationId": "updateFormueWithoutRemoving",
+                "parameters": [
+                    {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
+                ],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FormueInput"}}},
+                    "required": true
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
+                                }
+                            }
+                        }
+                    },
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/FormueDto"}}}
+                    }
+                }
+            }
+        },
         "/soknad/{soknadId}/familie/sivilstatus": {
             "get": {
                 "tags": ["sivilstand-controller"],

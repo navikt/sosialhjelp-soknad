@@ -16,6 +16,7 @@ import {Opplysning} from "../../../lib/opplysninger.ts";
 import {BodyShort, Heading} from "@navikt/ds-react";
 import {DokumentasjonRader} from "../../08-vedlegg/DokumentasjonRader.tsx";
 import {useFormue} from "../../../lib/hooks/data/useFormue.tsx";
+import useIsKort from "../../../lib/hooks/data/useIsKort.ts";
 
 const Dokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
     const {t} = useTranslation("skjema");
@@ -38,15 +39,20 @@ const Inntekt = () => {
     const {t} = useTranslation("skjema");
     const {sorterte} = useOpplysninger();
     const brukskontoOpplysning = sorterte.find((opplysning) => opplysning.type === "kontooversikt|brukskonto");
-    const {setFormue, formue} = useFormue();
+    const {setFormue, formue, setFormueWithStrategy} = useFormue();
     const [hasInitialized, setHasInitialized] = useState(false);
+    const isKortSoknad = useIsKort();
 
     useEffect(() => {
         if (!hasInitialized && formue && !formue.hasBrukskonto) {
-            setFormue(["hasBrukskonto"]);
+            if (isKortSoknad) {
+                setFormueWithStrategy(["hasBrukskonto"], true);
+            } else {
+                setFormue(["hasBrukskonto"]);
+            }
             setHasInitialized(true);
         }
-    }, [formue, hasInitialized]);
+    }, [formue, isKortSoknad, hasInitialized]);
 
     const navigate = useNavigate();
     const gotoPage = async (page: number) => {
