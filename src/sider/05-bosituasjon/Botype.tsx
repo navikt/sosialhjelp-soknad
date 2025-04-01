@@ -3,63 +3,39 @@ import {useBosituasjon} from "../../lib/hooks/data/useBosituasjon";
 import {NyttUnderskjema} from "./NyttUnderskjema";
 import {useTranslation} from "react-i18next";
 import {Radio, RadioGroup} from "@navikt/ds-react";
-import {BosituasjonDtoBotype} from "../../generated/new/model";
-
-const ANDRE_BOTYPER = ["INSTITUSJON", "KRISESENTER", "FENGSEL", "VENNER", "FORELDRE", "FAMILIE"] as const;
-type AnnenBotype = (typeof ANDRE_BOTYPER)[number];
-
-const BOTYPER = ["EIER", "LEIER", "KOMMUNAL", "INGEN", "ANNET"] as const;
-type Botype = (typeof BOTYPER)[number];
-
-type AnnetLanguageKey = `bosituasjon.annenBotype.${Lowercase<AnnenBotype>}`;
-type LanguageKey = `bosituasjon.${Lowercase<Botype>}`;
-
-interface Botypevalg<T extends LanguageKey | AnnetLanguageKey> {
-    value: BosituasjonDtoBotype;
-    languageKey: T;
-}
-
-const BOTYPEVALG: Botypevalg<LanguageKey>[] = BOTYPER.map((botype) => ({
-    value: botype,
-    languageKey: `bosituasjon.${botype.toLowerCase() as Lowercase<Botype>}`,
-}));
-
-const ANNEN_BOTYPEVALG: Botypevalg<AnnetLanguageKey>[] = ANDRE_BOTYPER.map((botype) => ({
-    value: botype,
-    languageKey: `bosituasjon.annenBotype.${botype.toLowerCase() as Lowercase<AnnenBotype>}`,
-}));
 
 export const Botype = () => {
     const {t} = useTranslation("skjema");
     const {botype, setBosituasjon} = useBosituasjon();
 
     // Hjelpefunksjon: Vis kun undermenyen dersom ikke "eier", "leier", "kommunal" eller "ingen" er valgt
-    const erAnnet = botype && [...ANDRE_BOTYPER, "ANNET"].includes(botype);
+    const erAnnet = () => !["EIER", "LEIER", "KOMMUNAL", "INGEN", null].includes(botype || null);
 
     return (
         <div className={"mt-12 lg:mt-24 mb-12 lg:mb-24"}>
             <RadioGroup
                 legend={t("bosituasjon.sporsmal")}
-                value={erAnnet ? "ANNET" : botype || ""}
-                onChange={(botype: BosituasjonDtoBotype) => setBosituasjon({botype})}
+                value={erAnnet() ? "ANNET" : botype || ""}
+                onChange={(botype) => setBosituasjon({botype})}
             >
-                {BOTYPEVALG.map(({value, languageKey}) => (
-                    <Radio key={value} value={value}>
-                        {t(languageKey)}
-                    </Radio>
-                ))}
+                <Radio value={"EIER"}>{t("bosituasjon.eier")}</Radio>
+                <Radio value={"LEIER"}>{t("bosituasjon.leier")}</Radio>
+                <Radio value={"KOMMUNAL"}>{t("bosituasjon.kommunal")}</Radio>
+                <Radio value={"INGEN"}>{t("bosituasjon.ingen")}</Radio>
+                <Radio value={"ANNET"}>{t("bosituasjon.annet")}</Radio>
             </RadioGroup>
-            <NyttUnderskjema hidden={!erAnnet}>
+            <NyttUnderskjema hidden={!erAnnet()}>
                 <RadioGroup
                     legend={t("bosituasjon.annenBotype.sporsmal")}
                     value={botype || ""}
                     onChange={(botype) => setBosituasjon({botype})}
                 >
-                    {ANNEN_BOTYPEVALG.map(({value, languageKey}) => (
-                        <Radio key={value} value={value}>
-                            {t(languageKey)}
-                        </Radio>
-                    ))}
+                    <Radio value={"FORELDRE"}>{t("bosituasjon.annenBotype.foreldre")}</Radio>
+                    <Radio value={"FAMILIE"}>{t("bosituasjon.annenBotype.familie")}</Radio>
+                    <Radio value={"VENNER"}>{t("bosituasjon.annenBotype.venner")}</Radio>
+                    <Radio value={"INSTITUSJON"}>{t("bosituasjon.annenBotype.institusjon")}</Radio>
+                    <Radio value={"FENGSEL"}>{t("bosituasjon.annenBotype.fengsel")}</Radio>
+                    <Radio value={"KRISESENTER"}>{t("bosituasjon.annenBotype.krisesenter")}</Radio>
                 </RadioGroup>
             </NyttUnderskjema>
         </div>

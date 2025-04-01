@@ -2125,7 +2125,18 @@
                 "type": "object",
                 "properties": {"loginUrl": {"type": "string", "format": "uri"}}
             },
-            "BoutgifterInput": {"type": "object"},
+            "BoutgifterInput": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {"type": {"type": "string"}},
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "HarIkkeBoutgifterInput": "#/components/schemas/HarIkkeBoutgifterInput",
+                        "HarBoutgifterInput": "#/components/schemas/HarBoutgifterInput"
+                    }
+                }
+            },
             "HarBoutgifterInput": {
                 "required": [
                     "hasAnnenBoutgift",
@@ -2175,7 +2186,18 @@
                     "skalViseInfoVedBekreftelse": {"type": "boolean"}
                 }
             },
-            "BarneutgifterInput": {"type": "object"},
+            "BarneutgifterInput": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {"type": {"type": "string"}},
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "HarIkkeBarneutgifterInput": "#/components/schemas/HarIkkeBarneutgifterInput",
+                        "HarBarneutgifterInput": "#/components/schemas/HarBarneutgifterInput"
+                    }
+                }
+            },
             "HarBarneutgifterInput": {
                 "required": [
                     "hasAnnenUtgiftBarn",

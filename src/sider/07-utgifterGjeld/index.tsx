@@ -1,4 +1,3 @@
-import * as React from "react";
 import {Boutgifter} from "./Boutgifter";
 import {Barneutgifter} from "./Barneutgifter";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
