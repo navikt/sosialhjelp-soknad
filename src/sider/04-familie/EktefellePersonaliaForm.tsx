@@ -24,7 +24,7 @@ const SivilstatusSchema = z.object({
         .transform((str) => (str?.length ? parse(str, "ddMMyyyy", 0) : undefined))
         .refine((date) => (date ? isValid(date) : true), ValideringsFeilKode.ER_FDATO)
         .transform((date) => date && format(date, "yyyy-MM-dd")),
-    personnummer: z.string().optional(),
+    personId: z.string().optional(),
     borSammen: z.boolean({invalid_type_error: "validering.pakrevd"}),
 });
 
@@ -101,7 +101,7 @@ export const EktefellePersonaliaForm = ({sivilstatus, ektefelle, setEktefelle}: 
                         pattern="[0-9]*"
                         style={{width: "140px"}}
                         label={t("familie.sivilstatus.gift.ektefelle.pnr.label")}
-                        {...register("personnummer")}
+                        {...register("personId")}
                         required={false}
                     />
                     <YesNoInput
