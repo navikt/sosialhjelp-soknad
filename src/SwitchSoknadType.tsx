@@ -7,12 +7,16 @@ export const SwitchSoknadType = () => {
 
     const location = useLocation();
 
-    if (isError || (!location.pathname?.includes("/kort") && !isLoading && !!isKortSoknad)) {
-        return <Navigate to={location.pathname.replace("skjema/", "skjema/kort/")} replace></Navigate>;
+    if (isError) {
+        throw new Error("Feil ved henting av søknadstype");
     }
 
-    if (isError || (location.pathname?.includes("/kort") && !isLoading && !isKortSoknad)) {
-        return <Navigate to={location.pathname.replace("/kort", "")} replace></Navigate>;
+    if (location.pathname?.includes("/kort") && !isLoading && !isKortSoknad) {
+        return <Navigate to={location.pathname.replace("/kort", "")} replace />;
+    }
+
+    if (!location.pathname?.includes("/kort") && !isLoading && !!isKortSoknad) {
+        return <Navigate to={location.pathname.replace("skjema/", "skjema/kort/")} replace />;
     }
     return <Outlet />;
 };

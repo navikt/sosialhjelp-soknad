@@ -4,6 +4,7 @@ import digisosConfig from "../config";
 import {LINK_PAGE_PATH} from "../constants";
 import {isLoginError} from "./error/isLoginError";
 import {getGotoParameter} from "./auth/getGotoParameter";
+import {logger} from "@navikt/next-logger";
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL: digisosConfig.baseURL,
@@ -64,8 +65,14 @@ export const axiosInstance = <T>(
             }
 
             if (isLoginError(response)) {
-                const redirect = `?redirect=${origin}${LINK_PAGE_PATH}?goto=${getGotoParameter(window.location)}`;
-                window.location.assign(response.data.loginUrl + redirect);
+                if (response.data.loginUrl) {
+                    const redirect = `?redirect=${origin}${LINK_PAGE_PATH}?goto=${getGotoParameter(window.location)}`;
+                    window.location.assign(response.data.loginUrl + redirect);
+                } else {
+                    const loginUrl = `/sosialhjelp/soknad/oauth2/login?redirect=${origin}${decodeURIComponent(window.location.pathname)}`;
+                    logger.info(`Fikk 401 på kall, redirecter til login: ${loginUrl}`);
+                    window.location.assign(loginUrl);
+                }
                 return neverResolves();
             }
 
