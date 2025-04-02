@@ -11,16 +11,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -63,16 +54,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -104,16 +86,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -156,16 +129,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -197,16 +161,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -249,16 +204,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -290,16 +236,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -335,16 +272,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -378,16 +306,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -421,16 +340,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -462,16 +372,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -514,16 +415,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -555,16 +447,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -608,16 +491,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -649,16 +523,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -701,16 +566,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -742,16 +598,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -794,16 +641,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -835,16 +673,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -878,16 +707,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -920,16 +740,7 @@
                 ],
                 "requestBody": {"content": {"application/json": {"schema": {"type": "boolean"}}}, "required": true},
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -961,16 +772,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1004,61 +806,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/FormueDto"}}}
-                    }
-                }
-            }
-        },
-        "/soknad/{soknadId}/inntekt/formue/updateWithoutRemoving": {
-            "put": {
-                "tags": ["formue-controller"],
-                "operationId": "updateFormueWithoutRemoving",
-                "parameters": [
-                    {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
-                ],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FormueInput"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1090,16 +838,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1133,16 +872,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1174,16 +904,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1217,16 +938,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1258,16 +970,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1301,16 +1004,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1342,16 +1036,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1385,16 +1070,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1426,16 +1102,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1469,16 +1136,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1510,16 +1168,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1553,16 +1202,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1600,16 +1240,7 @@
                     {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1641,16 +1272,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1684,16 +1306,7 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1723,16 +1336,7 @@
                 "operationId": "createSoknad",
                 "parameters": [{"name": "soknadstype", "in": "query", "required": false, "schema": {"type": "string"}}],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1783,16 +1387,7 @@
                     }
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1824,16 +1419,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1865,16 +1451,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1906,16 +1483,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -1959,16 +1527,7 @@
                     }
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -2006,16 +1565,7 @@
                     }
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
@@ -2050,16 +1600,7 @@
                     {"name": "Referer", "in": "header", "required": false, "schema": {"type": "string"}}
                 ],
                 "responses": {
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "oneOf": [{"$ref": "#/components/schemas/SoknadApiError"}, {"type": "object"}]
-                                }
-                            }
-                        }
-                    },
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
                     "413": {
                         "description": "Payload Too Large",
                         "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
