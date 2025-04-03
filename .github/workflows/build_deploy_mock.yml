@@ -3,51 +3,36 @@ run-name: Deploy '${{ github.ref_name }}' to 'mock'
 on:
   workflow_dispatch:
 env:
-  DOCKER_IMAGE: ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
   NEXT_PUBLIC_DIGISOS_ENV: mock
 
 jobs:
-  build-image:
-    name: "Build Artifact and Image"
-    runs-on: ubuntu-latest
-    outputs:
-      docker-tag: ${{ steps.docker-image.outputs.full-tag }}
-      artifact-version: ${{ steps.docker-image.outputs.artifact-version }}
-    permissions:
-      contents: write
-      packages: write
-      actions: write
-    env:
-      READER_TOKEN: ${{ secrets.READER_TOKEN }}
-      WORKFLOW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - name: "Build Docker Image"
-        id: docker-image
-        uses: navikt/sosialhjelp-soknad/.github/actions/build-image@main
-        with:
-          prefix: ${{ env.NEXT_PUBLIC_DIGISOS_ENV }}
-
   deploy-app:
-    name: "Deploy Application"
     runs-on: ubuntu-latest
-    needs: build-image
     permissions:
-      packages: write
-      contents: write
+      contents: read
       id-token: write
     steps:
       - uses: actions/checkout@v4
 
-      - id: docker-image-tag
-        run: |
-          echo "IMAGE_TAG=${{ env.DOCKER_IMAGE }}:${{ needs.build-image.outputs.docker-tag }}" >> $GITHUB_ENV
+      - name: Build and push docker image to GAR
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: teamdigisos
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          image_suffix: mock
+          build_args: |
+            DIGISOS_ENV=${{ env.NEXT_PUBLIC_DIGISOS_ENV }}
+          build_secrets: |
+            NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
 
-      - name: Deploy til ${{ env.NEXT_PUBLIC_DIGISOS_ENV }}
+      - name: "Deploy to mock"
         uses: nais/deploy/actions/deploy@v2
         env:
           RESOURCE: .nais/app.yaml
-          VARS: .nais/vars/mock.yaml
           CLUSTER: dev-gcp
           REF: ${{ github.sha }}
           PRINT_PAYLOAD: true
-          IMAGE: ${{ env.IMAGE_TAG }}
+          IMAGE: ${{ steps.docker-build-push.outputs.image }}
+          VARS: .nais/vars/mock.yaml
