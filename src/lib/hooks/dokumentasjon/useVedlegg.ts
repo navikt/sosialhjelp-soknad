@@ -76,7 +76,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
 
                     logAmplitudeEvent("dokument slettet", {opplysningType: dokumentasjonType}).then();
 
-                    //brukes for å tvinge en refretch av dokumentasjon slik at ting blir rendret riktig
+                    //brukes for å tvinge en refretch av dokumentasjon fra backend slik at ting blir rendret
                     queryClient.invalidateQueries({queryKey: dokumentasjonQueryKey});
                 },
             }
@@ -117,7 +117,7 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
 
             await logAmplitudeEvent("dokument lastet opp", {opplysningType: dokumentasjonType});
 
-            //brukes for å tvinge en refretch av dokumentasjon slik at ting blir rendret riktig
+            //brukes for å tvinge en refretch av dokumentasjon fra backend slik at ting blir rendret
             await queryClient.invalidateQueries({queryKey: dokumentasjonQueryKey});
         } catch (e: any) {
             handleApiError(e);
