@@ -8,7 +8,7 @@ export const useAmplitudeSkjemaStartet = () => {
         await logAmplitudeEvent("skjema startet", {
             antallNyligInnsendteSoknader: numRecentlySent,
             antallPabegynteSoknader: open?.length,
-            qualifiesForKortSoknad,
+            qualifiesForKortSoknad: qualifiesForKortSoknad,
             enableModalV2: true,
             erProdsatt: true,
             language: document.documentElement.lang,
