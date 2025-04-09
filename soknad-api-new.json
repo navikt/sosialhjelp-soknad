@@ -1869,6 +1869,18 @@
                 "type": "object",
                 "properties": {"dokumentasjonLevert": {"type": "boolean"}}
             },
+            "AnnenDokumentasjonType": {
+                "type": "string",
+                "allOf": [{"$ref": "#/components/schemas/OpplysningType"}],
+                "enum": [
+                    "SKATTEMELDING",
+                    "SAMVARSAVTALE",
+                    "OPPHOLDSTILLATELSE",
+                    "HUSLEIEKONTRAKT",
+                    "HUSLEIEKONTRAKT_KOMMUNAL",
+                    "BEHOV"
+                ]
+            },
             "AvdragRenterDto": {
                 "type": "object",
                 "allOf": [
@@ -1911,7 +1923,10 @@
             },
             "FormueType": {
                 "type": "string",
-                "allOf": [{"$ref": "#/components/schemas/OpplysningType"}],
+                "allOf": [
+                    {"$ref": "#/components/schemas/OkonomiOpplysningType"},
+                    {"$ref": "#/components/schemas/OpplysningType"}
+                ],
                 "enum": [
                     "FORMUE_BRUKSKONTO",
                     "FORMUE_BSU",
@@ -1936,6 +1951,11 @@
                         "properties": {
                             "opplysningType": {
                                 "oneOf": [
+                                    {"$ref": "#/components/schemas/AnnenDokumentasjonType"},
+                                    {"$ref": "#/components/schemas/FormueType"},
+                                    {"$ref": "#/components/schemas/InntektType"},
+                                    {"$ref": "#/components/schemas/OkonomiOpplysningType"},
+                                    {"$ref": "#/components/schemas/UtgiftType"},
                                     {"$ref": "#/components/schemas/FormueType"},
                                     {"$ref": "#/components/schemas/InntektType"},
                                     {"$ref": "#/components/schemas/UtgiftType"}
@@ -1948,7 +1968,10 @@
             },
             "InntektType": {
                 "type": "string",
-                "allOf": [{"$ref": "#/components/schemas/OpplysningType"}],
+                "allOf": [
+                    {"$ref": "#/components/schemas/OkonomiOpplysningType"},
+                    {"$ref": "#/components/schemas/OpplysningType"}
+                ],
                 "enum": [
                     "BARNEBIDRAG_MOTTAR",
                     "STUDIELAN_INNTEKT",
@@ -1984,12 +2007,19 @@
                     {"type": "object", "properties": {"detalj": {"$ref": "#/components/schemas/LonnsInntektDto"}}}
                 ]
             },
+            "OkonomiOpplysningType": {
+                "required": ["dokumentasjonForventet", "group", "name"],
+                "type": "object",
+                "allOf": [
+                    {"$ref": "#/components/schemas/OpplysningType"},
+                    {"type": "object", "properties": {"dokumentasjonForventet": {"type": "boolean"}}}
+                ]
+            },
             "OpplysningType": {
                 "required": ["group", "name", "type"],
                 "type": "object",
                 "properties": {
                     "name": {"type": "string"},
-                    "dokumentasjonForventet": {"type": "boolean"},
                     "group": {
                         "type": "string",
                         "enum": [
@@ -2009,7 +2039,10 @@
             },
             "UtgiftType": {
                 "type": "string",
-                "allOf": [{"$ref": "#/components/schemas/OpplysningType"}],
+                "allOf": [
+                    {"$ref": "#/components/schemas/OkonomiOpplysningType"},
+                    {"$ref": "#/components/schemas/OpplysningType"}
+                ],
                 "enum": [
                     "UTGIFTER_ANNET_BO",
                     "UTGIFTER_KOMMUNAL_AVGIFT",
@@ -2039,6 +2072,11 @@
                 "properties": {
                     "type": {
                         "oneOf": [
+                            {"$ref": "#/components/schemas/AnnenDokumentasjonType"},
+                            {"$ref": "#/components/schemas/FormueType"},
+                            {"$ref": "#/components/schemas/InntektType"},
+                            {"$ref": "#/components/schemas/OkonomiOpplysningType"},
+                            {"$ref": "#/components/schemas/UtgiftType"},
                             {"$ref": "#/components/schemas/FormueType"},
                             {"$ref": "#/components/schemas/InntektType"},
                             {"$ref": "#/components/schemas/UtgiftType"}
