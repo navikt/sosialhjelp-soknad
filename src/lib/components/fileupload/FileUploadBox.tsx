@@ -12,7 +12,9 @@ import {
     SUPPORTED_WITHOUT_CONVERSION,
 } from "../../../sider/08-vedlegg/upload/DokumentUploader";
 import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
+import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
 import {VedleggFrontendType} from "../../../generated/model";
+import {UploadedFileBox} from "./UploadedFileBox.tsx";
 
 type TranslationKeys = "begrunnelse.kort.behov.dokumentasjon.beskrivelse" | "situasjon.kort.dokumentasjon.description";
 
@@ -23,7 +25,7 @@ interface Props {
     undertekst?: TranslationKeys;
     liste?: ListeKeys;
     bunntekst?: string;
-    dokumentasjonType: VedleggFrontendType;
+    dokumentasjonType?: VedleggFrontendType;
 }
 
 export const FileUploadBoxNoStyle = ({
@@ -59,35 +61,14 @@ export const FileUploadBoxNoStyle = ({
     );
 };
 
-const FileUploadBox = ({sporsmal, undertekst, liste, dokumentasjonType}: Props): React.JSX.Element => {
+const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element => {
     const {t} = useTranslation("skjema");
     const forslag = liste ? (t(liste, {returnObjects: true}) as string[]) : [];
 
-    return (
-        <div className={"rounded-md bg-surface-action-subtle p-8"}>
-            {sporsmal && (
-                <Heading level={"4"} size={"small"} spacing>
-                    {sporsmal}
-                </Heading>
-            )}
-            {undertekst && <Trans i18nKey={undertekst} components={{br: <br />}} />}
-            {forslag.length > 0 && (
-                <ul className="list-disc pl-5">
-                    {forslag.map((item, index) => (
-                        <li key={index}>
-                            <BodyShort>{item}</BodyShort>
-                        </li>
-                    ))}
-                </ul>
-            )}
-            <BodyShort spacing>{t("begrunnelse.kort.behov.dokumentasjon.bunntekst")}</BodyShort>
-            <Dokumenter dokumentasjonType={dokumentasjonType} />
-        </div>
-    );
-};
+    const {valgtKategoriData} = useValgtKategoriContext();
 
-const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType}) => {
-    const {t} = useTranslation();
+    const finalDokumentasjonType = valgtKategoriData.valgtKategorier || "annet|annet";
+
     const {
         deleteDocument,
         documents,
@@ -95,10 +76,95 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType
         error,
         isPending: uploadPending,
         currentUpload,
-    } = useVedlegg(dokumentasjonType);
+        allUploadedFiles,
+    } = useVedlegg(finalDokumentasjonType);
     const {conversionPending} = usePDFConverter();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
     const isPending = conversionPending || conversionPending;
+    return (
+        <>
+            <div className={"rounded-md bg-surface-action-subtle p-8"}>
+                {sporsmal && (
+                    <Heading level={"4"} size={"small"} spacing>
+                        {sporsmal}
+                    </Heading>
+                )}
+                {undertekst && <Trans i18nKey={undertekst} components={{br: <br />}} />}
+                {forslag.length > 0 && (
+                    <ul className="list-disc pl-5">
+                        {forslag.map((item, index) => (
+                            <li key={index}>
+                                <BodyShort>{item}</BodyShort>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+                <BodyShort spacing>{t("begrunnelse.kort.behov.dokumentasjon.bunntekst")}</BodyShort>
+
+                <div className={"space-y-2"}>
+                    <FaroErrorBoundary
+                        fallback={(error, resetError) => <UploadError error={error} resetError={resetError} />}
+                    >
+                        <DokumentUploader
+                            isLoading={isPending}
+                            visSpinner={uploadPending}
+                            doUpload={async (file) => {
+                                await uploadDocument(file);
+                                setShowSuccessAlert(true);
+                            }}
+                            resetAlerts={() => setShowSuccessAlert(false)}
+                        />
+                    </FaroErrorBoundary>
+
+                    {showSuccessAlert && documents.length > 0 && (
+                        <Alert variant="success">{t("vedlegg.opplasting.suksess")}</Alert>
+                    )}
+                    {error && <Alert variant="error">{error}</Alert>}
+                </div>
+            </div>
+            <div>
+                <Heading size={"small"}>Dine Opplastede filer ({allUploadedFiles.length})</Heading>
+                <ul>
+                    {currentUpload && <BodyShort>Laster opp ({currentUpload.percent}%)</BodyShort>}
+                    {allUploadedFiles.length === 0 ? (
+                        <p>ingen filer har blitt lastet opp</p>
+                    ) : (
+                        allUploadedFiles.map((fil) => (
+                            <UploadedFileBox
+                                key={fil.dokumentId}
+                                dokument={fil}
+                                dokumentasjonsType={fil.dokumentasjonType}
+                                onDelete={deleteDocument}
+                            />
+                        ))
+                    )}
+                </ul>
+            </div>
+        </>
+    );
+};
+
+const Dokumenter = ({dokumentasjonType}: {dokumentasjonType?: VedleggFrontendType}) => {
+    const {t} = useTranslation();
+
+    const {valgtKategoriData} = useValgtKategoriContext();
+
+    const finalDokumentasjonType =
+        dokumentasjonType === "kontooversikt|brukskonto"
+            ? "kontooversikt|brukskonto"
+            : valgtKategoriData.valgtKategorier || "annet|annet";
+    const {
+        deleteDocument,
+        documents,
+        uploadDocument,
+        error,
+        isPending: uploadPending,
+        currentUpload,
+    } = useVedlegg(finalDokumentasjonType);
+    const {conversionPending} = usePDFConverter();
+    const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
+    const isPending = conversionPending || conversionPending;
+
     return (
         <div className={"space-y-2"}>
             <FaroErrorBoundary fallback={(error, resetError) => <UploadError error={error} resetError={resetError} />}>
@@ -143,20 +209,17 @@ const DokumentUploader = ({
     const [previewFile, setPreviewFile] = React.useState<File | null>(null);
     const {conversionPending, conversionError, convertToPDF} = usePDFConverter();
     const isPending = visSpinner || conversionPending;
-
     if (conversionError) throw new PdfConversionError(`conversion error: ${conversionError}`);
 
     const handleFileSelect = async ({target: {files}}: ChangeEvent<HTMLInputElement>) => {
         if (!files?.length) return;
 
         const file = files[0];
-
         if (SUPPORTED_WITHOUT_CONVERSION.includes(file.type)) {
             setPreviewFile(file);
         } else {
             setPreviewFile(await convertToPDF(file));
         }
-
         if (vedleggElement?.current) vedleggElement.current.value = "";
     };
 

@@ -1,18 +1,23 @@
 // When new backend has been deployed, this can be removed.
 import {DokumentUpload, VedleggFrontendType} from "../../../generated/model";
-import {useEffect, useReducer, useState} from "react";
+import {useEffect, useMemo, useReducer, useState} from "react";
 import {DocumentListReducer, initialDocumentListState} from "../../../sider/08-vedlegg/lib/DocumentListReducer";
 import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useTranslation} from "react-i18next";
 import {isSoknadApiError} from "../../api/error/isSoknadApiError";
 import {DigisosApiErrorMap} from "../../api/error/DigisosApiErrorMap";
 import {REST_FEIL} from "../../api/error/restFeil";
-import {useHentOkonomiskeOpplysninger} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
+import {
+    getHentOkonomiskeOpplysningerQueryKey,
+    useHentOkonomiskeOpplysninger,
+} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs";
 import {useDeleteDokument} from "../../../generated/opplastet-vedlegg-ressurs/opplastet-vedlegg-ressurs";
 import {humanizeFilesize} from "../../../sider/08-vedlegg/lib/humanizeFilesize";
 import {axiosInstance} from "../../api/axiosInstance";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 import {useContextSessionInfo} from "../../providers/useContextSessionInfo.ts";
+import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
+import {useQueryClient} from "@tanstack/react-query";
 
 const TEN_MEGABYTE_COMPAT_FALLBACK = 10 * 1024 * 1024;
 
@@ -32,6 +37,10 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
     const {mutate: mutateDelete, isPending: isDeletionPending} = useDeleteDokument();
 
     const isPending = isDokumentasjonPending || isDeletionPending || uploadPercent !== null;
+    const {setValgtKategoriData} = useValgtKategoriContext();
+
+    const queryClient = useQueryClient();
+    const dokumentasjonQueryKey = getHentOkonomiskeOpplysningerQueryKey(behandlingsId);
 
     /**
      * When the data on the server has changed, we automatically update the client-side list.
@@ -56,14 +65,19 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
      *
      * @param dokumentId The dokumentId to delete
      */
-    const deleteDocument = (dokumentId: string) => {
+    const deleteDocument = async (dokumentId: string) => {
         mutateDelete(
             {behandlingsId, dokumentId},
             {
                 onError: handleApiError,
                 onSuccess: () => {
                     dispatch({type: "remove", dokumentId});
+                    setValgtKategoriData({valgtKategorier: "annet|annet"});
+
                     logAmplitudeEvent("dokument slettet", {opplysningType: dokumentasjonType}).then();
+
+                    //brukes for å tvinge en refretch av dokumentasjon fra backend slik at ting blir rendret
+                    queryClient.invalidateQueries({queryKey: dokumentasjonQueryKey});
                 },
             }
         );
@@ -79,7 +93,6 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
 
         if (maxUploadSize != null && file.size > maxUploadSize) {
             setError(t(REST_FEIL.FOR_STOR, "", {maxUploadSize: humanizeFilesize(maxUploadSize)}));
-
             return Promise.reject(new Error("for stor"));
         }
 
@@ -100,7 +113,12 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
 
             setUploadPercent(null);
             dispatch({type: "insert", dokument});
+            setValgtKategoriData({valgtKategorier: "annet|annet"});
+
             await logAmplitudeEvent("dokument lastet opp", {opplysningType: dokumentasjonType});
+
+            //brukes for å tvinge en refretch av dokumentasjon fra backend slik at ting blir rendret
+            await queryClient.invalidateQueries({queryKey: dokumentasjonQueryKey});
         } catch (e: any) {
             handleApiError(e);
         } finally {
@@ -108,9 +126,24 @@ export const useVedlegg = (dokumentasjonType: VedleggFrontendType) => {
         }
     };
 
+    const allUploadedFiles = useMemo(() => {
+        return (
+            dokumentasjon?.okonomiskeOpplysninger
+                ?.filter((opplysning) => opplysning.filer?.length)
+                .flatMap(
+                    (opplysning) =>
+                        opplysning.filer?.map((fil) => ({
+                            ...fil,
+                            dokumentasjonType: opplysning.type,
+                        })) ?? []
+                ) ?? []
+        );
+    }, [dokumentasjon]);
+
     return {
         uploadDocument,
         deleteDocument,
+        allUploadedFiles,
         maxUploadSize,
         currentUpload: uploadPercent == null ? null : {percent: uploadPercent},
         documents,

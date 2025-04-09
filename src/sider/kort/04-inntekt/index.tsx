@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {useTranslation} from "react-i18next";
 import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
@@ -11,42 +11,14 @@ import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegSt
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
-import {useOpplysninger} from "../../../lib/hooks/dokumentasjon/useOpplysninger.ts";
-import {Opplysning} from "../../../lib/opplysninger.ts";
 import {BodyShort, Heading} from "@navikt/ds-react";
 import {DokumentasjonRader} from "../../08-vedlegg/DokumentasjonRader.tsx";
-import {useFormue} from "../../../lib/hooks/data/useFormue.tsx";
-
-const Dokumentasjon = ({opplysning}: {opplysning: Opplysning}) => {
-    const {t} = useTranslation("skjema");
-    return (
-        <div className={"rounded-md bg-surface-action-subtle p-8"}>
-            <Heading level={"4"} size={"small"} spacing>
-                {t("utbetalinger.inntekt.skattbar.kort_saldo_tittel")}
-            </Heading>
-            <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.kort_saldo_undertekst")}</BodyShort>
-            <DokumentasjonRader opplysning={opplysning} />
-            <FileUploadBoxNoStyle
-                bunntekst={t("utbetalinger.inntekt.skattbar.kort_saldo_lastOpp")}
-                dokumentasjonType={opplysning.type}
-            />
-        </div>
-    );
-};
+import {useOpplysninger} from "../../../lib/hooks/dokumentasjon/useOpplysninger.ts";
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
     const {sorterte} = useOpplysninger();
     const brukskontoOpplysning = sorterte.find((opplysning) => opplysning.type === "kontooversikt|brukskonto");
-    const {setFormue, formue} = useFormue();
-    const [hasInitialized, setHasInitialized] = useState(false);
-
-    useEffect(() => {
-        if (!hasInitialized && formue && !formue.hasBrukskonto) {
-            setFormue(["hasBrukskonto"]);
-            setHasInitialized(true);
-        }
-    }, [formue, hasInitialized]);
 
     const navigate = useNavigate();
     const gotoPage = async (page: number) => {
@@ -59,20 +31,33 @@ const Inntekt = () => {
             <SkjemaStegStepper page={4} onStepChange={gotoPage} />
             <SkjemaStegBlock className={"lg:space-y-12"}>
                 <SkjemaStegTitle
-                    className={"lg:mb-16"}
+                    className={"lg:mb-12"}
                     title={t(KortSkjemaHeadings[4].tittel)}
                     icon={KortSkjemaHeadings[4].ikon}
                 />
-                <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
-                <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
-                <NavYtelser />
-                {brukskontoOpplysning && <Dokumentasjon opplysning={brukskontoOpplysning} />}
-                <FileUploadBox
-                    sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
-                    undertekst="situasjon.kort.dokumentasjon.description"
-                    liste="situasjon.kort.dokumentasjon.liste"
-                    dokumentasjonType={"annet|annet"}
-                />
+                <div className={"space-y-12"}>
+                    <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
+                    <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
+                    <NavYtelser />
+                    {brukskontoOpplysning && (
+                        <div className={"rounded-md bg-surface-action-subtle p-8"}>
+                            <Heading level={"4"} size={"small"} spacing>
+                                {t("utbetalinger.inntekt.skattbar.kort_saldo_tittel")}
+                            </Heading>
+                            <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.kort_saldo_undertekst")}</BodyShort>
+                            <DokumentasjonRader opplysning={brukskontoOpplysning} />
+                            <FileUploadBoxNoStyle
+                                bunntekst={t("utbetalinger.inntekt.skattbar.kort_saldo_lastOpp")}
+                                dokumentasjonType={brukskontoOpplysning.type}
+                            />
+                        </div>
+                    )}
+                    <FileUploadBox
+                        sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+                        undertekst="situasjon.kort.dokumentasjon.description"
+                        liste="situasjon.kort.dokumentasjon.liste"
+                    />
+                </div>
                 <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
             </SkjemaStegBlock>
         </SkjemaSteg>
