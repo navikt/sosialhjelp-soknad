@@ -1,5 +1,4 @@
 import {
-    getHentSituasjonsendringQueryOptions,
     useHentSituasjonsendring,
     useUpdateSituasjonsendring,
 } from "../../../../generated/situasjonsendring-ressurs/situasjonsendring-ressurs";
@@ -10,19 +9,22 @@ import {SituasjonsendringFrontend} from "../../../../generated/model";
 const useSituasjon = () => {
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
-    const {mutateAsync, isPending: isMutating, isError: isMutateError} = useUpdateSituasjonsendring();
-    const {isPending, isError, queryKey} = useHentSituasjonsendring(behandlingsId);
-    const get = (): Promise<SituasjonsendringFrontend> =>
-        queryClient.ensureQueryData(getHentSituasjonsendringQueryOptions(behandlingsId));
-    const put = async (data: SituasjonsendringFrontend) => {
-        queryClient.setQueryData(queryKey, data);
-        await mutateAsync({behandlingsId, data});
-    };
+    const {data, isLoading, isError, queryKey} = useHentSituasjonsendring(behandlingsId);
+    const invalidate = () => queryClient.invalidateQueries({queryKey});
+    const {
+        mutate,
+        isPending,
+        isError: isMutateError,
+        variables,
+    } = useUpdateSituasjonsendring({mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})}});
+
+    const updateSituasjonsendring = (data: SituasjonsendringFrontend) => mutate({behandlingsId, data});
     return {
-        get,
-        put,
-        isPending: isPending || isMutating,
+        data: isPending ? variables.data : data,
+        updateSituasjonsendring,
+        isLoading,
         isError: isError || isMutateError,
+        invalidate,
     };
 };
 
