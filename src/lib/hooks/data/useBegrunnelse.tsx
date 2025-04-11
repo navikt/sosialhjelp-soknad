@@ -1,48 +1,55 @@
 import {useBehandlingsId} from "../common/useBehandlingsId";
-import * as React from "react";
 import {useEffect} from "react";
-import {
-    getHentBegrunnelseQueryOptions,
-    updateBegrunnelse,
-    useHentBegrunnelse,
-} from "../../../generated/begrunnelse-ressurs/begrunnelse-ressurs";
-import {BegrunnelseFrontend} from "../../../generated/model";
-import {faro} from "@grafana/faro-react";
 import {useQueryClient} from "@tanstack/react-query";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
+import {
+    useGetBegrunnelse,
+    useUpdateBegrunnelse,
+} from "../../../generated/new/begrunnelse-controller/begrunnelse-controller.ts";
+import {BegrunnelseDto, type HarHvaSokesOmInput} from "../../../generated/new/model/index.ts";
+import {HarKategorierInput} from "../../../generated/new-ssr/model";
 
 export const useBegrunnelse = () => {
     const behandlingsId = useBehandlingsId();
 
-    const [isError, setIsError] = React.useState(false);
     const queryClient = useQueryClient();
-    const {isPending, queryKey} = useHentBegrunnelse(behandlingsId);
-
-    // Returnerer promise som resolver til dataen når den er klar.
-    // For bruk med react-hook-form defaultValues.
-    const get = (): Promise<BegrunnelseFrontend> =>
-        queryClient.ensureQueryData(getHentBegrunnelseQueryOptions(behandlingsId));
+    const {data, isLoading, queryKey} = useGetBegrunnelse(behandlingsId);
+    const invalidate = () => queryClient.invalidateQueries({queryKey});
+    const {mutate, isPending, variables, isError} = useUpdateBegrunnelse({
+        mutation: {onSettled: invalidate},
+    });
 
     // Lagrer data på backend og oppdaterer lokal cache.
-    const put = async (begrunnelse: BegrunnelseFrontend) => {
+    const updateBegrunnelse = (begrunnelse: Omit<HarHvaSokesOmInput, "type">) => {
         logAmplitudeEvent("begrunnelse fullført", {
             hvaLengde: (Math.round((begrunnelse?.hvaSokesOm?.length ?? 0) / 20) - 1) * 20,
             hvorforLengde: (Math.round((begrunnelse?.hvorforSoke?.length ?? 0) / 20) - 1) * 20,
         });
 
-        try {
-            queryClient.setQueryData(queryKey, begrunnelse);
-            await updateBegrunnelse(behandlingsId, begrunnelse);
-        } catch (e: any) {
-            setIsError(true);
-            faro.api.pushError(e);
-            throw e;
-        }
+        mutate({
+            soknadId: behandlingsId,
+            data: {type: "HarHvaSokesOm", ...begrunnelse},
+        });
+    };
+
+    const updateCategories = (kategorier: Omit<HarKategorierInput, "type">) => {
+        mutate({soknadId: behandlingsId, data: {type: "HarKategorier", ...kategorier}});
     };
 
     useEffect(() => {
         logAmplitudeEvent("begrunnelse åpnet").then();
-    }, [true]);
+    }, []);
 
-    return {get, put, isPending, isError};
+    const begrunnelse: BegrunnelseDto | undefined = isPending
+        ? {
+              hvaSokesOm: variables.data.type === "HarHvaSokesOm" ? variables.data.hvaSokesOm : "",
+              hvorforSoke: variables.data.hvorforSoke,
+              kategorier:
+                  variables.data.type === "HarKategorier"
+                      ? {annet: variables.data.annet, definerte: variables.data.kategorier}
+                      : {annet: "", definerte: []},
+          }
+        : data;
+
+    return {begrunnelse, updateBegrunnelse, updateCategories, isLoading, isError, invalidate};
 };
