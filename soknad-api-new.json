@@ -2585,9 +2585,9 @@
                 }
             },
             "BegrunnelseInput": {
-                "required": ["hvorforSoke", "type"],
+                "required": ["type"],
                 "type": "object",
-                "properties": {"hvorforSoke": {"type": "string"}, "type": {"type": "string"}},
+                "properties": {"type": {"type": "string"}},
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
@@ -2597,15 +2597,18 @@
                 }
             },
             "HarHvaSokesOmInput": {
-                "required": ["hvaSokesOm", "hvorforSoke"],
+                "required": ["hvaSokesOm"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/BegrunnelseInput"},
-                    {"type": "object", "properties": {"hvaSokesOm": {"type": "string"}}}
+                    {
+                        "type": "object",
+                        "properties": {"hvorforSoke": {"type": "string"}, "hvaSokesOm": {"type": "string"}}
+                    }
                 ]
             },
             "HarKategorierInput": {
-                "required": ["annet", "hvorforSoke", "kategorier"],
+                "required": ["annet", "kategorier"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/BegrunnelseInput"},
@@ -2633,7 +2636,7 @@
                 ]
             },
             "BegrunnelseDto": {
-                "required": ["hvaSokesOm", "hvorforSoke", "kategorier"],
+                "required": ["hvaSokesOm", "kategorier"],
                 "type": "object",
                 "properties": {
                     "hvaSokesOm": {"type": "string"},

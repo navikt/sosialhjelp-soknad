@@ -1,5 +1,5 @@
-import {useBehandlingsId} from "../common/useBehandlingsId";
 import {useIsKortSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
+import {useBehandlingsId} from "../common/useBehandlingsId";
 
 const useIsKort = () => {
     const behandlingsId = useBehandlingsId();
