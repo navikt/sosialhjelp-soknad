@@ -20,7 +20,11 @@ const KategorierChips = ({categories, toggle}: Props): React.JSX.Element => {
             <VStack align="start">
                 <HStack align="start" gap="2" id={"kategorier"} aria-labelledby={"kategorier-label"} className={"pt-4"}>
                     {categories.map((category) => (
-                        <Category category={category} toggle={toggle} />
+                        <Category
+                            category={category}
+                            toggle={toggle}
+                            showXMark={category.selected && Boolean(category.subCategories?.length)}
+                        />
                     ))}
                 </HStack>
             </VStack>
@@ -40,7 +44,7 @@ const Category = ({category, toggle, showXMark}: CategoryProps) => {
         <Box
             role="button"
             className={`flex rounded-lg cursor-pointer ${category.selected ? (category.text === "NØDHJELP" ? "bg-surface-warning-subtle" : "bg-blue-200") : "bg-blue-50"} ${
-                category.selected && ["Annet", "Nødhjelp"].includes(category.text) ? "w-full min-w-full" : ""
+                category.selected && "NØDHJELP" === category.text ? "w-full min-w-full" : ""
             }`}
             key={category.text}
             onClick={() => toggle(category.text)}
