@@ -3,7 +3,7 @@ import KategorierChips from "../../lib/components/KategorierChips.tsx";
 import {TranslatedError} from "../../lib/components/TranslatedError.tsx";
 import {MAX_LEN_ANNET} from "./schema.ts";
 import LocalizedTextArea from "../../lib/components/LocalizedTextArea.tsx";
-import {KategorierDto} from "../../generated/new/model";
+import {KategorierDto, KategorierDtoDefinerteItem} from "../../generated/new/model";
 import {CATEGORIES} from "../../lib/hooks/data/useKategorier.tsx";
 import {useTranslation} from "react-i18next";
 
@@ -19,6 +19,19 @@ interface FormValues {
     hvorforSoke: string | null;
 }
 
+const nodhjelpCategories: KategorierDtoDefinerteItem[] = [
+    "NODHJELP_IKKE_BOSTED",
+    "NODHJELP_IKKE_MAT",
+    "NODHJELP_IKKE_STROM",
+];
+
+const defaultCategories = (categories?: KategorierDtoDefinerteItem[]) => {
+    if (!categories) {
+        return [];
+    }
+    return [...categories, ...(categories.some((cat) => nodhjelpCategories.includes(cat)) ? ["NØDHJELP"] : [])];
+};
+
 const KategorierForm = ({kategorier, hvorforSoke, onSubmit}: Props) => {
     const {t} = useTranslation("skjema");
     const {
@@ -30,21 +43,43 @@ const KategorierForm = ({kategorier, hvorforSoke, onSubmit}: Props) => {
         formState: {errors},
     } = useForm<FormValues>({
         defaultValues: {
-            categories: kategorier?.definerte ?? [],
+            categories: defaultCategories(kategorier?.definerte),
             annet: kategorier?.annet ?? null,
             hvorforSoke: hvorforSoke ?? null,
         },
     });
-    const toggle = (category: string) => {
-        const abc = getValues("categories");
-        if (abc.includes(category)) {
-            setValue(
-                "categories",
-                abc.filter((cat) => cat !== category)
-            );
+    const toggle = (category: string, subCategory?: string) => {
+        const selectedCategories = getValues("categories");
+
+        console.log(category, subCategory);
+        let updatedCategories = selectedCategories;
+        if (subCategory) {
+            if (updatedCategories.includes(subCategory)) {
+                updatedCategories = updatedCategories.filter((cat) => cat !== subCategory);
+            } else {
+                updatedCategories = [...updatedCategories, subCategory];
+            }
         } else {
-            setValue("categories", [...abc, category]);
+            // Rensk subCategories hvis NØDHJELP blir unselected
+            if (updatedCategories.includes(category)) {
+                if (category === "NØDHJELP") {
+                    console.log(
+                        "rensker. Bare disse blir med videre: ",
+                        updatedCategories.filter(
+                            (cat) => !nodhjelpCategories.includes(cat as KategorierDtoDefinerteItem)
+                        )
+                    );
+                    updatedCategories = updatedCategories.filter(
+                        (cat) => !nodhjelpCategories.includes(cat as KategorierDtoDefinerteItem)
+                    );
+                }
+                updatedCategories = updatedCategories.filter((cat) => cat !== category);
+            } else {
+                updatedCategories = [...updatedCategories, category];
+            }
         }
+        setValue("categories", updatedCategories);
+        onSubmit({...getValues(), categories: updatedCategories});
     };
 
     const selectedCategories = watch("categories");

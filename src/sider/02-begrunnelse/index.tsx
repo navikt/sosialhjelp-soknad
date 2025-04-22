@@ -21,7 +21,6 @@ export const Begrunnelse = () => {
 
     const navigate = useNavigate();
 
-    // TODO: Trenger man å gjøre dette for å forhindre at blurs canceles?
     const goto = async (page: number) => {
         invalidate();
         await logAmplitudeSkjemaStegFullfort(2);
@@ -38,13 +37,15 @@ export const Begrunnelse = () => {
                 ) : isKategorierEnabled ? (
                     <KategorierForm
                         kategorier={begrunnelse?.kategorier}
-                        onSubmit={(formValues) =>
+                        onSubmit={(formValues) => {
                             updateCategories({
-                                kategorier: formValues.categories as HarKategorierInputAllOfKategorierItem[],
+                                kategorier: formValues.categories.filter(
+                                    (it) => it !== "NØDHJELP"
+                                ) as HarKategorierInputAllOfKategorierItem[],
                                 annet: formValues.annet ?? "",
                                 hvorforSoke: formValues.hvorforSoke ?? "",
-                            })
-                        }
+                            });
+                        }}
                     />
                 ) : (
                     <BegrunnelseForm
