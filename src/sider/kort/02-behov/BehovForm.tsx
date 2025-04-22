@@ -60,7 +60,6 @@ const BehovForm = ({hvaErEndret, hvaSokesOm, onSubmit}: Props) => {
                     label={t("begrunnelse.hva.label")}
                     description={<BodyShort>{t("begrunnelse.hva.description")}</BodyShort>}
                 />
-
                 <LocalizedTextArea
                     {...register("hvaErEndret")}
                     id={"hvaErEndret"}

@@ -43,7 +43,6 @@ export const Begrunnelse = () => {
                                     (it) => it !== "NØDHJELP"
                                 ) as HarKategorierInputAllOfKategorierItem[],
                                 annet: formValues.annet ?? "",
-                                hvorforSoke: formValues.hvorforSoke ?? "",
                             });
                         }}
                     />
