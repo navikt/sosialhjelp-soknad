@@ -15,6 +15,9 @@ import {useAnalyticsContext} from "../../../lib/providers/useAnalyticsContext.ts
 import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {useBegrunnelse} from "../../../lib/hooks/data/useBegrunnelse.tsx";
 import BehovForm, {FormValues} from "./BehovForm.tsx";
+import type {HarKategorierInputAllOfKategorierItem} from "../../../generated/new-ssr/model";
+import KategorierForm, {FormValues as KategorierFormValues} from "./KategorierForm.tsx";
+import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
 
 const Behov = () => {
     const {t} = useTranslation("skjema");
@@ -29,6 +32,7 @@ const Behov = () => {
     const {
         updateBegrunnelse,
         begrunnelse,
+        updateCategories,
         isLoading: isBegrunnelseLoading,
         invalidate: invalidateBegrunnelse,
     } = useBegrunnelse();
@@ -45,18 +49,48 @@ const Behov = () => {
 
     const isLoading = isBegrunnelseLoading || isSituasjonLoading;
 
+    const onSubmitKategorier = (formValues: KategorierFormValues) => {
+        if ((formValues.hvaErEndret ?? "") !== (data?.hvaErEndret ?? "")) {
+            updateSituasjonsendring({
+                hvaErEndret: formValues.hvaErEndret ?? undefined,
+                endring: !!formValues.hvaErEndret && formValues.hvaErEndret.trim() !== "",
+            });
+        }
+        if (
+            begrunnelse?.kategorier?.definerte.length !==
+                formValues.categories.filter((it) => it !== "NØDHJELP").length ||
+            begrunnelse?.kategorier.annet !== formValues.annet
+        ) {
+            updateCategories({
+                kategorier: formValues.categories.filter(
+                    (it) => it !== "NØDHJELP"
+                ) as HarKategorierInputAllOfKategorierItem[],
+                annet: formValues.annet ?? "",
+            });
+        }
+        const situasjonEndret = formValues.hvaErEndret?.trim() ? "Ja" : "Ikke utfylt";
+        setAnalyticsData({
+            situasjonEndret,
+            selectedKategorier: formValues.categories,
+        });
+    };
+
     const onSubmit = (formValues: FormValues) => {
         const situasjonEndret = formValues.hvaErEndret?.trim() ? "Ja" : "Ikke utfylt";
         const hvaErEndret = formValues.hvaErEndret ?? undefined;
 
         setAnalyticsData({situasjonEndret});
         // TODO: hvorforSoke finnes ikke i kort. Burde være nullable i backend
-        updateBegrunnelse({hvaSokesOm: formValues.hvaSokesOm ?? "", hvorforSoke: ""});
+        updateBegrunnelse({hvaSokesOm: formValues.hvaSokesOm ?? ""});
         updateSituasjonsendring({
             hvaErEndret: hvaErEndret,
-            endring: !hvaErEndret || hvaErEndret.trim() !== "",
+            endring: !!hvaErEndret && hvaErEndret.trim() !== "",
         });
     };
+
+    const featureFlagData = useContextFeatureToggles();
+    const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
+
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={2} onStepChange={goto} />
@@ -74,11 +108,19 @@ const Behov = () => {
                         <ApplicationSpinner />
                     ) : (
                         <>
-                            <BehovForm
-                                hvaErEndret={data?.hvaErEndret}
-                                onSubmit={onSubmit}
-                                hvaSokesOm={begrunnelse?.hvaSokesOm}
-                            />
+                            {isKategorierEnabled ? (
+                                <KategorierForm
+                                    kategorier={begrunnelse?.kategorier}
+                                    onSubmit={onSubmitKategorier}
+                                    hvaErEndret={data?.hvaErEndret}
+                                />
+                            ) : (
+                                <BehovForm
+                                    hvaErEndret={data?.hvaErEndret}
+                                    onSubmit={onSubmit}
+                                    hvaSokesOm={begrunnelse?.hvaSokesOm}
+                                />
+                            )}
                             <FileUploadBox
                                 sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                                 undertekst="begrunnelse.kort.behov.dokumentasjon.beskrivelse"

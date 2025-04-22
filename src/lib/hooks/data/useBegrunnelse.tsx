@@ -43,7 +43,7 @@ export const useBegrunnelse = () => {
     const begrunnelse: BegrunnelseDto | undefined = isPending
         ? {
               hvaSokesOm: variables.data.type === "HarHvaSokesOm" ? variables.data.hvaSokesOm : "",
-              hvorforSoke: variables.data.hvorforSoke,
+              hvorforSoke: variables.data.type === "HarHvaSokesOm" ? variables.data.hvorforSoke : "",
               kategorier:
                   variables.data.type === "HarKategorier"
                       ? {annet: variables.data.annet, definerte: variables.data.kategorier}
