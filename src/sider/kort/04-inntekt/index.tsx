@@ -46,10 +46,7 @@ const Inntekt = () => {
                             </Heading>
                             <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.kort_saldo_undertekst")}</BodyShort>
                             <DokumentasjonRader opplysning={brukskontoOpplysning} />
-                            <FileUploadBoxNoStyle
-                                bunntekst={t("utbetalinger.inntekt.skattbar.kort_saldo_lastOpp")}
-                                dokumentasjonType={brukskontoOpplysning.type}
-                            />
+                            <FileUploadBoxNoStyle bunntekst={t("utbetalinger.inntekt.skattbar.kort_saldo_lastOpp")} />
                         </div>
                     )}
                     <FileUploadBox

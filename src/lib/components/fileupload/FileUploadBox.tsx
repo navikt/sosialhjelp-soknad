@@ -28,35 +28,11 @@ interface Props {
     dokumentasjonType?: VedleggFrontendType;
 }
 
-export const FileUploadBoxNoStyle = ({
-    sporsmal,
-    undertekst,
-    liste,
-    bunntekst,
-    dokumentasjonType,
-}: Props): React.JSX.Element => {
-    const {t} = useTranslation("skjema");
-    const forslag = liste ? (t(liste, {returnObjects: true}) as string[]) : [];
-
+export const FileUploadBoxNoStyle = ({bunntekst}: Props): React.JSX.Element => {
     return (
         <>
-            {sporsmal && (
-                <Heading level={"4"} size={"small"} spacing>
-                    {sporsmal}
-                </Heading>
-            )}
-            {undertekst && <Trans i18nKey={undertekst} components={{br: <br />}} />}
-            {forslag.length > 0 && (
-                <ul className="list-disc pl-5">
-                    {forslag.map((item, index) => (
-                        <li key={index}>
-                            <BodyShort>{item}</BodyShort>
-                        </li>
-                    ))}
-                </ul>
-            )}
             <BodyShort spacing>{bunntekst}</BodyShort>
-            <Dokumenter dokumentasjonType={dokumentasjonType} />
+            <Dokumenter dokumentasjonType={"kontooversikt|brukskonto"} />
         </>
     );
 };
@@ -144,15 +120,8 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
     );
 };
 
-const Dokumenter = ({dokumentasjonType}: {dokumentasjonType?: VedleggFrontendType}) => {
+const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType}) => {
     const {t} = useTranslation();
-
-    const {valgtKategoriData} = useValgtKategoriContext();
-
-    const finalDokumentasjonType =
-        dokumentasjonType === "kontooversikt|brukskonto"
-            ? "kontooversikt|brukskonto"
-            : valgtKategoriData.valgtKategorier || "annet|annet";
     const {
         deleteDocument,
         documents,
@@ -160,7 +129,7 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType?: VedleggFrontendTyp
         error,
         isPending: uploadPending,
         currentUpload,
-    } = useVedlegg(finalDokumentasjonType);
+    } = useVedlegg(dokumentasjonType);
     const {conversionPending} = usePDFConverter();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
     const isPending = conversionPending || conversionPending;
@@ -250,7 +219,7 @@ const DokumentUploader = ({
             />
             {previewFile && (
                 <ForhandsvisningVedleggModal
-                    header={"Er det lesbart?"}
+                    header={"Er det lesbart? ------ legg til engelsk og nynorsk -----"}
                     file={previewFile}
                     onAccept={async () => {
                         if (!previewFile) return;

@@ -26,7 +26,7 @@ export const ForhandsvisningVedleggModal = ({header, file, onAccept, onClose}: F
     const {t} = useTranslation();
     const isKortSoknad = useCurrentSoknadIsKort();
 
-    const {setValgtKategoriData} = useValgtKategoriContext();
+    const {valgtKategoriData, setValgtKategoriData} = useValgtKategoriContext();
     const [selectedCategory, setSelectedCategory] = useState<string>("");
 
     const handleAccept = () => {
@@ -80,7 +80,7 @@ export const ForhandsvisningVedleggModal = ({header, file, onAccept, onClose}: F
             </Modal.Body>
             <Modal.Footer className={"!block space-y-4"}>
                 <BodyShort>{t("vedlegg.forhandsvisning.info")}</BodyShort>
-                {isKortSoknad && (
+                {isKortSoknad && valgtKategoriData.valgtKategorier !== "kontooversikt|brukskonto" && (
                     <div>
                         <div>
                             <Select
