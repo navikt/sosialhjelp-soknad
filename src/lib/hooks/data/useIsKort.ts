@@ -1,4 +1,4 @@
-import {useIsKortSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
+import {useIsKortSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller";
 import {useBehandlingsId} from "../common/useBehandlingsId";
 
 const useIsKort = () => {

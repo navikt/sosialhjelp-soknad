@@ -1518,6 +1518,33 @@
                 }
             }
         },
+        "/soknad/{soknadId}/isKort": {
+            "get": {
+                "tags": ["soknad-lifecycle-controller"],
+                "operationId": "isKortSoknad",
+                "parameters": [{"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
+                }
+            }
+        },
         "/soknad/{soknadId}/inntekt/skattbarinntekt": {
             "get": {
                 "tags": ["inntekt-skattetaten-controller"],

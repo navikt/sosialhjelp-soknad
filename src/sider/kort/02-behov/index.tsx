@@ -80,7 +80,6 @@ const Behov = () => {
         const hvaErEndret = formValues.hvaErEndret ?? undefined;
 
         setAnalyticsData({situasjonEndret});
-        // TODO: hvorforSoke finnes ikke i kort. Burde være nullable i backend
         updateBegrunnelse({hvaSokesOm: formValues.hvaSokesOm ?? ""});
         updateSituasjonsendring({
             hvaErEndret: hvaErEndret,
