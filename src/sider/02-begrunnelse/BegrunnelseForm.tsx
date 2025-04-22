@@ -12,10 +12,9 @@ interface Props {
     begrunnelse?: BegrunnelseDto;
     isError?: boolean;
     onSubmit: (formValues: FormValues) => void;
-    excludeHvorforSoke?: boolean;
 }
 
-const BegrunnelseForm = ({isError, begrunnelse, onSubmit, excludeHvorforSoke}: Props) => {
+const BegrunnelseForm = ({isError, begrunnelse, onSubmit}: Props) => {
     const {
         register,
         handleSubmit,
@@ -43,16 +42,14 @@ const BegrunnelseForm = ({isError, begrunnelse, onSubmit, excludeHvorforSoke}: P
                     label={t("begrunnelse.hva.label")}
                     description={<BodyShort>{t("begrunnelse.hva.description")}</BodyShort>}
                 />
-                {!excludeHvorforSoke && (
-                    <LocalizedTextArea
-                        {...register("hvorforSoke")}
-                        id={"hvorforSoke"}
-                        error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
-                        label={t("begrunnelse.hvorfor.label")}
-                        maxLength={MAX_LEN_HVORFOR}
-                        description={<BodyShort>{t("begrunnelse.hvorfor.description")}</BodyShort>}
-                    />
-                )}
+                <LocalizedTextArea
+                    {...register("hvorforSoke")}
+                    id={"hvorforSoke"}
+                    error={errors.hvorforSoke && <TranslatedError error={errors.hvorforSoke} />}
+                    label={t("begrunnelse.hvorfor.label")}
+                    maxLength={MAX_LEN_HVORFOR}
+                    description={<BodyShort>{t("begrunnelse.hvorfor.description")}</BodyShort>}
+                />
             </form>
         </>
     );
