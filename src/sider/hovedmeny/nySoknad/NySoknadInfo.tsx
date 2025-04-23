@@ -1,48 +1,43 @@
 "use client";
 import {Alert, Button, Loader} from "@navikt/ds-react";
-import * as React from "react";
-import {useState} from "react";
+import {useState, useTransition} from "react";
 import {NySoknadVelkomst} from "./NySoknadVelkomst.tsx";
 import {useTranslations} from "next-intl";
 import {SoknadstypeValg} from "./SoknadstypeValg.tsx";
-import {useCreateSoknad} from "./useCreateSoknad.tsx";
 import {useAmplitudeSkjemaStartet} from "./useAmplitudeSkjemaStartet.tsx";
-import {BASE_PATH} from "../../../lib/constants.ts";
+import {useCreateSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
+import {useRouter} from "next/navigation";
 
 export const NySoknadInfo = () => {
-    const [startSoknadPending, setStartSoknadPending] = useState<boolean>(false);
-    const [startSoknadError, setStartSoknadError] = useState<Error | null>(null);
     const [soknadstype, setSoknadstype] = useState<"kort" | "standard" | undefined>(undefined);
-    const {createSoknad} = useCreateSoknad();
+    const router = useRouter();
+    const [isTransitioning, startTransition] = useTransition();
+    const {mutate, isPending, error} = useCreateSoknad({
+        mutation: {
+            onSuccess: async (data) => {
+                await logAmplitudeStartSoknad();
+                startTransition(() => router.push(`/skjema/${data.soknadId}/1`));
+            },
+        },
+    });
     const {logAmplitudeStartSoknad} = useAmplitudeSkjemaStartet();
     const t = useTranslations("NySoknadInfo");
-
-    const onSokSosialhjelpButtonClick = async (event: React.SyntheticEvent) => {
-        setStartSoknadPending(true);
-        event.preventDefault();
-
-        await logAmplitudeStartSoknad();
-        try {
-            const {soknadId} = await createSoknad(soknadstype);
-            window.location.assign(`${BASE_PATH}/skjema/${soknadId}/1`);
-        } catch (e: any) {
-            setStartSoknadError(e);
-            setStartSoknadPending(false);
-        }
-    };
 
     return (
         <>
             <NySoknadVelkomst />
-            {startSoknadError && <Alert variant="error">{t("feilet")}</Alert>}
+            {error && <Alert variant="error">{t("feilet")}</Alert>}
             <div className={"text-center"}>
                 <SoknadstypeValg valg={soknadstype} setValg={setSoknadstype} />
                 <Button
                     variant="primary"
                     id="start_soknad_button"
-                    disabled={startSoknadPending}
-                    onClick={onSokSosialhjelpButtonClick}
-                    icon={startSoknadPending && <Loader />}
+                    disabled={isTransitioning || isPending}
+                    onClick={(event) => {
+                        event.preventDefault();
+                        mutate({params: {soknadstype}});
+                    }}
+                    icon={(isTransitioning || isPending) && <Loader />}
                     iconPosition={"right"}
                 >
                     {t("start")}
