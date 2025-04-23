@@ -6,7 +6,6 @@ import {BasisPersonalia} from "./BasisPersonalia";
 import {Kontonr} from "./Kontonr";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {FieldErrorsImpl} from "react-hook-form";
-import {NavEnhetFrontend} from "../../generated/model";
 import {erAktiv} from "../../lib/navEnhetStatus";
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/SkjemaStegErrorSummary.tsx";
 import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
@@ -20,10 +19,11 @@ import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFu
 import {mutationKey, useAdresser} from "./adresse/useAdresser.tsx";
 import {useIsMutating} from "@tanstack/react-query";
 import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId.ts";
+import {NavEnhetDto} from "../../generated/new/model";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
-    const errors = !error ? undefined : ({adressefelt: {message: error}} as FieldErrorsImpl<NavEnhetFrontend>);
+    const errors = !error ? undefined : ({adressefelt: {message: error}} as FieldErrorsImpl<NavEnhetDto>);
     const soknadId = useBehandlingsId();
     const {navenhet} = useAdresser();
     const mutating = useIsMutating({mutationKey: mutationKey(soknadId)});
