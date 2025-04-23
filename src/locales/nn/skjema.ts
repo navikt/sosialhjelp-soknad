@@ -167,7 +167,7 @@ export const skjema = {
                 kategoriValg: "Vel kategori",
                 barnebidrag_b: "Barnebidrag - Jeg betaler",
                 barnebidrag_m: "Barnebidrag - Jeg mottar",
-                Barnehage: "Barnehage",
+                barnehage: "Barnehage",
                 barnehageSFO: "SFO/AKS",
                 bostotte: "Bustøtte frå Husbanken",
                 husleie: "Husleige",
@@ -2014,12 +2014,14 @@ export const skjema = {
         },
         ferdig: "Til oppsummering",
         forhandsvisning: {
+            header: "Er det leseleg?",
             avbryt: "Avbryt",
             fullskjerm: {
                 lukk: "Lukk fullskjerm",
                 stringValue: "Fullskjerm",
             },
             info: "Sørg for at dokumenta er leselege og viser rett informasjon",
+            kategori_sporsmal: "Kva har du lasta opp?",
             kategori: 'Om du ikkje vel ein kategori blir dokumentet lasta opp som "Anna".',
             opplast: "Last opp dokument",
             slett: "Slett",

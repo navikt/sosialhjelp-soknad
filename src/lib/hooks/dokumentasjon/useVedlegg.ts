@@ -34,9 +34,7 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
     const {mutate: mutateDelete, isPending: isDeletionPending} = useDeleteDokument();
 
     const isPending = isDokumentasjonPending || isDeletionPending || uploadPercent !== null;
-    const {valgtKategoriData, setValgtKategoriData} = useValgtKategoriContext();
-
-    console.log("valgtKategoriData", valgtKategoriData);
+    const {setValgtKategoriData} = useValgtKategoriContext();
 
     const queryClient = useQueryClient();
     const dokumentasjonQueryKey = getHentOkonomiskeOpplysningerQueryKey(behandlingsId);

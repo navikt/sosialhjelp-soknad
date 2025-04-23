@@ -36,10 +36,7 @@ export const FileUploadBoxNoStyle = ({bunntekst}: Props): React.JSX.Element => {
     );
 };
 
-const FileUploadBox = (
-    {sporsmal, undertekst, liste}: Props,
-    dokumentasjonType: DokumentasjonDtoType
-): React.JSX.Element => {
+const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element => {
     const {t} = useTranslation("skjema");
     const forslag = liste ? (t(liste, {returnObjects: true}) as string[]) : [];
 
@@ -47,7 +44,6 @@ const FileUploadBox = (
 
     const finalDokumentasjonType = valgtKategoriData.valgtKategorier || "UTGIFTER_ANDRE_UTGIFTER";
 
-    console.log("dokumentasjonType", dokumentasjonType);
     const {
         deleteDocument,
         documents,
@@ -215,7 +211,7 @@ const DokumentUploader = ({
             />
             {previewFile && (
                 <ForhandsvisningVedleggModal
-                    header={"Er det lesbart? ------ legg til engelsk og nynorsk -----"}
+                    header={t("vedlegg.forhandsvisning.header")}
                     file={previewFile}
                     onAccept={async () => {
                         if (!previewFile) return;

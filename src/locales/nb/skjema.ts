@@ -2022,12 +2022,14 @@ export const skjema = {
         },
         ferdig: "Til oppsummering",
         forhandsvisning: {
+            header: "Er det leselig?",
             avbryt: "Avbryt",
             fullskjerm: {
                 lukk: "Lukk fullskjerm",
                 stringValue: "Fullskjerm",
             },
             info: "Sørg for at dokumentene er leselige og viser riktig informasjon",
+            kategori_sporsmal: "Hva har du lastet opp?",
             kategori: 'Om du ikke velger en beskrivelse blir dokumentet lastet opp som "Annet".',
             opplast: "Last opp dokument",
             slett: "Slett",
