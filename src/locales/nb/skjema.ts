@@ -175,6 +175,7 @@ export const skjema = {
                 lonnslipp: "Lønnsslipp",
                 stromOppvarming: "Strøm og oppvarming",
                 stipendLan: "Stipend og lån fra Lånekassen",
+                brukskonto: "Brukskonto",
                 annet: "Annet",
             },
         },
@@ -1907,7 +1908,7 @@ export const skjema = {
         erFdatoEtterIdag: "Fødselsdato kan ikke være etter dagens dato",
         erKontonummer: "Ugyldig kontonummer",
         erSamvaersgrad: "Samværsgrad må være mellom 0 og 100%",
-        erTall: "Ugyldig tall. Du må oppgi et heltall.",
+        erTall: "Ugyldig tall. Du må oppgi et positivt heltall.",
         erTelefonnummer: "Ugyldig telefonnummer",
         feltEksistererIkke:
             "Vi klarte ikke å oppdatere feltet. Det kan være fordi du har gjort endringer i søknaden, vennligst oppdater denne siden og prøv på nytt.",

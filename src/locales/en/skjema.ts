@@ -175,6 +175,7 @@ export const skjema = {
                 lonnslipp: "Wage slip",
                 stromOppvarming: "Electricity and heating",
                 stipendLan: "Loan or grant from Lånekassen",
+                brukskonto: "Brukskonto",
                 annet: "Other",
             },
         },
@@ -1909,7 +1910,7 @@ export const skjema = {
         erFdatoEtterIdag: "Date of birth cannot be after today’s date",
         erKontonummer: "Invalid account number",
         erSamvaersgrad: "Visiting arrangement must be between 0 and 100%",
-        erTall: "Please state the amount in whole numbers",
+        erTall: "Please state the amount in a whole positive number",
         erTelefonnummer: "Invalid telephone number",
         feltEksistererIkke:
             "We could not update the field. This may be because you have made changes in the application. Please update this page and try again.",

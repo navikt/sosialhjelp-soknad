@@ -442,7 +442,7 @@
         "/soknad/{soknadId}/okonomiskeOpplysninger": {
             "get": {
                 "tags": ["okonomiske-opplysninger-controller"],
-                "operationId": "getForventetDokumentasjon",
+                "operationId": "getOkonomiskeOpplysninger",
                 "parameters": [
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
@@ -466,13 +466,13 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/ForventetDokumentasjonDto"}}}
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/OkonomiskeOpplysningerDto"}}}
                     }
                 }
             },
             "put": {
                 "tags": ["okonomiske-opplysninger-controller"],
-                "operationId": "updateOkonomiskeDetaljer",
+                "operationId": "updateOkonomiskOpplysning",
                 "parameters": [
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
@@ -510,7 +510,7 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/ForventetDokumentasjonDto"}}}
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/OkonomiskeOpplysningerDto"}}}
                     }
                 }
             }
@@ -958,6 +958,72 @@
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ForsorgerDto"}}}
+                    }
+                }
+            }
+        },
+        "/soknad/{soknadId}/dokumentasjon/forventet": {
+            "get": {
+                "tags": ["dokumentasjon-controller"],
+                "operationId": "getForventetDokumentasjon",
+                "parameters": [
+                    {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
+                ],
+                "responses": {
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/ForventetDokumentasjonDto"}}}
+                    }
+                }
+            },
+            "put": {
+                "tags": ["dokumentasjon-controller"],
+                "operationId": "updateDokumentasjonStatus",
+                "parameters": [
+                    {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
+                ],
+                "requestBody": {
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DokumentasjonInput"}}},
+                    "required": true
+                },
+                "responses": {
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/ForventetDokumentasjonDto"}}}
                     }
                 }
             }
@@ -1865,21 +1931,58 @@
                 }
             },
             "AbstractOkonomiInput": {
-                "required": ["dokumentasjonLevert"],
+                "required": ["_type", "type"],
                 "type": "object",
-                "properties": {"dokumentasjonLevert": {"type": "boolean"}}
-            },
-            "AnnenDokumentasjonType": {
-                "type": "string",
-                "allOf": [{"$ref": "#/components/schemas/OpplysningType"}],
-                "enum": [
-                    "SKATTEMELDING",
-                    "SAMVARSAVTALE",
-                    "OPPHOLDSTILLATELSE",
-                    "HUSLEIEKONTRAKT",
-                    "HUSLEIEKONTRAKT_KOMMUNAL",
-                    "BEHOV"
-                ]
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "UTGIFTER_ANNET_BO",
+                            "UTGIFTER_KOMMUNAL_AVGIFT",
+                            "UTGIFTER_OPPVARMING",
+                            "UTGIFTER_STROM",
+                            "UTGIFTER_BARN_TANNREGULERING",
+                            "UTGIFTER_BARN_FRITIDSAKTIVITETER",
+                            "UTGIFTER_ANNET_BARN",
+                            "UTGIFTER_ANDRE_UTGIFTER",
+                            "BARNEBIDRAG_BETALER",
+                            "UTGIFTER_SFO",
+                            "UTGIFTER_BARNEHAGE",
+                            "UTGIFTER_HUSLEIE",
+                            "UTGIFTER_BOLIGLAN",
+                            "FORMUE_BRUKSKONTO",
+                            "FORMUE_BSU",
+                            "FORMUE_LIVSFORSIKRING",
+                            "FORMUE_SPAREKONTO",
+                            "FORMUE_VERDIPAPIRER",
+                            "FORMUE_ANNET",
+                            "BARNEBIDRAG_MOTTAR",
+                            "STUDIELAN_INNTEKT",
+                            "JOBB",
+                            "UTBETALING_FORSIKRING",
+                            "UTBETALING_UTBYTTE",
+                            "UTBETALING_SALG",
+                            "UTBETALING_HUSBANKEN",
+                            "UTBETALING_ANNET",
+                            "SLUTTOPPGJOER",
+                            "SKATTEMELDING",
+                            "SAMVARSAVTALE",
+                            "OPPHOLDSTILLATELSE",
+                            "HUSLEIEKONTRAKT",
+                            "HUSLEIEKONTRAKT_KOMMUNAL",
+                            "BEHOV"
+                        ]
+                    },
+                    "_type": {"type": "string"}
+                },
+                "discriminator": {
+                    "propertyName": "_type",
+                    "mapping": {
+                        "GenericOkonomiInput": "#/components/schemas/GenericOkonomiInput",
+                        "LonnsInput": "#/components/schemas/LonnsInput",
+                        "BoliglanInput": "#/components/schemas/BoliglanInput"
+                    }
+                }
             },
             "AvdragRenterDto": {
                 "type": "object",
@@ -1895,7 +1998,6 @@
                 ]
             },
             "BelopDto": {
-                "required": ["belop"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/OkonomiDetaljDto"},
@@ -1909,7 +2011,7 @@
                 ]
             },
             "BoliglanInput": {
-                "required": ["detaljer", "dokumentasjonLevert"],
+                "required": ["detaljer", "type"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/AbstractOkonomiInput"},
@@ -1921,69 +2023,17 @@
                     }
                 ]
             },
-            "FormueType": {
-                "type": "string",
-                "allOf": [
-                    {"$ref": "#/components/schemas/OkonomiOpplysningType"},
-                    {"$ref": "#/components/schemas/OpplysningType"}
-                ],
-                "enum": [
-                    "FORMUE_BRUKSKONTO",
-                    "FORMUE_BSU",
-                    "FORMUE_LIVSFORSIKRING",
-                    "FORMUE_SPAREKONTO",
-                    "FORMUE_VERDIPAPIRER",
-                    "FORMUE_ANNET",
-                    "VERDI_BOLIG",
-                    "VERDI_CAMPINGVOGN",
-                    "VERDI_KJORETOY",
-                    "VERDI_FRITIDSEIENDOM",
-                    "VERDI_ANNET"
-                ]
-            },
             "GenericOkonomiInput": {
-                "required": ["detaljer", "dokumentasjonLevert", "opplysningType"],
+                "required": ["detaljer", "type"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/AbstractOkonomiInput"},
                     {
                         "type": "object",
                         "properties": {
-                            "opplysningType": {
-                                "oneOf": [
-                                    {"$ref": "#/components/schemas/AnnenDokumentasjonType"},
-                                    {"$ref": "#/components/schemas/FormueType"},
-                                    {"$ref": "#/components/schemas/InntektType"},
-                                    {"$ref": "#/components/schemas/OkonomiOpplysningType"},
-                                    {"$ref": "#/components/schemas/UtgiftType"},
-                                    {"$ref": "#/components/schemas/FormueType"},
-                                    {"$ref": "#/components/schemas/InntektType"},
-                                    {"$ref": "#/components/schemas/UtgiftType"}
-                                ]
-                            },
                             "detaljer": {"type": "array", "items": {"$ref": "#/components/schemas/BelopDto"}}
                         }
                     }
-                ]
-            },
-            "InntektType": {
-                "type": "string",
-                "allOf": [
-                    {"$ref": "#/components/schemas/OkonomiOpplysningType"},
-                    {"$ref": "#/components/schemas/OpplysningType"}
-                ],
-                "enum": [
-                    "BARNEBIDRAG_MOTTAR",
-                    "STUDIELAN_INNTEKT",
-                    "JOBB",
-                    "UTBETALING_FORSIKRING",
-                    "UTBETALING_UTBYTTE",
-                    "UTBETALING_SALG",
-                    "UTBETALING_ANNET",
-                    "SLUTTOPPGJOER",
-                    "UTBETALING_NAVYTELSE",
-                    "UTBETALING_SKATTEETATEN",
-                    "UTBETALING_HUSBANKEN"
                 ]
             },
             "LonnsInntektDto": {
@@ -2000,99 +2050,67 @@
                 ]
             },
             "LonnsInput": {
-                "required": ["detalj", "dokumentasjonLevert"],
+                "required": ["detalj", "type"],
                 "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/AbstractOkonomiInput"},
                     {"type": "object", "properties": {"detalj": {"$ref": "#/components/schemas/LonnsInntektDto"}}}
                 ]
             },
-            "OkonomiOpplysningType": {
-                "required": ["dokumentasjonForventet", "group", "name"],
+            "OkonomiDetaljDto": {
+                "required": ["type"],
                 "type": "object",
-                "allOf": [
-                    {"$ref": "#/components/schemas/OpplysningType"},
-                    {"type": "object", "properties": {"dokumentasjonForventet": {"type": "boolean"}}}
-                ]
+                "properties": {"type": {"type": "string"}},
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "BelopDto": "#/components/schemas/BelopDto",
+                        "LonnsInntektDto": "#/components/schemas/LonnsInntektDto",
+                        "AvdragRenterDto": "#/components/schemas/AvdragRenterDto"
+                    }
+                }
             },
-            "OpplysningType": {
-                "required": ["group", "name", "type"],
-                "type": "object",
-                "properties": {
-                    "name": {"type": "string"},
-                    "group": {
-                        "type": "string",
-                        "enum": [
-                            "andre utgifter",
-                            "arbeid",
-                            "bosituasjon",
-                            "familie",
-                            "generelle vedlegg",
-                            "inntekt",
-                            "statsborgerskap",
-                            "utgifter"
-                        ]
-                    },
-                    "type": {"type": "string"}
-                },
-                "discriminator": {"propertyName": "type"}
-            },
-            "UtgiftType": {
-                "type": "string",
-                "allOf": [
-                    {"$ref": "#/components/schemas/OkonomiOpplysningType"},
-                    {"$ref": "#/components/schemas/OpplysningType"}
-                ],
-                "enum": [
-                    "UTGIFTER_ANNET_BO",
-                    "UTGIFTER_KOMMUNAL_AVGIFT",
-                    "UTGIFTER_OPPVARMING",
-                    "UTGIFTER_STROM",
-                    "UTGIFTER_BARN_TANNREGULERING",
-                    "UTGIFTER_BARN_FRITIDSAKTIVITETER",
-                    "UTGIFTER_ANNET_BARN",
-                    "UTGIFTER_ANDRE_UTGIFTER",
-                    "BARNEBIDRAG_BETALER",
-                    "UTGIFTER_SFO",
-                    "UTGIFTER_BARNEHAGE",
-                    "UTGIFTER_HUSLEIE",
-                    "UTGIFTER_BOLIGLAN",
-                    "UTGIFTER_BOLIGLAN_AVDRAG",
-                    "UTGIFTER_BOLIGLAN_RENTER"
-                ]
-            },
-            "DokumentDto": {
-                "required": ["dokumentId", "filnavn"],
-                "type": "object",
-                "properties": {"dokumentId": {"type": "string", "format": "uuid"}, "filnavn": {"type": "string"}}
-            },
-            "DokumentasjonDto": {
-                "required": ["dokumentasjonStatus", "dokumenter", "gruppe", "type"],
+            "OkonomiskOpplysningDto": {
+                "required": ["type"],
                 "type": "object",
                 "properties": {
                     "type": {
-                        "oneOf": [
-                            {"$ref": "#/components/schemas/AnnenDokumentasjonType"},
-                            {"$ref": "#/components/schemas/FormueType"},
-                            {"$ref": "#/components/schemas/InntektType"},
-                            {"$ref": "#/components/schemas/OkonomiOpplysningType"},
-                            {"$ref": "#/components/schemas/UtgiftType"},
-                            {"$ref": "#/components/schemas/FormueType"},
-                            {"$ref": "#/components/schemas/InntektType"},
-                            {"$ref": "#/components/schemas/UtgiftType"}
-                        ]
-                    },
-                    "gruppe": {
                         "type": "string",
                         "enum": [
-                            "andre utgifter",
-                            "arbeid",
-                            "bosituasjon",
-                            "familie",
-                            "generelle vedlegg",
-                            "inntekt",
-                            "statsborgerskap",
-                            "utgifter"
+                            "UTGIFTER_ANNET_BO",
+                            "UTGIFTER_KOMMUNAL_AVGIFT",
+                            "UTGIFTER_OPPVARMING",
+                            "UTGIFTER_STROM",
+                            "UTGIFTER_BARN_TANNREGULERING",
+                            "UTGIFTER_BARN_FRITIDSAKTIVITETER",
+                            "UTGIFTER_ANNET_BARN",
+                            "UTGIFTER_ANDRE_UTGIFTER",
+                            "BARNEBIDRAG_BETALER",
+                            "UTGIFTER_SFO",
+                            "UTGIFTER_BARNEHAGE",
+                            "UTGIFTER_HUSLEIE",
+                            "UTGIFTER_BOLIGLAN",
+                            "FORMUE_BRUKSKONTO",
+                            "FORMUE_BSU",
+                            "FORMUE_LIVSFORSIKRING",
+                            "FORMUE_SPAREKONTO",
+                            "FORMUE_VERDIPAPIRER",
+                            "FORMUE_ANNET",
+                            "BARNEBIDRAG_MOTTAR",
+                            "STUDIELAN_INNTEKT",
+                            "JOBB",
+                            "UTBETALING_FORSIKRING",
+                            "UTBETALING_UTBYTTE",
+                            "UTBETALING_SALG",
+                            "UTBETALING_HUSBANKEN",
+                            "UTBETALING_ANNET",
+                            "SLUTTOPPGJOER",
+                            "SKATTEMELDING",
+                            "SAMVARSAVTALE",
+                            "OPPHOLDSTILLATELSE",
+                            "HUSLEIEKONTRAKT",
+                            "HUSLEIEKONTRAKT_KOMMUNAL",
+                            "BEHOV"
                         ]
                     },
                     "detaljer": {
@@ -2104,22 +2122,16 @@
                                 {"$ref": "#/components/schemas/LonnsInntektDto"}
                             ]
                         }
-                    },
-                    "dokumentasjonStatus": {"type": "string", "enum": ["LASTET_OPP", "FORVENTET", "LEVERT_TIDLIGERE"]},
-                    "dokumenter": {"type": "array", "items": {"$ref": "#/components/schemas/DokumentDto"}}
-                }
-            },
-            "ForventetDokumentasjonDto": {
-                "required": ["forventetDokumentasjon"],
-                "type": "object",
-                "properties": {
-                    "forventetDokumentasjon": {
-                        "type": "array",
-                        "items": {"$ref": "#/components/schemas/DokumentasjonDto"}
                     }
                 }
             },
-            "OkonomiDetaljDto": {"type": "object"},
+            "OkonomiskeOpplysningerDto": {
+                "required": ["opplysninger"],
+                "type": "object",
+                "properties": {
+                    "opplysninger": {"type": "array", "items": {"$ref": "#/components/schemas/OkonomiskOpplysningDto"}}
+                }
+            },
             "HarIkkeVerdierInput": {
                 "required": ["hasBekreftelse"],
                 "type": "object",
@@ -2421,6 +2433,124 @@
                     "harForsorgerplikt": {"type": "boolean"},
                     "barnebidrag": {"type": "string", "enum": ["BETALER", "MOTTAR", "BEGGE", "INGEN"]},
                     "ansvar": {"type": "array", "items": {"$ref": "#/components/schemas/BarnDto"}}
+                }
+            },
+            "DokumentasjonInput": {
+                "required": ["hasLevert", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "UTGIFTER_ANNET_BO",
+                            "UTGIFTER_KOMMUNAL_AVGIFT",
+                            "UTGIFTER_OPPVARMING",
+                            "UTGIFTER_STROM",
+                            "UTGIFTER_BARN_TANNREGULERING",
+                            "UTGIFTER_BARN_FRITIDSAKTIVITETER",
+                            "UTGIFTER_ANNET_BARN",
+                            "UTGIFTER_ANDRE_UTGIFTER",
+                            "BARNEBIDRAG_BETALER",
+                            "UTGIFTER_SFO",
+                            "UTGIFTER_BARNEHAGE",
+                            "UTGIFTER_HUSLEIE",
+                            "UTGIFTER_BOLIGLAN",
+                            "FORMUE_BRUKSKONTO",
+                            "FORMUE_BSU",
+                            "FORMUE_LIVSFORSIKRING",
+                            "FORMUE_SPAREKONTO",
+                            "FORMUE_VERDIPAPIRER",
+                            "FORMUE_ANNET",
+                            "BARNEBIDRAG_MOTTAR",
+                            "STUDIELAN_INNTEKT",
+                            "JOBB",
+                            "UTBETALING_FORSIKRING",
+                            "UTBETALING_UTBYTTE",
+                            "UTBETALING_SALG",
+                            "UTBETALING_HUSBANKEN",
+                            "UTBETALING_ANNET",
+                            "SLUTTOPPGJOER",
+                            "SKATTEMELDING",
+                            "SAMVARSAVTALE",
+                            "OPPHOLDSTILLATELSE",
+                            "HUSLEIEKONTRAKT",
+                            "HUSLEIEKONTRAKT_KOMMUNAL",
+                            "BEHOV"
+                        ]
+                    },
+                    "hasLevert": {"type": "boolean"}
+                }
+            },
+            "DokumentDto": {
+                "required": ["dokumentId", "filnavn"],
+                "type": "object",
+                "properties": {"dokumentId": {"type": "string", "format": "uuid"}, "filnavn": {"type": "string"}}
+            },
+            "DokumentasjonDto": {
+                "required": ["dokumentasjonStatus", "dokumenter", "gruppe", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "UTGIFTER_ANNET_BO",
+                            "UTGIFTER_KOMMUNAL_AVGIFT",
+                            "UTGIFTER_OPPVARMING",
+                            "UTGIFTER_STROM",
+                            "UTGIFTER_BARN_TANNREGULERING",
+                            "UTGIFTER_BARN_FRITIDSAKTIVITETER",
+                            "UTGIFTER_ANNET_BARN",
+                            "UTGIFTER_ANDRE_UTGIFTER",
+                            "BARNEBIDRAG_BETALER",
+                            "UTGIFTER_SFO",
+                            "UTGIFTER_BARNEHAGE",
+                            "UTGIFTER_HUSLEIE",
+                            "UTGIFTER_BOLIGLAN",
+                            "FORMUE_BRUKSKONTO",
+                            "FORMUE_BSU",
+                            "FORMUE_LIVSFORSIKRING",
+                            "FORMUE_SPAREKONTO",
+                            "FORMUE_VERDIPAPIRER",
+                            "FORMUE_ANNET",
+                            "BARNEBIDRAG_MOTTAR",
+                            "STUDIELAN_INNTEKT",
+                            "JOBB",
+                            "UTBETALING_FORSIKRING",
+                            "UTBETALING_UTBYTTE",
+                            "UTBETALING_SALG",
+                            "UTBETALING_HUSBANKEN",
+                            "UTBETALING_ANNET",
+                            "SLUTTOPPGJOER",
+                            "SKATTEMELDING",
+                            "SAMVARSAVTALE",
+                            "OPPHOLDSTILLATELSE",
+                            "HUSLEIEKONTRAKT",
+                            "HUSLEIEKONTRAKT_KOMMUNAL",
+                            "BEHOV"
+                        ]
+                    },
+                    "gruppe": {
+                        "type": "string",
+                        "enum": [
+                            "andre utgifter",
+                            "arbeid",
+                            "bosituasjon",
+                            "familie",
+                            "generelle vedlegg",
+                            "inntekt",
+                            "statsborgerskap",
+                            "utgifter"
+                        ]
+                    },
+                    "dokumentasjonStatus": {"type": "string", "enum": ["LASTET_OPP", "FORVENTET", "LEVERT_TIDLIGERE"]},
+                    "dokumenter": {"type": "array", "items": {"$ref": "#/components/schemas/DokumentDto"}}
+                }
+            },
+            "ForventetDokumentasjonDto": {
+                "required": ["dokumentasjon"],
+                "type": "object",
+                "properties": {
+                    "dokumentasjon": {"type": "array", "items": {"$ref": "#/components/schemas/DokumentasjonDto"}}
                 }
             },
             "BosituasjonDto": {

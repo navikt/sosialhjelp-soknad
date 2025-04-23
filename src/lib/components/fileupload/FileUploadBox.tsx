@@ -2,7 +2,6 @@ import React, {ChangeEvent} from "react";
 import {Alert, BodyShort, Button, Heading, Loader} from "@navikt/ds-react";
 import {FaroErrorBoundary} from "@grafana/faro-react";
 import {PdfConversionError, UploadError} from "../../../sider/08-vedlegg/upload/UploadError";
-import {OpplastetVedlegg} from "../../../sider/08-vedlegg/OpplastetVedlegg";
 import {Trans, useTranslation} from "react-i18next";
 import {usePDFConverter} from "../../hooks/dokumentasjon/usePDFConverter";
 import {PlusIcon} from "@navikt/aksel-icons";
@@ -12,9 +11,9 @@ import {
     SUPPORTED_WITHOUT_CONVERSION,
 } from "../../../sider/08-vedlegg/upload/DokumentUploader";
 import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
-import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
-import {VedleggFrontendType} from "../../../generated/model";
 import {UploadedFileBox} from "./UploadedFileBox.tsx";
+import {DokumentasjonDtoType} from "../../../generated/new/model";
+import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
 
 type TranslationKeys = "begrunnelse.kort.behov.dokumentasjon.beskrivelse" | "situasjon.kort.dokumentasjon.description";
 
@@ -25,26 +24,30 @@ interface Props {
     undertekst?: TranslationKeys;
     liste?: ListeKeys;
     bunntekst?: string;
-    dokumentasjonType?: VedleggFrontendType;
+    dokumentasjonType?: DokumentasjonDtoType;
 }
 
 export const FileUploadBoxNoStyle = ({bunntekst}: Props): React.JSX.Element => {
     return (
         <>
             <BodyShort spacing>{bunntekst}</BodyShort>
-            <Dokumenter dokumentasjonType={"kontooversikt|brukskonto"} />
+            <Dokumenter dokumentasjonType={"FORMUE_BRUKSKONTO"} />
         </>
     );
 };
 
-const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element => {
+const FileUploadBox = (
+    {sporsmal, undertekst, liste}: Props,
+    dokumentasjonType: DokumentasjonDtoType
+): React.JSX.Element => {
     const {t} = useTranslation("skjema");
     const forslag = liste ? (t(liste, {returnObjects: true}) as string[]) : [];
 
     const {valgtKategoriData} = useValgtKategoriContext();
 
-    const finalDokumentasjonType = valgtKategoriData.valgtKategorier || "annet|annet";
+    const finalDokumentasjonType = valgtKategoriData.valgtKategorier || "UTGIFTER_ANDRE_UTGIFTER";
 
+    console.log("dokumentasjonType", dokumentasjonType);
     const {
         deleteDocument,
         documents,
@@ -108,7 +111,10 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
                         allUploadedFiles.map((fil) => (
                             <UploadedFileBox
                                 key={fil.dokumentId}
-                                dokument={fil}
+                                dokument={{
+                                    dokumentId: fil.dokumentId,
+                                    filename: fil.filnavn,
+                                }}
                                 dokumentasjonsType={fil.dokumentasjonType}
                                 onDelete={deleteDocument}
                             />
@@ -120,16 +126,9 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
     );
 };
 
-const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType}) => {
+const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: DokumentasjonDtoType}) => {
     const {t} = useTranslation();
-    const {
-        deleteDocument,
-        documents,
-        uploadDocument,
-        error,
-        isPending: uploadPending,
-        currentUpload,
-    } = useVedlegg(dokumentasjonType);
+    const {documents, uploadDocument, error, isPending: uploadPending, currentUpload} = useVedlegg(dokumentasjonType);
     const {conversionPending} = usePDFConverter();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
     const isPending = conversionPending || conversionPending;
@@ -150,9 +149,6 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: VedleggFrontendType
 
             <ul className="vedleggsliste pb-2">
                 {currentUpload && <BodyShort>Laster opp ({currentUpload.percent}%)</BodyShort>}
-                {documents.map((fil) => (
-                    <OpplastetVedlegg key={fil.dokumentId} dokument={fil} onDelete={deleteDocument} />
-                ))}
             </ul>
             {showSuccessAlert && documents.length > 0 && (
                 <Alert variant="success">{t("vedlegg.opplasting.suksess")}</Alert>
@@ -228,9 +224,6 @@ const DokumentUploader = ({
                         await doUpload(upload);
                     }}
                     onClose={() => setPreviewFile(null)}
-                    onDelete={() => {
-                        setPreviewFile(null);
-                    }}
                 />
             )}
         </div>

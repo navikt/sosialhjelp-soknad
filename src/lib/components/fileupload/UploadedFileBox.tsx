@@ -30,17 +30,18 @@ const StyledCircle = styled.div`
 `;
 
 const dokumentasjonsTypeTilTextKey: Record<string, string> = {
-    "barnebidrag|betaler": "begrunnelse.kategorier.kortKategorier.barnebidrag_b",
-    "barnebidrag|mottar": "begrunnelse.kategorier.kortKategorier.barnebidrag_m",
-    "faktura|barnehage": "begrunnelse.kategorier.kortKategorier.barnehage",
-    "faktura|sfo": "begrunnelse.kategorier.kortKategorier.barnehageSFO",
-    "husbanken|vedtak": "begrunnelse.kategorier.kortKategorier.bostotte",
-    "husleiekontrakt|husleiekontrakt": "begrunnelse.kategorier.kortKategorier.husleie",
-    "kontooversikt|annet": "begrunnelse.kategorier.kortKategorier.kontooversikt",
-    "lonnslipp|arbeid": "begrunnelse.kategorier.kortKategorier.lonnslipp",
-    "faktura|strom": "begrunnelse.kategorier.kortKategorier.stromOppvarming",
-    "student|vedtak": "begrunnelse.kategorier.kortKategorier.stipendLan",
-    "annet|annet": "begrunnelse.kategorier.kortKategorier.annet",
+    BARNEBIDRAG_BETALER: "begrunnelse.kategorier.kortKategorier.barnebidrag_b",
+    BARNEBIDRAG_MOTTAR: "begrunnelse.kategorier.kortKategorier.barnebidrag_m",
+    UTGIFTER_BARNEHAGE: "begrunnelse.kategorier.kortKategorier.barnehage",
+    UTGIFTER_SFO: "begrunnelse.kategorier.kortKategorier.barnehageSFO",
+    UTBETALING_HUSBANKEN: "begrunnelse.kategorier.kortKategorier.bostotte",
+    HUSLEIEKONTRAKT: "begrunnelse.kategorier.kortKategorier.husleie",
+    FORMUE_BRUKSKONTO: "begrunnelse.kategorier.kortKategorier.brukskonto",
+    FORMUE_ANNET: "begrunnelse.kategorier.kortKategorier.kontooversikt",
+    JOBB: "begrunnelse.kategorier.kortKategorier.lonnslipp",
+    UTGIFTER_STROM: "begrunnelse.kategorier.kortKategorier.stromOppvarming",
+    STUDIELAN_INNTEKT: "begrunnelse.kategorier.kortKategorier.stipendLan",
+    UTGIFTER_ANDRE_UTGIFTER: "begrunnelse.kategorier.kortKategorier.annet",
     "kort|annet": "begrunnelse.kategorier.kortKategorier.kategoriValg",
 };
 

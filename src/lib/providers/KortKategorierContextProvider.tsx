@@ -1,8 +1,8 @@
 import React, {useContext} from "react";
-import {VedleggFrontendType} from "../../generated/model";
+import {DokumentasjonDtoType} from "../../generated/new/model";
 
 interface ValgtKategoriData {
-    valgtKategorier?: VedleggFrontendType;
+    valgtKategorier?: DokumentasjonDtoType;
     sokersTekst?: string;
 }
 
@@ -20,7 +20,7 @@ export const ValgtKategoriProvider = ({children}: {children: React.ReactNode}) =
         setKategoriDataState((prevData) => ({
             ...prevData,
             ...data,
-            valgtKategorier: data.valgtKategorier || "annet|annet",
+            valgtKategorier: data.valgtKategorier || "UTGIFTER_ANDRE_UTGIFTER",
         }));
     };
 

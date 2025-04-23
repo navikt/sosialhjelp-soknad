@@ -9,7 +9,7 @@ import {FilePreviewButtons} from "./FilePreviewButtons";
 import {FilePreviewDisplay} from "./FilePreviewDisplay";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useValgtKategoriContext} from "../../../lib/providers/KortKategorierContextProvider.tsx";
-import {VedleggFrontendType} from "../../../generated/model";
+import {DokumentasjonDtoType} from "../../../generated/new/model/dokumentasjonDtoType.ts";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 
@@ -18,7 +18,6 @@ interface ForhandsvisningModalProps {
     header: string | undefined;
     onAccept: () => void;
     onClose: () => void;
-    onDelete: () => void;
 }
 
 export const ForhandsvisningVedleggModal = ({header, file, onAccept, onClose}: ForhandsvisningModalProps) => {
@@ -30,14 +29,14 @@ export const ForhandsvisningVedleggModal = ({header, file, onAccept, onClose}: F
     const [selectedCategory, setSelectedCategory] = useState<string>("");
 
     const handleAccept = () => {
-        const categoryToSet = selectedCategory || "annet|annet";
-        setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
+        const categoryToSet = selectedCategory || "UTGIFTER_ANDRE_UTGIFTER";
+        setValgtKategoriData({valgtKategorier: categoryToSet as DokumentasjonDtoType});
         setSelectedCategory("");
         onAccept();
     };
 
     const handleClose = () => {
-        setValgtKategoriData({valgtKategorier: "annet|annet"});
+        setValgtKategoriData({valgtKategorier: "UTGIFTER_ANDRE_UTGIFTER"});
         setSelectedCategory("");
         onClose();
     };
@@ -80,7 +79,7 @@ export const ForhandsvisningVedleggModal = ({header, file, onAccept, onClose}: F
             </Modal.Body>
             <Modal.Footer className={"!block space-y-4"}>
                 <BodyShort>{t("vedlegg.forhandsvisning.info")}</BodyShort>
-                {isKortSoknad && valgtKategoriData.valgtKategorier !== "kontooversikt|brukskonto" && (
+                {isKortSoknad && valgtKategoriData.valgtKategorier !== "FORMUE_BRUKSKONTO" && (
                     <div>
                         <div>
                             <Select
@@ -89,45 +88,46 @@ export const ForhandsvisningVedleggModal = ({header, file, onAccept, onClose}: F
                                 onChange={(event: any) => {
                                     const newCategory = event.target.value;
 
-                                    const categoryToSet = newCategory === "kort|annet" ? "annet|annet" : newCategory;
+                                    const categoryToSet =
+                                        newCategory === "kort|annet" ? "UTGIFTER_ANDRE_UTGIFTER" : newCategory;
                                     setSelectedCategory(newCategory);
-                                    setValgtKategoriData({valgtKategorier: categoryToSet as VedleggFrontendType});
+                                    setValgtKategoriData({valgtKategorier: categoryToSet as DokumentasjonDtoType});
                                 }}
                             >
                                 <option value="kort|annet">
                                     {t("begrunnelse.kategorier.kortKategorier.kategoriValg")}
                                 </option>
-                                <option value="barnebidrag|betaler">
+                                <option value="BARNEBIDRAG_BETALER">
                                     {t("begrunnelse.kategorier.kortKategorier.barnebidrag_b")}
                                 </option>
-                                <option value="barnebidrag|mottar">
+                                <option value="BARNEBIDRAG_MOTTAR">
                                     {t("begrunnelse.kategorier.kortKategorier.barnebidrag_m")}
                                 </option>
-                                <option value="faktura|barnehage">
+                                <option value="UTGIFTER_BARNEHAGE">
                                     {t("begrunnelse.kategorier.kortKategorier.barnehage")}
                                 </option>
-                                <option value="faktura|sfo">
+                                <option value="UTGIFTER_SFO">
                                     {t("begrunnelse.kategorier.kortKategorier.barnehageSFO")}
                                 </option>
-                                <option value="husbanken|vedtak">
+                                <option value="UTBETALING_HUSBANKEN">
                                     {t("begrunnelse.kategorier.kortKategorier.bostotte")}
                                 </option>
-                                <option value="husleiekontrakt|husleiekontrakt">
+                                <option value="HUSLEIEKONTRAKT">
                                     {t("begrunnelse.kategorier.kortKategorier.husleie")}
                                 </option>
-                                <option value="kontooversikt|annet">
+                                <option value="FORMUE_ANNET">
                                     {t("begrunnelse.kategorier.kortKategorier.kontooversikt")}
                                 </option>
-                                <option value="lonnslipp|arbeid">
-                                    {t("begrunnelse.kategorier.kortKategorier.lonnslipp")}
-                                </option>
-                                <option value="faktura|strom">
+                                <option value="JOBB">{t("begrunnelse.kategorier.kortKategorier.lonnslipp")}</option>
+                                <option value="UTGIFTER_STROM">
                                     {t("begrunnelse.kategorier.kortKategorier.stromOppvarming")}
                                 </option>
-                                <option value="student|vedtak">
+                                <option value="STUDIELAN_INNTEKT">
                                     {t("begrunnelse.kategorier.kortKategorier.stipendLan")}
                                 </option>
-                                <option value="annet|annet">{t("begrunnelse.kategorier.kortKategorier.annet")}</option>
+                                <option value="UTGIFTER_ANDRE_UTGIFTER">
+                                    {t("begrunnelse.kategorier.kortKategorier.annet")}
+                                </option>
                             </Select>
                         </div>
                         <div className={"mt-8"}>
