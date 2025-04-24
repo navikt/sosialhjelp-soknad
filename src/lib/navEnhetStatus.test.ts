@@ -1,38 +1,35 @@
 import {erAktiv, erMidlDeaktivert} from "./navEnhetStatus";
-import {NavEnhetFrontend} from "../generated/model";
 import {expect, test} from "vitest";
+import {NavEnhetDto} from "../generated/new/model";
 
-const aktivNavEnhet: NavEnhetFrontend = {
-    orgnr: "12345",
-    enhetsnr: "4321",
+const aktivNavEnhet: NavEnhetDto = {
+    orgnummer: "12345",
+    enhetsnummer: "4321",
     isMottakMidlertidigDeaktivert: false,
     isMottakDeaktivert: false,
     enhetsnavn: "Enhetsnavn",
     kommunenavn: "Kommunenavn",
-    kommuneNr: "15533",
-    valgt: true,
+    kommunenummer: "15533",
 };
 
-const deaktivertNavEnhet: NavEnhetFrontend = {
-    orgnr: "12345",
-    enhetsnr: "4321",
+const deaktivertNavEnhet: NavEnhetDto = {
+    orgnummer: "12345",
+    enhetsnummer: "4321",
     isMottakMidlertidigDeaktivert: false,
     isMottakDeaktivert: true,
     enhetsnavn: "Enhetsnavn",
     kommunenavn: "Kommunenavn",
-    kommuneNr: "15533",
-    valgt: true,
+    kommunenummer: "15533",
 };
 
-const midlertidigDeaktivertNavEnhet: NavEnhetFrontend = {
-    orgnr: "12345",
-    enhetsnr: "4321",
+const midlertidigDeaktivertNavEnhet: NavEnhetDto = {
+    orgnummer: "12345",
+    enhetsnummer: "4321",
     isMottakMidlertidigDeaktivert: true,
     isMottakDeaktivert: false,
     enhetsnavn: "Enhetsnavn",
     kommunenavn: "Kommunenavn",
-    kommuneNr: "15533",
-    valgt: true,
+    kommunenummer: "15533",
 };
 
 test("erAktiv returnerer true ved aktive Nav-kontorer", () => {

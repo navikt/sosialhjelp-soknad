@@ -3,10 +3,10 @@ import Script from "next/script";
 import {DECORATOR_SETTINGS} from "../decoratorSettings.tsx";
 import {isSupportedLanguage} from "../lib/i18n/common.ts";
 import {getMessages} from "next-intl/server";
-import {NextIntlClientProvider} from "next-intl";
 import "../index.css";
 import {cookies} from "next/headers";
 import {DECORATOR_LANG_COOKIE} from "../lib/constants.ts";
+import Providers from "./providers.tsx";
 
 export const dynamic = "force-dynamic";
 
@@ -32,9 +32,9 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             <body>
                 <Decorator.Header />
                 <div id="root" className={"bg-digisosGronnBakgrunn"} role={"none"}>
-                    <NextIntlClientProvider messages={messages} locale={locale}>
+                    <Providers messages={messages} locale={locale}>
                         {children}
-                    </NextIntlClientProvider>
+                    </Providers>
                 </div>
                 <Decorator.Footer />
                 <Decorator.Scripts loader={Script} />

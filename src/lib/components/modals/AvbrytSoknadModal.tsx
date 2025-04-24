@@ -4,19 +4,19 @@ import {useTranslation} from "react-i18next";
 import {faro} from "@grafana/faro-react";
 import {TrashIcon} from "@navikt/aksel-icons";
 import {useBehandlingsId} from "../../hooks/common/useBehandlingsId";
-import {useSlettSoknad} from "../../../generated/soknad-ressurs/soknad-ressurs";
 import digisosConfig from "../../config";
 import {logError} from "../../log/loggerUtils";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
+import {useDeleteSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
 
 export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () => void}) => {
     const behandlingsId = useBehandlingsId();
     const {t} = useTranslation();
-    const {mutateAsync, isPending: isLoading, isError} = useSlettSoknad();
+    const {mutateAsync, isPending: isLoading, isError} = useDeleteSoknad();
 
     const deleteAndRedirect = async () => {
         try {
-            await mutateAsync({behandlingsId});
+            await mutateAsync({soknadId: behandlingsId});
             window.location.assign(digisosConfig.minSideURL);
         } catch (e: any) {
             faro.api.pushError(e);

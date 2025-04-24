@@ -1,28 +1,30 @@
-import {
-    getHentSituasjonsendringQueryOptions,
-    useHentSituasjonsendring,
-    useUpdateSituasjonsendring,
-} from "../../../../generated/situasjonsendring-ressurs/situasjonsendring-ressurs";
 import {useBehandlingsId} from "../../common/useBehandlingsId";
 import {useQueryClient} from "@tanstack/react-query";
-import {SituasjonsendringFrontend} from "../../../../generated/model";
+import {
+    useGetSituasjonsendring,
+    useUpdateSituasjonsendring,
+} from "../../../../generated/new/situasjonsendring-controller/situasjonsendring-controller.ts";
+import {SituasjonsendringDto} from "../../../../generated/new/model/index.ts";
 
 const useSituasjon = () => {
     const behandlingsId = useBehandlingsId();
     const queryClient = useQueryClient();
-    const {mutateAsync, isPending: isMutating, isError: isMutateError} = useUpdateSituasjonsendring();
-    const {isPending, isError, queryKey} = useHentSituasjonsendring(behandlingsId);
-    const get = (): Promise<SituasjonsendringFrontend> =>
-        queryClient.ensureQueryData(getHentSituasjonsendringQueryOptions(behandlingsId));
-    const put = async (data: SituasjonsendringFrontend) => {
-        queryClient.setQueryData(queryKey, data);
-        await mutateAsync({behandlingsId, data});
-    };
+    const {data, isLoading, isError, queryKey} = useGetSituasjonsendring(behandlingsId);
+    const invalidate = () => queryClient.invalidateQueries({queryKey});
+    const {
+        mutate,
+        isPending,
+        isError: isMutateError,
+        variables,
+    } = useUpdateSituasjonsendring({mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})}});
+
+    const updateSituasjonsendring = (data: SituasjonsendringDto) => mutate({soknadId: behandlingsId, data});
     return {
-        get,
-        put,
-        isPending: isPending || isMutating,
+        data: isPending ? variables.data : data,
+        updateSituasjonsendring,
+        isLoading,
         isError: isError || isMutateError,
+        invalidate,
     };
 };
 

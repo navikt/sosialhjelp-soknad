@@ -34,7 +34,6 @@ jobs:
       - name: "Deploy ${{ inputs.app-name }} to ${{ env.CLUSTER }}"
         uses: nais/deploy/actions/deploy@v2
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: wonderwall/${{ inputs.app-name }}/wonderwall.yml
           CLUSTER: ${{ env.CLUSTER }}
           REF: ${{ github.sha }}

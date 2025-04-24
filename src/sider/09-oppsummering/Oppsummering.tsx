@@ -5,31 +5,22 @@ import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
 import {useTranslation} from "react-i18next";
 import {useGetOppsummering} from "../../generated/oppsummering-ressurs/oppsummering-ressurs";
 import {OppsummeringSteg} from "./OppsummeringSteg";
-import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullfortEvent";
 import {useSendSoknad} from "./useSendSoknad";
-import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude";
 import {KortSkjemaHeadings, SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import React from "react";
-import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
-import {useAnalyticsContext} from "../../lib/providers/useAnalyticsContext.ts";
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
     const behandlingsId = useBehandlingsId();
-    const {sendSoknad, isError} = useSendSoknad(behandlingsId);
     const navigate = useNavigate();
-    const isKortSoknad = useCurrentSoknadIsKort();
-
     const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId);
 
-    const {
-        analyticsData: {selectedKategorier, situasjonEndret},
-    } = useAnalyticsContext();
+    const {sendSoknad, isError, isPending, isKortSoknad} = useSendSoknad(oppsummering);
 
     if (isLoading) return <ApplicationSpinner />;
 
@@ -52,11 +43,9 @@ export const Oppsummering = () => {
                 </div>
                 <SkjemaStegButtons
                     isFinalStep
+                    isNextPending={isPending}
                     onPrevious={async () => navigate("../" + (isKortSoknad ? 4 : 8))}
-                    onNext={async () => {
-                        await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
-                        await sendSoknad(isKortSoknad, selectedKategorier, situasjonEndret);
-                    }}
+                    onNext={async () => sendSoknad({soknadId: behandlingsId})}
                 />
             </SkjemaStegBlock>
         </SkjemaSteg>
