@@ -1132,7 +1132,16 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BegrunnelseDto"}}},
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "oneOf": [
+                                    {"$ref": "#/components/schemas/HarHvaSokesOmInput"},
+                                    {"$ref": "#/components/schemas/HarKategorierInput"}
+                                ]
+                            }
+                        }
+                    },
                     "required": true
                 },
                 "responses": {
@@ -1506,6 +1515,33 @@
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PersonaliaDto"}}}
                     }
+                }
+            }
+        },
+        "/soknad/{soknadId}/isKort": {
+            "get": {
+                "tags": ["soknad-lifecycle-controller"],
+                "operationId": "isKortSoknad",
+                "parameters": [{"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string"}}],
+                "responses": {
+                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
+                    "413": {
+                        "description": "Payload Too Large",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
+                    },
+                    "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
                 }
             }
         },
@@ -2575,10 +2611,87 @@
                     "antallPersoner": {"type": "integer", "format": "int32"}
                 }
             },
-            "BegrunnelseDto": {
-                "required": ["hvaSokesOm", "hvorforSoke"],
+            "BegrunnelseInput": {
+                "required": ["type"],
                 "type": "object",
-                "properties": {"hvaSokesOm": {"type": "string"}, "hvorforSoke": {"type": "string"}}
+                "properties": {"type": {"type": "string"}},
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "HarHvaSokesOm": "#/components/schemas/HarHvaSokesOmInput",
+                        "HarKategorier": "#/components/schemas/HarKategorierInput"
+                    }
+                }
+            },
+            "HarHvaSokesOmInput": {
+                "required": ["hvaSokesOm"],
+                "type": "object",
+                "allOf": [
+                    {"$ref": "#/components/schemas/BegrunnelseInput"},
+                    {
+                        "type": "object",
+                        "properties": {"hvorforSoke": {"type": "string"}, "hvaSokesOm": {"type": "string"}}
+                    }
+                ]
+            },
+            "HarKategorierInput": {
+                "required": ["annet", "kategorier"],
+                "type": "object",
+                "allOf": [
+                    {"$ref": "#/components/schemas/BegrunnelseInput"},
+                    {
+                        "type": "object",
+                        "properties": {
+                            "kategorier": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "LIVSOPPHOLD",
+                                        "HUSLEIE",
+                                        "STROM_OPPVARMING",
+                                        "NODHJELP_IKKE_MAT",
+                                        "NODHJELP_IKKE_BOSTED",
+                                        "NODHJELP_IKKE_STROM"
+                                    ]
+                                }
+                            },
+                            "annet": {"type": "string"}
+                        }
+                    }
+                ]
+            },
+            "BegrunnelseDto": {
+                "required": ["hvaSokesOm", "kategorier"],
+                "type": "object",
+                "properties": {
+                    "hvaSokesOm": {"type": "string"},
+                    "hvorforSoke": {"type": "string"},
+                    "kategorier": {"$ref": "#/components/schemas/KategorierDto"}
+                }
+            },
+            "KategorierDto": {
+                "required": ["annet", "definerte"],
+                "type": "object",
+                "properties": {
+                    "definerte": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "LIVSOPPHOLD",
+                                "HUSLEIE",
+                                "STROM_OPPVARMING",
+                                "NODHJELP_IKKE_MAT",
+                                "NODHJELP_IKKE_BOSTED",
+                                "NODHJELP_IKKE_STROM"
+                            ]
+                        }
+                    },
+                    "annet": {"type": "string"}
+                }
             },
             "ArbeidInput": {"type": "object", "properties": {"kommentarTilArbeidsforhold": {"type": "string"}}},
             "ArbeidDto": {

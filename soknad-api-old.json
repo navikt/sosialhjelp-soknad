@@ -373,72 +373,6 @@
                 }
             }
         },
-        "/soknader/{behandlingsId}/personalia/adresser": {
-            "get": {
-                "tags": ["adresse-ressurs"],
-                "operationId": "hentAdresser",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AdresserFrontend"}}}
-                    }
-                }
-            },
-            "put": {
-                "tags": ["adresse-ressurs"],
-                "operationId": "updateAdresse",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AdresserFrontendInput"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/NavEnhetFrontend"}}
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/soknader/{behandlingsId}/okonomiskeOpplysninger": {
             "get": {
                 "tags": ["okonomiske-opplysninger-ressurs"],
@@ -1926,69 +1860,6 @@
                 },
                 "description": "Kontonummer for bruker - obs: PUT med (systemverdi !== null) vil nullstille brukerutfyltVerdi"
             },
-            "AdresseFrontend": {
-                "type": "object",
-                "properties": {
-                    "type": {"type": "string", "enum": ["gateadresse", "matrikkeladresse", "postboks", "ustrukturert"]},
-                    "gateadresse": {"$ref": "#/components/schemas/GateadresseFrontend"},
-                    "matrikkeladresse": {"$ref": "#/components/schemas/MatrikkeladresseFrontend"},
-                    "ustrukturert": {"$ref": "#/components/schemas/UstrukturertAdresseFrontend"}
-                },
-                "nullable": true
-            },
-            "AdresserFrontendInput": {
-                "type": "object",
-                "properties": {
-                    "valg": {"type": "string", "enum": ["folkeregistrert", "midlertidig", "soknad"]},
-                    "folkeregistrert": {"$ref": "#/components/schemas/AdresseFrontend"},
-                    "midlertidig": {"$ref": "#/components/schemas/AdresseFrontend"},
-                    "soknad": {"$ref": "#/components/schemas/AdresseFrontend"}
-                }
-            },
-            "GateadresseFrontend": {
-                "type": "object",
-                "properties": {
-                    "landkode": {"type": "string"},
-                    "kommunenummer": {"type": "string"},
-                    "adresselinjer": {"type": "array", "items": {"type": "string"}},
-                    "bolignummer": {"type": "string"},
-                    "postnummer": {"type": "string"},
-                    "poststed": {"type": "string"},
-                    "gatenavn": {"type": "string"},
-                    "husnummer": {"type": "string"},
-                    "husbokstav": {"type": "string"}
-                }
-            },
-            "MatrikkeladresseFrontend": {
-                "type": "object",
-                "properties": {
-                    "kommunenummer": {"type": "string"},
-                    "gaardsnummer": {"type": "string"},
-                    "bruksnummer": {"type": "string"},
-                    "festenummer": {"type": "string"},
-                    "seksjonsnummer": {"type": "string"},
-                    "undernummer": {"type": "string"}
-                }
-            },
-            "UstrukturertAdresseFrontend": {
-                "type": "object",
-                "properties": {"adresse": {"type": "array", "items": {"type": "string"}}}
-            },
-            "NavEnhetFrontend": {
-                "required": ["enhetsnavn"],
-                "type": "object",
-                "properties": {
-                    "orgnr": {"type": "string"},
-                    "enhetsnr": {"type": "string"},
-                    "enhetsnavn": {"type": "string"},
-                    "kommunenavn": {"type": "string"},
-                    "kommuneNr": {"type": "string"},
-                    "behandlingsansvarlig": {"type": "string"},
-                    "valgt": {"type": "boolean"},
-                    "isMottakMidlertidigDeaktivert": {"type": "boolean"},
-                    "isMottakDeaktivert": {"type": "boolean"}
-                }
-            },
             "DokumentUpload": {
                 "required": ["dokumentId", "filename"],
                 "type": "object",
@@ -2321,16 +2192,6 @@
                     "navn": {"$ref": "#/components/schemas/NavnFrontend"},
                     "fodselsnummer": {"type": "string"},
                     "statsborgerskap": {"type": "string"}
-                }
-            },
-            "AdresserFrontend": {
-                "type": "object",
-                "properties": {
-                    "valg": {"type": "string", "enum": ["folkeregistrert", "midlertidig", "soknad"]},
-                    "folkeregistrert": {"$ref": "#/components/schemas/AdresseFrontend"},
-                    "midlertidig": {"$ref": "#/components/schemas/AdresseFrontend"},
-                    "soknad": {"$ref": "#/components/schemas/AdresseFrontend"},
-                    "navEnhet": {"$ref": "#/components/schemas/NavEnhetFrontend"}
                 }
             },
             "Avsnitt": {
