@@ -2097,6 +2097,7 @@ export const skjema = {
             },
         },
         opplasting: {
+            tittel: "Dine opplasta filer",
             feil: {
                 filType: "Opplastinga var mislukka. Berre JPEG, PNG, og PDF filer er tillatne.",
                 forStor: "Opplastinga var mislukka. Fila kan ikkje vere større enn {{maxUploadSize}}",

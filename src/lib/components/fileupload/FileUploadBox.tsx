@@ -98,7 +98,9 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
                 </div>
             </div>
             <div>
-                <Heading size={"small"}>Dine Opplastede filer ({allUploadedFiles.length})</Heading>
+                <Heading size={"small"}>
+                    {t("vedlegg.opplasting.tittel")} ({allUploadedFiles.length})
+                </Heading>
                 <ul>
                     {currentUpload && <BodyShort>Laster opp ({currentUpload.percent}%)</BodyShort>}
                     {allUploadedFiles.length === 0 ? (
