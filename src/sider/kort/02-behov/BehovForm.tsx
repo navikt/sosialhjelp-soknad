@@ -51,7 +51,7 @@ const BehovForm = ({hvaErEndret, hvaSokesOm, onSubmit}: Props) => {
     return (
         <>
             <SkjemaStegErrorSummary errors={errors} />
-            <form onBlur={handleSubmit(onSubmit)} onSubmit={(e) => e.preventDefault()}>
+            <form className={"space-y-12"} onBlur={handleSubmit(onSubmit)} onSubmit={(e) => e.preventDefault()}>
                 <LocalizedTextArea
                     {...register("hvaSokesOm")}
                     id={"hvaSokesOm"}

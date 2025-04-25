@@ -45,7 +45,7 @@ const KategorierForm = ({kategorier, hvaErEndret, onSubmit}: Props) => {
     );
 
     return (
-        <form onBlur={handleSubmit(onSubmit)}>
+        <form className={"space-y-12"} onBlur={handleSubmit(onSubmit)}>
             <KategorierChips
                 categories={CATEGORIES.map((cat) => ({
                     ...cat,
