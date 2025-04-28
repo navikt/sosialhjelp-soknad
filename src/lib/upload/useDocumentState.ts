@@ -1,4 +1,3 @@
-import {VedleggFrontendTypeMinusUferdig} from "../../locales/en/dokumentasjon.ts";
 import {useEffect, useReducer} from "react";
 import {eventstreamUrl, openEventChannel} from "./openEventChannel.ts";
 import {logger} from "@navikt/next-logger";
@@ -35,7 +34,7 @@ const documentStateReducer = (state: DocumentState, {newState, type}: DocumentSt
     return newState;
 };
 
-export const useDocumentState = (soknadId: string, vedleggType: VedleggFrontendTypeMinusUferdig): DocumentState => {
+export const useDocumentState = (soknadId: string, vedleggType: string): DocumentState => {
     const [state, dispatch] = useReducer(documentStateReducer, {});
 
     // Subscribe to server-sent events and send any state updates to the reducer

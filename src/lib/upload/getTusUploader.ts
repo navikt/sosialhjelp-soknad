@@ -27,7 +27,11 @@ export const getTusUploader = ({
         endpoint: TUSD_ENDPOINT,
         retryDelays: [0, 1000, 3000, 5000],
         chunkSize: 1000000,
-        metadata: {filename: file.name, soknadId, vedleggType},
+        metadata: {
+            filename: file.name,
+            soknadId,
+            vedleggType,
+        },
         uploadSize: file.size,
         onError: (error: any) => logger.error("Upload failed", error),
         // uploadId kan deriveres fra URL, så vi bruker denne som en callback for en primærnøkkel
