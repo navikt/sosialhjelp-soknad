@@ -2598,14 +2598,14 @@
                             "EIER",
                             "LEIER",
                             "KOMMUNAL",
+                            "ANNET",
                             "INGEN",
                             "INSTITUSJON",
                             "KRISESENTER",
                             "FENGSEL",
                             "VENNER",
                             "FORELDRE",
-                            "FAMILIE",
-                            "ANNET"
+                            "FAMILIE"
                         ]
                     },
                     "antallPersoner": {"type": "integer", "format": "int32"}
