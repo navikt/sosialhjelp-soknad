@@ -74,7 +74,7 @@ export const ArbeidOgUtdanning = () => {
                     maxLength={MAX_LENGTH}
                     description={t("opplysninger.arbeidsituasjon.kommentarer.description")}
                     label={t("opplysninger.arbeidsituasjon.kommentarer.label")}
-                    className={"!mt-8"}
+                    className={"mt-8!"}
                 />
             </div>
             <div>
@@ -108,7 +108,7 @@ export const ArbeidOgUtdanning = () => {
                             });
                         }}
                         legend={t("dinsituasjon.studerer.grad.sporsmal")}
-                        className={"!mt-8"}
+                        className={"mt-8!"}
                     >
                         <Radio value={UtdanningDtoStudentgrad.HELTID}>{t("dinsituasjon.studerer.grad.heltid")}</Radio>
                         <Radio value={UtdanningDtoStudentgrad.DELTID}>{t("dinsituasjon.studerer.grad.deltid")}</Radio>

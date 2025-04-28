@@ -60,7 +60,7 @@ export const KontonrEdit = ({
     return (
         <form onSubmit={handleSubmit(onSave)} className={"space-y-4 pt-8"}>
             <BodyShort weight={"semibold"}>{t("kontakt.kontonummer.label")}</BodyShort>
-            <BodyShort className={"!mt-2"} size={"small"}>
+            <BodyShort className={"mt-2!"} size={"small"}>
                 {t("kontakt.kontonummer.description")}
             </BodyShort>
             <TextField

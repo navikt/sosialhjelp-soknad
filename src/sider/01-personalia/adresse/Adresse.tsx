@@ -48,7 +48,7 @@ export const AdresseData = () => {
                 legend={"Addressevalg"}
                 hideLegend
                 value={isUpdatePending ? variables?.data.adresseValg : adresseValg}
-                className={"!mb-4"}
+                className={"mb-4!"}
                 onChange={setAdressevalg}
             >
                 <Radio
@@ -63,7 +63,7 @@ export const AdresseData = () => {
                     {t("kontakt.system.oppholdsadresse.midlertidigAdresse")}
                     <AdresseVisning adresse={midlertidig} />
                 </Radio>
-                <Radio value={AdresserDtoAdresseValg.SOKNAD} className={"!mb-0"}>
+                <Radio value={AdresserDtoAdresseValg.SOKNAD} className={"mb-0!"}>
                     {t("kontakt.system.oppholdsadresse.valg.soknad")}
                 </Radio>
                 {adresseValg === AdresserDtoAdresseValg.SOKNAD && (

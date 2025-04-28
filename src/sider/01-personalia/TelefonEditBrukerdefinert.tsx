@@ -49,7 +49,7 @@ export const TelefonEditBrukerdefinert = ({onClose, telefonnummerBruker, setTele
     return (
         <form onSubmit={onSubmit} className={"space-y-4 pt-8"}>
             <BodyShort weight={"semibold"}>{t("kontakt.telefon.tittel")}</BodyShort>
-            <BodyShort className={"!mt-2"} size={"small"}>
+            <BodyShort className={"mt-2!"} size={"small"}>
                 {t("kontakt.telefon.description")}
             </BodyShort>
             <div className={"flex gap-2 pb-2"}>

@@ -33,7 +33,7 @@ export const PabegyntSoknadView = ({
             href={getSoknadUri(behandlingsId, isKort)}
             onClick={() => logAmplitudeEvent("Klikk på påbegynt søknad", {antallPabegynteSoknader})}
             border
-            className={"!p-4 group !text-[#222] hover:!text-[#000]"}
+            className={"p-4! group text-[#222]! hover:text-[#000]!"}
         >
             <LinkPanel.Title as={"h3"} className={"flex flex-col lg:flex-row align-center"}>
                 <Label style={{marginRight: "1rem"}}>

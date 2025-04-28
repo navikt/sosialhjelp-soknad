@@ -19,7 +19,7 @@ export const EttersendDokuPanel = () => {
                     {t("title")}
                 </Heading>
             </HovedmenyCardHeader>
-            <ExpansionCard.Content className={"!border-0"}>
+            <ExpansionCard.Content className={"border-0!"}>
                 <BodyShort spacing>{t("text.p1")}</BodyShort>
                 <ul className={"list-disc list-inside py-2"}>
                     <li>{t.rich("text.p2", {lenke})}</li>
