@@ -14,6 +14,7 @@ export const DocumentStatus = ({
     return (
         <div className={"p-4"}>
             <h1>Preview</h1>
+            <pre>{JSON.stringify(foo, null, 2)}</pre>
             <div className={"flex gap-4 overflow-scroll"}>
                 {Object.entries(foo?.uploads ?? {})
                     .filter(([_, upload]) => upload.pages.length)
