@@ -14,6 +14,7 @@ import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
 import {UploadedFileBox} from "./UploadedFileBox.tsx";
 import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
+import {useQueryClient} from "@tanstack/react-query";
 
 type TranslationKeys = "begrunnelse.kort.behov.dokumentasjon.beskrivelse" | "situasjon.kort.dokumentasjon.description";
 
@@ -41,7 +42,7 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
     const forslag = liste ? (t(liste, {returnObjects: true}) as string[]) : [];
 
     const {valgtKategoriData} = useValgtKategoriContext();
-
+    const queryClient = useQueryClient();
     const finalDokumentasjonType = valgtKategoriData.valgtKategorier || "UTGIFTER_ANDRE_UTGIFTER";
 
     const {
@@ -85,6 +86,7 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
                             visSpinner={uploadPending}
                             doUpload={async (file) => {
                                 await uploadDocument(file);
+                                await queryClient.invalidateQueries();
                                 setShowSuccessAlert(true);
                             }}
                             resetAlerts={() => setShowSuccessAlert(false)}
@@ -104,7 +106,7 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
                 <ul>
                     {currentUpload && <BodyShort>Laster opp ({currentUpload.percent}%)</BodyShort>}
                     {allUploadedFiles.length === 0 ? (
-                        <p>ingen filer har blitt lastet opp</p>
+                        <BodyShort> {t("vedlegg.opplasting.beskrivelse")}</BodyShort>
                     ) : (
                         allUploadedFiles.map((fil) => (
                             <UploadedFileBox

@@ -2167,7 +2167,8 @@ export const skjema = {
             },
         },
         opplasting: {
-            tittel: "Dine opplastede filer",
+            tittel: "Your uploaded files",
+            beskrivelse: "No file has been uploaded yet",
             feil: {
                 filType: "Upload failed. Only JPEG, PNG, and PDF files are supported.",
                 forStor: "Upload failed. The total file size cannot exceed {{maxUploadSize}}.",

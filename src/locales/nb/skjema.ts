@@ -2105,7 +2105,8 @@ export const skjema = {
             },
         },
         opplasting: {
-            tittel: "Your uploaded files",
+            tittel: "Dine opplastede filer",
+            beskrivelse: "Ingen filer har blitt lastet opp",
             feil: {
                 filType: "Opplastingen feilet. Støtter kun JPEG, PNG og PDF filer",
                 forStor: "Opplastingen feilet. Total filstørrelse kan ikke overstige {{maxUploadSize}}.",
