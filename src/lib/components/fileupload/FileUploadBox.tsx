@@ -113,7 +113,7 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
                                 key={fil.dokumentId}
                                 dokument={{
                                     dokumentId: fil.dokumentId,
-                                    filename: fil.filnavn,
+                                    filnavn: fil.filnavn,
                                 }}
                                 dokumentasjonsType={fil.dokumentasjonType}
                                 onDelete={deleteDocument}
