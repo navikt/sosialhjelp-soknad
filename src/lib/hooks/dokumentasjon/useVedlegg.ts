@@ -13,8 +13,8 @@ import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {saveDokument, useDeleteDokument} from "../../../generated/new/dokument-controller/dokument-controller.ts";
 import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
 import {useQueryClient} from "@tanstack/react-query";
-import {getHentOkonomiskeOpplysningerQueryKey} from "../../../generated/okonomiske-opplysninger-ressurs/okonomiske-opplysninger-ressurs.ts";
 import {useGetForventetDokumentasjon} from "../../../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
+import {useGetOkonomiskeOpplysninger} from "../../../generated/new/okonomiske-opplysninger-controller/okonomiske-opplysninger-controller.ts";
 
 const TEN_MEGABYTE_COMPAT_FALLBACK = 10 * 1024 * 1024;
 
@@ -37,7 +37,7 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
     const {setValgtKategoriData} = useValgtKategoriContext();
 
     const queryClient = useQueryClient();
-    const dokumentasjonQueryKey = getHentOkonomiskeOpplysningerQueryKey(behandlingsId);
+    const {queryKey: dokumentasjonQueryKey} = useGetOkonomiskeOpplysninger(behandlingsId);
 
     /**
      * When the data on the server has changed, we automatically update the client-side list.

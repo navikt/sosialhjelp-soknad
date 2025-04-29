@@ -1,4 +1,3 @@
-import {DokumentUpload} from "../../../generated/model";
 import {useBehandlingsId} from "../../hooks/common/useBehandlingsId.ts";
 import React, {useState} from "react";
 import {BekreftSlettDokumentModal} from "../modals/BekreftSlettDokumentModal.tsx";
@@ -9,6 +8,7 @@ import {TrashIcon} from "@navikt/aksel-icons";
 import {useTranslation} from "react-i18next";
 import {FilIllustrasjon} from "../svg/illustrasjoner/FilIllustrasjon.tsx";
 import styled from "styled-components";
+import {DokumentDto} from "../../../generated/new/model";
 
 const StyledCircle = styled.div`
     display: flex;
@@ -47,10 +47,10 @@ const dokumentasjonsTypeTilTextKey: Record<string, string> = {
 
 export const UploadedFileBox = ({
     onDelete,
-    dokument: {filename, dokumentId},
+    dokument: {filnavn, dokumentId},
     dokumentasjonsType,
 }: {
-    dokument: DokumentUpload;
+    dokument: DokumentDto;
     onDelete: (dokumentId: string) => void;
     dokumentasjonsType: string;
 }) => {
@@ -72,7 +72,7 @@ export const UploadedFileBox = ({
                 <div className="flex flex-col">
                     <BodyShort className="font-semibold">{kategoriTekst}</BodyShort>
                     <LinkButton className="text-left" onClick={() => window.open(digisosConfig.baseURL + lastNedUrl)}>
-                        {filename}
+                        {filnavn}
                     </LinkButton>
                 </div>
             </div>
@@ -88,7 +88,7 @@ export const UploadedFileBox = ({
                     size="small"
                     variant="tertiary-neutral"
                     onClick={() => setShowConfirmDelete(true)}
-                    aria-label={`Slett ${filename}`}
+                    aria-label={`Slett ${filnavn}`}
                 >
                     <TrashIcon height={25} width={25} />
                 </Button>
