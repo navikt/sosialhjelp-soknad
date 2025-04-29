@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {useTranslation} from "react-i18next";
 import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
@@ -15,6 +15,7 @@ import {BodyShort, Heading, Loader} from "@navikt/ds-react";
 import BelopBeskrivelse from "../../08-vedlegg/form/BelopBeskrivelse.tsx";
 import useOkonomiskOpplysningMutation from "../../../lib/hooks/dokumentasjon/useOkonomiskOpplysningMutation.ts";
 import {BelopDto, DokumentasjonDtoType} from "../../../generated/new/model";
+import {useFormue} from "../../../lib/hooks/data/useFormue.tsx";
 
 const KortDokumentasjon = ({opplysningstype}: {opplysningstype: DokumentasjonDtoType}) => {
     const {t} = useTranslation("skjema");
@@ -54,6 +55,18 @@ const Inntekt = () => {
         await logAmplitudeSkjemaStegFullfort(4);
         navigate(`../${page}`);
     };
+    const {setFormue, formue} = useFormue();
+    const [hasInitialized, setHasInitialized] = useState(false);
+
+    // TODO: Gjør dette i backend ved kort transition i stedet.
+    // TODO: Denne eksistere på grunn av en 404 feil når søker skriver verdi
+    // TODO: i inputeltet
+    useEffect(() => {
+        if (!hasInitialized && formue && !formue.hasBrukskonto) {
+            setFormue(["hasBrukskonto"]);
+            setHasInitialized(true);
+        }
+    }, [formue, hasInitialized]);
 
     return (
         <SkjemaSteg>
