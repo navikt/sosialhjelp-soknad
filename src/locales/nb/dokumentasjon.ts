@@ -1,5 +1,8 @@
+import {VedleggFrontendType} from "../../generated/model";
 import {DokumentasjonTexts} from "../types";
 import {type DokumentasjonDtoType} from "../../generated/new/model";
+
+export type VedleggFrontendTypeMinusUferdig = Exclude<VedleggFrontendType, "kort|behov" | "kort|situasjonsendring">;
 
 export const dokumentasjon: Record<DokumentasjonDtoType, DokumentasjonTexts> = {
     JOBB: {
