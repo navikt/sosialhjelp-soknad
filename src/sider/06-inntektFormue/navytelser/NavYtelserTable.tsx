@@ -2,10 +2,10 @@ import {useTranslation} from "react-i18next";
 import {BodyShort, Table} from "@navikt/ds-react";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate";
 import * as React from "react";
-import {SysteminntektFrontend} from "../../../generated/model";
 import {LocalizedCurrency} from "../../../lib/components/LocalizedCurrency";
+import {NavUtbetalingerDto} from "../../../generated/new/model";
 
-export const NavYtelserTable = ({systeminntekter = []}: {systeminntekter?: SysteminntektFrontend[]}) => {
+export const NavYtelserTable = ({systeminntekter = []}: {systeminntekter?: NavUtbetalingerDto[]}) => {
     const {t} = useTranslation("skjema");
 
     if (!systeminntekter.length) return <BodyShort>{t("utbetalinger.ingen.true")}</BodyShort>;
@@ -30,7 +30,7 @@ export const NavYtelserTable = ({systeminntekter = []}: {systeminntekter?: Syste
                             <Table.DataCell>
                                 <LocalizedDate date={utbetaling.utbetalingsdato} />
                             </Table.DataCell>
-                            <Table.DataCell>{utbetaling.inntektType}</Table.DataCell>
+                            <Table.DataCell>{utbetaling.type}</Table.DataCell>
                             <Table.DataCell align={"left"}>
                                 <LocalizedCurrency value={utbetaling.belop} />
                             </Table.DataCell>
