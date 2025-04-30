@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {useGetVerdier, useUpdateVerdier} from "../../../generated/new/verdi-controller/verdi-controller.ts";
 import {HarVerdierInput, UpdateVerdierBody, VerdierDto} from "../../../generated/new/model";
@@ -22,9 +22,9 @@ const mapToDto = (vars?: UpdateVerdierBody): Partial<VerdierDto> | undefined => 
 };
 
 export const useVerdier = () => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const queryClient = useQueryClient();
-    const {data, queryKey} = useGetVerdier(behandlingsId);
+    const {data, queryKey} = useGetVerdier(soknadId);
     const {mutate, variables, isPending} = useUpdateVerdier({
         mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
     });
@@ -35,12 +35,12 @@ export const useVerdier = () => {
         if (!verdier) return;
 
         if (!verdi) {
-            mutate({soknadId: behandlingsId, data: {type: "HarIkkeVerdierInput", hasBekreftelse: verdi}});
+            mutate({soknadId: soknadId, data: {type: "HarIkkeVerdierInput", hasBekreftelse: verdi}});
             return;
         }
 
         mutate({
-            soknadId: behandlingsId,
+            soknadId: soknadId,
             data: {
                 type: "HarVerdierInput",
                 hasBekreftelse: verdi,
@@ -66,7 +66,7 @@ export const useVerdier = () => {
             hasBeskrivelseVerdi: checked.includes("hasAnnetVerdi"),
             beskrivelseVerdi: checked.includes("hasAnnetVerdi") ? verdier.beskrivelseVerdi : "",
         };
-        mutate({soknadId: behandlingsId, data: oppdatert});
+        mutate({soknadId: soknadId, data: oppdatert});
     };
 
     const setBeskrivelseAvAnnet = async (beskrivelseAvAnnet: string) => {
@@ -81,7 +81,7 @@ export const useVerdier = () => {
             hasBekreftelse: true,
             beskrivelseVerdi: beskrivelseAvAnnet,
         };
-        mutate({soknadId: behandlingsId, data: oppdatert});
+        mutate({soknadId: soknadId, data: oppdatert});
     };
 
     return {verdier, setBekreftelse, setVerdier, setBeskrivelseAvAnnet};

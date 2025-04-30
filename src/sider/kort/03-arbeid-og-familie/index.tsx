@@ -15,7 +15,7 @@ import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {useGetArbeid} from "../../../generated/new/arbeid-controller/arbeid-controller.ts";
-import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId.ts";
+import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 
 const ArbeidOgFamilie = () => {
     const {t} = useTranslation("skjema");
@@ -30,7 +30,7 @@ const ArbeidOgFamilie = () => {
 
     const {forsorgerplikt} = useForsorgerplikt();
 
-    const {data: arbeid} = useGetArbeid(useBehandlingsId());
+    const {data: arbeid} = useGetArbeid(useSoknadId());
 
     return (
         <SkjemaSteg>

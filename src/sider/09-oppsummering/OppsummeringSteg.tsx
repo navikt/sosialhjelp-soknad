@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
+import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {Accordion} from "@navikt/ds-react";
 import React from "react";
 import {Steg} from "../../generated/model";
@@ -8,7 +8,7 @@ import {OppsummeringAvsnitt} from "./question/OppsummeringAvsnitt";
 import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 
 export const OppsummeringSteg = ({steg: {stegNr, tittel, avsnitt}}: {steg: Steg}) => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const {t} = useTranslation();
 
     return (
@@ -17,7 +17,7 @@ export const OppsummeringSteg = ({steg: {stegNr, tittel, avsnitt}}: {steg: Steg}
                 <Accordion.Header>{t(tittel as DigisosLanguageKey)}</Accordion.Header>
                 <Accordion.Content>
                     <div className={"flex justify-end"}>
-                        <ReactRouterLink className="navds-link" to={`/skjema/${behandlingsId}/${stegNr}`}>
+                        <ReactRouterLink className="navds-link" to={`/skjema/${soknadId}/${stegNr}`}>
                             {t("oppsummering.gatilbake")}
                         </ReactRouterLink>
                     </div>

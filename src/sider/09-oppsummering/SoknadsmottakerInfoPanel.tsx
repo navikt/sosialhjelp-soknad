@@ -1,7 +1,7 @@
 import React from "react";
 import {BodyShort, GuidePanel, Heading, Link} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
+import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {erAktiv} from "../../lib/navEnhetStatus";
 import {NavEnhetInaktiv} from "../01-personalia/adresse/NavEnhetInaktiv";
@@ -10,7 +10,7 @@ import {useGetAdresser} from "../../generated/new/adresse-controller/adresse-con
 const URL = "https://www.nav.no/personopplysninger-sosialhjelp";
 
 export const SoknadsmottakerInfoPanel = () => {
-    const {expectOK} = useAlgebraic(useGetAdresser(useBehandlingsId()));
+    const {expectOK} = useAlgebraic(useGetAdresser(useSoknadId()));
     const {t, i18n} = useTranslation("skjema");
 
     return expectOK(({navenhet}) => {

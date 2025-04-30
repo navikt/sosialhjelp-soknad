@@ -1,5 +1,5 @@
 import {useQueryClient} from "@tanstack/react-query";
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {isValid} from "date-fns";
 import {formatTidspunkt} from "../../utils";
 import {
@@ -10,23 +10,23 @@ import {getGetForventetDokumentasjonQueryKey} from "../../../generated/new/dokum
 
 export const useSkatteetatenData = () => {
     const queryClient = useQueryClient();
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
 
     const {
         data,
         isPending: isFetching,
         isError: isFetchError,
         queryKey: skattbarInntektQueryKey,
-    } = useGetSkattbarInntekt(behandlingsId);
+    } = useGetSkattbarInntekt(soknadId);
     const {mutate, status: mutationStatus, isError: isMutateError} = useUpdateSamtykke();
-    const opplysningerQueryKey = getGetForventetDokumentasjonQueryKey(behandlingsId);
+    const opplysningerQueryKey = getGetForventetDokumentasjonQueryKey(soknadId);
 
     const setSamtykke = async (samtykke: boolean) => {
         // Any HentSkattbareInntekter queries on the way are no longer valid
         await queryClient.cancelQueries({queryKey: skattbarInntektQueryKey});
         await queryClient.cancelQueries({queryKey: opplysningerQueryKey});
         return mutate(
-            {soknadId: behandlingsId, data: samtykke},
+            {soknadId: soknadId, data: samtykke},
             {
                 onSuccess: () =>
                     Promise.all([

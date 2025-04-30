@@ -1,10 +1,10 @@
 import {useIsKortSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller";
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 
 const useIsKort = () => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
 
-    return useIsKortSoknad(behandlingsId);
+    return useIsKortSoknad(soknadId);
 };
 
 export default useIsKort;

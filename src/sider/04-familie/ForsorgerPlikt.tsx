@@ -1,7 +1,7 @@
 import * as React from "react";
 import {RegistrerteBarn} from "./RegistrerteBarn";
 import {useTranslation} from "react-i18next";
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
+import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {BodyShort, Heading as DSHeading} from "@navikt/ds-react";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {useGetForsorgerplikt} from "../../generated/new/forsorgerplikt-controller/forsorgerplikt-controller.ts";
@@ -24,7 +24,7 @@ const Heading = () => {
 };
 export const ForsorgerPlikt = ({skipForm, heading = <Heading />}: Props) => {
     const {t} = useTranslation("skjema");
-    const {expectOK} = useAlgebraic(useGetForsorgerplikt(useBehandlingsId()));
+    const {expectOK} = useAlgebraic(useGetForsorgerplikt(useSoknadId()));
 
     return expectOK(({ansvar}) => {
         if (!ansvar.length)

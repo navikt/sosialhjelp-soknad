@@ -2,7 +2,7 @@ import {
     useGetKontonummer,
     useUpdateKontoInformasjonBruker,
 } from "../../../generated/new/kontonummer-controller/kontonummer-controller.ts";
-import {useBehandlingsId} from "../common/useBehandlingsId.ts";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {
     HarIkkeKontoInput,
@@ -19,8 +19,8 @@ const getKontonummerFromVariables = (kontoInput: HarIkkeKontoInput | Kontonummer
 };
 
 export const useKontonummer = () => {
-    const behandlingsId = useBehandlingsId();
-    const {data, isLoading, queryKey} = useGetKontonummer(behandlingsId);
+    const soknadId = useSoknadId();
+    const {data, isLoading, queryKey} = useGetKontonummer(soknadId);
     const queryClient = useQueryClient();
     const {mutate, variables, isPending} = useUpdateKontoInformasjonBruker({
         mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
@@ -41,7 +41,7 @@ export const useKontonummer = () => {
             ? {type: HarIkkeKontoInputType.HarIkkeKonto, harIkkeKonto}
             : {type: KontonummerBrukerInputType.KontonummerBruker, kontonummer: kontonummer ?? undefined};
 
-        return mutate({soknadId: behandlingsId, data});
+        return mutate({soknadId: soknadId, data});
     };
 
     return {kontonummer, harIkkeKonto, updateKontoInformasjon, isLoading, isBrukerUtfylt: isBrukerUtfylt};

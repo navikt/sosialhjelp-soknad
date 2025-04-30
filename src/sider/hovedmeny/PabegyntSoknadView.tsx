@@ -13,16 +13,16 @@ const getTimeBeforeDeletion = (sistOppdatert: string) =>
         addSuffix: true,
     });
 
-const getSoknadUri = (behandlingsId: string, isKort: boolean) =>
-    `/sosialhjelp/soknad/skjema${isKort ? "/kort" : ""}/${behandlingsId}/1`;
+const getSoknadUri = (soknadId: string, isKort: boolean) =>
+    `/sosialhjelp/soknad/skjema${isKort ? "/kort" : ""}/${soknadId}/1`;
 
 export const PabegyntSoknadView = ({
-    behandlingsId,
+    soknadId,
     sistOppdatert,
     antallPabegynteSoknader,
     isKort,
 }: {
-    behandlingsId: string;
+    soknadId: string;
     sistOppdatert: string;
     antallPabegynteSoknader: number;
     isKort: boolean;
@@ -30,7 +30,7 @@ export const PabegyntSoknadView = ({
     const t = useTranslations("PabegyntSoknadView");
     return (
         <LinkPanel
-            href={getSoknadUri(behandlingsId, isKort)}
+            href={getSoknadUri(soknadId, isKort)}
             onClick={() => logAmplitudeEvent("Klikk på påbegynt søknad", {antallPabegynteSoknader})}
             border
             className={"p-4! group text-[#222]! hover:text-[#000]!"}
