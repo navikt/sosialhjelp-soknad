@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {
     useGetUtbetalinger,
@@ -32,9 +32,9 @@ const merge = (data?: UtbetalingerDto, variables?: UpdateUtbetalingerBody): Utbe
 };
 
 export const useUtbetalinger = () => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const queryClient = useQueryClient();
-    const {data: utbetalinger, queryKey} = useGetUtbetalinger(behandlingsId);
+    const {data: utbetalinger, queryKey} = useGetUtbetalinger(soknadId);
     const {mutate, variables, isPending} = useUpdateUtbetalinger({
         mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
     });
@@ -50,7 +50,7 @@ export const useUtbetalinger = () => {
         if (!utbetalinger) return;
         if (!bekreftelse) {
             mutate({
-                soknadId: behandlingsId,
+                soknadId: soknadId,
                 data: {type: "HarIkkeUtbetalingerInput", harIkkeUtbetalinger: true} satisfies HarIkkeUtbetalingerInput,
             });
         }
@@ -69,7 +69,7 @@ export const useUtbetalinger = () => {
             beskrivelseUtbetaling: valg.includes("annet") ? valgteKategorier.beskrivelseUtbetaling : "",
         };
 
-        mutate({soknadId: behandlingsId, data: oppdatert});
+        mutate({soknadId: soknadId, data: oppdatert});
     };
 
     const setBeskrivelseAvAnnet = async (beskrivelseAvAnnet: string) => {
@@ -80,7 +80,7 @@ export const useUtbetalinger = () => {
             beskrivelseUtbetaling: beskrivelseAvAnnet,
             hasAnnet: valgteKategorier.hasAnnenUtbetaling,
         };
-        mutate({soknadId: behandlingsId, data: oppdatert});
+        mutate({soknadId: soknadId, data: oppdatert});
     };
 
     return {utbetalinger: valgteKategorier, setBekreftelse, setUtbetalinger, setBeskrivelseAvAnnet, harBekreftelse};

@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId.ts";
+import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {
     getGetAdresserQueryKey,
@@ -15,7 +15,7 @@ import {useState} from "react";
 export const mutationKey = (soknadId: string) => ["updateAdresser", soknadId];
 
 export const useAdresser = () => {
-    const soknadId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const {data, isLoading, error} = useGetAdresser(soknadId);
     const queryClient = useQueryClient();
     const [showSpinner, setShowSpinner] = useState(false);

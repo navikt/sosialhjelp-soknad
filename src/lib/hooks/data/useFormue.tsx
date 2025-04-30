@@ -1,5 +1,5 @@
 import {useQueryClient} from "@tanstack/react-query";
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {useUpdateFormue, useGetFormue} from "../../../generated/new/formue-controller/formue-controller";
 import {FormueDto, FormueInput} from "../../../generated/new/model";
 
@@ -25,9 +25,9 @@ function mapToVars(data?: FormueDto): FormueInput | undefined {
 }
 
 export const useFormue = () => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const queryClient = useQueryClient();
-    const {data, queryKey} = useGetFormue(behandlingsId);
+    const {data, queryKey} = useGetFormue(soknadId);
     const {mutate, variables, isPending} = useUpdateFormue({
         mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
     });
@@ -47,14 +47,14 @@ export const useFormue = () => {
             beskrivelseSparing: valg.includes("hasSparing") ? formue.beskrivelseSparing : "",
         };
 
-        mutate({soknadId: behandlingsId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
     const setBeskrivelse = (beskrivelseAvAnnet: string) => {
         if (!formue) return;
         const variables = mapToVars(formue);
         if (!variables) return;
         const oppdatert: FormueInput = {...variables, beskrivelseSparing: beskrivelseAvAnnet};
-        mutate({soknadId: behandlingsId, data: oppdatert});
+        mutate({soknadId: soknadId, data: oppdatert});
     };
 
     return {formue, setFormue, setBeskrivelse};

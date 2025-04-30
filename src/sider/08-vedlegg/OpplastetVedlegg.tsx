@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {LinkButton} from "../../lib/components/LinkButton";
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
+import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {TrashIcon} from "@navikt/aksel-icons";
 import {Button} from "@navikt/ds-react";
 import digisosConfig from "../../lib/config";
@@ -14,9 +14,9 @@ export const OpplastetVedlegg = ({
     dokument: DokumentDto;
     onDelete: (dokumentId: string) => void;
 }) => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-    const lastNedUrl = `/dokument/${behandlingsId}/${dokumentId}`;
+    const lastNedUrl = `/dokument/${soknadId}/${dokumentId}`;
 
     return (
         <li className="mt-4 flex gap-2 justify-between bg-surface-action-subtle-hover rounded-md p-2">

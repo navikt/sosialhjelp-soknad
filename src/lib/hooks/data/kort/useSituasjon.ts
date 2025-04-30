@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../../common/useBehandlingsId";
+import {useSoknadId} from "../../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {
     useGetSituasjonsendring,
@@ -7,9 +7,9 @@ import {
 import {SituasjonsendringDto} from "../../../../generated/new/model/index.ts";
 
 const useSituasjon = () => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const queryClient = useQueryClient();
-    const {data, isLoading, isError, queryKey} = useGetSituasjonsendring(behandlingsId);
+    const {data, isLoading, isError, queryKey} = useGetSituasjonsendring(soknadId);
     const invalidate = () => queryClient.invalidateQueries({queryKey});
     const {
         mutate,
@@ -18,7 +18,7 @@ const useSituasjon = () => {
         variables,
     } = useUpdateSituasjonsendring({mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})}});
 
-    const updateSituasjonsendring = (data: SituasjonsendringDto) => mutate({soknadId: behandlingsId, data});
+    const updateSituasjonsendring = (data: SituasjonsendringDto) => mutate({soknadId: soknadId, data});
     return {
         data: isPending ? variables.data : data,
         updateSituasjonsendring,

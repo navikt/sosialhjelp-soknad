@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {useEffect} from "react";
 import {useQueryClient} from "@tanstack/react-query";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
@@ -10,10 +10,10 @@ import {BegrunnelseDto, type HarHvaSokesOmInput} from "../../../generated/new/mo
 import {HarKategorierInput} from "../../../generated/new-ssr/model";
 
 export const useBegrunnelse = () => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
 
     const queryClient = useQueryClient();
-    const {data, isLoading, queryKey} = useGetBegrunnelse(behandlingsId);
+    const {data, isLoading, queryKey} = useGetBegrunnelse(soknadId);
     const invalidate = () => queryClient.invalidateQueries({queryKey});
     const {mutate, isPending, variables, isError} = useUpdateBegrunnelse({
         mutation: {onSettled: invalidate},
@@ -27,13 +27,13 @@ export const useBegrunnelse = () => {
         });
 
         mutate({
-            soknadId: behandlingsId,
+            soknadId: soknadId,
             data: {type: "HarHvaSokesOm", ...begrunnelse},
         });
     };
 
     const updateCategories = (kategorier: Omit<HarKategorierInput, "type">) => {
-        mutate({soknadId: behandlingsId, data: {type: "HarKategorier", ...kategorier}});
+        mutate({soknadId: soknadId, data: {type: "HarKategorier", ...kategorier}});
     };
 
     useEffect(() => {

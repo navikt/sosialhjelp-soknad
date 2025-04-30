@@ -3,12 +3,12 @@ import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlacehold
 import {Alert, Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {NavYtelserTable} from "./NavYtelserTable";
-import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId";
+import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {useGetNavYtelse} from "../../../generated/new/nav-ytelse-controller/nav-ytelse-controller.ts";
 
 const useNavYtelser = () => {
-    const behandlingsId = useBehandlingsId();
-    const {data, isLoading, isError} = useGetNavYtelse(behandlingsId);
+    const soknadId = useSoknadId();
+    const {data, isLoading, isError} = useGetNavYtelse(soknadId);
 
     return {systeminntekter: data?.utbetalinger, isError: data?.fetchUtbetalingerFeilet || isError, isLoading};
 };

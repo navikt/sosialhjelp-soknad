@@ -3,7 +3,7 @@ import {Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {SkalIkkeFinansiereStudier} from "./SkalIkkeFinansiereStudier";
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
+import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {useGetHasStudielan, useUpdateStudielan} from "../../generated/new/studielan-controller/studielan-controller.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {TextPlaceholder} from "../../lib/components/animasjoner/TextPlaceholder.tsx";
@@ -11,9 +11,9 @@ import {TextPlaceholder} from "../../lib/components/animasjoner/TextPlaceholder.
 export const Studielan = () => {
     const {t} = useTranslation("skjema");
 
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const queryClient = useQueryClient();
-    const {data: studielan, queryKey, isLoading} = useGetHasStudielan(behandlingsId);
+    const {data: studielan, queryKey, isLoading} = useGetHasStudielan(soknadId);
     const {mutate, variables, isPending} = useUpdateStudielan({
         mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
     });
@@ -39,7 +39,7 @@ export const Studielan = () => {
             <YesNoInput
                 name={"studielan-bekreftelse"}
                 legend={t("inntekt.studielan.sporsmal")}
-                onChange={(checked) => mutate({soknadId: behandlingsId, data: {mottarStudielan: checked}})}
+                onChange={(checked) => mutate({soknadId: soknadId, data: {mottarStudielan: checked}})}
                 value={mottarStudielan}
             />
             {mottarStudielan === true && <SkalIkkeFinansiereStudier />}

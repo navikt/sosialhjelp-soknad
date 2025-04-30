@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {useGetUtdanning, useUpdateUtdanning} from "../../../generated/new/utdanning-controller/utdanning-controller.ts";
 import {
@@ -8,10 +8,10 @@ import {
 import {ArbeidDto, ArbeidInput, UpdateUtdanningBody, UtdanningDto} from "../../../generated/new/model/index.ts";
 
 export const useArbeidOgUtdanning = () => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const queryClient = useQueryClient();
-    const {data: arbeidData, isLoading: isLoadingArbeid, queryKey: arbeidKey} = useGetArbeid(behandlingsId);
-    const {data: utdanningData, isLoading: isLoadingUtdanning, queryKey: utdanningKey} = useGetUtdanning(behandlingsId);
+    const {data: arbeidData, isLoading: isLoadingArbeid, queryKey: arbeidKey} = useGetArbeid(soknadId);
+    const {data: utdanningData, isLoading: isLoadingUtdanning, queryKey: utdanningKey} = useGetUtdanning(soknadId);
     const {
         mutate: mutateArbeid,
         isPending: isArbeidPending,
@@ -27,10 +27,9 @@ export const useArbeidOgUtdanning = () => {
         mutation: {onSettled: () => queryClient.invalidateQueries({queryKey: utdanningKey})},
     });
 
-    const updateArbeid = (arbeid: ArbeidInput) => mutateArbeid({soknadId: behandlingsId, data: arbeid});
+    const updateArbeid = (arbeid: ArbeidInput) => mutateArbeid({soknadId: soknadId, data: arbeid});
 
-    const updateUtdanning = (utdanning: UpdateUtdanningBody) =>
-        mutateUtdanning({soknadId: behandlingsId, data: utdanning});
+    const updateUtdanning = (utdanning: UpdateUtdanningBody) => mutateUtdanning({soknadId: soknadId, data: utdanning});
 
     const arbeid: ArbeidDto | undefined = isArbeidPending
         ? {
