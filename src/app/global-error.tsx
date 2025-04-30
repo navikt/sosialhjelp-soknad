@@ -26,7 +26,7 @@ export default function GlobalError({error, reset}: {error: Error & {digest?: st
                 <title>Søknad om økonomisk sosialhjelp</title>
             </head>
             <body>
-                <div id="root" className={"bg-digisosGronnBakgrunn"} role={"none"}>
+                <div id="root" className={"bg-digisos-surface"} role={"none"}>
                     {messages && (
                         <NextIntlClientProvider messages={messages} locale={locale}>
                             <TekniskFeil error={error} reset={reset} />
