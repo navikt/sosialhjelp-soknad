@@ -1,6 +1,5 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {TelefonData} from "./Telefon";
 import {AdresseData} from "./adresse/Adresse";
 import {BasisPersonalia} from "./BasisPersonalia";
 import {Kontonr} from "./konto/Kontonr.tsx";
@@ -21,6 +20,7 @@ import {useIsMutating} from "@tanstack/react-query";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";
 import {Heading} from "@navikt/ds-react";
+import {PersondataTelefon} from "./PersondataTelefon.tsx";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
@@ -63,7 +63,13 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                 <SkjemaStegErrorSummary errors={errors} />
                 <BasisPersonalia />
                 <AdresseData />
-                <TelefonData />
+                <section aria-labelledby={"telefon-heading"} className={"space-y-2"}>
+                    <Heading id={"telefon-heading"} size={"small"} level={"3"}>
+                        {t("kontakt.telefon.sporsmal")}
+                    </Heading>
+                    <PersondataTelefon />
+                </section>
+
                 <section aria-labelledby={"kontonummer-heading"} className={"space-y-2"}>
                     <Heading id={"kontonummer-heading"} size={"small"} level={"3"}>
                         {t("kontakt.kontonummer.sporsmal")}
