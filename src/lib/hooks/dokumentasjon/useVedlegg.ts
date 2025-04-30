@@ -57,7 +57,7 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
      */
     const deleteDocument = (dokumentId: string) => {
         mutateDelete(
-            {soknadId: soknadId, dokumentId},
+            {soknadId, dokumentId},
             {
                 onError: handleApiError,
                 onSuccess: () => {

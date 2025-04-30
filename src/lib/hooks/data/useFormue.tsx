@@ -54,7 +54,7 @@ export const useFormue = () => {
         const variables = mapToVars(formue);
         if (!variables) return;
         const oppdatert: FormueInput = {...variables, beskrivelseSparing: beskrivelseAvAnnet};
-        mutate({soknadId: soknadId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     return {formue, setFormue, setBeskrivelse};

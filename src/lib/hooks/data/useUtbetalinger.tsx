@@ -50,7 +50,7 @@ export const useUtbetalinger = () => {
         if (!utbetalinger) return;
         if (!bekreftelse) {
             mutate({
-                soknadId: soknadId,
+                soknadId,
                 data: {type: "HarIkkeUtbetalingerInput", harIkkeUtbetalinger: true} satisfies HarIkkeUtbetalingerInput,
             });
         }
@@ -69,7 +69,7 @@ export const useUtbetalinger = () => {
             beskrivelseUtbetaling: valg.includes("annet") ? valgteKategorier.beskrivelseUtbetaling : "",
         };
 
-        mutate({soknadId: soknadId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     const setBeskrivelseAvAnnet = async (beskrivelseAvAnnet: string) => {
@@ -80,7 +80,7 @@ export const useUtbetalinger = () => {
             beskrivelseUtbetaling: beskrivelseAvAnnet,
             hasAnnet: valgteKategorier.hasAnnenUtbetaling,
         };
-        mutate({soknadId: soknadId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     return {utbetalinger: valgteKategorier, setBekreftelse, setUtbetalinger, setBeskrivelseAvAnnet, harBekreftelse};

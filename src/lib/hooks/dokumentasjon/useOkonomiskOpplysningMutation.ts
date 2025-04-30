@@ -17,7 +17,7 @@ const useOkonomiskOpplysningMutation = <T extends OkonomiskOpplysningDtoDetaljer
         mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
     });
     const updateOkonomiskOpplysning = (data: UpdateOkonomiskOpplysningBody) => {
-        mutate({soknadId: soknadId, data});
+        mutate({soknadId, data});
     };
     return {
         updateOkonomiskOpplysning,

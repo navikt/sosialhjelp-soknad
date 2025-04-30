@@ -46,7 +46,7 @@ export const useForsorgerplikt = () => {
             });
         }
 
-        mutate({soknadId: soknadId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     useEffect(() => {

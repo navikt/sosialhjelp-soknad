@@ -27,13 +27,13 @@ export const useBegrunnelse = () => {
         });
 
         mutate({
-            soknadId: soknadId,
+            soknadId,
             data: {type: "HarHvaSokesOm", ...begrunnelse},
         });
     };
 
     const updateCategories = (kategorier: Omit<HarKategorierInput, "type">) => {
-        mutate({soknadId: soknadId, data: {type: "HarKategorier", ...kategorier}});
+        mutate({soknadId, data: {type: "HarKategorier", ...kategorier}});
     };
 
     useEffect(() => {

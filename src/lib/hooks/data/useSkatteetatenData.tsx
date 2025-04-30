@@ -26,7 +26,7 @@ export const useSkatteetatenData = () => {
         await queryClient.cancelQueries({queryKey: skattbarInntektQueryKey});
         await queryClient.cancelQueries({queryKey: opplysningerQueryKey});
         return mutate(
-            {soknadId: soknadId, data: samtykke},
+            {soknadId, data: samtykke},
             {
                 onSuccess: () =>
                     Promise.all([

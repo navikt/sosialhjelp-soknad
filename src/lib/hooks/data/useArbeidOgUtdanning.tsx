@@ -27,9 +27,9 @@ export const useArbeidOgUtdanning = () => {
         mutation: {onSettled: () => queryClient.invalidateQueries({queryKey: utdanningKey})},
     });
 
-    const updateArbeid = (arbeid: ArbeidInput) => mutateArbeid({soknadId: soknadId, data: arbeid});
+    const updateArbeid = (arbeid: ArbeidInput) => mutateArbeid({soknadId, data: arbeid});
 
-    const updateUtdanning = (utdanning: UpdateUtdanningBody) => mutateUtdanning({soknadId: soknadId, data: utdanning});
+    const updateUtdanning = (utdanning: UpdateUtdanningBody) => mutateUtdanning({soknadId, data: utdanning});
 
     const arbeid: ArbeidDto | undefined = isArbeidPending
         ? {
