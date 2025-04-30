@@ -45,7 +45,7 @@ export const ArbeidOgUtdanning = () => {
     const onKommentarChange = React.useMemo(
         () =>
             debounce(
-                ({target: {value}}: React.ChangeEvent<HTMLInputElement>) =>
+                ({target: {value}}: React.ChangeEvent<HTMLTextAreaElement>) =>
                     updateArbeid({kommentarTilArbeidsforhold: value}),
                 500
             ),
