@@ -1,5 +1,5 @@
 {
-    "openapi": "3.0.1",
+    "openapi": "3.1.0",
     "info": {"title": "OpenAPI definition", "version": "v0"},
     "servers": [{"url": "http://localhost:8181/sosialhjelp/soknad-api", "description": "Generated server url"}],
     "paths": {
@@ -12,9 +12,9 @@
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "required": ["file"],
                                 "type": "object",
-                                "properties": {"file": {"type": "string", "format": "binary"}}
+                                "properties": {"file": {"type": "string", "format": "binary"}},
+                                "required": ["file"]
                             }
                         }
                     }
@@ -322,8 +322,11 @@
     "components": {
         "schemas": {
             "SoknadApiError": {
-                "required": ["error", "responseType"],
                 "type": "object",
+                "discriminator": {
+                    "propertyName": "responseType",
+                    "mapping": {"SoknadApiError": "#/components/schemas/SoknadApiError"}
+                },
                 "properties": {
                     "error": {
                         "type": "string",
@@ -353,18 +356,14 @@
                     "message": {"type": "string"},
                     "id": {"type": "string"}
                 },
-                "discriminator": {
-                    "propertyName": "responseType",
-                    "mapping": {"SoknadApiError": "#/components/schemas/SoknadApiError"}
-                }
+                "required": ["error", "responseType"]
             },
             "UnauthorizedMelding": {
-                "required": ["loginUrl"],
                 "type": "object",
-                "properties": {"loginUrl": {"type": "string", "format": "uri"}}
+                "properties": {"loginUrl": {"type": "string", "format": "uri"}},
+                "required": ["loginUrl"]
             },
             "Logg": {
-                "required": ["level"],
                 "type": "object",
                 "properties": {
                     "level": {"type": "string", "enum": ["ERROR", "WARN", "INFO"]},
@@ -374,18 +373,18 @@
                     "columnNumber": {"type": "string"},
                     "url": {"type": "string"},
                     "userAgent": {"type": "string"}
-                }
+                },
+                "required": ["level"]
             },
             "Avsnitt": {
-                "required": ["sporsmal", "tittel"],
                 "type": "object",
                 "properties": {
                     "tittel": {"type": "string"},
                     "sporsmal": {"type": "array", "items": {"$ref": "#/components/schemas/Sporsmal"}}
-                }
+                },
+                "required": ["sporsmal", "tittel"]
             },
             "Felt": {
-                "required": ["type"],
                 "type": "object",
                 "properties": {
                     "label": {"type": "string"},
@@ -396,62 +395,66 @@
                         "enum": ["TEKST", "CHECKBOX", "SYSTEMDATA", "SYSTEMDATA_MAP", "VEDLEGG"]
                     },
                     "vedlegg": {"type": "array", "items": {"$ref": "#/components/schemas/Vedlegg"}}
-                }
+                },
+                "required": ["type"]
             },
             "Oppsummering": {
-                "required": ["steg"],
                 "type": "object",
-                "properties": {"steg": {"type": "array", "items": {"$ref": "#/components/schemas/Steg"}}}
+                "properties": {"steg": {"type": "array", "items": {"$ref": "#/components/schemas/Steg"}}},
+                "required": ["steg"]
             },
             "Sporsmal": {
-                "required": ["erUtfylt"],
                 "type": "object",
                 "properties": {
                     "tittel": {"type": "string"},
                     "felt": {"type": "array", "items": {"$ref": "#/components/schemas/Felt"}},
                     "erUtfylt": {"type": "boolean"}
-                }
+                },
+                "required": ["erUtfylt"]
             },
             "Steg": {
-                "required": ["avsnitt", "stegNr", "tittel"],
                 "type": "object",
                 "properties": {
                     "stegNr": {"type": "integer", "format": "int32"},
                     "tittel": {"type": "string"},
                     "avsnitt": {"type": "array", "items": {"$ref": "#/components/schemas/Avsnitt"}}
-                }
+                },
+                "required": ["avsnitt", "stegNr", "tittel"]
             },
             "Svar": {
-                "required": ["type"],
                 "type": "object",
                 "properties": {
                     "value": {"type": "string"},
                     "type": {"type": "string", "enum": ["LOCALE_TEKST", "TEKST", "DATO", "TIDSPUNKT"]}
-                }
+                },
+                "required": ["type"]
             },
             "Vedlegg": {
-                "required": ["filnavn"],
                 "type": "object",
-                "properties": {"filnavn": {"type": "string"}, "uuid": {"type": "string"}}
+                "properties": {"filnavn": {"type": "string"}, "uuid": {"type": "string"}},
+                "required": ["filnavn"]
             },
             "InnsendtSoknadDto": {
-                "required": ["kode", "navn", "sistEndret"],
                 "type": "object",
-                "properties": {"navn": {"type": "string"}, "kode": {"type": "string"}, "sistEndret": {"type": "string"}}
+                "properties": {
+                    "navn": {"type": "string"},
+                    "kode": {"type": "string"},
+                    "sistEndret": {"type": "string"}
+                },
+                "required": ["kode", "navn", "sistEndret"]
             },
             "PabegyntSoknad": {
-                "required": ["behandlingsId", "isKort", "sistOppdatert"],
                 "type": "object",
                 "properties": {
                     "sistOppdatert": {"type": "string", "format": "date-time"},
                     "behandlingsId": {"type": "string"},
                     "isKort": {"type": "boolean"}
                 },
-                "description": "Påbegynte men ikke innleverte søknader"
+                "required": ["behandlingsId", "isKort", "sistOppdatert"]
             },
             "SessionResponse": {
-                "required": ["daysBeforeDeletion", "maxUploadSizeBytes", "numRecentlySent", "open", "userBlocked"],
                 "type": "object",
+                "description": "Informasjon om brukerøkt",
                 "properties": {
                     "userBlocked": {
                         "type": "boolean",
@@ -460,8 +463,8 @@
                     "fornavn": {"type": "string", "description": "Brukerens fornavn"},
                     "daysBeforeDeletion": {
                         "type": "integer",
-                        "description": "Antall dager etter siste endring før søknader slettes",
-                        "format": "int64"
+                        "format": "int64",
+                        "description": "Antall dager etter siste endring før søknader slettes"
                     },
                     "open": {
                         "type": "array",
@@ -470,20 +473,19 @@
                     },
                     "numRecentlySent": {
                         "type": "integer",
-                        "description": "Antall nylig innsendte søknader",
-                        "format": "int32"
+                        "format": "int32",
+                        "description": "Antall nylig innsendte søknader"
                     },
                     "maxUploadSizeBytes": {
                         "type": "integer",
-                        "description": "Max file upload size, in bytes",
-                        "format": "int64"
+                        "format": "int64",
+                        "description": "Max file upload size, in bytes"
                     },
                     "qualifiesForKortSoknad": {"type": "boolean", "description": "User qualifies for kort søknad"}
                 },
-                "description": "Informasjon om brukerøkt"
+                "required": ["daysBeforeDeletion", "maxUploadSizeBytes", "numRecentlySent", "open", "userBlocked"]
             },
             "AdresseForslag": {
-                "required": ["type"],
                 "type": "object",
                 "properties": {
                     "adresse": {"type": "string"},
@@ -497,19 +499,10 @@
                     "gatekode": {"type": "string"},
                     "bydel": {"type": "string"},
                     "type": {"type": "string", "enum": ["GATEADRESSE", "MATRIKKELADRESSE"]}
-                }
+                },
+                "required": ["type"]
             },
             "PabegyntSoknadDto": {
-                "required": [
-                    "eventId",
-                    "eventTidspunkt",
-                    "grupperingsId",
-                    "isAktiv",
-                    "link",
-                    "sikkerhetsnivaa",
-                    "sistOppdatert",
-                    "tekst"
-                ],
                 "type": "object",
                 "properties": {
                     "eventTidspunkt": {"type": "string"},
@@ -520,7 +513,17 @@
                     "sikkerhetsnivaa": {"type": "integer", "format": "int32"},
                     "sistOppdatert": {"type": "string"},
                     "isAktiv": {"type": "boolean"}
-                }
+                },
+                "required": [
+                    "eventId",
+                    "eventTidspunkt",
+                    "grupperingsId",
+                    "isAktiv",
+                    "link",
+                    "sikkerhetsnivaa",
+                    "sistOppdatert",
+                    "tekst"
+                ]
             }
         }
     }
