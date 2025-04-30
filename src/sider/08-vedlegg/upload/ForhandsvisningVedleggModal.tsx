@@ -16,16 +16,23 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.m
 interface ForhandsvisningModalProps {
     file: File;
     header: string | undefined;
+    visKategori?: boolean;
     onAccept: () => void;
     onClose: () => void;
 }
 
-export const ForhandsvisningVedleggModal = ({header, file, onAccept, onClose}: ForhandsvisningModalProps) => {
+export const ForhandsvisningVedleggModal = ({
+    header,
+    file,
+    visKategori,
+    onAccept,
+    onClose,
+}: ForhandsvisningModalProps) => {
     const [isFullscreen, setFullscreen] = useState<boolean>(false);
     const {t} = useTranslation();
     const isKortSoknad = useCurrentSoknadIsKort();
 
-    const {valgtKategoriData, setValgtKategoriData} = useValgtKategoriContext();
+    const {setValgtKategoriData} = useValgtKategoriContext();
     const [selectedCategory, setSelectedCategory] = useState<string>("");
 
     const handleAccept = () => {
@@ -79,7 +86,7 @@ export const ForhandsvisningVedleggModal = ({header, file, onAccept, onClose}: F
             </Modal.Body>
             <Modal.Footer className={"!block space-y-4"}>
                 <BodyShort>{t("vedlegg.forhandsvisning.info")}</BodyShort>
-                {isKortSoknad && valgtKategoriData.valgtKategorier !== "FORMUE_BRUKSKONTO" && (
+                {isKortSoknad && visKategori && (
                     <div>
                         <div>
                             <Select

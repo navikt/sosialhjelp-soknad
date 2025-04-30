@@ -84,6 +84,7 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
                         <DokumentUploader
                             isLoading={isPending}
                             visSpinner={uploadPending}
+                            visKategorier={true}
                             doUpload={async (file) => {
                                 await uploadDocument(file);
                                 await queryClient.invalidateQueries();
@@ -139,6 +140,7 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: DokumentasjonDtoTyp
                 <DokumentUploader
                     isLoading={isPending}
                     visSpinner={uploadPending}
+                    visKategorier={dokumentasjonType !== "FORMUE_BRUKSKONTO"}
                     doUpload={async (file) => {
                         await uploadDocument(file);
                         setShowSuccessAlert(true);
@@ -161,11 +163,13 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: DokumentasjonDtoTyp
 const DokumentUploader = ({
     doUpload,
     visSpinner,
+    visKategorier,
     isLoading,
     resetAlerts,
 }: {
     isLoading: boolean;
     visSpinner: boolean;
+    visKategorier?: boolean;
     doUpload: (document: File) => Promise<void>;
     resetAlerts: () => void;
 }) => {
@@ -217,6 +221,7 @@ const DokumentUploader = ({
                 <ForhandsvisningVedleggModal
                     header={t("vedlegg.forhandsvisning.header")}
                     file={previewFile}
+                    visKategori={visKategorier}
                     onAccept={async () => {
                         if (!previewFile) return;
                         const upload = previewFile;
