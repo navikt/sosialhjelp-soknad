@@ -18,7 +18,7 @@ const useAlleredeLevert = (opplysningstype: DokumentasjonDtoType) => {
     return {
         alleredeLevert: isPending ? variables?.data?.hasLevert : opplysning?.dokumentasjonStatus === "LEVERT_TIDLIGERE",
         updateAlleredeLevert: (alleredeLevert: boolean) =>
-            mutate({soknadId: soknadId, data: {type: opplysningstype, hasLevert: alleredeLevert}}),
+            mutate({soknadId, data: {type: opplysningstype, hasLevert: alleredeLevert}}),
     };
 };
 

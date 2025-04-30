@@ -45,7 +45,7 @@ export const Oppsummering = () => {
                     isFinalStep
                     isNextPending={isPending}
                     onPrevious={async () => navigate("../" + (isKortSoknad ? 4 : 8))}
-                    onNext={async () => sendSoknad({soknadId: soknadId})}
+                    onNext={async () => sendSoknad({soknadId})}
                 />
             </SkjemaStegBlock>
         </SkjemaSteg>

@@ -35,12 +35,12 @@ export const useVerdier = () => {
         if (!verdier) return;
 
         if (!verdi) {
-            mutate({soknadId: soknadId, data: {type: "HarIkkeVerdierInput", hasBekreftelse: verdi}});
+            mutate({soknadId, data: {type: "HarIkkeVerdierInput", hasBekreftelse: verdi}});
             return;
         }
 
         mutate({
-            soknadId: soknadId,
+            soknadId,
             data: {
                 type: "HarVerdierInput",
                 hasBekreftelse: verdi,
@@ -66,7 +66,7 @@ export const useVerdier = () => {
             hasBeskrivelseVerdi: checked.includes("hasAnnetVerdi"),
             beskrivelseVerdi: checked.includes("hasAnnetVerdi") ? verdier.beskrivelseVerdi : "",
         };
-        mutate({soknadId: soknadId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     const setBeskrivelseAvAnnet = async (beskrivelseAvAnnet: string) => {
@@ -81,7 +81,7 @@ export const useVerdier = () => {
             hasBekreftelse: true,
             beskrivelseVerdi: beskrivelseAvAnnet,
         };
-        mutate({soknadId: soknadId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     return {verdier, setBekreftelse, setVerdier, setBeskrivelseAvAnnet};

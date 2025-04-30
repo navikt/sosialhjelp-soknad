@@ -41,7 +41,7 @@ export const useKontonummer = () => {
             ? {type: HarIkkeKontoInputType.HarIkkeKonto, harIkkeKonto}
             : {type: KontonummerBrukerInputType.KontonummerBruker, kontonummer: kontonummer ?? undefined};
 
-        return mutate({soknadId: soknadId, data});
+        return mutate({soknadId, data});
     };
 
     return {kontonummer, harIkkeKonto, updateKontoInformasjon, isLoading, isBrukerUtfylt: isBrukerUtfylt};

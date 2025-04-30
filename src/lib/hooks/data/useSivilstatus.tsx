@@ -55,7 +55,7 @@ export const useSivilstatus = () => {
             ektefelle: nySivilstatus === "GIFT" ? ektefelleInput : undefined,
         };
 
-        mutate({soknadId: soknadId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     const setEktefelle = (nyEktefelle: EktefelleInput) => {
@@ -64,7 +64,7 @@ export const useSivilstatus = () => {
             sivilstatus: "GIFT",
         };
 
-        mutate({soknadId: soknadId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     const ektefelle: EktefelleDtoOrInput = isPending

@@ -18,15 +18,15 @@ export const useInntekterBostotte = () => {
 
     const setSamtykke = async (nyttHarSamtykke: boolean) => {
         if (!bostotte) return;
-        mutate({soknadId: soknadId, data: {hasSamtykke: nyttHarSamtykke}});
+        mutate({soknadId, data: {hasSamtykke: nyttHarSamtykke}});
     };
 
     const setBekreftelse = async (harInntektHusbanken: boolean) => {
-        mutate({soknadId: soknadId, data: {hasBostotte: harInntektHusbanken}});
+        mutate({soknadId, data: {hasBostotte: harInntektHusbanken}});
     };
 
     const setBostotte = async (harBekreftelse: boolean, harSamtykke?: boolean) => {
-        mutate({soknadId: soknadId, data: {hasBostotte: harBekreftelse, hasSamtykke: harSamtykke}});
+        mutate({soknadId, data: {hasBostotte: harBekreftelse, hasSamtykke: harSamtykke}});
     };
 
     const bekreftelse = bostotte?.hasBostotte;

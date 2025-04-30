@@ -39,7 +39,7 @@ export const Studielan = () => {
             <YesNoInput
                 name={"studielan-bekreftelse"}
                 legend={t("inntekt.studielan.sporsmal")}
-                onChange={(checked) => mutate({soknadId: soknadId, data: {mottarStudielan: checked}})}
+                onChange={(checked) => mutate({soknadId, data: {mottarStudielan: checked}})}
                 value={mottarStudielan}
             />
             {mottarStudielan === true && <SkalIkkeFinansiereStudier />}

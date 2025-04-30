@@ -18,7 +18,7 @@ const useSituasjon = () => {
         variables,
     } = useUpdateSituasjonsendring({mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})}});
 
-    const updateSituasjonsendring = (data: SituasjonsendringDto) => mutate({soknadId: soknadId, data});
+    const updateSituasjonsendring = (data: SituasjonsendringDto) => mutate({soknadId, data});
     return {
         data: isPending ? variables.data : data,
         updateSituasjonsendring,

@@ -17,7 +17,7 @@ export const useTelefonnummer = () => {
     const telefonnummerBruker = mutationIsPending ? variables?.data.telefonnummerBruker : data?.telefonnummerBruker;
     const telefonnummerRegister = data?.telefonnummerRegister;
     const setTelefonnummer = async (brukerutfyltVerdi: string | null) =>
-        mutate({soknadId: soknadId, data: {telefonnummerBruker: brukerutfyltVerdi ?? undefined}});
+        mutate({soknadId, data: {telefonnummerBruker: brukerutfyltVerdi ?? undefined}});
 
     return {telefonnummerBruker, telefonnummerRegister, setTelefonnummer, isLoading};
 };

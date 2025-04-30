@@ -29,7 +29,7 @@ export const useBarnebidrag = () => {
     const setBarnebidrag = (barnebidrag: ForsorgerInputBarnebidrag) => {
         if (!data) return;
         const oppdatert = {...data, barnebidrag};
-        mutate({soknadId: soknadId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     const barnebidrag = isPending ? variables?.data?.barnebidrag : data?.barnebidrag;

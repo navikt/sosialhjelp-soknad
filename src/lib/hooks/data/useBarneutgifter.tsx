@@ -41,14 +41,14 @@ export const useBarneutgifter = () => {
             hasTannregulering: valg.includes("hasTannregulering"),
             hasAnnenUtgiftBarn: valg.includes("hasAnnenUtgiftBarn"),
         };
-        mutate({soknadId: soknadId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     const setBekreftelse = async (bekreftelse: boolean) => {
         if (!barneutgifter) return;
 
         if (!bekreftelse) {
-            mutate({soknadId: soknadId, data: {type: "HarIkkeBarneutgifterInput"}});
+            mutate({soknadId, data: {type: "HarIkkeBarneutgifterInput"}});
             return;
         }
         const oppdatert: HarBarneutgifterInput = {
@@ -60,7 +60,7 @@ export const useBarneutgifter = () => {
             hasSfo: barneutgifter.hasSfo ?? false,
             hasTannregulering: barneutgifter.hasTannregulering ?? false,
         };
-        mutate({soknadId: soknadId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     return {barneutgifter, setBarneutgifter, setBekreftelse};

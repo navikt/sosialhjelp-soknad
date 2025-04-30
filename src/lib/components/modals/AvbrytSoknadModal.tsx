@@ -16,7 +16,7 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
 
     const deleteAndRedirect = async () => {
         try {
-            await mutateAsync({soknadId: soknadId});
+            await mutateAsync({soknadId});
             window.location.assign(digisosConfig.minSideURL);
         } catch (e: any) {
             faro.api.pushError(e);
