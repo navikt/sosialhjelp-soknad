@@ -1,6 +1,6 @@
 import {Heading, Loader, TextField} from "@navikt/ds-react";
 import Downshift from "downshift";
-import {useState} from "react";
+import {ReactNode, useState} from "react";
 import {useDebounce} from "react-use";
 import styled from "styled-components";
 
@@ -16,7 +16,7 @@ type AdresseSokChildProps = Pick<UseQueryResult<AdresseForslag[]>, "isPending" |
 interface FetchAddressProps {
     searchvalue: string | null;
     isOpen: boolean;
-    children(state: AdresseSokChildProps): JSX.Element;
+    children(state: AdresseSokChildProps): ReactNode;
 }
 
 const DEBOUNCE_TIMEOUT_MS = 400;

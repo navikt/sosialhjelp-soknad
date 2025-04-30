@@ -26,13 +26,7 @@ interface Props {
     dokumentasjonType: DokumentasjonDtoType;
 }
 
-export const FileUploadBoxNoStyle = ({
-    sporsmal,
-    undertekst,
-    liste,
-    bunntekst,
-    dokumentasjonType,
-}: Props): React.JSX.Element => {
+export const FileUploadBoxNoStyle = ({sporsmal, undertekst, liste, bunntekst, dokumentasjonType}: Props) => {
     const {t} = useTranslation("skjema");
     const forslag = liste ? (t(liste, {returnObjects: true}) as string[]) : [];
 
@@ -59,7 +53,7 @@ export const FileUploadBoxNoStyle = ({
     );
 };
 
-const FileUploadBox = ({sporsmal, undertekst, liste, dokumentasjonType}: Props): React.JSX.Element => {
+const FileUploadBox = ({sporsmal, undertekst, liste, dokumentasjonType}: Props) => {
     const {t} = useTranslation("skjema");
     const forslag = liste ? (t(liste, {returnObjects: true}) as string[]) : [];
 

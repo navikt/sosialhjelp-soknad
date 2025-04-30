@@ -1,12 +1,12 @@
 import cx from "classnames";
 import {TextField} from "@navikt/ds-react";
-import React from "react";
+import {ReactNode} from "react";
 import {UseFormRegisterReturn} from "react-hook-form";
 
 interface Props<T extends string> {
     registered: UseFormRegisterReturn<T>;
-    label: JSX.Element;
-    error?: React.ReactNode;
+    label: ReactNode;
+    error?: ReactNode;
 }
 
 const OpplysningTextField = <T extends string>({registered, label, error}: Props<T>) => {

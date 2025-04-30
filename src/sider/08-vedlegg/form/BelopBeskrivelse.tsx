@@ -4,7 +4,7 @@ import {useFieldArray, useForm} from "react-hook-form";
 import {useDokumentasjonTekster} from "../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
 import {DigisosLanguageKey} from "../../../lib/i18n/common.ts";
 import {LinkButton} from "../../../lib/components/LinkButton.tsx";
-import React from "react";
+import React, {ReactNode} from "react";
 import {z} from "zod";
 import {ValideringsFeilKode} from "../../../lib/validering.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -16,7 +16,7 @@ interface Props {
     excludeBeskrivelse?: boolean;
     mutate: (data: GenericOkonomiInput) => void;
     opplysning: BelopDto[] | undefined;
-    belopLabel?: JSX.Element;
+    belopLabel?: ReactNode;
     leggTilTekst?: string;
 }
 
