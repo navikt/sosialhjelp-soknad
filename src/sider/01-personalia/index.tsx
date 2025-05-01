@@ -26,14 +26,14 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
     const errors = !error ? undefined : ({adressefelt: {message: error}} as FieldErrorsImpl<NavEnhetDto>);
     const soknadId = useSoknadId();
-    const {navenhet} = useAdresser();
+    const {navEnhet} = useAdresser();
     const mutating = useIsMutating({mutationKey: mutationKey(soknadId)});
     const isMutating = mutating > 0;
     const {t} = useTranslation("skjema");
     const navigate = useNavigate();
 
     const validate = () => {
-        if (!navenhet || !erAktiv(navenhet)) {
+        if (!navEnhet || !erAktiv(navEnhet)) {
             setError("validering.adresseMangler");
             scrollToTop();
             return false;
@@ -49,8 +49,8 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
 
     // Midlertidig hack til komponentene under kan behandles som react-hook-form-inputs
     useEffect(() => {
-        if (erAktiv(navenhet)) setError(null);
-    }, [navenhet]);
+        if (erAktiv(navEnhet)) setError(null);
+    }, [navEnhet]);
 
     return (
         <SkjemaSteg>

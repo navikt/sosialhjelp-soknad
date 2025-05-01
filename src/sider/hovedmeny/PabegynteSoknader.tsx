@@ -34,7 +34,7 @@ export const PabegynteSoknaderPanel = () => {
                 aria-label={t("pabegynte", {count})}
             >
                 <BodyShort id={"pabegynt-description"} className={"pb-4"}>
-                    {t("slettesEtter", {DAYS_BEFORE_DELETION})}
+                    {t("slettesEtter", {count: DAYS_BEFORE_DELETION.toString()})}
                 </BodyShort>
                 <div className={"flex gap-2 flex-col"}>
                     {/*

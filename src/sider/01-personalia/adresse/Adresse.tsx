@@ -18,7 +18,7 @@ export const AdresseData = () => {
         midlertidig,
         brukerAdresse,
         adresseValg,
-        navenhet,
+        navEnhet,
         isLoading,
         error,
         setAdresse,
@@ -70,7 +70,7 @@ export const AdresseData = () => {
                     <AdresseSok defaultValue={formaterSoknadsadresse(brukerAdresse)} onChange={setAdresse} />
                 )}
             </HorizontalRadioGroup>
-            <NavEnhet navEnhet={navenhet} />
+            {navEnhet && <NavEnhet navEnhet={navEnhet} />}
         </section>
     );
 };

@@ -31,3 +31,5 @@ chromedriver.log
 
 .next
 next-env.d.ts
+
+messages/*.d.json.ts

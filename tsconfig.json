@@ -1,6 +1,10 @@
 {
     "extends": "@tsconfig/next/tsconfig.json",
     "compilerOptions": {
+        // allowArbitraryExtensions er her for å få bedre typesikkerhet med next-intl.
+        // se: https://next-intl.dev/docs/workflows/typescript#messages-arguments
+        // dersom dette ikke lenger trengs, kan allowArbitraryExtensions fjernes.
+        "allowArbitraryExtensions": true,
         "allowImportingTsExtensions": true,
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,

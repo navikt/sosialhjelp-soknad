@@ -2,7 +2,6 @@ import {fetchDecoratorReact} from "@navikt/nav-dekoratoren-moduler/ssr";
 import Script from "next/script";
 import {DECORATOR_SETTINGS} from "../decoratorSettings.tsx";
 import {isSupportedLanguage} from "../lib/i18n/common.ts";
-import {getMessages} from "next-intl/server";
 import "../index.css";
 import {cookies} from "next/headers";
 import {DECORATOR_LANG_COOKIE} from "../lib/constants.ts";
@@ -20,7 +19,6 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         params: {...DECORATOR_SETTINGS.params, language: locale},
     });
 
-    const messages = await getMessages();
     // locale blir hentet via middleware.ts,
     // og html lang leses (som document.documentElement.lang) av både analytics og klientside i18n
     return (
@@ -32,9 +30,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             <body>
                 <Decorator.Header />
                 <div id="root" className={"bg-digisos-surface"} role={"none"}>
-                    <Providers messages={messages} locale={locale}>
-                        {children}
-                    </Providers>
+                    <Providers locale={locale}>{children}</Providers>
                 </div>
                 <Decorator.Footer />
                 <Decorator.Scripts loader={Script} />
