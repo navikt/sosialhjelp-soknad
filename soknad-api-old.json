@@ -1,1063 +1,8 @@
 {
-    "openapi": "3.0.1",
+    "openapi": "3.1.0",
     "info": {"title": "OpenAPI definition", "version": "v0"},
     "servers": [{"url": "http://localhost:8181/sosialhjelp/soknad-api", "description": "Generated server url"}],
     "paths": {
-        "/soknader/{behandlingsId}/utgifter/boutgifter": {
-            "get": {
-                "tags": ["boutgift-ressurs"],
-                "operationId": "hentBoutgifter",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BoutgifterFrontend"}}}
-                    }
-                }
-            },
-            "put": {
-                "tags": ["boutgift-ressurs"],
-                "operationId": "updateBoutgifter",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BoutgifterFrontend"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK"}
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/utgifter/barneutgifter": {
-            "get": {
-                "tags": ["barneutgift-ressurs"],
-                "operationId": "hentBarneutgifter",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/BarneutgifterFrontend"}}
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["barneutgift-ressurs"],
-                "operationId": "updateBarneutgifter",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BarneutgifterFrontend"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK"}
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/utdanning": {
-            "get": {
-                "tags": ["utdanning-ressurs"],
-                "operationId": "hentUtdanning",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UtdanningFrontend"}}}
-                    }
-                }
-            },
-            "put": {
-                "tags": ["utdanning-ressurs"],
-                "operationId": "updateUtdanning",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UtdanningFrontend"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK"}
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/situasjonsendring": {
-            "get": {
-                "tags": ["situasjonsendring-ressurs"],
-                "operationId": "hentSituasjonsendring",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/SituasjonsendringFrontend"}}
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["situasjonsendring-ressurs"],
-                "operationId": "updateSituasjonsendring",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {
-                        "application/json": {"schema": {"$ref": "#/components/schemas/SituasjonsendringFrontend"}}
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK"}
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/personalia/telefonnummer": {
-            "get": {
-                "tags": ["telefonnummer-ressurs"],
-                "operationId": "hentTelefonnummer",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/TelefonnummerFrontend"}}
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["telefonnummer-ressurs"],
-                "operationId": "updateTelefonnummer",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/TelefonnummerFrontend"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/TelefonnummerFrontend"}}
-                        }
-                    }
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/personalia/kontonummer": {
-            "get": {
-                "tags": ["kontonummer-ressurs"],
-                "operationId": "hentKontonummer",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontonummerFrontend"}}}
-                    }
-                }
-            },
-            "put": {
-                "tags": ["kontonummer-ressurs"],
-                "operationId": "updateKontonummer",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/KontonummerInputDto"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontonummerFrontend"}}}
-                    }
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/okonomiskeOpplysninger": {
-            "get": {
-                "tags": ["okonomiske-opplysninger-ressurs"],
-                "operationId": "hentOkonomiskeOpplysninger",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/VedleggFrontends"}}}
-                    }
-                }
-            },
-            "put": {
-                "tags": ["okonomiske-opplysninger-ressurs"],
-                "operationId": "updateOkonomiskOpplysning",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/VedleggFrontend"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK"}
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/inntekt/verdier": {
-            "get": {
-                "tags": ["verdi-ressurs"],
-                "operationId": "hentVerdier",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/VerdierFrontend"}}}
-                    }
-                }
-            },
-            "put": {
-                "tags": ["verdi-ressurs"],
-                "operationId": "updateVerdier",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/VerdierFrontend"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK"}
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/inntekt/utbetalinger": {
-            "get": {
-                "tags": ["utbetaling-ressurs"],
-                "operationId": "hentUtbetalinger",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/UtbetalingerFrontend"}}
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["utbetaling-ressurs"],
-                "operationId": "updateUtbetalinger",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UtbetalingerFrontend"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK"}
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/inntekt/studielan": {
-            "get": {
-                "tags": ["studielan-ressurs"],
-                "operationId": "hentStudielanBekreftelse",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudielanFrontend"}}}
-                    }
-                }
-            },
-            "put": {
-                "tags": ["studielan-ressurs"],
-                "operationId": "updateStudielan",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudielanInputDTO"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StudielanFrontend"}}}
-                    }
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/inntekt/skattbarinntektogforskuddstrekk": {
-            "get": {
-                "tags": ["skattbar-inntekt-ressurs"],
-                "operationId": "hentSkattbareInntekter",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/SkattbarInntektFrontend"}}
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["skattbar-inntekt-ressurs"],
-                "operationId": "putSkatteetatenSamtykke",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {
-                        "application/json": {"schema": {"$ref": "#/components/schemas/SkattbarInntektInputDTO"}}
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/SkattbarInntektFrontend"}}
-                        }
-                    }
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/inntekt/formue": {
-            "get": {
-                "tags": ["formue-ressurs"],
-                "operationId": "hentFormue",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FormueFrontend"}}}
-                    }
-                }
-            },
-            "put": {
-                "tags": ["formue-ressurs"],
-                "operationId": "updateFormue",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FormueFrontend"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK"}
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/familie/sivilstatus": {
-            "get": {
-                "tags": ["sivilstatus-ressurs"],
-                "operationId": "hentSivilstatus",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/SivilstatusFrontend"}}
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["sivilstatus-ressurs"],
-                "operationId": "updateSivilstatus",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SivilstatusFrontend"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK"}
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/familie/forsorgerplikt": {
-            "get": {
-                "tags": ["forsorgerplikt-ressurs"],
-                "operationId": "hentForsorgerplikt",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/ForsorgerpliktFrontend"}}
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["forsorgerplikt-ressurs"],
-                "operationId": "updateForsorgerplikt",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {
-                        "application/json": {"schema": {"$ref": "#/components/schemas/ForsorgerpliktFrontend"}}
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK"}
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/bosituasjon": {
-            "get": {
-                "tags": ["bosituasjon-ressurs"],
-                "operationId": "hentBosituasjon",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/BosituasjonFrontend"}}
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["bosituasjon-ressurs"],
-                "operationId": "updateBosituasjon",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BosituasjonFrontend"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/BosituasjonFrontend"}}
-                        }
-                    }
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/begrunnelse": {
-            "get": {
-                "tags": ["begrunnelse-ressurs"],
-                "operationId": "hentBegrunnelse",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/BegrunnelseFrontend"}}
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["begrunnelse-ressurs"],
-                "operationId": "updateBegrunnelse",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BegrunnelseFrontend"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK"}
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/arbeid": {
-            "get": {
-                "tags": ["arbeid-ressurs"],
-                "operationId": "hentArbeid",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/ArbeidsforholdResponse"}}
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["arbeid-ressurs"],
-                "operationId": "updateArbeid",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ArbeidsforholdRequest"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/ArbeidsforholdResponse"}}
-                        }
-                    }
-                }
-            }
-        },
         "/vedlegg/konverter": {
             "post": {
                 "tags": ["file-converter-controller"],
@@ -1067,9 +12,9 @@
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "required": ["file"],
                                 "type": "object",
-                                "properties": {"file": {"type": "string", "format": "binary"}}
+                                "properties": {"file": {"type": "string", "format": "binary"}},
+                                "required": ["file"]
                             }
                         }
                     }
@@ -1095,147 +40,6 @@
                     "200": {
                         "description": "Vedlegg konvertert til PDF",
                         "content": {"application/pdf": {"schema": {"type": "string", "format": "binary"}}}
-                    }
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/inntekt/skattbarinntektogforskuddstrekk/samtykke": {
-            "post": {
-                "tags": ["skattbar-inntekt-ressurs"],
-                "operationId": "updateSamtykke",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "requestBody": {"content": {"application/json": {"schema": {"type": "boolean"}}}, "required": true},
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK"}
-                },
-                "deprecated": true
-            }
-        },
-        "/soknader/{behandlingsId}/actions/send": {
-            "post": {
-                "tags": ["soknad-actions"],
-                "operationId": "sendSoknad",
-                "parameters": [
-                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
-                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}}
-                ],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SendTilUrlFrontend"}}}
-                    }
-                }
-            }
-        },
-        "/soknader/opprettSoknad": {
-            "post": {
-                "tags": ["soknad-ressurs"],
-                "operationId": "opprettSoknad",
-                "parameters": [
-                    {"name": "Authorization", "in": "header", "required": false, "schema": {"type": "string"}},
-                    {"name": "soknadstype", "in": "query", "required": false, "schema": {"type": "string"}}
-                ],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/StartSoknadResponse"}}
-                        }
-                    }
-                }
-            }
-        },
-        "/opplastetVedlegg/{behandlingsId}/{dokumentasjonType}": {
-            "post": {
-                "tags": ["opplastet-vedlegg-ressurs"],
-                "operationId": "uploadDokument",
-                "parameters": [
-                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
-                    {"name": "dokumentasjonType", "in": "path", "required": true, "schema": {"type": "string"}}
-                ],
-                "requestBody": {
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "required": ["file"],
-                                "type": "object",
-                                "properties": {"file": {"type": "string", "format": "binary"}}
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DokumentUpload"}}}
                     }
                 }
             }
@@ -1270,38 +74,6 @@
                 }
             }
         },
-        "/soknader/{behandlingsId}/personalia/basisPersonalia": {
-            "get": {
-                "tags": ["basis-personalia-ressurs"],
-                "operationId": "hentBasisPersonalia",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/BasisPersonaliaFrontend"}}
-                        }
-                    }
-                }
-            }
-        },
         "/soknader/{behandlingsId}/oppsummering": {
             "get": {
                 "tags": ["oppsummering-ressurs"],
@@ -1328,99 +100,6 @@
                     "200": {
                         "description": "OK",
                         "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Oppsummering"}}}
-                    }
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/isKort": {
-            "get": {
-                "tags": ["soknad-ressurs"],
-                "operationId": "isKortSoknad",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "boolean"}}}}
-                }
-            }
-        },
-        "/soknader/{behandlingsId}/inntekt/systemdata": {
-            "get": {
-                "tags": ["systemregistrert-inntekt-ressurs"],
-                "operationId": "hentSystemregistrerteInntekter",
-                "parameters": [{"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {"schema": {"$ref": "#/components/schemas/SysteminntekterFrontend"}}
-                        }
-                    }
-                }
-            }
-        },
-        "/opplastetVedlegg/{behandlingsId}/{dokumentId}/fil": {
-            "get": {
-                "tags": ["opplastet-vedlegg-ressurs"],
-                "summary": "Hent innhold i dokument",
-                "operationId": "getDokument",
-                "parameters": [
-                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
-                    {"name": "dokumentId", "in": "path", "required": true, "schema": {"type": "string"}}
-                ],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "Dokumentets innhold sendes til klienten",
-                        "content": {"application/octet-stream": {"schema": {"type": "string", "format": "binary"}}}
                     }
                 }
             }
@@ -1480,35 +159,6 @@
                                 "schema": {"type": "array", "items": {"$ref": "#/components/schemas/InnsendtSoknadDto"}}
                             }
                         }
-                    }
-                }
-            }
-        },
-        "/internal/selftest": {
-            "get": {
-                "tags": ["internal-ressurs"],
-                "operationId": "getSelftest",
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SelftestResult"}}}
                     }
                 }
             }
@@ -1667,73 +317,16 @@
                     }
                 }
             }
-        },
-        "/soknader/{behandlingsId}": {
-            "delete": {
-                "tags": ["soknad-ressurs"],
-                "operationId": "slettSoknad",
-                "parameters": [
-                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
-                    {"name": "Referer", "in": "header", "required": false, "schema": {"type": "string"}}
-                ],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK"}
-                }
-            }
-        },
-        "/opplastetVedlegg/{behandlingsId}/{dokumentId}": {
-            "delete": {
-                "tags": ["opplastet-vedlegg-ressurs"],
-                "operationId": "deleteDokument",
-                "parameters": [
-                    {"name": "behandlingsId", "in": "path", "required": true, "schema": {"type": "string"}},
-                    {"name": "dokumentId", "in": "path", "required": true, "schema": {"type": "string"}}
-                ],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "200": {"description": "OK"}
-                }
-            }
         }
     },
     "components": {
         "schemas": {
             "SoknadApiError": {
-                "required": ["error", "responseType"],
                 "type": "object",
+                "discriminator": {
+                    "propertyName": "responseType",
+                    "mapping": {"SoknadApiError": "#/components/schemas/SoknadApiError"}
+                },
                 "properties": {
                     "error": {
                         "type": "string",
@@ -1763,418 +356,14 @@
                     "message": {"type": "string"},
                     "id": {"type": "string"}
                 },
-                "discriminator": {
-                    "propertyName": "responseType",
-                    "mapping": {"SoknadApiError": "#/components/schemas/SoknadApiError"}
-                }
+                "required": ["error", "responseType"]
             },
             "UnauthorizedMelding": {
-                "required": ["loginUrl"],
                 "type": "object",
-                "properties": {"loginUrl": {"type": "string", "format": "uri"}}
-            },
-            "BoutgifterFrontend": {
-                "required": [
-                    "annet",
-                    "boliglan",
-                    "husleie",
-                    "kommunalAvgift",
-                    "oppvarming",
-                    "skalViseInfoVedBekreftelse",
-                    "strom"
-                ],
-                "type": "object",
-                "properties": {
-                    "bekreftelse": {"type": "boolean"},
-                    "husleie": {"type": "boolean"},
-                    "strom": {"type": "boolean"},
-                    "kommunalAvgift": {"type": "boolean"},
-                    "oppvarming": {"type": "boolean"},
-                    "boliglan": {"type": "boolean"},
-                    "annet": {"type": "boolean"},
-                    "skalViseInfoVedBekreftelse": {"type": "boolean"}
-                }
-            },
-            "BarneutgifterFrontend": {
-                "required": ["annet", "barnehage", "fritidsaktiviteter", "harForsorgerplikt", "sfo", "tannregulering"],
-                "type": "object",
-                "properties": {
-                    "harForsorgerplikt": {"type": "boolean"},
-                    "bekreftelse": {"type": "boolean"},
-                    "fritidsaktiviteter": {"type": "boolean"},
-                    "barnehage": {"type": "boolean"},
-                    "sfo": {"type": "boolean"},
-                    "tannregulering": {"type": "boolean"},
-                    "annet": {"type": "boolean"}
-                }
-            },
-            "UtdanningFrontend": {
-                "type": "object",
-                "properties": {
-                    "erStudent": {"type": "boolean", "nullable": true},
-                    "studengradErHeltid": {"type": "boolean", "nullable": true}
-                }
-            },
-            "SituasjonsendringFrontend": {
-                "type": "object",
-                "properties": {"endring": {"type": "boolean"}, "hvaErEndret": {"type": "string"}}
-            },
-            "TelefonnummerFrontend": {
-                "required": ["brukerdefinert"],
-                "type": "object",
-                "properties": {
-                    "brukerdefinert": {"type": "boolean"},
-                    "systemverdi": {"type": "string"},
-                    "brukerutfyltVerdi": {"type": "string", "nullable": true}
-                }
-            },
-            "KontonummerInputDto": {
-                "type": "object",
-                "properties": {
-                    "brukerutfyltVerdi": {
-                        "pattern": "^\\d{11}$",
-                        "type": "string",
-                        "description": "Kontonummer fra bruker",
-                        "nullable": true
-                    },
-                    "harIkkeKonto": {
-                        "type": "boolean",
-                        "description": "Bruker oppgir at de ikke har konto",
-                        "nullable": true
-                    },
-                    "brukerdefinert": {"type": "boolean"}
-                }
-            },
-            "KontonummerFrontend": {
-                "required": ["brukerdefinert", "harIkkeKonto"],
-                "type": "object",
-                "properties": {
-                    "systemverdi": {
-                        "type": "string",
-                        "description": "Kontonummer fra kontoregisteret",
-                        "readOnly": true
-                    },
-                    "brukerutfyltVerdi": {"type": "string", "description": "Kontonummer fra bruker", "nullable": true},
-                    "harIkkeKonto": {"type": "boolean", "description": "Bruker oppgir at de ikke har konto"},
-                    "brukerdefinert": {"type": "boolean"}
-                },
-                "description": "Kontonummer for bruker - obs: PUT med (systemverdi !== null) vil nullstille brukerutfyltVerdi"
-            },
-            "DokumentUpload": {
-                "required": ["dokumentId", "filename"],
-                "type": "object",
-                "properties": {"filename": {"type": "string"}, "dokumentId": {"type": "string"}},
-                "readOnly": true
-            },
-            "VedleggFrontend": {
-                "required": ["gruppe", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "annet|annet",
-                            "barnebidrag|betaler",
-                            "barnebidrag|mottar",
-                            "dokumentasjon|annetboutgift",
-                            "dokumentasjon|annetinntekter",
-                            "dokumentasjon|forsikringsutbetaling",
-                            "dokumentasjon|utbytte",
-                            "faktura|annetbarnutgift",
-                            "faktura|barnehage",
-                            "faktura|fritidsaktivitet",
-                            "faktura|husleie",
-                            "faktura|kommunaleavgifter",
-                            "faktura|oppvarming",
-                            "faktura|sfo",
-                            "faktura|strom",
-                            "faktura|tannbehandling",
-                            "husbanken|vedtak",
-                            "husleiekontrakt|husleiekontrakt",
-                            "husleiekontrakt|kommunal",
-                            "kontooversikt|aksjer",
-                            "kontooversikt|annet",
-                            "kontooversikt|brukskonto",
-                            "kontooversikt|bsu",
-                            "kontooversikt|livsforsikring",
-                            "kontooversikt|sparekonto",
-                            "lonnslipp|arbeid",
-                            "nedbetalingsplan|avdraglaan",
-                            "oppholdstillatel|oppholdstillatel",
-                            "salgsoppgjor|eiendom",
-                            "samvarsavtale|barn",
-                            "skattemelding|skattemelding",
-                            "sluttoppgjor|arbeid",
-                            "student|vedtak",
-                            "kort|behov",
-                            "kort|situasjonsendring"
-                        ]
-                    },
-                    "gruppe": {
-                        "type": "string",
-                        "enum": [
-                            "andre utgifter",
-                            "arbeid",
-                            "bosituasjon",
-                            "familie",
-                            "generelle vedlegg",
-                            "inntekt",
-                            "statsborgerskap",
-                            "utgifter"
-                        ]
-                    },
-                    "rader": {"type": "array", "items": {"$ref": "#/components/schemas/VedleggRadFrontend"}},
-                    "vedleggStatus": {
-                        "type": "string",
-                        "description": "Ignoreres dersom alleredeLevert === true",
-                        "readOnly": true,
-                        "deprecated": true,
-                        "enum": ["LastetOpp", "VedleggKreves", "VedleggAlleredeSendt"]
-                    },
-                    "alleredeLevert": {
-                        "type": "boolean",
-                        "description": "Vedlegg er levert inn utenom denne søknaden (f. eks. levert til NAV-kontor)"
-                    },
-                    "filer": {
-                        "type": "array",
-                        "readOnly": true,
-                        "items": {"$ref": "#/components/schemas/DokumentUpload"}
-                    }
-                }
-            },
-            "VedleggRadFrontend": {
-                "type": "object",
-                "properties": {
-                    "beskrivelse": {"type": "string", "nullable": true},
-                    "belop": {"type": "integer", "format": "int32", "nullable": true},
-                    "brutto": {"type": "integer", "format": "int32", "nullable": true},
-                    "netto": {"type": "integer", "format": "int32", "nullable": true},
-                    "avdrag": {"type": "integer", "format": "int32", "nullable": true},
-                    "renter": {"type": "integer", "format": "int32", "nullable": true}
-                }
-            },
-            "VerdierFrontend": {
-                "required": ["annet", "bolig", "campingvogn", "fritidseiendom", "kjoretoy"],
-                "type": "object",
-                "properties": {
-                    "bekreftelse": {"type": "boolean"},
-                    "bolig": {"type": "boolean"},
-                    "campingvogn": {"type": "boolean"},
-                    "kjoretoy": {"type": "boolean"},
-                    "fritidseiendom": {"type": "boolean"},
-                    "annet": {"type": "boolean"},
-                    "beskrivelseAvAnnet": {"type": "string"}
-                }
-            },
-            "UtbetalingerFrontend": {
-                "required": ["annet", "forsikring", "salg", "utbytte"],
-                "type": "object",
-                "properties": {
-                    "bekreftelse": {"type": "boolean"},
-                    "utbytte": {"type": "boolean"},
-                    "salg": {"type": "boolean"},
-                    "forsikring": {"type": "boolean"},
-                    "annet": {"type": "boolean"},
-                    "beskrivelseAvAnnet": {"type": "string"},
-                    "utbetalingerFraNavFeilet": {"type": "boolean"}
-                }
-            },
-            "StudielanInputDTO": {"type": "object", "properties": {"bekreftelse": {"type": "boolean"}}},
-            "StudielanFrontend": {
-                "required": ["skalVises"],
-                "type": "object",
-                "properties": {"skalVises": {"type": "boolean"}, "bekreftelse": {"type": "boolean"}}
-            },
-            "SkattbarInntektInputDTO": {
-                "required": ["samtykke"],
-                "type": "object",
-                "properties": {
-                    "samtykke": {
-                        "type": "boolean",
-                        "description": "Samtykke til å hente skattbar inntekt fra skatteetaten",
-                        "nullable": true,
-                        "example": true
-                    }
-                }
-            },
-            "Organisasjon": {
-                "required": ["fom", "tom"],
-                "type": "object",
-                "properties": {
-                    "utbetalinger": {"type": "array", "items": {"$ref": "#/components/schemas/Utbetaling"}},
-                    "organisasjonsnavn": {"type": "string"},
-                    "orgnr": {"type": "string"},
-                    "fom": {"type": "string"},
-                    "tom": {"type": "string"}
-                }
-            },
-            "SkattbarInntektFrontend": {
-                "type": "object",
-                "properties": {
-                    "inntektFraSkatteetaten": {
-                        "type": "array",
-                        "items": {"$ref": "#/components/schemas/SkattbarInntektOgForskuddstrekk"}
-                    },
-                    "inntektFraSkatteetatenFeilet": {"type": "boolean"},
-                    "samtykke": {"type": "boolean"},
-                    "samtykkeTidspunkt": {"type": "string"}
-                }
-            },
-            "SkattbarInntektOgForskuddstrekk": {
-                "type": "object",
-                "properties": {
-                    "organisasjoner": {"type": "array", "items": {"$ref": "#/components/schemas/Organisasjon"}}
-                }
-            },
-            "Utbetaling": {
-                "type": "object",
-                "properties": {
-                    "brutto": {"type": "number", "format": "double"},
-                    "forskuddstrekk": {"type": "number", "format": "double"},
-                    "tittel": {"type": "string"}
-                }
-            },
-            "FormueFrontend": {
-                "required": ["annet", "brukskonto", "bsu", "livsforsikring", "sparekonto", "verdipapirer"],
-                "type": "object",
-                "properties": {
-                    "brukskonto": {"type": "boolean"},
-                    "sparekonto": {"type": "boolean"},
-                    "bsu": {"type": "boolean"},
-                    "livsforsikring": {"type": "boolean"},
-                    "verdipapirer": {"type": "boolean"},
-                    "annet": {"type": "boolean"},
-                    "beskrivelseAvAnnet": {"type": "string"}
-                }
-            },
-            "EktefelleFrontend": {
-                "type": "object",
-                "properties": {
-                    "navn": {"$ref": "#/components/schemas/NavnFrontend"},
-                    "fodselsdato": {"type": "string"},
-                    "personnummer": {"type": "string"}
-                }
-            },
-            "NavnFrontend": {
-                "type": "object",
-                "properties": {
-                    "fornavn": {"type": "string"},
-                    "mellomnavn": {"type": "string"},
-                    "etternavn": {"type": "string"},
-                    "fulltNavn": {"type": "string"}
-                }
-            },
-            "SivilstatusFrontend": {
-                "type": "object",
-                "properties": {
-                    "kildeErSystem": {"type": "boolean"},
-                    "sivilstatus": {
-                        "type": "string",
-                        "enum": ["gift", "ugift", "samboer", "enke", "skilt", "separert"]
-                    },
-                    "ektefelle": {"$ref": "#/components/schemas/EktefelleFrontend"},
-                    "harDiskresjonskode": {"type": "boolean"},
-                    "borSammenMed": {"type": "boolean"},
-                    "erFolkeregistrertSammen": {"type": "boolean"}
-                }
-            },
-            "AnsvarFrontend": {
-                "type": "object",
-                "properties": {
-                    "barn": {"$ref": "#/components/schemas/BarnFrontend"},
-                    "borSammenMed": {"type": "boolean"},
-                    "erFolkeregistrertSammen": {"type": "boolean"},
-                    "harDeltBosted": {"type": "boolean"},
-                    "samvarsgrad": {"type": "integer", "format": "int32"}
-                }
-            },
-            "BarnFrontend": {
-                "type": "object",
-                "properties": {
-                    "navn": {"$ref": "#/components/schemas/NavnFrontend"},
-                    "fodselsdato": {"type": "string"},
-                    "personnummer": {"type": "string"},
-                    "fodselsnummer": {"type": "string"}
-                }
-            },
-            "ForsorgerpliktFrontend": {
-                "required": ["ansvar"],
-                "type": "object",
-                "properties": {
-                    "harForsorgerplikt": {"type": "boolean"},
-                    "barnebidrag": {"type": "string", "enum": ["betaler", "mottar", "begge", "ingen"]},
-                    "ansvar": {"type": "array", "items": {"$ref": "#/components/schemas/AnsvarFrontend"}}
-                }
-            },
-            "BosituasjonFrontend": {
-                "type": "object",
-                "properties": {
-                    "botype": {
-                        "type": "string",
-                        "enum": [
-                            "eier",
-                            "leier",
-                            "kommunal",
-                            "ingen",
-                            "institusjon",
-                            "krisesenter",
-                            "fengsel",
-                            "venner",
-                            "foreldre",
-                            "familie",
-                            "annet"
-                        ]
-                    },
-                    "antallPersoner": {"type": "integer", "format": "int32"}
-                }
-            },
-            "BegrunnelseFrontend": {
-                "type": "object",
-                "properties": {"hvaSokesOm": {"type": "string"}, "hvorforSoke": {"type": "string"}}
-            },
-            "ArbeidsforholdRequest": {
-                "type": "object",
-                "properties": {"kommentarTilArbeidsforhold": {"type": "string"}}
-            },
-            "ArbeidsforholdFrontend": {
-                "type": "object",
-                "properties": {
-                    "arbeidsgivernavn": {"type": "string"},
-                    "fom": {"type": "string"},
-                    "tom": {"type": "string"},
-                    "stillingstypeErHeltid": {"type": "boolean"},
-                    "stillingsprosent": {"type": "integer", "format": "int32"},
-                    "overstyrtAvBruker": {"type": "boolean"}
-                }
-            },
-            "ArbeidsforholdResponse": {
-                "required": ["arbeidsforhold"],
-                "type": "object",
-                "properties": {
-                    "arbeidsforhold": {
-                        "type": "array",
-                        "items": {"$ref": "#/components/schemas/ArbeidsforholdFrontend"}
-                    },
-                    "kommentarTilArbeidsforhold": {"type": "string"}
-                }
-            },
-            "SendTilUrlFrontend": {
-                "required": ["antallDokumenter", "id", "sendtTil"],
-                "type": "object",
-                "properties": {
-                    "sendtTil": {"type": "string", "enum": ["FIKS_DIGISOS_API"]},
-                    "id": {"type": "string"},
-                    "forrigeSoknadSendt": {"type": "string", "format": "date-time"},
-                    "antallDokumenter": {"type": "integer", "format": "int32"}
-                }
-            },
-            "StartSoknadResponse": {
-                "required": ["brukerBehandlingId", "useKortSoknad"],
-                "type": "object",
-                "properties": {"brukerBehandlingId": {"type": "string"}, "useKortSoknad": {"type": "boolean"}}
+                "properties": {"loginUrl": {"type": "string", "format": "uri"}},
+                "required": ["loginUrl"]
             },
             "Logg": {
-                "required": ["level"],
                 "type": "object",
                 "properties": {
                     "level": {"type": "string", "enum": ["ERROR", "WARN", "INFO"]},
@@ -2184,26 +373,18 @@
                     "columnNumber": {"type": "string"},
                     "url": {"type": "string"},
                     "userAgent": {"type": "string"}
-                }
-            },
-            "BasisPersonaliaFrontend": {
-                "type": "object",
-                "properties": {
-                    "navn": {"$ref": "#/components/schemas/NavnFrontend"},
-                    "fodselsnummer": {"type": "string"},
-                    "statsborgerskap": {"type": "string"}
-                }
+                },
+                "required": ["level"]
             },
             "Avsnitt": {
-                "required": ["sporsmal", "tittel"],
                 "type": "object",
                 "properties": {
                     "tittel": {"type": "string"},
                     "sporsmal": {"type": "array", "items": {"$ref": "#/components/schemas/Sporsmal"}}
-                }
+                },
+                "required": ["sporsmal", "tittel"]
             },
             "Felt": {
-                "required": ["type"],
                 "type": "object",
                 "properties": {
                     "label": {"type": "string"},
@@ -2214,123 +395,66 @@
                         "enum": ["TEKST", "CHECKBOX", "SYSTEMDATA", "SYSTEMDATA_MAP", "VEDLEGG"]
                     },
                     "vedlegg": {"type": "array", "items": {"$ref": "#/components/schemas/Vedlegg"}}
-                }
+                },
+                "required": ["type"]
             },
             "Oppsummering": {
-                "required": ["steg"],
                 "type": "object",
-                "properties": {"steg": {"type": "array", "items": {"$ref": "#/components/schemas/Steg"}}}
+                "properties": {"steg": {"type": "array", "items": {"$ref": "#/components/schemas/Steg"}}},
+                "required": ["steg"]
             },
             "Sporsmal": {
-                "required": ["erUtfylt"],
                 "type": "object",
                 "properties": {
                     "tittel": {"type": "string"},
                     "felt": {"type": "array", "items": {"$ref": "#/components/schemas/Felt"}},
                     "erUtfylt": {"type": "boolean"}
-                }
+                },
+                "required": ["erUtfylt"]
             },
             "Steg": {
-                "required": ["avsnitt", "stegNr", "tittel"],
                 "type": "object",
                 "properties": {
                     "stegNr": {"type": "integer", "format": "int32"},
                     "tittel": {"type": "string"},
                     "avsnitt": {"type": "array", "items": {"$ref": "#/components/schemas/Avsnitt"}}
-                }
+                },
+                "required": ["avsnitt", "stegNr", "tittel"]
             },
             "Svar": {
-                "required": ["type"],
                 "type": "object",
                 "properties": {
                     "value": {"type": "string"},
                     "type": {"type": "string", "enum": ["LOCALE_TEKST", "TEKST", "DATO", "TIDSPUNKT"]}
-                }
+                },
+                "required": ["type"]
             },
             "Vedlegg": {
-                "required": ["filnavn"],
                 "type": "object",
-                "properties": {"filnavn": {"type": "string"}, "uuid": {"type": "string"}}
-            },
-            "VedleggFrontends": {
-                "required": ["isOkonomiskeOpplysningerBekreftet"],
-                "type": "object",
-                "properties": {
-                    "okonomiskeOpplysninger": {
-                        "type": "array",
-                        "items": {"$ref": "#/components/schemas/VedleggFrontend"}
-                    },
-                    "slettedeVedlegg": {"type": "array", "items": {"$ref": "#/components/schemas/VedleggFrontend"}},
-                    "isOkonomiskeOpplysningerBekreftet": {
-                        "type": "boolean",
-                        "description": "True dersom bruker har oppgitt noen økonomiske opplysninger",
-                        "readOnly": true
-                    },
-                    "okonomiskeOpplysningerBekreftet": {"type": "boolean", "writeOnly": true}
-                }
-            },
-            "SysteminntektFrontend": {
-                "type": "object",
-                "properties": {
-                    "inntektType": {"type": "string"},
-                    "utbetalingsdato": {"type": "string"},
-                    "belop": {"type": "number", "format": "double"}
-                }
-            },
-            "SysteminntekterFrontend": {
-                "type": "object",
-                "properties": {
-                    "systeminntekter": {
-                        "type": "array",
-                        "items": {"$ref": "#/components/schemas/SysteminntektFrontend"}
-                    },
-                    "utbetalingerFraNavFeilet": {"type": "boolean"}
-                }
+                "properties": {"filnavn": {"type": "string"}, "uuid": {"type": "string"}},
+                "required": ["filnavn"]
             },
             "InnsendtSoknadDto": {
-                "required": ["kode", "navn", "sistEndret"],
-                "type": "object",
-                "properties": {"navn": {"type": "string"}, "kode": {"type": "string"}, "sistEndret": {"type": "string"}}
-            },
-            "DependencyCheckResult": {
-                "required": ["address", "endpoint", "importance", "result", "type"],
                 "type": "object",
                 "properties": {
-                    "endpoint": {"type": "string"},
-                    "result": {"type": "string", "enum": ["OK", "WARNING", "ERROR"]},
-                    "address": {"type": "string"},
-                    "errorMessage": {"type": "string"},
-                    "type": {"type": "string", "enum": ["REST", "DB"]},
-                    "importance": {"type": "string", "enum": ["CRITICAL", "WARNING"]},
-                    "responseTime": {"type": "string"}
-                }
-            },
-            "SelftestResult": {
-                "required": ["appName", "dependencyCheckResults", "result", "version"],
-                "type": "object",
-                "properties": {
-                    "appName": {"type": "string"},
-                    "version": {"type": "string"},
-                    "result": {"type": "string", "enum": ["OK", "WARNING", "ERROR"]},
-                    "dependencyCheckResults": {
-                        "type": "array",
-                        "items": {"$ref": "#/components/schemas/DependencyCheckResult"}
-                    }
-                }
+                    "navn": {"type": "string"},
+                    "kode": {"type": "string"},
+                    "sistEndret": {"type": "string"}
+                },
+                "required": ["kode", "navn", "sistEndret"]
             },
             "PabegyntSoknad": {
-                "required": ["behandlingsId", "isKort", "sistOppdatert"],
                 "type": "object",
                 "properties": {
                     "sistOppdatert": {"type": "string", "format": "date-time"},
                     "behandlingsId": {"type": "string"},
                     "isKort": {"type": "boolean"}
                 },
-                "description": "Påbegynte men ikke innleverte søknader"
+                "required": ["behandlingsId", "isKort", "sistOppdatert"]
             },
             "SessionResponse": {
-                "required": ["daysBeforeDeletion", "maxUploadSizeBytes", "numRecentlySent", "open", "userBlocked"],
                 "type": "object",
+                "description": "Informasjon om brukerøkt",
                 "properties": {
                     "userBlocked": {
                         "type": "boolean",
@@ -2339,8 +463,8 @@
                     "fornavn": {"type": "string", "description": "Brukerens fornavn"},
                     "daysBeforeDeletion": {
                         "type": "integer",
-                        "description": "Antall dager etter siste endring før søknader slettes",
-                        "format": "int64"
+                        "format": "int64",
+                        "description": "Antall dager etter siste endring før søknader slettes"
                     },
                     "open": {
                         "type": "array",
@@ -2349,20 +473,19 @@
                     },
                     "numRecentlySent": {
                         "type": "integer",
-                        "description": "Antall nylig innsendte søknader",
-                        "format": "int32"
+                        "format": "int32",
+                        "description": "Antall nylig innsendte søknader"
                     },
                     "maxUploadSizeBytes": {
                         "type": "integer",
-                        "description": "Max file upload size, in bytes",
-                        "format": "int64"
+                        "format": "int64",
+                        "description": "Max file upload size, in bytes"
                     },
                     "qualifiesForKortSoknad": {"type": "boolean", "description": "User qualifies for kort søknad"}
                 },
-                "description": "Informasjon om brukerøkt"
+                "required": ["daysBeforeDeletion", "maxUploadSizeBytes", "numRecentlySent", "open", "userBlocked"]
             },
             "AdresseForslag": {
-                "required": ["type"],
                 "type": "object",
                 "properties": {
                     "adresse": {"type": "string"},
@@ -2376,19 +499,10 @@
                     "gatekode": {"type": "string"},
                     "bydel": {"type": "string"},
                     "type": {"type": "string", "enum": ["GATEADRESSE", "MATRIKKELADRESSE"]}
-                }
+                },
+                "required": ["type"]
             },
             "PabegyntSoknadDto": {
-                "required": [
-                    "eventId",
-                    "eventTidspunkt",
-                    "grupperingsId",
-                    "isAktiv",
-                    "link",
-                    "sikkerhetsnivaa",
-                    "sistOppdatert",
-                    "tekst"
-                ],
                 "type": "object",
                 "properties": {
                     "eventTidspunkt": {"type": "string"},
@@ -2399,7 +513,17 @@
                     "sikkerhetsnivaa": {"type": "integer", "format": "int32"},
                     "sistOppdatert": {"type": "string"},
                     "isAktiv": {"type": "boolean"}
-                }
+                },
+                "required": [
+                    "eventId",
+                    "eventTidspunkt",
+                    "grupperingsId",
+                    "isAktiv",
+                    "link",
+                    "sikkerhetsnivaa",
+                    "sistOppdatert",
+                    "tekst"
+                ]
             }
         }
     }
