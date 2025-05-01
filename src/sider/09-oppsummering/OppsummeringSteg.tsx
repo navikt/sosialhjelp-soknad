@@ -3,7 +3,7 @@ import {Accordion} from "@navikt/ds-react";
 import React from "react";
 import {Steg} from "../../generated/model";
 import {useTranslation} from "react-i18next";
-import {Link as ReactRouterLink} from "react-router-dom";
+import {Link as ReactRouterLink} from "react-router";
 import {OppsummeringAvsnitt} from "./question/OppsummeringAvsnitt";
 import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 
