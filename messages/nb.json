@@ -93,5 +93,15 @@
   "NavEnhet": {
     "kontor": "{enhetsnavn}, {kommunenavn} kommune.",
     "blirSendtTil": "Din søknad vil bli sendt til:"
+  },
+  "NavYtelserTable": {
+    "utbetalt": "Utbetalt",
+    "ytelse": "Ytelse",
+    "belop": "Beløp"
+  },
+  "NavYtelser": {
+    "heading": "Dine utbetalinger fra NAV",
+    "empty": "Vi har ingen registrerte utbetalinger på deg fra NAV den siste måneden.",
+    "error": "På grunn av systemfeil klarte vi ikke å hente inn informasjon om ytelser fra NAV."
   }
 }
