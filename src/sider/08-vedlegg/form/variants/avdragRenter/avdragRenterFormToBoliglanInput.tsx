@@ -1,6 +1,6 @@
-import {BoliglanInput, DokumentasjonDtoType} from "../../../generated/new/model";
+import {BoliglanInput, DokumentasjonDtoType} from "../../../../../generated/new/model";
 
-import {AvdragRenterFormValues} from "./AvdragRenterFormSchema.tsx";
+import {AvdragRenterFormValues} from "./AvdragRenterFormSchema.ts";
 
 export const avdragRenterFormToBoliglanInput = (
     opplysningstype: DokumentasjonDtoType,

@@ -1,14 +1,9 @@
 import {z} from "zod";
-import {ValideringsFeilKode} from "../../../lib/validering.ts";
-
-const BelopSchema = z.coerce
-    .number({invalid_type_error: ValideringsFeilKode.ER_TALL})
-    .min(0, ValideringsFeilKode.ER_TALL)
-    .optional();
+import {BelopSchema} from "../../common/BelopSchema.ts";
 
 export const AvdragRenterFormEntrySchema = z.object({
-    avdrag: BelopSchema,
-    renter: BelopSchema,
+    avdrag: BelopSchema.optional(),
+    renter: BelopSchema.optional(),
 });
 
 export const AvdragRenterFormSchema = z.object({
