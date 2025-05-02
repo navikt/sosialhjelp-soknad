@@ -4,7 +4,7 @@ import {Systeminfo} from "../../../lib/components/systeminfo/Systeminfo.tsx";
 import {TelefonShow} from "./TelefonShow.tsx";
 import {TelefonEdit} from "./TelefonEdit.tsx";
 import {TelefonnummerDto} from "../../../generated/new/model/telefonnummerDto.ts";
-import {phoneNumberParsedOrUndefined} from "../../../lib/hooks/data/phoneNumberParsedOrUndefined.tsx";
+import {phoneNumberParsedOrUndefined} from "../../../lib/hooks/data/phoneNumberParsedOrUndefined.ts";
 import {TelefonnummerInput} from "../../../generated/new/model/telefonnummerInput.ts";
 import {PersonaliaEditKnapp} from "../PersonaliaEditKnapp.tsx";
 

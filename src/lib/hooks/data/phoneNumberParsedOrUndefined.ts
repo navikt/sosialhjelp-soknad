@@ -1,4 +1,3 @@
-// Should have better test coverage!
 import {parsePhoneNumberWithError} from "libphonenumber-js";
 import {logger} from "@navikt/next-logger";
 
@@ -9,12 +8,17 @@ import {logger} from "@navikt/next-logger";
 export const phoneNumberParsedOrUndefined = (telefonNr: string | undefined) => {
     if (!telefonNr) return undefined;
 
-    const parsedNumber = parsePhoneNumberWithError(telefonNr, "NO");
+    try {
+        const parsedNumber = parsePhoneNumberWithError(telefonNr, "NO");
 
-    if (!parsedNumber.isValid()) {
-        logger.error(`attempt to parse invalid phone number, returning undefined`);
+        if (!parsedNumber.isValid()) {
+            logger.error(`attempt to parse invalid phone number, returning undefined`);
+            return undefined;
+        }
+
+        return parsedNumber;
+    } catch (e) {
+        logger.error(`error parsing phone number: ${e}`);
         return undefined;
     }
-
-    return parsedNumber;
 };
