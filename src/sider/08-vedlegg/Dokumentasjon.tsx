@@ -28,15 +28,15 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
 
 const FormSwitch = ({opplysningstype}: {opplysningstype: DokumentasjonDtoType}) => {
     const {updateOkonomiskOpplysning, data, isLoading} = useOkonomiskOpplysningMutation(opplysningstype);
-    const abc = opplysningSpec[opplysningstype];
+    const {formVariant} = opplysningSpec[opplysningstype];
     if (isLoading) {
         return <Loader />;
     }
-    switch (abc.formVariant) {
+    switch (formVariant) {
         case "avdragRenter":
             return (
                 <AvdragRenter
-                    opplysningstype={opplysningstype}
+                    opplysningstype={"UTGIFTER_BOLIGLAN"}
                     mutate={updateOkonomiskOpplysning}
                     opplysning={data as AvdragRenterDto[]}
                 />

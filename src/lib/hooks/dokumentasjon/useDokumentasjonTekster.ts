@@ -14,12 +14,12 @@ export const useDokumentasjonTekster = (opplysningType: DokumentasjonDtoType): D
     const {numRows} = formVariants[formVariant];
     const {t} = useTranslation("dokumentasjon");
 
-    const {sporsmal, undertekst, leggtil, dokumentBeskrivelse} = t(opplysningType, "", {
+    const {sporsmal, undertekst, leggtil, dokumentBeskrivelse, renter, avdrag} = t(opplysningType, "", {
         returnObjects: true,
     }) as unknown as DokumentasjonTexts;
 
     if (!sporsmal) throw new Error(`Missing translation for ${opplysningType}.sporsmal`);
     if (!leggtil && numRows === "flere") throw new Error(`Missing translation for ${opplysningType}.leggtil`);
 
-    return {sporsmal, undertekst, leggtil, dokumentBeskrivelse};
+    return {sporsmal, undertekst, leggtil, dokumentBeskrivelse, renter, avdrag} as const;
 };
