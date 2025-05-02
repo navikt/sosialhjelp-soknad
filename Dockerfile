@@ -2,7 +2,6 @@
 # - .nvmrc
 # - .github/dependabot.yml (fjern versjonspin for docker)
 # - .ncurc.js (automatiske oppdateringer for node-types)
-# pt er vi på node 18 fordi ellers plager dekoratoren oss med "body has already been consumed"
 FROM node:22-alpine AS dependencies
 
 WORKDIR /app

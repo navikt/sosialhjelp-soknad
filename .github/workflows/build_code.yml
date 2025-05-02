@@ -32,7 +32,7 @@ jobs:
               run: npm run orval
 
             - name: "Build project"
-              run: npm run build
+              run: npm install @tailwindcss/oxide-linux-x64-gnu lightningcss-linux-x64-gnu && npm run build
 
             - name: "Run tests"
               run: npm install @rollup/rollup-linux-x64-gnu && npm run test
