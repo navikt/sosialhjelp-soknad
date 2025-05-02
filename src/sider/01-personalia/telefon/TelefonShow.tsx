@@ -3,7 +3,7 @@ import {SysteminfoItem} from "../../../lib/components/systeminfo/Systeminfo.tsx"
 import {useTranslation} from "react-i18next";
 import {PhoneNumber} from "libphonenumber-js";
 import {BodyShort} from "@navikt/ds-react";
-import {formatPhoneNumber} from "./formatPhoneNumber.tsx";
+import {formatPhoneNumber} from "./formatPhoneNumber.ts";
 
 export const TelefonShow = ({bruker, register}: {bruker?: PhoneNumber; register?: PhoneNumber}) => {
     const {t} = useTranslation();

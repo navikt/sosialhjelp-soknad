@@ -8,7 +8,7 @@ import {parsePhoneNumber} from "libphonenumber-js/min";
 import {TelefonnummerInput} from "../../../generated/new/model/telefonnummerInput.ts";
 import {TelefonnummerField} from "./TelefonnummerField.tsx";
 import {TelefonnummerFormSchema} from "./TelefonnummerFormSchema.ts";
-import {formatPhoneNumber} from "./formatPhoneNumber.tsx";
+import {formatPhoneNumber} from "./formatPhoneNumber.ts";
 
 export const TelefonEdit = ({
     onClose,
@@ -38,7 +38,7 @@ export const TelefonEdit = ({
             <BodyShort className={"mt-2!"} size={"small"}>
                 {t("kontakt.telefon.description")}
             </BodyShort>
-            <TelefonnummerField control={control} name="phoneNumber" />
+            <TelefonnummerField control={control} name="phoneNumber" rules={{required: false}} />
             <div className={"space-x-2"}>
                 <Button type={"submit"} data-testid="lagre-telefonnummer">
                     {t("lagreEndring")}

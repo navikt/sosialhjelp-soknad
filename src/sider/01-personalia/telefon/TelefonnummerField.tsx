@@ -20,7 +20,6 @@ export const TelefonnummerField = (
             <TextField
                 {...field}
                 value={asYouType.input(field.value ?? "")}
-                onChange={({target: {value}}) => field.onChange(value.length ? value : null)}
                 maxLength={12}
                 htmlSize={16}
                 type={"tel"}
