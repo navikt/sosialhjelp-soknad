@@ -44,9 +44,30 @@ export const axiosInstance = <T>(
     retry: number = 0
 ): Promise<T> => {
     const controller = new AbortController();
+    let mockToken: string | null = null;
+
+    // Ta idtoken fra cookie og legg i authorization header, men kun i mock/localhost
+    if (["mock", "localhost"].includes(process.env.NEXT_PUBLIC_DIGISOS_ENV ?? "")) {
+        const bearerToken = document.cookie
+            .split("; ")
+            .find((c) => c.startsWith("localhost-idtoken"))
+            ?.split("=")[1];
+        if (bearerToken) {
+            mockToken = bearerToken;
+        }
+    }
     const promise: CancellablePromise<AxiosResponse> = AXIOS_INSTANCE({
         ...config,
         ...options,
+        ...(mockToken
+            ? {
+                  headers: {
+                      ...config.headers,
+                      ...options?.headers,
+                      Authorization: mockToken ? `Bearer ${mockToken}` : undefined,
+                  },
+              }
+            : {}),
         signal: controller.signal, // Use signal instead of cancelToken
     })
         .then(({data}) => data)
