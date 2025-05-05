@@ -1,27 +1,30 @@
 import {Alert, BodyShort} from "@navikt/ds-react";
 import LocalizedTextArea from "../../lib/components/LocalizedTextArea.tsx";
-import {begrunnelseSchema, FormValues, MAX_LEN_HVA, MAX_LEN_HVORFOR} from "./schema.ts";
+import {BegrunnelseSchema, MAX_LEN_HVA, MAX_LEN_HVORFOR} from "./schema.ts";
 import {TranslatedError} from "../../lib/components/TranslatedError.tsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {BegrunnelseDto} from "../../generated/new/model/index.ts";
 import {useTranslation} from "react-i18next";
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/SkjemaStegErrorSummary.tsx";
+import {z} from "zod";
 
-interface Props {
+const BegrunnelseForm = ({
+    isError,
+    begrunnelse,
+    onSubmit,
+}: {
     begrunnelse?: BegrunnelseDto;
     isError?: boolean;
-    onSubmit: (formValues: FormValues) => void;
-}
-
-const BegrunnelseForm = ({isError, begrunnelse, onSubmit}: Props) => {
+    onSubmit: (formValues: z.infer<typeof BegrunnelseSchema>) => void;
+}) => {
     const {
         register,
         handleSubmit,
         formState: {errors},
-    } = useForm<FormValues>({
+    } = useForm({
         defaultValues: begrunnelse,
-        resolver: zodResolver(begrunnelseSchema),
+        resolver: zodResolver(BegrunnelseSchema),
         mode: "onChange",
     });
     const {t} = useTranslation("skjema");

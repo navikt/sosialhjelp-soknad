@@ -15,7 +15,7 @@ export const NySoknadPanel = ({defaultOpen}: {defaultOpen?: boolean}) => (
                 {useTranslations("NySoknadPanel")("title")}
             </Heading>
         </HovedmenyCardHeader>
-        <ExpansionCard.Content className={"!border-0"}>
+        <ExpansionCard.Content className={"border-0!"}>
             <NySoknadInfo />
         </ExpansionCard.Content>
     </ExpansionCard>

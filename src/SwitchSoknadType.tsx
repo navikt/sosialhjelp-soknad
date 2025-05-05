@@ -1,5 +1,5 @@
 import useIsKort from "./lib/hooks/data/useIsKort.ts";
-import {Navigate, Outlet, useLocation} from "react-router-dom";
+import {Navigate, Outlet, useLocation} from "react-router";
 import * as React from "react";
 
 export const SwitchSoknadType = () => {

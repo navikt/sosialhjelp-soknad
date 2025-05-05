@@ -28,6 +28,4 @@ type DokumentasjonTextFields = {
     dokumentInfo?: string;
 };
 
-export type DokumentasjonAntallRader = "ingen" | "en" | "flere";
-
 export type DokumentasjonTexts = DokumentasjonRadTypes & DokumentasjonRadObsoleteTypes & DokumentasjonTextFields;

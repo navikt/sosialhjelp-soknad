@@ -26,7 +26,7 @@ export const Informasjon = () => {
                     id={"app-heading"}
                     level="1"
                     size="small"
-                    className={"lg:!text-heading-xlarge !w-full !p-0 !text-left"}
+                    className={"lg:text-heading-xlarge! w-full! p-0! text-left!"}
                 >
                     {t("title")}
                 </Heading>

@@ -15,9 +15,9 @@ export const SysteminfoItem = ({
     className?: string;
     as?: ElementType;
 }) => (
-    <Cmp className={cx("!leading-5 ", className)} aria-label={label}>
+    <Cmp className={cx("leading-5! ", className)} aria-label={label}>
         {label && <Label className="pr-1.5 after:content-[':']">{label}</Label>}
-        <BodyShort className={cx({inline: !multiline, "!font-bold": !label})}>{children}</BodyShort>
+        <BodyShort className={cx({inline: !multiline, "font-bold!": !label})}>{children}</BodyShort>
     </Cmp>
 );
 

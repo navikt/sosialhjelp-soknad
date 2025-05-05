@@ -17,7 +17,7 @@ export const SkatteetatenOrganisasjon = ({
             <Table key={orgnr}>
                 <Table.Header>
                     <Table.Row>
-                        <Table.HeaderCell className={"!border-hidden"} colSpan={2}>
+                        <Table.HeaderCell className={"border-hidden!"} colSpan={2}>
                             {t("utbetalinger.inntekt.skattbar.inntekt.tittel")}
                         </Table.HeaderCell>
                     </Table.Row>

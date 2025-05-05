@@ -8,7 +8,7 @@ export const AppHeader = () => {
     return (
         <div className={"w-full"}>
             {/*kommentert ut for nextjs ssr {digisosConfig.showDevPanel && <DeveloperToolkit />}*/}
-            <Heading level="1" size="small" className={"text-center p-4 bg-digisosGronnLys"}>
+            <Heading level="1" size="small" className={"text-center p-4 bg-digisos-light"}>
                 {t("title")}
             </Heading>
         </div>

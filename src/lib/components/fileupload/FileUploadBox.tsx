@@ -26,13 +26,7 @@ interface Props {
     dokumentasjonType: DokumentasjonDtoType;
 }
 
-export const FileUploadBoxNoStyle = ({
-    sporsmal,
-    undertekst,
-    liste,
-    bunntekst,
-    dokumentasjonType,
-}: Props): React.JSX.Element => {
+export const FileUploadBoxNoStyle = ({sporsmal, undertekst, liste, bunntekst, dokumentasjonType}: Props) => {
     const {t} = useTranslation("skjema");
     const forslag = liste ? (t(liste, {returnObjects: true}) as string[]) : [];
 
@@ -59,7 +53,7 @@ export const FileUploadBoxNoStyle = ({
     );
 };
 
-const FileUploadBox = ({sporsmal, undertekst, liste, dokumentasjonType}: Props): React.JSX.Element => {
+const FileUploadBox = ({sporsmal, undertekst, liste, dokumentasjonType}: Props) => {
     const {t} = useTranslation("skjema");
     const forslag = liste ? (t(liste, {returnObjects: true}) as string[]) : [];
 
@@ -169,7 +163,7 @@ const DokumentUploader = ({
                     resetAlerts();
                     vedleggElement?.current?.click();
                 }}
-                className="last-opp-vedlegg-knapp !bg-[var(--a-surface-default)]"
+                className="last-opp-vedlegg-knapp bg-(--a-surface-default)!"
             >
                 <div className={"flex gap-1 items-center"}>
                     <PlusIcon aria-hidden={true} /> {t("opplysninger.vedlegg.knapp.tekst")}

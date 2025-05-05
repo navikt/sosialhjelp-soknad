@@ -53,7 +53,7 @@ export const useAdresser = () => {
         midlertidig: data?.midlertidigAdresse,
         brukerAdresse: data?.brukerAdresse,
         adresseValg: data?.adresseValg,
-        navenhet: data?.navenhet,
+        navEnhet: data?.navenhet,
         isLoading,
         showSpinner: showSpinner,
     };
