@@ -1,11 +1,11 @@
 import {useGetBostotte, useUpdateBostotte} from "../../../generated/new/bostotte-controller/bostotte-controller";
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 
 export const useInntekterBostotte = () => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const queryClient = useQueryClient();
-    const {data: bostotte, queryKey, isPending} = useGetBostotte(behandlingsId);
+    const {data: bostotte, queryKey, isPending} = useGetBostotte(soknadId);
     const {
         mutate,
         isPending: isUpdatePending,
@@ -18,15 +18,15 @@ export const useInntekterBostotte = () => {
 
     const setSamtykke = async (nyttHarSamtykke: boolean) => {
         if (!bostotte) return;
-        mutate({soknadId: behandlingsId, data: {hasSamtykke: nyttHarSamtykke}});
+        mutate({soknadId, data: {hasSamtykke: nyttHarSamtykke}});
     };
 
     const setBekreftelse = async (harInntektHusbanken: boolean) => {
-        mutate({soknadId: behandlingsId, data: {hasBostotte: harInntektHusbanken}});
+        mutate({soknadId, data: {hasBostotte: harInntektHusbanken}});
     };
 
     const setBostotte = async (harBekreftelse: boolean, harSamtykke?: boolean) => {
-        mutate({soknadId: behandlingsId, data: {hasBostotte: harBekreftelse, hasSamtykke: harSamtykke}});
+        mutate({soknadId, data: {hasBostotte: harBekreftelse, hasSamtykke: harSamtykke}});
     };
 
     const bekreftelse = bostotte?.hasBostotte;

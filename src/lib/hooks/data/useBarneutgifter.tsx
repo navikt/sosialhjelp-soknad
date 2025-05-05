@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {
     useGetBarneutgifter,
@@ -20,9 +20,9 @@ const mapToDto = (variables: UpdateBarneutgifterBody | undefined): Partial<Barne
 };
 
 export const useBarneutgifter = () => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const queryClient = useQueryClient();
-    const {data, queryKey} = useGetBarneutgifter(behandlingsId);
+    const {data, queryKey} = useGetBarneutgifter(soknadId);
     const {mutate, variables, isPending} = useUpdateBarneutgifter({
         mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
     });
@@ -41,14 +41,14 @@ export const useBarneutgifter = () => {
             hasTannregulering: valg.includes("hasTannregulering"),
             hasAnnenUtgiftBarn: valg.includes("hasAnnenUtgiftBarn"),
         };
-        mutate({soknadId: behandlingsId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     const setBekreftelse = async (bekreftelse: boolean) => {
         if (!barneutgifter) return;
 
         if (!bekreftelse) {
-            mutate({soknadId: behandlingsId, data: {type: "HarIkkeBarneutgifterInput"}});
+            mutate({soknadId, data: {type: "HarIkkeBarneutgifterInput"}});
             return;
         }
         const oppdatert: HarBarneutgifterInput = {
@@ -60,7 +60,7 @@ export const useBarneutgifter = () => {
             hasSfo: barneutgifter.hasSfo ?? false,
             hasTannregulering: barneutgifter.hasTannregulering ?? false,
         };
-        mutate({soknadId: behandlingsId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     return {barneutgifter, setBarneutgifter, setBekreftelse};

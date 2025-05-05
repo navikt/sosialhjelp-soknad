@@ -12,15 +12,15 @@ import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import useGrupper from "../../lib/hooks/dokumentasjon/useGrupper.ts";
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId.ts";
+import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {useGetBarneutgifter} from "../../generated/new/barneutgift-controller/barneutgift-controller.ts";
 import {useGetBoutgifter} from "../../generated/new/boutgift-controller/boutgift-controller.ts";
 import {UbesvarteOpplysninger} from "./UbesvarteOpplysninger.tsx";
 
 const useHasBekreftetUtgifter = () => {
-    const behandlingsId = useBehandlingsId();
-    const {data: barneutgifterData, isLoading: isBarneutgifterLoading} = useGetBarneutgifter(behandlingsId);
-    const {data: boutgifterData, isLoading: isBoutgifterLoading} = useGetBoutgifter(behandlingsId);
+    const soknadId = useSoknadId();
+    const {data: barneutgifterData, isLoading: isBarneutgifterLoading} = useGetBarneutgifter(soknadId);
+    const {data: boutgifterData, isLoading: isBoutgifterLoading} = useGetBoutgifter(soknadId);
 
     return {
         isLoading: isBarneutgifterLoading || isBoutgifterLoading,

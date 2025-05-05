@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {
     useGetBosituasjon,
@@ -7,9 +7,9 @@ import {
 import type {BosituasjonDto, BosituasjonDtoBotype} from "../../../generated/new/model";
 
 export const useBosituasjon = () => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const queryClient = useQueryClient();
-    const {data, isLoading, isError, queryKey} = useGetBosituasjon(behandlingsId);
+    const {data, isLoading, isError, queryKey} = useGetBosituasjon(soknadId);
     const {mutate, variables, isPending} = useUpdateBosituasjon({
         mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
     });
@@ -18,7 +18,7 @@ export const useBosituasjon = () => {
 
     const setBosituasjon = (nyBosituasjon: Partial<BosituasjonDto>) => {
         const data = {...(bosituasjon as BosituasjonDto), ...nyBosituasjon};
-        mutate({soknadId: behandlingsId, data});
+        mutate({soknadId, data});
     };
 
     const setBotype = (botype: BosituasjonDtoBotype) => setBosituasjon({botype});

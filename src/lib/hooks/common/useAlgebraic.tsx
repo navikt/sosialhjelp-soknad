@@ -58,7 +58,7 @@ const resolveQueryState = <TData, TError>(
  * @see {@link https://swan-io.github.io/boxed/ Library documentation for Boxed}
  *
  * @example
- *  const {expectOK} = useAlgebraic(useHentKontonummer(behandlingsId));
+ *  const {expectOK} = useAlgebraic(useHentKontonummer(soknadId));
  *  // The callback will only be called if the query succeeds, otherwise
  *  // a loader will be displayed for the loading state and an error
  *  // is handled with the GETErrorHandler.

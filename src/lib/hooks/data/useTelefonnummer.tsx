@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {
     useGetTelefonnummer,
     useUpdateTelefonnummer,
@@ -7,8 +7,8 @@ import {useQueryClient} from "@tanstack/react-query";
 
 export const useTelefonnummer = () => {
     const queryClient = useQueryClient();
-    const behandlingsId = useBehandlingsId();
-    const {data, queryKey, isLoading} = useGetTelefonnummer(behandlingsId);
+    const soknadId = useSoknadId();
+    const {data, queryKey, isLoading} = useGetTelefonnummer(soknadId);
     const {
         mutate,
         isPending: mutationIsPending,
@@ -17,7 +17,7 @@ export const useTelefonnummer = () => {
     const telefonnummerBruker = mutationIsPending ? variables?.data.telefonnummerBruker : data?.telefonnummerBruker;
     const telefonnummerRegister = data?.telefonnummerRegister;
     const setTelefonnummer = async (brukerutfyltVerdi: string | null) =>
-        mutate({soknadId: behandlingsId, data: {telefonnummerBruker: brukerutfyltVerdi ?? undefined}});
+        mutate({soknadId, data: {telefonnummerBruker: brukerutfyltVerdi ?? undefined}});
 
     return {telefonnummerBruker, telefonnummerRegister, setTelefonnummer, isLoading};
 };
