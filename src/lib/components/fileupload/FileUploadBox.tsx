@@ -133,6 +133,7 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: DokumentasjonDtoTyp
     const {conversionPending} = usePDFConverter();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
     const isPending = conversionPending || conversionPending;
+    const queryClient = useQueryClient();
 
     return (
         <div className={"space-y-2"}>
@@ -143,6 +144,7 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: DokumentasjonDtoTyp
                     visKategorier={dokumentasjonType !== "FORMUE_BRUKSKONTO"}
                     doUpload={async (file) => {
                         await uploadDocument(file);
+                        await queryClient.invalidateQueries();
                         setShowSuccessAlert(true);
                     }}
                     resetAlerts={() => setShowSuccessAlert(false)}
