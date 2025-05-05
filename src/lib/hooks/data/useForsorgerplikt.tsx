@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {useEffect, useState} from "react";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
@@ -9,9 +9,9 @@ import {
 import {ForsorgerDto, ForsorgerInput} from "../../../generated/new/model";
 
 export const useForsorgerplikt = () => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const queryClient = useQueryClient();
-    const {data, isLoading, queryKey} = useGetForsorgerplikt(behandlingsId);
+    const {data, isLoading, queryKey} = useGetForsorgerplikt(soknadId);
     const [isDelayedPending, setIsDelayedPending] = useState(false);
     const {mutate, variables, isPending} = useUpdateForsorgerplikt({
         mutation: {
@@ -46,7 +46,7 @@ export const useForsorgerplikt = () => {
             });
         }
 
-        mutate({soknadId: behandlingsId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     useEffect(() => {

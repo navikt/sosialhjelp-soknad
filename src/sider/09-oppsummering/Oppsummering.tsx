@@ -1,7 +1,7 @@
 import {Alert} from "@navikt/ds-react";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId";
+import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {useTranslation} from "react-i18next";
 import {useGetOppsummering} from "../../generated/oppsummering-ressurs/oppsummering-ressurs";
 import {OppsummeringSteg} from "./OppsummeringSteg";
@@ -16,9 +16,9 @@ import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButto
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const navigate = useNavigate();
-    const {isLoading, data: oppsummering} = useGetOppsummering(behandlingsId);
+    const {isLoading, data: oppsummering} = useGetOppsummering(soknadId);
 
     const {sendSoknad, isError, isPending, isKortSoknad} = useSendSoknad(oppsummering);
 
@@ -45,7 +45,7 @@ export const Oppsummering = () => {
                     isFinalStep
                     isNextPending={isPending}
                     onPrevious={async () => navigate("../" + (isKortSoknad ? 4 : 8))}
-                    onNext={async () => sendSoknad({soknadId: behandlingsId})}
+                    onNext={async () => sendSoknad({soknadId})}
                 />
             </SkjemaStegBlock>
         </SkjemaSteg>

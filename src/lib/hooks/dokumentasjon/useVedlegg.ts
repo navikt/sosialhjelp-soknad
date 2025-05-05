@@ -1,7 +1,7 @@
 // When new backend has been deployed, this can be removed.
 import {useEffect, useMemo, useReducer, useState} from "react";
 import {DocumentListReducer, initialDocumentListState} from "../../../sider/08-vedlegg/lib/DocumentListReducer";
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {useTranslation} from "react-i18next";
 import {isSoknadApiError} from "../../api/error/isSoknadApiError";
 import {DigisosApiErrorMap} from "../../api/error/DigisosApiErrorMap";
@@ -23,14 +23,14 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
     const [maxUploadSize, setMaxUploadSize] = useState<number | null>(null);
     const [uploadPercent, setUploadPercent] = useState<number | null>(null);
     const [{documents}, dispatch] = useReducer(DocumentListReducer, initialDocumentListState(dokumentasjonType));
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const {t} = useTranslation();
 
     const handleApiError = (reason: any) =>
         setError(t(isSoknadApiError(reason) ? DigisosApiErrorMap[reason.error] : REST_FEIL.GENERELL_FEIL));
 
     const sessionInfo = useContextSessionInfo();
-    const {data: dokumentasjon, isPending: isDokumentasjonPending} = useGetForventetDokumentasjon(behandlingsId);
+    const {data: dokumentasjon, isPending: isDokumentasjonPending} = useGetForventetDokumentasjon(soknadId);
     const {mutate: mutateDelete, isPending: isDeletionPending} = useDeleteDokument();
 
     const isPending = isDokumentasjonPending || isDeletionPending || uploadPercent !== null;
@@ -64,7 +64,7 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
      */
     const deleteDocument = async (dokumentId: string) => {
         mutateDelete(
-            {soknadId: behandlingsId, dokumentId},
+            {soknadId, dokumentId},
             {
                 onError: handleApiError,
                 onSuccess: () => {
@@ -98,7 +98,7 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
             data.append("file", file);
 
             const dokument = await saveDokument(
-                behandlingsId,
+                soknadId,
                 dokumentasjonType,
                 {file},
                 {

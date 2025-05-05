@@ -18,13 +18,13 @@ import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {mutationKey, useAdresser} from "./adresse/useAdresser.tsx";
 import {useIsMutating} from "@tanstack/react-query";
-import {useBehandlingsId} from "../../lib/hooks/common/useBehandlingsId.ts";
+import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
     const errors = !error ? undefined : ({adressefelt: {message: error}} as FieldErrorsImpl<NavEnhetDto>);
-    const soknadId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const {navenhet} = useAdresser();
     const mutating = useIsMutating({mutationKey: mutationKey(soknadId)});
     const isMutating = mutating > 0;

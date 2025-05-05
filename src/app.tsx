@@ -67,7 +67,7 @@ export default function App() {
                 <ValgtKategoriProvider>
                     <Routes>
                         <Route path={"skjema"}>
-                            <Route path="kort/:behandlingsId">
+                            <Route path="kort/:soknadId">
                                 <Route element={<SwitchSoknadType />}>
                                     <Route path="1" element={<RedirectToStandard />} />
                                     <Route path="2" element={<Behov />} />
@@ -76,7 +76,7 @@ export default function App() {
                                     <Route path="5" element={<Oppsummering />} />
                                 </Route>
                             </Route>
-                            <Route path=":behandlingsId">
+                            <Route path=":soknadId">
                                 <Route index path="1" element={<Personopplysninger shortSpacing />} />
                                 <Route element={<SwitchSoknadType />}>
                                     <Route path="2" element={<Begrunnelse />} />
