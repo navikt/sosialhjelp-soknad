@@ -12,7 +12,7 @@ export const TelefonData = ({
     setTelefonnummer,
     telefonnummer,
 }: {
-    setTelefonnummer: (input: Partial<TelefonnummerInput>) => Promise<TelefonnummerDto>;
+    setTelefonnummer: (input: Partial<TelefonnummerInput>) => Promise<void>;
     telefonnummer: TelefonnummerDto;
 }) => {
     const [editMode, setEditMode] = useState<boolean>(false);

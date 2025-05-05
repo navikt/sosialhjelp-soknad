@@ -4,8 +4,8 @@ import {
     useUpdateTelefonnummer,
 } from "../../../generated/new/telefonnummer-controller/telefonnummer-controller.ts";
 import {TelefonnummerInput} from "../../../generated/new/model/telefonnummerInput.ts";
-import {TelefonnummerDto} from "../../../generated/new/model/telefonnummerDto.ts";
 import {useSoknadId} from "../common/useSoknadId.ts";
+import {startTransition, useOptimistic} from "react";
 
 export const useTelefonnummerAPI = () => {
     const queryClient = useQueryClient();
@@ -13,11 +13,13 @@ export const useTelefonnummerAPI = () => {
     const {data: telefonnummer, queryKey, isLoading} = useGetTelefonnummer(soknadId);
     const {mutateAsync} = useUpdateTelefonnummer();
 
-    const setTelefonnummer = async (data: Partial<TelefonnummerInput>): Promise<TelefonnummerDto> => {
-        const mutatedData = await mutateAsync({soknadId, data});
-        queryClient.setQueryData(queryKey, mutatedData);
-        return mutatedData;
+    const setTelefonnummer = async ({telefonnummerBruker}: Partial<TelefonnummerInput>) => {
+        startTransition(() => setOptimistic({...(telefonnummer ?? {}), telefonnummerBruker}));
+        const updatedData = await mutateAsync({soknadId, data: {telefonnummerBruker}});
+        queryClient.setQueryData(queryKey, updatedData);
     };
 
-    return {telefonnummer, setTelefonnummer, isLoading};
+    const [telefonnummerOptimistic, setOptimistic] = useOptimistic(telefonnummer);
+
+    return {telefonnummer: telefonnummerOptimistic, setTelefonnummer, isLoading};
 };

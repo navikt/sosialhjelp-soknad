@@ -9,6 +9,7 @@ import {TelefonnummerInput} from "../../../generated/new/model/telefonnummerInpu
 import {TelefonnummerField} from "./TelefonnummerField.tsx";
 import {TelefonnummerFormSchema} from "./TelefonnummerFormSchema.ts";
 import {formatPhoneNumber} from "./formatPhoneNumber.ts";
+import {startTransition} from "react";
 
 export const TelefonEdit = ({
     onClose,
@@ -27,8 +28,11 @@ export const TelefonEdit = ({
     const {t} = useTranslation("skjema");
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = handleSubmit(async ({phoneNumber}) => {
-        if (!phoneNumber) await setTelefonnummer({telefonnummerBruker: undefined});
-        else await setTelefonnummer({telefonnummerBruker: parsePhoneNumber(phoneNumber, "NO").number});
+        startTransition(async () => {
+            const telefonnummerBruker = phoneNumber ? parsePhoneNumber(phoneNumber, "NO").number : undefined;
+            await setTelefonnummer({telefonnummerBruker});
+        });
+
         onClose();
     });
 
