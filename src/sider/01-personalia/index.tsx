@@ -20,7 +20,7 @@ import {useIsMutating} from "@tanstack/react-query";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";
 import {Heading} from "@navikt/ds-react";
-import {PersondataTelefon} from "./PersondataTelefon.tsx";
+import {Telefon} from "./telefon/Telefon.tsx";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
@@ -67,7 +67,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                     <Heading id={"telefon-heading"} size={"small"} level={"3"}>
                         {t("kontakt.telefon.sporsmal")}
                     </Heading>
-                    <PersondataTelefon />
+                    <Telefon />
                 </section>
 
                 <section aria-labelledby={"kontonummer-heading"} className={"space-y-2"}>

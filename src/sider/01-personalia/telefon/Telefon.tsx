@@ -3,19 +3,18 @@ import {startTransition, useState} from "react";
 import {Systeminfo} from "../../../lib/components/systeminfo/Systeminfo.tsx";
 import {TelefonShow} from "./TelefonShow.tsx";
 import {TelefonEdit} from "./TelefonEdit.tsx";
-import {TelefonnummerDto} from "../../../generated/new/model/telefonnummerDto.ts";
 import {phoneNumberParsedOrUndefined} from "../../../lib/hooks/data/phoneNumberParsedOrUndefined.ts";
-import {TelefonnummerInput} from "../../../generated/new/model/telefonnummerInput.ts";
 import {PersonaliaEditKnapp} from "../PersonaliaEditKnapp.tsx";
+import {useTelefonnummerAPI} from "../../../lib/hooks/data/useTelefonnummerAPI.ts";
+import {Loader} from "@navikt/ds-react";
 
-export const TelefonData = ({
-    setTelefonnummer,
-    telefonnummer,
-}: {
-    setTelefonnummer: (input: Partial<TelefonnummerInput>) => void;
-    telefonnummer: TelefonnummerDto;
-}) => {
+export const Telefon = () => {
+    const {isLoading, setTelefonnummer, telefonnummer, isMutating} = useTelefonnummerAPI();
     const [editMode, setEditMode] = useState<boolean>(false);
+
+    if (isLoading || !telefonnummer) {
+        return <Loader />;
+    }
 
     const bruker = phoneNumberParsedOrUndefined(telefonnummer.telefonnummerBruker);
     const register = phoneNumberParsedOrUndefined(telefonnummer.telefonnummerRegister);
@@ -25,7 +24,7 @@ export const TelefonData = ({
             {!editMode ? (
                 <div className={"flex justify-between items-center"}>
                     <TelefonShow bruker={bruker} register={register} />
-                    <PersonaliaEditKnapp onClick={() => setEditMode(true)} />
+                    <PersonaliaEditKnapp onClick={() => setEditMode(true)} disabled={isMutating} />
                 </div>
             ) : (
                 <TelefonEdit
