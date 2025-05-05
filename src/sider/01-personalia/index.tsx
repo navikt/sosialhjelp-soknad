@@ -2,7 +2,7 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {AdresseData} from "./adresse/Adresse";
 import {BasisPersonalia} from "./BasisPersonalia";
-import {Kontonr} from "./konto/Kontonr.tsx";
+import {Kontoinformasjon} from "./konto/Kontoinformasjon.tsx";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {FieldErrorsImpl} from "react-hook-form";
 import {erAktiv} from "../../lib/navEnhetStatus";
@@ -74,7 +74,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                     <Heading id={"kontonummer-heading"} size={"small"} level={"3"}>
                         {t("kontakt.kontonummer.sporsmal")}
                     </Heading>
-                    <Kontonr />
+                    <Kontoinformasjon />
                 </section>
                 <SkjemaStegButtons onNext={onClickNext} isNextPending={isMutating} />
             </SkjemaStegBlock>

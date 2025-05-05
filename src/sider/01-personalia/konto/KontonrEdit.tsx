@@ -2,22 +2,24 @@ import {useTranslation} from "react-i18next";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {BodyShort, Button, Checkbox} from "@navikt/ds-react";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {z} from "zod";
 import {KontonummerInputField} from "./KontonummerInputField.tsx";
-import {KontonummerSchema} from "./KontonummerSchema.tsx";
+import {KontonummerFormSchema, KontonummerFormValues} from "./KontonummerFormSchema.ts";
 
 export const KontonrEdit = ({
     defaultValues,
     onSave,
     onCancel,
 }: {
-    defaultValues: z.infer<typeof KontonummerSchema>;
-    onSave: SubmitHandler<z.infer<typeof KontonummerSchema>>;
+    defaultValues: KontonummerFormValues;
+    onSave: SubmitHandler<KontonummerFormValues>;
     onCancel: () => void;
 }) => {
     const {t} = useTranslation("skjema");
 
-    const {handleSubmit, register, watch, control} = useForm({defaultValues, resolver: zodResolver(KontonummerSchema)});
+    const {handleSubmit, register, watch, control} = useForm({
+        defaultValues,
+        resolver: zodResolver(KontonummerFormSchema),
+    });
 
     return (
         <form onSubmit={handleSubmit(onSave)} className={"space-y-4"}>
@@ -29,6 +31,7 @@ export const KontonrEdit = ({
                 control={control}
                 name={"kontonummerBruker"}
                 disabled={watch("harIkkeKonto") === true}
+                rules={{required: false}}
             />
             <Checkbox {...register("harIkkeKonto")}>{t("kontakt.kontonummer.harikke.stringValue")}</Checkbox>
             <div className={"space-x-2"}>

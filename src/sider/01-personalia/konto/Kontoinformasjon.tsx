@@ -7,38 +7,27 @@ import {Loader} from "@navikt/ds-react";
 import {useKontonummer} from "../../../lib/hooks/data/useKontonummer.ts";
 import {PersonaliaEditKnapp} from "../PersonaliaEditKnapp.tsx";
 
-export const Kontonr = () => {
+export const Kontoinformasjon = () => {
     const [editMode, setEditMode] = useState<boolean>(false);
-    const {data, updateKontoInformasjon, isLoading} = useKontonummer();
+    const {kontoinformasjon, updateKontoInformasjon, isLoading} = useKontonummer();
 
-    if (isLoading || data === undefined) {
-        return <Loader />;
-    }
-
-    const {kontonummerBruker, kontonummerRegister, harIkkeKonto} = data;
+    if (isLoading || kontoinformasjon === undefined) return <Loader />;
 
     return (
         <Systeminfo>
             {!editMode ? (
                 <div className={"flex justify-between items-center"}>
-                    <KontonrShow
-                        kontonummerRegister={kontonummerRegister}
-                        kontonummerBruker={kontonummerBruker}
-                        harIkkeKonto={harIkkeKonto}
-                    />
+                    <KontonrShow kontoinformasjon={kontoinformasjon} />
                     <PersonaliaEditKnapp onClick={() => setEditMode(true)} />
                 </div>
             ) : (
                 <KontonrEdit
-                    defaultValues={{
-                        kontonummerBruker: kontonummerBruker ?? null,
-                        harIkkeKonto: harIkkeKonto,
-                    }}
-                    onSave={async ({kontonummerBruker, harIkkeKonto}) => {
-                        await updateKontoInformasjon({harIkkeKonto, kontonummerBruker});
+                    defaultValues={kontoinformasjon}
+                    onCancel={() => setEditMode(false)}
+                    onSave={(data) => {
+                        updateKontoInformasjon(data);
                         setEditMode(false);
                     }}
-                    onCancel={() => setEditMode(false)}
                 />
             )}
         </Systeminfo>

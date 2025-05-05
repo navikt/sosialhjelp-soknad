@@ -402,16 +402,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "oneOf": [
-                                    {"$ref": "#/components/schemas/HarIkkeKontoInput"},
-                                    {"$ref": "#/components/schemas/KontonummerBrukerInput"}
-                                ]
-                            }
-                        }
-                    },
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/KontoInformasjonInput"}}},
                     "required": true
                 },
                 "responses": {
@@ -1924,30 +1915,9 @@
                 "type": "object",
                 "properties": {"telefonnummerRegister": {"type": "string"}, "telefonnummerBruker": {"type": "string"}}
             },
-            "HarIkkeKontoInput": {
-                "allOf": [
-                    {"$ref": "#/components/schemas/KontoInput"},
-                    {"type": "object", "properties": {"harIkkeKonto": {"type": "boolean"}}}
-                ],
-                "required": ["harIkkeKonto"]
-            },
-            "KontoInput": {
+            "KontoInformasjonInput": {
                 "type": "object",
-                "discriminator": {
-                    "propertyName": "type",
-                    "mapping": {
-                        "HarIkkeKonto": "#/components/schemas/HarIkkeKontoInput",
-                        "KontonummerBruker": "#/components/schemas/KontonummerBrukerInput"
-                    }
-                },
-                "properties": {"type": {"type": "string"}},
-                "required": ["type"]
-            },
-            "KontonummerBrukerInput": {
-                "allOf": [
-                    {"$ref": "#/components/schemas/KontoInput"},
-                    {"type": "object", "properties": {"kontonummer": {"type": "string"}}}
-                ]
+                "properties": {"harIkkeKonto": {"type": "boolean"}, "kontonummerBruker": {"type": "string"}}
             },
             "KontoInformasjonDto": {
                 "type": "object",

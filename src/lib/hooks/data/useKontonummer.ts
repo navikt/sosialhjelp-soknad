@@ -4,36 +4,25 @@ import {
 } from "../../../generated/new/kontonummer-controller/kontonummer-controller.ts";
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {
-    HarIkkeKontoInputType,
-    KontonummerBrukerInputType,
-    UpdateKontoInformasjonBrukerBody,
-} from "../../../generated/new/model";
+import {KontoInformasjonDto, KontoInformasjonInput} from "../../../generated/new/model";
+import {optimisticMutationHandlers} from "./optimisticMutationHandlers.ts";
+import {KontonummerFormValues} from "../../../sider/01-personalia/konto/KontonummerFormSchema.ts";
 
 export const useKontonummer = () => {
     const soknadId = useSoknadId();
-    const {data, isLoading, queryKey} = useGetKontonummer(soknadId);
+    const {data: kontoinformasjon, isLoading, queryKey} = useGetKontonummer(soknadId);
     const queryClient = useQueryClient();
-    const {mutateAsync} = useUpdateKontoInformasjonBruker();
+    const mutationHandlers = optimisticMutationHandlers<KontoInformasjonDto, KontoInformasjonInput>(
+        queryClient,
+        queryKey
+    );
 
-    const updateKontoInformasjon = async ({
-        harIkkeKonto,
-        kontonummerBruker,
-    }: {
-        harIkkeKonto?: boolean | null;
-        kontonummerBruker?: string | null;
-    }) => {
-        const input: UpdateKontoInformasjonBrukerBody = harIkkeKonto
-            ? {type: HarIkkeKontoInputType.HarIkkeKonto, harIkkeKonto}
-            : {type: KontonummerBrukerInputType.KontonummerBruker, kontonummer: kontonummerBruker ?? undefined};
+    const {mutate} = useUpdateKontoInformasjonBruker({mutation: {...mutationHandlers}});
 
-        const data = await mutateAsync({soknadId, data: input});
-
-        queryClient.setQueryData(queryKey, data);
-    };
+    const updateKontoInformasjon = (data: KontonummerFormValues) => mutate({soknadId, data});
 
     return {
-        data,
+        kontoinformasjon,
         updateKontoInformasjon,
         isLoading,
     };
