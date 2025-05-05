@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../../hooks/common/useBehandlingsId.ts";
+import {useSoknadId} from "../../hooks/common/useSoknadId.ts";
 import React, {useState} from "react";
 import {BekreftSlettDokumentModal} from "../modals/BekreftSlettDokumentModal.tsx";
 import {LinkButton} from "../LinkButton.tsx";
@@ -54,9 +54,9 @@ export const UploadedFileBox = ({
     onDelete: (dokumentId: string) => void;
     dokumentasjonsType: string;
 }) => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-    const lastNedUrl = `opplastetVedlegg/${behandlingsId}/${dokumentId}/fil`;
+    const lastNedUrl = `opplastetVedlegg/${soknadId}/${dokumentId}/fil`;
 
     const {t: tSkjema} = useTranslation("skjema");
 
