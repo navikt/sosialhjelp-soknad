@@ -12,14 +12,12 @@ export const useTelefonnummerAPI = () => {
     const queryClient = useQueryClient();
     const soknadId = useSoknadId();
     const {data: telefonnummer, queryKey, isLoading} = useGetTelefonnummer(soknadId);
-    const {mutateAsync} = useUpdateTelefonnummer({
-        mutation: optimisticMutationHandlers<TelefonnummerDto, TelefonnummerInput>(queryClient, queryKey),
-    });
 
-    const setTelefonnummer = async ({telefonnummerBruker}: Partial<TelefonnummerInput>) => {
-        const updatedData = await mutateAsync({soknadId, data: {telefonnummerBruker}});
-        queryClient.setQueryData(queryKey, updatedData);
-    };
+    const mutationHandlers = optimisticMutationHandlers<TelefonnummerDto, TelefonnummerInput>(queryClient, queryKey);
 
-    return {telefonnummer, setTelefonnummer, isLoading};
+    const {mutate, isPending: isMutating} = useUpdateTelefonnummer({mutation: mutationHandlers});
+
+    const setTelefonnummer = (data: Partial<TelefonnummerInput>) => mutate({soknadId, data});
+
+    return {telefonnummer, setTelefonnummer, isLoading, isMutating};
 };

@@ -9,16 +9,15 @@ import {TelefonnummerInput} from "../../../generated/new/model/telefonnummerInpu
 import {TelefonnummerField} from "./TelefonnummerField.tsx";
 import {TelefonnummerFormSchema} from "./TelefonnummerFormSchema.ts";
 import {formatPhoneNumber} from "./formatPhoneNumber.ts";
-import {startTransition} from "react";
 
 export const TelefonEdit = ({
-    onClose,
     telefonnummerBruker,
-    setTelefonnummer,
+    onChange,
+    onCancel,
 }: {
-    onClose: () => void;
     telefonnummerBruker: PhoneNumber | undefined;
-    setTelefonnummer: (telefonnummer: TelefonnummerInput) => Promise<unknown>;
+    onChange: (telefonnummer: TelefonnummerInput) => void;
+    onCancel: () => void;
 }) => {
     const {handleSubmit, control} = useForm({
         defaultValues: {phoneNumber: telefonnummerBruker ? formatPhoneNumber(telefonnummerBruker) : null},
@@ -28,12 +27,8 @@ export const TelefonEdit = ({
     const {t} = useTranslation("skjema");
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = handleSubmit(async ({phoneNumber}) => {
-        startTransition(async () => {
-            const telefonnummerBruker = phoneNumber ? parsePhoneNumber(phoneNumber, "NO").number : undefined;
-            await setTelefonnummer({telefonnummerBruker});
-        });
-
-        onClose();
+        const telefonnummerBruker = phoneNumber ? parsePhoneNumber(phoneNumber, "NO").number : undefined;
+        onChange({telefonnummerBruker});
     });
 
     return (
@@ -47,7 +42,7 @@ export const TelefonEdit = ({
                 <Button type={"submit"} data-testid="lagre-telefonnummer">
                     {t("lagreEndring")}
                 </Button>
-                <Button variant="secondary" onClick={() => onClose()}>
+                <Button variant="secondary" onClick={onCancel}>
                     {t("avbryt.avbryt")}
                 </Button>
             </div>

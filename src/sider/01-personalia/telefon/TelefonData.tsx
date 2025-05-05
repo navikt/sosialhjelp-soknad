@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import {startTransition, useState} from "react";
 import {Systeminfo} from "../../../lib/components/systeminfo/Systeminfo.tsx";
 import {TelefonShow} from "./TelefonShow.tsx";
 import {TelefonEdit} from "./TelefonEdit.tsx";
@@ -12,7 +12,7 @@ export const TelefonData = ({
     setTelefonnummer,
     telefonnummer,
 }: {
-    setTelefonnummer: (input: Partial<TelefonnummerInput>) => Promise<void>;
+    setTelefonnummer: (input: Partial<TelefonnummerInput>) => void;
     telefonnummer: TelefonnummerDto;
 }) => {
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -30,8 +30,11 @@ export const TelefonData = ({
             ) : (
                 <TelefonEdit
                     telefonnummerBruker={bruker}
-                    setTelefonnummer={setTelefonnummer}
-                    onClose={() => setEditMode(false)}
+                    onChange={(telefonnummer) => {
+                        startTransition(() => setTelefonnummer(telefonnummer));
+                        setEditMode(false);
+                    }}
+                    onCancel={() => setEditMode(false)}
                 />
             )}
         </Systeminfo>
