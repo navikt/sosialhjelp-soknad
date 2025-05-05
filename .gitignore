@@ -19,6 +19,7 @@ src/generated
 
 
 node_modules/
+build/
 .next/
 
 npm-debug.log*
