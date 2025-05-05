@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {useGetBoutgifter, useUpdateBoutgifter} from "../../../generated/new/boutgift-controller/boutgift-controller.ts";
 import {BoutgifterDto, UpdateBoutgifterBody} from "../../../generated/new/model/index.ts";
@@ -24,9 +24,9 @@ const mapToDto = (
 };
 
 export const useBoutgifter = () => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const queryClient = useQueryClient();
-    const {data, queryKey} = useGetBoutgifter(behandlingsId);
+    const {data, queryKey} = useGetBoutgifter(soknadId);
     const {mutate, variables, isPending} = useUpdateBoutgifter({
         mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
     });
@@ -46,7 +46,7 @@ export const useBoutgifter = () => {
             hasBoliglan: valg.includes("boliglan"),
             hasAnnenBoutgift: valg.includes("annet"),
         };
-        mutate({soknadId: behandlingsId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     return {boutgifter, setBoutgifter};

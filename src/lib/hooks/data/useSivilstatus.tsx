@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../common/useBehandlingsId";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {
     EktefelleDto,
@@ -25,10 +25,10 @@ export type EktefelleDtoOrInput =
     | undefined;
 
 export const useSivilstatus = () => {
-    const behandlingsId = useBehandlingsId();
+    const soknadId = useSoknadId();
     const queryClient = useQueryClient();
     const [isDelayedPending, setIsDelayedPending] = useState(false);
-    const {data, isLoading, queryKey} = useGetSivilstand(behandlingsId);
+    const {data, isLoading, queryKey} = useGetSivilstand(soknadId);
     const {mutate, variables, isPending} = useUpdateSivilstand({
         mutation: {
             onSettled: (_data, _error, _variables, context) => {
@@ -55,7 +55,7 @@ export const useSivilstatus = () => {
             ektefelle: nySivilstatus === "GIFT" ? ektefelleInput : undefined,
         };
 
-        mutate({soknadId: behandlingsId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     const setEktefelle = (nyEktefelle: EktefelleInput) => {
@@ -64,7 +64,7 @@ export const useSivilstatus = () => {
             sivilstatus: "GIFT",
         };
 
-        mutate({soknadId: behandlingsId, data: oppdatert});
+        mutate({soknadId, data: oppdatert});
     };
 
     const ektefelle: EktefelleDtoOrInput = isPending

@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../../../lib/hooks/common/useBehandlingsId";
+import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {Alert, BodyShort, Link} from "@navikt/ds-react";
 import * as React from "react";
 import {useTranslations} from "next-intl";
@@ -6,8 +6,8 @@ import {useGetAdresser} from "../../../generated/new/adresse-controller/adresse-
 
 export const NavEnhetInaktiv = () => {
     const t = useTranslations("NavEnhetInaktiv");
-    const behandlingsId = useBehandlingsId();
-    const {data: adresser} = useGetAdresser(behandlingsId);
+    const soknadId = useSoknadId();
+    const {data: adresser} = useGetAdresser(soknadId);
 
     if (!adresser?.navenhet) return null;
 

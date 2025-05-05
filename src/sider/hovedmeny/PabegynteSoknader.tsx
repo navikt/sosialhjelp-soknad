@@ -6,6 +6,7 @@ import {useTranslations} from "next-intl";
 import {PabegyntSoknadView} from "./PabegyntSoknadView.tsx";
 import {EXPANSION_CARD_BORDER_STYLE_HACK, HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
 import {useContextSessionInfo} from "../../lib/providers/useContextSessionInfo.ts";
+import {PabegyntSoknad} from "../../generated/model/pabegyntSoknad.ts";
 
 export const DAYS_BEFORE_DELETION = 14;
 
@@ -36,15 +37,25 @@ export const PabegynteSoknaderPanel = () => {
                     {t("slettesEtter", {DAYS_BEFORE_DELETION})}
                 </BodyShort>
                 <div className={"flex gap-2 flex-col"}>
-                    {open?.map(({behandlingsId, sistOppdatert, isKort}) => (
-                        <PabegyntSoknadView
-                            key={behandlingsId}
-                            behandlingsId={behandlingsId}
-                            sistOppdatert={sistOppdatert}
-                            isKort={isKort}
-                            antallPabegynteSoknader={open.length}
-                        />
-                    ))}
+                    {/*
+                        Midlertidig hack for å gjøre backend fri til å migrere til "soknadId".
+                        Når back-end er ajour, kan dette forenkles til
+                        {open?.map(({soknadId, sistOppdatert, isKort}) => <PabegyntSoknadView ... />)}
+                    */}
+                    {open?.map((pabegyntSoknad: PabegyntSoknad & {soknadId?: string}) => {
+                        const {sistOppdatert, isKort} = pabegyntSoknad;
+                        const soknadId = pabegyntSoknad.soknadId || pabegyntSoknad.behandlingsId;
+
+                        return (
+                            <PabegyntSoknadView
+                                key={soknadId}
+                                soknadId={soknadId}
+                                sistOppdatert={sistOppdatert}
+                                isKort={isKort}
+                                antallPabegynteSoknader={open.length}
+                            />
+                        );
+                    })}
                 </div>
             </ExpansionCard.Content>
         </ExpansionCard>

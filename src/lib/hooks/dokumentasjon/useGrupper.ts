@@ -1,4 +1,4 @@
-import {useBehandlingsId} from "../common/useBehandlingsId.ts";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {type DokumentasjonDtoType} from "../../../generated/new/model";
 import {useGetForventetDokumentasjon} from "../../../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
 
@@ -65,8 +65,8 @@ export const gruppeMapping = (type: DokumentasjonDtoType) => {
 };
 
 const useGrupper = () => {
-    const behandlingsId = useBehandlingsId();
-    const {data, isLoading} = useGetForventetDokumentasjon(behandlingsId);
+    const soknadId = useSoknadId();
+    const {data, isLoading} = useGetForventetDokumentasjon(soknadId);
     const grupper = Object.values(GruppeKey).filter((gruppe) =>
         data?.dokumentasjon?.some((dok) => gruppeMapping(dok.type) === gruppe)
     );

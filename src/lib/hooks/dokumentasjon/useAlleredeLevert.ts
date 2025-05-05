@@ -3,12 +3,12 @@ import {
     useUpdateDokumentasjonStatus,
 } from "../../../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
 import {DokumentasjonDtoType} from "../../../generated/new/model/index.ts";
-import {useBehandlingsId} from "../common/useBehandlingsId.ts";
+import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 
 const useAlleredeLevert = (opplysningstype: DokumentasjonDtoType) => {
-    const behandlingsId = useBehandlingsId();
-    const {data, queryKey} = useGetForventetDokumentasjon(behandlingsId);
+    const soknadId = useSoknadId();
+    const {data, queryKey} = useGetForventetDokumentasjon(soknadId);
     const queryClient = useQueryClient();
     const opplysning = data?.dokumentasjon?.find((dokumentasjon) => dokumentasjon.type === opplysningstype);
     const {mutate, variables, isPending} = useUpdateDokumentasjonStatus({
@@ -18,7 +18,7 @@ const useAlleredeLevert = (opplysningstype: DokumentasjonDtoType) => {
     return {
         alleredeLevert: isPending ? variables?.data?.hasLevert : opplysning?.dokumentasjonStatus === "LEVERT_TIDLIGERE",
         updateAlleredeLevert: (alleredeLevert: boolean) =>
-            mutate({soknadId: behandlingsId, data: {type: opplysningstype, hasLevert: alleredeLevert}}),
+            mutate({soknadId, data: {type: opplysningstype, hasLevert: alleredeLevert}}),
     };
 };
 
