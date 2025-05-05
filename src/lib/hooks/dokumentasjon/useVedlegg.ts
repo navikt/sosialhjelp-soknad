@@ -37,7 +37,7 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
     const {setValgtKategoriData} = useValgtKategoriContext();
 
     const queryClient = useQueryClient();
-    const {queryKey: dokumentasjonQueryKey} = useGetOkonomiskeOpplysninger(behandlingsId);
+    const {queryKey: dokumentasjonQueryKey} = useGetOkonomiskeOpplysninger(soknadId);
 
     /**
      * When the data on the server has changed, we automatically update the client-side list.
