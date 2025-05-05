@@ -2940,6 +2940,7 @@
                             "UTBETALING_HUSBANKEN"
                         ]
                     },
+                    "ytelsestype": {"type": "string"},
                     "utbetalingsdato": {"type": "string"},
                     "belop": {"type": "number", "format": "double"}
                 }

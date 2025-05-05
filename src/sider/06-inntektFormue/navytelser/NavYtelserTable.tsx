@@ -30,7 +30,7 @@ export const NavYtelserTable = ({systeminntekter = []}: {systeminntekter?: NavUt
                             <Table.DataCell>
                                 <LocalizedDate date={utbetaling.utbetalingsdato} />
                             </Table.DataCell>
-                            <Table.DataCell>{utbetaling.type}</Table.DataCell>
+                            <Table.DataCell>{utbetaling.ytelsestype}</Table.DataCell>
                             <Table.DataCell align={"left"}>
                                 <LocalizedCurrency value={utbetaling.belop} />
                             </Table.DataCell>
