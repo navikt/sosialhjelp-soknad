@@ -402,7 +402,16 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/KontoInformasjonInput"}}},
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "oneOf": [
+                                    {"$ref": "#/components/schemas/HarIkkeKontoInput"},
+                                    {"$ref": "#/components/schemas/KontonummerBrukerInput"}
+                                ]
+                            }
+                        }
+                    },
                     "required": true
                 },
                 "responses": {
@@ -1915,9 +1924,19 @@
                 "type": "object",
                 "properties": {"telefonnummerRegister": {"type": "string"}, "telefonnummerBruker": {"type": "string"}}
             },
-            "KontoInformasjonInput": {
-                "type": "object",
-                "properties": {"harIkkeKonto": {"type": "boolean"}, "kontonummerBruker": {"type": "string"}}
+            "HarIkkeKontoInput": {
+                "allOf": [
+                    {"$ref": "#/components/schemas/KontoInput"},
+                    {"type": "object", "properties": {"harIkkeKonto": {"type": "boolean"}}}
+                ],
+                "required": ["harIkkeKonto"]
+            },
+            "KontoInput": {"type": "object"},
+            "KontonummerBrukerInput": {
+                "allOf": [
+                    {"$ref": "#/components/schemas/KontoInput"},
+                    {"type": "object", "properties": {"kontonummerBruker": {"type": "string"}}}
+                ]
             },
             "KontoInformasjonDto": {
                 "type": "object",
@@ -2910,6 +2929,7 @@
                             "UTBETALING_HUSBANKEN"
                         ]
                     },
+                    "ytelsestype": {"type": "string"},
                     "utbetalingsdato": {"type": "string"},
                     "belop": {"type": "number", "format": "double"}
                 }
