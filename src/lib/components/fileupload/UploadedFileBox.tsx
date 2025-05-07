@@ -39,6 +39,7 @@ const dokumentasjonsTypeTilTextKey: Record<string, string> = {
     FORMUE_BRUKSKONTO: "begrunnelse.kategorier.kortKategorier.brukskonto",
     FORMUE_ANNET: "begrunnelse.kategorier.kortKategorier.kontooversikt",
     JOBB: "begrunnelse.kategorier.kortKategorier.lonnslipp",
+    LONNSLIPP: "begrunnelse.kategorier.kortKategorier.lonnslipp",
     UTGIFTER_STROM: "begrunnelse.kategorier.kortKategorier.stromOppvarming",
     STUDIELAN_INNTEKT: "begrunnelse.kategorier.kortKategorier.stipendLan",
     UTGIFTER_ANDRE_UTGIFTER: "begrunnelse.kategorier.kortKategorier.annet",
