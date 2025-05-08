@@ -58,12 +58,18 @@ const Inntekt = () => {
     const {setFormue, formue} = useFormue();
     const [hasInitialized, setHasInitialized] = useState(false);
 
-    // TODO: Gjør dette i backend ved kort transition i stedet.
-    // TODO: Denne eksistere på grunn av en 404 feil når søker skriver verdi
-    // TODO: i inputeltet
+    /**
+       TODO: Dette er unnødvendig innvikla og bør bli gjort i backend,
+                    eller finne en bedre måte å gjør dette på i frontend.
+                    Kanskje dette kan bli gjort i backend ved kort transition i stedet?
+                    Denne eksistere på grunn av en 404 feil når søker skriver verdi
+                    i inputeltet, og pga. så må hasSparing legges til fordi ellers
+                    får man 404 feil når søker velger kontooversikt (FORMUE_ANNET)
+     */
+
     useEffect(() => {
         if (!hasInitialized && formue && !formue.hasBrukskonto) {
-            setFormue(["hasBrukskonto"]);
+            setFormue(["hasBrukskonto", "hasSparing"]);
             setHasInitialized(true);
         }
     }, [formue, hasInitialized]);
