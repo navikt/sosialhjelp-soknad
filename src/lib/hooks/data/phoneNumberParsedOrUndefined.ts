@@ -11,7 +11,7 @@ export const phoneNumberParsedOrUndefined = (telefonNr: string | undefined) => {
     try {
         const parsedNumber = parsePhoneNumberWithError(telefonNr, "NO");
 
-        if (!parsedNumber.isValid()) {
+        if (!parsedNumber.isPossible()) {
             logger.error(`attempt to parse invalid phone number, returning undefined`);
             return undefined;
         }
