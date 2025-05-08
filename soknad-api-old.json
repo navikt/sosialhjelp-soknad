@@ -46,7 +46,7 @@
         },
         "/informasjon/actions/logg": {
             "post": {
-                "tags": ["informasjon-ressurs"],
+                "tags": ["informasjon-controller"],
                 "operationId": "loggFraKlient",
                 "requestBody": {
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Logg"}}},
@@ -191,7 +191,7 @@
         },
         "/informasjon/session": {
             "get": {
-                "tags": ["informasjon-ressurs"],
+                "tags": ["informasjon-controller"],
                 "operationId": "getSessionInfo",
                 "responses": {
                     "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
@@ -220,7 +220,7 @@
         },
         "/informasjon/adressesok": {
             "get": {
-                "tags": ["informasjon-ressurs"],
+                "tags": ["informasjon-controller"],
                 "operationId": "adresseSok",
                 "parameters": [{"name": "sokestreng", "in": "query", "required": false, "schema": {"type": "string"}}],
                 "responses": {
@@ -460,11 +460,10 @@
                         "type": "boolean",
                         "description": "Bruker har adressebeskyttelse og kan ikke bruke digital søknad"
                     },
-                    "fornavn": {"type": "string", "description": "Brukerens fornavn"},
                     "daysBeforeDeletion": {
                         "type": "integer",
                         "format": "int64",
-                        "description": "Antall dager etter siste endring før søknader slettes"
+                        "description": "Antall dager før søknader slettes"
                     },
                     "open": {
                         "type": "array",
@@ -480,8 +479,7 @@
                         "type": "integer",
                         "format": "int64",
                         "description": "Max file upload size, in bytes"
-                    },
-                    "qualifiesForKortSoknad": {"type": "boolean", "description": "User qualifies for kort søknad"}
+                    }
                 },
                 "required": ["daysBeforeDeletion", "maxUploadSizeBytes", "numRecentlySent", "open", "userBlocked"]
             },

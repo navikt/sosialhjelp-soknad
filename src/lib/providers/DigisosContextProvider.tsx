@@ -2,7 +2,7 @@
 import {ReactNode, useEffect, useReducer, useState} from "react";
 import {initialValideringState, valideringsReducer} from "../validering.ts";
 import {AnalyticsData, DigisosContext} from "./DigisosContext.ts";
-import {getSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs.ts";
+import {getSessionInfo} from "../../generated/informasjon-controller/informasjon-controller.ts";
 import {featureToggles as getFeatureToggles} from "../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
 import {SessionResponse} from "../../generated/model/sessionResponse.ts";
 import {FeatureToggles200} from "../../generated/model/featureToggles200.ts";

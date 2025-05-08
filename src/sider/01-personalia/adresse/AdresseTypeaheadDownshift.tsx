@@ -8,7 +8,7 @@ import {formaterAdresseString} from "./AdresseUtils";
 import {AdresseForslag} from "../../../generated/model";
 import * as React from "react";
 import {Trans, useTranslation} from "react-i18next";
-import {useAdresseSok} from "../../../generated/informasjon-ressurs/informasjon-ressurs";
+import {useAdresseSok} from "../../../generated/informasjon-controller/informasjon-controller.ts";
 import {UseQueryResult} from "@tanstack/react-query";
 
 type AdresseSokChildProps = Pick<UseQueryResult<AdresseForslag[]>, "isPending" | "data">;
