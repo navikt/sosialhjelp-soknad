@@ -189,4 +189,10 @@ export const opplysningSpec: Record<DokumentasjonDtoType, OpplysningSpec> = {
         textKey: "opplysninger.oppholdstillatelse.oppholdstillatelse",
         sortKey: 33,
     },
+    // Brukes ikke, men "må" med pga. kategori valg i kort søknad. Og siden JOBB blir fjernet i backend pga skatteetate samtykke
+    LONNSLIPP: {
+        formVariant: "ingen",
+        textKey: "opplysninger.oppholdstillatelse.oppholdstillatelse",
+        sortKey: 34,
+    },
 };
