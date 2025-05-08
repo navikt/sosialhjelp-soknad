@@ -125,9 +125,8 @@ export const ForhandsvisningVedleggModal = ({
                                 <option value="FORMUE_ANNET">
                                     {t("begrunnelse.kategorier.kortKategorier.kontooversikt")}
                                 </option>
-                                <option value="JOBB">{t("begrunnelse.kategorier.kortKategorier.lonnslipp")}JOBB</option>
                                 <option value="LONNSLIPP">
-                                    {t("begrunnelse.kategorier.kortKategorier.lonnslipp")}LONNSLIPP
+                                    {t("begrunnelse.kategorier.kortKategorier.lonnslipp")}
                                 </option>
                                 <option value="UTGIFTER_STROM">
                                     {t("begrunnelse.kategorier.kortKategorier.stromOppvarming")}
