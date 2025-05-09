@@ -14,7 +14,6 @@ import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
 import {UploadedFileBox} from "./UploadedFileBox.tsx";
 import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
-import {useQueryClient} from "@tanstack/react-query";
 
 type TranslationKeys = "begrunnelse.kort.behov.dokumentasjon.beskrivelse" | "situasjon.kort.dokumentasjon.description";
 
@@ -42,7 +41,6 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
     const forslag = liste ? (t(liste, {returnObjects: true}) as string[]) : [];
 
     const {valgtKategoriData} = useValgtKategoriContext();
-    const queryClient = useQueryClient();
     const finalDokumentasjonType = valgtKategoriData.valgtKategorier || "UTGIFTER_ANDRE_UTGIFTER";
 
     const {
@@ -87,7 +85,6 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props): React.JSX.Element 
                             visKategorier={true}
                             doUpload={async (file) => {
                                 await uploadDocument(file);
-                                await queryClient.invalidateQueries();
                                 setShowSuccessAlert(true);
                             }}
                             resetAlerts={() => setShowSuccessAlert(false)}
@@ -133,7 +130,6 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: DokumentasjonDtoTyp
     const {conversionPending} = usePDFConverter();
     const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
     const isPending = conversionPending || conversionPending;
-    const queryClient = useQueryClient();
 
     return (
         <div className={"space-y-2"}>
@@ -144,7 +140,6 @@ const Dokumenter = ({dokumentasjonType}: {dokumentasjonType: DokumentasjonDtoTyp
                     visKategorier={dokumentasjonType !== "FORMUE_BRUKSKONTO"}
                     doUpload={async (file) => {
                         await uploadDocument(file);
-                        await queryClient.invalidateQueries();
                         setShowSuccessAlert(true);
                     }}
                     resetAlerts={() => setShowSuccessAlert(false)}

@@ -14,7 +14,6 @@ import {saveDokument, useDeleteDokument} from "../../../generated/new/dokument-c
 import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
 import {useQueryClient} from "@tanstack/react-query";
 import {useGetForventetDokumentasjon} from "../../../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
-import {useGetOkonomiskeOpplysninger} from "../../../generated/new/okonomiske-opplysninger-controller/okonomiske-opplysninger-controller.ts";
 
 const TEN_MEGABYTE_COMPAT_FALLBACK = 10 * 1024 * 1024;
 
@@ -37,7 +36,7 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
     const {setValgtKategoriData} = useValgtKategoriContext();
 
     const queryClient = useQueryClient();
-    const {queryKey: dokumentasjonQueryKey} = useGetOkonomiskeOpplysninger(soknadId);
+    queryClient.invalidateQueries();
 
     /**
      * When the data on the server has changed, we automatically update the client-side list.
@@ -74,7 +73,7 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
                     logAmplitudeEvent("dokument slettet", {opplysningType: dokumentasjonType}).then();
 
                     //brukes for å tvinge en refretch av dokumentasjon fra backend slik at ting blir rendret
-                    queryClient.invalidateQueries({queryKey: dokumentasjonQueryKey});
+                    queryClient.invalidateQueries();
                 },
             }
         );
@@ -116,7 +115,7 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
             await logAmplitudeEvent("dokument lastet opp", {opplysningType: dokumentasjonType});
 
             //brukes for å tvinge en refretch av dokumentasjon fra backend slik at ting blir rendret
-            await queryClient.invalidateQueries({queryKey: dokumentasjonQueryKey});
+            await queryClient.invalidateQueries();
         } catch (e: any) {
             handleApiError(e);
         } finally {
