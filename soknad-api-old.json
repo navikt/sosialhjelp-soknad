@@ -46,7 +46,7 @@
         },
         "/informasjon/actions/logg": {
             "post": {
-                "tags": ["informasjon-controller"],
+                "tags": ["informasjon-ressurs"],
                 "operationId": "loggFraKlient",
                 "requestBody": {
                     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Logg"}}},
@@ -191,7 +191,7 @@
         },
         "/informasjon/session": {
             "get": {
-                "tags": ["informasjon-controller"],
+                "tags": ["informasjon-ressurs"],
                 "operationId": "getSessionInfo",
                 "responses": {
                     "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
@@ -220,7 +220,7 @@
         },
         "/informasjon/adressesok": {
             "get": {
-                "tags": ["informasjon-controller"],
+                "tags": ["informasjon-ressurs"],
                 "operationId": "adresseSok",
                 "parameters": [{"name": "sokestreng", "in": "query", "required": false, "schema": {"type": "string"}}],
                 "responses": {

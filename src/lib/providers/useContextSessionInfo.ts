@@ -1,6 +1,6 @@
 import {useContext, useEffect, useState} from "react";
 import {DigisosContext} from "./DigisosContext.ts";
-import {getSessionInfo} from "../../generated/informasjon-controller/informasjon-controller.ts";
+import {getSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs.ts";
 
 export const useContextSessionInfo = () => {
     const context = useContext(DigisosContext);
