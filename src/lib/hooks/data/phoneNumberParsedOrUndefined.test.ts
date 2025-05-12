@@ -40,7 +40,7 @@ describe("phoneNumberParsedOrUndefined", () => {
     });
 
     it("returns undefined for invalid number", () => {
-        const result = phoneNumberParsedOrUndefined("12345");
+        const result = phoneNumberParsedOrUndefined("1232345234545");
         expect(result).toBeUndefined();
         expect(logger.error).toHaveBeenCalledWith("attempt to parse invalid phone number, returning undefined");
     });
