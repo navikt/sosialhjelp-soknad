@@ -460,11 +460,10 @@
                         "type": "boolean",
                         "description": "Bruker har adressebeskyttelse og kan ikke bruke digital søknad"
                     },
-                    "fornavn": {"type": "string", "description": "Brukerens fornavn"},
                     "daysBeforeDeletion": {
                         "type": "integer",
                         "format": "int64",
-                        "description": "Antall dager etter siste endring før søknader slettes"
+                        "description": "Antall dager før søknader slettes"
                     },
                     "open": {
                         "type": "array",
@@ -480,8 +479,7 @@
                         "type": "integer",
                         "format": "int64",
                         "description": "Max file upload size, in bytes"
-                    },
-                    "qualifiesForKortSoknad": {"type": "boolean", "description": "User qualifies for kort søknad"}
+                    }
                 },
                 "required": ["daysBeforeDeletion", "maxUploadSizeBytes", "numRecentlySent", "open", "userBlocked"]
             },

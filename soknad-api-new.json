@@ -391,7 +391,7 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoInformasjonDto"}}}
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoinformasjonResponse"}}}
                     }
                 }
             },
@@ -403,14 +403,7 @@
                 ],
                 "requestBody": {
                     "content": {
-                        "application/json": {
-                            "schema": {
-                                "oneOf": [
-                                    {"$ref": "#/components/schemas/HarIkkeKontoInput"},
-                                    {"$ref": "#/components/schemas/KontonummerBrukerInput"}
-                                ]
-                            }
-                        }
+                        "application/json": {"schema": {"$ref": "#/components/schemas/KontoinformasjonRequest"}}
                     },
                     "required": true
                 },
@@ -434,7 +427,7 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoInformasjonDto"}}}
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoinformasjonResponse"}}}
                     }
                 }
             }
@@ -1769,7 +1762,6 @@
                 "required": ["loginUrl"]
             },
             "BoutgifterInput": {
-                "type": "object",
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
@@ -1829,7 +1821,6 @@
                 ]
             },
             "BarneutgifterInput": {
-                "type": "object",
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
@@ -1897,7 +1888,6 @@
                 ]
             },
             "UtdanningInput": {
-                "type": "object",
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
@@ -1924,21 +1914,11 @@
                 "type": "object",
                 "properties": {"telefonnummerRegister": {"type": "string"}, "telefonnummerBruker": {"type": "string"}}
             },
-            "HarIkkeKontoInput": {
-                "allOf": [
-                    {"$ref": "#/components/schemas/KontoInput"},
-                    {"type": "object", "properties": {"harIkkeKonto": {"type": "boolean"}}}
-                ],
-                "required": ["harIkkeKonto"]
+            "KontoinformasjonRequest": {
+                "type": "object",
+                "properties": {"harIkkeKonto": {"type": "boolean"}, "kontonummerBruker": {"type": "string"}}
             },
-            "KontoInput": {"type": "object"},
-            "KontonummerBrukerInput": {
-                "allOf": [
-                    {"$ref": "#/components/schemas/KontoInput"},
-                    {"type": "object", "properties": {"kontonummerBruker": {"type": "string"}}}
-                ]
-            },
-            "KontoInformasjonDto": {
+            "KontoinformasjonResponse": {
                 "type": "object",
                 "properties": {
                     "harIkkeKonto": {"type": "boolean"},
@@ -2068,7 +2048,6 @@
                 "required": ["detalj", "type"]
             },
             "OkonomiDetaljDto": {
-                "type": "object",
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
@@ -2175,7 +2154,6 @@
                 ]
             },
             "VerdierInput": {
-                "type": "object",
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
@@ -2223,7 +2201,6 @@
                 "required": ["hasAnnet", "hasForsikring", "hasSalg", "hasUtbytte"]
             },
             "UtbetalingerInput": {
-                "type": "object",
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
@@ -2582,7 +2559,6 @@
                 }
             },
             "BegrunnelseInput": {
-                "type": "object",
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
@@ -2685,7 +2661,6 @@
                 }
             },
             "AdresseInput": {
-                "type": "object",
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
@@ -2749,7 +2724,6 @@
                 "required": ["adresselinjer", "landkode"]
             },
             "Adresse": {
-                "type": "object",
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
