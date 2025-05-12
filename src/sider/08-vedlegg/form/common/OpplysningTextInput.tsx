@@ -1,6 +1,6 @@
 import {TextField, TextFieldProps} from "@navikt/ds-react";
 import {useController, UseControllerProps} from "react-hook-form";
-import {BelopBeskrivelseFormValues} from "../variants/belopBeskrivelse/BelopBeskrivelseFormSchema.tsx";
+import {BelopBeskrivelseFormValues} from "../variants/belopBeskrivelse/BelopBeskrivelseFormSchema.ts";
 import cx from "classnames";
 import React from "react";
 import {DigisosLanguageKey} from "../../../../lib/i18n/common.ts";

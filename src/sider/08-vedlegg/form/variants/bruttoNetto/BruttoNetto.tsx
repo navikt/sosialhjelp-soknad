@@ -4,7 +4,7 @@ import React from "react";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {BruttoNettoFormSchema} from "./BruttoNettoFormSchema.ts";
-import {bruttoNettoFormToLonnsInput} from "./bruttoNettoFormToLonnsInput.tsx";
+import {bruttoNettoFormToLonnsInput} from "./bruttoNettoFormToLonnsInput.ts";
 import {OpplysningBelopInput} from "../../common/OpplysningBelopInput.tsx";
 import {useDokumentasjonTekster} from "../../../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
 

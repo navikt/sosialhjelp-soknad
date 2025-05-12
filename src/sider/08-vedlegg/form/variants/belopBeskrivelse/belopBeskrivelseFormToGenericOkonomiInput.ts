@@ -1,6 +1,6 @@
 import {DokumentasjonDtoType} from "../../../../../generated/new/model/dokumentasjonDtoType.ts";
 import {GenericOkonomiInput} from "../../../../../generated/new/model/genericOkonomiInput.ts";
-import {BelopBeskrivelseFormValues} from "./BelopBeskrivelseFormSchema.tsx";
+import {BelopBeskrivelseFormValues} from "./BelopBeskrivelseFormSchema.ts";
 
 export const belopBeskrivelseFormToGenericOkonomiInput = (
     opplysningstype: DokumentasjonDtoType,

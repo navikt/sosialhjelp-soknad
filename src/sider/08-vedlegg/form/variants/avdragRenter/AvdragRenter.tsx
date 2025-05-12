@@ -2,7 +2,7 @@ import {AvdragRenterDto, BoliglanInput} from "../../../../../generated/new/model
 import {useForm} from "react-hook-form";
 import React from "react";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {avdragRenterFormToBoliglanInput} from "./avdragRenterFormToBoliglanInput.tsx";
+import {avdragRenterFormToBoliglanInput} from "./avdragRenterFormToBoliglanInput.ts";
 import {AvdragRenterFormSchema, AvdragRenterFormValues} from "./AvdragRenterFormSchema.ts";
 import {AvdragRenterInputList} from "./AvdragRenterInputList.tsx";
 import {DokumentasjonTypesForVariant} from "../../../../../lib/opplysninger.ts";

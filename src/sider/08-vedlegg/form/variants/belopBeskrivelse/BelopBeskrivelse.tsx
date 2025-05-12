@@ -4,7 +4,7 @@ import {useDokumentasjonTekster} from "../../../../../lib/hooks/dokumentasjon/us
 import React, {ReactNode} from "react";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {OpplysningBelopInput} from "../../common/OpplysningBelopInput.tsx";
-import {BelopBeskrivelseFormSchema, BelopBeskrivelseFormValues} from "./BelopBeskrivelseFormSchema.tsx";
+import {BelopBeskrivelseFormSchema, BelopBeskrivelseFormValues} from "./BelopBeskrivelseFormSchema.ts";
 import {ListAddButton} from "../../common/ListAddButton.tsx";
 import {ListRemoveButton} from "../../common/ListRemoveButton.tsx";
 import {OpplysningTextInput} from "../../common/OpplysningTextInput.tsx";

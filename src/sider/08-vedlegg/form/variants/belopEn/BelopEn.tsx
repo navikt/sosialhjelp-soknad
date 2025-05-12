@@ -2,7 +2,7 @@ import {BelopDto, DokumentasjonDtoType, type GenericOkonomiInput} from "../../..
 import {useForm} from "react-hook-form";
 import React from "react";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {belopEnFormToGenericOkonomiInput} from "./belopEnFormToGenericOkonomiInput.tsx";
+import {belopEnFormToGenericOkonomiInput} from "./belopEnFormToGenericOkonomiInput.ts";
 import {BelopEnFormValues, BelopEnSchema} from "./BelopEnSchema.ts";
 import {OpplysningBelopInput} from "../../common/OpplysningBelopInput.tsx";
 import {useDokumentasjonTekster} from "../../../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
