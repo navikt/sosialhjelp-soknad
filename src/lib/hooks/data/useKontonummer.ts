@@ -18,7 +18,7 @@ export const useKontonummer = () => {
         queryKey
     );
 
-    const {mutate} = useUpdateKontoInformasjonBruker({mutation: {...mutationHandlers}});
+    const {mutate, isPending: isMutating} = useUpdateKontoInformasjonBruker({mutation: {...mutationHandlers}});
 
     const updateKontoInformasjon = (data: KontonummerFormValues) => mutate({soknadId, data});
 
@@ -26,5 +26,6 @@ export const useKontonummer = () => {
         kontoinformasjon,
         updateKontoInformasjon,
         isLoading,
+        isMutating,
     };
 };
