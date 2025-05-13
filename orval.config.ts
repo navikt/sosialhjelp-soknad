@@ -56,9 +56,10 @@ export default defineConfig({
                     name: "axiosInstance",
                 },
             },
-            // Vi bruker ikke mocks enda, og avventer ny versjon av orval
-            // som støtter msw v2.
-            mock: false,
+            mock: {
+                type: "msw",
+                baseUrl: "http://localhost:8181/sosialhjelp/soknad-api",
+            },
         },
         hooks: {
             afterAllFilesWrite: "prettier --write",
