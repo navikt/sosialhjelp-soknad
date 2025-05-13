@@ -33,3 +33,4 @@ chromedriver.log
 next-env.d.ts
 
 messages/*.d.json.ts
+*storybook.log
