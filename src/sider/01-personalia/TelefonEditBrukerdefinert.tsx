@@ -1,7 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {BodyShort, Button} from "@navikt/ds-react";
 import * as React from "react";
-import {PhoneNumber} from "libphonenumber-js";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {parsePhoneNumber} from "libphonenumber-js/min";
@@ -9,16 +8,19 @@ import {TelefonnummerInput} from "../../generated/new/model/telefonnummerInput.t
 import {TelefonnummerField} from "./TelefonnummerField.tsx";
 import {TelefonnummerFormSchema} from "./TelefonnummerFormSchema.ts";
 import {formatPhoneNumber} from "./formatPhoneNumber.ts";
+import {phoneNumberParsedOrUndefined} from "../../lib/hooks/data/phoneNumberParsedOrUndefined.ts";
 
 export const TelefonEditBrukerdefinert = ({
-    telefonnummerBruker,
+    bruker,
     onChange,
     onCancel,
 }: {
-    telefonnummerBruker: PhoneNumber | undefined;
+    bruker: string | undefined;
     onChange: (telefonnummer: TelefonnummerInput) => void;
     onCancel: () => void;
 }) => {
+    const telefonnummerBruker = phoneNumberParsedOrUndefined(bruker);
+
     const {handleSubmit, control} = useForm({
         defaultValues: {phoneNumber: telefonnummerBruker ? formatPhoneNumber(telefonnummerBruker) : null},
         resolver: zodResolver(TelefonnummerFormSchema),
