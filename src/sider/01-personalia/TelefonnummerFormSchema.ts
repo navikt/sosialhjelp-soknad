@@ -10,6 +10,7 @@ const TelefonnummerSchema = z.preprocess(
         .max(11, "kontakt.telefon.feil.maxLength")
         .nullable()
 ) as z.ZodEffects<z.ZodNullable<z.ZodString>, string | null, string | null>;
+//   ^^^ https://github.com/colinhacks/zod/issues/3537#issuecomment-2829790481
 
 export const TelefonnummerFormSchema = z
     .object({phoneNumber: TelefonnummerSchema})
@@ -18,5 +19,3 @@ export const TelefonnummerFormSchema = z
         message: "kontakt.telefon.feil.ugyldig",
         path: ["phoneNumber"],
     });
-
-//   ^^^ https://github.com/colinhacks/zod/issues/3537#issuecomment-2829790481
