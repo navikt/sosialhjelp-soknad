@@ -3,12 +3,12 @@ import * as React from "react";
 import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo.tsx";
 import {formatKontonummer} from "@fremtind/jkl-formatters-util";
 import {BodyShort, Label} from "@navikt/ds-react";
-import {KontoinformasjonResponse} from "../../../generated/new/model/kontoinformasjonResponse.ts";
+import {KontoinformasjonDto} from "../../generated/new/model/kontoinformasjonDto.ts";
 
 export const KontonrShow = ({
     kontoinformasjon: {harIkkeKonto, kontonummerBruker, kontonummerRegister},
 }: {
-    kontoinformasjon: KontoinformasjonResponse;
+    kontoinformasjon: KontoinformasjonDto;
 }) => {
     const {t} = useTranslation("skjema");
 

@@ -391,7 +391,7 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoinformasjonResponse"}}}
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoinformasjonDto"}}}
                     }
                 }
             },
@@ -402,9 +402,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "requestBody": {
-                    "content": {
-                        "application/json": {"schema": {"$ref": "#/components/schemas/KontoinformasjonRequest"}}
-                    },
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/KontoinformasjonInput"}}},
                     "required": true
                 },
                 "responses": {
@@ -427,7 +425,7 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoinformasjonResponse"}}}
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoinformasjonDto"}}}
                     }
                 }
             }
@@ -1914,11 +1912,11 @@
                 "type": "object",
                 "properties": {"telefonnummerRegister": {"type": "string"}, "telefonnummerBruker": {"type": "string"}}
             },
-            "KontoinformasjonRequest": {
+            "KontoinformasjonInput": {
                 "type": "object",
                 "properties": {"harIkkeKonto": {"type": "boolean"}, "kontonummerBruker": {"type": "string"}}
             },
-            "KontoinformasjonResponse": {
+            "KontoinformasjonDto": {
                 "type": "object",
                 "properties": {
                     "harIkkeKonto": {"type": "boolean"},
