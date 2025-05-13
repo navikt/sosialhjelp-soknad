@@ -8,7 +8,7 @@ import {ListAddButton} from "./components/ListAddButton.tsx";
 import {ListRemoveButton} from "./components/ListRemoveButton.tsx";
 import {OpplysningTextInput} from "./components/OpplysningTextInput.tsx";
 import {DokumentasjonTypesForVariant} from "../../../lib/opplysninger.ts";
-import {BelopBeskrivelseFormSchema, BelopBeskrivelseFormValues} from "./lib/formSchemas.ts";
+import {BelopBeskrivelseFormSchema, BelopBeskrivelseFormValues} from "./schema/belopBeskrivelseForm.ts";
 import {belopBeskrivelseFormToGenericOkonomiInput} from "./lib/formToInputMappers.ts";
 
 type Props = (

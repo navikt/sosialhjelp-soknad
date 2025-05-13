@@ -1,5 +1,7 @@
-import {AvdragRenterFormValues, BelopBeskrivelseFormValues, BelopEnFormValues} from "./formSchemas.ts";
-import {BruttoNettoFormValues} from "../BruttoNetto.tsx";
+import {BelopBeskrivelseFormValues} from "../schema/belopBeskrivelseForm.ts";
+import {AvdragRenterFormValues} from "../schema/avdragRenterForm.ts";
+import {BelopEnFormValues} from "../schema/belopEnForm.ts";
+import {BruttoNettoFormValues} from "../schema/bruttoNettoForm.ts";
 import {LonnsInput} from "../../../../generated/new/model/lonnsInput.ts";
 import {GenericOkonomiInput} from "../../../../generated/new/model/genericOkonomiInput.ts";
 import {DokumentasjonDtoType} from "../../../../generated/new/model/dokumentasjonDtoType.ts";

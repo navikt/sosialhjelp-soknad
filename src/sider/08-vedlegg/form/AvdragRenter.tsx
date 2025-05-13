@@ -4,7 +4,7 @@ import React from "react";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {AvdragRenterInputList} from "./AvdragRenterInputList.tsx";
 import {DokumentasjonTypesForVariant} from "../../../lib/opplysninger.ts";
-import {AvdragRenterFormSchema, AvdragRenterFormValues} from "./lib/formSchemas.ts";
+import {AvdragRenterFormSchema, AvdragRenterFormValues} from "./schema/avdragRenterForm.ts";
 import {avdragRenterFormToBoliglanInput} from "./lib/formToInputMappers.ts";
 
 const AvdragRenter = ({

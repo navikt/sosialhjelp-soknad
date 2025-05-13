@@ -4,7 +4,7 @@ import cx from "classnames";
 import React from "react";
 import {DigisosLanguageKey} from "../../../../lib/i18n/common.ts";
 import {useTranslation} from "react-i18next";
-import {BelopBeskrivelseFormValues} from "../lib/formSchemas.ts";
+import {BelopBeskrivelseFormValues} from "../schema/belopBeskrivelseForm.ts";
 
 export const OpplysningTextInput = ({
     label,

@@ -4,7 +4,7 @@ import React from "react";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {OpplysningBelopInput} from "./components/OpplysningBelopInput.tsx";
 import {useDokumentasjonTekster} from "../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
-import {BelopEnFormValues, BelopEnSchema} from "./lib/formSchemas.ts";
+import {BelopEnFormSchema, BelopEnFormValues} from "./schema/belopEnForm.ts";
 import {belopEnFormToGenericOkonomiInput} from "./lib/formToInputMappers.ts";
 
 const BelopEn = ({
@@ -19,7 +19,7 @@ const BelopEn = ({
     const {control, handleSubmit} = useForm({
         mode: "onBlur",
         shouldFocusError: false,
-        resolver: zodResolver(BelopEnSchema),
+        resolver: zodResolver(BelopEnFormSchema),
         defaultValues: {belop: opplysning?.belop},
     });
 

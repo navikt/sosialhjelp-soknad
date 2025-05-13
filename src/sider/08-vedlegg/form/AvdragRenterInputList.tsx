@@ -3,7 +3,7 @@ import {useDokumentasjonTekster} from "../../../lib/hooks/dokumentasjon/useDokum
 import {OpplysningBelopInput} from "./components/OpplysningBelopInput.tsx";
 import {ListRemoveButton} from "./components/ListRemoveButton.tsx";
 import {ListAddButton} from "./components/ListAddButton.tsx";
-import {AvdragRenterFormValues} from "./lib/formSchemas.ts";
+import {AvdragRenterFormValues} from "./schema/avdragRenterForm.ts";
 
 export const AvdragRenterInputList = ({
     name,
