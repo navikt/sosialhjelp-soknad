@@ -19,8 +19,9 @@ import {mutationKey, useAdresser} from "./adresse/useAdresser.tsx";
 import {useIsMutating} from "@tanstack/react-query";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";
-import {Heading} from "@navikt/ds-react";
+import {Heading, Loader} from "@navikt/ds-react";
 import {Telefon} from "./Telefon.tsx";
+import {useTelefonnummer} from "../../lib/hooks/data/useTelefonnummer.tsx";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
@@ -52,6 +53,8 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
         if (erAktiv(navEnhet)) setError(null);
     }, [navEnhet]);
 
+    const {isLoading, isMutating: telefonIsMutating, setTelefonnummer, telefonnummer} = useTelefonnummer();
+
     return (
         <SkjemaSteg>
             <SkjemaStegBlock className={shortSpacing ? "lg:space-y-12" : ""}>
@@ -67,7 +70,15 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                     <Heading id={"telefon-heading"} size={"small"} level={"3"}>
                         {t("kontakt.telefon.sporsmal")}
                     </Heading>
-                    <Telefon />
+                    {isLoading ? (
+                        <Loader />
+                    ) : (
+                        <Telefon
+                            telefonnummer={telefonnummer!}
+                            setTelefonnummer={setTelefonnummer}
+                            isMutating={telefonIsMutating}
+                        />
+                    )}
                 </section>
 
                 <section aria-labelledby={"kontonummer-heading"} className={"space-y-2"}>

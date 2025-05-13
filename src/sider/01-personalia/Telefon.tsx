@@ -4,18 +4,19 @@ import {Systeminfo} from "../../lib/components/systeminfo/Systeminfo.tsx";
 import {TelefonShow} from "./TelefonShow.tsx";
 import {TelefonEditBrukerdefinert} from "./TelefonEditBrukerdefinert.tsx";
 import {PersonaliaEditKnapp} from "./PersonaliaEditKnapp.tsx";
-import {useTelefonnummer} from "../../lib/hooks/data/useTelefonnummer.tsx";
-import {Loader} from "@navikt/ds-react";
+import {TelefonnummerDto} from "../../generated/new/model/telefonnummerDto.ts";
+import {TelefonnummerInput} from "../../generated/new/model/telefonnummerInput.ts";
 
-export const Telefon = () => {
-    const {isLoading, setTelefonnummer, telefonnummer, isMutating} = useTelefonnummer();
+export const Telefon = ({
+    telefonnummer: {telefonnummerBruker, telefonnummerRegister},
+    setTelefonnummer,
+    isMutating,
+}: {
+    telefonnummer: TelefonnummerDto;
+    setTelefonnummer: (input: TelefonnummerInput) => void;
+    isMutating: boolean;
+}) => {
     const [editMode, setEditMode] = useState<boolean>(false);
-
-    if (isLoading || !telefonnummer) {
-        return <Loader />;
-    }
-
-    const {telefonnummerBruker, telefonnummerRegister} = telefonnummer;
 
     return (
         <Systeminfo>
