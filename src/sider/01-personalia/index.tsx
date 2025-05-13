@@ -2,7 +2,7 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {AdresseData} from "./adresse/Adresse";
 import {BasisPersonalia} from "./BasisPersonalia";
-import {Kontoinformasjon} from "./konto/Kontoinformasjon.tsx";
+import {Kontonr} from "./Kontonr.tsx";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {FieldErrorsImpl} from "react-hook-form";
 import {erAktiv} from "../../lib/navEnhetStatus";
@@ -20,7 +20,7 @@ import {useIsMutating} from "@tanstack/react-query";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";
 import {Heading} from "@navikt/ds-react";
-import {Telefon} from "./telefon/Telefon.tsx";
+import {Telefon} from "./Telefon.tsx";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
@@ -74,7 +74,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                     <Heading id={"kontonummer-heading"} size={"small"} level={"3"}>
                         {t("kontakt.kontonummer.sporsmal")}
                     </Heading>
-                    <Kontoinformasjon />
+                    <Kontonr />
                 </section>
                 <SkjemaStegButtons onNext={onClickNext} isNextPending={isMutating} />
             </SkjemaStegBlock>

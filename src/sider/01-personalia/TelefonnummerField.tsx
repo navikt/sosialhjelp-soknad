@@ -3,7 +3,7 @@ import * as z from "zod";
 import {useTranslation} from "react-i18next";
 import {AsYouType} from "libphonenumber-js";
 import {TextField} from "@navikt/ds-react";
-import {DigisosLanguageKey} from "../../../lib/i18n/common.ts";
+import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 import * as React from "react";
 
 import {TelefonnummerFormSchema} from "./TelefonnummerFormSchema.ts";

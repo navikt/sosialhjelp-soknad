@@ -1,11 +1,11 @@
-import {BelopDto, DokumentasjonDtoType, type GenericOkonomiInput} from "../../../../../generated/new/model";
+import {BelopDto, DokumentasjonDtoType, type GenericOkonomiInput} from "../../../generated/new/model";
 import {useForm} from "react-hook-form";
 import React from "react";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {belopEnFormToGenericOkonomiInput} from "./belopEnFormToGenericOkonomiInput.ts";
-import {BelopEnFormValues, BelopEnSchema} from "./BelopEnSchema.ts";
-import {OpplysningBelopInput} from "../../common/OpplysningBelopInput.tsx";
-import {useDokumentasjonTekster} from "../../../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
+import {OpplysningBelopInput} from "./components/OpplysningBelopInput.tsx";
+import {useDokumentasjonTekster} from "../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
+import {BelopEnFormValues, BelopEnSchema} from "./lib/formSchemas.ts";
+import {belopEnFormToGenericOkonomiInput} from "./lib/formToInputMappers.ts";
 
 const BelopEn = ({
     opplysningstype,

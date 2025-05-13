@@ -1,15 +1,15 @@
 import * as React from "react";
 import {startTransition, useState} from "react";
-import {Systeminfo} from "../../../lib/components/systeminfo/Systeminfo.tsx";
+import {Systeminfo} from "../../lib/components/systeminfo/Systeminfo.tsx";
 import {TelefonShow} from "./TelefonShow.tsx";
-import {TelefonEdit} from "./TelefonEdit.tsx";
-import {phoneNumberParsedOrUndefined} from "../../../lib/hooks/data/phoneNumberParsedOrUndefined.ts";
-import {PersonaliaEditKnapp} from "../PersonaliaEditKnapp.tsx";
-import {useTelefonnummerAPI} from "../../../lib/hooks/data/useTelefonnummerAPI.ts";
+import {TelefonEditBrukerdefinert} from "./TelefonEditBrukerdefinert.tsx";
+import {phoneNumberParsedOrUndefined} from "../../lib/hooks/data/phoneNumberParsedOrUndefined.ts";
+import {PersonaliaEditKnapp} from "./PersonaliaEditKnapp.tsx";
+import {useTelefonnummer} from "../../lib/hooks/data/useTelefonnummer.tsx";
 import {Loader} from "@navikt/ds-react";
 
 export const Telefon = () => {
-    const {isLoading, setTelefonnummer, telefonnummer, isMutating} = useTelefonnummerAPI();
+    const {isLoading, setTelefonnummer, telefonnummer, isMutating} = useTelefonnummer();
     const [editMode, setEditMode] = useState<boolean>(false);
 
     if (isLoading || !telefonnummer) {
@@ -27,7 +27,7 @@ export const Telefon = () => {
                     <PersonaliaEditKnapp onClick={() => setEditMode(true)} disabled={isMutating} />
                 </div>
             ) : (
-                <TelefonEdit
+                <TelefonEditBrukerdefinert
                     telefonnummerBruker={bruker}
                     onChange={(telefonnummer) => {
                         startTransition(() => setTelefonnummer(telefonnummer));

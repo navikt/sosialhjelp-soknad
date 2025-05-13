@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
 import useOkonomiskOpplysningMutation from "../../../lib/hooks/dokumentasjon/useOkonomiskOpplysningMutation.ts";
 import {BodyShort, Heading, Loader} from "@navikt/ds-react";
-import BelopBeskrivelse from "../../08-vedlegg/form/variants/belopBeskrivelse/BelopBeskrivelse.tsx";
+import BelopBeskrivelse from "../../08-vedlegg/form/BelopBeskrivelse.tsx";
 import {FileUploadBoxNoStyle} from "../../../lib/components/fileupload/FileUploadBox.tsx";
 import React from "react";
 import {BelopDto} from "../../../generated/new/model/belopDto.ts";

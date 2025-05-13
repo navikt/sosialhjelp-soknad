@@ -1,9 +1,9 @@
 import {UseControllerProps, useFieldArray} from "react-hook-form";
-import {AvdragRenterFormValues} from "./AvdragRenterFormSchema.ts";
-import {useDokumentasjonTekster} from "../../../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
-import {OpplysningBelopInput} from "../../common/OpplysningBelopInput.tsx";
-import {ListRemoveButton} from "../../common/ListRemoveButton.tsx";
-import {ListAddButton} from "../../common/ListAddButton.tsx";
+import {useDokumentasjonTekster} from "../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
+import {OpplysningBelopInput} from "./components/OpplysningBelopInput.tsx";
+import {ListRemoveButton} from "./components/ListRemoveButton.tsx";
+import {ListAddButton} from "./components/ListAddButton.tsx";
+import {AvdragRenterFormValues} from "./lib/formSchemas.ts";
 
 export const AvdragRenterInputList = ({
     name,

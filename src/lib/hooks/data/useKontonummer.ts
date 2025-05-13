@@ -5,7 +5,7 @@ import {
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {optimisticMutationHandlers} from "./optimisticMutationHandlers.ts";
-import {KontonummerFormValues} from "../../../sider/01-personalia/konto/KontonummerFormSchema.ts";
+import {KontonummerFormValues} from "../../../sider/01-personalia/KontonummerFormSchema.ts";
 import {KontoinformasjonResponse} from "../../../generated/new/model/kontoinformasjonResponse.ts";
 import {KontoinformasjonRequest} from "../../../generated/new/model/kontoinformasjonRequest.ts";
 

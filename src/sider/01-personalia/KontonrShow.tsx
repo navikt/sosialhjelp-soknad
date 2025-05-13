@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import * as React from "react";
-import {SysteminfoItem} from "../../../lib/components/systeminfo/Systeminfo.tsx";
+import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo.tsx";
 import {formatKontonummer} from "@fremtind/jkl-formatters-util";
 import {BodyShort, Label} from "@navikt/ds-react";
 import {KontoinformasjonResponse} from "../../../generated/new/model/kontoinformasjonResponse.ts";

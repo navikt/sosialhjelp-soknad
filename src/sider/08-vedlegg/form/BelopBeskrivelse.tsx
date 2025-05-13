@@ -1,15 +1,15 @@
-import {BelopDto, type GenericOkonomiInput} from "../../../../../generated/new/model";
+import {BelopDto, type GenericOkonomiInput} from "../../../generated/new/model";
 import {useFieldArray, useForm} from "react-hook-form";
-import {useDokumentasjonTekster} from "../../../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
+import {useDokumentasjonTekster} from "../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
 import React, {ReactNode} from "react";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {OpplysningBelopInput} from "../../common/OpplysningBelopInput.tsx";
-import {BelopBeskrivelseFormSchema, BelopBeskrivelseFormValues} from "./BelopBeskrivelseFormSchema.ts";
-import {ListAddButton} from "../../common/ListAddButton.tsx";
-import {ListRemoveButton} from "../../common/ListRemoveButton.tsx";
-import {OpplysningTextInput} from "../../common/OpplysningTextInput.tsx";
-import {belopBeskrivelseFormToGenericOkonomiInput} from "./belopBeskrivelseFormToGenericOkonomiInput.ts";
-import {DokumentasjonTypesForVariant} from "../../../../../lib/opplysninger.ts";
+import {OpplysningBelopInput} from "./components/OpplysningBelopInput.tsx";
+import {ListAddButton} from "./components/ListAddButton.tsx";
+import {ListRemoveButton} from "./components/ListRemoveButton.tsx";
+import {OpplysningTextInput} from "./components/OpplysningTextInput.tsx";
+import {DokumentasjonTypesForVariant} from "../../../lib/opplysninger.ts";
+import {BelopBeskrivelseFormSchema, BelopBeskrivelseFormValues} from "./lib/formSchemas.ts";
+import {belopBeskrivelseFormToGenericOkonomiInput} from "./lib/formToInputMappers.ts";
 
 type Props = (
     | {

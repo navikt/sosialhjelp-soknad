@@ -2,7 +2,7 @@ import {useController, UseControllerProps} from "react-hook-form";
 import {useTranslation} from "react-i18next";
 import {TextField} from "@navikt/ds-react";
 import {formatKontonummer} from "@fremtind/jkl-formatters-util";
-import {DigisosLanguageKey} from "../../../lib/i18n/common.ts";
+import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 import {KontonummerFormValues} from "./KontonummerFormSchema.ts";
 
 export const KontonummerInputField = (props: UseControllerProps<KontonummerFormValues, "kontonummerBruker">) => {

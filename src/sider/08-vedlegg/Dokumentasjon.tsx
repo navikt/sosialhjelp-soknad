@@ -1,9 +1,9 @@
 import {BodyShort, Heading} from "@navikt/ds-react";
-import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokumentasjonTekster";
+import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
 import React from "react";
 import {DokumentasjonDtoType} from "../../generated/new/model";
 import {Dokumenter} from "./upload/Dokumenter.tsx";
-import {FormSwitch} from "./form/FormSwitch.tsx";
+import {FormSwitch} from "./form/components/FormSwitch.tsx";
 
 export const Dokumentasjon = ({opplysningstype}: {opplysningstype: DokumentasjonDtoType}) => {
     const {sporsmal, undertekst} = useDokumentasjonTekster(opplysningstype);

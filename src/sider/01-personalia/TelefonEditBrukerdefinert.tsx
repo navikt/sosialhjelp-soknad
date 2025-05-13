@@ -5,12 +5,12 @@ import {PhoneNumber} from "libphonenumber-js";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {parsePhoneNumber} from "libphonenumber-js/min";
-import {TelefonnummerInput} from "../../../generated/new/model/telefonnummerInput.ts";
+import {TelefonnummerInput} from "../../generated/new/model/telefonnummerInput.ts";
 import {TelefonnummerField} from "./TelefonnummerField.tsx";
 import {TelefonnummerFormSchema} from "./TelefonnummerFormSchema.ts";
 import {formatPhoneNumber} from "./formatPhoneNumber.ts";
 
-export const TelefonEdit = ({
+export const TelefonEditBrukerdefinert = ({
     telefonnummerBruker,
     onChange,
     onCancel,
