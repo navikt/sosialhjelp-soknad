@@ -35,7 +35,7 @@ const dokumentasjonsTypeTilTextKey: Record<string, string> = {
     UTGIFTER_BARNEHAGE: "begrunnelse.kategorier.kortKategorier.barnehage",
     UTGIFTER_SFO: "begrunnelse.kategorier.kortKategorier.barnehageSFO",
     UTBETALING_HUSBANKEN: "begrunnelse.kategorier.kortKategorier.bostotte",
-    HUSLEIEKONTRAKT: "begrunnelse.kategorier.kortKategorier.husleie",
+    UTGIFTER_HUSLEIE: "begrunnelse.kategorier.kortKategorier.husleie",
     FORMUE_BRUKSKONTO: "begrunnelse.kategorier.kortKategorier.brukskonto",
     FORMUE_ANNET: "begrunnelse.kategorier.kortKategorier.kontooversikt",
     JOBB: "begrunnelse.kategorier.kortKategorier.lonnslipp",

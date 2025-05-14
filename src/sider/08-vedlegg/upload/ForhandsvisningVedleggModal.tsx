@@ -119,7 +119,7 @@ export const ForhandsvisningVedleggModal = ({
                                 <option value="UTBETALING_HUSBANKEN">
                                     {t("begrunnelse.kategorier.kortKategorier.bostotte")}
                                 </option>
-                                <option value="HUSLEIEKONTRAKT">
+                                <option value="UTGIFTER_HUSLEIE">
                                     {t("begrunnelse.kategorier.kortKategorier.husleie")}
                                 </option>
                                 <option value="FORMUE_ANNET">
