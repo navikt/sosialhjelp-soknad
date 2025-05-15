@@ -4,10 +4,10 @@ import "../src/index.css";
 import Providers from "../src/app/providers";
 import {DecoratorFunction} from "storybook/internal/types";
 import {Suspense, useEffect} from "react";
-
+import {initialize, mswLoader} from "msw-storybook-addon";
 import i18n from "../src/lib/i18n/reacti18Next";
 import {I18nextProvider} from "react-i18next";
-
+initialize();
 const withI18next: DecoratorFunction<ReactRenderer, {[x: string]: any}> = (Story, context) => {
     const {locale} = context.globals;
 
@@ -50,8 +50,10 @@ export const globalTypes = {
         },
     },
 };
+
 const preview: Preview = {
     decorators: [AppDecorator, withI18next],
+    loaders: [mswLoader],
     parameters: {
         controls: {
             matchers: {
