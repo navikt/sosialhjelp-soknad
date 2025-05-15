@@ -8,25 +8,15 @@ import {initialize, mswLoader} from "msw-storybook-addon";
 import i18n from "../src/lib/i18n/reacti18Next";
 import {I18nextProvider} from "react-i18next";
 initialize();
-const withI18next: DecoratorFunction<ReactRenderer, {[x: string]: any}> = (Story, context) => {
+
+const AppDecorator: DecoratorFunction<ReactRenderer, {[x: string]: any}> = (storyFn, context) => {
     const {locale} = context.globals;
 
     // When the locale global changes
     // Set the new locale in i18n
     useEffect(() => {
-        i18n.changeLanguage(locale);
+        i18n.changeLanguage(locale).then();
     }, [locale]);
-
-    return (
-        <Suspense fallback={<div>loading translations...</div>}>
-            <I18nextProvider i18n={i18n}>
-                <Story />
-            </I18nextProvider>
-        </Suspense>
-    );
-};
-
-const AppDecorator: DecoratorFunction<ReactRenderer, {[x: string]: any}> = (storyFn) => {
     return (
         <Suspense fallback={<div>loading translations...</div>}>
             <I18nextProvider i18n={i18n}>
@@ -35,6 +25,8 @@ const AppDecorator: DecoratorFunction<ReactRenderer, {[x: string]: any}> = (stor
         </Suspense>
     );
 };
+
+// noinspection JSUnusedGlobalSymbols
 export const globalTypes = {
     locale: {
         name: "Locale",
@@ -52,7 +44,7 @@ export const globalTypes = {
 };
 
 const preview: Preview = {
-    decorators: [AppDecorator, withI18next],
+    decorators: [AppDecorator],
     loaders: [mswLoader],
     parameters: {
         controls: {
