@@ -7,6 +7,7 @@ import {getGetTelefonnummerResponseMock} from "../../generated/new/telefonnummer
 const meta = {
     tags: ["autodocs"],
     component: Telefon,
+    argTypes: {isMutating: {control: {type: "boolean"}}, telefonnummer: {control: {type: "object"}}},
 } satisfies Meta<typeof Telefon>;
 
 export default meta;
