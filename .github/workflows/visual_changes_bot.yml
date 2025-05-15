@@ -1,0 +1,123 @@
+name: Visual changes bot
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: ['**']
+jobs:
+  update-screenshots:
+    name: Update screenshots if any changes
+    runs-on: ubuntu-latest-16-cores
+    permissions:
+      id-token: 'write'
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Get branch of PR
+        if: github.event_name == 'pull_request'
+        uses: xt0rted/pull-request-comment-branch@v3
+        id: comment-branch
+
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'pull_request' && steps.comment-branch.outputs.head_ref || github.ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+
+      - name: Build static storybook
+        run: npm run build:storybook
+
+      - name: Update Playwright screenshots
+        run: docker run --rm -v $(pwd):/workspace -w /workspace --ipc=host mcr.microsoft.com/playwright:v1.52.0-noble /bin/bash -c "CI=true npx playwright test --update-snapshots"
+
+      - name: Commit and push updated screenshots if any changes
+        if: always()
+        id: auto-commit-action
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'Update screenshots'
+
+      - name: Review PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              const { repo, owner } = context.repo;
+            
+              // Get PR number from event context
+              let prNumber;
+              if (context.payload.pull_request) {
+                prNumber = context.payload.pull_request.number;
+              } else {
+                return;
+              }
+            
+              // Add a small delay to ensure files are available
+              await new Promise(resolve => setTimeout(resolve, 1000));
+            
+              const changedFiles = await github.rest.pulls.listFiles({
+                owner,
+                repo,
+                pull_number: prNumber
+              });
+            
+              if (changedFiles.data.length === 0) {
+                console.log('Warning: No files detected in PR. This might be a timing issue.');
+                return;
+              }
+            
+              // Separate files by status
+              // Only consider files as "changed" if they are modified or added
+              const modifiedOrAddedPngs = changedFiles.data.filter(file => 
+                file.filename.endsWith('.png') && 
+                (file.status === 'modified' || file.status === 'added')
+              );
+            
+              const hasScreenshotChanges = modifiedOrAddedPngs.length > 0;
+            
+              // Find all reviews
+              const reviews = await github.rest.pulls.listReviews({
+                owner,
+                repo,
+                pull_number: prNumber
+              });
+            
+              const REVIEW_MARKER = '<!-- playwright-screenshot-bot -->';
+            
+              const botReview = reviews.data.find(review => 
+                review.user.login === 'github-actions[bot]' && 
+                review.state === 'CHANGES_REQUESTED' &&
+                review.body.includes(REVIEW_MARKER)
+              );
+            
+              if (hasScreenshotChanges && !botReview) {
+                const filesUrl = `https://github.com/${owner}/${repo}/pull/${prNumber}/files?file-filters[]=.png&file-filters[]=^playwright/`;
+                await github.rest.pulls.createReview({
+                  owner,
+                  repo,
+                  pull_number: prNumber,
+                  body: `${REVIEW_MARKER}\n## 👀 Visual changes detected\n\nPlease [review the screenshot changes](${filesUrl}) before merging.`,
+                  event: 'REQUEST_CHANGES'
+                });
+              } else if (!hasScreenshotChanges && botReview) {
+                await github.rest.pulls.dismissReview({
+                  owner,
+                  repo,
+                  pull_number: prNumber,
+                  review_id: botReview.id,
+                  message: `${REVIEW_MARKER}\nVisual changes have been reverted`
+                });
+              }
+            } catch (error) {
+              console.log('Error:', error);
+              console.log('Error details:', error.message);
+              core.setFailed('Failed to handle review');
+            }

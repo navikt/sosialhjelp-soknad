@@ -64,6 +64,7 @@
     "@chromatic-com/storybook": "^3.2.6",
     "@eslint/js": "9.26.0",
     "@faker-js/faker": "^9.8.0",
+    "@playwright/test": "^1.52.0",
     "@storybook/addon-essentials": "^8.6.12",
     "@storybook/addon-onboarding": "^8.6.12",
     "@storybook/blocks": "^8.6.12",
@@ -99,7 +100,6 @@
     "msw-storybook-addon": "^2.0.4",
     "orval": "^7.9.0",
     "pino-pretty": "^13.0.0",
-    "playwright": "^1.52.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "react-test-renderer": "^19.1.0",
@@ -123,7 +123,7 @@
     "orval": "rm -rf ./src/generated & orval --prettier",
     "lint": "eslint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build:storybook": "storybook build"
   },
   "browserslist": {
     "production": [
