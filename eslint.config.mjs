@@ -4,11 +4,16 @@ import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import nextPlugin from "@next/eslint-plugin-next";
 import globals from "globals";
+import storybook from "eslint-plugin-storybook";
 
 export default tseslint.config(
     {ignores: [".next/**/*", "src/generated/**/*"]},
     eslint.configs.recommended,
     ...tseslint.configs.recommended,
+    ...storybook.configs["flat/recommended"],
+    {
+        ignores: ["!.storybook"],
+    },
     {
         plugins: {
             "@next/next": nextPlugin,
