@@ -2,47 +2,6 @@ import {defineConfig} from "orval";
 import {pascal} from "@orval/core";
 
 export default defineConfig({
-    "soknad-api-client-old": {
-        input: "./soknad-api-old.json",
-        output: {
-            mode: "tags-split",
-            target: "src/generated",
-            schemas: "src/generated/model",
-            client: "react-query",
-            override: {
-                mutator: {
-                    path: "./src/lib/api/axiosInstance.ts",
-                    name: "axiosInstance",
-                },
-            },
-            // Vi bruker ikke mocks enda, og avventer ny versjon av orval
-            // som støtter msw v2.
-            mock: false,
-        },
-        hooks: {
-            afterAllFilesWrite: "prettier --write",
-        },
-    },
-    "soknad-api-client-old-ssr": {
-        input: "./soknad-api-old.json",
-        output: {
-            mode: "single",
-            target: "src/generated/old-ssr",
-            schemas: "src/generated/old-ssr/model",
-            client: "fetch",
-            override: {
-                mutator: {
-                    path: "./src/lib/api/ssr/authenticatedFetch.ts",
-                    name: "authenticatedFetch",
-                },
-                operationName: ({operationId}) => ssrCamelCasePrefixer(operationId),
-            },
-            mock: false,
-        },
-        hooks: {
-            afterAllFilesWrite: "prettier --write",
-        },
-    },
     "soknad-api-client-new": {
         input: "./soknad-api-new.json",
         output: {
