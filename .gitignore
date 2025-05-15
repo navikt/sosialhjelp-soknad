@@ -33,4 +33,14 @@ chromedriver.log
 next-env.d.ts
 
 messages/*.d.json.ts
-*storybook.log
+
+# testing
+**/coverage
+**/storybook.log
+**/storybook-static
+
+# Playwright
+**/test-results
+**/playwright-report
+**/blob-report
+**/playwright/.cache
