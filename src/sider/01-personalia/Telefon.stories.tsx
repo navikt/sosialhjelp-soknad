@@ -5,6 +5,7 @@ import {fn} from "@storybook/test";
 import {getGetTelefonnummerResponseMock} from "../../generated/new/telefonnummer-controller/telefonnummer-controller.msw";
 
 const meta = {
+    tags: ["autodocs"],
     component: Telefon,
 } satisfies Meta<typeof Telefon>;
 
