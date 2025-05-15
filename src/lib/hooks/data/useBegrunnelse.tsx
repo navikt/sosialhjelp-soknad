@@ -7,7 +7,7 @@ import {
     useUpdateBegrunnelse,
 } from "../../../generated/new/begrunnelse-controller/begrunnelse-controller.ts";
 import {BegrunnelseDto, type HarHvaSokesOmInput} from "../../../generated/new/model/index.ts";
-import {HarKategorierInput} from "../../../generated/new-ssr/model";
+import {HarKategorierInput} from "../../../generated/new/model";
 
 export const useBegrunnelse = () => {
     const soknadId = useSoknadId();

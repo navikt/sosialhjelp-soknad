@@ -15,7 +15,7 @@ import {useAnalyticsContext} from "../../../lib/providers/useAnalyticsContext.ts
 import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {useBegrunnelse} from "../../../lib/hooks/data/useBegrunnelse.tsx";
 import BehovForm, {FormValues} from "./BehovForm.tsx";
-import type {HarKategorierInputAllOfKategorierItem} from "../../../generated/new-ssr/model";
+import type {HarKategorierInputAllOfKategorierItem} from "../../../generated/new/model";
 import KategorierForm, {FormValues as KategorierFormValues} from "./KategorierForm.tsx";
 import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
 

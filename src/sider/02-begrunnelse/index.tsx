@@ -10,7 +10,7 @@ import {useNavigate} from "react-router";
 import {useContextFeatureToggles} from "../../lib/providers/useContextFeatureToggles.ts";
 import BegrunnelseForm from "./BegrunnelseForm.tsx";
 import KategorierForm from "./KategorierForm.tsx";
-import type {HarKategorierInputAllOfKategorierItem} from "../../generated/new-ssr/model";
+import type {HarKategorierInputAllOfKategorierItem} from "../../generated/new/model";
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 
 export const Begrunnelse = () => {

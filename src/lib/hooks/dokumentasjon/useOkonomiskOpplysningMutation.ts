@@ -1,4 +1,4 @@
-import {OkonomiskOpplysningDtoDetaljerItem} from "../../../generated/new-ssr/model";
+import {OkonomiskOpplysningDtoDetaljerItem} from "../../../generated/new/model";
 import {DokumentasjonDtoType, UpdateOkonomiskOpplysningBody} from "../../../generated/new/model";
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
