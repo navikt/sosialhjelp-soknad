@@ -1,9 +1,13 @@
 import createNextIntlPlugin from "next-intl/plugin";
 
+const isRunningInDocker = process.env.CREATE_MESSAGES_DECLARATION === "skip";
+
 const withNextIntl = createNextIntlPlugin({
     experimental: {
-        // Provide the path to the messages that you're using in `AppConfig`
-        createMessagesDeclaration: "./messages/en.json",
+        // this re-generates a typescript definitions file for next-intl messages.
+        // to avoid trying to write to a read-only docker image in production,
+        // we skip updating this file if the environment variable is set (in Dockerfile)
+        createMessagesDeclaration: isRunningInDocker ? undefined : "./messages/en.json",
     },
 });
 /** @type {import('next').NextConfig} */
