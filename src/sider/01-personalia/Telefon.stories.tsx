@@ -30,7 +30,7 @@ const render = () => {
 
 const storyTemplate = (name: string, initialState: TelefonnummerDto): Story => ({
     name,
-    args: {telefonnummer: initialState, setTelefonnummer: fn(), isMutating: false},
+    args: {telefonnummer: initialState, setTelefonnummer: fn(), isMutating: false, isLoading: false},
     render,
 });
 

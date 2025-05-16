@@ -18,7 +18,6 @@ import {AdresserDtoAdresseValg} from "../../generated/new/model/adresserDtoAdres
 import {MockSoknadIdUrlParam} from "./mockSoknadIdUrlParam.tsx";
 
 const meta = {
-    tags: ["autodocs"],
     component: Personopplysninger,
 } satisfies Meta<typeof Personopplysninger>;
 
@@ -26,7 +25,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Integrasjonstest: Story = {
     decorators: [MockSoknadIdUrlParam("mock-id-42")],
     parameters: {
         msw: [

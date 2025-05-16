@@ -19,9 +19,11 @@ import {mutationKey, useAdresser} from "./adresse/useAdresser.tsx";
 import {useIsMutating} from "@tanstack/react-query";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";
-import {Heading, Loader} from "@navikt/ds-react";
 import {Telefon} from "./Telefon.tsx";
 import {useTelefonnummer} from "../../lib/hooks/data/useTelefonnummer.tsx";
+import {useKontonummer} from "../../lib/hooks/data/useKontonummer.ts";
+import {PageSection} from "./PageSection.tsx";
+import {useGetBasisPersonalia} from "../../generated/new/basis-personalia-controller/basis-personalia-controller.ts";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
@@ -53,7 +55,9 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
         if (erAktiv(navEnhet)) setError(null);
     }, [navEnhet]);
 
-    const {isLoading, isMutating: telefonIsMutating, setTelefonnummer, telefonnummer} = useTelefonnummer();
+    const personalia = useGetBasisPersonalia(soknadId);
+    const telefonnummer = useTelefonnummer();
+    const konto = useKontonummer();
 
     return (
         <SkjemaSteg>
@@ -64,29 +68,18 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                     icon={SkjemaHeadings[1].ikon}
                 />
                 <SkjemaStegErrorSummary errors={errors} />
-                <BasisPersonalia />
-                <AdresseData />
-                <section aria-labelledby={"telefon-heading"} className={"space-y-2"}>
-                    <Heading id={"telefon-heading"} size={"small"} level={"3"}>
-                        {t("kontakt.telefon.sporsmal")}
-                    </Heading>
-                    {isLoading ? (
-                        <Loader />
-                    ) : (
-                        <Telefon
-                            telefonnummer={telefonnummer!}
-                            setTelefonnummer={setTelefonnummer}
-                            isMutating={telefonIsMutating}
-                        />
-                    )}
-                </section>
-
-                <section aria-labelledby={"kontonummer-heading"} className={"space-y-2"}>
-                    <Heading id={"kontonummer-heading"} size={"small"} level={"3"}>
-                        {t("kontakt.kontonummer.sporsmal")}
-                    </Heading>
-                    <Kontonr />
-                </section>
+                <PageSection heading={t("kontakt.system.personalia.sporsmal")}>
+                    <BasisPersonalia {...personalia} />
+                </PageSection>
+                <PageSection heading={t("soknadsmottaker.sporsmal")}>
+                    <AdresseData />
+                </PageSection>
+                <PageSection heading={t("kontakt.telefon.sporsmal")}>
+                    <Telefon {...telefonnummer} />
+                </PageSection>
+                <PageSection heading={t("kontakt.kontonummer.sporsmal")}>
+                    <Kontonr {...konto} />
+                </PageSection>
                 <SkjemaStegButtons onNext={onClickNext} isNextPending={isMutating} />
             </SkjemaStegBlock>
         </SkjemaSteg>
