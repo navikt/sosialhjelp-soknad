@@ -9,6 +9,13 @@ import {KontonummerFormValues} from "../../../sider/01-personalia/KontonummerFor
 import {KontoinformasjonDto} from "../../../generated/new/model/kontoinformasjonDto.ts";
 import {KontoinformasjonInput} from "../../../generated/new/model/kontoinformasjonInput.ts";
 
+export type UseKontonummer = {
+    kontoinformasjon: KontoinformasjonDto | undefined;
+    updateKontoInformasjon: (data: KontonummerFormValues) => any;
+    isLoading: boolean;
+    isMutating: boolean;
+};
+
 export const useKontonummer = () => {
     const soknadId = useSoknadId();
     const {data: kontoinformasjon, isLoading, queryKey} = useGetKontonummer(soknadId);

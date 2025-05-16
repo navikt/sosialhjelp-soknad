@@ -8,6 +8,13 @@ import {useSoknadId} from "../common/useSoknadId.ts";
 import {TelefonnummerDto} from "../../../generated/new/model/telefonnummerDto.ts";
 import {optimisticMutationHandlers} from "./optimisticMutationHandlers.ts";
 
+export type UseTelefonnummer = {
+    telefonnummer: TelefonnummerDto | undefined;
+    setTelefonnummer: (data: Partial<TelefonnummerInput>) => any;
+    isLoading: boolean;
+    isMutating: boolean;
+};
+
 export const useTelefonnummer = () => {
     const queryClient = useQueryClient();
     const soknadId = useSoknadId();

@@ -4,12 +4,11 @@ import {KontonrShow} from "./KontonrShow.tsx";
 import {KontonrEdit} from "./KontonrEdit.tsx";
 import {Systeminfo} from "../../lib/components/systeminfo/Systeminfo.tsx";
 import {Loader} from "@navikt/ds-react";
-import {useKontonummer} from "../../lib/hooks/data/useKontonummer.ts";
+import {UseKontonummer} from "../../lib/hooks/data/useKontonummer.ts";
 import {PersonaliaEditKnapp} from "./PersonaliaEditKnapp.tsx";
 
-export const Kontonr = () => {
+export const Kontonr = ({kontoinformasjon, isLoading, isMutating, updateKontoInformasjon}: UseKontonummer) => {
     const [editMode, setEditMode] = useState<boolean>(false);
-    const {kontoinformasjon, updateKontoInformasjon, isLoading, isMutating} = useKontonummer();
 
     if (isLoading || kontoinformasjon === undefined) return <Loader />;
 
