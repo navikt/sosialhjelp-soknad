@@ -189,4 +189,11 @@ export const opplysningSpec: Record<DokumentasjonDtoType, OpplysningSpec> = {
         textKey: "opplysninger.oppholdstillatelse.oppholdstillatelse",
         sortKey: 33,
     },
+    // Brukes som et "mellomled", dette pga. av at JOBB blir slettet pga. noe med skatteetatenSamtykke i backend,
+    // og dette medfører til at når søker velger kategori JOBB for opplastet dokument så krasjer alt.
+    LONNSLIPP: {
+        formVariant: "ingen",
+        textKey: "opplysninger.oppholdstillatelse.oppholdstillatelse",
+        sortKey: 34,
+    },
 };

@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Button, Heading, Modal} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {TrashIcon} from "@navikt/aksel-icons";
 
 export const BekreftSlettDokumentModal = ({open, onSelect}: {open: boolean; onSelect: (slett: boolean) => void}) => {
     const {t} = useTranslation("skjema");
@@ -11,7 +10,7 @@ export const BekreftSlettDokumentModal = ({open, onSelect}: {open: boolean; onSe
         <Modal open={open} onClose={() => onSelect(false)} aria-label={t("vedlegg.sletteModal.tittel")}>
             <Modal.Header>
                 <Heading level="1" size="large" spacing className={"flex"}>
-                    <TrashIcon /> {t("vedlegg.sletteModal.tittel")}
+                    {t("vedlegg.sletteModal.tittel")}
                 </Heading>
             </Modal.Header>
             <Modal.Footer>
