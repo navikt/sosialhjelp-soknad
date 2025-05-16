@@ -1,0 +1,15 @@
+{
+  "short_name": "Sosialhjelp",
+  "name": "Soknad om økonomisk sosialhjelp",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "16x16",
+      "type": "ico"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
