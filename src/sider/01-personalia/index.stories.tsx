@@ -1,7 +1,5 @@
-import {Decorator, Meta, StoryObj} from "@storybook/react";
+import {Meta, StoryObj} from "@storybook/react";
 import Personopplysninger from "./index.tsx";
-import {MemoryRouter, Route, Routes} from "react-router";
-import {ReactNode} from "react";
 import {
     getGetAdresserMockHandler,
     getUpdateAdresserMockHandler,
@@ -17,6 +15,7 @@ import {
 import {getGetBasisPersonaliaMockHandler} from "../../generated/new/basis-personalia-controller/basis-personalia-controller.msw.ts";
 import {VegAdresseType} from "../../generated/new/model/vegAdresseType.ts";
 import {AdresserDtoAdresseValg} from "../../generated/new/model/adresserDtoAdresseValg.ts";
+import {MockSoknadIdUrlParam} from "./mockSoknadIdUrlParam.tsx";
 
 const meta = {
     tags: ["autodocs"],
@@ -25,20 +24,10 @@ const meta = {
 
 export default meta;
 
-const WithLocation =
-    (entry: string): Decorator =>
-    (Story: () => ReactNode) => (
-        <MemoryRouter initialEntries={[entry]}>
-            <Routes>
-                <Route path={"/soknad/:soknadId"} element={<Story />} />
-            </Routes>
-        </MemoryRouter>
-    );
-
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    decorators: [WithLocation("/soknad/mock-id-42")],
+    decorators: [MockSoknadIdUrlParam("mock-id-42")],
     parameters: {
         msw: [
             getGetAdresserMockHandler({
