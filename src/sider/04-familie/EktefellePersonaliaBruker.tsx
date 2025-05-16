@@ -4,7 +4,7 @@ import {BodyShort, Loader} from "@navikt/ds-react";
 import * as React from "react";
 
 import {LocalizedDate} from "../../lib/components/LocalizedDate";
-import {FullName} from "../01-personalia/FulltNavn";
+import {FullName} from "../../lib/components/FullName.tsx";
 import {EktefelleDtoOrInput} from "../../lib/hooks/data/useSivilstatus.tsx";
 
 interface Props {

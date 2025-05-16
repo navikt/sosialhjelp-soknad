@@ -1,9 +1,8 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {TelefonData} from "./Telefon";
 import {AdresseData} from "./adresse/Adresse";
 import {BasisPersonalia} from "./BasisPersonalia";
-import {Kontonr} from "./Kontonr";
+import {Kontonr} from "./Kontonr.tsx";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {FieldErrorsImpl} from "react-hook-form";
 import {erAktiv} from "../../lib/navEnhetStatus";
@@ -20,19 +19,21 @@ import {mutationKey, useAdresser} from "./adresse/useAdresser.tsx";
 import {useIsMutating} from "@tanstack/react-query";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";
+import {Heading} from "@navikt/ds-react";
+import {Telefon} from "./Telefon.tsx";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
     const errors = !error ? undefined : ({adressefelt: {message: error}} as FieldErrorsImpl<NavEnhetDto>);
     const soknadId = useSoknadId();
-    const {navenhet} = useAdresser();
+    const {navEnhet} = useAdresser();
     const mutating = useIsMutating({mutationKey: mutationKey(soknadId)});
     const isMutating = mutating > 0;
     const {t} = useTranslation("skjema");
     const navigate = useNavigate();
 
     const validate = () => {
-        if (!navenhet || !erAktiv(navenhet)) {
+        if (!navEnhet || !erAktiv(navEnhet)) {
             setError("validering.adresseMangler");
             scrollToTop();
             return false;
@@ -48,8 +49,8 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
 
     // Midlertidig hack til komponentene under kan behandles som react-hook-form-inputs
     useEffect(() => {
-        if (erAktiv(navenhet)) setError(null);
-    }, [navenhet]);
+        if (erAktiv(navEnhet)) setError(null);
+    }, [navEnhet]);
 
     return (
         <SkjemaSteg>
@@ -62,8 +63,19 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                 <SkjemaStegErrorSummary errors={errors} />
                 <BasisPersonalia />
                 <AdresseData />
-                <TelefonData />
-                <Kontonr />
+                <section aria-labelledby={"telefon-heading"} className={"space-y-2"}>
+                    <Heading id={"telefon-heading"} size={"small"} level={"3"}>
+                        {t("kontakt.telefon.sporsmal")}
+                    </Heading>
+                    <Telefon />
+                </section>
+
+                <section aria-labelledby={"kontonummer-heading"} className={"space-y-2"}>
+                    <Heading id={"kontonummer-heading"} size={"small"} level={"3"}>
+                        {t("kontakt.kontonummer.sporsmal")}
+                    </Heading>
+                    <Kontonr />
+                </section>
                 <SkjemaStegButtons onNext={onClickNext} isNextPending={isMutating} />
             </SkjemaStegBlock>
         </SkjemaSteg>

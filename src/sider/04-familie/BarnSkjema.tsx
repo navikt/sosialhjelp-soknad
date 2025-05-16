@@ -20,7 +20,7 @@ export const BarnSkjema = ({barnIndex}: {barnIndex: number}) => {
     if (!ansvar) return null;
 
     return (
-        <div className={"!mt-16 !mb-16"}>
+        <div className={"mt-16! mb-16!"}>
             {ansvar.folkeregistrertSammen ? (
                 <YesNoInput
                     legend={

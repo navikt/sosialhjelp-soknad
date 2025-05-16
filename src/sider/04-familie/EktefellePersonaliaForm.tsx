@@ -55,7 +55,7 @@ export const EktefellePersonaliaForm = ({sivilstatus, ektefelle, setEktefelle}: 
     });
     if (!sivilstatus) return null;
     return (
-        <Panel className={"!bg-gray-100 mb-4"}>
+        <Panel className={"bg-gray-100! mb-4"}>
             <form onSubmit={handleSubmit(setEktefelle, console.error)}>
                 <div className="space-y-4 pb-4">
                     <Heading size={"small"} level={"3"} spacing>

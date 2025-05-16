@@ -10,7 +10,7 @@ const Feiloppsummering = () => {
     if (!visValideringsfeil || !feil?.length) return null;
 
     return (
-        <Alert variant={"error"} tabIndex={-1} className={"!mb-8"}>
+        <Alert variant={"error"} tabIndex={-1} className={"mb-8!"}>
             <Heading size={"small"} level={"3"} className="feiloppsummering__tittel blokk-s">
                 Det er {feil ? feil.length : 1} feil i skjemaet
             </Heading>

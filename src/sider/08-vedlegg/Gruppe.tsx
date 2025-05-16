@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Dokumentasjon} from "./Dokumentasjon";
+import {Dokumentasjon} from "./Dokumentasjon.tsx";
 import {useTranslation} from "react-i18next";
 import {Heading, Loader} from "@navikt/ds-react";
 import {DigisosLanguageKey} from "../../lib/i18n/common.ts";

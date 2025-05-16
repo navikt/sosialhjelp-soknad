@@ -6,49 +6,14 @@ import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/SkjemaStegBloc
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import {NavYtelser} from "../../06-inntektFormue/navytelser";
 import {SkattbarInntekt} from "../../06-inntektFormue/skattbarInntekt";
-import FileUploadBox, {FileUploadBoxNoStyle} from "../../../lib/components/fileupload/FileUploadBox.tsx";
+import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox.tsx";
 import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
-import {BodyShort, Heading, Loader} from "@navikt/ds-react";
 import {useFormue} from "../../../lib/hooks/data/useFormue.tsx";
-import BelopBeskrivelse from "../../08-vedlegg/form/BelopBeskrivelse.tsx";
-import useOkonomiskOpplysningMutation from "../../../lib/hooks/dokumentasjon/useOkonomiskOpplysningMutation.ts";
-import {BelopDto, DokumentasjonDtoType} from "../../../generated/new/model";
-
-const KortDokumentasjon = ({opplysningstype}: {opplysningstype: DokumentasjonDtoType}) => {
-    const {t} = useTranslation("skjema");
-    const {updateOkonomiskOpplysning, data, isLoading} = useOkonomiskOpplysningMutation<BelopDto>(opplysningstype);
-
-    if (isLoading) {
-        return <Loader />;
-    }
-    return (
-        <div className={"rounded-md bg-surface-action-subtle p-8"}>
-            <Heading level={"4"} size={"small"} spacing>
-                {t("utbetalinger.inntekt.skattbar.kort_saldo_tittel")}
-            </Heading>
-            <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.kort_saldo_undertekst")}</BodyShort>
-            <BelopBeskrivelse
-                opplysningstype={opplysningstype}
-                excludeBeskrivelse
-                opplysning={data}
-                mutate={updateOkonomiskOpplysning}
-                belopLabel={
-                    <span style={{fontSize: 16, fontWeight: "normal"}}>
-                        {t("utbetalinger.inntekt.skattbar.kort_saldo_saldo")}
-                    </span>
-                }
-                leggTilTekst={t("utbetalinger.inntekt.skattbar.kort_saldo_leggTil")}
-            />
-            <FileUploadBoxNoStyle
-                bunntekst={t("utbetalinger.inntekt.skattbar.kort_saldo_lastOpp")}
-                dokumentasjonType={opplysningstype}
-            />
-        </div>
-    );
-};
+import {DokumentasjonDtoType} from "../../../generated/new/model";
+import {KortDokumentasjon} from "./KortDokumentasjon.tsx";
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");

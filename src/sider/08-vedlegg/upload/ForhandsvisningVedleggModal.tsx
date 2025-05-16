@@ -35,7 +35,7 @@ export const ForhandsvisningVedleggModal = ({header, file, onAccept, onClose}: F
                     {header}
                 </Heading>
             </Modal.Header>
-            <Modal.Body className={cx({"fixed inset-0 w-full !p-0": isFullscreen}, "flex flex-col items-center")}>
+            <Modal.Body className={cx({"fixed inset-0 w-full p-0!": isFullscreen}, "flex flex-col items-center")}>
                 <div
                     className={cx(
                         {
@@ -58,7 +58,7 @@ export const ForhandsvisningVedleggModal = ({header, file, onAccept, onClose}: F
                     )}
                 </div>
             </Modal.Body>
-            <Modal.Footer className={"!block space-y-4"}>
+            <Modal.Footer className={"block! space-y-4"}>
                 <BodyShort>{t("vedlegg.forhandsvisning.info")}</BodyShort>
                 <div className={"w-fit space-x-4"}>
                     <Button variant="primary" onClick={onAccept}>

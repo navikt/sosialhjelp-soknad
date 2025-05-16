@@ -1,4 +1,4 @@
-import React, {CSSProperties} from "react";
+import {CSSProperties} from "react";
 import {BodyShort, Box, Checkbox, HStack, Label, VStack} from "@navikt/ds-react";
 import {SelectableCategory} from "../hooks/data/useKategorier";
 import {useTranslation} from "react-i18next";
@@ -9,7 +9,7 @@ interface Props {
     toggle: (category: string, subCategory?: string) => void;
 }
 
-const KategorierChips = ({categories, toggle}: Props): React.JSX.Element => {
+const KategorierChips = ({categories, toggle}: Props) => {
     const {t} = useTranslation("skjema");
     return (
         <div>

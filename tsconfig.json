@@ -1,20 +1,27 @@
 {
-    "extends": "@tsconfig/next/tsconfig.json",
-    "compilerOptions": {
-        "allowImportingTsExtensions": true,
-        "forceConsistentCasingInFileNames": true,
-        "noFallthroughCasesInSwitch": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "target": "ES2022",
-        "useDefineForClassFields": true,
-    },
-    "include": [
-        "./src",
-        "./dist/types/**/*.ts",
-        "./next-env.d.ts",
-        "./build/types/**/*.ts",
-        "node_modules/vitest/globals.d.ts"
-    ],
-    "exclude": ["./node_modules"]
+  "extends": "@tsconfig/next/tsconfig.json",
+  "compilerOptions": {
+    // allowArbitraryExtensions er her for å få bedre typesikkerhet med next-intl.
+    // se: https://next-intl.dev/docs/workflows/typescript#messages-arguments
+    // dersom dette ikke lenger trengs, kan allowArbitraryExtensions fjernes.
+    "allowArbitraryExtensions": true,
+    "allowImportingTsExtensions": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "target": "ES2022",
+    "useDefineForClassFields": true
+  },
+  "include": [
+    "./.next/types/**/*.ts",
+    "./dist/types/**/*.ts",
+    "./next-env.d.ts",
+    "./src",
+    "node_modules/vitest/globals.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "./node_modules"
+  ]
 }

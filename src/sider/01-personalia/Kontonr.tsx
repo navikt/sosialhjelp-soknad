@@ -1,59 +1,37 @@
 import * as React from "react";
-import {useState} from "react";
-import {useTranslation} from "react-i18next";
-import {KontonrShow} from "./KontonrShow";
-import {KontonrEdit} from "./KontonrEdit";
-import {Systeminfo} from "../../lib/components/systeminfo/Systeminfo";
-import {Heading, Loader} from "@navikt/ds-react";
+import {startTransition, useState} from "react";
+import {KontonrShow} from "./KontonrShow.tsx";
+import {KontonrEdit} from "./KontonrEdit.tsx";
+import {Systeminfo} from "../../lib/components/systeminfo/Systeminfo.tsx";
+import {Loader} from "@navikt/ds-react";
 import {useKontonummer} from "../../lib/hooks/data/useKontonummer.ts";
+import {PersonaliaEditKnapp} from "./PersonaliaEditKnapp.tsx";
 
 export const Kontonr = () => {
     const [editMode, setEditMode] = useState<boolean>(false);
-    const {t} = useTranslation("skjema");
-    const {updateKontoInformasjon, harIkkeKonto, kontonummer, isLoading, isBrukerUtfylt} = useKontonummer();
+    const {kontoinformasjon, updateKontoInformasjon, isLoading, isMutating} = useKontonummer();
 
-    if (isLoading) {
-        return (
-            <section aria-labelledby={"kontonummer-heading"} className={"space-y-2"}>
-                <Heading id={"kontonummer-heading"} size={"small"} level={"3"}>
-                    {t("kontakt.kontonummer.sporsmal")}
-                </Heading>
-                <Loader />
-            </section>
-        );
-    }
+    if (isLoading || kontoinformasjon === undefined) return <Loader />;
 
     return (
-        <section aria-labelledby={"kontonummer-heading"} className={"space-y-2"}>
-            <Heading id={"kontonummer-heading"} size={"small"} level={"3"}>
-                {t("kontakt.kontonummer.sporsmal")}
-            </Heading>
-            {editMode ? (
-                <Systeminfo>
-                    <KontonrShow
-                        isBrukerUtfylt={isBrukerUtfylt}
-                        harIkkeKonto={harIkkeKonto}
-                        kontonummer={kontonummer}
-                    />
-                    <KontonrEdit
-                        defaultValues={{brukerutfyltVerdi: null, harIkkeKonto: harIkkeKonto ?? null}}
-                        onSave={(data) => {
-                            updateKontoInformasjon(data.harIkkeKonto, data.brukerutfyltVerdi);
-                            setEditMode(false);
-                        }}
-                        onCancel={() => setEditMode(false)}
-                    />
-                </Systeminfo>
+        <Systeminfo>
+            {!editMode ? (
+                <div className={"flex justify-between items-center"}>
+                    <KontonrShow kontoinformasjon={kontoinformasjon} />
+                    <PersonaliaEditKnapp disabled={isMutating} onClick={() => setEditMode(true)} />
+                </div>
             ) : (
-                <Systeminfo>
-                    <KontonrShow
-                        isBrukerUtfylt={isBrukerUtfylt}
-                        harIkkeKonto={harIkkeKonto}
-                        kontonummer={kontonummer}
-                        onEdit={() => setEditMode(true)}
-                    />
-                </Systeminfo>
+                <KontonrEdit
+                    defaultValues={kontoinformasjon}
+                    onCancel={() => setEditMode(false)}
+                    onSave={(data) =>
+                        startTransition(() => {
+                            updateKontoInformasjon(data);
+                            setEditMode(false);
+                        })
+                    }
+                />
             )}
-        </section>
+        </Systeminfo>
     );
 };

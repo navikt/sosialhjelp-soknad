@@ -21,7 +21,7 @@ export const Dokumenter = ({opplysningstype}: {opplysningstype: DokumentasjonDto
     const {updateAlleredeLevert, alleredeLevert} = useAlleredeLevert(opplysningstype);
     return (
         <div className={"space-y-2"}>
-            <BodyShort size={"small"} className={"!mt-6"}>
+            <BodyShort size={"small"} className={"mt-6!"}>
                 {dokumentBeskrivelse}
             </BodyShort>
 

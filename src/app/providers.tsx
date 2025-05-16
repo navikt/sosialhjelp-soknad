@@ -1,6 +1,6 @@
 "use client";
 import {isServer, QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import {AbstractIntlMessages, NextIntlClientProvider} from "next-intl";
+import {Locale, NextIntlClientProvider} from "next-intl";
 
 function makeQueryClient() {
     return new QueryClient({
@@ -32,11 +32,10 @@ function getQueryClient() {
 
 interface Props {
     children: React.ReactNode;
-    messages?: AbstractIntlMessages;
-    locale?: string;
+    locale?: Locale;
 }
 
-export default function Providers({children, messages, locale}: Props) {
+export default function Providers({children, locale}: Props) {
     // NOTE: Avoid useState when initializing the query client if you don't
     //       have a suspense boundary between this and the code that may
     //       suspend because React will throw away the client on the initial
@@ -45,9 +44,7 @@ export default function Providers({children, messages, locale}: Props) {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <NextIntlClientProvider messages={messages} locale={locale}>
-                {children}
-            </NextIntlClientProvider>
+            <NextIntlClientProvider locale={locale}>{children}</NextIntlClientProvider>
         </QueryClientProvider>
     );
 }

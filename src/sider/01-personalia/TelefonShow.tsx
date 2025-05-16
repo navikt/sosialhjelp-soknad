@@ -1,33 +1,36 @@
-import {TelefonShowBrukerdefinert} from "./TelefonShowBrukerdefinert";
-import {TelefonShowFraKRR} from "./TelefonShowFraKRR";
 import * as React from "react";
-import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
+import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo.tsx";
 import {useTranslation} from "react-i18next";
-import {PersonaliaEditKnapp} from "./PersonaliaEditKnapp.tsx";
+import {PhoneNumber} from "libphonenumber-js";
+import {BodyShort} from "@navikt/ds-react";
+import {formatPhoneNumber} from "./formatPhoneNumber.ts";
 
-interface Props {
-    onEdit?: () => void;
-    telefonnummerBruker?: string;
-    telefonnummerRegister?: string;
-}
-
-export const TelefonShow = ({onEdit, telefonnummerBruker, telefonnummerRegister}: Props) => {
+export const TelefonShow = ({bruker, register}: {bruker?: PhoneNumber; register?: PhoneNumber}) => {
     const {t} = useTranslation();
 
-    if (telefonnummerBruker)
-        return <TelefonShowBrukerdefinert brukerutfyltVerdi={telefonnummerBruker} onEdit={onEdit} />;
-    if (telefonnummerRegister?.length) return <TelefonShowFraKRR systemverdi={telefonnummerRegister} onEdit={onEdit} />;
-
-    if (!onEdit)
+    // Hvis brukeren har overstyrt telefonnummer
+    if (bruker)
         return (
-            <SysteminfoItem as="div" label={"Telefonnummer"}>
-                {t("kontakt.telefon.feilmelding")}
-            </SysteminfoItem>
+            <div role={"none"}>
+                <SysteminfoItem as="div">{formatPhoneNumber(bruker)}</SysteminfoItem>
+            </div>
         );
+
+    // Bruker har et telefonnummer i registeret
+    if (register)
+        return (
+            <div role={"none"}>
+                <SysteminfoItem as="div">{formatPhoneNumber(register)}</SysteminfoItem>
+                <BodyShort className={"pt-2"} role={"note"}>
+                    {t("kontakt.system.telefoninfo.infotekst.tekst")}
+                </BodyShort>
+            </div>
+        );
+
+    // Bruker har hverken oppgitt et nummer eller har et i registeret
     return (
-        <div>
+        <div role={"none"}>
             {t("kontakt.system.telefoninfo.ingeninfo")} <br />
-            {onEdit && <PersonaliaEditKnapp onClick={onEdit} />}
         </div>
     );
 };

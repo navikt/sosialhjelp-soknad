@@ -1,4 +1,4 @@
-import {createRoutesFromChildren, matchRoutes, Routes, useLocation, useNavigationType} from "react-router-dom";
+import {createRoutesFromChildren, matchRoutes, Routes, useLocation, useNavigationType} from "react-router";
 
 import {
     // ConsoleInstrumentation,

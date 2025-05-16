@@ -5,9 +5,10 @@ import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {BodyShort, Heading as DSHeading} from "@navikt/ds-react";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {useGetForsorgerplikt} from "../../generated/new/forsorgerplikt-controller/forsorgerplikt-controller.ts";
+import {ReactNode} from "react";
 
 interface Props {
-    heading?: JSX.Element;
+    heading?: ReactNode;
     skipForm?: boolean;
 }
 
