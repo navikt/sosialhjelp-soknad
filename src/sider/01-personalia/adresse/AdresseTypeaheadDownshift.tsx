@@ -25,6 +25,7 @@ const FetchAddress = ({children, searchvalue, isOpen}: FetchAddressProps) => {
     const [sokestreng, setSokestreng] = useState<string>("");
     const queryTooShort = (sokestreng?.length ?? 0) < 3;
     const {data, isPending, isError} = useAdresseSok({sokestreng}, {query: {enabled: !queryTooShort}});
+    // TODO: Change to usehooks-ts useDebounceValue og fjern react-use (og debounce i
     useDebounce(() => setSokestreng(searchvalue ?? ""), DEBOUNCE_TIMEOUT_MS, [searchvalue]);
 
     if (!isOpen) return null;
