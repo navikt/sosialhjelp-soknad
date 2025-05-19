@@ -391,7 +391,7 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoinformasjonDto"}}}
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoInformasjonDto"}}}
                     }
                 }
             },
@@ -402,7 +402,16 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/KontoinformasjonInput"}}},
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "oneOf": [
+                                    {"$ref": "#/components/schemas/HarIkkeKontoInput"},
+                                    {"$ref": "#/components/schemas/KontonummerBrukerInput"}
+                                ]
+                            }
+                        }
+                    },
                     "required": true
                 },
                 "responses": {
@@ -425,7 +434,7 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoinformasjonDto"}}}
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoInformasjonDto"}}}
                     }
                 }
             }
@@ -1912,11 +1921,31 @@
                 "type": "object",
                 "properties": {"telefonnummerRegister": {"type": "string"}, "telefonnummerBruker": {"type": "string"}}
             },
-            "KontoinformasjonInput": {
-                "type": "object",
-                "properties": {"harIkkeKonto": {"type": "boolean"}, "kontonummerBruker": {"type": "string"}}
+            "HarIkkeKontoInput": {
+                "allOf": [
+                    {"$ref": "#/components/schemas/KontoInput"},
+                    {"type": "object", "properties": {"harIkkeKonto": {"type": "boolean"}}}
+                ],
+                "required": ["harIkkeKonto"]
             },
-            "KontoinformasjonDto": {
+            "KontoInput": {
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "HarIkkeKonto": "#/components/schemas/HarIkkeKontoInput",
+                        "KontonummerBruker": "#/components/schemas/KontonummerBrukerInput"
+                    }
+                },
+                "properties": {"type": {"type": "string"}},
+                "required": ["type"]
+            },
+            "KontonummerBrukerInput": {
+                "allOf": [
+                    {"$ref": "#/components/schemas/KontoInput"},
+                    {"type": "object", "properties": {"kontonummer": {"type": "string"}}}
+                ]
+            },
+            "KontoInformasjonDto": {
                 "type": "object",
                 "properties": {
                     "harIkkeKonto": {"type": "boolean"},
