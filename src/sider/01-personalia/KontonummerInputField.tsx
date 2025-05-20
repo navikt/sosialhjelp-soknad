@@ -22,6 +22,12 @@ export const KontonummerInputField = (props: UseControllerProps<KontonummerFormV
             required={false}
             maxLength={13}
             error={fieldState.error?.message && t(fieldState.error.message as DigisosLanguageKey)}
+            onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    e.currentTarget.form?.requestSubmit();
+                }
+            }}
         />
     );
 };
