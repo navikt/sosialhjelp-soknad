@@ -1,5 +1,5 @@
 {
-    "openapi": "3.0.1",
+    "openapi": "3.1.0",
     "info": {"title": "OpenAPI definition", "version": "v0"},
     "servers": [{"url": "http://localhost:8181/sosialhjelp/soknad-api", "description": "Generated server url"}],
     "paths": {
@@ -391,7 +391,7 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoInformasjonDto"}}}
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoinformasjonDto"}}}
                     }
                 }
             },
@@ -402,16 +402,7 @@
                     {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
                 ],
                 "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "oneOf": [
-                                    {"$ref": "#/components/schemas/HarIkkeKontoInput"},
-                                    {"$ref": "#/components/schemas/KontonummerBrukerInput"}
-                                ]
-                            }
-                        }
-                    },
+                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/KontoinformasjonInput"}}},
                     "required": true
                 },
                 "responses": {
@@ -434,7 +425,7 @@
                     },
                     "200": {
                         "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoInformasjonDto"}}}
+                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/KontoinformasjonDto"}}}
                     }
                 }
             }
@@ -1454,9 +1445,9 @@
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "required": ["file"],
                                 "type": "object",
-                                "properties": {"file": {"type": "string", "format": "binary"}}
+                                "properties": {"file": {"type": "string", "format": "binary"}},
+                                "required": ["file"]
                             }
                         }
                     }
@@ -1727,8 +1718,11 @@
     "components": {
         "schemas": {
             "SoknadApiError": {
-                "required": ["error", "responseType"],
                 "type": "object",
+                "discriminator": {
+                    "propertyName": "responseType",
+                    "mapping": {"SoknadApiError": "#/components/schemas/SoknadApiError"}
+                },
                 "properties": {
                     "error": {
                         "type": "string",
@@ -1758,38 +1752,25 @@
                     "message": {"type": "string"},
                     "id": {"type": "string"}
                 },
-                "discriminator": {
-                    "propertyName": "responseType",
-                    "mapping": {"SoknadApiError": "#/components/schemas/SoknadApiError"}
-                }
+                "required": ["error", "responseType"]
             },
             "UnauthorizedMelding": {
-                "required": ["loginUrl"],
                 "type": "object",
-                "properties": {"loginUrl": {"type": "string", "format": "uri"}}
+                "properties": {"loginUrl": {"type": "string", "format": "uri"}},
+                "required": ["loginUrl"]
             },
             "BoutgifterInput": {
-                "required": ["type"],
-                "type": "object",
-                "properties": {"type": {"type": "string"}},
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
                         "HarIkkeBoutgifterInput": "#/components/schemas/HarIkkeBoutgifterInput",
                         "HarBoutgifterInput": "#/components/schemas/HarBoutgifterInput"
                     }
-                }
+                },
+                "properties": {"type": {"type": "string"}},
+                "required": ["type"]
             },
             "HarBoutgifterInput": {
-                "required": [
-                    "hasAnnenBoutgift",
-                    "hasBoliglan",
-                    "hasHusleie",
-                    "hasKommunalAvgift",
-                    "hasOppvarming",
-                    "hasStrom"
-                ],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/BoutgifterInput"},
                     {
@@ -1804,19 +1785,18 @@
                             "beskrivelseAnnenBoutgift": {"type": "string"}
                         }
                     }
+                ],
+                "required": [
+                    "hasAnnenBoutgift",
+                    "hasBoliglan",
+                    "hasHusleie",
+                    "hasKommunalAvgift",
+                    "hasOppvarming",
+                    "hasStrom"
                 ]
             },
-            "HarIkkeBoutgifterInput": {"type": "object", "allOf": [{"$ref": "#/components/schemas/BoutgifterInput"}]},
+            "HarIkkeBoutgifterInput": {"allOf": [{"$ref": "#/components/schemas/BoutgifterInput"}]},
             "BoutgifterDto": {
-                "required": [
-                    "annet",
-                    "boliglan",
-                    "husleie",
-                    "kommunalAvgift",
-                    "oppvarming",
-                    "skalViseInfoVedBekreftelse",
-                    "strom"
-                ],
                 "type": "object",
                 "properties": {
                     "bekreftelse": {"type": "boolean"},
@@ -1827,29 +1807,29 @@
                     "boliglan": {"type": "boolean"},
                     "annet": {"type": "boolean"},
                     "skalViseInfoVedBekreftelse": {"type": "boolean"}
-                }
+                },
+                "required": [
+                    "annet",
+                    "boliglan",
+                    "husleie",
+                    "kommunalAvgift",
+                    "oppvarming",
+                    "skalViseInfoVedBekreftelse",
+                    "strom"
+                ]
             },
             "BarneutgifterInput": {
-                "required": ["type"],
-                "type": "object",
-                "properties": {"type": {"type": "string"}},
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
                         "HarIkkeBarneutgifterInput": "#/components/schemas/HarIkkeBarneutgifterInput",
                         "HarBarneutgifterInput": "#/components/schemas/HarBarneutgifterInput"
                     }
-                }
+                },
+                "properties": {"type": {"type": "string"}},
+                "required": ["type"]
             },
             "HarBarneutgifterInput": {
-                "required": [
-                    "hasAnnenUtgiftBarn",
-                    "hasBarnehage",
-                    "hasFritidsaktiviteter",
-                    "hasSfo",
-                    "hasTannregulering"
-                ],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/BarneutgifterInput"},
                     {
@@ -1862,21 +1842,17 @@
                             "hasAnnenUtgiftBarn": {"type": "boolean"}
                         }
                     }
-                ]
-            },
-            "HarIkkeBarneutgifterInput": {
-                "type": "object",
-                "allOf": [{"$ref": "#/components/schemas/BarneutgifterInput"}]
-            },
-            "BarneutgifterDto": {
+                ],
                 "required": [
                     "hasAnnenUtgiftBarn",
                     "hasBarnehage",
-                    "hasForsorgerplikt",
                     "hasFritidsaktiviteter",
                     "hasSfo",
                     "hasTannregulering"
-                ],
+                ]
+            },
+            "HarIkkeBarneutgifterInput": {"allOf": [{"$ref": "#/components/schemas/BarneutgifterInput"}]},
+            "BarneutgifterDto": {
                 "type": "object",
                 "properties": {
                     "hasForsorgerplikt": {"type": "boolean"},
@@ -1886,34 +1862,39 @@
                     "hasSfo": {"type": "boolean"},
                     "hasTannregulering": {"type": "boolean"},
                     "hasAnnenUtgiftBarn": {"type": "boolean"}
-                }
+                },
+                "required": [
+                    "hasAnnenUtgiftBarn",
+                    "hasBarnehage",
+                    "hasForsorgerplikt",
+                    "hasFritidsaktiviteter",
+                    "hasSfo",
+                    "hasTannregulering"
+                ]
             },
             "IkkeStudentInput": {
-                "required": ["erStudent"],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/UtdanningInput"},
                     {"type": "object", "properties": {"erStudent": {"type": "boolean"}}}
-                ]
+                ],
+                "required": ["erStudent"]
             },
             "StudentgradInput": {
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/UtdanningInput"},
                     {"type": "object", "properties": {"studentgrad": {"type": "string", "enum": ["HELTID", "DELTID"]}}}
                 ]
             },
             "UtdanningInput": {
-                "required": ["type"],
-                "type": "object",
-                "properties": {"type": {"type": "string"}},
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
                         "IkkeStudent": "#/components/schemas/IkkeStudentInput",
                         "Studentgrad": "#/components/schemas/StudentgradInput"
                     }
-                }
+                },
+                "properties": {"type": {"type": "string"}},
+                "required": ["type"]
             },
             "UtdanningDto": {
                 "type": "object",
@@ -1931,34 +1912,11 @@
                 "type": "object",
                 "properties": {"telefonnummerRegister": {"type": "string"}, "telefonnummerBruker": {"type": "string"}}
             },
-            "HarIkkeKontoInput": {
-                "required": ["harIkkeKonto"],
+            "KontoinformasjonInput": {
                 "type": "object",
-                "allOf": [
-                    {"$ref": "#/components/schemas/KontoInput"},
-                    {"type": "object", "properties": {"harIkkeKonto": {"type": "boolean"}}}
-                ]
+                "properties": {"harIkkeKonto": {"type": "boolean"}, "kontonummerBruker": {"type": "string"}}
             },
-            "KontoInput": {
-                "required": ["type"],
-                "type": "object",
-                "properties": {"type": {"type": "string"}},
-                "discriminator": {
-                    "propertyName": "type",
-                    "mapping": {
-                        "HarIkkeKonto": "#/components/schemas/HarIkkeKontoInput",
-                        "KontonummerBruker": "#/components/schemas/KontonummerBrukerInput"
-                    }
-                }
-            },
-            "KontonummerBrukerInput": {
-                "type": "object",
-                "allOf": [
-                    {"$ref": "#/components/schemas/KontoInput"},
-                    {"type": "object", "properties": {"kontonummer": {"type": "string"}}}
-                ]
-            },
-            "KontoInformasjonDto": {
+            "KontoinformasjonDto": {
                 "type": "object",
                 "properties": {
                     "harIkkeKonto": {"type": "boolean"},
@@ -1967,8 +1925,15 @@
                 }
             },
             "AbstractOkonomiInput": {
-                "required": ["_type", "type"],
                 "type": "object",
+                "discriminator": {
+                    "propertyName": "_type",
+                    "mapping": {
+                        "GenericOkonomiInput": "#/components/schemas/GenericOkonomiInput",
+                        "LonnsInput": "#/components/schemas/LonnsInput",
+                        "BoliglanInput": "#/components/schemas/BoliglanInput"
+                    }
+                },
                 "properties": {
                     "type": {
                         "type": "string",
@@ -2011,17 +1976,9 @@
                     },
                     "_type": {"type": "string"}
                 },
-                "discriminator": {
-                    "propertyName": "_type",
-                    "mapping": {
-                        "GenericOkonomiInput": "#/components/schemas/GenericOkonomiInput",
-                        "LonnsInput": "#/components/schemas/LonnsInput",
-                        "BoliglanInput": "#/components/schemas/BoliglanInput"
-                    }
-                }
+                "required": ["_type", "type"]
             },
             "AvdragRenterDto": {
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/OkonomiDetaljDto"},
                     {
@@ -2034,7 +1991,6 @@
                 ]
             },
             "BelopDto": {
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/OkonomiDetaljDto"},
                     {
@@ -2047,8 +2003,6 @@
                 ]
             },
             "BoliglanInput": {
-                "required": ["detaljer", "type"],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/AbstractOkonomiInput"},
                     {
@@ -2057,11 +2011,10 @@
                             "detaljer": {"type": "array", "items": {"$ref": "#/components/schemas/AvdragRenterDto"}}
                         }
                     }
-                ]
+                ],
+                "required": ["detaljer", "type"]
             },
             "GenericOkonomiInput": {
-                "required": ["detaljer", "type"],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/AbstractOkonomiInput"},
                     {
@@ -2070,10 +2023,10 @@
                             "detaljer": {"type": "array", "items": {"$ref": "#/components/schemas/BelopDto"}}
                         }
                     }
-                ]
+                ],
+                "required": ["detaljer", "type"]
             },
             "LonnsInntektDto": {
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/OkonomiDetaljDto"},
                     {
@@ -2086,17 +2039,13 @@
                 ]
             },
             "LonnsInput": {
-                "required": ["detalj", "type"],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/AbstractOkonomiInput"},
                     {"type": "object", "properties": {"detalj": {"$ref": "#/components/schemas/LonnsInntektDto"}}}
-                ]
+                ],
+                "required": ["detalj", "type"]
             },
             "OkonomiDetaljDto": {
-                "required": ["type"],
-                "type": "object",
-                "properties": {"type": {"type": "string"}},
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
@@ -2104,10 +2053,11 @@
                         "LonnsInntektDto": "#/components/schemas/LonnsInntektDto",
                         "AvdragRenterDto": "#/components/schemas/AvdragRenterDto"
                     }
-                }
+                },
+                "properties": {"type": {"type": "string"}},
+                "required": ["type"]
             },
             "OkonomiskOpplysningDto": {
-                "required": ["type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -2159,33 +2109,24 @@
                             ]
                         }
                     }
-                }
+                },
+                "required": ["type"]
             },
             "OkonomiskeOpplysningerDto": {
-                "required": ["opplysninger"],
                 "type": "object",
                 "properties": {
                     "opplysninger": {"type": "array", "items": {"$ref": "#/components/schemas/OkonomiskOpplysningDto"}}
-                }
+                },
+                "required": ["opplysninger"]
             },
             "HarIkkeVerdierInput": {
-                "required": ["hasBekreftelse"],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/VerdierInput"},
                     {"type": "object", "properties": {"hasBekreftelse": {"type": "boolean"}}}
-                ]
+                ],
+                "required": ["hasBekreftelse"]
             },
             "HarVerdierInput": {
-                "required": [
-                    "hasBekreftelse",
-                    "hasBeskrivelseVerdi",
-                    "hasBolig",
-                    "hasCampingvogn",
-                    "hasFritidseiendom",
-                    "hasKjoretoy"
-                ],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/VerdierInput"},
                     {
@@ -2200,22 +2141,28 @@
                             "beskrivelseVerdi": {"type": "string"}
                         }
                     }
+                ],
+                "required": [
+                    "hasBekreftelse",
+                    "hasBeskrivelseVerdi",
+                    "hasBolig",
+                    "hasCampingvogn",
+                    "hasFritidseiendom",
+                    "hasKjoretoy"
                 ]
             },
             "VerdierInput": {
-                "required": ["type"],
-                "type": "object",
-                "properties": {"type": {"type": "string"}},
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
                         "HarIkkeVerdierInput": "#/components/schemas/HarIkkeVerdierInput",
                         "HarVerdierInput": "#/components/schemas/HarVerdierInput"
                     }
-                }
+                },
+                "properties": {"type": {"type": "string"}},
+                "required": ["type"]
             },
             "VerdierDto": {
-                "required": ["hasAnnetVerdi", "hasBolig", "hasCampingvogn", "hasFritidseiendom", "hasKjoretoy"],
                 "type": "object",
                 "properties": {
                     "bekreftelse": {"type": "boolean"},
@@ -2225,19 +2172,17 @@
                     "hasFritidseiendom": {"type": "boolean"},
                     "hasAnnetVerdi": {"type": "boolean"},
                     "beskrivelseVerdi": {"type": "string"}
-                }
+                },
+                "required": ["hasAnnetVerdi", "hasBolig", "hasCampingvogn", "hasFritidseiendom", "hasKjoretoy"]
             },
             "HarIkkeUtbetalingerInput": {
-                "required": ["harIkkeUtbetalinger"],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/UtbetalingerInput"},
                     {"type": "object", "properties": {"harIkkeUtbetalinger": {"type": "boolean"}}}
-                ]
+                ],
+                "required": ["harIkkeUtbetalinger"]
             },
             "HarUtbetalingerInput": {
-                "required": ["hasAnnet", "hasForsikring", "hasSalg", "hasUtbytte"],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/UtbetalingerInput"},
                     {
@@ -2250,22 +2195,21 @@
                             "beskrivelseUtbetaling": {"type": "string"}
                         }
                     }
-                ]
+                ],
+                "required": ["hasAnnet", "hasForsikring", "hasSalg", "hasUtbytte"]
             },
             "UtbetalingerInput": {
-                "required": ["type"],
-                "type": "object",
-                "properties": {"type": {"type": "string"}},
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
                         "HarIkkeUtbetalingerInput": "#/components/schemas/HarIkkeUtbetalingerInput",
                         "HarUtbetalingerInput": "#/components/schemas/HarUtbetalingerInput"
                     }
-                }
+                },
+                "properties": {"type": {"type": "string"}},
+                "required": ["type"]
             },
             "UtbetalingerDto": {
-                "required": ["hasAnnenUtbetaling", "hasForsikring", "hasSalg", "hasUtbytte"],
                 "type": "object",
                 "properties": {
                     "hasBekreftelse": {"type": "boolean"},
@@ -2275,26 +2219,26 @@
                     "hasAnnenUtbetaling": {"type": "boolean"},
                     "beskrivelseUtbetaling": {"type": "string"},
                     "utbetalingerFraNavFeilet": {"type": "boolean"}
-                }
+                },
+                "required": ["hasAnnenUtbetaling", "hasForsikring", "hasSalg", "hasUtbytte"]
             },
             "StudielanInput": {
-                "required": ["mottarStudielan"],
                 "type": "object",
-                "properties": {"mottarStudielan": {"type": "boolean"}}
+                "properties": {"mottarStudielan": {"type": "boolean"}},
+                "required": ["mottarStudielan"]
             },
             "StudielanDto": {
                 "type": "object",
                 "properties": {"erStudent": {"type": "boolean"}, "mottarStudielan": {"type": "boolean"}}
             },
             "InntektFraOrganisasjonDto": {
-                "required": ["organisasjoner"],
                 "type": "object",
                 "properties": {
                     "organisasjoner": {"type": "array", "items": {"$ref": "#/components/schemas/OrganisasjonDto"}}
-                }
+                },
+                "required": ["organisasjoner"]
             },
             "OrganisasjonDto": {
-                "required": ["utbetalinger"],
                 "type": "object",
                 "properties": {
                     "utbetalinger": {
@@ -2305,15 +2249,15 @@
                     "orgnr": {"type": "string"},
                     "fom": {"type": "string"},
                     "tom": {"type": "string"}
-                }
+                },
+                "required": ["utbetalinger"]
             },
             "SamtykkeDto": {
-                "required": ["samtykkeTidspunkt", "verdi"],
                 "type": "object",
-                "properties": {"verdi": {"type": "boolean"}, "samtykkeTidspunkt": {"type": "string"}}
+                "properties": {"verdi": {"type": "boolean"}, "samtykkeTidspunkt": {"type": "string"}},
+                "required": ["samtykkeTidspunkt", "verdi"]
             },
             "SkattbarInntektDto": {
-                "required": ["inntektSkatteetaten"],
                 "type": "object",
                 "properties": {
                     "inntektSkatteetaten": {
@@ -2322,7 +2266,8 @@
                     },
                     "inntektFraSkatteetatenFeilet": {"type": "boolean"},
                     "samtykke": {"$ref": "#/components/schemas/SamtykkeDto"}
-                }
+                },
+                "required": ["inntektSkatteetaten"]
             },
             "UtbetalingFraSkatteetatenDto": {
                 "type": "object",
@@ -2333,14 +2278,6 @@
                 }
             },
             "FormueInput": {
-                "required": [
-                    "hasBeskrivelseSparing",
-                    "hasBrukskonto",
-                    "hasBsu",
-                    "hasLivsforsikring",
-                    "hasSparekonto",
-                    "hasVerdipapirer"
-                ],
                 "type": "object",
                 "properties": {
                     "hasBrukskonto": {"type": "boolean"},
@@ -2350,17 +2287,17 @@
                     "hasVerdipapirer": {"type": "boolean"},
                     "hasBeskrivelseSparing": {"type": "boolean"},
                     "beskrivelseSparing": {"type": "string"}
-                }
-            },
-            "FormueDto": {
+                },
                 "required": [
+                    "hasBeskrivelseSparing",
                     "hasBrukskonto",
                     "hasBsu",
                     "hasLivsforsikring",
                     "hasSparekonto",
-                    "hasSparing",
                     "hasVerdipapirer"
-                ],
+                ]
+            },
+            "FormueDto": {
                 "type": "object",
                 "properties": {
                     "hasBrukskonto": {"type": "boolean"},
@@ -2370,17 +2307,25 @@
                     "hasVerdipapirer": {"type": "boolean"},
                     "hasSparing": {"type": "boolean"},
                     "beskrivelseSparing": {"type": "string"}
-                }
+                },
+                "required": [
+                    "hasBrukskonto",
+                    "hasBsu",
+                    "hasLivsforsikring",
+                    "hasSparekonto",
+                    "hasSparing",
+                    "hasVerdipapirer"
+                ]
             },
             "EktefelleInput": {
-                "required": ["navn"],
                 "type": "object",
                 "properties": {
                     "personId": {"type": "string"},
                     "navn": {"$ref": "#/components/schemas/NavnInput"},
                     "fodselsdato": {"type": "string"},
                     "borSammen": {"type": "boolean"}
-                }
+                },
+                "required": ["navn"]
             },
             "NavnInput": {
                 "type": "object",
@@ -2391,7 +2336,6 @@
                 }
             },
             "SivilstandInput": {
-                "required": ["sivilstatus"],
                 "type": "object",
                 "properties": {
                     "sivilstatus": {
@@ -2399,7 +2343,8 @@
                         "enum": ["GIFT", "UGIFT", "SAMBOER", "ENKE", "SKILT", "SEPARERT", "TOM"]
                     },
                     "ektefelle": {"$ref": "#/components/schemas/EktefelleInput"}
-                }
+                },
+                "required": ["sivilstatus"]
             },
             "EktefelleDto": {
                 "type": "object",
@@ -2442,15 +2387,14 @@
                 }
             },
             "ForsorgerInput": {
-                "required": ["ansvar"],
                 "type": "object",
                 "properties": {
                     "barnebidrag": {"type": "string", "enum": ["BETALER", "MOTTAR", "BEGGE", "INGEN"]},
                     "ansvar": {"type": "array", "items": {"$ref": "#/components/schemas/BarnInput"}}
-                }
+                },
+                "required": ["ansvar"]
             },
             "BarnDto": {
-                "required": ["uuid"],
                 "type": "object",
                 "properties": {
                     "uuid": {"type": "string", "format": "uuid"},
@@ -2460,19 +2404,19 @@
                     "folkeregistrertSammen": {"type": "boolean"},
                     "deltBosted": {"type": "boolean"},
                     "samvarsgrad": {"type": "integer", "format": "int32"}
-                }
+                },
+                "required": ["uuid"]
             },
             "ForsorgerDto": {
-                "required": ["ansvar"],
                 "type": "object",
                 "properties": {
                     "harForsorgerplikt": {"type": "boolean"},
                     "barnebidrag": {"type": "string", "enum": ["BETALER", "MOTTAR", "BEGGE", "INGEN"]},
                     "ansvar": {"type": "array", "items": {"$ref": "#/components/schemas/BarnDto"}}
-                }
+                },
+                "required": ["ansvar"]
             },
             "DokumentasjonInput": {
-                "required": ["hasLevert", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -2515,15 +2459,15 @@
                         ]
                     },
                     "hasLevert": {"type": "boolean"}
-                }
+                },
+                "required": ["hasLevert", "type"]
             },
             "DokumentDto": {
-                "required": ["dokumentId", "filnavn"],
                 "type": "object",
-                "properties": {"dokumentId": {"type": "string", "format": "uuid"}, "filnavn": {"type": "string"}}
+                "properties": {"dokumentId": {"type": "string", "format": "uuid"}, "filnavn": {"type": "string"}},
+                "required": ["dokumentId", "filnavn"]
             },
             "DokumentasjonDto": {
-                "required": ["dokumentasjonStatus", "dokumenter", "gruppe", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -2580,14 +2524,15 @@
                     },
                     "dokumentasjonStatus": {"type": "string", "enum": ["LASTET_OPP", "FORVENTET", "LEVERT_TIDLIGERE"]},
                     "dokumenter": {"type": "array", "items": {"$ref": "#/components/schemas/DokumentDto"}}
-                }
+                },
+                "required": ["dokumentasjonStatus", "dokumenter", "gruppe", "type"]
             },
             "ForventetDokumentasjonDto": {
-                "required": ["dokumentasjon"],
                 "type": "object",
                 "properties": {
                     "dokumentasjon": {"type": "array", "items": {"$ref": "#/components/schemas/DokumentasjonDto"}}
-                }
+                },
+                "required": ["dokumentasjon"]
             },
             "BosituasjonDto": {
                 "type": "object",
@@ -2598,52 +2543,47 @@
                             "EIER",
                             "LEIER",
                             "KOMMUNAL",
+                            "ANNET",
                             "INGEN",
                             "INSTITUSJON",
                             "KRISESENTER",
                             "FENGSEL",
                             "VENNER",
                             "FORELDRE",
-                            "FAMILIE",
-                            "ANNET"
+                            "FAMILIE"
                         ]
                     },
                     "antallPersoner": {"type": "integer", "format": "int32"}
                 }
             },
             "BegrunnelseInput": {
-                "required": ["type"],
-                "type": "object",
-                "properties": {"type": {"type": "string"}},
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
                         "HarHvaSokesOm": "#/components/schemas/HarHvaSokesOmInput",
                         "HarKategorier": "#/components/schemas/HarKategorierInput"
                     }
-                }
+                },
+                "properties": {"type": {"type": "string"}},
+                "required": ["type"]
             },
             "HarHvaSokesOmInput": {
-                "required": ["hvaSokesOm"],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/BegrunnelseInput"},
                     {
                         "type": "object",
                         "properties": {"hvorforSoke": {"type": "string"}, "hvaSokesOm": {"type": "string"}}
                     }
-                ]
+                ],
+                "required": ["hvaSokesOm"]
             },
             "HarKategorierInput": {
-                "required": ["annet", "kategorier"],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/BegrunnelseInput"},
                     {
                         "type": "object",
                         "properties": {
                             "kategorier": {
-                                "uniqueItems": true,
                                 "type": "array",
                                 "items": {
                                     "type": "string",
@@ -2655,28 +2595,28 @@
                                         "NODHJELP_IKKE_BOSTED",
                                         "NODHJELP_IKKE_STROM"
                                     ]
-                                }
+                                },
+                                "uniqueItems": true
                             },
                             "annet": {"type": "string"}
                         }
                     }
-                ]
+                ],
+                "required": ["annet", "kategorier"]
             },
             "BegrunnelseDto": {
-                "required": ["hvaSokesOm", "kategorier"],
                 "type": "object",
                 "properties": {
                     "hvaSokesOm": {"type": "string"},
                     "hvorforSoke": {"type": "string"},
                     "kategorier": {"$ref": "#/components/schemas/KategorierDto"}
-                }
+                },
+                "required": ["hvaSokesOm", "kategorier"]
             },
             "KategorierDto": {
-                "required": ["annet", "definerte"],
                 "type": "object",
                 "properties": {
                     "definerte": {
-                        "uniqueItems": true,
                         "type": "array",
                         "items": {
                             "type": "string",
@@ -2688,14 +2628,15 @@
                                 "NODHJELP_IKKE_BOSTED",
                                 "NODHJELP_IKKE_STROM"
                             ]
-                        }
+                        },
+                        "uniqueItems": true
                     },
                     "annet": {"type": "string"}
-                }
+                },
+                "required": ["annet", "definerte"]
             },
             "ArbeidInput": {"type": "object", "properties": {"kommentarTilArbeidsforhold": {"type": "string"}}},
             "ArbeidDto": {
-                "required": ["arbeidsforholdList"],
                 "type": "object",
                 "properties": {
                     "arbeidsforholdList": {
@@ -2703,7 +2644,8 @@
                         "items": {"$ref": "#/components/schemas/ArbeidsforholdDto"}
                     },
                     "kommentar": {"type": "string"}
-                }
+                },
+                "required": ["arbeidsforholdList"]
             },
             "ArbeidsforholdDto": {
                 "type": "object",
@@ -2717,19 +2659,17 @@
                 }
             },
             "AdresseInput": {
-                "required": ["type"],
-                "type": "object",
-                "properties": {"type": {"type": "string"}},
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
                         "VegAdresse": "#/components/schemas/VegAdresse",
                         "MatrikkelAdresse": "#/components/schemas/MatrikkelAdresse"
                     }
-                }
+                },
+                "properties": {"type": {"type": "string"}},
+                "required": ["type"]
             },
             "AdresserInput": {
-                "required": ["adresseValg"],
                 "type": "object",
                 "properties": {
                     "adresseValg": {"type": "string", "enum": ["FOLKEREGISTRERT", "MIDLERTIDIG", "SOKNAD"]},
@@ -2739,11 +2679,10 @@
                             {"$ref": "#/components/schemas/VegAdresse"}
                         ]
                     }
-                }
+                },
+                "required": ["adresseValg"]
             },
             "MatrikkelAdresse": {
-                "required": ["bruksnummer", "gaardsnummer", "kommunenummer"],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/AdresseInput"},
                     {
@@ -2758,11 +2697,10 @@
                         }
                     },
                     {"$ref": "#/components/schemas/Adresse"}
-                ]
+                ],
+                "required": ["bruksnummer", "gaardsnummer", "kommunenummer"]
             },
             "VegAdresse": {
-                "required": ["adresselinjer", "landkode"],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/AdresseInput"},
                     {
@@ -2780,12 +2718,10 @@
                         }
                     },
                     {"$ref": "#/components/schemas/Adresse"}
-                ]
+                ],
+                "required": ["adresselinjer", "landkode"]
             },
             "Adresse": {
-                "required": ["type"],
-                "type": "object",
-                "properties": {"type": {"type": "string"}},
                 "discriminator": {
                     "propertyName": "type",
                     "mapping": {
@@ -2794,7 +2730,9 @@
                         "PostboksAdresse": "#/components/schemas/PostboksAdresse",
                         "UstrukturertAdresse": "#/components/schemas/UstrukturertAdresse"
                     }
-                }
+                },
+                "properties": {"type": {"type": "string"}},
+                "required": ["type"]
             },
             "AdresserDto": {
                 "type": "object",
@@ -2840,8 +2778,6 @@
                 }
             },
             "PostboksAdresse": {
-                "required": ["postboks", "postnummer", "poststed"],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/Adresse"},
                     {
@@ -2852,30 +2788,29 @@
                             "poststed": {"type": "string"}
                         }
                     }
-                ]
+                ],
+                "required": ["postboks", "postnummer", "poststed"]
             },
             "UstrukturertAdresse": {
-                "required": ["adresse"],
-                "type": "object",
                 "allOf": [
                     {"$ref": "#/components/schemas/Adresse"},
                     {"type": "object", "properties": {"adresse": {"type": "array", "items": {"type": "string"}}}}
-                ]
+                ],
+                "required": ["adresse"]
             },
             "SoknadSendtDto": {
-                "required": ["digisosId", "tidspunkt"],
                 "type": "object",
                 "properties": {
                     "digisosId": {"type": "string", "format": "uuid"},
                     "tidspunkt": {"type": "string", "format": "date-time"}
-                }
+                },
+                "required": ["digisosId", "tidspunkt"]
             },
             "BostotteInput": {
                 "type": "object",
                 "properties": {"hasBostotte": {"type": "boolean"}, "hasSamtykke": {"type": "boolean"}}
             },
             "BostotteDto": {
-                "required": ["saker", "utbetalinger"],
                 "type": "object",
                 "properties": {
                     "hasBostotte": {"type": "boolean"},
@@ -2884,20 +2819,20 @@
                     "utbetalinger": {"type": "array", "items": {"$ref": "#/components/schemas/UtbetalingBostotteDto"}},
                     "saker": {"type": "array", "items": {"$ref": "#/components/schemas/BostotteSakDto"}},
                     "fetchHusbankenFeilet": {"type": "boolean"}
-                }
+                },
+                "required": ["saker", "utbetalinger"]
             },
             "BostotteSakDto": {
-                "required": ["dato", "status"],
                 "type": "object",
                 "properties": {
                     "dato": {"type": "string", "format": "date"},
                     "status": {"type": "string", "enum": ["UNDER_BEHANDLING", "VEDTATT"]},
                     "beskrivelse": {"type": "string"},
                     "vedtaksstatus": {"type": "string", "enum": ["INNVILGET", "AVSLAG", "AVVIST"]}
-                }
+                },
+                "required": ["dato", "status"]
             },
             "UtbetalingBostotteDto": {
-                "required": ["type"],
                 "type": "object",
                 "properties": {
                     "mottaker": {"type": "string", "enum": ["HUSSTAND", "KOMMUNE"]},
@@ -2919,32 +2854,33 @@
                             "UTBETALING_HUSBANKEN"
                         ]
                     }
-                }
+                },
+                "required": ["type"]
             },
             "StartSoknadResponseDto": {
-                "required": ["soknadId", "useKortSoknad"],
                 "type": "object",
-                "properties": {"soknadId": {"type": "string", "format": "uuid"}, "useKortSoknad": {"type": "boolean"}}
+                "properties": {"soknadId": {"type": "string", "format": "uuid"}, "useKortSoknad": {"type": "boolean"}},
+                "required": ["soknadId", "useKortSoknad"]
             },
             "NavnDto": {
-                "required": ["etternavn", "fornavn", "fulltNavn"],
                 "type": "object",
                 "properties": {
                     "fornavn": {"type": "string"},
                     "mellomnavn": {"type": "string"},
                     "etternavn": {"type": "string"},
                     "fulltNavn": {"type": "string"}
-                }
+                },
+                "required": ["etternavn", "fornavn", "fulltNavn"]
             },
             "PersonaliaDto": {
-                "required": ["navn"],
                 "type": "object",
                 "properties": {
                     "navn": {"$ref": "#/components/schemas/NavnDto"},
                     "fodselsnummer": {"type": "string"},
                     "statsborgerskap": {"type": "string"},
                     "nordiskBorger": {"type": "boolean"}
-                }
+                },
+                "required": ["navn"]
             },
             "NavUtbetalingerDto": {
                 "type": "object",
@@ -2965,17 +2901,18 @@
                             "UTBETALING_HUSBANKEN"
                         ]
                     },
+                    "ytelsestype": {"type": "string"},
                     "utbetalingsdato": {"type": "string"},
                     "belop": {"type": "number", "format": "double"}
                 }
             },
             "NavYtelseDto": {
-                "required": ["utbetalinger"],
                 "type": "object",
                 "properties": {
                     "utbetalinger": {"type": "array", "items": {"$ref": "#/components/schemas/NavUtbetalingerDto"}},
                     "fetchUtbetalingerFeilet": {"type": "boolean"}
-                }
+                },
+                "required": ["utbetalinger"]
             }
         }
     }

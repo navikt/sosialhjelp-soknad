@@ -1,3 +1,3 @@
-import {useLocation} from "react-router-dom";
+import {useLocation} from "react-router";
 
 export const useCurrentSoknadIsKort = () => useLocation().pathname.includes("/kort");

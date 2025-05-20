@@ -14,7 +14,7 @@
   "PabegynteSoknaderPanel": {
     "title": "Hald fram på ein søknad du har byrja på",
     "pabegynte": "{count, plural, =1 {1 påbyrja søknad} other {# påbyrja søknader}}",
-    "slettesEtter": "Ver merksam på at påbyrja søknader blir sletta etter {DAYS_BEFORE_DELETION} dagar."
+    "slettesEtter": "Ver merksam på at påbyrja søknader blir sletta etter {count} dagar."
   },
   "PabegyntSoknadView": {
     "sistOppdatert": "Sist oppdatert",
@@ -93,5 +93,15 @@
   "NavEnhet": {
     "kontor": "{enhetsnavn}, {kommunenavn} kommune.",
     "blirSendtTil": "Søknaden din vil bli sendt til:"
+  },
+  "NavYtelserTable": {
+    "utbetalt": "Utbetalt",
+    "ytelse": "Yting",
+    "belop": "Beløp"
+  },
+  "NavYtelser": {
+    "heading": "Utbetalingar frå NAV",
+    "empty": "Vi har ingen registrerte utbetalingar på deg frå NAV den siste månaden.",
+    "error": "På grunn av systemfeil, fekk vi ikkje henta inn informasjon om ytingar frå NAV."
   }
 }

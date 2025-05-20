@@ -1,13 +1,14 @@
 "use client";
 
 import IkkeFunnet from "../sider/feilsider/IkkeFunnet.tsx";
+import * as React from "react";
+import {ClientSideProvider} from "../lib/components/error/ClientSideProvider.tsx";
+import {ErrorPage} from "../lib/components/error/ErrorPage.tsx";
 
-const NotFound = () => {
-    return (
-        <div className={"grow bg-white flex-col flex"}>
+export default () => (
+    <ClientSideProvider>
+        <ErrorPage error={new Error("404")}>
             <IkkeFunnet />
-        </div>
-    );
-};
-
-export default NotFound;
+        </ErrorPage>
+    </ClientSideProvider>
+);

@@ -11,3 +11,6 @@ export const DEFAULT_LANGUAGE = "nb";
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 export const isSupportedLanguage = (lang: string): lang is SupportedLanguage =>
     SUPPORTED_LANGUAGES.includes(lang as SupportedLanguage);
+
+/** Returns the language if it's supported (nb, en or nn), defaults to nb if it isn't. */
+export const supportedLanguageOrFallback = (lang?: string) => (lang && isSupportedLanguage(lang) ? lang : "nb");

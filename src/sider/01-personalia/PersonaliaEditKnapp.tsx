@@ -4,10 +4,10 @@ import * as React from "react";
 import {Button} from "@navikt/ds-react/Button";
 import {BodyShort} from "@navikt/ds-react";
 
-export const PersonaliaEditKnapp = ({onClick}: {onClick: () => void}) => {
+export const PersonaliaEditKnapp = ({onClick, disabled}: {onClick: () => void; disabled?: boolean}) => {
     const {t} = useTranslation("skjema");
     return (
-        <Button variant={"tertiary"} onClick={onClick} data-testid="personalia-rediger-knapp">
+        <Button variant={"tertiary"} onClick={onClick} data-testid="personalia-rediger-knapp" disabled={disabled}>
             <div className={"flex flex-row gap-1 text-small items-center"}>
                 <PencilIcon className={"h-[24px] w-[24px]"} aria-hidden={true} />
                 <BodyShort size={"small"}>{t("kontakt.system.telefon.endreknapp.label")}</BodyShort>

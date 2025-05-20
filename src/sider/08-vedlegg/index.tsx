@@ -34,10 +34,6 @@ export const OkonomiskeOpplysningerView = () => {
     const navigate = useNavigate();
     const {hasBekreftet, isLoading: isHasBekreftetLoading} = useHasBekreftetUtgifter();
 
-    const firstGroup = grupper[0];
-    const middleGroups = grupper.slice(1, grupper.length - 1);
-    const lastGroup = grupper[grupper.length - 1];
-
     if (isLoading || isHasBekreftetLoading) return <ApplicationSpinner />;
 
     return (
@@ -49,22 +45,26 @@ export const OkonomiskeOpplysningerView = () => {
                     navigate(`../${toPage}`);
                 }}
             />
-            <SkjemaStegBlock className={cx("pb-12", {"lg:space-y-8": true})}>
+            <SkjemaStegBlock className={cx("lg:space-y-8 mb-0! pb-0! rounded-b-none")}>
                 <SkjemaStegTitle
                     title={t(SkjemaHeadings[8].tittel)}
                     icon={SkjemaHeadings[8].ikon}
                     className={"lg:mb-8"}
                 />
                 {hasBekreftet ? <InfopanelOpplysninger /> : <UbesvarteOpplysninger />}
-                <Gruppe gruppeKey={firstGroup} />
             </SkjemaStegBlock>
-            {middleGroups.map((gruppe, i) => (
-                <SkjemaStegBlock key={i} className={"pb-12"}>
+            {grupper.map((gruppe, i) => (
+                <SkjemaStegBlock
+                    key={i}
+                    className={cx("pb-12", {
+                        "pt-24! mt-0! rounded-t-none": i === 0,
+                        "mb-0! rounded-b-none": i === grupper.length - 1,
+                    })}
+                >
                     <Gruppe key={gruppe} gruppeKey={gruppe} />
                 </SkjemaStegBlock>
             ))}
-            <SkjemaStegBlock className={cx("pb-12")}>
-                <Gruppe gruppeKey={lastGroup} />
+            <SkjemaStegBlock className={cx("pb-12 rounded-t-none")}>
                 <SkjemaStegButtons
                     onPrevious={() => navigate(`../7`)}
                     onNext={async () => {

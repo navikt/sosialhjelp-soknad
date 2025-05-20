@@ -13,15 +13,13 @@ const useOkonomiskOpplysningMutation = <T extends OkonomiskOpplysningDtoDetaljer
     const soknadId = useSoknadId();
     const queryClient = useQueryClient();
     const {data, isLoading, queryKey} = useGetOkonomiskeOpplysninger(soknadId);
-    const {mutate} = useUpdateOkonomiskOpplysning({
-        mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
-    });
-    const updateOkonomiskOpplysning = (data: UpdateOkonomiskOpplysningBody) => {
-        mutate({soknadId, data});
+    const {mutateAsync} = useUpdateOkonomiskOpplysning();
+    const updateOkonomiskOpplysning = async (data: UpdateOkonomiskOpplysningBody) => {
+        queryClient.setQueryData(queryKey, await mutateAsync({soknadId, data}));
     };
     return {
         updateOkonomiskOpplysning,
-        data: data?.opplysninger?.find((it) => it.type === opplysningstype)?.detaljer as T[] | undefined,
+        opplysning: data?.opplysninger?.find(({type}) => type === opplysningstype)?.detaljer as T[] | undefined,
         isLoading,
     };
 };

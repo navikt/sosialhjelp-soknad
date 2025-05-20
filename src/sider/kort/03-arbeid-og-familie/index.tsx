@@ -17,7 +17,7 @@ import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaSte
 import {useGetArbeid} from "../../../generated/new/arbeid-controller/arbeid-controller.ts";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 
-const ArbeidOgFamilie = (): React.JSX.Element => {
+const ArbeidOgFamilie = () => {
     const {t} = useTranslation("skjema");
 
     const navigate = useNavigate();

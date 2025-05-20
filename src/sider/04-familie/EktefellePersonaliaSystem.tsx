@@ -4,7 +4,7 @@ import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
 import * as React from "react";
 import {LocalizedDate} from "../../lib/components/LocalizedDate";
-import {FullName} from "../01-personalia/FulltNavn";
+import {FullName} from "../../lib/components/FullName.tsx";
 import {LocalizedYesNo} from "../../lib/components/LocalizedYesNo";
 import {BodyShort} from "@navikt/ds-react";
 import {useGetSivilstand} from "../../generated/new/sivilstand-controller/sivilstand-controller.ts";

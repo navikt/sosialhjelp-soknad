@@ -17,7 +17,7 @@ export const formVariants = {
     ingen: {numRows: "ingen"},
 } as const;
 
-export const opplysningSpec: Record<DokumentasjonDtoType, OpplysningSpec> = {
+export const opplysningSpec = {
     JOBB: {
         formVariant: "bruttonetto",
         textKey: "opplysninger.arbeid.jobb",
@@ -189,4 +189,11 @@ export const opplysningSpec: Record<DokumentasjonDtoType, OpplysningSpec> = {
         textKey: "opplysninger.oppholdstillatelse.oppholdstillatelse",
         sortKey: 33,
     },
-};
+} as const satisfies Record<DokumentasjonDtoType, OpplysningSpec>;
+type OpplysningSpecMap = typeof opplysningSpec;
+type FormVariants = OpplysningSpecMap[keyof OpplysningSpecMap]["formVariant"];
+
+// Utility type: Gir alle dokumentasjonstyper som har en spesifisert formVariant
+export type DokumentasjonTypesForVariant<Variant extends FormVariants> = {
+    [K in keyof OpplysningSpecMap]: OpplysningSpecMap[K]["formVariant"] extends Variant ? K : never;
+}[keyof OpplysningSpecMap];

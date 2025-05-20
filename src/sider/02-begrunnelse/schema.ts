@@ -14,7 +14,7 @@ export interface FormValues {
     hvorforSoke?: string | null;
 }
 
-export const begrunnelseSchema = z.object({
+export const BegrunnelseSchema = z.object({
     hvaSokesOm: z.string().max(MAX_LEN_HVA, feilmeldinger.maksLengde).optional(),
     hvorforSoke: z.string().max(MAX_LEN_HVORFOR, feilmeldinger.maksLengde).optional(),
 });

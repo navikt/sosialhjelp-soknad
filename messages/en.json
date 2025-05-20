@@ -14,7 +14,7 @@
   "PabegynteSoknaderPanel": {
     "title": "Continue with an application you have started",
     "pabegynte": "{count, plural, =1 {One started application} other {# started applications}}",
-    "slettesEtter": "Please note that the started applications will be deleted after {DAYS_BEFORE_DELETION} days."
+    "slettesEtter": "Please note that the started applications will be deleted after {count} days."
   },
   "PabegyntSoknadView": {
     "sistOppdatert": "Last updated",
@@ -93,5 +93,15 @@
   "NavEnhet": {
     "kontor": "{enhetsnavn}, {kommunenavn} municipality.",
     "blirSendtTil": "Your application will be sent to:"
+  },
+  "NavYtelserTable": {
+    "utbetalt": "Paid out",
+    "ytelse": "Benefit",
+    "belop": "Amount"
+  },
+  "NavYtelser": {
+    "heading": "Your payments from NAV",
+    "empty": "You have no payments registered from NAV in the last month.",
+    "error": "Due to a system fault we have not been able to obtain information about benefits from NAV."
   }
 }
