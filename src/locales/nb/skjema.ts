@@ -723,7 +723,7 @@ export const skjema = {
             infotekst: {
                 tekst: "For eksempel bolig eller kjøretøy",
             },
-            sporsmal: "Eier du noe med økonomisk verdi?",
+            sporsmal: "Huk av hvis du eier noe med høyere økonomisk verdi.",
             true: {
                 type: {
                     annet: {
@@ -747,7 +747,8 @@ export const skjema = {
                 tekst: "Har du fått utbetalt penger i form av utbytte på aksjer, fond, salg av eiendeler eller på andre måter, ønsker vi å vite om dette.",
             },
             lesmer: "Eksempler på utbetalinger",
-            sporsmal: "Har du de siste tre månedene fått utbetalt penger som hverken er lønn eller en ytelse fra Nav?",
+            sporsmal:
+                "Huk av hvis du de siste tre månedene har mottatt andre utbetalinger. For eksempel fra forsikring, salg av eiendeler, eller utbytte på aksjer/fond.",
             tittel: "Andre inntekter",
             true: {
                 type: {
@@ -1831,7 +1832,7 @@ export const skjema = {
             infotekst: {
                 tekst: "For eksempel barnehage, SFO eller fritidsaktiviteter.",
             },
-            sporsmal: "Har du utgifter til barn?",
+            sporsmal: "Huk av hvis du har utgifter til barn.",
             typer: {
                 annet: "Annet",
                 barnFritidsaktiviteter: "Fritidsaktiviteter",
