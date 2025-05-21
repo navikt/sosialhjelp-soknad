@@ -1,8 +1,8 @@
-import {Alert} from "@navikt/ds-react";
+import {Alert, BodyLong, BodyShort, Heading, Link} from "@navikt/ds-react";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 import {useGetOppsummering} from "../../generated/oppsummering-ressurs/oppsummering-ressurs";
 import {OppsummeringSteg} from "./OppsummeringSteg";
 import {useSendSoknad} from "./useSendSoknad";
@@ -26,6 +26,39 @@ export const Oppsummering = () => {
 
     const {tittel, ikon} = isKortSoknad ? KortSkjemaHeadings[5] : SkjemaHeadings[9];
 
+    const feilmeldingstekst = (deletionDate: string) => {
+        return (
+            <>
+                <Heading level={"3"} size={"small"} spacing>
+                    {t("soknad.innsendingFeilet.overskrift")}
+                </Heading>
+                <BodyLong>{t("soknad.innsendingFeilet.infotekst1")}</BodyLong>
+                <BodyLong>{t("soknad.innsendingFeilet.infotekst2", {deletionDate: deletionDate})}</BodyLong>
+                <br />
+                <Heading level={"3"} size={"small"}>
+                    {t("soknad.innsendingFeilet.nodssituasjon")}
+                </Heading>
+                <BodyShort>
+                    <Trans
+                        t={t}
+                        i18nKey={"soknad.innsendingFeilet.generelt"}
+                        components={{
+                            lenke: (
+                                <Link
+                                    href="https://www.nav.no/sok-nav-kontor"
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                >
+                                    {null}
+                                </Link>
+                            ),
+                        }}
+                    />
+                </BodyShort>
+            </>
+        );
+    };
+
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={isKortSoknad ? 5 : 9} onStepChange={async (page) => navigate(`../${page}`)} />
@@ -37,7 +70,7 @@ export const Oppsummering = () => {
                     <SoknadsmottakerInfoPanel />
                     {isError && (
                         <Alert variant="error" className="mt-4">
-                            {t("soknad.innsendingFeilet", {deletionDate: deletionDateRef.current})}
+                            {feilmeldingstekst(deletionDateRef.current)}
                         </Alert>
                     )}
                 </div>
