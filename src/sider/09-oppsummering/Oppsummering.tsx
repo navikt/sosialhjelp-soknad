@@ -20,7 +20,7 @@ export const Oppsummering = () => {
     const navigate = useNavigate();
     const {isLoading, data: oppsummering} = useGetOppsummering(soknadId);
 
-    const {sendSoknad, isError, isPending, isKortSoknad} = useSendSoknad(oppsummering);
+    const {sendSoknad, isError, isPending, isKortSoknad, deletionDateRef} = useSendSoknad(oppsummering);
 
     if (isLoading) return <ApplicationSpinner />;
 
@@ -37,7 +37,7 @@ export const Oppsummering = () => {
                     <SoknadsmottakerInfoPanel />
                     {isError && (
                         <Alert variant="error" className="mt-4">
-                            {t("soknad.innsendingFeilet")}
+                            {t("soknad.innsendingFeilet", {deletionDate: deletionDateRef.current})}
                         </Alert>
                     )}
                 </div>

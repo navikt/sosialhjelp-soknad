@@ -1540,7 +1540,11 @@ export const skjema = {
     soknad: {
         ferdigstilt: "Søknaden er allerede sendt.",
         innsendingFeilet:
-            "Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg prøve igjen. Søknaden din er lagret og dersom problemet fortsetter kan du forsøke igjen senere. Kontakt ditt NAV-kontor dersom du er i en nødsituasjon.",
+            "<h3>Feil ved innsendelse</h3>" +
+            "<p>Beklager, noe har gått galt i systemene våre. Vi jobber med å rette feilen. " +
+            "Søknaden din lagres til {{deletionDate}}, så du kan prøve igjen senere. " +
+            "Den påbegynte søknaden finner du på Min side</p>" +
+            "<h3>Er du i en nødssituasjon?</h3><p>Kontakt ditt Nav-kontor eller ring oss på 55 55 33 33.</p>",
     },
     soknadsmottaker: {
         enhetsnavn: {
