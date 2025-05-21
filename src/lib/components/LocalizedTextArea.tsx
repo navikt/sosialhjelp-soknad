@@ -1,8 +1,8 @@
-import React, {ForwardedRef, forwardRef} from "react";
+import {ForwardedRef, forwardRef} from "react";
 import {Textarea, TextareaProps} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 
-const LocalizedTextarea = (props: TextareaProps, ref: ForwardedRef<HTMLTextAreaElement>): React.JSX.Element => {
+const LocalizedTextarea = (props: TextareaProps, ref: ForwardedRef<HTMLTextAreaElement>) => {
     const {t} = useTranslation("skjema");
     return (
         <Textarea

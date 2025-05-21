@@ -61,7 +61,7 @@ export const ForhandsvisningVedleggModal = ({
                     {header}
                 </Heading>
             </Modal.Header>
-            <Modal.Body className={cx({"fixed inset-0 w-full !p-0": isFullscreen}, "flex flex-col items-center")}>
+            <Modal.Body className={cx({"fixed inset-0 w-full p-0!": isFullscreen}, "flex flex-col items-center")}>
                 <div
                     className={cx(
                         {
@@ -84,7 +84,7 @@ export const ForhandsvisningVedleggModal = ({
                     )}
                 </div>
             </Modal.Body>
-            <Modal.Footer className={"!block space-y-4"}>
+            <Modal.Footer className={"block! space-y-4"}>
                 <BodyShort>{t("vedlegg.forhandsvisning.info")}</BodyShort>
                 {isKortSoknad && visKategori && (
                     <div>

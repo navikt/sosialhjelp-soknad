@@ -22,7 +22,7 @@ export const HusbankenUtbetalinger = ({utbetalinger}: {utbetalinger?: Utbetaling
         <Table>
             <Table.Header>
                 <Table.Row>
-                    <Table.HeaderCell>{t("utbetalinger.utbetaling.erutbetalt.label")}</Table.HeaderCell>
+                    <Table.HeaderCell>{t("inntekt.bostotte.utbetaling.stringValue")}</Table.HeaderCell>
                     <Table.HeaderCell className={"w-fit"}>{t("inntekt.bostotte.utbetaling.mottaker")}</Table.HeaderCell>
                     <Table.HeaderCell align={"left"}>{t("inntekt.bostotte.utbetaling.belop")}</Table.HeaderCell>
                 </Table.Row>

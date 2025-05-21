@@ -1,7 +1,7 @@
 "use client";
 
 import {Suspense} from "react";
-import {BrowserRouter, Navigate, Route, Routes, useLocation} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes, useLocation} from "react-router";
 import {ApplicationSpinner} from "./lib/components/animasjoner/ApplicationSpinner";
 import Personopplysninger from "./sider/01-personalia";
 import Begrunnelse from "./sider/02-begrunnelse";
@@ -56,14 +56,7 @@ export default function App() {
 
     return (
         <Suspense fallback={<ApplicationSpinner />}>
-            <BrowserRouter
-                basename={prefix}
-                future={{
-                    // these are just to stop react-router-dom from spamming
-                    v7_relativeSplatPath: true,
-                    v7_startTransition: true,
-                }}
-            >
+            <BrowserRouter basename={prefix}>
                 <ValgtKategoriProvider>
                     <Routes>
                         <Route path={"skjema"}>

@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 import * as React from "react";
 import {SkatteetatenAmount} from "./SkatteetatenAmount";
 import {DigisosLanguageKey} from "../../../lib/i18n/common.ts";
-import {UtbetalingFraSkatteetatenDto} from "../../../generated/new/model";
+import {UtbetalingFraSkatteetatenDto} from "../../../generated/new/model/utbetalingFraSkatteetatenDto.ts";
 
 // This will throw an error once i18n is more strongly typed
 const LABELS: Record<"brutto" | "trekk" | "netto", DigisosLanguageKey> = {

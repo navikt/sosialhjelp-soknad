@@ -8,7 +8,7 @@ export const Driftsmeldinger = async () => {
         <Alert
             variant={severity}
             fullWidth
-            className={"justify-center [&>div]:max-w-lg [&>div]:lg:max-w-3xl [&>svg]:md:ml-8 [&>div]:w-full"}
+            className={"justify-center [&>div]:max-w-lg lg:[&>div]:max-w-3xl md:[&>svg]:ml-8 [&>div]:w-full"}
         >
             <Markdown>{text}</Markdown>
         </Alert>

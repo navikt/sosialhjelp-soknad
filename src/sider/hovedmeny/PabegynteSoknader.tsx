@@ -21,20 +21,20 @@ export const PabegynteSoknaderPanel = () => {
     return (
         <ExpansionCard style={EXPANSION_CARD_BORDER_STYLE_HACK} aria-labelledby={"pabegyntesoknader-title"}>
             <HovedmenyCardHeader icon={<FileContent className={"w-6 h-6"} />}>
-                <ExpansionCard.Title id={"pabegyntesoknader-title"} as={"h2"} className={"!m-0"} size={"small"}>
+                <ExpansionCard.Title id={"pabegyntesoknader-title"} as={"h2"} className={"m-0!"} size={"small"}>
                     {t("title")}
                 </ExpansionCard.Title>
-                <ExpansionCard.Description className={"opacity-70 !m-0"}>
+                <ExpansionCard.Description className={"opacity-70 m-0!"}>
                     {t("pabegynte", {count})}
                 </ExpansionCard.Description>
             </HovedmenyCardHeader>
             <ExpansionCard.Content
-                className={"!border-0"}
+                className={"border-0!"}
                 aria-describedby={"pabegynt-description"}
                 aria-label={t("pabegynte", {count})}
             >
                 <BodyShort id={"pabegynt-description"} className={"pb-4"}>
-                    {t("slettesEtter", {DAYS_BEFORE_DELETION})}
+                    {t("slettesEtter", {count: DAYS_BEFORE_DELETION.toString()})}
                 </BodyShort>
                 <div className={"flex gap-2 flex-col"}>
                     {/*
