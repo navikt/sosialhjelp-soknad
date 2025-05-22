@@ -42,7 +42,7 @@ export const handleAxiosError =
 
         // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
         if ([403, 404, 410].includes(status)) {
-            window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
+            window.location.assign(`/sosialhjelp/soknad/informasjon?reason=axios${status}`);
             return neverResolves();
         }
 
