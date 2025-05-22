@@ -1,6 +1,7 @@
 import Axios, {AxiosRequestConfig, AxiosResponse} from "axios";
 import digisosConfig from "../config";
 import {handleAxiosError} from "./handleAxiosError.ts";
+import Cookie from "js-cookie";
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL: digisosConfig.baseURL,
@@ -18,6 +19,8 @@ export interface DigisosAxiosConfig extends AxiosRequestConfig {
     digisosIgnoreErrors?: boolean;
 }
 
+const isCookieAuthEnv = ["mock", "localhost"].includes(process.env.NEXT_PUBLIC_DIGISOS_ENV ?? "");
+
 /**
  * Digisos Axios client
  *
@@ -32,18 +35,10 @@ export interface DigisosAxiosConfig extends AxiosRequestConfig {
  */
 export const axiosInstance = <T>(config: AxiosRequestConfig, options?: DigisosAxiosConfig): Promise<T> => {
     const controller = new AbortController();
-    let mockToken: string | null = null;
 
     // Ta idtoken fra cookie og legg i authorization header, men kun i mock/localhost
-    if (["mock", "localhost"].includes(process.env.NEXT_PUBLIC_DIGISOS_ENV ?? "")) {
-        const bearerToken = document.cookie
-            .split("; ")
-            .find((c) => c.startsWith("localhost-idtoken"))
-            ?.split("=")[1];
-        if (bearerToken) {
-            mockToken = bearerToken;
-        }
-    }
+    const mockToken = isCookieAuthEnv ? Cookie.get("localhost-idtoken") : undefined;
+
     const promise: CancellablePromise<AxiosResponse> = AXIOS_INSTANCE({
         ...config,
         ...options,
