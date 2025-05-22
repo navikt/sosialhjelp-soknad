@@ -4,6 +4,7 @@ import {LINK_PAGE_PATH} from "../constants";
 import {isLoginError} from "./error/isLoginError";
 import {getGotoParameter} from "./auth/getGotoParameter";
 import {logger} from "@navikt/next-logger";
+import {UnauthorizedMelding} from "../../generated/model";
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL: digisosConfig.baseURL,
@@ -22,6 +23,11 @@ export type DigisosAxiosConfig = {
 };
 
 const neverResolves = <T>() => new Promise<T>(() => {});
+
+const getLoginUrl = (data: UnauthorizedMelding) =>
+    data.loginUrl
+        ? `${data.loginUrl}?redirect=${origin}${LINK_PAGE_PATH}?goto=${getGotoParameter(window.location)}`
+        : `/sosialhjelp/soknad/oauth2/login?redirect=${origin}${decodeURIComponent(window.location.pathname)}`;
 
 /**
  * Digisos Axios client
@@ -77,19 +83,11 @@ export const axiosInstance = <T>(
             const {response} = e;
             if (!response) {
                 logger.warn(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
-                console.warn(e);
                 throw e;
             }
 
             if (isLoginError(response)) {
-                if (response.data.loginUrl) {
-                    const loginUrl = `${response.data.loginUrl}?redirect=${origin}${LINK_PAGE_PATH}?goto=${getGotoParameter(window.location)}`;
-                    window.location.assign(loginUrl);
-                } else {
-                    const loginUrl = `/sosialhjelp/soknad/oauth2/login?redirect=${origin}${decodeURIComponent(window.location.pathname)}`;
-                    logger.info({loginUrl}, `401 fra soknad-api, redirecter til login`);
-                    window.location.assign(loginUrl);
-                }
+                window.location.assign(getLoginUrl(response.data));
                 return neverResolves();
             }
 
