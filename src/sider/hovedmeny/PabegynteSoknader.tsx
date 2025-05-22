@@ -6,7 +6,7 @@ import {useTranslations} from "next-intl";
 import {PabegyntSoknadView} from "./PabegyntSoknadView.tsx";
 import {EXPANSION_CARD_BORDER_STYLE_HACK, HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
 import {useContextSessionInfo} from "../../lib/providers/useContextSessionInfo.ts";
-import {PabegyntSoknad} from "../../generated/model/pabegyntSoknad.ts";
+import {PabegyntSoknad} from "../../generated/model";
 
 export const DAYS_BEFORE_DELETION = 14;
 
@@ -44,7 +44,7 @@ export const PabegynteSoknaderPanel = () => {
                     */}
                     {open?.map((pabegyntSoknad: PabegyntSoknad & {soknadId?: string}) => {
                         const {sistOppdatert, isKort} = pabegyntSoknad;
-                        const soknadId = pabegyntSoknad.soknadId || pabegyntSoknad.behandlingsId;
+                        const soknadId = pabegyntSoknad.soknadId;
 
                         return (
                             <PabegyntSoknadView
