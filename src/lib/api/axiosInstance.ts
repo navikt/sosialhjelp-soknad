@@ -74,24 +74,25 @@ export const axiosInstance = <T>(
     })
         .then(({data}) => data)
         .catch(async (e) => {
+            const {method, url} = config;
+
             if (!(e instanceof AxiosError)) logger.warn({error: e}, `non-AxiosError error in axiosinstance`);
 
             if (isCancel(e) || options?.digisosIgnoreErrors) {
                 return neverResolves();
             }
 
-            const {response} = e;
-            if (!response) {
+            if (!e.response) {
                 logger.warn(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
                 throw e;
             }
 
-            if (isLoginError(response)) {
-                window.location.assign(getLoginUrl(response.data));
+            const {status, data} = e.response;
+
+            if (isLoginError(e.response)) {
+                window.location.assign(getLoginUrl(data));
                 return neverResolves();
             }
-
-            const {status, data} = response;
 
             // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
             if ([403, 404, 410].includes(status)) {
@@ -99,7 +100,6 @@ export const axiosInstance = <T>(
                 return neverResolves();
             }
 
-            const {method, url} = config;
             logger.warn({method, url, status, data}, `nettverksfeil i axiosInstance`);
             throw e;
         });
