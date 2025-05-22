@@ -1,4 +1,4 @@
-import {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
+import {AxiosRequestConfig, AxiosResponse, isAxiosError, isCancel} from "axios";
 import {logger} from "@navikt/next-logger";
 import {LINK_PAGE_PATH} from "../constants.ts";
 import {getGotoParameter} from "./auth/getGotoParameter.ts";
@@ -19,9 +19,12 @@ export const handleAxiosError =
     (config: AxiosRequestConfig, options: DigisosAxiosConfig | undefined) => async (e: any) => {
         const {method, url} = config;
 
-        if (!(e instanceof AxiosError)) logger.warn({error: e}, `non-AxiosError error in axiosInstance`);
-
         if (isCancel(e) || options?.digisosIgnoreErrors) {
+            return neverResolves();
+        }
+
+        if (!isAxiosError(e)) {
+            logger.warn({error: e}, `non-AxiosError error in axiosInstance`);
             return neverResolves();
         }
 
