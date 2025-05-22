@@ -1,5 +1,4 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
-import {logWarning} from "../log/loggerUtils";
 import digisosConfig from "../config";
 import {LINK_PAGE_PATH} from "../constants";
 import {isLoginError} from "./error/isLoginError";
@@ -69,7 +68,7 @@ export const axiosInstance = <T>(
     })
         .then(({data}) => data)
         .catch(async (e) => {
-            if (!(e instanceof AxiosError)) await logWarning(`non-axioserror error ${e} in axiosinstance`);
+            if (!(e instanceof AxiosError)) logger.warn({error: e}, `non-AxiosError error in axiosinstance`);
 
             if (isCancel(e) || options?.digisosIgnoreErrors) {
                 return neverResolves();
@@ -77,7 +76,7 @@ export const axiosInstance = <T>(
 
             const {response} = e;
             if (!response) {
-                await logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
+                logger.warn(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
                 console.warn(e);
                 throw e;
             }
@@ -88,7 +87,7 @@ export const axiosInstance = <T>(
                     window.location.assign(response.data.loginUrl + redirect);
                 } else {
                     const loginUrl = `/sosialhjelp/soknad/oauth2/login?redirect=${origin}${decodeURIComponent(window.location.pathname)}`;
-                    logger.info(`Fikk 401 på kall, redirecter til login: ${loginUrl}`);
+                    logger.info({loginUrl}, `401 fra soknad-api, redirecter til login`);
                     window.location.assign(loginUrl);
                 }
                 return neverResolves();
@@ -102,7 +101,8 @@ export const axiosInstance = <T>(
                 return neverResolves();
             }
 
-            await logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url}: ${status} ${data}`);
+            const {method, url} = config;
+            logger.warn({method, url, status, data}, `nettverksfeil i axiosInstance`);
             throw e;
         });
 
