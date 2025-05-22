@@ -123,5 +123,3 @@ export const axiosInstance = <T>(
 
     return promise as Promise<T>;
 };
-
-export type ErrorType<T> = AxiosError<T>;
