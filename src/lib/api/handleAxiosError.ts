@@ -1,10 +1,12 @@
-import {AxiosError, AxiosRequestConfig, isCancel} from "axios";
+import {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
 import {logger} from "@navikt/next-logger";
-import {isLoginError} from "./error/isLoginError.ts";
 import {LINK_PAGE_PATH} from "../constants.ts";
 import {getGotoParameter} from "./auth/getGotoParameter.ts";
 import {DigisosAxiosConfig} from "./axiosInstance.ts";
 import {UnauthorizedMelding} from "../../generated/model/unauthorizedMelding.ts";
+
+export const isLoginError = (response: AxiosResponse): response is AxiosResponse<UnauthorizedMelding> =>
+    response.status === 401;
 
 const neverResolves = <T>() => new Promise<T>(() => {});
 

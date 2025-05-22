@@ -33,7 +33,7 @@ const getAuthHeaderFromCookie = () => {
  * the rug is about to be pulled out under the code anyway when
  * window.location.href is assigned to.
  *
- * All others will generate exceptions (In case of 409, retry up to 10 times).
+ * All others will generate exception
  *
  * @returns data from the request, *or* a promise that never resolves,
  * in case of an error that is about to be handled by a page redirection.
