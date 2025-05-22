@@ -1,7 +1,7 @@
 import * as React from "react";
 import {NavEnhet} from "./NavEnhet";
 import {AdresseVisning} from "./AdresseVisning";
-import {Alert, BodyLong, Heading, Loader, Radio} from "@navikt/ds-react";
+import {Alert, BodyLong, Loader, Radio} from "@navikt/ds-react";
 import {formaterSoknadsadresse} from "./AdresseUtils";
 import {AdresseSok} from "./AdresseSok";
 import cx from "classnames";
@@ -37,11 +37,8 @@ export const AdresseData = () => {
     }
 
     return (
-        <section aria-labelledby={"soknadsmottaker-label"} className={"space-y-2"} id={"adressefelt"}>
-            <Heading id={"soknadsmottaker-label"} size={"small"} level={"3"} className={"flex gap-4"}>
-                {t("soknadsmottaker.sporsmal")}
-                {showSpinner && <Loader />}
-            </Heading>
+        <>
+            {showSpinner && <Loader />}
             <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.tekst")}</BodyLong>
             <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.ingress")}</BodyLong>
             <HorizontalRadioGroup
@@ -71,6 +68,6 @@ export const AdresseData = () => {
                 )}
             </HorizontalRadioGroup>
             {navEnhet && <NavEnhet navEnhet={navEnhet} />}
-        </section>
+        </>
     );
 };

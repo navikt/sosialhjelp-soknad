@@ -19,8 +19,8 @@ import {mutationKey, useAdresser} from "./adresse/useAdresser.tsx";
 import {useIsMutating} from "@tanstack/react-query";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";
-import {Heading} from "@navikt/ds-react";
 import {Telefon} from "./Telefon.tsx";
+import {PersonopplysningerSection} from "./PersonopplysningerSection.tsx";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
@@ -61,21 +61,18 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                     icon={SkjemaHeadings[1].ikon}
                 />
                 <SkjemaStegErrorSummary errors={errors} />
-                <BasisPersonalia />
-                <AdresseData />
-                <section aria-labelledby={"telefon-heading"} className={"space-y-2"}>
-                    <Heading id={"telefon-heading"} size={"small"} level={"3"}>
-                        {t("kontakt.telefon.sporsmal")}
-                    </Heading>
+                <PersonopplysningerSection heading={t("kontakt.system.personalia.sporsmal")}>
+                    <BasisPersonalia />
+                </PersonopplysningerSection>
+                <PersonopplysningerSection heading={t("soknadsmottaker.sporsmal")}>
+                    <AdresseData />
+                </PersonopplysningerSection>
+                <PersonopplysningerSection heading={t("kontakt.telefon.sporsmal")}>
                     <Telefon />
-                </section>
-
-                <section aria-labelledby={"kontonummer-heading"} className={"space-y-2"}>
-                    <Heading id={"kontonummer-heading"} size={"small"} level={"3"}>
-                        {t("kontakt.kontonummer.sporsmal")}
-                    </Heading>
+                </PersonopplysningerSection>
+                <PersonopplysningerSection heading={t("kontakt.kontonummer.sporsmal")}>
                     <Kontonr />
-                </section>
+                </PersonopplysningerSection>
                 <SkjemaStegButtons onNext={onClickNext} isNextPending={isMutating} />
             </SkjemaStegBlock>
         </SkjemaSteg>
