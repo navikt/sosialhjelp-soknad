@@ -9,7 +9,6 @@ import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullf
 import {Oppsummering} from "../../generated/model/index.ts";
 import {useAnalyticsContext} from "../../lib/providers/useAnalyticsContext.ts";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
-import {useValgtKategoriContext} from "../../lib/providers/KortKategorierContextProvider.tsx";
 
 export const useSendSoknad = (oppsummering?: Oppsummering) => {
     const {brukerAdresse} = useAdresser();
@@ -19,8 +18,6 @@ export const useSendSoknad = (oppsummering?: Oppsummering) => {
     const {
         analyticsData: {selectedKategorier, situasjonEndret},
     } = useAnalyticsContext();
-
-    const {valgtKategoriData} = useValgtKategoriContext();
 
     const {mutate, isPending, isError} = useSendSoknadMutation({
         mutation: {
@@ -32,7 +29,6 @@ export const useSendSoknad = (oppsummering?: Oppsummering) => {
                     kategorier: selectedKategorier?.length ? "Ja" : "Ikke utfylt",
                     valgteKategorier: selectedKategorier?.length ? selectedKategorier : "Ikke utfylt",
                     situasjonEndret: situasjonEndret !== "Ikke utfylt" ? "Ja" : "Ikke utfylt",
-                    dokumentKategori: valgtKategoriData ? "Ja" : "Nei",
                 });
                 const shouldAddParam = featureFlagData?.["sosialhjelp.innsyn.uxsignals_kort_soknad"] && isKortSoknad;
                 startTransition(() =>
