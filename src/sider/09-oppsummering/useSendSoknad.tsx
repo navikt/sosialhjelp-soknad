@@ -9,8 +9,6 @@ import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullf
 import {Oppsummering} from "../../generated/model";
 import {useAnalyticsContext} from "../../lib/providers/useAnalyticsContext.ts";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
-import {AxiosError, isAxiosError} from "axios";
-import {InnsendingFeiletError} from "../../generated/new/model";
 
 export const useSendSoknad = (oppsummering?: Oppsummering) => {
     const {brukerAdresse} = useAdresser();
@@ -22,7 +20,7 @@ export const useSendSoknad = (oppsummering?: Oppsummering) => {
     } = useAnalyticsContext();
     const deletionDateRef = useRef("");
 
-    const {mutate, isPending, isError} = useSendSoknadMutation({
+    const {mutate, isPending, error} = useSendSoknadMutation({
         mutation: {
             onSuccess: async ({digisosId}) => {
                 await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
@@ -41,14 +39,6 @@ export const useSendSoknad = (oppsummering?: Oppsummering) => {
                 );
                 deletionDateRef.current = "";
             },
-            // TODO compileren mener 'error' skal være en 4 typer, men det er i realiteten en AxiosError
-            onError: async (error) => {
-                if (isAxiosError(error)) {
-                    const axiosError = error as AxiosError;
-                    const responseBody = axiosError.response!.data! as InnsendingFeiletError;
-                    deletionDateRef.current = responseBody.deletionDate;
-                }
-            },
         },
     });
 
@@ -56,10 +46,9 @@ export const useSendSoknad = (oppsummering?: Oppsummering) => {
 
     return {
         sendSoknad: mutate,
-        isError,
         isPending: isPending || isTransitioning,
         featureFlagData,
         isKortSoknad,
-        deletionDateRef,
+        error,
     };
 };
