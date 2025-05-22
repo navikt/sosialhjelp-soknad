@@ -49,7 +49,7 @@ export const axiosInstance = <T>(config: AxiosRequestConfig, options?: DigisosAx
         },
         signal: controller.signal, // Use signal instead of cancelToken
     })
-        .then(({data}) => data)
+        .then((res) => res.data)
         .catch(handleAxiosError(config, options));
 
     promise.cancel = () => controller.abort(); // Use abort method
