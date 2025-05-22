@@ -14,7 +14,7 @@ const getLoginUrl = (data: UnauthorizedMelding) =>
         : `/sosialhjelp/soknad/oauth2/login?redirect=${origin}${decodeURIComponent(window.location.pathname)}`;
 
 export const handleAxiosError =
-    (config: AxiosRequestConfig, options: (AxiosRequestConfig & DigisosAxiosConfig) | undefined) => async (e: any) => {
+    (config: AxiosRequestConfig, options: DigisosAxiosConfig | undefined) => async (e: any) => {
         const {method, url} = config;
 
         if (!(e instanceof AxiosError)) logger.warn({error: e}, `non-AxiosError error in axiosInstance`);

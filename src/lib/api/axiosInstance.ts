@@ -12,11 +12,11 @@ interface CancellablePromise<T> extends Promise<T> {
     cancel?: () => void;
 }
 
-export type DigisosAxiosConfig = {
+export interface DigisosAxiosConfig extends AxiosRequestConfig {
     // If the request fails, silently return a promise which never resolves.
     // (Useful to prevent packet storms from calls to the logger failing)
     digisosIgnoreErrors?: boolean;
-};
+}
 
 /**
  * Digisos Axios client
@@ -30,10 +30,7 @@ export type DigisosAxiosConfig = {
  * @returns data from the request, *or* a promise that never resolves,
  * in case of an error that is about to be handled by a page redirection.
  */
-export const axiosInstance = <T>(
-    config: AxiosRequestConfig,
-    options?: AxiosRequestConfig & DigisosAxiosConfig
-): Promise<T> => {
+export const axiosInstance = <T>(config: AxiosRequestConfig, options?: DigisosAxiosConfig): Promise<T> => {
     const controller = new AbortController();
     let mockToken: string | null = null;
 
