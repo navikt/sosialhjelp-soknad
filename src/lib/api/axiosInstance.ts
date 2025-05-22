@@ -47,15 +47,11 @@ export const axiosInstance = <T>(config: AxiosRequestConfig, options?: DigisosAx
     const promise: CancellablePromise<AxiosResponse> = AXIOS_INSTANCE({
         ...config,
         ...options,
-        ...(mockToken
-            ? {
-                  headers: {
-                      ...config.headers,
-                      ...options?.headers,
-                      Authorization: mockToken ? `Bearer ${mockToken}` : undefined,
-                  },
-              }
-            : {}),
+        headers: {
+            ...config.headers,
+            ...options?.headers,
+            Authorization: mockToken ? `Bearer ${mockToken}` : undefined,
+        },
         signal: controller.signal, // Use signal instead of cancelToken
     })
         .then(({data}) => data)
