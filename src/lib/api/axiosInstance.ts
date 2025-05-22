@@ -83,8 +83,8 @@ export const axiosInstance = <T>(
 
             if (isLoginError(response)) {
                 if (response.data.loginUrl) {
-                    const redirect = `?redirect=${origin}${LINK_PAGE_PATH}?goto=${getGotoParameter(window.location)}`;
-                    window.location.assign(response.data.loginUrl + redirect);
+                    const loginUrl = `${response.data.loginUrl}?redirect=${origin}${LINK_PAGE_PATH}?goto=${getGotoParameter(window.location)}`;
+                    window.location.assign(loginUrl);
                 } else {
                     const loginUrl = `/sosialhjelp/soknad/oauth2/login?redirect=${origin}${decodeURIComponent(window.location.pathname)}`;
                     logger.info({loginUrl}, `401 fra soknad-api, redirecter til login`);
