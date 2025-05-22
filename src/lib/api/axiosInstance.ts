@@ -1,10 +1,6 @@
-import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
+import Axios, {AxiosRequestConfig, AxiosResponse} from "axios";
 import digisosConfig from "../config";
-import {LINK_PAGE_PATH} from "../constants";
-import {isLoginError} from "./error/isLoginError";
-import {getGotoParameter} from "./auth/getGotoParameter";
-import {logger} from "@navikt/next-logger";
-import {UnauthorizedMelding} from "../../generated/model";
+import {handleAxiosError} from "./handleAxiosError.ts";
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL: digisosConfig.baseURL,
@@ -21,13 +17,6 @@ export type DigisosAxiosConfig = {
     // (Useful to prevent packet storms from calls to the logger failing)
     digisosIgnoreErrors?: boolean;
 };
-
-const neverResolves = <T>() => new Promise<T>(() => {});
-
-const getLoginUrl = (data: UnauthorizedMelding) =>
-    data.loginUrl
-        ? `${data.loginUrl}?redirect=${origin}${LINK_PAGE_PATH}?goto=${getGotoParameter(window.location)}`
-        : `/sosialhjelp/soknad/oauth2/login?redirect=${origin}${decodeURIComponent(window.location.pathname)}`;
 
 /**
  * Digisos Axios client
@@ -73,36 +62,7 @@ export const axiosInstance = <T>(
         signal: controller.signal, // Use signal instead of cancelToken
     })
         .then(({data}) => data)
-        .catch(async (e) => {
-            const {method, url} = config;
-
-            if (!(e instanceof AxiosError)) logger.warn({error: e}, `non-AxiosError error in axiosinstance`);
-
-            if (isCancel(e) || options?.digisosIgnoreErrors) {
-                return neverResolves();
-            }
-
-            if (!e.response) {
-                logger.warn({method, url, error: e}, `Nettverksfeil i axiosInstance`);
-                throw e;
-            }
-
-            const {status, data} = e.response;
-
-            if (isLoginError(e.response)) {
-                window.location.assign(getLoginUrl(data));
-                return neverResolves();
-            }
-
-            // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
-            if ([403, 404, 410].includes(status)) {
-                window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
-                return neverResolves();
-            }
-
-            logger.warn({method, url, status, data}, `nettverksfeil i axiosInstance`);
-            throw e;
-        });
+        .catch(handleAxiosError(config, options));
 
     promise.cancel = () => controller.abort(); // Use abort method
 
