@@ -34,17 +34,15 @@ export const mockAxiosError = <T = never>(
 
 const mockLocationAssign = vi.fn();
 
-beforeEach(() => {
-    Object.defineProperty(window, "location", {
-        writable: true,
-        value: {
-            assign: mockLocationAssign,
-            pathname: "/some/path",
-        },
-    });
-
-    vi.resetAllMocks();
+Object.defineProperty(window, "location", {
+    writable: true,
+    value: {
+        assign: mockLocationAssign,
+        pathname: "/some/path",
+    },
 });
+
+beforeEach(vi.resetAllMocks);
 
 const config = {method: "GET", url: "/api/data"};
 const options = {};
