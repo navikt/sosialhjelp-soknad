@@ -61,8 +61,12 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                     icon={SkjemaHeadings[1].ikon}
                 />
                 <SkjemaStegErrorSummary errors={errors} />
-                <BasisPersonalia />
-                <AdresseData />
+                <PersonopplysningerSection heading={t("kontakt.system.personalia.sporsmal")}>
+                    <BasisPersonalia />
+                </PersonopplysningerSection>
+                <PersonopplysningerSection heading={t("soknadsmottaker.sporsmal")}>
+                    <AdresseData />
+                </PersonopplysningerSection>
                 <section aria-labelledby={"telefon-heading"} className={"space-y-2"}>
                     <Heading id={"telefon-heading"} size={"small"} level={"3"}>
                         {t("kontakt.telefon.sporsmal")}
