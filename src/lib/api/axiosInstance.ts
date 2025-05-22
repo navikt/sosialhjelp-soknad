@@ -1,5 +1,5 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
-import {logError, logInfo, logWarning} from "../log/loggerUtils";
+import {logWarning} from "../log/loggerUtils";
 import digisosConfig from "../config";
 import {LINK_PAGE_PATH} from "../constants";
 import {isLoginError} from "./error/isLoginError";
@@ -15,8 +15,6 @@ const AXIOS_INSTANCE = Axios.create({
 interface CancellablePromise<T> extends Promise<T> {
     cancel?: () => void;
 }
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export type DigisosAxiosConfig = {
     // If the request fails, silently return a promise which never resolves.
@@ -40,8 +38,7 @@ const neverResolves = <T>() => new Promise<T>(() => {});
  */
 export const axiosInstance = <T>(
     config: AxiosRequestConfig,
-    options?: AxiosRequestConfig & DigisosAxiosConfig,
-    retry: number = 0
+    options?: AxiosRequestConfig & DigisosAxiosConfig
 ): Promise<T> => {
     const controller = new AbortController();
     let mockToken: string | null = null;
@@ -103,16 +100,6 @@ export const axiosInstance = <T>(
             if ([403, 404, 410].includes(status)) {
                 window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
                 return neverResolves();
-            }
-
-            if (status === 409) {
-                if (retry >= 10) {
-                    await logError("Max retries encountered!");
-                    throw e;
-                }
-                await logInfo(`Conflict resolution hack, retry #${retry}`);
-                await delay(500);
-                return axiosInstance<T>(config, options, retry + 1);
             }
 
             await logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url}: ${status} ${data}`);
