@@ -5,6 +5,7 @@ import {LINK_PAGE_PATH} from "../constants";
 import {isLoginError} from "./error/isLoginError";
 import {getGotoParameter} from "./auth/getGotoParameter";
 import {logger} from "@navikt/next-logger";
+import {SoknadApiError} from "../../generated/model";
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL: digisosConfig.baseURL,
@@ -99,8 +100,14 @@ export const axiosInstance = <T>(
 
             const {status, data} = response;
 
+            if (403 === status) {
+                const error = data as SoknadApiError;
+                window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}&type=${error.error}`;
+                return neverResolves();
+            }
+
             // 403 burde gi feilmelding, men visse HTTP-kall som burde returnere 404 gir 403
-            if ([403, 404, 410].includes(status)) {
+            if ([404, 410].includes(status)) {
                 window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
                 return neverResolves();
             }
