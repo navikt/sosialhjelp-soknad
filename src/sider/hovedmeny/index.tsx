@@ -7,12 +7,28 @@ import {EttersendDokuPanel} from "./EttersendDokuPanel.tsx";
 import {Heading, VStack} from "@navikt/ds-react";
 import {useTranslations} from "next-intl";
 import {useContextSessionInfo} from "../../lib/providers/useContextSessionInfo.ts";
+import {SoknadApiErrorError} from "../../generated/model";
+import {useEffect, useState} from "react";
+
+const useIsBlocked = (): boolean => {
+    const [isBlocked, setIsBlocked] = useState<boolean>(false);
+
+    useEffect(() => {
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const status = urlSearchParams.get("reason");
+        const type = urlSearchParams.get("type") as SoknadApiErrorError;
+        setIsBlocked(status === "axios403" && type === SoknadApiErrorError.NoAccess);
+    }, []);
+
+    return isBlocked;
+};
 
 export const Informasjon = () => {
-    const {userBlocked, open, numRecentlySent} = useContextSessionInfo();
+    const {open, numRecentlySent} = useContextSessionInfo();
     const t = useTranslations("Informasjon");
+    const isUserBlocked: boolean = useIsBlocked();
 
-    if (userBlocked) return <PersonbeskyttelseFeilmelding />;
+    if (isUserBlocked) return <PersonbeskyttelseFeilmelding />;
 
     return (
         <main aria-labelledby={"app-heading"}>
