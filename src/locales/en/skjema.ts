@@ -163,6 +163,21 @@ export const skjema = {
             tannlege: "Dental treatment",
             transport: "Transport",
             fritidsaktiviteter: "Leisure activities for children",
+            kortKategorier: {
+                kategoriValg: "Choose category",
+                barnebidrag_b: "Other expenses for children - I pay",
+                barnebidrag_m: "Other expenses for children - I recieve",
+                barnehage: "Kindergarten",
+                barnehageSFO: "SFO/AKS",
+                bostotte: "Housing allowance from Husbanken",
+                husleie: "Rent",
+                kontooversikt: "Bank account statements",
+                lonnslipp: "Wage slip",
+                stromOppvarming: "Electricity and heating",
+                stipendLan: "Loan or grant from Lånekassen",
+                brukskonto: "Current account",
+                annet: "Other",
+            },
         },
         kort: {
             behov: {
@@ -2073,12 +2088,15 @@ export const skjema = {
         },
         ferdig: "To summary",
         forhandsvisning: {
+            header: "Is it readable?",
             avbryt: "Cancel",
             fullskjerm: {
                 lukk: "End full screen",
                 stringValue: "Full screen",
             },
             info: "Please ensure the documents can be read, and show the correct information",
+            kategori_sporsmal: "What have you uploaded?",
+            kategori: 'If ypu do not choose a category the document will be uploaded under "Other".',
             opplast: "Upload document",
             slett: "Delete",
             tilbake: {
@@ -2156,6 +2174,8 @@ export const skjema = {
             },
         },
         opplasting: {
+            tittel: "Your uploaded files",
+            beskrivelse: "No file has been uploaded yet",
             feil: {
                 filType: "Upload failed. Only JPEG, PNG, and PDF files are supported.",
                 forStor: "Upload failed. The total file size cannot exceed {{maxUploadSize}}.",

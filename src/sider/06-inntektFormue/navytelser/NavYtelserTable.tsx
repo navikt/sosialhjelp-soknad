@@ -18,12 +18,12 @@ export const NavYtelserTable = ({navUtbetalinger}: {navUtbetalinger: NavUtbetali
                 </Table.Row>
             </Table.Header>
             <Table.Body>
-                {navUtbetalinger.map(({belop, utbetalingsdato}, index) => (
+                {navUtbetalinger.map(({belop, utbetalingsdato, ytelsestype}, index) => (
                     <Table.Row key={index} shadeOnHover={false} className="border-b border-blue-200 last:border-b-0">
                         <Table.DataCell>
                             <LocalizedDate date={utbetalingsdato} />
                         </Table.DataCell>
-                        <Table.DataCell>{t("ytelse")}</Table.DataCell>
+                        <Table.DataCell>{ytelsestype}</Table.DataCell>
                         <Table.DataCell align={"left"}>
                             <LocalizedCurrency value={belop} />
                         </Table.DataCell>

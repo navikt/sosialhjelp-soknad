@@ -406,6 +406,7 @@ export const dokumentasjon: Record<DokumentasjonDtoType, DokumentasjonTexts> = {
         dokumentBeskrivelse: "Upload relevant documentation",
     },
     BEHOV: {sporsmal: "", dokumentBeskrivelse: ""},
+    LONNSLIPP: {sporsmal: "", dokumentBeskrivelse: ""},
 };
 
 export default dokumentasjon;

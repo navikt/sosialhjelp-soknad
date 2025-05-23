@@ -17,29 +17,37 @@ import {KortDokumentasjon} from "./KortDokumentasjon.tsx";
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
-    const {setFormue, formue} = useFormue();
-    const [hasInitialized, setHasInitialized] = useState(false);
-
-    // TODO: Gjør dette i backend ved kort transition i stedet
-    useEffect(() => {
-        if (!hasInitialized && formue && !formue.hasBrukskonto) {
-            setFormue(["hasBrukskonto"]);
-            setHasInitialized(true);
-        }
-    }, [formue, hasInitialized]);
 
     const navigate = useNavigate();
     const gotoPage = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(4);
         navigate(`../${page}`);
     };
+    const {setFormue, formue} = useFormue();
+    const [hasInitialized, setHasInitialized] = useState(false);
+
+    /**
+       TODO: Dette er unnødvendig innvikla og bør bli gjort i backend,
+                    eller finne en bedre måte å gjør dette på i frontend.
+                    Kanskje dette kan bli gjort i backend ved kort transition i stedet?
+                    Denne eksistere på grunn av en 404 feil når søker skriver verdi
+                    i inputeltet, og pga. så må hasSparing legges til fordi ellers
+                    får man 404 feil når søker velger kontooversikt (FORMUE_ANNET)
+     */
+
+    useEffect(() => {
+        if (!hasInitialized && formue && !formue.hasBrukskonto) {
+            setFormue(["hasBrukskonto", "hasSparing"]);
+            setHasInitialized(true);
+        }
+    }, [formue, hasInitialized]);
 
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={4} onStepChange={gotoPage} />
             <SkjemaStegBlock className={"lg:space-y-12"}>
                 <SkjemaStegTitle
-                    className={"lg:mb-16"}
+                    className={"lg:mb-12"}
                     title={t(KortSkjemaHeadings[4].tittel)}
                     icon={KortSkjemaHeadings[4].ikon}
                 />
@@ -51,7 +59,6 @@ const Inntekt = () => {
                     sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                     undertekst="situasjon.kort.dokumentasjon.description"
                     liste="situasjon.kort.dokumentasjon.liste"
-                    dokumentasjonType={"UTGIFTER_ANDRE_UTGIFTER"}
                 />
                 <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
             </SkjemaStegBlock>
