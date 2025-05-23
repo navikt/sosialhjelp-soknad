@@ -1556,6 +1556,13 @@ export const skjema = {
     },
     soknad: {
         ferdigstilt: "The application has already been submitted.",
+        innsendingFeilet: {
+            overskrift: "Error while sending the application",
+            infotekst1: "Sorry, we cannot send your application right now due to a technical error. ",
+            infotekst2: "Your application is available on My page until {{deletionDate}}, so you can try again later. ",
+            nodssituasjon: "Are you in an emergency?",
+            generelt: "Contact <lenke>your local Nav office</lenke> or call us at 55 55 33 33.",
+        },
     },
     soknadsmottaker: {
         enhetsnavn: {
