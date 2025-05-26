@@ -21,6 +21,8 @@ import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";
 import {Telefon} from "./telefon/Telefon.tsx";
 import {PersonopplysningerSection} from "./PersonopplysningerSection.tsx";
+import {useKontonummer} from "./konto/useKontonummer.ts";
+import {useTelefonnummer} from "./telefon/useTelefonnummer.ts";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
@@ -31,6 +33,8 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
     const isMutating = mutating > 0;
     const {t} = useTranslation("skjema");
     const navigate = useNavigate();
+    const telefonnummer = useTelefonnummer();
+    const kontonummer = useKontonummer();
 
     const validate = () => {
         if (!navEnhet || !erAktiv(navEnhet)) {
@@ -68,10 +72,10 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                     <AdresseData />
                 </PersonopplysningerSection>
                 <PersonopplysningerSection heading={t("kontakt.telefon.sporsmal")}>
-                    <Telefon />
+                    <Telefon {...telefonnummer} />
                 </PersonopplysningerSection>
                 <PersonopplysningerSection heading={t("kontakt.kontonummer.sporsmal")}>
-                    <Kontonr />
+                    <Kontonr {...kontonummer} />
                 </PersonopplysningerSection>
                 <SkjemaStegButtons onNext={onClickNext} isNextPending={isMutating} />
             </SkjemaStegBlock>
