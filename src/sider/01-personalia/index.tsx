@@ -2,7 +2,7 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {AdresseData} from "./adresse/Adresse";
 import {BasisPersonalia} from "./BasisPersonalia";
-import {Kontonr} from "./konto/Kontonr.tsx";
+import {Kontonummer} from "./konto/Kontonummer.tsx";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {FieldErrorsImpl} from "react-hook-form";
 import {erAktiv} from "../../lib/navEnhetStatus";
@@ -83,7 +83,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                     <Telefon {...telefonnummer} />
                 </PersonopplysningerSection>
                 <PersonopplysningerSection heading={t("kontakt.kontonummer.sporsmal")}>
-                    <Kontonr {...kontonummer} />
+                    <Kontonummer {...kontonummer} />
                 </PersonopplysningerSection>
                 <SkjemaStegButtons onNext={onClickNext} isNextPending={isMutating} />
             </SkjemaStegBlock>

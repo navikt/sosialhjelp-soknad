@@ -5,7 +5,7 @@ import {formatKontonummer} from "@fremtind/jkl-formatters-util";
 import {BodyShort, Label} from "@navikt/ds-react";
 import {KontoinformasjonDto} from "../../../generated/new/model/kontoinformasjonDto.ts";
 
-export const KontonrShow = ({
+export const KontonummerShow = ({
     kontoinformasjon: {harIkkeKonto, kontonummerBruker, kontonummerRegister},
 }: {
     kontoinformasjon: KontoinformasjonDto;

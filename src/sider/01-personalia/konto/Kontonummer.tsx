@@ -1,13 +1,18 @@
 import * as React from "react";
 import {startTransition, useState} from "react";
-import {KontonrShow} from "./KontonrShow.tsx";
-import {KontonrEdit} from "./KontonrEdit.tsx";
+import {KontonummerShow} from "./KontonummerShow.tsx";
+import {KontonummerEdit} from "./KontonummerEdit.tsx";
 import {Systeminfo} from "../../../lib/components/systeminfo/Systeminfo.tsx";
 import {Loader} from "@navikt/ds-react";
 import {UseKontonummerResult} from "./useKontonummer.ts";
 import {PersonaliaEditKnapp} from "../PersonaliaEditKnapp.tsx";
 
-export const Kontonr = ({kontoinformasjon, updateKontoInformasjon, isLoading, isMutating}: UseKontonummerResult) => {
+export const Kontonummer = ({
+    kontoinformasjon,
+    updateKontoInformasjon,
+    isLoading,
+    isMutating,
+}: UseKontonummerResult) => {
     const [editMode, setEditMode] = useState<boolean>(false);
 
     if (isLoading || kontoinformasjon === undefined) return <Loader />;
@@ -16,11 +21,11 @@ export const Kontonr = ({kontoinformasjon, updateKontoInformasjon, isLoading, is
         <Systeminfo>
             {!editMode ? (
                 <div className={"flex justify-between items-center"}>
-                    <KontonrShow kontoinformasjon={kontoinformasjon} />
+                    <KontonummerShow kontoinformasjon={kontoinformasjon} />
                     <PersonaliaEditKnapp disabled={isMutating} onClick={() => setEditMode(true)} />
                 </div>
             ) : (
-                <KontonrEdit
+                <KontonummerEdit
                     defaultValues={kontoinformasjon}
                     onCancel={() => setEditMode(false)}
                     onSave={(data) =>
