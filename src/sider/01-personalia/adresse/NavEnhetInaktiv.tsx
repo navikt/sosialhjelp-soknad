@@ -13,12 +13,12 @@ export const NavEnhetInaktiv = () => {
 
     const {isMottakDeaktivert, isMottakMidlertidigDeaktivert} = adresser.navenhet;
 
-    const kommunenavn = adresser.navenhet.kommunenavn ?? "";
+    const enhetsnavn = adresser.navenhet.enhetsnavn ?? "";
 
     if (isMottakDeaktivert)
         return (
             <Alert variant="warning">
-                <BodyShort>{t("varig.melding", {kommunenavn})}</BodyShort>
+                <BodyShort>{t("varig.melding", {enhetsnavn})}</BodyShort>
                 {t.rich("varig.forslag", {
                     lenke: (chunks) => (
                         <Link href="https://www.nav.no/start/okonomisk-sosialhjelp" target="_blank">
@@ -32,7 +32,7 @@ export const NavEnhetInaktiv = () => {
     if (isMottakMidlertidigDeaktivert)
         return (
             <Alert variant="error">
-                <BodyShort>{t("midlertidig.melding", {kommunenavn})}</BodyShort>
+                <BodyShort>{t("midlertidig.melding", {enhetsnavn})}</BodyShort>
                 {t.rich("midlertidig.forslag", {
                     lenke: (chunks) => (
                         <Link href="https://www.nav.no/start/okonomisk-sosialhjelp" target="_blank">
