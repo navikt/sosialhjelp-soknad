@@ -9,7 +9,14 @@ import {KontonummerFormValues} from "./KontonummerFormSchema.ts";
 import {KontoinformasjonDto} from "../../../generated/new/model/kontoinformasjonDto.ts";
 import {KontoinformasjonInput} from "../../../generated/new/model/kontoinformasjonInput.ts";
 
-export const useKontonummer = () => {
+export interface UseKontonummerResult {
+    kontoinformasjon: KontoinformasjonDto | undefined;
+    updateKontoInformasjon: (data: KontonummerFormValues) => void;
+    isLoading: boolean;
+    isMutating: boolean;
+}
+
+export const useKontonummer = (): UseKontonummerResult => {
     const soknadId = useSoknadId();
     const {data: kontoinformasjon, isLoading, queryKey} = useGetKontonummer(soknadId);
     const queryClient = useQueryClient();
