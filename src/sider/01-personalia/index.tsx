@@ -15,7 +15,7 @@ import {scrollToTop} from "../../lib/utils";
 import {useNavigate} from "react-router";
 import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
-import {mutationKey, useAdresser} from "./adresse/useAdresser.tsx";
+import {mutationKey, useAdresser} from "./adresse/useAdresser.ts";
 import {useIsMutating} from "@tanstack/react-query";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";

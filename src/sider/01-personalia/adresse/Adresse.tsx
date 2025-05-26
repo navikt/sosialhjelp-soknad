@@ -7,7 +7,7 @@ import cx from "classnames";
 import {useTranslation} from "react-i18next";
 import {HorizontalRadioGroup} from "../../../lib/components/form/HorizontalRadioGroup";
 import {AdresserDtoAdresseValg} from "../../../generated/new/model/adresserDtoAdresseValg.ts";
-import {UseAdresserResult} from "./useAdresser.tsx";
+import {UseAdresserResult} from "./useAdresser.ts";
 
 export const AdresseData = ({
     folkeregistrert,
