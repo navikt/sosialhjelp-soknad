@@ -1,32 +1,28 @@
 import * as React from "react";
-import {NavEnhet} from "./NavEnhet";
 import {AdresseVisning} from "./AdresseVisning";
-import {Alert, BodyLong, Loader, Radio} from "@navikt/ds-react";
+import {Alert, Loader, Radio} from "@navikt/ds-react";
 import {formaterSoknadsadresse} from "./AdresseUtils";
 import {AdresseSok} from "./AdresseSok";
 import cx from "classnames";
 import {useTranslation} from "react-i18next";
 import {HorizontalRadioGroup} from "../../../lib/components/form/HorizontalRadioGroup";
 import {AdresserDtoAdresseValg} from "../../../generated/new/model/adresserDtoAdresseValg.ts";
-import {useAdresser} from "./useAdresser.tsx";
+import {UseAdresserResult} from "./useAdresser.tsx";
 
-export const AdresseData = () => {
+export const AdresseData = ({
+    folkeregistrert,
+    midlertidig,
+    brukerAdresse,
+    adresseValg,
+    isLoading,
+    error,
+    setAdresse,
+    variables,
+    setAdressevalg,
+    isUpdatePending,
+    showSpinner,
+}: UseAdresserResult) => {
     const {t} = useTranslation();
-
-    const {
-        folkeregistrert,
-        midlertidig,
-        brukerAdresse,
-        adresseValg,
-        navEnhet,
-        isLoading,
-        error,
-        setAdresse,
-        variables,
-        setAdressevalg,
-        isUpdatePending,
-        showSpinner,
-    } = useAdresser();
 
     if (isLoading) {
         return <Loader />;
@@ -39,8 +35,6 @@ export const AdresseData = () => {
     return (
         <>
             {showSpinner && <Loader />}
-            <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.tekst")}</BodyLong>
-            <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.ingress")}</BodyLong>
             <HorizontalRadioGroup
                 legend={"Addressevalg"}
                 hideLegend
@@ -67,7 +61,6 @@ export const AdresseData = () => {
                     <AdresseSok defaultValue={formaterSoknadsadresse(brukerAdresse)} onChange={setAdresse} />
                 )}
             </HorizontalRadioGroup>
-            {navEnhet && <NavEnhet navEnhet={navEnhet} />}
         </>
     );
 };

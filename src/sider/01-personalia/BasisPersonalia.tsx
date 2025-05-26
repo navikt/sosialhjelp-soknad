@@ -1,27 +1,27 @@
 import * as React from "react";
 import {Systeminfo, SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
-import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
-import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {useTranslation} from "react-i18next";
 import {formatFodselsnummer} from "@fremtind/jkl-formatters-util";
-import {BodyShort} from "@navikt/ds-react";
-import {useGetBasisPersonalia} from "../../generated/new/basis-personalia-controller/basis-personalia-controller.ts";
+import {BodyShort, Loader} from "@navikt/ds-react";
+import {UseQueryResult} from "@tanstack/react-query";
+import {PersonaliaDto} from "../../generated/new/model/personaliaDto.ts";
 
-export const BasisPersonalia = () => {
-    const {expectOK} = useAlgebraic(useGetBasisPersonalia(useSoknadId()));
+export const BasisPersonalia = ({data}: UseQueryResult<PersonaliaDto>) => {
     const {t} = useTranslation("skjema");
-    return expectOK(({navn, fodselsnummer, statsborgerskap = "Ukjent/statsløs"}) => (
+    return !data ? (
+        <Loader />
+    ) : (
         <Systeminfo>
             <SysteminfoItem as="div" label={t("kontakt.system.personalia.navn")}>
-                {navn?.fulltNavn}
+                {data.navn?.fulltNavn}
             </SysteminfoItem>
             <SysteminfoItem as="div" label={t("kontakt.system.personalia.fnr")}>
-                {formatFodselsnummer(fodselsnummer ?? "")}
+                {formatFodselsnummer(data.fodselsnummer ?? "")}
             </SysteminfoItem>
             <SysteminfoItem as="div" label={t("kontakt.system.personalia.statsborgerskap")}>
-                {statsborgerskap}
+                {data.statsborgerskap}
             </SysteminfoItem>
             <BodyShort className={"pt-3"}>{t("kontakt.system.personalia.infotekst.tekst")}</BodyShort>
         </Systeminfo>
-    ));
+    );
 };

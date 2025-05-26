@@ -23,21 +23,26 @@ import {Telefon} from "./telefon/Telefon.tsx";
 import {PersonopplysningerSection} from "./PersonopplysningerSection.tsx";
 import {useKontonummer} from "./konto/useKontonummer.ts";
 import {useTelefonnummer} from "./telefon/useTelefonnummer.ts";
+import {BodyLong} from "@navikt/ds-react";
+import {NavEnhet} from "./adresse/NavEnhet.tsx";
+import {useGetBasisPersonalia} from "../../generated/new/basis-personalia-controller/basis-personalia-controller.ts";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
     const errors = !error ? undefined : ({adressefelt: {message: error}} as FieldErrorsImpl<NavEnhetDto>);
     const soknadId = useSoknadId();
-    const {navEnhet} = useAdresser();
     const mutating = useIsMutating({mutationKey: mutationKey(soknadId)});
     const isMutating = mutating > 0;
     const {t} = useTranslation("skjema");
     const navigate = useNavigate();
+
+    const basisPersonalia = useGetBasisPersonalia(soknadId);
+    const adressedata = useAdresser();
     const telefonnummer = useTelefonnummer();
     const kontonummer = useKontonummer();
 
     const validate = () => {
-        if (!navEnhet || !erAktiv(navEnhet)) {
+        if (!adressedata.navEnhet || !erAktiv(adressedata.navEnhet)) {
             setError("validering.adresseMangler");
             scrollToTop();
             return false;
@@ -53,8 +58,8 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
 
     // Midlertidig hack til komponentene under kan behandles som react-hook-form-inputs
     useEffect(() => {
-        if (erAktiv(navEnhet)) setError(null);
-    }, [navEnhet]);
+        if (erAktiv(adressedata.navEnhet)) setError(null);
+    }, [adressedata.navEnhet]);
 
     return (
         <SkjemaSteg>
@@ -66,10 +71,13 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                 />
                 <SkjemaStegErrorSummary errors={errors} />
                 <PersonopplysningerSection heading={t("kontakt.system.personalia.sporsmal")}>
-                    <BasisPersonalia />
+                    <BasisPersonalia {...basisPersonalia} />
                 </PersonopplysningerSection>
                 <PersonopplysningerSection heading={t("soknadsmottaker.sporsmal")}>
-                    <AdresseData />
+                    <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.tekst")}</BodyLong>
+                    <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.ingress")}</BodyLong>
+                    <AdresseData {...adressedata} />
+                    {adressedata.navEnhet && <NavEnhet navEnhet={adressedata.navEnhet} />}
                 </PersonopplysningerSection>
                 <PersonopplysningerSection heading={t("kontakt.telefon.sporsmal")}>
                     <Telefon {...telefonnummer} />
