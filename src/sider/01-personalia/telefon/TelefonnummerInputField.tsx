@@ -8,7 +8,7 @@ import * as React from "react";
 
 import {TelefonnummerFormSchema} from "./TelefonnummerFormSchema.ts";
 
-export const TelefonnummerField = (
+export const TelefonnummerInputField = (
     props: UseControllerProps<z.infer<typeof TelefonnummerFormSchema>, "phoneNumber">
 ) => {
     const {t} = useTranslation("skjema");

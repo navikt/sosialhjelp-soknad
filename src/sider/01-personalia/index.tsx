@@ -19,7 +19,7 @@ import {mutationKey, useAdresser} from "./adresse/useAdresser.tsx";
 import {useIsMutating} from "@tanstack/react-query";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";
-import {Telefon} from "./telefon/Telefon.tsx";
+import {Telefonnummer} from "./telefon/Telefonnummer.tsx";
 import {PersonopplysningerSection} from "./PersonopplysningerSection.tsx";
 import {useKontonummer} from "./konto/useKontonummer.ts";
 import {useTelefonnummer} from "./telefon/useTelefonnummer.ts";
@@ -80,7 +80,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                     {adressedata.navEnhet && <NavEnhet navEnhet={adressedata.navEnhet} />}
                 </PersonopplysningerSection>
                 <PersonopplysningerSection heading={t("kontakt.telefon.sporsmal")}>
-                    <Telefon {...telefonnummer} />
+                    <Telefonnummer {...telefonnummer} />
                 </PersonopplysningerSection>
                 <PersonopplysningerSection heading={t("kontakt.kontonummer.sporsmal")}>
                     <Kontonummer {...kontonummer} />
