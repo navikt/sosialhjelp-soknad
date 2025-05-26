@@ -52,7 +52,7 @@
   },
   "PersonbeskyttelseFeilmelding": {
     "title": "Beklager",
-    "text": "Du kan dessverre ikke bruke den digitale søknaden om økonomisk sosialhjelp.\nPersoner med kode 6 eller 7 kan ikke søke om økonomisk sosialhjelp digitalt.\nTa kontakt med <lenke>ditt lokale Nav-kontor</lenke> for å få hjelp til å søke."
+    "text": "Du kan dessverre ikke bruke den digitale søknaden om økonomisk sosialhjelp. \nTa kontakt med <lenke>ditt lokale Nav-kontor</lenke> for å få hjelp til å søke."
   },
   "TekniskFeil": {
     "title": "Vi beklager!",
