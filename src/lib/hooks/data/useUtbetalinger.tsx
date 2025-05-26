@@ -4,12 +4,7 @@ import {
     useGetUtbetalinger,
     useUpdateUtbetalinger,
 } from "../../../generated/new/utbetaling-controller/utbetaling-controller.ts";
-import {
-    type HarIkkeUtbetalingerInput,
-    HarUtbetalingerInput,
-    UpdateUtbetalingerBody,
-    UtbetalingerDto,
-} from "../../../generated/new/model";
+import {HarUtbetalingerInput, UpdateUtbetalingerBody, UtbetalingerDto} from "../../../generated/new/model";
 import {CHECKBOX_VALUES} from "../../../sider/06-inntektFormue/Utbetalinger.tsx";
 import {useEffect, useState} from "react";
 
@@ -45,17 +40,6 @@ export const useUtbetalinger = () => {
 
     const valgteKategorier = isPending ? merge(utbetalinger, variables?.data) : utbetalinger;
 
-    const setBekreftelse = async (bekreftelse: boolean) => {
-        setHarBekreftelse(bekreftelse);
-        if (!utbetalinger) return;
-        if (!bekreftelse) {
-            mutate({
-                soknadId,
-                data: {type: "HarIkkeUtbetalingerInput", harIkkeUtbetalinger: true} satisfies HarIkkeUtbetalingerInput,
-            });
-        }
-    };
-
     const setUtbetalinger = async (valg: typeof CHECKBOX_VALUES) => {
         if (!valgteKategorier) return;
 
@@ -83,5 +67,5 @@ export const useUtbetalinger = () => {
         mutate({soknadId, data: oppdatert});
     };
 
-    return {utbetalinger: valgteKategorier, setBekreftelse, setUtbetalinger, setBeskrivelseAvAnnet, harBekreftelse};
+    return {utbetalinger: valgteKategorier, setUtbetalinger, setBeskrivelseAvAnnet, harBekreftelse};
 };
