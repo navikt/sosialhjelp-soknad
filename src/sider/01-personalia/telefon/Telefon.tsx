@@ -5,7 +5,7 @@ import {TelefonShow} from "./TelefonShow.tsx";
 import {TelefonEditBrukerdefinert} from "./TelefonEditBrukerdefinert.tsx";
 import {phoneNumberParsedOrUndefined} from "./phoneNumberParsedOrUndefined.ts";
 import {PersonaliaEditKnapp} from "../PersonaliaEditKnapp.tsx";
-import {useTelefonnummer} from "./useTelefonnummer.tsx";
+import {useTelefonnummer} from "./useTelefonnummer.ts";
 import {Loader} from "@navikt/ds-react";
 
 export const Telefon = () => {
