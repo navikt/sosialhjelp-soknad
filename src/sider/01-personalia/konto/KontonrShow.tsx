@@ -1,9 +1,9 @@
 import {useTranslation} from "react-i18next";
 import * as React from "react";
-import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo.tsx";
+import {SysteminfoItem} from "../../../lib/components/systeminfo/Systeminfo.tsx";
 import {formatKontonummer} from "@fremtind/jkl-formatters-util";
 import {BodyShort, Label} from "@navikt/ds-react";
-import {KontoinformasjonDto} from "../../generated/new/model/kontoinformasjonDto.ts";
+import {KontoinformasjonDto} from "../../../generated/new/model/kontoinformasjonDto.ts";
 
 export const KontonrShow = ({
     kontoinformasjon: {harIkkeKonto, kontonummerBruker, kontonummerRegister},

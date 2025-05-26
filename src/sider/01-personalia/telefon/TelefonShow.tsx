@@ -1,5 +1,5 @@
 import * as React from "react";
-import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo.tsx";
+import {SysteminfoItem} from "../../../lib/components/systeminfo/Systeminfo.tsx";
 import {useTranslation} from "react-i18next";
 import {PhoneNumber} from "libphonenumber-js";
 import {BodyShort} from "@navikt/ds-react";

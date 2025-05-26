@@ -2,7 +2,7 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {AdresseData} from "./adresse/Adresse";
 import {BasisPersonalia} from "./BasisPersonalia";
-import {Kontonr} from "./Kontonr.tsx";
+import {Kontonr} from "./konto/Kontonr.tsx";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {FieldErrorsImpl} from "react-hook-form";
 import {erAktiv} from "../../lib/navEnhetStatus";
@@ -19,7 +19,7 @@ import {mutationKey, useAdresser} from "./adresse/useAdresser.tsx";
 import {useIsMutating} from "@tanstack/react-query";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";
-import {Telefon} from "./Telefon.tsx";
+import {Telefon} from "./telefon/Telefon.tsx";
 import {PersonopplysningerSection} from "./PersonopplysningerSection.tsx";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {

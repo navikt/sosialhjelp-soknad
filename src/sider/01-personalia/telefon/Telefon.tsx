@@ -1,11 +1,11 @@
 import * as React from "react";
 import {startTransition, useState} from "react";
-import {Systeminfo} from "../../lib/components/systeminfo/Systeminfo.tsx";
+import {Systeminfo} from "../../../lib/components/systeminfo/Systeminfo.tsx";
 import {TelefonShow} from "./TelefonShow.tsx";
 import {TelefonEditBrukerdefinert} from "./TelefonEditBrukerdefinert.tsx";
-import {phoneNumberParsedOrUndefined} from "../../lib/hooks/data/phoneNumberParsedOrUndefined.ts";
-import {PersonaliaEditKnapp} from "./PersonaliaEditKnapp.tsx";
-import {useTelefonnummer} from "../../lib/hooks/data/useTelefonnummer.tsx";
+import {phoneNumberParsedOrUndefined} from "./phoneNumberParsedOrUndefined.ts";
+import {PersonaliaEditKnapp} from "../PersonaliaEditKnapp.tsx";
+import {useTelefonnummer} from "./useTelefonnummer.tsx";
 import {Loader} from "@navikt/ds-react";
 
 export const Telefon = () => {

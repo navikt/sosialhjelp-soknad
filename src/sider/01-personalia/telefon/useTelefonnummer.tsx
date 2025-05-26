@@ -4,9 +4,9 @@ import {
     useUpdateTelefonnummer,
 } from "../../../generated/new/telefonnummer-controller/telefonnummer-controller.ts";
 import {TelefonnummerInput} from "../../../generated/new/model/telefonnummerInput.ts";
-import {useSoknadId} from "../common/useSoknadId.ts";
+import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {TelefonnummerDto} from "../../../generated/new/model/telefonnummerDto.ts";
-import {optimisticMutationHandlers} from "./optimisticMutationHandlers.ts";
+import {optimisticMutationHandlers} from "../../../lib/hooks/data/optimisticMutationHandlers.ts";
 
 export const useTelefonnummer = () => {
     const queryClient = useQueryClient();
