@@ -122,7 +122,6 @@ export const axiosInstance = <T>(
             }
 
             await logWarning(`Nettverksfeil i axiosInstance: ${config.method} ${config.url}: ${status} ${data}`);
-            throw e;
         });
 
     promise.cancel = () => controller.abort(); // Use abort method
