@@ -1,4 +1,5 @@
 "use client";
+
 import {isServer, QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {Locale, NextIntlClientProvider} from "next-intl";
 import {isAxiosError} from "axios";
@@ -8,10 +9,7 @@ function makeQueryClient() {
         defaultOptions: {
             queries: {
                 // 403 errors should be handled by the error boundary
-                throwOnError: (error) => {
-                    console.log(`Error: `, error);
-                    return isAxiosError(error) && error.status === 403;
-                },
+                throwOnError: (error) => isAxiosError(error) && error.status === 403,
                 // With SSR, we usually want to set some default staleTime
                 // above 0 to avoid refetching immediately on the client
                 staleTime: 60 * 1000,
