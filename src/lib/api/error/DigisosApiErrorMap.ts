@@ -11,6 +11,7 @@ import {DigisosLanguageKey} from "../../i18n/common.ts";
  */
 export const DigisosApiErrorMap: Record<SoknadApiErrorError, DigisosLanguageKey> = {
     Forbidden: REST_FEIL.GENERELL_FEIL,
+    NoAccess: REST_FEIL.GENERELL_FEIL,
     GeneralError: REST_FEIL.GENERELL_FEIL,
     InnsendingIkkeAktivert: REST_FEIL.GENERELL_FEIL,
     InnsendingMidlertidigUtilgjengelig: REST_FEIL.GENERELL_FEIL,
