@@ -11,7 +11,6 @@ export default async function Layout({
     params: Promise<{locale: string}>;
 }) {
     const locale = supportedLanguageOrFallback((await params).locale);
-
     return (
         <NextIntlClientProvider locale={locale}>
             <DigisosContextProvider locale={locale}>
