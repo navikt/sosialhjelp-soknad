@@ -6,11 +6,15 @@ import {TrengerDuRaskHjelp} from "../sider/feilsider/TrengerDuRaskHjelp.tsx";
 import {ErrorPage} from "../lib/components/error/ErrorPage.tsx";
 import {ClientSideProvider} from "../lib/components/error/ClientSideProvider.tsx";
 
-export default ({error, reset}: {error: Error; reset: () => void}) => (
-    <ClientSideProvider>
-        <ErrorPage error={error}>
-            <TekniskFeil error={error} reset={reset} />
-            <TrengerDuRaskHjelp />
-        </ErrorPage>
-    </ClientSideProvider>
-);
+export default ({error, reset}: {error: Error; reset: () => void}) => {
+    console.log("Error error: ", error);
+
+    return (
+        <ClientSideProvider>
+            <ErrorPage error={error}>
+                <TekniskFeil error={error} reset={reset} />
+                <TrengerDuRaskHjelp />
+            </ErrorPage>
+        </ClientSideProvider>
+    );
+};
