@@ -2095,7 +2095,7 @@ export const skjema = {
                 stringValue: "Full screen",
             },
             info: "Please ensure the documents can be read, and show the correct information",
-            kategori_sporsmal: "What have you uploaded?",
+            kategori_sporsmal: "What are you uploading?",
             kategori: 'If ypu do not choose a category the document will be uploaded under "Other".',
             opplast: "Upload document",
             slett: "Delete",
