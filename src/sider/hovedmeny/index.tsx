@@ -11,8 +11,6 @@ export const Informasjon = () => {
     const {open, numRecentlySent} = useContextSessionInfo();
     const t = useTranslations("Informasjon");
 
-    // if (userBlocked) return <PersonbeskyttelseFeilmelding />;
-
     return (
         <main aria-labelledby={"app-heading"}>
             <title>{t("title")}</title>

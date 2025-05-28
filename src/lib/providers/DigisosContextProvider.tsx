@@ -3,17 +3,14 @@
 import {ReactNode, useReducer, useState} from "react";
 import {initialValideringState, valideringsReducer} from "../validering.ts";
 import {AnalyticsData, DigisosContext} from "./DigisosContext.ts";
-import {SessionResponse} from "../../generated/model";
-import {FeatureToggles200} from "../../generated/model";
 import {SupportedLanguage} from "../i18n/common.ts";
 import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs.ts";
 import {useFeatureToggles} from "../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
+import {Loader} from "@navikt/ds-react";
 
 interface Props {
     children: ReactNode;
     locale: SupportedLanguage;
-    sessionInfo?: SessionResponse;
-    featureToggles?: FeatureToggles200;
 }
 
 export const DigisosContextProvider = ({children, locale}: Props) => {
@@ -27,8 +24,12 @@ export const DigisosContextProvider = ({children, locale}: Props) => {
         }));
     };
 
-    const {data: sessionInfo} = useGetSessionInfo({query: {retry: 0}});
-    const {data: featureToggles} = useFeatureToggles({query: {retry: 0}});
+    const {data: sessionInfo, isLoading: isSessionLoading} = useGetSessionInfo({query: {retry: 0}});
+    const {data: featureToggles, isLoading: isTogglesLoading} = useFeatureToggles({query: {retry: 0}});
+
+    if (isSessionLoading || isTogglesLoading) {
+        return <Loader />;
+    }
 
     if (!sessionInfo || !featureToggles) return null;
 
@@ -43,8 +44,8 @@ export const DigisosContextProvider = ({children, locale}: Props) => {
                     state,
                     dispatch,
                 },
-                featureToggles: featureToggles!,
-                sessionInfo: sessionInfo!,
+                featureToggles: featureToggles,
+                sessionInfo: sessionInfo,
                 locale,
             }}
         >
