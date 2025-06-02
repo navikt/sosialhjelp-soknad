@@ -1,4 +1,4 @@
-import {type DokumentasjonDtoType} from "../generated/new/model";
+import {DokumentasjonDtoType} from "../generated/new/model";
 
 export type OpplysningInputType = "beskrivelse" | "belop" | "brutto" | "netto" | "avdrag" | "renter";
 
@@ -188,6 +188,13 @@ export const opplysningSpec = {
         formVariant: "ingen",
         textKey: "opplysninger.oppholdstillatelse.oppholdstillatelse",
         sortKey: 33,
+    },
+    // Brukes som et "mellomled", dette pga. av at JOBB blir slettet pga. noe med skatteetatenSamtykke i backend,
+    // og dette medfører til at når søker velger kategori JOBB for opplastet dokument så krasjer alt.
+    LONNSLIPP: {
+        formVariant: "ingen",
+        textKey: "opplysninger.oppholdstillatelse.oppholdstillatelse",
+        sortKey: 34,
     },
 } as const satisfies Record<DokumentasjonDtoType, OpplysningSpec>;
 type OpplysningSpecMap = typeof opplysningSpec;

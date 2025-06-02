@@ -163,6 +163,21 @@ export const skjema = {
             tannlege: "Tannlege",
             transport: "Transport",
             fritidsaktiviteter: "Fritidsaktivitetar for barn",
+            kortKategorier: {
+                kategoriValg: "Vel kategori",
+                barnebidrag_b: "Barnebidrag - Jeg betaler",
+                barnebidrag_m: "Barnebidrag - Jeg mottar",
+                barnehage: "Barnehage",
+                barnehageSFO: "SFO/AKS",
+                bostotte: "Bustøtte frå Husbanken",
+                husleie: "Husleige",
+                kontooversikt: "Kontooversikt",
+                lonnslipp: "Lønsslipp",
+                stromOppvarming: "Straum og oppvarming",
+                stipendLan: "Stipend og lån fra Lånekassen",
+                brukskonto: "Brukskonto",
+                annet: "Anna",
+            },
         },
         kort: {
             behov: {
@@ -2006,12 +2021,15 @@ export const skjema = {
         },
         ferdig: "Til oppsummering",
         forhandsvisning: {
+            header: "Er det leseleg?",
             avbryt: "Avbryt",
             fullskjerm: {
                 lukk: "Lukk fullskjerm",
                 stringValue: "Fullskjerm",
             },
             info: "Sørg for at dokumenta er leselege og viser rett informasjon",
+            kategori_sporsmal: "Kva lastar du opp?",
+            kategori: 'Om du ikkje vel ein kategori blir dokumentet lasta opp som "Anna".',
             opplast: "Last opp dokument",
             slett: "Slett",
             tilbake: {
@@ -2086,6 +2104,8 @@ export const skjema = {
             },
         },
         opplasting: {
+            tittel: "Dine opplasta filer",
+            beskrivelse: "Ingen filer har blitt lasta opp",
             feil: {
                 filType: "Opplastinga var mislukka. Berre JPEG, PNG, og PDF filer er tillatne.",
                 forStor: "Opplastinga var mislukka. Fila kan ikkje vere større enn {{maxUploadSize}}",
