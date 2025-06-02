@@ -46,6 +46,6 @@ export const handleAxiosError =
             return neverResolves();
         }
 
-        logger.warn({method, url, status, data}, `nettverksfeil i axiosInstance`);
+        logger.warn({method, url, status, data}, `non-OK response in axiosInstance`);
         throw e;
     };

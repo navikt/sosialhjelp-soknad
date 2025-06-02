@@ -1,8 +1,7 @@
-import Axios, {AxiosRequestConfig, AxiosResponse} from "axios";
+import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
 import digisosConfig from "../config";
 import {handleAxiosError} from "./handleAxiosError.ts";
 import Cookie from "js-cookie";
-
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL: digisosConfig.baseURL,

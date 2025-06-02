@@ -90,7 +90,7 @@ describe("handleAxiosError", () => {
     });
 
     it("logs and rethrows other errors", async () => {
-        const error = mockAxiosError({status: 500, data: undefined});
+        const error = mockAxiosError({status: 500, data: {}});
         await expect(() => handleAxiosError(config, options)(error)).rejects.toThrow();
         expect(logger.warn).toHaveBeenCalledWith(
             expect.objectContaining({status: 500}),
