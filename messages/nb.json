@@ -82,11 +82,11 @@
   },
   "NavEnhetInaktiv": {
     "varig": {
-      "melding": "{kommunenavn} kommune kan ikke ta i mot digitale søknader.",
+      "melding": "{enhetsnavn} kan ikke ta i mot digitale søknader.",
       "forslag": "Du kan <lenke>søke på papirskjema</lenke>."
     },
     "midlertidig": {
-      "melding": "{kommuneNavn} kommune kan dessverre ikke ta i mot digitale søknader akkurat nå.",
+      "melding": "{enhetsnavn} kan dessverre ikke ta i mot digitale søknader akkurat nå.",
       "forslag": "<lenke>Søk på papirskjema</lenke>, eller prøv igjen senere."
     }
   },
