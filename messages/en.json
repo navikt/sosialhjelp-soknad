@@ -52,7 +52,7 @@
   },
   "PersonbeskyttelseFeilmelding": {
     "title": "Sorry",
-    "text": "Unfortunately, you cannot use the digital application for financial assistance. People with code 6 or 7 cannot apply for financial assistance digitally. Contact your local <lenke>Nav office</lenke> to receive help applying."
+    "text": "Unfortunately, you cannot use the digital application for financial assistance. Contact your local <lenke>Nav office</lenke> to receive help applying."
   },
   "TekniskFeil": {
     "title": "We're sorry!",

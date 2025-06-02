@@ -1,4 +1,4 @@
-import {useTransition} from "react";
+import {useRef, useTransition} from "react";
 import {useSendSoknad as useSendSoknadMutation} from "../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
 import digisosConfig from "../../lib/config";
 import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude.tsx";
@@ -6,7 +6,7 @@ import {useAdresser} from "../01-personalia/adresse/useAdresser.tsx";
 import {useContextFeatureToggles} from "../../lib/providers/useContextFeatureToggles.ts";
 import {useRouter} from "next/navigation";
 import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullfortEvent.tsx";
-import {Oppsummering} from "../../generated/model/index.ts";
+import {Oppsummering} from "../../generated/model";
 import {useAnalyticsContext} from "../../lib/providers/useAnalyticsContext.ts";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 
@@ -18,8 +18,9 @@ export const useSendSoknad = (oppsummering?: Oppsummering) => {
     const {
         analyticsData: {selectedKategorier, situasjonEndret},
     } = useAnalyticsContext();
+    const deletionDateRef = useRef("");
 
-    const {mutate, isPending, isError} = useSendSoknadMutation({
+    const {mutate, isPending, error} = useSendSoknadMutation({
         mutation: {
             onSuccess: async ({digisosId}) => {
                 await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
@@ -36,6 +37,7 @@ export const useSendSoknad = (oppsummering?: Oppsummering) => {
                         `${digisosConfig.innsynURL}/${digisosId}/status${shouldAddParam ? "?kortSoknad=true" : ""}`
                     )
                 );
+                deletionDateRef.current = "";
             },
         },
     });
@@ -44,9 +46,9 @@ export const useSendSoknad = (oppsummering?: Oppsummering) => {
 
     return {
         sendSoknad: mutate,
-        isError,
         isPending: isPending || isTransitioning,
         featureFlagData,
         isKortSoknad,
+        error,
     };
 };

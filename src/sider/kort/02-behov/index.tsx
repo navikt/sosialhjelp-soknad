@@ -12,7 +12,6 @@ import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegSt
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {useAnalyticsContext} from "../../../lib/providers/useAnalyticsContext.ts";
-import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {useBegrunnelse} from "../../../lib/hooks/data/useBegrunnelse.tsx";
 import BehovForm, {FormValues} from "./BehovForm.tsx";
 import type {HarKategorierInputAllOfKategorierItem} from "../../../generated/new-ssr/model";
@@ -124,7 +123,6 @@ const Behov = () => {
                                 sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
                                 undertekst="begrunnelse.kort.behov.dokumentasjon.beskrivelse"
                                 liste="begrunnelse.kort.behov.dokumentasjon.liste"
-                                dokumentasjonType={DokumentasjonDtoType.BEHOV}
                             />
                         </>
                     )}

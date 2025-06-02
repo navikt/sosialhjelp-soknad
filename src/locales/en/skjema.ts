@@ -163,6 +163,21 @@ export const skjema = {
             tannlege: "Dental treatment",
             transport: "Transport",
             fritidsaktiviteter: "Leisure activities for children",
+            kortKategorier: {
+                kategoriValg: "Choose category",
+                barnebidrag_b: "Other expenses for children - I pay",
+                barnebidrag_m: "Other expenses for children - I recieve",
+                barnehage: "Kindergarten",
+                barnehageSFO: "SFO/AKS",
+                bostotte: "Housing allowance from Husbanken",
+                husleie: "Rent",
+                kontooversikt: "Bank account statements",
+                lonnslipp: "Wage slip",
+                stromOppvarming: "Electricity and heating",
+                stipendLan: "Loan or grant from Lånekassen",
+                brukskonto: "Current account",
+                annet: "Other",
+            },
         },
         kort: {
             behov: {
@@ -1541,6 +1556,13 @@ export const skjema = {
     },
     soknad: {
         ferdigstilt: "The application has already been submitted.",
+        innsendingFeilet: {
+            overskrift: "Error while sending the application",
+            infotekst1: "Sorry, we cannot send your application right now due to a technical error. ",
+            infotekst2: "Your application is available on My page until {{deletionDate}}, so you can try again later. ",
+            nodssituasjon: "Are you in an emergency?",
+            generelt: "Contact <lenke>your local Nav office</lenke> or call us at 55 55 33 33.",
+        },
     },
     soknadsmottaker: {
         enhetsnavn: {
@@ -2066,12 +2088,15 @@ export const skjema = {
         },
         ferdig: "To summary",
         forhandsvisning: {
+            header: "Is it readable?",
             avbryt: "Cancel",
             fullskjerm: {
                 lukk: "End full screen",
                 stringValue: "Full screen",
             },
             info: "Please ensure the documents can be read, and show the correct information",
+            kategori_sporsmal: "What are you uploading?",
+            kategori: 'If ypu do not choose a category the document will be uploaded under "Other".',
             opplast: "Upload document",
             slett: "Delete",
             tilbake: {
@@ -2149,6 +2174,8 @@ export const skjema = {
             },
         },
         opplasting: {
+            tittel: "Your uploaded files",
+            beskrivelse: "No file has been uploaded yet",
             feil: {
                 filType: "Upload failed. Only JPEG, PNG, and PDF files are supported.",
                 forStor: "Upload failed. The total file size cannot exceed {{maxUploadSize}}.",

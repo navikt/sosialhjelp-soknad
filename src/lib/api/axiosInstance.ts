@@ -3,6 +3,7 @@ import digisosConfig from "../config";
 import {handleAxiosError} from "./handleAxiosError.ts";
 import Cookie from "js-cookie";
 
+
 const AXIOS_INSTANCE = Axios.create({
     baseURL: digisosConfig.baseURL,
     withCredentials: digisosConfig.withCredentials,
@@ -57,3 +58,5 @@ export const axiosInstance = <T>(config: AxiosRequestConfig, options?: DigisosAx
 
     return promise as Promise<T>;
 };
+
+export type ErrorType<T> = AxiosError<T>;

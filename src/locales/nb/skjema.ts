@@ -163,6 +163,21 @@ export const skjema = {
             tannlege: "Tannlege",
             transport: "Transport",
             fritidsaktiviteter: "Fritidsaktiviteter for barn",
+            kortKategorier: {
+                kategoriValg: "Velg kategori",
+                barnebidrag_b: "Barnebidrag - Jeg betaler",
+                barnebidrag_m: "Barnebidrag - Jeg mottar",
+                barnehage: "Barnehage",
+                barnehageSFO: "SFO/AKS",
+                bostotte: "Bostøtte fra Husbanken",
+                husleie: "Husleie",
+                kontooversikt: "Kontooversikt",
+                lonnslipp: "Lønnsslipp",
+                stromOppvarming: "Strøm og oppvarming",
+                stipendLan: "Stipend og lån fra Lånekassen",
+                brukskonto: "Brukskonto",
+                annet: "Annet",
+            },
         },
         kort: {
             behov: {
@@ -1539,8 +1554,13 @@ export const skjema = {
     },
     soknad: {
         ferdigstilt: "Søknaden er allerede sendt.",
-        innsendingFeilet:
-            "Vi klarte ikke sende søknaden din, grunnet en midlertidig teknisk feil. Vi ber deg prøve igjen. Søknaden din er lagret og dersom problemet fortsetter kan du forsøke igjen senere. Kontakt ditt NAV-kontor dersom du er i en nødsituasjon.",
+        innsendingFeilet: {
+            overskrift: "Feil ved innsendelse",
+            infotekst1: "Beklager, vi kan ikke sende søknaden din akkurat nå på grunn av en teknisk feil. ",
+            infotekst2: "Søknaden din ligger på Min side frem til {{deletionDate}}, så du kan prøve igjen senere. ",
+            nodssituasjon: "Er du i en nødssituasjon?",
+            generelt: "Kontakt <lenke>ditt Nav-kontor</lenke> eller ring oss på 55 55 33 33.",
+        },
     },
     soknadsmottaker: {
         enhetsnavn: {
@@ -2007,12 +2027,15 @@ export const skjema = {
         },
         ferdig: "Til oppsummering",
         forhandsvisning: {
+            header: "Er det leselig?",
             avbryt: "Avbryt",
             fullskjerm: {
                 lukk: "Lukk fullskjerm",
                 stringValue: "Fullskjerm",
             },
             info: "Sørg for at dokumentene er leselige og viser riktig informasjon",
+            kategori_sporsmal: "Hva laster du opp?",
+            kategori: 'Om du ikke velger en beskrivelse blir dokumentet lastet opp som "Annet".',
             opplast: "Last opp dokument",
             slett: "Slett",
             tilbake: {
@@ -2087,6 +2110,8 @@ export const skjema = {
             },
         },
         opplasting: {
+            tittel: "Dine opplastede filer",
+            beskrivelse: "Ingen filer har blitt lastet opp",
             feil: {
                 filType: "Opplastingen feilet. Støtter kun JPEG, PNG og PDF filer",
                 forStor: "Opplastingen feilet. Total filstørrelse kan ikke overstige {{maxUploadSize}}.",

@@ -163,6 +163,21 @@ export const skjema = {
             tannlege: "Tannlege",
             transport: "Transport",
             fritidsaktiviteter: "Fritidsaktivitetar for barn",
+            kortKategorier: {
+                kategoriValg: "Vel kategori",
+                barnebidrag_b: "Barnebidrag - Jeg betaler",
+                barnebidrag_m: "Barnebidrag - Jeg mottar",
+                barnehage: "Barnehage",
+                barnehageSFO: "SFO/AKS",
+                bostotte: "Bustøtte frå Husbanken",
+                husleie: "Husleige",
+                kontooversikt: "Kontooversikt",
+                lonnslipp: "Lønsslipp",
+                stromOppvarming: "Straum og oppvarming",
+                stipendLan: "Stipend og lån fra Lånekassen",
+                brukskonto: "Brukskonto",
+                annet: "Anna",
+            },
         },
         kort: {
             behov: {
@@ -1534,6 +1549,13 @@ export const skjema = {
     },
     soknad: {
         ferdigstilt: "Søknaden er allereie send.",
+        innsendingFeilet: {
+            overskrift: "Feil ved sending av søknaden",
+            infotekst1: "Beklager, vi kan ikkje sende søknad din akkurat no på grunn av ein teknisk feil. ",
+            infotekst2: "Søknaden din ligg på Mi side til {{deletionDate}}, så du kan prøve igjen seinare. ",
+            nodssituasjon: "Er du i ein nødssituasjon?",
+            generelt: "Kontakt <lenke>ditt Nav-kontor</lenke> eller ring oss på 55 55 33 33.",
+        },
     },
     soknadsmottaker: {
         enhetsnavn: {
@@ -1999,12 +2021,15 @@ export const skjema = {
         },
         ferdig: "Til oppsummering",
         forhandsvisning: {
+            header: "Er det leseleg?",
             avbryt: "Avbryt",
             fullskjerm: {
                 lukk: "Lukk fullskjerm",
                 stringValue: "Fullskjerm",
             },
             info: "Sørg for at dokumenta er leselege og viser rett informasjon",
+            kategori_sporsmal: "Kva lastar du opp?",
+            kategori: 'Om du ikkje vel ein kategori blir dokumentet lasta opp som "Anna".',
             opplast: "Last opp dokument",
             slett: "Slett",
             tilbake: {
@@ -2079,6 +2104,8 @@ export const skjema = {
             },
         },
         opplasting: {
+            tittel: "Dine opplasta filer",
+            beskrivelse: "Ingen filer har blitt lasta opp",
             feil: {
                 filType: "Opplastinga var mislukka. Berre JPEG, PNG, og PDF filer er tillatne.",
                 forStor: "Opplastinga var mislukka. Fila kan ikkje vere større enn {{maxUploadSize}}",

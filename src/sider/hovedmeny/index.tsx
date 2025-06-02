@@ -1,6 +1,5 @@
 import * as React from "react";
 import "./overrides.css";
-import {PersonbeskyttelseFeilmelding} from "./PersonbeskyttelseFeilmelding";
 import {NySoknadPanel} from "./nySoknad/NySoknadPanel.tsx";
 import {PabegynteSoknaderPanel} from "./PabegynteSoknader.tsx";
 import {EttersendDokuPanel} from "./EttersendDokuPanel.tsx";
@@ -9,10 +8,8 @@ import {useTranslations} from "next-intl";
 import {useContextSessionInfo} from "../../lib/providers/useContextSessionInfo.ts";
 
 export const Informasjon = () => {
-    const {userBlocked, open, numRecentlySent} = useContextSessionInfo();
+    const {open, numRecentlySent} = useContextSessionInfo();
     const t = useTranslations("Informasjon");
-
-    if (userBlocked) return <PersonbeskyttelseFeilmelding />;
 
     return (
         <main aria-labelledby={"app-heading"}>

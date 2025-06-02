@@ -1,5 +1,5 @@
 // When new backend has been deployed, this can be removed.
-import {useEffect, useReducer, useState} from "react";
+import {useEffect, useMemo, useReducer, useState} from "react";
 import {DocumentListReducer, initialDocumentListState} from "../../../sider/08-vedlegg/lib/DocumentListReducer";
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useTranslation} from "react-i18next";
@@ -11,6 +11,8 @@ import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 import {useContextSessionInfo} from "../../providers/useContextSessionInfo.ts";
 import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {saveDokument, useDeleteDokument} from "../../../generated/new/dokument-controller/dokument-controller.ts";
+import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
+import {useQueryClient} from "@tanstack/react-query";
 import {useGetForventetDokumentasjon} from "../../../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
 
 const TEN_MEGABYTE_COMPAT_FALLBACK = 10 * 1024 * 1024;
@@ -31,6 +33,10 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
     const {mutate: mutateDelete, isPending: isDeletionPending} = useDeleteDokument();
 
     const isPending = isDokumentasjonPending || isDeletionPending || uploadPercent !== null;
+    const {setValgtKategoriData} = useValgtKategoriContext();
+
+    const queryClient = useQueryClient();
+    queryClient.invalidateQueries();
 
     /**
      * When the data on the server has changed, we automatically update the client-side list.
@@ -55,14 +61,19 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
      *
      * @param dokumentId The dokumentId to delete
      */
-    const deleteDocument = (dokumentId: string) => {
+    const deleteDocument = async (dokumentId: string) => {
         mutateDelete(
             {soknadId, dokumentId},
             {
                 onError: handleApiError,
                 onSuccess: () => {
                     dispatch({type: "remove", dokumentId});
+                    setValgtKategoriData({valgtKategorier: "UTGIFTER_ANDRE_UTGIFTER"});
+
                     logAmplitudeEvent("dokument slettet", {opplysningType: dokumentasjonType}).then();
+
+                    //brukes for å tvinge en refretch av dokumentasjon fra backend slik at ting blir rendret
+                    queryClient.invalidateQueries();
                 },
             }
         );
@@ -78,7 +89,6 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
 
         if (maxUploadSize != null && file.size > maxUploadSize) {
             setError(t(REST_FEIL.FOR_STOR, "", {maxUploadSize: humanizeFilesize(maxUploadSize)}));
-
             return Promise.reject(new Error("for stor"));
         }
 
@@ -100,7 +110,12 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
 
             setUploadPercent(null);
             dispatch({type: "insert", dokument});
+            setValgtKategoriData({valgtKategorier: "UTGIFTER_ANDRE_UTGIFTER"});
+
             await logAmplitudeEvent("dokument lastet opp", {opplysningType: dokumentasjonType});
+
+            //brukes for å tvinge en refretch av dokumentasjon fra backend slik at ting blir rendret
+            await queryClient.invalidateQueries();
         } catch (e: any) {
             handleApiError(e);
         } finally {
@@ -108,9 +123,24 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
         }
     };
 
+    const allUploadedFiles = useMemo(() => {
+        return (
+            dokumentasjon?.dokumentasjon
+                ?.filter((opplysning) => opplysning.dokumenter?.length)
+                .flatMap(
+                    (opplysning) =>
+                        opplysning.dokumenter?.map((fil) => ({
+                            ...fil,
+                            dokumentasjonType: opplysning.type,
+                        })) ?? []
+                ) ?? []
+        );
+    }, [dokumentasjon]);
+
     return {
         uploadDocument,
         deleteDocument,
+        allUploadedFiles,
         maxUploadSize,
         currentUpload: uploadPercent == null ? null : {percent: uploadPercent},
         documents,
