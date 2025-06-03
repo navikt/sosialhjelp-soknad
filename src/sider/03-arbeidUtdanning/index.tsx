@@ -15,7 +15,7 @@ import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButto
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {UtdanningDtoStudentgrad} from "../../generated/new/model";
 import {TextPlaceholder} from "../../lib/components/animasjoner/TextPlaceholder.tsx";
-import {PropsWithChildren} from "react";
+import {PropsWithChildren, useState} from "react";
 
 const MAX_LENGTH = 500;
 
@@ -42,14 +42,20 @@ const Side3 = ({children}: PropsWithChildren) => {
 export const ArbeidOgUtdanning = () => {
     const {t} = useTranslation("skjema");
     const {isLoading, updateArbeid, updateUtdanning, arbeid, utdanning} = useArbeidOgUtdanning();
+    const [kommentarError, setKommentarError] = useState(false);
     const onKommentarChange = React.useMemo(
         () =>
-            debounce(
-                ({target: {value}}: React.ChangeEvent<HTMLTextAreaElement>) =>
-                    updateArbeid({kommentarTilArbeidsforhold: value}),
-                500
-            ),
-        [updateArbeid]
+            debounce(({target: {value}}: React.ChangeEvent<HTMLTextAreaElement>) => {
+                if (value.length > MAX_LENGTH) {
+                    setKommentarError(true);
+                    return;
+                }
+                if (kommentarError) {
+                    setKommentarError(false);
+                }
+                updateArbeid({kommentarTilArbeidsforhold: value});
+            }, 500),
+        [updateArbeid, kommentarError, setKommentarError]
     );
     if (isLoading) {
         return (
@@ -70,6 +76,7 @@ export const ArbeidOgUtdanning = () => {
                 <LocalizedTextarea
                     onChange={onKommentarChange}
                     defaultValue={arbeid?.kommentar}
+                    error={kommentarError ? t("validering.maksLengde") : undefined}
                     id={"arbeid.kommentar"}
                     maxLength={MAX_LENGTH}
                     description={t("opplysninger.arbeidsituasjon.kommentarer.description")}
