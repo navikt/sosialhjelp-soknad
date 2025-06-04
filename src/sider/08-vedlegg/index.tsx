@@ -16,6 +16,7 @@ import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {useGetBarneutgifter} from "../../generated/new/barneutgift-controller/barneutgift-controller.ts";
 import {useGetBoutgifter} from "../../generated/new/boutgift-controller/boutgift-controller.ts";
 import {UbesvarteOpplysninger} from "./UbesvarteOpplysninger.tsx";
+import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 
 const useHasBekreftetUtgifter = () => {
     const soknadId = useSoknadId();
@@ -42,6 +43,7 @@ export const OkonomiskeOpplysningerView = () => {
                 page={8}
                 onStepChange={async (toPage) => {
                     await logAmplitudeSkjemaStegFullfort(8);
+                    window.umami.trackEvent((props) => ({...props, steg: 8, isKortSoknad: useCurrentSoknadIsKort()}));
                     navigate(`../${toPage}`);
                 }}
             />
@@ -69,6 +71,15 @@ export const OkonomiskeOpplysningerView = () => {
                     onPrevious={() => navigate(`../7`)}
                     onNext={async () => {
                         await logAmplitudeSkjemaStegFullfort(8);
+                        //window.umami.trackEvent((props) => ({
+                        //    ...props,
+                        //    steg: 8,
+                        //    isKortSoknad: useCurrentSoknadIsKort(),
+                        //}));
+                        window.umami.track("Skjemasteg fullført", {
+                            steg: 8,
+                            isKortSoknad: useCurrentSoknadIsKort(),
+                        });
                         navigate("../9");
                     }}
                 />

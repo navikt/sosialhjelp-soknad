@@ -7,6 +7,7 @@ import {SoknadstypeValg} from "./SoknadstypeValg.tsx";
 import {useAmplitudeSkjemaStartet} from "./useAmplitudeSkjemaStartet.tsx";
 import {useCreateSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
 import {useRouter} from "next/navigation";
+import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 
 export const NySoknadInfo = () => {
     const [soknadstype, setSoknadstype] = useState<"kort" | "standard" | undefined>(undefined);
@@ -16,6 +17,10 @@ export const NySoknadInfo = () => {
         mutation: {
             onSuccess: async (data) => {
                 await logAmplitudeStartSoknad();
+                window.umami.track("Skjema startet", {
+                    steg: 0,
+                    isKortSoknad: useCurrentSoknadIsKort(),
+                });
                 startTransition(() => router.push(`/skjema/${data.soknadId}/1`));
             },
         },

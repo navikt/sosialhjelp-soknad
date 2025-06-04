@@ -14,6 +14,7 @@ import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaSte
 import {useFormue} from "../../../lib/hooks/data/useFormue.tsx";
 import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {KortDokumentasjon} from "./KortDokumentasjon.tsx";
+import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
@@ -21,6 +22,11 @@ const Inntekt = () => {
     const navigate = useNavigate();
     const gotoPage = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(4);
+        //window.umami.trackEvent((props) => ({...props, steg: 4, isKortSoknad: useCurrentSoknadIsKort()}));
+        window.umami.track("Skjemasteg fullført", {
+            steg: 4,
+            isKortSoknad: useCurrentSoknadIsKort(),
+        });
         navigate(`../${page}`);
     };
     const {setFormue, formue} = useFormue();

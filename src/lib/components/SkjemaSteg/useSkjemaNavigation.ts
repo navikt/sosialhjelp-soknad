@@ -1,6 +1,7 @@
 import {useNavigate} from "react-router";
 import {useValideringContext} from "../../providers/useValideringContext.ts";
 import {logAmplitudeEvent} from "../../amplitude/Amplitude";
+import {useCurrentSoknadIsKort} from "./useCurrentSoknadIsKort.tsx";
 
 /**
  * Utility hook for handling navigation between steps, using error validation context.
@@ -38,6 +39,11 @@ export const useSkjemaNavigation = (steg: number) => {
         }
 
         await logAmplitudeEvent("skjemasteg fullført", {steg});
+        //window.umami.trackEvent((props) => ({...props, steg: steg, isKortSoknad: useCurrentSoknadIsKort()}));
+        window.umami.track("Skjemasteg fullført", {
+            steg: steg,
+            isKortSoknad: useCurrentSoknadIsKort(),
+        });
         dispatch({type: "clearAllValideringsfeil"});
         navigate(`../${newPage}`);
     };

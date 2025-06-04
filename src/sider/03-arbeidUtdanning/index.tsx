@@ -16,6 +16,7 @@ import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFu
 import {UtdanningDtoStudentgrad} from "../../generated/new/model";
 import {TextPlaceholder} from "../../lib/components/animasjoner/TextPlaceholder.tsx";
 import {PropsWithChildren} from "react";
+import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 
 const MAX_LENGTH = 500;
 
@@ -24,6 +25,11 @@ const Side3 = ({children}: PropsWithChildren) => {
     const navigate = useNavigate();
     const goto = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(3);
+        //window.umami.trackEvent((props) => ({...props, steg: 3, isKortSoknad: useCurrentSoknadIsKort()}));
+        window.umami.track("Skjemasteg fullført", {
+            steg: 3,
+            isKortSoknad: useCurrentSoknadIsKort(),
+        });
         navigate(`../${page}`);
     };
 

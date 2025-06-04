@@ -17,6 +17,7 @@ import BehovForm, {FormValues} from "./BehovForm.tsx";
 import type {HarKategorierInputAllOfKategorierItem} from "../../../generated/new-ssr/model";
 import KategorierForm, {FormValues as KategorierFormValues} from "./KategorierForm.tsx";
 import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
+import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 
 const Behov = () => {
     const {t} = useTranslation("skjema");
@@ -41,6 +42,11 @@ const Behov = () => {
 
     const goto = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(2);
+        //window.umami.trackEvent((props) => ({...props, steg: 2, isKortSoknad: useCurrentSoknadIsKort()}));
+        window.umami.track("Skjemasteg fullført", {
+            steg: 2,
+            isKortSoknad: useCurrentSoknadIsKort(),
+        });
         invalidateSituasjon();
         invalidateBegrunnelse();
         navigate(`../${page}`);

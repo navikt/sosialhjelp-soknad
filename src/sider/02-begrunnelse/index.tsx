@@ -12,6 +12,7 @@ import BegrunnelseForm from "./BegrunnelseForm.tsx";
 import KategorierForm from "./KategorierForm.tsx";
 import type {HarKategorierInputAllOfKategorierItem} from "../../generated/new-ssr/model";
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
+import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 
 export const Begrunnelse = () => {
     const {begrunnelse, updateBegrunnelse, updateCategories, isLoading, isError, invalidate} = useBegrunnelse();
@@ -24,6 +25,11 @@ export const Begrunnelse = () => {
     const goto = async (page: number) => {
         invalidate();
         await logAmplitudeSkjemaStegFullfort(2);
+        //window.umami.trackEvent((props) => ({...props, steg: 2, isKortSoknad: useCurrentSoknadIsKort()}));
+        window.umami.track("Skjemasteg fullført", {
+            steg: 2,
+            isKortSoknad: useCurrentSoknadIsKort(),
+        });
         navigate(`../${page}`);
     };
 
