@@ -23,12 +23,13 @@ const MAX_LENGTH = 500;
 const Side3 = ({children}: PropsWithChildren) => {
     const {t} = useTranslation("skjema");
     const navigate = useNavigate();
+    const isKortSoknad = useCurrentSoknadIsKort();
     const goto = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(3);
         //window.umami.trackEvent((props) => ({...props, steg: 3, isKortSoknad: useCurrentSoknadIsKort()}));
         window.umami.track("Skjemasteg fullført", {
             steg: 3,
-            isKortSoknad: useCurrentSoknadIsKort(),
+            isKortSoknad: isKortSoknad,
         });
         navigate(`../${page}`);
     };

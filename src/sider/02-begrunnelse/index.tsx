@@ -21,6 +21,7 @@ export const Begrunnelse = () => {
     const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
 
     const navigate = useNavigate();
+    const isKortSoknad = useCurrentSoknadIsKort();
 
     const goto = async (page: number) => {
         invalidate();
@@ -28,7 +29,7 @@ export const Begrunnelse = () => {
         //window.umami.trackEvent((props) => ({...props, steg: 2, isKortSoknad: useCurrentSoknadIsKort()}));
         window.umami.track("Skjemasteg fullført", {
             steg: 2,
-            isKortSoknad: useCurrentSoknadIsKort(),
+            isKortSoknad: isKortSoknad,
         });
         navigate(`../${page}`);
     };

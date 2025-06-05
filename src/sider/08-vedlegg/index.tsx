@@ -33,6 +33,7 @@ export const OkonomiskeOpplysningerView = () => {
     const {grupper, isLoading} = useGrupper();
     const {t} = useTranslation("skjema");
     const navigate = useNavigate();
+    const isKortSoknad = useCurrentSoknadIsKort();
     const {hasBekreftet, isLoading: isHasBekreftetLoading} = useHasBekreftetUtgifter();
 
     if (isLoading || isHasBekreftetLoading) return <ApplicationSpinner />;
@@ -43,7 +44,11 @@ export const OkonomiskeOpplysningerView = () => {
                 page={8}
                 onStepChange={async (toPage) => {
                     await logAmplitudeSkjemaStegFullfort(8);
-                    window.umami.trackEvent((props) => ({...props, steg: 8, isKortSoknad: useCurrentSoknadIsKort()}));
+                    //window.umami.trackEvent((props) => ({...props, steg: 8, isKortSoknad: useCurrentSoknadIsKort()}));
+                    window.umami.track("Skjemasteg fullført", {
+                        steg: 8,
+                        isKortSoknad: isKortSoknad,
+                    });
                     navigate(`../${toPage}`);
                 }}
             />

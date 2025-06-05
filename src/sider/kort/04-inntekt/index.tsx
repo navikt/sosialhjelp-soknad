@@ -20,12 +20,13 @@ const Inntekt = () => {
     const {t} = useTranslation("skjema");
 
     const navigate = useNavigate();
+    const isKortSoknad = useCurrentSoknadIsKort();
     const gotoPage = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(4);
         //window.umami.trackEvent((props) => ({...props, steg: 4, isKortSoknad: useCurrentSoknadIsKort()}));
         window.umami.track("Skjemasteg fullført", {
             steg: 4,
-            isKortSoknad: useCurrentSoknadIsKort(),
+            isKortSoknad: isKortSoknad,
         });
         navigate(`../${page}`);
     };

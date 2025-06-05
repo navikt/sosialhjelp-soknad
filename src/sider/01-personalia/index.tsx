@@ -32,6 +32,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
     const isMutating = mutating > 0;
     const {t} = useTranslation("skjema");
     const navigate = useNavigate();
+    const isKortSoknad = useCurrentSoknadIsKort();
 
     const validate = () => {
         if (!navEnhet || !erAktiv(navEnhet)) {
@@ -48,7 +49,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
         //window.umami.trackEvent((props) => ({...props, steg: 1, isKortSoknad: useCurrentSoknadIsKort()}));
         window.umami.track("Skjemasteg fullført", {
             steg: 1,
-            isKortSoknad: useCurrentSoknadIsKort(),
+            isKortSoknad: isKortSoknad,
         });
         navigate(`../2`);
     };

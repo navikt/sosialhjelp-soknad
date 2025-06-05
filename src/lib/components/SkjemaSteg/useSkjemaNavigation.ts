@@ -13,6 +13,7 @@ export const useSkjemaNavigation = (steg: number) => {
         dispatch,
     } = useValideringContext();
     const navigate = useNavigate();
+    const isKortSoknad = useCurrentSoknadIsKort();
 
     /**
      * Handles navigation between steps.
@@ -42,7 +43,7 @@ export const useSkjemaNavigation = (steg: number) => {
         //window.umami.trackEvent((props) => ({...props, steg: steg, isKortSoknad: useCurrentSoknadIsKort()}));
         window.umami.track("Skjemasteg fullført", {
             steg: steg,
-            isKortSoknad: useCurrentSoknadIsKort(),
+            isKortSoknad: isKortSoknad,
         });
         dispatch({type: "clearAllValideringsfeil"});
         navigate(`../${newPage}`);
