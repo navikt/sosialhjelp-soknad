@@ -30,7 +30,7 @@ export const useSendSoknad = (oppsummering?: Oppsummering) => {
                 //    isKortSoknad: useCurrentSoknadIsKort(),
                 //}));
                 window.umami.track("Skjema fullført", {
-                    steg: useCurrentSoknadIsKort() ? 5 : 9,
+                    steg: isKortSoknad ? 5 : 9,
                     isKortSoknad: isKortSoknad,
                 });
                 await logAmplitudeEvent("Søknad sendt", {

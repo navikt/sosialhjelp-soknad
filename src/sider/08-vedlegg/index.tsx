@@ -38,17 +38,20 @@ export const OkonomiskeOpplysningerView = () => {
 
     if (isLoading || isHasBekreftetLoading) return <ApplicationSpinner />;
 
+    const umamiTrack = () => {
+        window.umami.track("Skjemasteg fullført", {
+            steg: 8,
+            isKortSoknad: isKortSoknad,
+        });
+    };
+
     return (
         <SkjemaSteg>
             <SkjemaStegStepper
                 page={8}
                 onStepChange={async (toPage) => {
                     await logAmplitudeSkjemaStegFullfort(8);
-                    //window.umami.trackEvent((props) => ({...props, steg: 8, isKortSoknad: useCurrentSoknadIsKort()}));
-                    window.umami.track("Skjemasteg fullført", {
-                        steg: 8,
-                        isKortSoknad: isKortSoknad,
-                    });
+                    umamiTrack();
                     navigate(`../${toPage}`);
                 }}
             />
@@ -76,15 +79,7 @@ export const OkonomiskeOpplysningerView = () => {
                     onPrevious={() => navigate(`../7`)}
                     onNext={async () => {
                         await logAmplitudeSkjemaStegFullfort(8);
-                        //window.umami.trackEvent((props) => ({
-                        //    ...props,
-                        //    steg: 8,
-                        //    isKortSoknad: useCurrentSoknadIsKort(),
-                        //}));
-                        window.umami.track("Skjemasteg fullført", {
-                            steg: 8,
-                            isKortSoknad: useCurrentSoknadIsKort(),
-                        });
+                        umamiTrack();
                         navigate("../9");
                     }}
                 />

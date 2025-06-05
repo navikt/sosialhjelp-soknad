@@ -16,7 +16,6 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         ...DECORATOR_SETTINGS,
         params: {...DECORATOR_SETTINGS.params, language},
     });
-
     // locale blir hentet via middleware.ts,
     // og html lang leses (som document.documentElement.lang) av både analytics og klientside i18n
     return (
