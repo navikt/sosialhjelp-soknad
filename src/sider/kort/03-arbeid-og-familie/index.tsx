@@ -25,7 +25,6 @@ const ArbeidOgFamilie = () => {
     const isKortSoknad = useCurrentSoknadIsKort();
     const gotoPage = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(3);
-        //window.umami.trackEvent((props) => ({...props, steg: 3, isKortSoknad: useCurrentSoknadIsKort()}));
         window.umami.track("Skjemasteg fullført", {
             steg: 3,
             isKortSoknad: isKortSoknad,

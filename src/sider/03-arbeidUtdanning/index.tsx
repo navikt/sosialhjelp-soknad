@@ -26,7 +26,6 @@ const Side3 = ({children}: PropsWithChildren) => {
     const isKortSoknad = useCurrentSoknadIsKort();
     const goto = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(3);
-        //window.umami.trackEvent((props) => ({...props, steg: 3, isKortSoknad: useCurrentSoknadIsKort()}));
         window.umami.track("Skjemasteg fullført", {
             steg: 3,
             isKortSoknad: isKortSoknad,

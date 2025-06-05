@@ -40,7 +40,6 @@ export const useSkjemaNavigation = (steg: number) => {
         }
 
         await logAmplitudeEvent("skjemasteg fullført", {steg});
-        //window.umami.trackEvent((props) => ({...props, steg: steg, isKortSoknad: useCurrentSoknadIsKort()}));
         window.umami.track("Skjemasteg fullført", {
             steg: steg,
             isKortSoknad: isKortSoknad,

@@ -26,7 +26,6 @@ export const Begrunnelse = () => {
     const goto = async (page: number) => {
         invalidate();
         await logAmplitudeSkjemaStegFullfort(2);
-        //window.umami.trackEvent((props) => ({...props, steg: 2, isKortSoknad: useCurrentSoknadIsKort()}));
         window.umami.track("Skjemasteg fullført", {
             steg: 2,
             isKortSoknad: isKortSoknad,

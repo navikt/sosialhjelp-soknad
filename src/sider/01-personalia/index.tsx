@@ -46,7 +46,6 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
     const onClickNext = async () => {
         if (!validate()) return;
         await logAmplitudeSkjemaStegFullfort(1);
-        //window.umami.trackEvent((props) => ({...props, steg: 1, isKortSoknad: useCurrentSoknadIsKort()}));
         window.umami.track("Skjemasteg fullført", {
             steg: 1,
             isKortSoknad: isKortSoknad,

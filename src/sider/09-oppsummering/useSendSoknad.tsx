@@ -24,11 +24,6 @@ export const useSendSoknad = (oppsummering?: Oppsummering) => {
         mutation: {
             onSuccess: async ({digisosId}) => {
                 await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
-                //window.umami.trackEvent((props) => ({
-                //    ...props,
-                //    steg: useCurrentSoknadIsKort() ? 5 : 9,
-                //    isKortSoknad: useCurrentSoknadIsKort(),
-                //}));
                 window.umami.track("Skjema fullført", {
                     steg: isKortSoknad ? 5 : 9,
                     isKortSoknad: isKortSoknad,
