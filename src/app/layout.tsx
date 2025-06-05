@@ -27,7 +27,6 @@ export default async function RootLayout({children}: {children: React.ReactNode}
                     src="https://cdn.nav.no/team-researchops/sporing/sporing.js"
                     data-host-url="https://umami.nav.no"
                     data-website-id="00a054e3-9928-4882-8e82-235940dfc04b"
-                    data-auto-track="false"
                 ></Script>
                 <title>Søknad om økonomisk sosialhjelp</title>
                 <Decorator.HeadAssets />
