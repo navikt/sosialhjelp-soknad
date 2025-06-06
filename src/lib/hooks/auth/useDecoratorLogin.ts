@@ -25,11 +25,12 @@ export const handleSessionCheck = async (
 
     setIsLoading(true);
     try {
-        const {status, ...response} = await fetch(sessionUrl, {
+        const response = await fetch(sessionUrl, {
             method: "get",
             credentials: "include",
         });
 
+        const {status} = response;
         if (status === 401) {
             router.replace(redirectUrl);
             return;
