@@ -26,6 +26,7 @@ type DekoratorOptions = {
     serviceDiscovery: boolean;
     env: "dev" | "prod";
     logoutRedirectUrl?: string;
+    dekoratorApiBaseUrl?: string;
 };
 
 type SoknadConfig = {
@@ -111,6 +112,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             env: "prod",
             serviceDiscovery: true,
             logoutRedirectUrl: "https://www.nav.no/sosialhjelp/soknad/oauth2/logout",
+            dekoratorApiBaseUrl: "https://www.nav.no/person/nav-dekoratoren-api",
         },
 
         proxy: {
@@ -142,6 +144,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             env: "dev",
             serviceDiscovery: true,
             logoutRedirectUrl: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/oauth2/logout",
+            dekoratorApiBaseUrl: "https://www.ekstern.dev.nav.no/person/nav-dekoratoren-api",
         },
 
         proxy: {
@@ -174,6 +177,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             env: "dev",
             serviceDiscovery: true,
             logoutRedirectUrl: "https://www.ansatt.dev.nav.no/sosialhjelp/soknad/oauth2/logout",
+            dekoratorApiBaseUrl: "https://www.ekstern.dev.nav.no/person/nav-dekoratoren-api",
         },
 
         proxy: {
