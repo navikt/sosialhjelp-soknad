@@ -1,588 +1,1305 @@
 {
-    "openapi": "3.1.0",
-    "info": {"title": "OpenAPI definition", "version": "v0"},
-    "servers": [{"url": "http://localhost:8181/sosialhjelp/soknad-api", "description": "Generated server url"}],
-    "paths": {
-        "/vedlegg/konverter": {
-            "post": {
-                "tags": ["file-converter-controller"],
-                "summary": "Konverterer vedlegg til PDF",
-                "operationId": "konverterVedlegg",
-                "requestBody": {
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {"file": {"type": "string", "format": "binary"}},
-                                "required": ["file"]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/InnsendingFeiletError"}}}
-                    },
-                    "200": {
-                        "description": "Vedlegg konvertert til PDF",
-                        "content": {"application/pdf": {"schema": {"type": "string", "format": "binary"}}}
-                    }
-                }
-            }
-        },
-        "/informasjon/actions/logg": {
-            "post": {
-                "tags": ["informasjon-ressurs"],
-                "operationId": "loggFraKlient",
-                "requestBody": {
-                    "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Logg"}}},
-                    "required": true
-                },
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/InnsendingFeiletError"}}}
-                    },
-                    "200": {"description": "OK"}
-                }
-            }
-        },
-        "/soknader/{soknadId}/oppsummering": {
-            "get": {
-                "tags": ["oppsummering-ressurs"],
-                "operationId": "getOppsummering",
-                "parameters": [
-                    {"name": "soknadId", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}
-                ],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/InnsendingFeiletError"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Oppsummering"}}}
-                    }
-                }
-            }
-        },
-        "/minesaker/ping": {
-            "get": {
-                "tags": ["mine-saker-metadata-ressurs"],
-                "operationId": "ping",
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/InnsendingFeiletError"}}}
-                    },
-                    "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "string"}}}}
-                }
-            }
-        },
-        "/minesaker/innsendte": {
-            "get": {
-                "tags": ["mine-saker-metadata-ressurs"],
-                "operationId": "hentInnsendteSoknaderForBruker",
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/InnsendingFeiletError"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/InnsendtSoknadDto"}}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/internal/isAlive": {
-            "get": {
-                "tags": ["internal-ressurs"],
-                "operationId": "isAlive",
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/InnsendingFeiletError"}}}
-                    },
-                    "200": {"description": "OK", "content": {"text/plain": {"schema": {"type": "string"}}}}
-                }
-            }
-        },
-        "/informasjon/session": {
-            "get": {
-                "tags": ["informasjon-ressurs"],
-                "operationId": "getSessionInfo",
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/InnsendingFeiletError"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SessionResponse"}}}
-                    }
-                }
-            }
-        },
-        "/informasjon/adressesok": {
-            "get": {
-                "tags": ["informasjon-ressurs"],
-                "operationId": "adresseSok",
-                "parameters": [{"name": "sokestreng", "in": "query", "required": false, "schema": {"type": "string"}}],
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/InnsendingFeiletError"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/AdresseForslag"}}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/feature-toggle": {
-            "get": {
-                "tags": ["feature-toggle-ressurs"],
-                "operationId": "featureToggles",
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/InnsendingFeiletError"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {"type": "object", "additionalProperties": {"type": "boolean"}}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/dittnav/pabegynte/aktive": {
-            "get": {
-                "tags": ["ditt-nav-metadata-ressurs"],
-                "operationId": "hentPabegynteSoknaderForBruker",
-                "responses": {
-                    "400": {"description": "Bad Request", "content": {"*/*": {"schema": {"type": "object"}}}},
-                    "413": {
-                        "description": "Payload Too Large",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/SoknadApiError"}}}
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/UnauthorizedMelding"}}}
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {"*/*": {"schema": {"$ref": "#/components/schemas/InnsendingFeiletError"}}}
-                    },
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {"type": "array", "items": {"$ref": "#/components/schemas/PabegyntSoknadDto"}}
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "components": {
-        "schemas": {
-            "SoknadApiError": {
-                "type": "object",
-                "discriminator": {
-                    "propertyName": "responseType",
-                    "mapping": {"SoknadApiError": "#/components/schemas/SoknadApiError"}
-                },
-                "properties": {
-                    "error": {
-                        "type": "string",
-                        "enum": [
-                            "InnsendingMidlertidigUtilgjengelig",
-                            "InnsendingIkkeAktivert",
-                            "InnsendingUtilgjengelig",
-                            "PlanlagtNedetid",
-                            "PdfGenereringFeilet",
-                            "NotFound",
-                            "DokumentUploadDuplicateFilename",
-                            "DokumentKonverteringFeilet",
-                            "UgyldigInput",
-                            "GeneralError",
-                            "Forbidden",
-                            "NoAccess",
-                            "SoknadAlleredeSendt",
-                            "DokumentUploadError",
-                            "DokumentUploadTooLarge",
-                            "DokumentUploadUnsupportedMediaType",
-                            "DokumentUploadFileEncrypted",
-                            "DokumentUploadPossibleVirus",
-                            "SoknadUpdateConflict",
-                            "PdlKallFeilet"
-                        ]
-                    },
-                    "responseType": {"type": "string"},
-                    "message": {"type": "string"},
-                    "id": {"type": "string"}
-                },
-                "required": ["error", "responseType"]
-            },
-            "UnauthorizedMelding": {
-                "type": "object",
-                "properties": {"loginUrl": {"type": "string", "format": "uri"}},
-                "required": ["loginUrl"]
-            },
-            "InnsendingFeiletError": {
-                "type": "object",
-                "discriminator": {
-                    "propertyName": "type",
-                    "mapping": {"InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"}
-                },
-                "properties": {"deletionDate": {"type": "string"}, "type": {"type": "string"}},
-                "required": ["deletionDate", "type"]
-            },
-            "Logg": {
-                "type": "object",
-                "properties": {
-                    "level": {"type": "string", "enum": ["ERROR", "WARN", "INFO"]},
-                    "message": {"type": "string"},
-                    "jsFileUrl": {"type": "string"},
-                    "lineNumber": {"type": "string"},
-                    "columnNumber": {"type": "string"},
-                    "url": {"type": "string"},
-                    "userAgent": {"type": "string"}
-                },
-                "required": ["level"]
-            },
-            "Avsnitt": {
-                "type": "object",
-                "properties": {
-                    "tittel": {"type": "string"},
-                    "sporsmal": {"type": "array", "items": {"$ref": "#/components/schemas/Sporsmal"}}
-                },
-                "required": ["sporsmal", "tittel"]
-            },
-            "Felt": {
-                "type": "object",
-                "properties": {
-                    "label": {"type": "string"},
-                    "svar": {"$ref": "#/components/schemas/Svar"},
-                    "labelSvarMap": {"type": "object", "additionalProperties": {"$ref": "#/components/schemas/Svar"}},
-                    "type": {
-                        "type": "string",
-                        "enum": ["TEKST", "CHECKBOX", "SYSTEMDATA", "SYSTEMDATA_MAP", "VEDLEGG"]
-                    },
-                    "vedlegg": {"type": "array", "items": {"$ref": "#/components/schemas/Vedlegg"}}
-                },
-                "required": ["type"]
-            },
-            "Oppsummering": {
-                "type": "object",
-                "properties": {"steg": {"type": "array", "items": {"$ref": "#/components/schemas/Steg"}}},
-                "required": ["steg"]
-            },
-            "Sporsmal": {
-                "type": "object",
-                "properties": {
-                    "tittel": {"type": "string"},
-                    "felt": {"type": "array", "items": {"$ref": "#/components/schemas/Felt"}},
-                    "erUtfylt": {"type": "boolean"}
-                },
-                "required": ["erUtfylt"]
-            },
-            "Steg": {
-                "type": "object",
-                "properties": {
-                    "stegNr": {"type": "integer", "format": "int32"},
-                    "tittel": {"type": "string"},
-                    "avsnitt": {"type": "array", "items": {"$ref": "#/components/schemas/Avsnitt"}}
-                },
-                "required": ["avsnitt", "stegNr", "tittel"]
-            },
-            "Svar": {
-                "type": "object",
-                "properties": {
-                    "value": {"type": "string"},
-                    "type": {"type": "string", "enum": ["LOCALE_TEKST", "TEKST", "DATO", "TIDSPUNKT"]}
-                },
-                "required": ["type"]
-            },
-            "Vedlegg": {
-                "type": "object",
-                "properties": {"filnavn": {"type": "string"}, "uuid": {"type": "string"}},
-                "required": ["filnavn"]
-            },
-            "InnsendtSoknadDto": {
-                "type": "object",
-                "properties": {
-                    "navn": {"type": "string"},
-                    "kode": {"type": "string"},
-                    "sistEndret": {"type": "string"}
-                },
-                "required": ["kode", "navn", "sistEndret"]
-            },
-            "PabegyntSoknad": {
-                "type": "object",
-                "properties": {
-                    "sistOppdatert": {"type": "string", "format": "date-time"},
-                    "soknadId": {"type": "string", "format": "uuid"},
-                    "isKort": {"type": "boolean"}
-                },
-                "required": ["isKort", "sistOppdatert", "soknadId"]
-            },
-            "SessionResponse": {
-                "type": "object",
-                "description": "Informasjon om brukerøkt",
-                "properties": {
-                    "userBlocked": {
-                        "type": "boolean",
-                        "description": "Bruker har adressebeskyttelse og kan ikke bruke digital søknad"
-                    },
-                    "daysBeforeDeletion": {
-                        "type": "integer",
-                        "format": "int64",
-                        "description": "Antall dager før søknader slettes"
-                    },
-                    "open": {
-                        "type": "array",
-                        "description": "Påbegynte men ikke innleverte søknader",
-                        "items": {"$ref": "#/components/schemas/PabegyntSoknad"}
-                    },
-                    "numRecentlySent": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Antall nylig innsendte søknader"
-                    },
-                    "maxUploadSizeBytes": {
-                        "type": "integer",
-                        "format": "int64",
-                        "description": "Max file upload size, in bytes"
-                    },
-                    "personId": {"type": "string", "description": "Personid for innlogget bruker"}
-                },
-                "required": [
-                    "daysBeforeDeletion",
-                    "maxUploadSizeBytes",
-                    "numRecentlySent",
-                    "open",
-                    "personId",
-                    "userBlocked"
-                ]
-            },
-            "AdresseForslag": {
-                "type": "object",
-                "properties": {
-                    "adresse": {"type": "string"},
-                    "husnummer": {"type": "string"},
-                    "husbokstav": {"type": "string"},
-                    "kommunenummer": {"type": "string"},
-                    "kommunenavn": {"type": "string"},
-                    "postnummer": {"type": "string"},
-                    "poststed": {"type": "string"},
-                    "geografiskTilknytning": {"type": "string"},
-                    "gatekode": {"type": "string"},
-                    "bydel": {"type": "string"},
-                    "type": {"type": "string", "enum": ["GATEADRESSE", "MATRIKKELADRESSE"]}
-                },
-                "required": ["type"]
-            },
-            "PabegyntSoknadDto": {
-                "type": "object",
-                "properties": {
-                    "eventTidspunkt": {"type": "string"},
-                    "eventId": {"type": "string"},
-                    "grupperingsId": {"type": "string"},
-                    "tekst": {"type": "string"},
-                    "link": {"type": "string"},
-                    "sikkerhetsnivaa": {"type": "integer", "format": "int32"},
-                    "sistOppdatert": {"type": "string"},
-                    "isAktiv": {"type": "boolean"}
-                },
-                "required": [
-                    "eventId",
-                    "eventTidspunkt",
-                    "grupperingsId",
-                    "isAktiv",
-                    "link",
-                    "sikkerhetsnivaa",
-                    "sistOppdatert",
-                    "tekst"
-                ]
-            }
-        }
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8181/sosialhjelp/soknad-api",
+      "description": "Generated server url"
     }
+  ],
+  "paths": {
+    "/vedlegg/konverter": {
+      "post": {
+        "operationId": "konverterVedlegg",
+        "summary": "Konverterer vedlegg til PDF",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Vedlegg konvertert til PDF",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "file-converter-controller"
+        ]
+      }
+    },
+    "/informasjon/actions/logg": {
+      "post": {
+        "operationId": "loggFraKlient",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Logg"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "informasjon-ressurs"
+        ]
+      }
+    },
+    "/soknader/{soknadId}/oppsummering": {
+      "get": {
+        "operationId": "getOppsummering",
+        "parameters": [
+          {
+            "name": "soknadId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Oppsummering"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "oppsummering-ressurs"
+        ]
+      }
+    },
+    "/minesaker/ping": {
+      "get": {
+        "operationId": "ping",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "mine-saker-metadata-ressurs"
+        ]
+      }
+    },
+    "/minesaker/innsendte": {
+      "get": {
+        "operationId": "hentInnsendteSoknaderForBruker",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InnsendtSoknadDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "mine-saker-metadata-ressurs"
+        ]
+      }
+    },
+    "/internal/isAlive": {
+      "get": {
+        "operationId": "isAlive",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "internal-ressurs"
+        ]
+      }
+    },
+    "/informasjon/session": {
+      "get": {
+        "operationId": "getSessionInfo",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "informasjon-ressurs"
+        ]
+      }
+    },
+    "/informasjon/adressesok": {
+      "get": {
+        "operationId": "adresseSok",
+        "parameters": [
+          {
+            "name": "sokestreng",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdresseForslag"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "informasjon-ressurs"
+        ]
+      }
+    },
+    "/feature-toggle": {
+      "get": {
+        "operationId": "featureToggles",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "feature-toggle-ressurs"
+        ]
+      }
+    },
+    "/dittnav/pabegynte/aktive": {
+      "get": {
+        "operationId": "hentPabegynteSoknaderForBruker",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PabegyntSoknadDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "ditt-nav-metadata-ressurs"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SoknadApiError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "InnsendingMidlertidigUtilgjengelig",
+              "InnsendingIkkeAktivert",
+              "InnsendingUtilgjengelig",
+              "PlanlagtNedetid",
+              "PdfGenereringFeilet",
+              "NotFound",
+              "DokumentUploadDuplicateFilename",
+              "DokumentKonverteringFeilet",
+              "UgyldigInput",
+              "GeneralError",
+              "Forbidden",
+              "NoAccess",
+              "SoknadAlleredeSendt",
+              "DokumentUploadError",
+              "DokumentUploadTooLarge",
+              "DokumentUploadUnsupportedMediaType",
+              "DokumentUploadFileEncrypted",
+              "DokumentUploadPossibleVirus",
+              "SoknadUpdateConflict",
+              "PdlKallFeilet"
+            ]
+          },
+          "responseType": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "responseType",
+          "mapping": {
+            "SoknadApiError": "#/components/schemas/SoknadApiError"
+          }
+        },
+        "required": [
+          "error",
+          "responseType"
+        ]
+      },
+      "UnauthorizedMelding": {
+        "type": "object",
+        "properties": {
+          "loginUrl": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "loginUrl"
+        ]
+      },
+      "InnsendingFeiletError": {
+        "type": "object",
+        "properties": {
+          "deletionDate": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
+          }
+        },
+        "required": [
+          "deletionDate",
+          "type"
+        ]
+      },
+      "Logg": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "ERROR",
+              "WARN",
+              "INFO"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "jsFileUrl": {
+            "type": "string"
+          },
+          "lineNumber": {
+            "type": "string"
+          },
+          "columnNumber": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "userAgent": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "level"
+        ]
+      },
+      "Avsnitt": {
+        "type": "object",
+        "properties": {
+          "tittel": {
+            "type": "string"
+          },
+          "sporsmal": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Sporsmal"
+            }
+          }
+        },
+        "required": [
+          "sporsmal",
+          "tittel"
+        ]
+      },
+      "Felt": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "svar": {
+            "$ref": "#/components/schemas/Svar"
+          },
+          "labelSvarMap": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Svar"
+            }
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "TEKST",
+              "CHECKBOX",
+              "SYSTEMDATA",
+              "SYSTEMDATA_MAP",
+              "VEDLEGG"
+            ]
+          },
+          "vedlegg": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Vedlegg"
+            }
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "Oppsummering": {
+        "type": "object",
+        "properties": {
+          "steg": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Steg"
+            }
+          }
+        },
+        "required": [
+          "steg"
+        ]
+      },
+      "Sporsmal": {
+        "type": "object",
+        "properties": {
+          "tittel": {
+            "type": "string"
+          },
+          "felt": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Felt"
+            }
+          },
+          "erUtfylt": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "erUtfylt"
+        ]
+      },
+      "Steg": {
+        "type": "object",
+        "properties": {
+          "stegNr": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tittel": {
+            "type": "string"
+          },
+          "avsnitt": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Avsnitt"
+            }
+          }
+        },
+        "required": [
+          "avsnitt",
+          "stegNr",
+          "tittel"
+        ]
+      },
+      "Svar": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "LOCALE_TEKST",
+              "TEKST",
+              "DATO",
+              "TIDSPUNKT"
+            ]
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "Vedlegg": {
+        "type": "object",
+        "properties": {
+          "filnavn": {
+            "type": "string"
+          },
+          "uuid": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "filnavn"
+        ]
+      },
+      "InnsendtSoknadDto": {
+        "type": "object",
+        "properties": {
+          "navn": {
+            "type": "string"
+          },
+          "kode": {
+            "type": "string"
+          },
+          "sistEndret": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kode",
+          "navn",
+          "sistEndret"
+        ]
+      },
+      "PabegyntSoknad": {
+        "type": "object",
+        "properties": {
+          "sistOppdatert": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "soknadId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "isKort": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "isKort",
+          "sistOppdatert",
+          "soknadId"
+        ]
+      },
+      "SessionResponse": {
+        "description": "Informasjon om brukerøkt",
+        "type": "object",
+        "properties": {
+          "userBlocked": {
+            "description": "Bruker har adressebeskyttelse og kan ikke bruke digital søknad",
+            "type": "boolean"
+          },
+          "daysBeforeDeletion": {
+            "description": "Antall dager før søknader slettes",
+            "type": "integer",
+            "format": "int64"
+          },
+          "open": {
+            "description": "Påbegynte men ikke innleverte søknader",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PabegyntSoknad"
+            }
+          },
+          "numRecentlySent": {
+            "description": "Antall nylig innsendte søknader",
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxUploadSizeBytes": {
+            "description": "Max file upload size, in bytes",
+            "type": "integer",
+            "format": "int64"
+          },
+          "personId": {
+            "description": "Personid for innlogget bruker",
+            "type": "string"
+          }
+        },
+        "required": [
+          "daysBeforeDeletion",
+          "maxUploadSizeBytes",
+          "numRecentlySent",
+          "open",
+          "personId",
+          "userBlocked"
+        ]
+      },
+      "AdresseForslag": {
+        "type": "object",
+        "properties": {
+          "adresse": {
+            "type": "string"
+          },
+          "husnummer": {
+            "type": "string"
+          },
+          "husbokstav": {
+            "type": "string"
+          },
+          "kommunenummer": {
+            "type": "string"
+          },
+          "kommunenavn": {
+            "type": "string"
+          },
+          "postnummer": {
+            "type": "string"
+          },
+          "poststed": {
+            "type": "string"
+          },
+          "geografiskTilknytning": {
+            "type": "string"
+          },
+          "gatekode": {
+            "type": "string"
+          },
+          "bydel": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "GATEADRESSE",
+              "MATRIKKELADRESSE"
+            ]
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "PabegyntSoknadDto": {
+        "type": "object",
+        "properties": {
+          "eventTidspunkt": {
+            "type": "string"
+          },
+          "eventId": {
+            "type": "string"
+          },
+          "grupperingsId": {
+            "type": "string"
+          },
+          "tekst": {
+            "type": "string"
+          },
+          "link": {
+            "type": "string"
+          },
+          "sikkerhetsnivaa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sistOppdatert": {
+            "type": "string"
+          },
+          "isAktiv": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "eventId",
+          "eventTidspunkt",
+          "grupperingsId",
+          "isAktiv",
+          "link",
+          "sikkerhetsnivaa",
+          "sistOppdatert",
+          "tekst"
+        ]
+      }
+    }
+  }
 }
