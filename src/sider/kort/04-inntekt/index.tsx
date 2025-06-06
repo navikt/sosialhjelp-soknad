@@ -24,7 +24,7 @@ const Inntekt = () => {
     const gotoPage = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(4);
         window.umami.track("Skjemasteg fullført", {
-            steg: 4,
+            steg: "4",
             isKortSoknad: isKortSoknad,
         });
         navigate(`../${page}`);

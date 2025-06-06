@@ -25,7 +25,7 @@ export const useSendSoknad = (oppsummering?: Oppsummering) => {
             onSuccess: async ({digisosId}) => {
                 await logAmplitudeEvent("skjema fullført", getAttributesForSkjemaFullfortEvent(oppsummering));
                 window.umami.track("Skjema fullført", {
-                    steg: isKortSoknad ? 5 : 9,
+                    steg: isKortSoknad ? "5" : "9",
                     isKortSoknad: isKortSoknad,
                 });
                 await logAmplitudeEvent("Søknad sendt", {

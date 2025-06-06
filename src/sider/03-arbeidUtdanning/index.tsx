@@ -27,7 +27,7 @@ const Side3 = ({children}: PropsWithChildren) => {
     const goto = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(3);
         window.umami.track("Skjemasteg fullført", {
-            steg: 3,
+            steg: "3",
             isKortSoknad: isKortSoknad,
         });
         navigate(`../${page}`);

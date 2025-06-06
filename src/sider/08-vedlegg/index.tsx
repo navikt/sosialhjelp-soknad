@@ -40,7 +40,7 @@ export const OkonomiskeOpplysningerView = () => {
 
     const umamiTrack = () => {
         window.umami.track("Skjemasteg fullført", {
-            steg: 8,
+            steg: "8",
             isKortSoknad: isKortSoknad,
         });
     };

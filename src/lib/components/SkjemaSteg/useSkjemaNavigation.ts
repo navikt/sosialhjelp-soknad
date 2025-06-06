@@ -41,7 +41,7 @@ export const useSkjemaNavigation = (steg: number) => {
 
         await logAmplitudeEvent("skjemasteg fullført", {steg});
         window.umami.track("Skjemasteg fullført", {
-            steg: steg,
+            steg: steg.toString(),
             isKortSoknad: isKortSoknad,
         });
         dispatch({type: "clearAllValideringsfeil"});

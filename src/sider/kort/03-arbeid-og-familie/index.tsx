@@ -26,7 +26,7 @@ const ArbeidOgFamilie = () => {
     const gotoPage = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(3);
         window.umami.track("Skjemasteg fullført", {
-            steg: 3,
+            steg: "3",
             isKortSoknad: isKortSoknad,
         });
         navigate(`../${page}`);

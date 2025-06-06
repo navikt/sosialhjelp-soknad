@@ -27,7 +27,7 @@ export const Begrunnelse = () => {
         invalidate();
         await logAmplitudeSkjemaStegFullfort(2);
         window.umami.track("Skjemasteg fullført", {
-            steg: 2,
+            steg: "2",
             isKortSoknad: isKortSoknad,
         });
         navigate(`../${page}`);

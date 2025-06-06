@@ -47,7 +47,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
         if (!validate()) return;
         await logAmplitudeSkjemaStegFullfort(1);
         window.umami.track("Skjemasteg fullført", {
-            steg: 1,
+            steg: "1",
             isKortSoknad: isKortSoknad,
         });
         navigate(`../2`);
