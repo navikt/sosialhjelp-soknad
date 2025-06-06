@@ -4,23 +4,42 @@ name: "Build and deploy to dev-gcp"
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy to"
+        required: true
+        default: "dev"
+        type: choice
+        options:
+          - dev
+          - mock
+          - preprod
+          - alle
   push:
     branches:
       - "dev"
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.filter_matrix.outputs.matrix }}
+    steps:
+      - name: Filter matrix
+        id: filter_matrix
+        run: |
+          if [[ "${{ github.event.inputs.environment }}" == "alle" ]]; then
+            echo '{"include": [{"environment": "preprod"}, {"environment": "mock"}, {"environment": "dev"}]}' > matrix.json
+          else
+            echo '{"include": [{"environment": "'${{ github.event.inputs.environment }}'"}]}' > matrix.json
+          fi
+          echo "matrix=$(cat matrix.json)" >> $GITHUB_OUTPUT
+
   deploy-gcp:
     strategy:
-      matrix:
-        include:
-          - environment: preprod
-            cluster: dev-gcp
-          - environment: mock
-            cluster: dev-gcp
-          - environment: dev
-            cluster: dev-gcp
-
+      matrix: ${{fromJson(needs.prepare.outputs.matrix)}}
     runs-on: ubuntu-latest
+    needs: prepare
     permissions:
       contents: read
       id-token: write
@@ -45,7 +64,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v2
         env:
           RESOURCE: .nais/app.yaml
-          CLUSTER: ${{ matrix.cluster }}
+          CLUSTER: dev-gcp
           REF: ${{ github.sha }}
           PRINT_PAYLOAD: true
           IMAGE: ${{ steps.docker-build-push.outputs.image }}
