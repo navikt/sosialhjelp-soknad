@@ -35,6 +35,7 @@ export const OkonomiskeOpplysningerView = () => {
     const navigate = useNavigate();
     const isKortSoknad = useCurrentSoknadIsKort();
     const {hasBekreftet, isLoading: isHasBekreftetLoading} = useHasBekreftetUtgifter();
+    const soknadId = useSoknadId();
 
     if (isLoading || isHasBekreftetLoading) return <ApplicationSpinner />;
 
@@ -42,6 +43,7 @@ export const OkonomiskeOpplysningerView = () => {
         window.umami.track("Skjemasteg fullført", {
             steg: "8",
             isKortSoknad: isKortSoknad,
+            soknadId: soknadId,
         });
     };
 

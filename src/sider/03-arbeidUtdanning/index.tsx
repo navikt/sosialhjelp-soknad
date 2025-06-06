@@ -17,6 +17,7 @@ import {UtdanningDtoStudentgrad} from "../../generated/new/model";
 import {TextPlaceholder} from "../../lib/components/animasjoner/TextPlaceholder.tsx";
 import {PropsWithChildren} from "react";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
+import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 
 const MAX_LENGTH = 500;
 
@@ -24,11 +25,14 @@ const Side3 = ({children}: PropsWithChildren) => {
     const {t} = useTranslation("skjema");
     const navigate = useNavigate();
     const isKortSoknad = useCurrentSoknadIsKort();
+    const soknadId = useSoknadId();
+
     const goto = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(3);
         window.umami.track("Skjemasteg fullført", {
             steg: "3",
             isKortSoknad: isKortSoknad,
+            soknadId: soknadId,
         });
         navigate(`../${page}`);
     };

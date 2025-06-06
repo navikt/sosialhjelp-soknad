@@ -9,6 +9,7 @@ import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullf
 import {Oppsummering} from "../../generated/model";
 import {useAnalyticsContext} from "../../lib/providers/useAnalyticsContext.ts";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
+import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 
 export const useSendSoknad = (oppsummering?: Oppsummering) => {
     const {brukerAdresse} = useAdresser();
@@ -19,6 +20,7 @@ export const useSendSoknad = (oppsummering?: Oppsummering) => {
         analyticsData: {selectedKategorier, situasjonEndret},
     } = useAnalyticsContext();
     const deletionDateRef = useRef("");
+    const soknadId = useSoknadId();
 
     const {mutate, isPending, error} = useSendSoknadMutation({
         mutation: {
@@ -27,6 +29,7 @@ export const useSendSoknad = (oppsummering?: Oppsummering) => {
                 window.umami.track("Skjema fullført", {
                     steg: isKortSoknad ? "5" : "9",
                     isKortSoknad: isKortSoknad,
+                    soknadId: soknadId,
                 });
                 await logAmplitudeEvent("Søknad sendt", {
                     KortSoknad: isKortSoknad ? "Ja" : "Nei",

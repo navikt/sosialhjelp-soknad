@@ -15,17 +15,21 @@ import {useFormue} from "../../../lib/hooks/data/useFormue.tsx";
 import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {KortDokumentasjon} from "./KortDokumentasjon.tsx";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
+import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
 
     const navigate = useNavigate();
     const isKortSoknad = useCurrentSoknadIsKort();
+    const soknadId = useSoknadId();
+
     const gotoPage = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(4);
         window.umami.track("Skjemasteg fullført", {
             steg: "4",
             isKortSoknad: isKortSoknad,
+            soknadId: soknadId,
         });
         navigate(`../${page}`);
     };

@@ -21,7 +21,6 @@ import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";
 import {Heading} from "@navikt/ds-react";
 import {Telefon} from "./Telefon.tsx";
-import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
@@ -32,7 +31,6 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
     const isMutating = mutating > 0;
     const {t} = useTranslation("skjema");
     const navigate = useNavigate();
-    const isKortSoknad = useCurrentSoknadIsKort();
 
     const validate = () => {
         if (!navEnhet || !erAktiv(navEnhet)) {
@@ -48,7 +46,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
         await logAmplitudeSkjemaStegFullfort(1);
         window.umami.track("Skjemasteg fullført", {
             steg: "1",
-            isKortSoknad: isKortSoknad,
+            soknadId: soknadId,
         });
         navigate(`../2`);
     };

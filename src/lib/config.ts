@@ -167,7 +167,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         featureFlags: {
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
-            soknadstypeValg: false,
+            soknadstypeValg: true,
         },
 
         dekorator: {

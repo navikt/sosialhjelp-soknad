@@ -23,11 +23,14 @@ const ArbeidOgFamilie = () => {
 
     const navigate = useNavigate();
     const isKortSoknad = useCurrentSoknadIsKort();
+    const soknadId = useSoknadId();
+
     const gotoPage = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(3);
         window.umami.track("Skjemasteg fullført", {
             steg: "3",
             isKortSoknad: isKortSoknad,
+            soknadId: soknadId,
         });
         navigate(`../${page}`);
     };
