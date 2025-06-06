@@ -15,52 +15,76 @@ const sessionUrl = `${dekoratorLoginBaseUrl}/oauth2/session`;
 const loginUrl = `${dekoratorLoginBaseUrl}/oauth2/login`;
 const authApiUrl = `${dekoratorApiBaseUrl}/auth`;
 
+export const handleSessionCheck = async (
+    isEnabled: boolean,
+    setIsLoading: (loading: boolean) => void,
+    router: ReturnType<typeof useRouter>
+) => {
+    if (!isEnabled) return;
+    const redirectUrl = `${loginUrl}?redirect=${window.location.href}`;
+
+    setIsLoading(true);
+    try {
+        const {status, ...response} = await fetch(sessionUrl, {
+            method: "get",
+            credentials: "include",
+        });
+
+        if (status === 401) {
+            router.replace(redirectUrl);
+            return;
+        }
+
+        if (status === 200) {
+            try {
+                const {
+                    session: {active},
+                }: SessionResponse = await response.json();
+                if (active === false) {
+                    router.replace(redirectUrl);
+                    return;
+                }
+            } catch (error) {
+                logger.error(error);
+            }
+        }
+
+        try {
+            const [dekoratorSession, soknadSession] = await Promise.all([
+                fetch(authApiUrl, {method: "get"}),
+                getSessionInfo(),
+            ]);
+
+            if (!dekoratorSession.ok) {
+                logger.error(
+                    `Failed to fetch dekorator session from ${authApiUrl}: ${dekoratorSession.status} ${dekoratorSession.statusText}`
+                );
+                return;
+            }
+            const {userId}: {userId: string} = await dekoratorSession.json();
+            if (userId !== soknadSession.personId) {
+                logger.warn(
+                    `Dekorator userId does not match soknad session personId. ${!userId ? "No userId from dekorator session" : ""}`
+                );
+                router.replace(logoutRedirectUrl ?? "");
+            }
+        } catch (error) {
+            logger.error(error);
+        }
+    } catch (error) {
+        logger.error(error);
+    } finally {
+        setIsLoading(false);
+    }
+};
+
 const useDecoratorLogin = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const isEnabled = ["prod", "preprod", "dev"].includes(process.env.NEXT_PUBLIC_DIGISOS_ENV!);
-    const redirectUrl = `${loginUrl}?redirect=${window.location.href}`;
 
     useEffect(() => {
-        if (!isEnabled) return;
-
-        setIsLoading(true);
-
-        fetch(sessionUrl, {
-            method: "get",
-            credentials: "include",
-        })
-            .then((response) => {
-                const {status} = response;
-                if (status === 401) router.replace(redirectUrl);
-                if (status === 200) {
-                    response
-                        .json()
-                        .then(({session: {active}}: SessionResponse) => active === false && router.replace(redirectUrl))
-                        .catch(logger.error);
-                }
-                // Sjekk at brukerId fra dekorator session matcher personId fra soknad session. Hvis ikke, logg brukeren ut av digisos-session
-                Promise.all([fetch(authApiUrl, {method: "get"}), getSessionInfo()])
-                    .then(([dekoratorSession, soknadSession]) => {
-                        if (!dekoratorSession.ok) {
-                            logger.error(
-                                `Failed to fetch dekorator session from ${authApiUrl}: ${dekoratorSession.status} ${dekoratorSession.statusText}`
-                            );
-                            return;
-                        }
-                        dekoratorSession.json().then(({userId}: {userId: string}) => {
-                            if (userId !== soknadSession.personId) {
-                                logger.warn(
-                                    `Dekorator userId does not match soknad session personId. ${!userId ? "No userId from dekorator session" : ""}`
-                                );
-                                router.replace(logoutRedirectUrl ?? "");
-                            }
-                        });
-                    })
-                    .catch(logger.error);
-            })
-            .catch(logger.error)
-            .finally(() => setIsLoading(false));
+        handleSessionCheck(isEnabled, setIsLoading, router);
     }, [isEnabled]);
 
     return {isLoading};
