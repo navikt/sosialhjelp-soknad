@@ -104,7 +104,9 @@
         "test": "vitest",
         "prepare": "husky",
         "checkUpdates": "npx npm-check-updates -u",
-        "fetch-api": "curl -o ./soknad-api-old.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs/old && prettier --write soknad-api-old.json && curl -o ./soknad-api-new.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs/new && prettier --write soknad-api-new.json",
+        "fetch-old-api": "curl -o ./soknad-api-old.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs/old && npx --yes openapi-format soknad-api-old.json -o soknad-api-old.json",
+        "fetch-new-api": "curl -o ./soknad-api-new.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs/new && npx --yes openapi-format soknad-api-new.json -o soknad-api-new.json",
+        "fetch-api": "npm run fetch-old-api && npm run fetch-new-api",
         "orval": "rm -rf ./src/generated & orval --prettier",
         "lint": "eslint"
     },
