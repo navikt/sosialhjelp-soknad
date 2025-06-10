@@ -48,29 +48,29 @@ export const handleSessionCheck = async (
             } catch (error) {
                 logger.error(error);
             }
-        }
+            try {
+                const [dekoratorSession, soknadSession] = await Promise.all([
+                    fetch(authApiUrl, {method: "get", credentials: "include"}),
+                    getSessionInfo(),
+                ]);
 
-        try {
-            const [dekoratorSession, soknadSession] = await Promise.all([
-                fetch(authApiUrl, {method: "get"}),
-                getSessionInfo(),
-            ]);
-
-            if (!dekoratorSession.ok) {
-                logger.error(
-                    `Failed to fetch dekorator session from ${authApiUrl}: ${dekoratorSession.status} ${dekoratorSession.statusText}`
-                );
-                return;
+                if (!dekoratorSession.ok) {
+                    logger.error(
+                        `Failed to fetch dekorator session from ${authApiUrl}: ${dekoratorSession.status} ${dekoratorSession.statusText}`
+                    );
+                    return;
+                }
+                const {userId}: {userId: string} = await dekoratorSession.json();
+                if (userId !== soknadSession.personId) {
+                    logger.warn(
+                        `Dekorator userId does not match soknad session personId. ${!userId ? "No userId from dekorator session" : ""}`
+                    );
+                    router.replace(logoutRedirectUrl ?? "");
+                    return;
+                }
+            } catch (error) {
+                logger.error(error);
             }
-            const {userId}: {userId: string} = await dekoratorSession.json();
-            if (userId !== soknadSession.personId) {
-                logger.warn(
-                    `Dekorator userId does not match soknad session personId. ${!userId ? "No userId from dekorator session" : ""}`
-                );
-                router.replace(logoutRedirectUrl ?? "");
-            }
-        } catch (error) {
-            logger.error(error);
         }
     } catch (error) {
         logger.error(error);
