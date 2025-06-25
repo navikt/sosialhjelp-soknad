@@ -7,14 +7,39 @@ import {
 } from "../../../generated/new/adresse-controller/adresse-controller.ts";
 import {
     AdresserDtoAdresseValg,
+    AdresserDtoBrukerAdresse,
+    AdresserDtoFolkeregistrertAdresse,
+    AdresserDtoMidlertidigAdresse,
+    AdresserInput,
     AdresserInputAdresseValg,
     AdresserInputBrukerAdresse,
+    NavEnhetDto,
 } from "../../../generated/new/model";
 import {useState} from "react";
 
 export const mutationKey = (soknadId: string) => ["updateAdresser", soknadId];
 
-export const useAdresser = () => {
+export interface UseAdresserResult {
+    setAdressevalg: (value: AdresserDtoAdresseValg) => void;
+    setAdresse: (value: AdresserInputBrukerAdresse | null) => void;
+    variables:
+        | {
+              soknadId: string;
+              data: AdresserInput;
+          }
+        | undefined;
+    error: Error | null;
+    isUpdatePending: boolean;
+    folkeregistrert: AdresserDtoFolkeregistrertAdresse | undefined;
+    midlertidig: AdresserDtoMidlertidigAdresse | undefined;
+    brukerAdresse: AdresserDtoBrukerAdresse | undefined;
+    adresseValg?: AdresserDtoAdresseValg;
+    navEnhet?: NavEnhetDto | undefined;
+    isLoading: boolean;
+    showSpinner: boolean;
+}
+
+export const useAdresser = (): UseAdresserResult => {
     const soknadId = useSoknadId();
     const {data, isLoading, error} = useGetAdresser(soknadId);
     const queryClient = useQueryClient();
