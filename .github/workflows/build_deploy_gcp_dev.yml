@@ -1,6 +1,7 @@
 # Denne filen vil erstatte build_prod, build_deploy_mock, etc.
 
 name: "Build and deploy to dev-gcp"
+run-name: Deploy '${{ github.ref_name }}' to '${{ github.event.inputs.environment }}'
 
 on:
   workflow_dispatch:
@@ -17,7 +18,7 @@ on:
           - alle
   push:
     branches:
-      - "dev"
+      - "main"
 
 jobs:
   prepare:
@@ -28,7 +29,9 @@ jobs:
       - name: Filter matrix
         id: filter_matrix
         run: |
-          if [[ "${{ github.event.inputs.environment }}" == "alle" ]]; then
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            echo '{"include": [{"environment": "preprod"}]}' > matrix.json
+          elif [[ "${{ github.event.inputs.environment }}" == "alle" ]]; then
             echo '{"include": [{"environment": "preprod"}, {"environment": "mock"}, {"environment": "dev"}]}' > matrix.json
           else
             echo '{"include": [{"environment": "'${{ github.event.inputs.environment }}'"}]}' > matrix.json
