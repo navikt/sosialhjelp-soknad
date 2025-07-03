@@ -16,12 +16,18 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         ...DECORATOR_SETTINGS,
         params: {...DECORATOR_SETTINGS.params, language},
     });
-
     // locale blir hentet via middleware.ts,
     // og html lang leses (som document.documentElement.lang) av både analytics og klientside i18n
     return (
         <html lang={language}>
             <head>
+                <Script
+                    defer
+                    strategy="afterInteractive"
+                    src="https://cdn.nav.no/team-researchops/sporing/sporing.js"
+                    data-host-url="https://umami.nav.no"
+                    data-website-id={process.env.UMAMI_ID}
+                ></Script>
                 <title>Søknad om økonomisk sosialhjelp</title>
                 <Decorator.HeadAssets />
             </head>

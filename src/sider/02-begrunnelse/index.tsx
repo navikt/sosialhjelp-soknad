@@ -12,6 +12,8 @@ import BegrunnelseForm from "./BegrunnelseForm.tsx";
 import KategorierForm from "./KategorierForm.tsx";
 import type {HarKategorierInputAllOfKategorierItem} from "../../generated/new-ssr/model";
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
+import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
+import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 
 export const Begrunnelse = () => {
     const {begrunnelse, updateBegrunnelse, updateCategories, isLoading, isError, invalidate} = useBegrunnelse();
@@ -20,10 +22,17 @@ export const Begrunnelse = () => {
     const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
 
     const navigate = useNavigate();
+    const isKortSoknad = useCurrentSoknadIsKort();
+    const soknadId = useSoknadId();
 
     const goto = async (page: number) => {
         invalidate();
         await logAmplitudeSkjemaStegFullfort(2);
+        window.umami.track("Skjemasteg fullført", {
+            steg: "2",
+            isKortSoknad: isKortSoknad,
+            soknadId: soknadId,
+        });
         navigate(`../${page}`);
     };
 

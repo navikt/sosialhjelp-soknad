@@ -44,6 +44,10 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
     const onClickNext = async () => {
         if (!validate()) return;
         await logAmplitudeSkjemaStegFullfort(1);
+        window.umami.track("Skjemasteg fullført", {
+            steg: "1",
+            soknadId: soknadId,
+        });
         navigate(`../2`);
     };
 

@@ -16,13 +16,22 @@ import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegBu
 import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {useGetArbeid} from "../../../generated/new/arbeid-controller/arbeid-controller.ts";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
+import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 
 const ArbeidOgFamilie = () => {
     const {t} = useTranslation("skjema");
 
     const navigate = useNavigate();
+    const isKortSoknad = useCurrentSoknadIsKort();
+    const soknadId = useSoknadId();
+
     const gotoPage = async (page: number) => {
         await logAmplitudeSkjemaStegFullfort(3);
+        window.umami.track("Skjemasteg fullført", {
+            steg: "3",
+            isKortSoknad: isKortSoknad,
+            soknadId: soknadId,
+        });
         navigate(`../${page}`);
     };
 

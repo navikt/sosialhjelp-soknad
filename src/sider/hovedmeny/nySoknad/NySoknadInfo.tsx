@@ -17,6 +17,7 @@ export const NySoknadInfo = () => {
             onSuccess: async (data) => {
                 await logAmplitudeStartSoknad();
                 startTransition(() => router.push(`/skjema/${data.soknadId}/1`));
+                window.umami.track("Skjema startet");
             },
         },
     });
