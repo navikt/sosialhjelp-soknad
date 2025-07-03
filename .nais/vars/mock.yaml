@@ -3,6 +3,8 @@ idportenEnabled: false
 ingresses: ["https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad"]
 outboundExternalHosts: []
 livenessPath: /sosialhjelp/soknad/internal/isAlive
+env:
+  UMAMI_ID: "00a054e3-9928-4882-8e82-235940dfc04b"
 requests:
   cpu: 50m
   memory: 100Mi

@@ -5,6 +5,8 @@ wonderwallInstance: wonderwall-soknad
 outboundRules: [sosialhjelp-soknad-api]
 outboundExternalHosts: []
 livenessPath: /sosialhjelp/soknad/internal/isAlive
+env:
+  UMAMI_ID: "aca7085d-8968-415b-bc32-20e4a03abf8d"
 requests:
   cpu: 50m
   memory: 100Mi

@@ -5,6 +5,7 @@ outboundExternalHosts: [sosialhjelp-soknad-api.prod-fss-pub.nais.io]
 livenessPath: /sosialhjelp/soknad/internal/isAlive
 env:
   LOGIN_SESSION_API_URL: "https://www.nav.no/sosialhjelp/soknad/oauth2/session"
+  UMAMI_ID: "82a0745a-b0b1-419a-82cb-cd4b0849b6bf"
 limits:
   memory: 800Mi
 requests:
