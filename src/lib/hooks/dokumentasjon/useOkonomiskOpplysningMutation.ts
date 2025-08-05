@@ -1,5 +1,9 @@
 import {OkonomiskOpplysningDtoDetaljerItem} from "../../../generated/new-ssr/model";
-import {DokumentasjonDtoType, UpdateOkonomiskOpplysningBody} from "../../../generated/new/model";
+import {
+    DokumentasjonDtoType,
+    UpdateOkonomiskOpplysningBody,
+    UpdateOkonomiskOpplysningParams,
+} from "../../../generated/new/model";
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {
@@ -14,8 +18,9 @@ const useOkonomiskOpplysningMutation = <T extends OkonomiskOpplysningDtoDetaljer
     const queryClient = useQueryClient();
     const {data, isLoading, queryKey} = useGetOkonomiskeOpplysninger(soknadId);
     const {mutateAsync} = useUpdateOkonomiskOpplysning();
+    const params = {type: opplysningstype} as UpdateOkonomiskOpplysningParams;
     const updateOkonomiskOpplysning = async (data: UpdateOkonomiskOpplysningBody) => {
-        queryClient.setQueryData(queryKey, await mutateAsync({soknadId, data}));
+        queryClient.setQueryData(queryKey, await mutateAsync({soknadId, data, params}));
     };
     return {
         updateOkonomiskOpplysning,

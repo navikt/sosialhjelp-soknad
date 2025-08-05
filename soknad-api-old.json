@@ -1287,6 +1287,10 @@
           },
           "isAktiv": {
             "type": "boolean"
+          },
+          "soknadId": {
+            "type": "string",
+            "format": "uuid"
           }
         },
         "required": [
@@ -1297,6 +1301,7 @@
           "link",
           "sikkerhetsnivaa",
           "sistOppdatert",
+          "soknadId",
           "tekst"
         ]
       }
