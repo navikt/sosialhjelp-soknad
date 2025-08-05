@@ -1277,7 +1277,7 @@
           {
             "name": "type",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": [
@@ -4762,6 +4762,27 @@
   },
   "components": {
     "schemas": {
+      "InnsendingFeiletError": {
+        "type": "object",
+        "properties": {
+          "deletionDate": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
+          }
+        },
+        "required": [
+          "deletionDate",
+          "type"
+        ]
+      },
       "SoknadApiError": {
         "type": "object",
         "properties": {
@@ -4821,27 +4842,6 @@
         },
         "required": [
           "loginUrl"
-        ]
-      },
-      "InnsendingFeiletError": {
-        "type": "object",
-        "properties": {
-          "deletionDate": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
-          }
-        },
-        "required": [
-          "deletionDate",
-          "type"
         ]
       },
       "BoutgifterInput": {
@@ -5164,7 +5164,48 @@
         }
       },
       "AbstractOkonomiInput": {
+        "type": "object",
         "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "UTGIFTER_ANNET_BO",
+              "UTGIFTER_KOMMUNAL_AVGIFT",
+              "UTGIFTER_OPPVARMING",
+              "UTGIFTER_STROM",
+              "UTGIFTER_BARN_TANNREGULERING",
+              "UTGIFTER_BARN_FRITIDSAKTIVITETER",
+              "UTGIFTER_ANNET_BARN",
+              "UTGIFTER_ANDRE_UTGIFTER",
+              "BARNEBIDRAG_BETALER",
+              "UTGIFTER_SFO",
+              "UTGIFTER_BARNEHAGE",
+              "UTGIFTER_HUSLEIE",
+              "UTGIFTER_BOLIGLAN",
+              "FORMUE_BRUKSKONTO",
+              "FORMUE_BSU",
+              "FORMUE_LIVSFORSIKRING",
+              "FORMUE_SPAREKONTO",
+              "FORMUE_VERDIPAPIRER",
+              "FORMUE_ANNET",
+              "BARNEBIDRAG_MOTTAR",
+              "STUDIELAN_INNTEKT",
+              "JOBB",
+              "LONNSLIPP",
+              "UTBETALING_FORSIKRING",
+              "UTBETALING_UTBYTTE",
+              "UTBETALING_SALG",
+              "UTBETALING_HUSBANKEN",
+              "UTBETALING_ANNET",
+              "SLUTTOPPGJOER",
+              "SKATTEMELDING",
+              "SAMVARSAVTALE",
+              "OPPHOLDSTILLATELSE",
+              "HUSLEIEKONTRAKT",
+              "HUSLEIEKONTRAKT_KOMMUNAL",
+              "BEHOV"
+            ]
+          },
           "_type": {
             "type": "string"
           }
@@ -5178,7 +5219,8 @@
           }
         },
         "required": [
-          "_type"
+          "_type",
+          "type"
         ]
       },
       "AvdragRenterDto": {
@@ -5238,7 +5280,8 @@
           }
         ],
         "required": [
-          "detaljer"
+          "detaljer",
+          "type"
         ]
       },
       "GenericOkonomiInput": {
@@ -5259,7 +5302,8 @@
           }
         ],
         "required": [
-          "detaljer"
+          "detaljer",
+          "type"
         ]
       },
       "LonnsInntektDto": {
@@ -5297,7 +5341,8 @@
           }
         ],
         "required": [
-          "detalj"
+          "detalj",
+          "type"
         ]
       },
       "OkonomiDetaljDto": {
