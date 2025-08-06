@@ -1,7 +1,9 @@
 appName: sosialhjelp-soknad-mock
 idportenEnabled: false
-ingresses: ["https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad"]
+ingresses: []
 outboundExternalHosts: []
+outboundRules: [sosialhjelp-soknad-api-mock]
+wonderwallInstance: wonderwall-soknad-mock
 livenessPath: /sosialhjelp/soknad/internal/isAlive
 env:
   UMAMI_ID: "00a054e3-9928-4882-8e82-235940dfc04b"
