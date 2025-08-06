@@ -1,9 +1,7 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
 import {logError, logInfo, logWarning} from "../log/loggerUtils";
 import digisosConfig from "../config";
-import {LINK_PAGE_PATH} from "../constants";
 import {isLoginError} from "./error/isLoginError";
-import {getGotoParameter} from "./auth/getGotoParameter";
 import {logger} from "@navikt/next-logger";
 import {SoknadApiError} from "../../generated/model";
 
@@ -45,30 +43,10 @@ export const axiosInstance = <T>(
     retry: number = 0
 ): Promise<T> => {
     const controller = new AbortController();
-    let mockToken: string | null = null;
 
-    // Ta idtoken fra cookie og legg i authorization header, men kun i mock/localhost
-    if (["mock", "localhost"].includes(process.env.NEXT_PUBLIC_DIGISOS_ENV ?? "")) {
-        const bearerToken = document.cookie
-            .split("; ")
-            .find((c) => c.startsWith("localhost-idtoken"))
-            ?.split("=")[1];
-        if (bearerToken) {
-            mockToken = bearerToken;
-        }
-    }
     const promise: CancellablePromise<AxiosResponse> = AXIOS_INSTANCE({
         ...config,
         ...options,
-        ...(mockToken
-            ? {
-                  headers: {
-                      ...config.headers,
-                      ...options?.headers,
-                      Authorization: mockToken ? `Bearer ${mockToken}` : undefined,
-                  },
-              }
-            : {}),
         signal: controller.signal, // Use signal instead of cancelToken
     })
         .then(({data}) => data)
@@ -87,14 +65,9 @@ export const axiosInstance = <T>(
             }
 
             if (isLoginError(response)) {
-                if (response.data.loginUrl) {
-                    const redirect = `?redirect=${origin}${LINK_PAGE_PATH}?goto=${getGotoParameter(window.location)}`;
-                    window.location.assign(response.data.loginUrl + redirect);
-                } else {
-                    const loginUrl = `/sosialhjelp/soknad/oauth2/login?redirect=${origin}${decodeURIComponent(window.location.pathname)}`;
-                    logger.info(`Fikk 401 på kall, redirecter til login: ${loginUrl}`);
-                    window.location.assign(loginUrl);
-                }
+                const loginUrl = `/sosialhjelp/soknad/oauth2/login?redirect=${origin}${decodeURIComponent(window.location.pathname)}`;
+                logger.info(`Fikk 401 på kall, redirecter til login: ${loginUrl}`);
+                window.location.assign(loginUrl);
                 return neverResolves();
             }
 
