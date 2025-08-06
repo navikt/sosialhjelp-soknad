@@ -18,7 +18,7 @@ const useOkonomiskOpplysningMutation = <T extends OkonomiskOpplysningDtoDetaljer
     const queryClient = useQueryClient();
     const {data, isLoading, queryKey} = useGetOkonomiskeOpplysninger(soknadId);
     const {mutateAsync} = useUpdateOkonomiskOpplysning();
-    const params = {type: opplysningstype} as UpdateOkonomiskOpplysningParams;
+    const params: UpdateOkonomiskOpplysningParams = {type: opplysningstype};
     const updateOkonomiskOpplysning = async (data: UpdateOkonomiskOpplysningBody) => {
         queryClient.setQueryData(queryKey, await mutateAsync({soknadId, data, params}));
     };
