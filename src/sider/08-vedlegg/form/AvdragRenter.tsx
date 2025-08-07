@@ -1,4 +1,3 @@
-import {AvdragRenterDto, BoliglanInput} from "../../../generated/new/model";
 import {useForm} from "react-hook-form";
 import React from "react";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -6,9 +5,9 @@ import {AvdragRenterInputList} from "./AvdragRenterInputList.tsx";
 import {DokumentasjonTypesForVariant} from "../../../lib/opplysninger.ts";
 import {AvdragRenterFormSchema, AvdragRenterFormValues} from "./schema/avdragRenterForm.ts";
 import {avdragRenterFormToBoliglanInput} from "./lib/formToInputMappers.ts";
+import {AvdragRenterDto, BoliglanInput} from "../../../generated/new/model";
 
 const AvdragRenter = ({
-    opplysningstype,
     mutate,
     opplysning,
 }: {
@@ -27,7 +26,7 @@ const AvdragRenter = ({
 
     const onSubmit = ({avdragRenter}: AvdragRenterFormValues) => {
         if (!avdragRenter.some(({avdrag, renter}) => avdrag || renter)) return;
-        mutate(avdragRenterFormToBoliglanInput(opplysningstype, avdragRenter));
+        mutate(avdragRenterFormToBoliglanInput(avdragRenter));
     };
 
     return (

@@ -1,4 +1,3 @@
-import {DokumentasjonDtoType, LonnsInntektDto, type LonnsInput} from "../../../generated/new/model";
 import {useForm} from "react-hook-form";
 import React from "react";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -6,6 +5,7 @@ import {OpplysningBelopInput} from "./components/OpplysningBelopInput.tsx";
 import {useDokumentasjonTekster} from "../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
 import {bruttoNettoFormToLonnsInput} from "./lib/formToInputMappers.ts";
 import {BruttoNettoFormSchema, BruttoNettoFormValues} from "./schema/bruttoNettoForm.ts";
+import {DokumentasjonDtoType, LonnsInntektDto, LonnsInput} from "../../../generated/new/model";
 
 const BruttoNetto = ({
     opplysningstype,
@@ -26,7 +26,7 @@ const BruttoNetto = ({
     });
 
     const onSubmit = (formValues: BruttoNettoFormValues) => {
-        mutate(bruttoNettoFormToLonnsInput(opplysningstype, formValues));
+        mutate(bruttoNettoFormToLonnsInput(formValues));
     };
 
     return (
