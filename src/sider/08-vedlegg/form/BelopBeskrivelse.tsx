@@ -1,4 +1,3 @@
-import {BelopDto, type GenericOkonomiInput} from "../../../generated/new/model";
 import {useFieldArray, useForm} from "react-hook-form";
 import {useDokumentasjonTekster} from "../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
 import React, {ReactNode} from "react";
@@ -10,6 +9,7 @@ import {OpplysningTextInput} from "./components/OpplysningTextInput.tsx";
 import {DokumentasjonTypesForVariant} from "../../../lib/opplysninger.ts";
 import {BelopBeskrivelseFormSchema, BelopBeskrivelseFormValues} from "./schema/belopBeskrivelseForm.ts";
 import {belopBeskrivelseFormToGenericOkonomiInput} from "./lib/formToInputMappers.ts";
+import {BelopDto, GenericOkonomiInput} from "../../../generated/new/model";
 
 type Props = (
     | {
@@ -50,7 +50,7 @@ const BelopBeskrivelse = ({
     const {leggtil, belop, beskrivelse} = useDokumentasjonTekster(opplysningstype);
 
     const onSubmit = ({belopBeskrivelse}: BelopBeskrivelseFormValues) => {
-        mutate(belopBeskrivelseFormToGenericOkonomiInput(opplysningstype, belopBeskrivelse));
+        mutate(belopBeskrivelseFormToGenericOkonomiInput(belopBeskrivelse));
     };
 
     const onRemove = (index: number) => () => {
