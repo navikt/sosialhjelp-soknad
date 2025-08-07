@@ -1277,7 +1277,7 @@
           {
             "name": "type",
             "in": "query",
-            "required": false,
+            "required": true,
             "schema": {
               "type": "string",
               "enum": [
@@ -5164,48 +5164,7 @@
         }
       },
       "AbstractOkonomiInput": {
-        "type": "object",
         "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "UTGIFTER_ANNET_BO",
-              "UTGIFTER_KOMMUNAL_AVGIFT",
-              "UTGIFTER_OPPVARMING",
-              "UTGIFTER_STROM",
-              "UTGIFTER_BARN_TANNREGULERING",
-              "UTGIFTER_BARN_FRITIDSAKTIVITETER",
-              "UTGIFTER_ANNET_BARN",
-              "UTGIFTER_ANDRE_UTGIFTER",
-              "BARNEBIDRAG_BETALER",
-              "UTGIFTER_SFO",
-              "UTGIFTER_BARNEHAGE",
-              "UTGIFTER_HUSLEIE",
-              "UTGIFTER_BOLIGLAN",
-              "FORMUE_BRUKSKONTO",
-              "FORMUE_BSU",
-              "FORMUE_LIVSFORSIKRING",
-              "FORMUE_SPAREKONTO",
-              "FORMUE_VERDIPAPIRER",
-              "FORMUE_ANNET",
-              "BARNEBIDRAG_MOTTAR",
-              "STUDIELAN_INNTEKT",
-              "JOBB",
-              "LONNSLIPP",
-              "UTBETALING_FORSIKRING",
-              "UTBETALING_UTBYTTE",
-              "UTBETALING_SALG",
-              "UTBETALING_HUSBANKEN",
-              "UTBETALING_ANNET",
-              "SLUTTOPPGJOER",
-              "SKATTEMELDING",
-              "SAMVARSAVTALE",
-              "OPPHOLDSTILLATELSE",
-              "HUSLEIEKONTRAKT",
-              "HUSLEIEKONTRAKT_KOMMUNAL",
-              "BEHOV"
-            ]
-          },
           "_type": {
             "type": "string"
           }
@@ -5219,8 +5178,7 @@
           }
         },
         "required": [
-          "_type",
-          "type"
+          "_type"
         ]
       },
       "AvdragRenterDto": {
@@ -5280,8 +5238,7 @@
           }
         ],
         "required": [
-          "detaljer",
-          "type"
+          "detaljer"
         ]
       },
       "GenericOkonomiInput": {
@@ -5302,8 +5259,7 @@
           }
         ],
         "required": [
-          "detaljer",
-          "type"
+          "detaljer"
         ]
       },
       "LonnsInntektDto": {
@@ -5341,8 +5297,7 @@
           }
         ],
         "required": [
-          "detalj",
-          "type"
+          "detalj"
         ]
       },
       "OkonomiDetaljDto": {
