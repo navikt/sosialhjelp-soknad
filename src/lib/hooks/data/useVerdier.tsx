@@ -31,28 +31,6 @@ export const useVerdier = () => {
 
     const verdier: Partial<VerdierDto> | undefined = isPending ? mapToDto(variables?.data) : data;
 
-    const setBekreftelse = async (verdi: boolean) => {
-        if (!verdier) return;
-
-        if (!verdi) {
-            mutate({soknadId, data: {type: "HarIkkeVerdierInput", hasBekreftelse: verdi}});
-            return;
-        }
-
-        mutate({
-            soknadId,
-            data: {
-                type: "HarVerdierInput",
-                hasBekreftelse: verdi,
-                hasBeskrivelseVerdi: false,
-                hasBolig: false,
-                hasCampingvogn: false,
-                hasFritidseiendom: false,
-                hasKjoretoy: false,
-            },
-        });
-    };
-
     const setVerdier = async (checked: (keyof VerdierDto)[]) => {
         if (!verdier) return;
 
@@ -71,6 +49,7 @@ export const useVerdier = () => {
 
     const setBeskrivelseAvAnnet = async (beskrivelseAvAnnet: string) => {
         if (!verdier) return;
+
         const oppdatert: HarVerdierInput = {
             type: "HarVerdierInput",
             hasBolig: verdier.hasBolig ?? false,
@@ -84,5 +63,5 @@ export const useVerdier = () => {
         mutate({soknadId, data: oppdatert});
     };
 
-    return {verdier, setBekreftelse, setVerdier, setBeskrivelseAvAnnet};
+    return {verdier, setVerdier, setBeskrivelseAvAnnet};
 };
