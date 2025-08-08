@@ -1,5 +1,5 @@
 import {describe, it, expect, vi, beforeEach} from "vitest";
-import {phoneNumberParsedOrUndefined} from "./phoneNumberParsedOrUndefined";
+import {phoneNumberParsedOrUndefined} from "./phoneNumberParsedOrUndefined.ts";
 
 vi.mock("@navikt/next-logger", () => ({
     logger: {
