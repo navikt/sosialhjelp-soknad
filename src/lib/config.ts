@@ -20,6 +20,7 @@ type SoknadApiProxyOptions = {
     hostname: string;
     basePath: string; // no trailing slash
     https: boolean;
+    port?: string;
 };
 
 type DekoratorOptions = {
@@ -68,9 +69,14 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         logLocally: true,
         showDevPanel: true,
         withCredentials: true,
-
+        proxy: {
+            hostname: "localhost",
+            basePath: "/sosialhjelp/soknad-api",
+            https: false,
+            port: "8181",
+        },
         driftsmeldingUrl: "http://localhost:3005/sosialhjelp/driftsmeldinger/api",
-        baseURL: "http://localhost:8181/sosialhjelp/soknad-api/",
+        baseURL: "http://localhost:3000/sosialhjelp/soknad/soknad-api/",
         innsynURL: "http://localhost:3000/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
