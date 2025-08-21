@@ -44,24 +44,5 @@ export const useBarneutgifter = () => {
         mutate({soknadId, data: oppdatert});
     };
 
-    const setBekreftelse = async (bekreftelse: boolean) => {
-        if (!barneutgifter) return;
-
-        if (!bekreftelse) {
-            mutate({soknadId, data: {type: "HarIkkeBarneutgifterInput"}});
-            return;
-        }
-        const oppdatert: HarBarneutgifterInput = {
-            ...barneutgifter,
-            type: "HarBarneutgifterInput",
-            hasAnnenUtgiftBarn: barneutgifter.hasAnnenUtgiftBarn ?? false,
-            hasFritidsaktiviteter: barneutgifter.hasFritidsaktiviteter ?? false,
-            hasBarnehage: barneutgifter.hasBarnehage ?? false,
-            hasSfo: barneutgifter.hasSfo ?? false,
-            hasTannregulering: barneutgifter.hasTannregulering ?? false,
-        };
-        mutate({soknadId, data: oppdatert});
-    };
-
-    return {barneutgifter, setBarneutgifter, setBekreftelse};
+    return {barneutgifter, setBarneutgifter};
 };
