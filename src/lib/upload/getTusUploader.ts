@@ -1,11 +1,11 @@
-import {VedleggFrontendTypeMinusUferdig} from "../../locales/nb/dokumentasjon.ts";
 import {logger} from "@navikt/next-logger";
 import {Upload, UploadOptions} from "tus-js-client";
 import {TUSD_ENDPOINT} from "./config.ts";
+import type {DokumentasjonDtoType} from "../../generated/new/model";
 
 type TusUploaderOptions = {
     soknadId: string;
-    vedleggType: VedleggFrontendTypeMinusUferdig;
+    vedleggType: DokumentasjonDtoType;
     file: File;
     onProgress: (bytesUploaded: number, bytesTotal: number) => void;
     /**

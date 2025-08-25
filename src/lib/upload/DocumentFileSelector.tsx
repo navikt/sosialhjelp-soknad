@@ -1,4 +1,4 @@
-import {VedleggFrontendTypeMinusUferdig} from "../../locales/en/dokumentasjon.ts";
+import {type DokumentasjonDtoType} from "../../generated/new/model";
 import {useMemo, useState} from "react";
 import {getTusUploader} from "./getTusUploader.ts";
 import {Button} from "@navikt/ds-react";
@@ -10,7 +10,7 @@ export const DocumentFileSelector = ({
     vedleggType,
 }: {
     soknadId: string;
-    vedleggType: VedleggFrontendTypeMinusUferdig;
+    vedleggType: DokumentasjonDtoType;
 }) => {
     const [files, setFiles] = useState<File[]>([]);
     const totalFileSize = useMemo(() => files.reduce((acc, file) => acc + file.size, 0), [files]);
@@ -53,8 +53,9 @@ export const DocumentFileSelector = ({
                         const res = await fetch(`${UPLOAD_API_BASE}/document/${soknadId}/${vedleggType}/submit`, {
                             method: "POST",
                             body: JSON.stringify({
-                                targetUrl: `${digisosConfig.baseURL}/opplastetVedlegg/${soknadId}/${encodeURI(vedleggType)}`,
+                                targetUrl: `${digisosConfig.baseURL}opplastetVedlegg/${soknadId}/${encodeURI(vedleggType)}`,
                             }),
+                            headers: {"Content-Type": "application/json"},
                         });
 
                         if (!res.ok) {
