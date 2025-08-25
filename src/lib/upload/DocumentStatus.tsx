@@ -2,13 +2,7 @@ import {UploadState, useDocumentState} from "./useDocumentState.ts";
 import {UPLOAD_IMG_BASE} from "./config.ts";
 import {FileCheckmarkIcon} from "@navikt/aksel-icons";
 
-export const DocumentStatus = ({
-    soknadId,
-    vedleggType,
-}: {
-    soknadId: string;
-    vedleggType: string;
-}) => {
+export const DocumentStatus = ({soknadId, vedleggType}: {soknadId: string; vedleggType: string}) => {
     const foo = useDocumentState(soknadId, vedleggType);
     return (
         <div className={"p-4"}>

@@ -6,8 +6,8 @@ type ProxyRequestContext = {params: Promise<{path: string[]}>};
 type ProxyRequestHandler = (request: Request, context: ProxyRequestContext) => Promise<Response>;
 
 const getRouteHandlerProxyTarget = (headers: Headers, requestPath: string[]): RouteHandlerProxyTarget => {
-    if (!digisosConfig.proxy?.soknadApi) throw new Error("SoknadApi proxy not configured");
-    const {hostname, basePath, https, port} = digisosConfig.proxy.soknadApi;
+    if (!digisosConfig.proxy?.uploadApi) throw new Error("SoknadApi proxy not configured");
+    const {hostname, basePath, https, port} = digisosConfig.proxy.uploadApi;
     const path = `${basePath}/${requestPath.join("/")}`;
     const bearerToken = `${headers.get("Authorization")?.split(" ")[1]}`;
     return {hostname, path: encodeURI(path), bearerToken, https, port};

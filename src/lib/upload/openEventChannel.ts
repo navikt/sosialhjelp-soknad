@@ -5,7 +5,9 @@ import {UPLOAD_API_BASE} from "./config.ts";
 export const eventstreamUrl = (soknadId: string, vedleggType: string) =>
     `${UPLOAD_API_BASE}/status/${soknadId}/${vedleggType}` as const;
 
-const isUpdateMessage = (payload: any): payload is DocumentState => payload.eventType === "document-state";
+const isUpdateMessage = (payload: any): payload is DocumentState => {
+    return !Object.hasOwn(payload, "heartbeat");
+};
 
 export const openEventChannel = (url: string, onUpdate: (payload: Partial<DocumentState>) => void) => {
     const eventSource = new EventSource(url);
