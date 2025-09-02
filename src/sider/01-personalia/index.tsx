@@ -2,7 +2,7 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {AdresseData} from "./adresse/Adresse";
 import {BasisPersonalia} from "./BasisPersonalia";
-import {Kontonr} from "./Kontonr.tsx";
+import {Kontonummer} from "./konto/Kontonummer.tsx";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {FieldErrorsImpl} from "react-hook-form";
 import {erAktiv} from "../../lib/navEnhetStatus";
@@ -15,25 +15,34 @@ import {scrollToTop} from "../../lib/utils";
 import {useNavigate} from "react-router";
 import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
-import {mutationKey, useAdresser} from "./adresse/useAdresser.tsx";
+import {mutationKey, useAdresser} from "./adresse/useAdresser.ts";
 import {useIsMutating} from "@tanstack/react-query";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";
-import {Heading} from "@navikt/ds-react";
-import {Telefon} from "./Telefon.tsx";
+import {Telefonnummer} from "./telefon/Telefonnummer.tsx";
+import {PersonopplysningerSection} from "./PersonopplysningerSection.tsx";
+import {useKontonummer} from "./konto/useKontonummer.ts";
+import {useTelefonnummer} from "./telefon/useTelefonnummer.ts";
+import {BodyLong} from "@navikt/ds-react";
+import {NavEnhet} from "./adresse/NavEnhet.tsx";
+import {useGetBasisPersonalia} from "../../generated/new/basis-personalia-controller/basis-personalia-controller.ts";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
     const errors = !error ? undefined : ({adressefelt: {message: error}} as FieldErrorsImpl<NavEnhetDto>);
     const soknadId = useSoknadId();
-    const {navEnhet} = useAdresser();
     const mutating = useIsMutating({mutationKey: mutationKey(soknadId)});
     const isMutating = mutating > 0;
     const {t} = useTranslation("skjema");
     const navigate = useNavigate();
 
+    const basisPersonalia = useGetBasisPersonalia(soknadId);
+    const adressedata = useAdresser();
+    const telefonnummer = useTelefonnummer();
+    const kontonummer = useKontonummer();
+
     const validate = () => {
-        if (!navEnhet || !erAktiv(navEnhet)) {
+        if (!adressedata.navEnhet || !erAktiv(adressedata.navEnhet)) {
             setError("validering.adresseMangler");
             scrollToTop();
             return false;
@@ -53,8 +62,8 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
 
     // Midlertidig hack til komponentene under kan behandles som react-hook-form-inputs
     useEffect(() => {
-        if (erAktiv(navEnhet)) setError(null);
-    }, [navEnhet]);
+        if (erAktiv(adressedata.navEnhet)) setError(null);
+    }, [adressedata.navEnhet]);
 
     return (
         <SkjemaSteg>
@@ -65,21 +74,21 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
                     icon={SkjemaHeadings[1].ikon}
                 />
                 <SkjemaStegErrorSummary errors={errors} />
-                <BasisPersonalia />
-                <AdresseData />
-                <section aria-labelledby={"telefon-heading"} className={"space-y-2"}>
-                    <Heading id={"telefon-heading"} size={"small"} level={"3"}>
-                        {t("kontakt.telefon.sporsmal")}
-                    </Heading>
-                    <Telefon />
-                </section>
-
-                <section aria-labelledby={"kontonummer-heading"} className={"space-y-2"}>
-                    <Heading id={"kontonummer-heading"} size={"small"} level={"3"}>
-                        {t("kontakt.kontonummer.sporsmal")}
-                    </Heading>
-                    <Kontonr />
-                </section>
+                <PersonopplysningerSection heading={t("kontakt.system.personalia.sporsmal")}>
+                    <BasisPersonalia {...basisPersonalia} />
+                </PersonopplysningerSection>
+                <PersonopplysningerSection heading={t("soknadsmottaker.sporsmal")}>
+                    <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.tekst")}</BodyLong>
+                    <BodyLong spacing>{t("soknadsmottaker.hjelpetekst.ingress")}</BodyLong>
+                    <AdresseData {...adressedata} />
+                    {adressedata.navEnhet && <NavEnhet navEnhet={adressedata.navEnhet} />}
+                </PersonopplysningerSection>
+                <PersonopplysningerSection heading={t("kontakt.telefon.sporsmal")}>
+                    <Telefonnummer {...telefonnummer} />
+                </PersonopplysningerSection>
+                <PersonopplysningerSection heading={t("kontakt.kontonummer.sporsmal")}>
+                    <Kontonummer {...kontonummer} />
+                </PersonopplysningerSection>
                 <SkjemaStegButtons onNext={onClickNext} isNextPending={isMutating} />
             </SkjemaStegBlock>
         </SkjemaSteg>

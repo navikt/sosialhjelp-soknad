@@ -2,7 +2,7 @@ import {useRef, useTransition} from "react";
 import {useSendSoknad as useSendSoknadMutation} from "../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
 import digisosConfig from "../../lib/config";
 import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude.tsx";
-import {useAdresser} from "../01-personalia/adresse/useAdresser.tsx";
+import {useAdresser} from "../01-personalia/adresse/useAdresser.ts";
 import {useContextFeatureToggles} from "../../lib/providers/useContextFeatureToggles.ts";
 import {useRouter} from "next/navigation";
 import {getAttributesForSkjemaFullfortEvent} from "./getAttributesForSkjemaFullfortEvent.tsx";

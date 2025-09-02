@@ -1,11 +1,11 @@
 import * as React from "react";
-import {SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo.tsx";
+import {SysteminfoItem} from "../../../lib/components/systeminfo/Systeminfo.tsx";
 import {useTranslation} from "react-i18next";
 import {PhoneNumber} from "libphonenumber-js";
 import {BodyShort} from "@navikt/ds-react";
 import {formatPhoneNumber} from "./formatPhoneNumber.ts";
 
-export const TelefonShow = ({bruker, register}: {bruker?: PhoneNumber; register?: PhoneNumber}) => {
+export const TelefonnummerShow = ({bruker, register}: {bruker?: PhoneNumber; register?: PhoneNumber}) => {
     const {t} = useTranslation();
 
     // Hvis brukeren har overstyrt telefonnummer

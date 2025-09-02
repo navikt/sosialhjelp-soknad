@@ -5,7 +5,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {KontonummerInputField} from "./KontonummerInputField.tsx";
 import {KontonummerFormSchema, KontonummerFormValues} from "./KontonummerFormSchema.ts";
 
-export const KontonrEdit = ({
+export const KontonummerEdit = ({
     defaultValues,
     onSave,
     onCancel,
