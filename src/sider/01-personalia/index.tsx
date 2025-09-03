@@ -14,7 +14,6 @@ import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButto
 import {scrollToTop} from "../../lib/utils";
 import {useNavigate} from "react-router";
 import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
-import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {mutationKey, useAdresser} from "./adresse/useAdresser.tsx";
 import {useIsMutating} from "@tanstack/react-query";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
@@ -43,7 +42,6 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
 
     const onClickNext = async () => {
         if (!validate()) return;
-        await logAmplitudeSkjemaStegFullfort(1);
         window.umami.track("Skjemasteg fullført", {
             steg: "1",
             soknadId: soknadId,

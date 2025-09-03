@@ -4,7 +4,6 @@ import {useState, useTransition} from "react";
 import {NySoknadVelkomst} from "./NySoknadVelkomst.tsx";
 import {useTranslations} from "next-intl";
 import {SoknadstypeValg} from "./SoknadstypeValg.tsx";
-import {useAmplitudeSkjemaStartet} from "./useAmplitudeSkjemaStartet.tsx";
 import {useCreateSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
 import {useRouter} from "next/navigation";
 
@@ -15,13 +14,11 @@ export const NySoknadInfo = () => {
     const {mutate, isPending, error} = useCreateSoknad({
         mutation: {
             onSuccess: async (data) => {
-                await logAmplitudeStartSoknad();
                 startTransition(() => router.push(`/skjema/${data.soknadId}/1`));
                 window.umami.track("Skjema startet");
             },
         },
     });
-    const {logAmplitudeStartSoknad} = useAmplitudeSkjemaStartet();
     const t = useTranslations("NySoknadInfo");
 
     return (

@@ -3,7 +3,6 @@ import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {AvbrytSoknadModal} from "../modals/AvbrytSoknadModal.tsx";
 import {Button} from "@navikt/ds-react";
-import {logAmplitudeEvent} from "../../amplitude/Amplitude.tsx";
 import digisosConfig from "../../config.ts";
 import {FloppydiskIcon, TrashIcon} from "@navikt/aksel-icons";
 
@@ -18,7 +17,6 @@ export const SkjemaStegCancelButtons = () => {
                 variant="tertiary"
                 icon={<FloppydiskIcon aria-hidden={true} />}
                 onClick={async () => {
-                    await logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"});
                     window.location.assign(digisosConfig.minSideURL);
                 }}
             >

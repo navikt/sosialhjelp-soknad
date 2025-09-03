@@ -1,7 +1,5 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
-import {useEffect} from "react";
 import {useQueryClient} from "@tanstack/react-query";
-import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 import {
     useGetBegrunnelse,
     useUpdateBegrunnelse,
@@ -21,11 +19,6 @@ export const useBegrunnelse = () => {
 
     // Lagrer data på backend og oppdaterer lokal cache.
     const updateBegrunnelse = (begrunnelse: Omit<HarHvaSokesOmInput, "type">) => {
-        logAmplitudeEvent("begrunnelse fullført", {
-            hvaLengde: (Math.round((begrunnelse?.hvaSokesOm?.length ?? 0) / 20) - 1) * 20,
-            hvorforLengde: (Math.round((begrunnelse?.hvorforSoke?.length ?? 0) / 20) - 1) * 20,
-        });
-
         mutate({
             soknadId,
             data: {type: "HarHvaSokesOm", ...begrunnelse},
@@ -35,10 +28,6 @@ export const useBegrunnelse = () => {
     const updateCategories = (kategorier: Omit<HarKategorierInput, "type">) => {
         mutate({soknadId, data: {type: "HarKategorier", ...kategorier}});
     };
-
-    useEffect(() => {
-        logAmplitudeEvent("begrunnelse åpnet").then();
-    }, []);
 
     const begrunnelse: BegrunnelseDto | undefined = isPending
         ? {

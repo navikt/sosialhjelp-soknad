@@ -6,7 +6,6 @@ import {TrashIcon} from "@navikt/aksel-icons";
 import {useSoknadId} from "../../hooks/common/useSoknadId.ts";
 import digisosConfig from "../../config";
 import {logError} from "../../log/loggerUtils";
-import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 import {useDeleteSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
 
 export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () => void}) => {
@@ -46,7 +45,6 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
                 <Button
                     variant="primary"
                     onClick={async () => {
-                        await logAmplitudeEvent("Klikk på fortsett senere", {SoknadVersjon: "Standard"});
                         window.location.href = "/sosialhjelp/soknad/informasjon?reason=soknadDeleteModal";
                     }}
                 >

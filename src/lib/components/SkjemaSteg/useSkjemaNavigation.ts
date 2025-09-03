@@ -1,6 +1,5 @@
 import {useNavigate} from "react-router";
 import {useValideringContext} from "../../providers/useValideringContext.ts";
-import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 import {useCurrentSoknadIsKort} from "./useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../hooks/common/useSoknadId.ts";
 
@@ -20,7 +19,6 @@ export const useSkjemaNavigation = (steg: number) => {
     /**
      * Handles navigation between steps.
      * Prevents navigation in the forward direction if validation error present.
-     * Logs event to Amplitude on successful navigation.
      *
      * @throws Error if trying to navigate back from first page
      * @param newPage New page number to navigate to
@@ -41,7 +39,6 @@ export const useSkjemaNavigation = (steg: number) => {
             return;
         }
 
-        await logAmplitudeEvent("skjemasteg fullført", {steg});
         window.umami.track("Skjemasteg fullført", {
             steg: steg.toString(),
             isKortSoknad: isKortSoknad,

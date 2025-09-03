@@ -12,7 +12,6 @@ import LocalizedTextarea from "../../lib/components/LocalizedTextArea.tsx";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
-import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {UtdanningDtoStudentgrad} from "../../generated/new/model";
 import {TextPlaceholder} from "../../lib/components/animasjoner/TextPlaceholder.tsx";
 import {PropsWithChildren, useState} from "react";
@@ -23,7 +22,6 @@ const Side3 = ({children}: PropsWithChildren) => {
     const {t} = useTranslation("skjema");
     const navigate = useNavigate();
     const goto = async (page: number) => {
-        await logAmplitudeSkjemaStegFullfort(3);
         navigate(`../${page}`);
     };
 

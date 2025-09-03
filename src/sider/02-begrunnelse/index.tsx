@@ -11,7 +11,6 @@ import {useContextFeatureToggles} from "../../lib/providers/useContextFeatureTog
 import BegrunnelseForm from "./BegrunnelseForm.tsx";
 import KategorierForm from "./KategorierForm.tsx";
 import type {HarKategorierInputAllOfKategorierItem} from "../../generated/new-ssr/model";
-import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 
@@ -27,7 +26,6 @@ export const Begrunnelse = () => {
 
     const goto = async (page: number) => {
         invalidate();
-        await logAmplitudeSkjemaStegFullfort(2);
         window.umami.track("Skjemasteg fullført", {
             steg: "2",
             isKortSoknad: isKortSoknad,

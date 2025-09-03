@@ -13,7 +13,6 @@ import {ForsorgerPlikt} from "../../04-familie/ForsorgerPlikt.tsx";
 import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
-import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {useGetArbeid} from "../../../generated/new/arbeid-controller/arbeid-controller.ts";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
@@ -26,7 +25,6 @@ const ArbeidOgFamilie = () => {
     const soknadId = useSoknadId();
 
     const gotoPage = async (page: number) => {
-        await logAmplitudeSkjemaStegFullfort(3);
         window.umami.track("Skjemasteg fullført", {
             steg: "3",
             isKortSoknad: isKortSoknad,

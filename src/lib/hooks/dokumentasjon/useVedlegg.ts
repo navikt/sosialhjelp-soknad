@@ -7,7 +7,6 @@ import {isSoknadApiError} from "../../api/error/isSoknadApiError";
 import {DigisosApiErrorMap} from "../../api/error/DigisosApiErrorMap";
 import {REST_FEIL} from "../../api/error/restFeil";
 import {humanizeFilesize} from "../../../sider/08-vedlegg/lib/humanizeFilesize";
-import {logAmplitudeEvent} from "../../amplitude/Amplitude";
 import {useContextSessionInfo} from "../../providers/useContextSessionInfo.ts";
 import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {saveDokument, useDeleteDokument} from "../../../generated/new/dokument-controller/dokument-controller.ts";
@@ -70,8 +69,6 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
                     dispatch({type: "remove", dokumentId});
                     setValgtKategoriData({valgtKategorier: "UTGIFTER_ANDRE_UTGIFTER"});
 
-                    logAmplitudeEvent("dokument slettet", {opplysningType: dokumentasjonType}).then();
-
                     //brukes for å tvinge en refretch av dokumentasjon fra backend slik at ting blir rendret
                     queryClient.invalidateQueries();
                 },
@@ -111,8 +108,6 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
             setUploadPercent(null);
             dispatch({type: "insert", dokument});
             setValgtKategoriData({valgtKategorier: "UTGIFTER_ANDRE_UTGIFTER"});
-
-            await logAmplitudeEvent("dokument lastet opp", {opplysningType: dokumentasjonType});
 
             //brukes for å tvinge en refretch av dokumentasjon fra backend slik at ting blir rendret
             await queryClient.invalidateQueries();

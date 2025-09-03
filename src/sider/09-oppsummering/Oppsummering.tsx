@@ -68,7 +68,7 @@ export const Oppsummering = () => {
     const navigate = useNavigate();
     const {isLoading, data: oppsummering} = useGetOppsummering(soknadId);
 
-    const {sendSoknad, isPending, isKortSoknad, error} = useSendSoknad(oppsummering);
+    const {sendSoknad, isPending, isKortSoknad, error} = useSendSoknad();
 
     if (isLoading) return <ApplicationSpinner />;
 
@@ -81,7 +81,9 @@ export const Oppsummering = () => {
                 <SkjemaStegTitle title={t(tittel)} icon={ikon} />
 
                 <div>
-                    {oppsummering?.steg.map((steg) => <OppsummeringSteg steg={steg} key={steg.stegNr} />)}
+                    {oppsummering?.steg.map((steg) => (
+                        <OppsummeringSteg steg={steg} key={steg.stegNr} />
+                    ))}
                     <SoknadsmottakerInfoPanel />
                     {error && (
                         <Alert variant="error" className="mt-4">
