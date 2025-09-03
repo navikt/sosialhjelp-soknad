@@ -2,7 +2,6 @@ import {useTranslations} from "next-intl";
 import {addDays, formatDistance} from "date-fns";
 import {getDateFnLocale} from "../../lib/i18n/dateFns.ts";
 import {Label, LinkPanel} from "@navikt/ds-react";
-import {logAmplitudeEvent} from "../../lib/amplitude/Amplitude.tsx";
 import {LocalizedDate} from "../../lib/components/LocalizedDate.tsx";
 import React from "react";
 import {DAYS_BEFORE_DELETION} from "./PabegynteSoknader.tsx";
@@ -19,19 +18,16 @@ const getSoknadUri = (soknadId: string, isKort: boolean) =>
 export const PabegyntSoknadView = ({
     soknadId,
     sistOppdatert,
-    antallPabegynteSoknader,
     isKort,
 }: {
     soknadId: string;
     sistOppdatert: string;
-    antallPabegynteSoknader: number;
     isKort: boolean;
 }) => {
     const t = useTranslations("PabegyntSoknadView");
     return (
         <LinkPanel
             href={getSoknadUri(soknadId, isKort)}
-            onClick={() => logAmplitudeEvent("Klikk på påbegynt søknad", {antallPabegynteSoknader})}
             border
             className={"p-4! group text-[#222]! hover:text-[#000]!"}
         >

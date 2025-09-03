@@ -10,7 +10,6 @@ import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox.tsx"
 import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
-import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {useFormue} from "../../../lib/hooks/data/useFormue.tsx";
 import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {KortDokumentasjon} from "./KortDokumentasjon.tsx";
@@ -25,7 +24,6 @@ const Inntekt = () => {
     const soknadId = useSoknadId();
 
     const gotoPage = async (page: number) => {
-        await logAmplitudeSkjemaStegFullfort(4);
         window.umami.track("Skjemasteg fullført", {
             steg: "4",
             isKortSoknad: isKortSoknad,

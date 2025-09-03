@@ -52,7 +52,6 @@ export const PabegynteSoknaderPanel = () => {
                                 soknadId={soknadId}
                                 sistOppdatert={sistOppdatert}
                                 isKort={isKort}
-                                antallPabegynteSoknader={open.length}
                             />
                         );
                     })}

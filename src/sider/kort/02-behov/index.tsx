@@ -10,7 +10,6 @@ import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
 import {useNavigate} from "react-router";
 import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
-import {logAmplitudeSkjemaStegFullfort} from "../../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import {useAnalyticsContext} from "../../../lib/providers/useAnalyticsContext.ts";
 import {useBegrunnelse} from "../../../lib/hooks/data/useBegrunnelse.tsx";
 import BehovForm, {FormValues} from "./BehovForm.tsx";
@@ -44,7 +43,6 @@ const Behov = () => {
     const soknadId = useSoknadId();
 
     const goto = async (page: number) => {
-        await logAmplitudeSkjemaStegFullfort(2);
         window.umami.track("Skjemasteg fullført", {
             steg: "2",
             isKortSoknad: isKortSoknad,

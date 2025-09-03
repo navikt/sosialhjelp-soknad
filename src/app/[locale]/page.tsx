@@ -6,13 +6,11 @@ import {useContext, useEffect} from "react";
 import {DigisosContext} from "../../lib/providers/DigisosContext.ts";
 import {BASE_PATH} from "../../lib/constants.ts";
 import {configureLogger} from "@navikt/next-logger";
-import {initAmplitude} from "../../lib/amplitude/Amplitude.tsx";
 import useDecoratorLogin from "../../lib/hooks/auth/useDecoratorLogin.ts";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner.tsx";
 
 const Page = () => {
     configureLogger({basePath: BASE_PATH});
-    initAmplitude();
     const {path} = getPathPrefixIncludingLocale();
     const locale = useContext(DigisosContext)!.locale;
     useEffect(() => {

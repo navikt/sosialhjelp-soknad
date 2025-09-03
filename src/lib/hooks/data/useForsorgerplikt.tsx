@@ -1,7 +1,6 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {useEffect, useState} from "react";
-import {logAmplitudeEvent} from "../../amplitude/Amplitude";
+import {useState} from "react";
 import {
     useGetForsorgerplikt,
     useUpdateForsorgerplikt,
@@ -31,32 +30,14 @@ export const useForsorgerplikt = () => {
 
         if (harDeltBosted !== undefined) {
             oppdatert.ansvar[barnIndex].deltBosted = harDeltBosted;
-            await logAmplitudeEvent("svart på sporsmal", {
-                sporsmal: "Har barnet delt bosted?",
-                verdi: harDeltBosted ? "Ja" : "Nei",
-            });
         }
 
         if (samvaersgrad !== undefined) {
             oppdatert.ansvar[barnIndex].samvarsgrad = samvaersgrad;
-
-            await logAmplitudeEvent("svart på sporsmal", {
-                sporsmal: "Hvor mye tid tilbringer du sammen med barnet?",
-                verdi: samvaersgrad.toString(),
-            });
         }
 
         mutate({soknadId, data: oppdatert});
     };
-
-    useEffect(() => {
-        data?.ansvar
-            ?.filter(({folkeregistrertSammen}) => !folkeregistrertSammen)
-            .forEach(async (_) => {
-                const sporsmal = "Har barnet delt bosted?";
-                await logAmplitudeEvent("sporsmal ikke vist", {sporsmal});
-            });
-    }, [data]);
 
     const forsorgerplikt: ForsorgerDto | undefined = isPending
         ? {

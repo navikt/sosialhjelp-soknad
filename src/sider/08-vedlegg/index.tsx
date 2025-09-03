@@ -10,7 +10,6 @@ import {useTranslation} from "react-i18next";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
-import {logAmplitudeSkjemaStegFullfort} from "../../lib/logAmplitudeSkjemaStegFullfort.ts";
 import useGrupper from "../../lib/hooks/dokumentasjon/useGrupper.ts";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {useGetBarneutgifter} from "../../generated/new/barneutgift-controller/barneutgift-controller.ts";
@@ -52,7 +51,6 @@ export const OkonomiskeOpplysningerView = () => {
             <SkjemaStegStepper
                 page={8}
                 onStepChange={async (toPage) => {
-                    await logAmplitudeSkjemaStegFullfort(8);
                     umamiTrack();
                     navigate(`../${toPage}`);
                 }}
@@ -80,7 +78,6 @@ export const OkonomiskeOpplysningerView = () => {
                 <SkjemaStegButtons
                     onPrevious={() => navigate(`../7`)}
                     onNext={async () => {
-                        await logAmplitudeSkjemaStegFullfort(8);
                         umamiTrack();
                         navigate("../9");
                     }}
