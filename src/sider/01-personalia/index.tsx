@@ -5,7 +5,7 @@ import {BasisPersonalia} from "./BasisPersonalia";
 import {Kontonr} from "./Kontonr.tsx";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {FieldErrorsImpl} from "react-hook-form";
-import {erAktiv} from "../../lib/navEnhetStatus";
+import {erAktiv, erMidlDeaktivert} from "../../lib/navEnhetStatus";
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/SkjemaStegErrorSummary.tsx";
 import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
@@ -32,7 +32,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
     const navigate = useNavigate();
 
     const validate = () => {
-        if (!navEnhet || !erAktiv(navEnhet)) {
+        if (!navEnhet || !erAktiv(navEnhet) || erMidlDeaktivert(navEnhet)) {
             setError("validering.adresseMangler");
             scrollToTop();
             return false;
@@ -51,7 +51,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
 
     // Midlertidig hack til komponentene under kan behandles som react-hook-form-inputs
     useEffect(() => {
-        if (erAktiv(navEnhet)) setError(null);
+        if (erAktiv(navEnhet) && !erMidlDeaktivert(navEnhet)) setError(null);
     }, [navEnhet]);
 
     return (
