@@ -52,13 +52,13 @@ export const OkonomiskeOpplysningerView = () => {
             </SkjemaStegBlock>
             {grupper.map((gruppe, i) => (
                 <SkjemaStegBlock
-                    key={i}
+                    key={gruppe}
                     className={cx("pb-12", {
                         "pt-24! mt-0! rounded-t-none": i === 0,
                         "mb-0! rounded-b-none": i === grupper.length - 1,
                     })}
                 >
-                    <Gruppe key={gruppe} gruppeKey={gruppe} />
+                    <Gruppe gruppeKey={gruppe} />
                 </SkjemaStegBlock>
             ))}
             <SkjemaStegBlock className={cx("pb-12 rounded-t-none")}>

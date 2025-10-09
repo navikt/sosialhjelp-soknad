@@ -11,7 +11,10 @@ import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {saveDokument, useDeleteDokument} from "../../../generated/new/dokument-controller/dokument-controller.ts";
 import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
 import {useQueryClient} from "@tanstack/react-query";
-import {useGetForventetDokumentasjon} from "../../../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
+import {
+    getGetForventetDokumentasjonQueryKey,
+    useGetForventetDokumentasjon,
+} from "../../../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
 
 const TEN_MEGABYTE_COMPAT_FALLBACK = 10 * 1024 * 1024;
 
@@ -32,7 +35,6 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
     const {setValgtKategoriData} = useValgtKategoriContext();
 
     const queryClient = useQueryClient();
-    queryClient.invalidateQueries();
 
     /**
      * When the data on the server has changed, we automatically update the client-side list.
@@ -55,7 +57,7 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
                     setValgtKategoriData({valgtKategorier: "UTGIFTER_ANDRE_UTGIFTER"});
 
                     //brukes for å tvinge en refretch av dokumentasjon fra backend slik at ting blir rendret
-                    queryClient.invalidateQueries();
+                    return queryClient.invalidateQueries({queryKey: getGetForventetDokumentasjonQueryKey(soknadId)});
                 },
             }
         );
@@ -95,7 +97,7 @@ export const useVedlegg = (dokumentasjonType: DokumentasjonDtoType) => {
             setValgtKategoriData({valgtKategorier: "UTGIFTER_ANDRE_UTGIFTER"});
 
             //brukes for å tvinge en refretch av dokumentasjon fra backend slik at ting blir rendret
-            await queryClient.invalidateQueries();
+            await queryClient.invalidateQueries({queryKey: getGetForventetDokumentasjonQueryKey(soknadId)});
         } catch (e: any) {
             handleApiError(e);
         } finally {
