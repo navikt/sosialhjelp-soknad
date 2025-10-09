@@ -12,39 +12,26 @@ import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import useGrupper from "../../lib/hooks/dokumentasjon/useGrupper.ts";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
-import {useGetBarneutgifter} from "../../generated/new/barneutgift-controller/barneutgift-controller.ts";
-import {useGetBoutgifter} from "../../generated/new/boutgift-controller/boutgift-controller.ts";
 import {UbesvarteOpplysninger} from "./UbesvarteOpplysninger.tsx";
-import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
-
-const useHasBekreftetUtgifter = () => {
-    const soknadId = useSoknadId();
-    const {data: barneutgifterData, isLoading: isBarneutgifterLoading} = useGetBarneutgifter(soknadId);
-    const {data: boutgifterData, isLoading: isBoutgifterLoading} = useGetBoutgifter(soknadId);
-
-    return {
-        isLoading: isBarneutgifterLoading || isBoutgifterLoading,
-        hasBekreftet: barneutgifterData?.hasBekreftelse || boutgifterData?.bekreftelse,
-    };
-};
+import {useCallback} from "react";
+import useHasBekreftetUtgifter from "./useHasBekreftetUtgifter.ts";
 
 export const OkonomiskeOpplysningerView = () => {
     const {grupper, isLoading} = useGrupper();
     const {t} = useTranslation("skjema");
     const navigate = useNavigate();
-    const isKortSoknad = useCurrentSoknadIsKort();
     const {hasBekreftet, isLoading: isHasBekreftetLoading} = useHasBekreftetUtgifter();
     const soknadId = useSoknadId();
 
-    if (isLoading || isHasBekreftetLoading) return <ApplicationSpinner />;
-
-    const umamiTrack = () => {
+    const umamiTrack = useCallback(() => {
         window.umami.track("Skjemasteg fullført", {
             steg: "8",
-            isKortSoknad: isKortSoknad,
+            isKortSoknad: true,
             soknadId: soknadId,
         });
-    };
+    }, [soknadId]);
+
+    if (isLoading || isHasBekreftetLoading) return <ApplicationSpinner />;
 
     return (
         <SkjemaSteg>

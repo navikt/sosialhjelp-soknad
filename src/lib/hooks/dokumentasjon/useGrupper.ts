@@ -1,6 +1,7 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {type DokumentasjonDtoType} from "../../../generated/new/model";
 import {useGetForventetDokumentasjon} from "../../../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
+import {useMemo} from "react";
 
 export enum GruppeKey {
     Statsborgerskap = "statsborgerskap",
@@ -67,8 +68,12 @@ export const gruppeMapping = (type: DokumentasjonDtoType) => {
 const useGrupper = () => {
     const soknadId = useSoknadId();
     const {data, isLoading} = useGetForventetDokumentasjon(soknadId);
-    const grupper = Object.values(GruppeKey).filter((gruppe) =>
-        data?.dokumentasjon?.some((dok) => gruppeMapping(dok.type) === gruppe)
+    const grupper = useMemo(
+        () =>
+            Object.values(GruppeKey).filter((gruppe) =>
+                data?.dokumentasjon?.some((dok) => gruppeMapping(dok.type) === gruppe)
+            ),
+        [data]
     );
     return {grupper, isLoading};
 };

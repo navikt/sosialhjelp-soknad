@@ -22,7 +22,7 @@ const mapToDto = (variables: UpdateBarneutgifterBody | undefined): Partial<Barne
 export const useBarneutgifter = () => {
     const soknadId = useSoknadId();
     const queryClient = useQueryClient();
-    const {data, queryKey} = useGetBarneutgifter(soknadId);
+    const {data, queryKey} = useGetBarneutgifter(soknadId, {}, queryClient);
     const {mutate, variables, isPending} = useUpdateBarneutgifter({
         mutation: {onSettled: () => queryClient.invalidateQueries({queryKey})},
     });
