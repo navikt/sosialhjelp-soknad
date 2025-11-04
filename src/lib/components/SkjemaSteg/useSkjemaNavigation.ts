@@ -2,6 +2,7 @@ import {useNavigate} from "react-router";
 import {useValideringContext} from "../../providers/useValideringContext.ts";
 import {useCurrentSoknadIsKort} from "./useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../hooks/common/useSoknadId.ts";
+import {umamiTrack} from "../../../app/umami.ts";
 
 /**
  * Utility hook for handling navigation between steps, using error validation context.
@@ -39,7 +40,7 @@ export const useSkjemaNavigation = (steg: number) => {
             return;
         }
 
-        window.umami.track("Skjemasteg fullført", {
+        umamiTrack("Skjemasteg fullført", {
             steg: steg.toString(),
             isKortSoknad: isKortSoknad,
             soknadId: soknadId,

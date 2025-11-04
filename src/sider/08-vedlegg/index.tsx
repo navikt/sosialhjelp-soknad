@@ -15,6 +15,7 @@ import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {UbesvarteOpplysninger} from "./UbesvarteOpplysninger.tsx";
 import {useCallback} from "react";
 import useHasBekreftetUtgifter from "./useHasBekreftetUtgifter.ts";
+import {umamiTrack} from "../../app/umami.ts";
 
 export const OkonomiskeOpplysningerView = () => {
     const {grupper, isLoading} = useGrupper();
@@ -23,8 +24,8 @@ export const OkonomiskeOpplysningerView = () => {
     const {hasBekreftet, isLoading: isHasBekreftetLoading} = useHasBekreftetUtgifter();
     const soknadId = useSoknadId();
 
-    const umamiTrack = useCallback(() => {
-        window.umami.track("Skjemasteg fullført", {
+    const umamiTracker = useCallback(() => {
+        umamiTrack("Skjemasteg fullført", {
             steg: "8",
             isKortSoknad: true,
             soknadId: soknadId,
@@ -38,7 +39,7 @@ export const OkonomiskeOpplysningerView = () => {
             <SkjemaStegStepper
                 page={8}
                 onStepChange={async (toPage) => {
-                    umamiTrack();
+                    umamiTracker();
                     navigate(`../${toPage}`);
                 }}
             />
@@ -65,7 +66,7 @@ export const OkonomiskeOpplysningerView = () => {
                 <SkjemaStegButtons
                     onPrevious={() => navigate(`../7`)}
                     onNext={async () => {
-                        umamiTrack();
+                        umamiTracker();
                         navigate("../9");
                     }}
                 />
