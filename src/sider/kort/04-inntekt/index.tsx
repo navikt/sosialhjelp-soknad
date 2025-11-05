@@ -15,6 +15,7 @@ import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {KortDokumentasjon} from "./KortDokumentasjon.tsx";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
+import {umamiTrack} from "../../../app/umami.ts";
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
@@ -24,7 +25,7 @@ const Inntekt = () => {
     const soknadId = useSoknadId();
 
     const gotoPage = async (page: number) => {
-        window.umami.track("Skjemasteg fullført", {
+        umamiTrack("Skjemasteg fullført", {
             steg: "4",
             isKortSoknad: isKortSoknad,
             soknadId: soknadId,

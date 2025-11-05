@@ -21,13 +21,6 @@ export default async function RootLayout({children}: {children: React.ReactNode}
     return (
         <html lang={language}>
             <head>
-                <Script
-                    defer
-                    strategy="afterInteractive"
-                    src="https://cdn.nav.no/team-researchops/sporing/sporing.js"
-                    data-host-url="https://umami.nav.no"
-                    data-website-id={process.env.UMAMI_ID}
-                ></Script>
                 <title>Søknad om økonomisk sosialhjelp</title>
                 <Decorator.HeadAssets />
             </head>
