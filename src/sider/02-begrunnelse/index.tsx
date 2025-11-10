@@ -13,6 +13,7 @@ import KategorierForm from "./KategorierForm.tsx";
 import type {HarKategorierInputAllOfKategorierItem} from "../../generated/new-ssr/model";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
+import {umamiTrack} from "../../app/umami.ts";
 
 export const Begrunnelse = () => {
     const {begrunnelse, updateBegrunnelse, updateCategories, isLoading, isError, invalidate} = useBegrunnelse();
@@ -26,7 +27,7 @@ export const Begrunnelse = () => {
 
     const goto = async (page: number) => {
         invalidate();
-        window.umami.track("Skjemasteg fullført", {
+        umamiTrack("Skjemasteg fullført", {
             steg: "2",
             isKortSoknad: isKortSoknad,
             soknadId: soknadId,

@@ -18,6 +18,7 @@ import KategorierForm, {FormValues as KategorierFormValues} from "./KategorierFo
 import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
+import {umamiTrack} from "../../../app/umami.ts";
 
 const Behov = () => {
     const {t} = useTranslation("skjema");
@@ -43,7 +44,7 @@ const Behov = () => {
     const soknadId = useSoknadId();
 
     const goto = async (page: number) => {
-        window.umami.track("Skjemasteg fullført", {
+        umamiTrack("Skjemasteg fullført", {
             steg: "2",
             isKortSoknad: isKortSoknad,
             soknadId: soknadId,
