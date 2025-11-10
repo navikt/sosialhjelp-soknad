@@ -25,7 +25,7 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Build and push docker image to GAR
         uses: nais/docker-build-push@v0
