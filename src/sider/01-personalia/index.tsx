@@ -20,6 +20,7 @@ import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {NavEnhetDto} from "../../generated/new/model";
 import {Heading} from "@navikt/ds-react";
 import {Telefon} from "./Telefon.tsx";
+import {umamiTrack} from "../../app/umami.ts";
 
 export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
@@ -42,7 +43,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
 
     const onClickNext = async () => {
         if (!validate()) return;
-        window.umami.track("Skjemasteg fullført", {
+        umamiTrack("Skjemasteg fullført", {
             steg: "1",
             soknadId: soknadId,
         });

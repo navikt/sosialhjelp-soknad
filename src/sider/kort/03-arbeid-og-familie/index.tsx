@@ -16,6 +16,7 @@ import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegBu
 import {useGetArbeid} from "../../../generated/new/arbeid-controller/arbeid-controller.ts";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
+import {umamiTrack} from "../../../app/umami.ts";
 
 const ArbeidOgFamilie = () => {
     const {t} = useTranslation("skjema");
@@ -25,7 +26,7 @@ const ArbeidOgFamilie = () => {
     const soknadId = useSoknadId();
 
     const gotoPage = async (page: number) => {
-        window.umami.track("Skjemasteg fullført", {
+        umamiTrack("Skjemasteg fullført", {
             steg: "3",
             isKortSoknad: isKortSoknad,
             soknadId: soknadId,

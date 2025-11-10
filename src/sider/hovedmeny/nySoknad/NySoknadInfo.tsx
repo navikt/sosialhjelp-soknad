@@ -6,6 +6,7 @@ import {useTranslations} from "next-intl";
 import {SoknadstypeValg} from "./SoknadstypeValg.tsx";
 import {useCreateSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
 import {useRouter} from "next/navigation";
+import {umamiTrack} from "../../../app/umami.ts";
 
 export const NySoknadInfo = () => {
     const [soknadstype, setSoknadstype] = useState<"kort" | "standard" | undefined>(undefined);
@@ -15,7 +16,7 @@ export const NySoknadInfo = () => {
         mutation: {
             onSuccess: async (data) => {
                 startTransition(() => router.push(`/skjema/${data.soknadId}/1`));
-                window.umami.track("Skjema startet");
+                umamiTrack("Skjema startet");
             },
         },
     });

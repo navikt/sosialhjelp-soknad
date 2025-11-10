@@ -5,6 +5,7 @@ import {useContextFeatureToggles} from "../../lib/providers/useContextFeatureTog
 import {useRouter} from "next/navigation";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
+import {umamiTrack} from "../../app/umami.ts";
 
 export const useSendSoknad = () => {
     const router = useRouter();
@@ -17,7 +18,7 @@ export const useSendSoknad = () => {
     const {mutate, isPending, error} = useSendSoknadMutation({
         mutation: {
             onSuccess: async ({digisosId}) => {
-                window.umami.track("Skjema fullført", {
+                umamiTrack("Skjema fullført", {
                     steg: isKortSoknad ? "5" : "9",
                     isKortSoknad: isKortSoknad,
                     soknadId: soknadId,
