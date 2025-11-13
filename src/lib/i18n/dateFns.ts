@@ -1,6 +1,6 @@
 import {DEFAULT_LANGUAGE, isSupportedLanguage, SupportedLanguage} from "./common.ts";
 import {enGB, Locale, nb, nn} from "date-fns/locale";
-import {logWarning} from "../log/loggerUtils.ts";
+import {logger} from "@navikt/next-logger";
 
 const dateFnLocales: Record<SupportedLanguage, Locale> = {
     en: enGB,
@@ -17,7 +17,7 @@ export const getDateFnLocale = () => {
 
     // Ensure that the current language is supported
     if (!isSupportedLanguage(language)) {
-        logWarning(`getDateFnLocale: Unsupported language "${language}", falling back to ${DEFAULT_LANGUAGE}`);
+        logger.warn(`getDateFnLocale: Unsupported language "${language}", falling back to ${DEFAULT_LANGUAGE}`);
         return dateFnLocales[DEFAULT_LANGUAGE];
     }
 

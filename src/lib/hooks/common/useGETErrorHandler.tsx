@@ -1,29 +1,28 @@
 import {AxiosError, isAxiosError} from "axios";
-import {logError} from "../../log/loggerUtils";
+import {logger} from "@navikt/next-logger";
 
 export const handleAxiosError = (error: AxiosError) => {
     if (!error.response) {
-        logError(`GET feilet: ${error.request.path} ${error.message}`);
+        logger.error(`GET feilet: ${error.request.path} ${error.message}`);
         return;
     }
 
-    logError(`GET-feil ${error.request.path}: ${error.code} ${error.message}`);
+    logger.error(`GET-feil ${error.request.path}: ${error.code} ${error.message}`);
     window.location.href = "/sosialhjelp/soknad/feil?reason=handleAxiosError";
 };
 
 export const useGETErrorHandler = () => ({
     GETErrorHandler: <TError,>(error: TError) => {
         if (!error) {
-            logError(`useGETErrorHandler invokert med error == null, skal ikke skje?`);
+            logger.error(`useGETErrorHandler invokert med error == null, skal ikke skje?`);
             return null;
         }
 
         if (isAxiosError(error)) {
             handleAxiosError(error);
         } else {
-            logError(`Feil i expectOK: ${error}`).then(() => {
-                window.location.href = "/sosialhjelp/soknad/feil?reason=useGETErrorHandler";
-            });
+            logger.error(`Feil i expectOK: ${error}`);
+            window.location.href = "/sosialhjelp/soknad/feil?reason=useGETErrorHandler";
         }
         return null;
     },

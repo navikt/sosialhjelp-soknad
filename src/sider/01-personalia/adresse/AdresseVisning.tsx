@@ -1,8 +1,8 @@
 import Detaljeliste, {DetaljelisteElement} from "../../../lib/components/detaljeliste/Detaljeliste";
 import * as React from "react";
 import {useTranslation} from "react-i18next";
-import {logError} from "../../../lib/log/loggerUtils";
 import {AdresserDtoBrukerAdresse} from "../../../generated/new/model";
+import {logger} from "@navikt/next-logger";
 
 export const AdresseVisning = ({adresse}: {adresse?: AdresserDtoBrukerAdresse}) => {
     const {t} = useTranslation();
@@ -28,7 +28,7 @@ export const AdresseVisning = ({adresse}: {adresse?: AdresserDtoBrukerAdresse}) 
             </Detaljeliste>
         );
     } else {
-        logError(`AdresseVisning fikk hverken gateadresse eller matrikkeladresse! (type ${type})`);
+        logger.error(`AdresseVisning fikk hverken gateadresse eller matrikkeladresse! (type ${type})`);
     }
 
     return null;
