@@ -1,7 +1,7 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {useGetBoutgifter, useUpdateBoutgifter} from "../../../generated/new/boutgift-controller/boutgift-controller.ts";
-import {BoutgifterDto, UpdateBoutgifterBody} from "../../../generated/new/model/index.ts";
+import {BoutgifterDto, UpdateBoutgifterBody} from "../../../generated/new/model";
 
 const mapToDto = (
     variables?: UpdateBoutgifterBody,
