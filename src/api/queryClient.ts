@@ -1,38 +1,16 @@
 import {isServer, QueryClient} from "@tanstack/react-query";
-import {getGetForventetDokumentasjonQueryKey} from "../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
-import {getUpdateOkonomiskOpplysningMutationOptions} from "../generated/new/okonomiske-opplysninger-controller/okonomiske-opplysninger-controller.ts";
-import {
-    getCreateSoknadMutationOptions,
-    getSendSoknadMutationOptions,
-} from "../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
-import {getKonverterVedleggMutationOptions} from "../generated/file-converter-controller/file-converter-controller.ts";
-import {getUpdateAdresserMutationOptions} from "../generated/new/adresse-controller/adresse-controller.ts";
-
-const mutationKeys: string[] = [
-    getUpdateOkonomiskOpplysningMutationOptions().mutationKey,
-    getSendSoknadMutationOptions().mutationKey,
-    getKonverterVedleggMutationOptions().mutationKey,
-    getCreateSoknadMutationOptions().mutationKey,
-    getUpdateAdresserMutationOptions().mutationKey,
-].flat() as string[];
+import {invalidateForventetDokumentasjonQuery} from "./utils.ts";
 
 function makeQueryClient() {
     return new QueryClient({
         defaultOptions: {
             mutations: {
-                onSuccess: (_data, variables: unknown | undefined, _, context): Promise<void> | undefined => {
-                    // Invalidate forventetDokumentasjon on any mutation that adds or removes dokumentasjon
-                    if (
-                        !mutationKeys.includes(context.mutationKey?.[0] as string) &&
-                        variables &&
-                        typeof variables === "object" &&
-                        "soknadId" in variables
-                    ) {
-                        return context.client.invalidateQueries({
-                            queryKey: getGetForventetDokumentasjonQueryKey(variables.soknadId as string),
-                        });
-                    }
-                },
+                onSuccess: (
+                    _data,
+                    variables: unknown | undefined,
+                    _onMutateResult,
+                    context
+                ): Promise<void> | undefined => invalidateForventetDokumentasjonQuery(context, variables),
             },
             queries: {
                 staleTime: 60 * 1000,
