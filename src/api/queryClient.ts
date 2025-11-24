@@ -1,8 +1,17 @@
 import {isServer, QueryClient} from "@tanstack/react-query";
+import {invalidateForventetDokumentasjonQuery} from "./utils.ts";
 
 function makeQueryClient() {
     return new QueryClient({
         defaultOptions: {
+            mutations: {
+                onSuccess: (
+                    _data,
+                    variables: unknown | undefined,
+                    _onMutateResult,
+                    context
+                ): Promise<void> | undefined => invalidateForventetDokumentasjonQuery(context, variables),
+            },
             queries: {
                 staleTime: 60 * 1000,
             },

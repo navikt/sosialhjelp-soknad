@@ -17,7 +17,7 @@ jobs:
         env:
             NEXT_PUBLIC_DIGISOS_ENV: dev # tester er pr. nå avhengig av denne
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
 
             - uses: actions/setup-node@v4
               with:
