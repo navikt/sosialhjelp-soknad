@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {BACKEND_FRONTEND_KEY_MAP} from "./BACKEND_FRONTEND_KEY_MAP";
-import {logWarning} from "../../../lib/log/loggerUtils";
+import {logger} from "@navikt/next-logger";
 
 interface UseBackendTranslationResult {
     /**
@@ -33,7 +33,9 @@ export const useBackendTranslation = (): UseBackendTranslationResult => {
         }
 
         if (!i18n.exists(languageKey)) {
-            logWarning(`i18n key "${languageKey}" not found in frontend i18n, is BACKEND_FRONTEND_KEY_MAP up to date?`);
+            logger.warn(
+                `i18n key "${languageKey}" not found in frontend i18n, is BACKEND_FRONTEND_KEY_MAP up to date?`
+            );
             return "";
         }
 

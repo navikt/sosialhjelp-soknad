@@ -1,6 +1,6 @@
 import {format, isValid} from "date-fns";
-import {logWarning} from "../log/loggerUtils";
 import {getDateFnLocale} from "../i18n/dateFns.ts";
+import {logger} from "@navikt/next-logger";
 
 /**
  * Formats a date to the current language (i18next.language)
@@ -15,7 +15,7 @@ export const LocalizedDate = ({date}: {date: Date | string | null | undefined}):
     const dato = typeof date === "string" ? new Date(date) : date;
 
     if (!isValid(dato)) {
-        logWarning(`formatDato: Invalid date: ${date}`);
+        logger.warn(`formatDato: Invalid date: ${date}`);
         return date.toString();
     }
 
