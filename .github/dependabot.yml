@@ -1,27 +1,29 @@
 version: 2
 updates:
-- package-ecosystem: "npm"
-  directory: "/"
-  schedule:
-    interval: daily
-  commit-message:
-    prefix: "[npm]"
+    - package-ecosystem: "npm"
+      directory: "/"
+      cooldown:
+          default-days: 5
+      schedule:
+          interval: daily
+      commit-message:
+          prefix: "[npm]"
 
-- package-ecosystem: "github-actions"
-  directory: "/"
-  schedule:
-    interval: daily
-  commit-message:
-    prefix: "[gha]"
+    - package-ecosystem: "github-actions"
+      directory: "/"
+      schedule:
+          interval: daily
+      commit-message:
+          prefix: "[gha]"
 
-- package-ecosystem: "docker"
-  directory: "/"
-  schedule:
-    interval: daily
-  commit-message:
-    prefix: "[docker]"
-  # We had stability issues with Next 14 and Node 22.
-  # When we do make the jump, please remove this kommentar.
-  ignore:
-    - dependency-name: "node"
-      versions: [ ">=22.0.0" ]
+    - package-ecosystem: "docker"
+      directory: "/"
+      schedule:
+          interval: daily
+      commit-message:
+          prefix: "[docker]"
+      # We had stability issues with Next 14 and Node 22.
+      # When we do make the jump, please remove this kommentar.
+      ignore:
+          - dependency-name: "node"
+            versions: [">=22.0.0"]
