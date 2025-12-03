@@ -38,7 +38,7 @@ Vi bruker Github sitt package registry for npm pakker, siden flere av Nav sine p
 For å kunne kjøre `pnpm install` lokalt må du logge inn mot Github package registry:
 
 - Lag/forny access token med repo og read:packages rettigheter i github ( under developer settings). husk enable sso
-- Login på npm med `npm login --auth-type=legacy --scope=@navikt --registry=https://npm.pkg.github.com` og benytt github brukernavn, epost og tokenet du nettopp genererte
+- Login på npm med `pnpm login --auth-type=legacy --scope=@navikt --registry=https://npm.pkg.github.com` og benytt github brukernavn, epost og tokenet du nettopp genererte
 
 ### Frontend
 
@@ -55,7 +55,7 @@ pnpm test # Kjør enhetstestene
 En snarvei for oppgradering av avhengigheter er:
 
 ```shell
-npm run checkUpdates
+pnpm run checkUpdates
 ```
 
 Eventuelle unntak (f. eks. når man er låst til en tidligere major) kan konfigureres i `.ncurc.js`.
