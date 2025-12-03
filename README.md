@@ -35,19 +35,19 @@ docker-compose up \
 
 Vi bruker Github sitt package registry for npm pakker, siden flere av Nav sine pakker kun blir publisert her.
 
-For å kunne kjøre `npm install` lokalt må du logge inn mot Github package registry:
+For å kunne kjøre `pnpm install` lokalt må du logge inn mot Github package registry:
 
--   Lag/forny access token med repo og read:packages rettigheter i github ( under developer settings). husk enable sso
--   Login på npm med `npm login --auth-type=legacy --scope=@navikt --registry=https://npm.pkg.github.com` og benytt github brukernavn, epost og tokenet du nettopp genererte
+- Lag/forny access token med repo og read:packages rettigheter i github ( under developer settings). husk enable sso
+- Login på npm med `npm login --auth-type=legacy --scope=@navikt --registry=https://npm.pkg.github.com` og benytt github brukernavn, epost og tokenet du nettopp genererte
 
 ### Frontend
 
 ```shell
-npm --include=dev install # Hent avhengigheter
-npm run fetch-api # Hent OpenAPI definition for soknad-api fra mock-miljø og lagrer i soknad-api.json
-npm run orval # Genererer API-kode
-npm run dev # Bygger less og starter dev-server
-npm test # Kjør enhetstestene
+pnpm --include=dev install # Hent avhengigheter
+pnpm run fetch-api # Hent OpenAPI definition for soknad-api fra mock-miljø og lagrer i soknad-api.json
+pnpm run orval # Genererer API-kode
+pnpm run dev # Bygger less og starter dev-server
+pnpm test # Kjør enhetstestene
 ```
 
 ## Oppgradering av avhengigheter
@@ -64,8 +64,8 @@ Eventuelle unntak (f. eks. når man er låst til en tidligere major) kan konfigu
 
 Image bygges vha Github Actions,
 
--   dev: https://github.com/navikt/sosialhjelp-soknad/actions/workflows/build.yml
--   prod: https://github.com/navikt/sosialhjelp-soknad/actions/workflows/build_prod_image.yml
+- dev: https://github.com/navikt/sosialhjelp-soknad/actions/workflows/build.yml
+- prod: https://github.com/navikt/sosialhjelp-soknad/actions/workflows/build_prod_image.yml
 
 Siden appen ikke kjører på nais lengre, se [ikke-nais deploy](https://teamdigisos.intern.nav.no/docs/utviklerdokumentasjon/ikke-nais%20deploy) for informasjon om deploy.
 
@@ -115,7 +115,7 @@ Når disse ressursene først er opprettet og konfigurert, trengs ingen fornying 
 
 Spørsmål knyttet til koden eller prosjektet kan rettes mot:
 
--   https://github.com/orgs/navikt/teams/digisos
+- https://github.com/orgs/navikt/teams/digisos
 
 ### For Nav-ansatte
 
@@ -133,6 +133,6 @@ Detaljer rundt dette ligger i `package.json`. Konfigurasjon av prettier ligger i
 
 Dersom du i tillegg ønsker å sette opp formatering av kode i IntelliJ slik at koden blir formatert før du committer kan det gjøres slik:
 
--   Installer Prettier plugin i IntelliJ
--   Trykk ⌥⇧⌘P for å formatere kode
--   Optional: Sette opp filewatcher og automatisk formatering. Se her `https://prettier.io/docs/en/webstorm.html#running-prettier-on-save-using-file-watcher`
+- Installer Prettier plugin i IntelliJ
+- Trykk ⌥⇧⌘P for å formatere kode
+- Optional: Sette opp filewatcher og automatisk formatering. Se her `https://prettier.io/docs/en/webstorm.html#running-prettier-on-save-using-file-watcher`

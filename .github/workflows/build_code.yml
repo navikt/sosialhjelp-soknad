@@ -40,10 +40,10 @@ jobs:
                   ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
             - name: "Run orval"
-              run: npm run orval
+              run: pnpm run orval
 
             - name: "Build project"
-              run: npm run build
+              run: pnpm run build
 
             - name: "Run tests"
-              run: npm install @rollup/rollup-linux-x64-gnu && npm run test
+              run: pnpm install @rollup/rollup-linux-x64-gnu && pnpm run test
