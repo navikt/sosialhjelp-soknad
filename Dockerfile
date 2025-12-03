@@ -39,7 +39,7 @@ COPY . .
 
 RUN pnpm run orval
 RUN pnpm run build
-RUN pnpm prune --production
+RUN pnpm prune --prod --ignore-scripts
 
 
 FROM gcr.io/distroless/nodejs18-debian12 AS runner
