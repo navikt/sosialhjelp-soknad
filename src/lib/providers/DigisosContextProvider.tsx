@@ -23,9 +23,7 @@ export const DigisosContextProvider = ({children, locale}: Props) => {
         }));
     };
 
-    const {data: sessionInfo} = useGetSessionInfo({
-        query: {retry: 0, throwOnError: (error) => error.response?.status === 403},
-    });
+    const {data: sessionInfo} = useGetSessionInfo({query: {retry: 0}});
     const {data: featureToggles} = useFeatureToggles({query: {retry: 0}});
 
     if (!sessionInfo || !featureToggles) return null;
