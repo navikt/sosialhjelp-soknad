@@ -7,6 +7,7 @@
         "@fremtind/jkl-formatters-util": "^6.0.56",
         "@fremtind/jkl-validators-util": "^3.0.3",
         "@grafana/faro-react": "^1.19.0",
+        "@grafana/faro-web-tracing": "^1.19.0",
         "@hookform/error-message": "^2.0.1",
         "@hookform/resolvers": "^5.2.2",
         "@navikt/aksel-icons": "^7.32.1",
@@ -42,6 +43,7 @@
         "next": "^15.5.4",
         "next-intl": "^4.3.11",
         "next-logger": "^5.0.2",
+        "pdfjs-dist": "^5.3.93",
         "pino": "^9.9.0",
         "react": "^19.2.0",
         "react-collapse": "^5.1.1",
@@ -108,7 +110,8 @@
         "fetch-new-api": "curl -o ./soknad-api-new.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs/new && npx --yes openapi-format soknad-api-new.json -o soknad-api-new.json",
         "fetch-api": "npm run fetch-old-api && npm run fetch-new-api",
         "orval": "rm -rf ./src/generated & orval --prettier",
-        "lint": "eslint"
+        "lint": "eslint",
+        "preinstall": "npx -y only-allow pnpm"
     },
     "browserslist": {
         "production": [
