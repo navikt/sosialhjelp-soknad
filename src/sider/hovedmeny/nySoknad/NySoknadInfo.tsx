@@ -20,6 +20,7 @@ export const NySoknadInfo = () => {
             },
         },
     });
+
     const t = useTranslations("NySoknadInfo");
 
     return (
