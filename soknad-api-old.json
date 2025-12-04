@@ -891,6 +891,18 @@
           "type"
         ]
       },
+      "UnauthorizedMelding": {
+        "type": "object",
+        "properties": {
+          "loginUrl": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "loginUrl"
+        ]
+      },
       "SoknadApiError": {
         "type": "object",
         "properties": {
@@ -916,7 +928,8 @@
               "DokumentUploadFileEncrypted",
               "DokumentUploadPossibleVirus",
               "SoknadUpdateConflict",
-              "PdlKallFeilet"
+              "PdlKallFeilet",
+              "SokerUnder18"
             ]
           },
           "responseType": {
@@ -938,18 +951,6 @@
         "required": [
           "error",
           "responseType"
-        ]
-      },
-      "UnauthorizedMelding": {
-        "type": "object",
-        "properties": {
-          "loginUrl": {
-            "type": "string",
-            "format": "uri"
-          }
-        },
-        "required": [
-          "loginUrl"
         ]
       },
       "Logg": {
