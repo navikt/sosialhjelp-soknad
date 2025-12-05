@@ -49,6 +49,7 @@ jobs:
           secrets: |
             NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
           tags: ghcr.io/${{ github.repository }}-e2e:${{ github.sha }}
+
     outputs:
       image: ${{ steps.playwright-build.outputs.image }}
 
@@ -58,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       app:
-        image: ${{ needs.build-for-playwright.outputs.image }}
+        image: ghcr.io/${{ github.repository }}-e2e:${{ github.sha }}
         ports: [ "3001:8080" ]
     strategy:
       fail-fast: false
