@@ -71,9 +71,11 @@ jobs:
       - uses: actions/setup-node@v6
         id: setup-node
         with:
+          registry-url: 'https://npm.pkg.github.com'
           node-version: 24
       # We specifically do not use the yarn cache here, because installing the playwright e2e workspace is actually faster without cache
       - name: Install dependencies
+        shell: bash
         run: |
           pnpm install --prefer-offline --frozen-lockfile
         env:
