@@ -9,7 +9,7 @@ export default defineConfig({
     reporter: process.env.CI ? "blob" : "html",
     timeout: 30 * 1000,
     use: {
-        baseURL: "http://localhost:3001",
+        baseURL: "http://app:8080",
         trace: "on-first-retry",
     },
 
@@ -33,7 +33,7 @@ export default defineConfig({
         : {
               command: "pnpm run dev",
               url: "http://localhost:3001/sosialhjelp/soknad/internal/isAlive",
-              reuseExistingServer: false,
+              reuseExistingServer: !!process.env.CI,
               timeout: 120 * 1000,
           },
 });
