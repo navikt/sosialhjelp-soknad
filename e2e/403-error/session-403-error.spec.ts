@@ -42,7 +42,7 @@ test.describe("Session Info 403 Error", () => {
 
         await page.goto("/sosialhjelp/soknad");
 
-        await expect(page.getByRole("heading")).toBeVisible({timeout: 10000});
+        await expect(page.getByRole("heading", {name: /teknisk feil/})).toBeVisible({timeout: 10000});
 
         const errorMessage = page.getByText(
             /Du kan dessverre ikke bruke den digitale søknaden om økonomisk sosialhjelp/
