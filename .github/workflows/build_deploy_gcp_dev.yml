@@ -50,9 +50,6 @@ jobs:
             NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
           tags: ghcr.io/${{ github.repository }}-e2e:${{ github.sha }}
 
-    outputs:
-      image: ${{ steps.playwright-build.outputs.image }}
-
   run-playwright:
     needs: [ build-for-playwright ]
     name: Playwright shard ${{ matrix.shardIndex }}
