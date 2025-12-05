@@ -73,6 +73,11 @@ jobs:
         with:
           node-version: 24
       # We specifically do not use the yarn cache here, because installing the playwright e2e workspace is actually faster without cache
+      - name: Install dependencies
+        run: |
+          pnpm install --prefer-offline --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - uses: navikt/sosialhjelp-ci/actions/playwright/run@playwright
         with:
           shardIndex: ${{ matrix.shardIndex }}
