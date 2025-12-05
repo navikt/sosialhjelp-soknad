@@ -74,7 +74,7 @@ export const axiosInstance = <T>(
                 if (status === 403 && errorType === "NoAccess") {
                     throw e;
                 }
-                window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
+                window.location.href = window.origin + `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
                 return neverResolves();
             }
 
