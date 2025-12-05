@@ -2,7 +2,7 @@
 # - .nvmrc
 # - .github/dependabot.yml (fjern versjonspin for docker)
 # - .ncurc.js (automatiske oppdateringer for node-types)
-FROM node:22-alpine AS dependencies
+FROM node:24-alpine AS dependencies
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -18,7 +18,7 @@ ENV CI=true
 RUN --mount=type=secret,id=NODE_AUTH_TOKEN NODE_AUTH_TOKEN=$(cat /run/secrets/NODE_AUTH_TOKEN) \
     pnpm i --prefer-offline --frozen-lockfile
 
-FROM node:22-alpine AS builder
+FROM node:24-alpine AS builder
 
 ARG DIGISOS_ENV
 ARG LOGIN_SESSION_API_URL
@@ -42,7 +42,7 @@ RUN pnpm run build
 RUN pnpm prune --prod --ignore-scripts
 
 
-FROM gcr.io/distroless/nodejs18-debian12 AS runner
+FROM gcr.io/distroless/nodejs24-debian12 AS runner
 
 ARG DIGISOS_ENV
 
