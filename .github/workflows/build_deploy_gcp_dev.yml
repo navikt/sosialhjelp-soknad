@@ -21,6 +21,66 @@ on:
       - "main"
 
 jobs:
+  build-for-playwright:
+    name: Build for playwright
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          build-args: |
+            DIGISOS_ENV=e2e
+            LOGIN_SESSION_API_URL=""
+            LOGOUT_URL=""
+          secrets: |
+            NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
+          tags: ghcr.io/${{ github.repository }}-e2e:${{ github.sha }}
+    outputs:
+      image: ${{ steps.playwright-build.outputs.image }}
+
+  run-playwright:
+    needs: [ build-for-playwright ]
+    name: Playwright shard ${{ matrix.shardIndex }}
+    runs-on: ubuntu-latest
+    services:
+      app:
+        image: ${{ needs.build-for-playwright.outputs.image }}
+        ports: [ "3001:3001" ]
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [ 1, 2, 3, 4, 5, 6, 7, 8 ]
+        shardTotal: [ 8 ]
+    steps:
+      - uses: actions/checkout@v5
+      - run: corepack enable
+      - uses: actions/setup-node@v6
+        id: setup-node
+        with:
+          node-version: 24
+      # We specifically do not use the yarn cache here, because installing the playwright e2e workspace is actually faster without cache
+      - uses: navikt/sosialhjelp-ci/actions/playwright/run@playwright
+        with:
+          shardIndex: ${{ matrix.shardIndex }}
+          shardTotal: ${{ matrix.shardTotal }}
+
+  playwright-report:
+    name: Playwright report
+    if: ${{ !cancelled() }}
+    needs: [ run-playwright ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: navikt/sosialhjelp-ci/actions/playwright/report@playwright
   prepare:
     runs-on: ubuntu-latest
     outputs:
