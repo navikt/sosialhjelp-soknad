@@ -1,4 +1,4 @@
-export const DigisosEnvironments = ["localhost", "mock", "prod", "preprod", "dev"] as const;
+export const DigisosEnvironments = ["localhost", "mock", "prod", "preprod", "dev", "e2e"] as const;
 export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 
 type FeatureFlags = {
@@ -54,6 +54,35 @@ const isValidDigisosEnvironment = (miljo: unknown): miljo is DigisosEnvironment 
     DigisosEnvironments.includes(miljo as DigisosEnvironment);
 
 const configMap: Record<DigisosEnvironment, SoknadConfig> = {
+    e2e: {
+        featureFlags: {
+            nyOppsummering: false,
+            oppsummeringNavEnhet: false,
+            soknadstypeValg: true,
+            publicFacingTestVersion: true,
+        },
+        dekorator: {
+            env: "dev",
+            serviceDiscovery: false,
+        },
+        logLocally: true,
+        showDevPanel: true,
+        withCredentials: true,
+        proxy: {
+            hostname: "localhost",
+            basePath: "/sosialhjelp/soknad-api",
+            https: false,
+            port: "8181",
+        },
+        driftsmeldingUrl: "http://localhost:3005/sosialhjelp/driftsmeldinger/api",
+        baseURL: "http://localhost:3001/sosialhjelp/soknad/api/soknad-api/",
+        innsynURL: "http://localhost:3002/sosialhjelp/innsyn",
+        minSideURL: "https://www.nav.no/minside/",
+        dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
+        // faro: {
+        //     url: "http://localhost:12347/collect",
+        // },
+    },
     localhost: {
         featureFlags: {
             nyOppsummering: false,

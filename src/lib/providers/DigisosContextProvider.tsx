@@ -23,10 +23,10 @@ export const DigisosContextProvider = ({children, locale}: Props) => {
         }));
     };
 
-    const {data: sessionInfo} = useGetSessionInfo({query: {retry: 0}});
+    const {data: sessionInfo} = useGetSessionInfo({query: {retry: 0, throwOnError: true}});
     const {data: featureToggles} = useFeatureToggles({query: {retry: 0}});
 
-    if (!sessionInfo || !featureToggles) return null;
+    if (!sessionInfo) return null;
 
     return (
         <DigisosContext.Provider

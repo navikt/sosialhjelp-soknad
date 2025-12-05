@@ -15,6 +15,8 @@ export const useSendSoknad = () => {
     const deletionDateRef = useRef("");
     const soknadId = useSoknadId();
 
+    const featureFlagData = useContextFeatureToggles();
+
     const {mutate, isPending, error} = useSendSoknadMutation({
         mutation: {
             onSuccess: async ({digisosId}) => {
@@ -34,12 +36,9 @@ export const useSendSoknad = () => {
         },
     });
 
-    const featureFlagData = useContextFeatureToggles();
-
     return {
         sendSoknad: mutate,
         isPending: isPending || isTransitioning,
-        featureFlagData,
         isKortSoknad,
         error,
     };
