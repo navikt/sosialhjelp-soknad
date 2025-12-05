@@ -75,7 +75,7 @@ export const axiosInstance = <T>(
                 if (status === 403 && (errorType === "NoAccess" || errorType === "SokerUnder18")) {
                     throw e;
                 }
-                window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
+                window.location.href = window.origin + `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
                 return neverResolves();
             }
 
