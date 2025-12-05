@@ -43,7 +43,7 @@ For å kunne kjøre `pnpm install` lokalt må du logge inn mot Github package re
 ### Frontend
 
 ```shell
-pnpm --include=dev install # Hent avhengigheter
+pnpm install # Hent avhengigheter
 pnpm run fetch-api # Hent OpenAPI definition for soknad-api fra mock-miljø og lagrer i soknad-api.json
 pnpm run orval # Genererer API-kode
 pnpm run dev # Bygger less og starter dev-server
