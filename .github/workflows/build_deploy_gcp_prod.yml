@@ -8,6 +8,11 @@ on:
     branches:
       - "main"
 
+permissions:
+  contents: read
+  id-token: write
+  packages: write
+
 jobs:
   build-for-playwright:
     name: Build for playwright
@@ -82,10 +87,6 @@ jobs:
             logout-url: "https://www.nav.no/sosialhjelp/soknad/oauth2/logout"
 
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-
     steps:
       - uses: actions/checkout@v6
 
