@@ -27,10 +27,12 @@ export default defineConfig({
         },
     ],
 
-    webServer: {
-        command: "pnpm run dev",
-        url: "http://localhost:3001/sosialhjelp/soknad/internal/isAlive",
-        reuseExistingServer: !!process.env.CI,
-        timeout: 120 * 1000,
-    },
+    webServer: process.env.CI
+        ? undefined
+        : {
+              command: "pnpm run dev",
+              url: "http://localhost:3001/sosialhjelp/soknad/internal/isAlive",
+              reuseExistingServer: false,
+              timeout: 120 * 1000,
+          },
 });
