@@ -47,7 +47,7 @@ jobs:
     services:
       app:
         image: ghcr.io/${{ github.repository }}-e2e:${{ github.sha }}
-        ports: [ "3001:3001" ]
+        ports: [ "3001:8080" ]
     strategy:
       fail-fast: false
       matrix:
