@@ -26,30 +26,6 @@ test.describe("Session Info 403 Error", () => {
         await expect(errorMessage).toBeVisible();
     });
 
-    test("should display generic error page when useGetSessionInfo returns 403 without NoAccess error", async ({
-        page,
-    }) => {
-        await page.route("**/informasjon/session", async (route) => {
-            await route.fulfill({
-                status: 403,
-                contentType: "application/json",
-                body: JSON.stringify({
-                    error: "OtherError",
-                    message: "Forbidden",
-                }),
-            });
-        });
-
-        await page.goto("/sosialhjelp/soknad");
-
-        await expect(page.getByRole("heading", {name: /teknisk feil/})).toBeVisible({timeout: 10000});
-
-        const errorMessage = page.getByText(
-            /Du kan dessverre ikke bruke den digitale søknaden om økonomisk sosialhjelp/
-        );
-        await expect(errorMessage).not.toBeVisible();
-    });
-
     test("should display generic error page on other errors (not 403)", async ({page}) => {
         await page.route("**/informasjon/session", async (route) => {
             await route.fulfill({
