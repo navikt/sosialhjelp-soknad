@@ -2,7 +2,7 @@ import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "ax
 import digisosConfig from "../config";
 import {isLoginError} from "./error/isLoginError";
 import {logger} from "@navikt/next-logger";
-import {SoknadApiError, SoknadApiErrorError} from "../../generated/model";
+import {SoknadApiError} from "../../generated/model";
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL: digisosConfig.baseURL,
@@ -70,17 +70,11 @@ export const axiosInstance = <T>(
             const {status, data} = response;
 
             if ([403, 404, 410].includes(status)) {
-                const errorType = (data as SoknadApiError).error as SoknadApiErrorError;
+                const errorType = (data as SoknadApiError).error;
 
-                if (status === 403) {
-                    if (errorType === SoknadApiErrorError.NoAccess || errorType === SoknadApiErrorError.SokerUnder18) {
-                        throw e;
-                    }
+                if (status === 403 && (errorType === "NoAccess" || errorType === "SokerUnder18")) {
+                    throw e;
                 }
-
-                // if (status === 403 && errorType === SoknadApiErrorError.NoAccess) {
-                //     throw e;
-                // }
                 window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
                 return neverResolves();
             }

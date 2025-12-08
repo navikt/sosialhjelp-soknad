@@ -870,39 +870,6 @@
   },
   "components": {
     "schemas": {
-      "InnsendingFeiletError": {
-        "type": "object",
-        "properties": {
-          "deletionDate": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
-          }
-        },
-        "required": [
-          "deletionDate",
-          "type"
-        ]
-      },
-      "UnauthorizedMelding": {
-        "type": "object",
-        "properties": {
-          "loginUrl": {
-            "type": "string",
-            "format": "uri"
-          }
-        },
-        "required": [
-          "loginUrl"
-        ]
-      },
       "SoknadApiError": {
         "type": "object",
         "properties": {
@@ -951,6 +918,39 @@
         "required": [
           "error",
           "responseType"
+        ]
+      },
+      "UnauthorizedMelding": {
+        "type": "object",
+        "properties": {
+          "loginUrl": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "loginUrl"
+        ]
+      },
+      "InnsendingFeiletError": {
+        "type": "object",
+        "properties": {
+          "deletionDate": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
+          }
+        },
+        "required": [
+          "deletionDate",
+          "type"
         ]
       },
       "Logg": {
