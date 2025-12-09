@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {Alert, Heading, Link} from "@navikt/ds-react";
+import {Alert, BodyLong, Heading, Link, VStack} from "@navikt/ds-react";
 import {AppHeader} from "../../lib/components/appHeader/AppHeader";
 import {useTranslations} from "next-intl";
 
@@ -16,13 +16,26 @@ export const SokerUnder18Feilmelding = () => {
                     <Heading level={"2"} size={"medium"}>
                         {t("title")}
                     </Heading>
-                    {t.rich("text", {
-                        lenke: (chunks) => (
-                            <Link href="https://www.nav.no/person/personopplysninger/#ditt-nav-kontor" target="_blank">
-                                {chunks}
-                            </Link>
-                        ),
-                    })}
+                    <VStack gap="5">
+                        <BodyLong>{t("text1")}</BodyLong>
+                        <BodyLong>
+                            {t.rich("text2", {
+                                lenke: (chunks) => (
+                                    <Link
+                                        href="https://www.nav.no/person/personopplysninger/#ditt-nav-kontor"
+                                        target="_blank"
+                                    >
+                                        {chunks}
+                                    </Link>
+                                ),
+                                phone: (chunks) => (
+                                    <Link href="tel:+4755553333" inlineText>
+                                        {chunks}
+                                    </Link>
+                                ),
+                            })}
+                        </BodyLong>
+                    </VStack>
                 </Alert>
             </div>
         </div>

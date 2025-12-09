@@ -52,7 +52,8 @@
   },
   "SokerUnder18Feilmelding": {
     "title": "For å søke om økonomisk sosialhjelp må du ha fylt 18 år",
-    "text": "Er du under 18 år, må du ha samtykke av dine foresatte for å søke om økonomisk sosialhjelp.\n\n Vil du vite mer om samtykke eller har spørsmål om hvordan dette fungerer, kan du kontakte <lenke>ditt Nav-kontor</lenke> der du bor eller oppholder deg, eller ringe oss på <lenke>55 55 33 33</lenke>."
+    "text1": "Er du under 18 år, må du ha samtykke av dine foresatte for å søke om økonomisk sosialhjelp.",
+    "text2": "Vil du vite mer om samtykke eller har spørsmål om hvordan dette fungerer, kan du kontakte <lenke>ditt Nav-kontor</lenke> der du bor eller oppholder deg, eller ringe oss på <phone>55 55 33 33</phone>."
   },
   "PersonbeskyttelseFeilmelding": {
     "title": "Beklager",

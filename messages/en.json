@@ -52,7 +52,8 @@
   },
   "SokerUnder18Feilmelding": {
     "title": "To apply for financial assistance, you must be at least 18 years old.",
-    "text": "If you are under 18, you must have consent from your guardians to apply for financial social assistance.\n \nIf you want to know more about consent or have questions about how this works, you can contact <lenke>your local Nav office</lenke> where you live or stay, or call us at <lenke>55 55 33 33</lenke>."
+    "text1": "If you are under 18, you must have consent from your guardians to apply for financial social assistance.",
+    "text2": "If you want to know more about consent or have questions about how this works, you can contact <lenke>your local Nav office</lenke> where you live or stay, or call us at <phone>55 55 33 33</phone>."
   },
   "PersonbeskyttelseFeilmelding": {
     "title": "Sorry",
