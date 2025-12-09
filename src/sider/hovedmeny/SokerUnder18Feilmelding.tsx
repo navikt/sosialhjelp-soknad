@@ -24,6 +24,7 @@ export const SokerUnder18Feilmelding = () => {
                                     <Link
                                         href="https://www.nav.no/person/personopplysninger/#ditt-nav-kontor"
                                         target="_blank"
+                                        inlineText
                                     >
                                         {chunks}
                                     </Link>
