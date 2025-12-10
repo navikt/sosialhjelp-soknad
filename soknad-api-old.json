@@ -870,27 +870,6 @@
   },
   "components": {
     "schemas": {
-      "InnsendingFeiletError": {
-        "type": "object",
-        "properties": {
-          "deletionDate": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
-          }
-        },
-        "required": [
-          "deletionDate",
-          "type"
-        ]
-      },
       "SoknadApiError": {
         "type": "object",
         "properties": {
@@ -916,7 +895,8 @@
               "DokumentUploadFileEncrypted",
               "DokumentUploadPossibleVirus",
               "SoknadUpdateConflict",
-              "PdlKallFeilet"
+              "PdlKallFeilet",
+              "SokerUnder18"
             ]
           },
           "responseType": {
@@ -950,6 +930,27 @@
         },
         "required": [
           "loginUrl"
+        ]
+      },
+      "InnsendingFeiletError": {
+        "type": "object",
+        "properties": {
+          "deletionDate": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
+          }
+        },
+        "required": [
+          "deletionDate",
+          "type"
         ]
       },
       "Logg": {

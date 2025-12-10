@@ -50,6 +50,11 @@
       "text": "Hvis du ikke har penger til mat eller et sted å overnatte det neste døgnet, bør du opplyse om dette i søknaden."
     }
   },
+  "SokerUnder18Feilmelding": {
+    "title": "For å søkje om økonomisk sosialhjelp må du ha fylt 18 år",
+    "text1": "Er du er under 18 år, må du ha samtykke av dine føresette for å søkje om økonomisk sosialhjelp.",
+    "text2": "Vil du vite meir om samtykke eller har spørsmål til korleis dette fungerer, kan du kontakte <lenke>Nav-kontoret ditt</lenke> der du bur eller oppheld deg, eller ringje oss på <phone>55 55 33 33</phone>."
+  },
   "PersonbeskyttelseFeilmelding": {
     "title": "Beklagar",
     "text": "Du kan diverre ikkje bruke den digitale søknaden om økonomisk sosialhjelp. \nTa kontakt med <lenke>det lokale Nav-kontoret ditt</lenke> for å få hjelp til å søkja."

@@ -71,7 +71,8 @@ export const axiosInstance = <T>(
 
             if ([403, 404, 410].includes(status)) {
                 const errorType = (data as SoknadApiError).error;
-                if (status === 403 && errorType === "NoAccess") {
+
+                if (status === 403 && (errorType === "NoAccess" || errorType === "SokerUnder18")) {
                     throw e;
                 }
                 window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
