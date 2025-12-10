@@ -6,7 +6,7 @@ import {TrashIcon} from "@navikt/aksel-icons";
 import {useSoknadId} from "../../hooks/common/useSoknadId.ts";
 import digisosConfig from "../../config";
 import {useDeleteSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
-import {logger} from "@navikt/next-logger";
+import getLogger from "@log/logger.ts";
 
 export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () => void}) => {
     const soknadId = useSoknadId();
@@ -19,7 +19,7 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
             window.location.assign(digisosConfig.minSideURL);
         } catch (e: any) {
             faro.api.pushError(e);
-            logger.error(`Feil ved sletting: ${e}`);
+            getLogger().error(`Feil ved sletting: ${e}`);
         }
     };
 

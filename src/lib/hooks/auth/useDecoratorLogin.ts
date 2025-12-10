@@ -2,7 +2,7 @@
 import {useRouter} from "next/navigation";
 import digisosConfig from "../../config.ts";
 import {useEffect, useState} from "react";
-import {logger} from "@navikt/next-logger";
+import getLogger from "@log/logger";
 import {getSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs.ts";
 
 type SessionResponse = {session: {active?: boolean}};
@@ -46,7 +46,7 @@ export const handleSessionCheck = async (
                     return;
                 }
             } catch (error) {
-                logger.error(error);
+                getLogger().error(error);
             }
             try {
                 const [dekoratorSession, soknadSession] = await Promise.all([
@@ -55,25 +55,25 @@ export const handleSessionCheck = async (
                 ]);
 
                 if (!dekoratorSession.ok) {
-                    logger.error(
+                    getLogger().error(
                         `Failed to fetch dekorator session from ${authApiUrl}: ${dekoratorSession.status} ${dekoratorSession.statusText}`
                     );
                     return;
                 }
                 const {userId}: {userId: string} = await dekoratorSession.json();
                 if (userId !== soknadSession.personId) {
-                    logger.warn(
+                    getLogger().warn(
                         `Dekorator userId does not match soknad session personId. ${!userId ? "No userId from dekorator session" : ""}`
                     );
                     router.replace(logoutRedirectUrl ?? "");
                     return;
                 }
             } catch (error) {
-                logger.error(error);
+                getLogger().error(error);
             }
         }
     } catch (error) {
-        logger.error(error);
+        getLogger().error(error);
     } finally {
         setIsLoading(false);
     }

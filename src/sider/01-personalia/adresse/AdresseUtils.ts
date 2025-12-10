@@ -1,6 +1,6 @@
 import {AdresseForslag} from "../../../generated/model";
 import {AdresserDtoBrukerAdresse, VegAdresseType} from "../../../generated/new/model";
-import {logger} from "@navikt/next-logger";
+import getLogger from "@log/logger";
 
 const formaterAdresseString = (sokTreff: AdresseForslag | null | undefined) => {
     if (!sokTreff) return "";
@@ -12,7 +12,7 @@ const formaterSoknadsadresse = (soknadAdresse?: AdresserDtoBrukerAdresse | null)
     if (!soknadAdresse) return "";
 
     if (soknadAdresse.type !== VegAdresseType.VegAdresse) {
-        logger.warn(`Ustøttet adressetype valgt av bruker: ${soknadAdresse.type}`);
+        getLogger().warn(`Ustøttet adressetype valgt av bruker: ${soknadAdresse.type}`);
         return "";
     }
     const {gatenavn, husnummer, husbokstav, postnummer, poststed} = soknadAdresse;
