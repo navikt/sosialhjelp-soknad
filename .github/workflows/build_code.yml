@@ -1,49 +1,49 @@
 name: "Build code and run test"
 on:
-    push:
-        branches:
-            - "**" # Build all branches
-        tags-ignore:
-            - "**" # Don't build any tags
-    workflow_dispatch:
+  push:
+    branches:
+      - "**" # Build all branches
+    tags-ignore:
+      - "**" # Don't build any tags
+  workflow_dispatch:
 
 jobs:
-    build_code:
-        name: "Build Code and run Tests"
-        runs-on: ubuntu-latest
-        permissions:
-            packages: read
+  build_code:
+    name: "Build Code and run Tests"
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
 
+    env:
+      NEXT_PUBLIC_DIGISOS_ENV: dev # tester er pr. nå avhengig av denne
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: "Install dependencies"
+        run: mv .npmrc.dockerbuild .npmrc && npm ci && npm install @tailwindcss/oxide-linux-x64-gnu lightningcss-linux-x64-gnu
         env:
-            NEXT_PUBLIC_DIGISOS_ENV: dev # tester er pr. nå avhengig av denne
-        steps:
-            - uses: actions/checkout@v6
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
-            - uses: actions/setup-node@v6
-              with:
-                  node-version: "22"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
-            - name: "Install dependencies"
-              run: mv .npmrc.dockerbuild .npmrc && npm ci && npm install @tailwindcss/oxide-linux-x64-gnu lightningcss-linux-x64-gnu
-              env:
-                NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+      - name: "Run orval"
+        run: pnpm run orval
 
-            - uses: actions/cache@v4
-              with:
-                path: |
-                  ~/.npm
-                  ${{ github.workspace }}/.next/cache
-                # Generate a new cache whenever packages or source files change.
-                key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
-                # If source files changed but packages didn't, rebuild from a prior cache.
-                restore-keys: |
-                  ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+      - name: "Build project"
+        run: pnpm run build
 
-            - name: "Run orval"
-              run: pnpm run orval
-
-            - name: "Build project"
-              run: pnpm run build
-
-            - name: "Run tests"
-              run: pnpm install @rollup/rollup-linux-x64-gnu && pnpm run test
+      - name: "Run tests"
+        run: pnpm install @rollup/rollup-linux-x64-gnu && pnpm run test

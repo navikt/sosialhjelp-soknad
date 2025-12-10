@@ -50,6 +50,24 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: "Build npm project"
+        uses: navikt/sosialhjelp-ci/actions/build-node@v13
+        with:
+          node-version: 24
+          build-less: "false"
+          run-orval: "true"
+          reader-token: ${{ secrets.READER_TOKEN }}
+          run-test: "false"
+          build-env: '{"NEXT_PUBLIC_DIGISOS_ENV": "${{ matrix.environment }}"}'
+
+      - name: "Upload static files to cdn"
+        id: upload
+        uses: nais/deploy/actions/cdn-upload/v2@master
+        with:
+          team: teamdigisos
+          source: ./.next/static
+          destination: "/sosialhjelp-soknad/_next"
+
       - name: Build and push docker image to GAR
         uses: nais/docker-build-push@v0
         id: docker-build-push
