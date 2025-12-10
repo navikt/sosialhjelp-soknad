@@ -2,15 +2,14 @@ import {formatTidspunkt} from "../../../lib/utils";
 import {SvarType} from "../../../generated/model";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate";
 import {useBackendTranslation} from "./useBackendTranslationResult";
-import {logger} from "@navikt/next-logger";
+import getLogger from "@log/logger.ts";
 
 const FormatAsType = ({type, children}: {type: SvarType; children: string}) => {
     const {tBackend} = useBackendTranslation();
-
     if (!children) return null;
 
     if (!Object.values(SvarType).includes(type)) {
-        logger.error("Ugyldig SvarType i FormattedTextValue");
+        getLogger().error("Ugyldig SvarType i FormattedTextValue");
         return children;
     }
 

@@ -10,12 +10,12 @@ import {
 } from "@grafana/faro-react";
 import {TracingInstrumentation} from "@grafana/faro-web-tracing";
 import digisosConfig from "./lib/config";
-import {logger} from "@navikt/next-logger";
+import getLogger from "@log/logger";
 let userHasBeenToldFaroIsDisabled = false;
 
 if (!digisosConfig.faro) {
     if (!userHasBeenToldFaroIsDisabled) {
-        logger.debug("faro is disabled!");
+        getLogger().debug("faro is disabled!");
         userHasBeenToldFaroIsDisabled = true;
     }
 } else

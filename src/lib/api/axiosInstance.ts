@@ -1,7 +1,7 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
 import digisosConfig from "../config";
 import {isLoginError} from "./error/isLoginError";
-import {logger} from "@navikt/next-logger";
+import getLogger from "@log/logger";
 import {SoknadApiError} from "../../generated/model";
 
 const AXIOS_INSTANCE = Axios.create({
@@ -47,7 +47,7 @@ export const axiosInstance = <T>(
     })
         .then(({data}) => data)
         .catch(async (e) => {
-            if (!(e instanceof AxiosError)) logger.warn(`non-axioserror error ${e} in axiosinstance`);
+            if (!(e instanceof AxiosError)) getLogger().warn(`non-axioserror error ${e} in axiosinstance`);
 
             if (isCancel(e) || options?.digisosIgnoreErrors) {
                 return neverResolves();
@@ -55,14 +55,14 @@ export const axiosInstance = <T>(
 
             const {response} = e;
             if (!response) {
-                logger.warn(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
+                getLogger().warn(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
                 console.warn(e);
                 throw e;
             }
 
             if (isLoginError(response)) {
                 const loginUrl = `/sosialhjelp/soknad/oauth2/login?redirect=${origin}${decodeURIComponent(window.location.pathname)}`;
-                logger.info(`Fikk 401 på kall, redirecter til login: ${loginUrl}`);
+                getLogger().info(`Fikk 401 på kall, redirecter til login: ${loginUrl}`);
                 window.location.assign(loginUrl);
                 return neverResolves();
             }
@@ -79,7 +79,7 @@ export const axiosInstance = <T>(
                 return neverResolves();
             }
 
-            logger.warn(`Nettverksfeil i axiosInstance: ${config.method} ${config.url}: ${status} ${data}`);
+            getLogger().warn(`Nettverksfeil i axiosInstance: ${config.method} ${config.url}: ${status} ${data}`);
             throw e;
         });
 

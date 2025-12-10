@@ -1,5 +1,5 @@
 import {parsePhoneNumberWithError} from "libphonenumber-js";
-import {logger} from "@navikt/next-logger";
+import getLogger from "@log/logger";
 
 /**
  *  uses libphonenumber to parse a string to a phone number.
@@ -12,13 +12,13 @@ export const phoneNumberParsedOrUndefined = (telefonNr: string | undefined) => {
         const parsedNumber = parsePhoneNumberWithError(telefonNr, "NO");
 
         if (!parsedNumber.isPossible()) {
-            logger.error(`attempt to parse invalid phone number, returning undefined`);
+            getLogger().error(`attempt to parse invalid phone number, returning undefined`);
             return undefined;
         }
 
         return parsedNumber;
     } catch (e) {
-        logger.error(`error parsing phone number: ${e}`);
+        getLogger().error(`error parsing phone number: ${e}`);
         return undefined;
     }
 };
