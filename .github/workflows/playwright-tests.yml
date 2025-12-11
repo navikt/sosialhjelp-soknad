@@ -2,11 +2,6 @@ name: "Playwright Tests"
 
 on:
   workflow_call:
-    secrets:
-      GITHUB_TOKEN:
-        required: true
-      READER_TOKEN:
-        required: true
 
 permissions:
   contents: read
