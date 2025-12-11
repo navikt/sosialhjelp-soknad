@@ -1,0 +1,41 @@
+name: "Build and test on PR"
+on:
+  pull_request:
+    branches:
+      - "**" # Build all branches
+    tags-ignore:
+      - "**" # Don't build any tags
+
+jobs:
+  build_code:
+    name: "Build Code and run Tests"
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+    env:
+      NEXT_PUBLIC_DIGISOS_ENV: dev # tester er pr. nå avhengig av denne
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: navikt/sosialhjelp-ci/actions/build-node@v14
+        with:
+          node-version: "24"
+          reader-token: ${{ secrets.GITHUB_TOKEN }}
+          run-orval: "true"
+          run-test: "true"
+
+      - name: lint
+        run: pnpm run lint
+        shell: bash
+
+      - name: tsc
+        run: pnpm run tsc
+        shell: bash
+
+  playwright-tests:
+    name: Playwright Tests
+    uses: ./.github/workflows/playwright-tests.yml
+    permissions:
+      contents: read
+      id-token: write
+      packages: write

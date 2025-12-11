@@ -29,8 +29,6 @@ jobs:
   playwright-tests:
     name: Playwright Tests
     uses: ./.github/workflows/playwright-tests.yml
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   prepare:
     runs-on: ubuntu-latest
     outputs:
