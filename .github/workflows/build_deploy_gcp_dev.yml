@@ -31,24 +31,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
+      - uses: navikt/sosialhjelp-ci/actions/playwright/build@playwright
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          build-args: |
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run-orval: "true"
+          docker-build-args: |
             DIGISOS_ENV=e2e
             LOGIN_SESSION_API_URL=""
             LOGOUT_URL=""
-          secrets: |
-            NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
-          tags: ghcr.io/${{ github.repository }}-e2e:${{ github.sha }}
 
   run-playwright:
     needs: [ build-for-playwright ]
@@ -69,7 +59,7 @@ jobs:
       - uses: actions/setup-node@v6
         id: setup-node
         with:
-          registry-url: 'https://npm.pkg.github.com'
+          registry-url: "https://npm.pkg.github.com"
           node-version: 24
       - name: Install dependencies
         shell: bash
@@ -111,7 +101,7 @@ jobs:
     strategy:
       matrix: ${{fromJson(needs.prepare.outputs.matrix)}}
     runs-on: ubuntu-latest
-    needs: prepare
+    needs: [ prepare, run-playwright ]
     steps:
       - uses: actions/checkout@v6
 

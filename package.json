@@ -104,6 +104,7 @@
     },
     "scripts": {
         "build": "next build",
+        "build:e2e": "NEXT_PUBLIC_ASSET_PREFIX= NEXT_PUBLIC_DIGISOS_ENV=e2e pnpm build --turbo && cp -R .next/static .next/standalone/.next",
         "tsc": "tsc",
         "dev": "next dev -p 3001 -H 0.0.0.0 --turbo | pino-pretty --messageKey=message",
         "start": "next start -H 0.0.0.0",
@@ -116,7 +117,7 @@
         "fetch-old-api": "curl -o ./soknad-api-old.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs/old && npx --yes openapi-format soknad-api-old.json -o soknad-api-old.json",
         "fetch-new-api": "curl -o ./soknad-api-new.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs/new && npx --yes openapi-format soknad-api-new.json -o soknad-api-new.json",
         "fetch-api": "pnpm run fetch-old-api && pnpm run fetch-new-api",
-        "orval": "rm -rf ./src/generated & orval --prettier",
+        "orval": "rm -rf ./src/generated && orval --prettier",
         "lint": "eslint",
         "preinstall": "npx -y only-allow pnpm"
     },
