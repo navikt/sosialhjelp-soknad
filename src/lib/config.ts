@@ -79,9 +79,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         innsynURL: "http://localhost:3002/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
-        // faro: {
-        //     url: "http://localhost:12347/collect",
-        // },
     },
     localhost: {
         featureFlags: {

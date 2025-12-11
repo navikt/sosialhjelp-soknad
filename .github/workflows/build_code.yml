@@ -1,6 +1,6 @@
 name: "Build code and run test"
 on:
-  push:
+  pull_request:
     branches:
       - "**" # Build all branches
     tags-ignore:
