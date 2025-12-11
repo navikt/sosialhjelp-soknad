@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: navikt/sosialhjelp-ci/actions/playwright/build@playwright
+      - uses: navikt/sosialhjelp-ci/actions/playwright/build@v14
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run-orval: "true"
@@ -67,7 +67,7 @@ jobs:
           pnpm install --prefer-offline --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-      - uses: navikt/sosialhjelp-ci/actions/playwright/run@playwright
+      - uses: navikt/sosialhjelp-ci/actions/playwright/run@v14
         with:
           shardIndex: ${{ matrix.shardIndex }}
           shardTotal: ${{ matrix.shardTotal }}
@@ -79,7 +79,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: navikt/sosialhjelp-ci/actions/playwright/report@playwright
+      - uses: navikt/sosialhjelp-ci/actions/playwright/report@v14
   prepare:
     runs-on: ubuntu-latest
     outputs:
