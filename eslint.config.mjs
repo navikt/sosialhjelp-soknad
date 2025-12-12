@@ -6,7 +6,7 @@ import nextPlugin from "@next/eslint-plugin-next";
 import globals from "globals";
 
 export default tseslint.config(
-    {ignores: [".next/**/*", "src/generated/**/*"]},
+    {ignores: [".next/**/*", "src/generated/**/*", "next-env.d.ts", "playwright-report/**/*"]},
     eslint.configs.recommended,
     ...tseslint.configs.recommended,
     {
