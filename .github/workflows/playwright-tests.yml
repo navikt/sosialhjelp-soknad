@@ -13,7 +13,7 @@ jobs:
     name: Build for playwright
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: navikt/sosialhjelp-ci/actions/playwright/build@v14
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -37,7 +37,7 @@ jobs:
         shardIndex: [ 1, 2, 3 ]
         shardTotal: [ 3 ]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: corepack enable
       - uses: actions/setup-node@v6
         id: setup-node
@@ -61,6 +61,6 @@ jobs:
     needs: [ run-playwright ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: navikt/sosialhjelp-ci/actions/playwright/report@v14
 
