@@ -7,6 +7,7 @@ nextEnv.loadEnvConfig(process.cwd());
 export default defineConfig({
     plugins: [tsconfigPaths()],
     test: {
+        exclude: ["e2e/**", "node_modules/**", ".next/**"],
         environment: "jsdom",
     },
 });
