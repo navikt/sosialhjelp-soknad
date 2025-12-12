@@ -40,7 +40,7 @@
         "jsdom": "^26.1.0",
         "libphonenumber-js": "^1.12.23",
         "markdown-to-jsx": "^7.7.15",
-        "next": "^15.5.7",
+        "next": "15.5.9",
         "next-intl": "^4.3.11",
         "next-logger": "^5.0.2",
         "pdfjs-dist": "^5.3.93",
