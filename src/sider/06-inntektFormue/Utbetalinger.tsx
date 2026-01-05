@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {Checkbox, CheckboxGroup, ReadMore, Textarea} from "@navikt/ds-react";
-import {YesNoInput} from "../../lib/components/form/YesNoInput";
+import YesNoInput from "../../lib/components/form/YesNoInput";
 import {useUtbetalinger} from "../../lib/hooks/data/useUtbetalinger";
 import {MAX_CHARS, useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";
 import {UnmountClosed} from "react-collapse";
