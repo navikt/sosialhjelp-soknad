@@ -26,38 +26,38 @@ interface GenericBooleanInputProps {
     radioLabels: [ReactNode, ReactNode];
 }
 
-export const BooleanInput = React.forwardRef(
-    (
-        {
-            radioLabels: [defaultTrueLabel, defaultFalseLabel],
-            defaultValue,
-            onChange,
-            onBlur,
-            legend,
-            description,
-            name,
-            value,
-            error,
-            trueLabel,
-            falseLabel,
-            className,
-        }: BaseBooleanInputProps & GenericBooleanInputProps,
-        ref: React.ForwardedRef<HTMLInputElement>
-    ) => (
-        <RadioGroup
-            legend={legend}
-            description={description}
-            name={name}
-            onBlur={onBlur}
-            error={error}
-            ref={ref as Ref<HTMLFieldSetElement>}
-            onChange={(value) => onChange(value === "true")}
-            value={value?.toString()}
-            defaultValue={defaultValue?.toString()}
-            className={className}
-        >
-            <BooleanInputRadio value={"true"} label={trueLabel ? trueLabel : defaultTrueLabel} />
-            <BooleanInputRadio value={"false"} label={falseLabel ? falseLabel : defaultFalseLabel} />
-        </RadioGroup>
-    )
+const BooleanInput = (
+    {
+        radioLabels: [defaultTrueLabel, defaultFalseLabel],
+        defaultValue,
+        onChange,
+        onBlur,
+        legend,
+        description,
+        name,
+        value,
+        error,
+        trueLabel,
+        falseLabel,
+        className,
+    }: BaseBooleanInputProps & GenericBooleanInputProps,
+    ref: React.ForwardedRef<HTMLInputElement>
+) => (
+    <RadioGroup
+        legend={legend}
+        description={description}
+        name={name}
+        onBlur={onBlur}
+        error={error}
+        ref={ref as Ref<HTMLFieldSetElement>}
+        onChange={(value) => onChange(value === "true")}
+        value={value?.toString()}
+        defaultValue={defaultValue?.toString()}
+        className={className}
+    >
+        <BooleanInputRadio value={"true"} label={trueLabel ? trueLabel : defaultTrueLabel} />
+        <BooleanInputRadio value={"false"} label={falseLabel ? falseLabel : defaultFalseLabel} />
+    </RadioGroup>
 );
+
+export default React.forwardRef(BooleanInput);

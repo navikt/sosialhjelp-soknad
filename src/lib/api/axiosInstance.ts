@@ -56,7 +56,6 @@ export const axiosInstance = <T>(
             const {response} = e;
             if (!response) {
                 getLogger().warn(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
-                console.warn(e);
                 throw e;
             }
 
