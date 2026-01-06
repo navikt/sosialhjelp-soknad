@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {YesNoInput} from "../../lib/components/form/YesNoInput";
+import YesNoInput from "../../lib/components/form/YesNoInput";
 import {SkalIkkeFinansiereStudier} from "./SkalIkkeFinansiereStudier";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {useGetHasStudielan, useUpdateStudielan} from "../../generated/new/studielan-controller/studielan-controller.ts";

@@ -36,6 +36,7 @@ const KategorierForm = ({kategorier, hvaErEndret, onSubmit}: Props) => {
             hvaErEndret: hvaErEndret ?? null,
         },
     });
+    // eslint-disable-next-line react-hooks/incompatible-library
     const selectedCategories = watch("categories");
     const {toggle} = useCategories(
         selectedCategories,

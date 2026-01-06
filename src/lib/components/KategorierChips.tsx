@@ -21,6 +21,7 @@ const KategorierChips = ({categories, toggle}: Props) => {
                 <HStack align="start" gap="2" id={"kategorier"} aria-labelledby={"kategorier-label"} className={"pt-4"}>
                     {categories.map((category) => (
                         <Category
+                            key={category.key}
                             category={category}
                             toggle={toggle}
                             showXMark={category.selected && Boolean(category.subCategories?.length)}

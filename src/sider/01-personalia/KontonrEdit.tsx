@@ -21,6 +21,8 @@ export const KontonrEdit = ({
         resolver: zodResolver(KontonummerFormSchema),
     });
 
+    /* eslint-disable-next-line react-hooks/incompatible-library */
+    const kontonummerInputDisabled = watch("harIkkeKonto") === true;
     return (
         <form onSubmit={handleSubmit(onSave)} className={"space-y-4"}>
             <BodyShort weight={"semibold"}>{t("kontakt.kontonummer.label")}</BodyShort>
@@ -30,7 +32,7 @@ export const KontonrEdit = ({
             <KontonummerInputField
                 control={control}
                 name={"kontonummerBruker"}
-                disabled={watch("harIkkeKonto") === true}
+                disabled={kontonummerInputDisabled}
                 rules={{required: false}}
             />
             <Checkbox {...register("harIkkeKonto")}>{t("kontakt.kontonummer.harikke.stringValue")}</Checkbox>

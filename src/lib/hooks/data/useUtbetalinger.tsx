@@ -40,6 +40,7 @@ export const useUtbetalinger = () => {
     });
     const [harBekreftelse, setHarBekreftelse] = useState<boolean | null>(null);
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setHarBekreftelse(utbetalinger?.hasBekreftelse ?? null);
     }, [utbetalinger?.hasBekreftelse]);
 
