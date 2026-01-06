@@ -25,7 +25,7 @@ const isSokerUnder18 = (error: Error | AxiosError<any>) => {
     }
 };
 
-export default ({error, reset}: {error: Error; reset: () => void}) => (
+const Error = ({error, reset}: {error: Error; reset: () => void}) => (
     <ClientSideProvider>
         {isNoAccess(error) ? (
             <PersonbeskyttelseFeilmelding />
@@ -39,3 +39,5 @@ export default ({error, reset}: {error: Error; reset: () => void}) => (
         )}
     </ClientSideProvider>
 );
+
+export default Error;
