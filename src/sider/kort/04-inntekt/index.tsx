@@ -47,10 +47,9 @@ const Inntekt = () => {
     useEffect(() => {
         if (!hasInitialized && formue && !formue.hasBrukskonto) {
             setFormue(["hasBrukskonto", "hasSparing"]);
-            // eslint-disable-next-line react-hooks/set-state-in-effect
             setHasInitialized(true);
         }
-    }, [formue, hasInitialized, setFormue]);
+    }, [formue, hasInitialized]);
 
     return (
         <SkjemaSteg>

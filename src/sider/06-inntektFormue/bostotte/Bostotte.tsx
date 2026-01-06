@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import {useInntekterBostotte} from "../../../lib/hooks/data/useInntekterBostotte";
 import {FaroErrorBoundary} from "@grafana/faro-react";
 import {BostotteDataVisning} from "./BostotteDataVisning";
-import YesNoInput from "../../../lib/components/form/YesNoInput.tsx";
+import {YesNoInput} from "../../../lib/components/form/YesNoInput.tsx";
 
 const BostotteData = () => {
     const {t} = useTranslation("skjema");

@@ -4,9 +4,8 @@ import {getDriftsmeldinger} from "./getDriftsmeldinger.ts";
 
 export const Driftsmeldinger = async () => {
     const driftsmeldinger = await getDriftsmeldinger();
-    return driftsmeldinger?.map(({severity, text, id}) => (
+    return driftsmeldinger?.map(({severity, text}) => (
         <Alert
-            key={id}
             variant={severity}
             fullWidth
             className={"justify-center [&>div]:max-w-lg lg:[&>div]:max-w-3xl md:[&>svg]:ml-8 [&>div]:w-full"}

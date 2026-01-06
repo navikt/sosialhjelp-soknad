@@ -1,5 +1,6 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
 import digisosConfig from "../config";
+import {isLoginError} from "./error/isLoginError";
 import getLogger from "@log/logger";
 import {SoknadApiError} from "../../generated/new/model";
 
@@ -55,10 +56,11 @@ export const axiosInstance = <T>(
             const {response} = e;
             if (!response) {
                 getLogger().warn(`Nettverksfeil i axiosInstance: ${config.method} ${config.url} ${e}`);
+                console.warn(e);
                 throw e;
             }
 
-            if (response.status === 401) {
+            if (isLoginError(response)) {
                 const loginUrl = `/sosialhjelp/soknad/oauth2/login?redirect=${origin}${decodeURIComponent(window.location.pathname)}`;
                 getLogger().info(`Fikk 401 på kall, redirecter til login: ${loginUrl}`);
                 window.location.assign(loginUrl);

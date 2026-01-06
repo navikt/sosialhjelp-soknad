@@ -86,7 +86,6 @@ const useDecoratorLogin = () => {
 
     useEffect(() => {
         handleSessionCheck(isEnabled, setIsLoading, router);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isEnabled]);
 
     return {isLoading};

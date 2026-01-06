@@ -2,7 +2,7 @@ import * as React from "react";
 
 import {useTranslation} from "react-i18next";
 import {Button, Heading, Panel, TextField} from "@navikt/ds-react";
-import YesNoInput from "../../lib/components/form/YesNoInput";
+import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {z} from "zod";
 import {format, isValid, parse} from "date-fns";
 import {useForm} from "react-hook-form";
@@ -11,7 +11,6 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {ValideringsFeilKode} from "../../lib/validering";
 import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 import {EktefelleDto, EktefelleInput, SivilstandDtoSivilstatus} from "../../generated/new/model";
-import getLogger from "@log/logger.ts";
 
 const SivilstatusSchema = z.object({
     navn: z.object({
@@ -57,7 +56,7 @@ export const EktefellePersonaliaForm = ({sivilstatus, ektefelle, setEktefelle}: 
     if (!sivilstatus) return null;
     return (
         <Panel className={"bg-gray-100! mb-4"}>
-            <form onSubmit={handleSubmit(setEktefelle, getLogger().error)}>
+            <form onSubmit={handleSubmit(setEktefelle, console.error)}>
                 <div className="space-y-4 pb-4">
                     <Heading size={"small"} level={"3"} spacing>
                         {t("familie.sivilstatus.gift.ektefelle.sporsmal")}

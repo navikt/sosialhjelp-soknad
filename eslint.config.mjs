@@ -1,29 +1,29 @@
-import {defineConfig, globalIgnores} from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
-import nextTs from "eslint-config-next/typescript";
-import prettierConfig from "eslint-config-prettier/flat";
-import testingLibrary from "eslint-plugin-testing-library";
+// @ts-check
 
-const eslintConfig = defineConfig([
-    ...nextVitals,
-    ...nextTs,
-    prettierConfig,
+import eslint from "@eslint/js";
+import tseslint from "typescript-eslint";
+import nextPlugin from "@next/eslint-plugin-next";
+import globals from "globals";
+
+export default tseslint.config(
+    {ignores: [".next/**/*", "src/generated/**/*", "next-env.d.ts", "playwright-report/**/*"]},
+    eslint.configs.recommended,
+    ...tseslint.configs.recommended,
     {
+        plugins: {
+            "@next/next": nextPlugin,
+        },
         rules: {
-            "@typescript-eslint/no-unused-vars": ["error", {argsIgnorePattern: "^_"}],
-            "no-console": "warn",
+            ...nextPlugin.configs.recommended.rules,
+            ...nextPlugin.configs["core-web-vitals"].rules,
             "@typescript-eslint/no-explicit-any": "off",
+            "@typescript-eslint/no-unused-vars": ["error", {argsIgnorePattern: "^_"}],
             "@next/next/no-img-element": "off",
         },
-    },
-    {
-        files: ["**/?(*.)+(spec|test).[jt]s?(x)"],
-        ...testingLibrary.configs["flat/react"],
-        rules: {
-            "testing-library/no-debugging-utils": "warn",
+        languageOptions: {
+            globals: {
+                ...globals.node,
+            },
         },
-    },
-    globalIgnores(["src/generated/**", "playwright-report/**", "test-results/**", "**/*.mjs"]),
-]);
-
-export default eslintConfig;
+    }
+);

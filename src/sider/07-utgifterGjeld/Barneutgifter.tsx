@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {Checkbox, CheckboxGroup} from "@navikt/ds-react";
-import YesNoInput from "../../lib/components/form/YesNoInput";
+import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {useBarneutgifter} from "../../lib/hooks/data/useBarneutgifter";
 import {BarneutgifterDto} from "../../generated/new/model";
 

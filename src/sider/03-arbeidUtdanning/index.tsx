@@ -3,7 +3,7 @@ import {debounce, Heading, Radio, RadioGroup, ReadMore} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {ArbeidsforholdListe} from "./ArbeidsforholdListe";
-import YesNoInput from "../../lib/components/form/YesNoInput";
+import {YesNoInput} from "../../lib/components/form/YesNoInput";
 import {UnmountClosed} from "react-collapse";
 import {useArbeidOgUtdanning} from "../../lib/hooks/data/useArbeidOgUtdanning";
 import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
