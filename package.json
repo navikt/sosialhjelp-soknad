@@ -100,7 +100,7 @@
         "vitest": "^4.0.16"
     },
     "scripts": {
-        "build": "next build",
+        "build": "next build --webpack",
         "build:e2e": "NEXT_PUBLIC_ASSET_PREFIX= NEXT_PUBLIC_DIGISOS_ENV=e2e pnpm build && cp -R .next/static .next/standalone/.next",
         "tsc": "tsc",
         "dev": "next dev -p 3001 -H 0.0.0.0 | pino-pretty --messageKey=message",
