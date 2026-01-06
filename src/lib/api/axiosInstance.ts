@@ -1,6 +1,5 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
 import digisosConfig from "../config";
-import {isLoginError} from "./error/isLoginError";
 import getLogger from "@log/logger";
 import {SoknadApiError} from "../../generated/new/model";
 
@@ -59,7 +58,7 @@ export const axiosInstance = <T>(
                 throw e;
             }
 
-            if (isLoginError(response)) {
+            if (response.status === 401) {
                 const loginUrl = `/sosialhjelp/soknad/oauth2/login?redirect=${origin}${decodeURIComponent(window.location.pathname)}`;
                 getLogger().info(`Fikk 401 på kall, redirecter til login: ${loginUrl}`);
                 window.location.assign(loginUrl);
