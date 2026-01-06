@@ -20,7 +20,7 @@
         "@navikt/next-api-proxy": "^5.0.2",
         "@navikt/next-logger": "^4.4.4",
         "@swan-io/boxed": "^3.2.1",
-        "@tanstack/react-query": "^5.90.14",
+        "@tanstack/react-query": "^5.90.15",
         "@types/react-collapse": "^5.0.4",
         "axios": "^1.13.2",
         "classnames": "^2.5.1",
