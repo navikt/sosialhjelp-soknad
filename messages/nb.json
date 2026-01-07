@@ -1,112 +1,116 @@
 {
-  "Informasjon": {
-    "title": "Søknad om økonomisk sosialhjelp"
-  },
-  "EttersendDokuPanel": {
-    "title": "Send dokumentasjon til en søknad du har sendt inn",
-    "text": {
-      "p1": "Dokumentasjon kan sendes til søknader du har sendt inn tidligere.",
-      "p2": "Gå til listen over <lenke>dine sosialhjelpssøknader</lenke>",
-      "p3": "Åpne søknaden du ønsker å ettersende dokumenter til",
-      "p4": "Last opp dokumentene du skal ettersende under “dine vedlegg”"
-    }
-  },
-  "PabegynteSoknaderPanel": {
-    "title": "Fortsett på en søknad du har begynt på",
-    "pabegynte": "{count, plural, =1 {1 påbegynt søknad} other {# påbegynte søknader}}",
-    "slettesEtter": "Vær oppmerksom på at påbegynte søknader slettes etter {count} dager."
-  },
-  "PabegyntSoknadView": {
-    "sistOppdatert": "Sist oppdatert",
-    "slettes": "Slettes"
-  },
-  "NySoknadPanel": {
-    "title": "Start en ny søknad"
-  },
-  "NySoknadInfo": {
-    "feilet": "Det oppstod en feil under opprettelsen av søknaden. Vennligst prøv igjen senere",
-    "start": "Start søknaden"
-  },
-  "NySoknadVelkomst": {
-    "intro": {
-      "title": "Opplysninger og dokumentasjon",
-      "text": {
-        "p1": "Vennligst fyll ut søknaden så godt du kan. Legg ved relevant dokumentasjon.",
-        "p2": "Se eksempler på <lenke>hvilken dokumentasjon vi kan be om</lenke>.",
-        "p3": "Hvis du med vilje holder tilbake eller gir uriktige opplysninger, kan du måtte betale tilbake stønaden."
-      },
-      "soknadUrl": "https://www.nav.no/okonomisk-sosialhjelp"
+    "Informasjon": {
+        "title": "Søknad om økonomisk sosialhjelp"
     },
-    "innhenting": {
-      "title": "Innhenting og behandling av personopplysninger",
-      "text": {
-        "p1": "Vi innhenter automatisk opplysninger fra offentlige registre. Ved å trykke \"Start søknad\" godtar du dette.",
-        "p2": "<lenke>Les mer om innhenting og behandling av dine personopplysninger</lenke>."
-      },
-      "persondataUrl": "https://www.nav.no/personopplysninger-sosialhjelp"
+    "EttersendDokuPanel": {
+        "title": "Send dokumentasjon til en søknad du har sendt inn",
+        "text": {
+            "p1": "Dokumentasjon kan sendes til søknader du har sendt inn tidligere.",
+            "p2": "Gå til listen over <lenke>dine sosialhjelpssøknader</lenke>",
+            "p3": "Åpne søknaden du ønsker å ettersende dokumenter til",
+            "p4": "Last opp dokumentene du skal ettersende under “dine vedlegg”"
+        }
     },
-    "nodsituasjon": {
-      "title": "Er du i en nødssituasjon?",
-      "text": "Hvis du ikke har penger til mat eller et sted å overnatte det neste døgnet, bør du opplyse om dette i søknaden."
-    }
-  },
-  "SokerUnder18Feilmelding": {
-    "title": "For å søke om økonomisk sosialhjelp må du ha fylt 18 år",
-    "text1": "Er du under 18 år, må du ha samtykke av dine foresatte for å søke om økonomisk sosialhjelp.",
-    "text2": "Vil du vite mer om samtykke eller har spørsmål om hvordan dette fungerer, kan du kontakte <lenke>ditt Nav-kontor</lenke> der du bor eller oppholder deg, eller ringe oss på <phone>55 55 33 33</phone>."
-  },
-  "PersonbeskyttelseFeilmelding": {
-    "title": "Beklager",
-    "text": "Du kan dessverre ikke bruke den digitale søknaden om økonomisk sosialhjelp. \nTa kontakt med <lenke>ditt lokale Nav-kontor</lenke> for å få hjelp til å søke."
-  },
-  "TekniskFeil": {
-    "title": "Vi beklager!",
-    "feilmelding": "En teknisk feil har oppstått.",
-    "anbefaling": "Vi anbefaler at du prøver på nytt.",
-    "lenkeTilHovedmeny": "Til startsiden for søknad",
-    "problemetErLogget": "Hendelsen har blitt loggført og problemet utbedres så fort som mulig."
-  },
-  "TrengerDuRaskHjelp": {
-    "title": "Trenger du rask hjelp?",
-    "kontaktKontoret": "Hvis du ikke har penger til det aller mest nødvendige som mat, må du kontakte Nav-kontoret ditt.\n\nNav skal også hjelpe deg med å finne et midlertidig botilbud hvis du ikke har et sted å sove eller oppholde deg det nærmeste døgnet.",
-    "papirAlternativ": "Du kan også <lenke>søke om økonomisk sosialhjelp på papir</lenke> hos ditt Nav-kontor.",
-    "papirAlternativUrl": "https://www.nav.no/okonomisk-sosialhjelp/nb#soknad-papir",
-    "lenkeTilHovedmeny": "Gå til forsiden for sosialhjelp",
-    "lenkeTilNavForside": "Gå til nav.no",
-    "lenkeTilMinSide": "Gå til Min Side",
-    "sendBugRapport": "Send feilrapport",
-    "bugRapportUrl": "https://www.nav.no/person/kontakt-oss/nb/tilbakemeldinger/feil-og-mangler"
-  },
-  "AppHeader": {
-    "title": "Søknad om økonomisk sosialhjelp"
-  },
-  "IkkeFunnet": {
-    "title": "Side ikke funnet",
-    "feilmelding": "Om det gjelder en ferdig innsendt/slettet søknad, returner til startsiden.",
-    "lenkeTilHovedmeny": "Til startsiden for søknad"
-  },
-  "NavEnhetInaktiv": {
-    "varig": {
-      "melding": "{kommunenavn} kommune kan ikke ta i mot digitale søknader.",
-      "forslag": "Du kan <lenke>søke på papirskjema</lenke>."
+    "PabegynteSoknaderPanel": {
+        "title": "Fortsett på en søknad du har begynt på",
+        "pabegynte": "{count, plural, =1 {1 påbegynt søknad} other {# påbegynte søknader}}",
+        "slettesEtter": "Vær oppmerksom på at påbegynte søknader slettes etter {count} dager."
     },
-    "midlertidig": {
-      "melding": "{kommuneNavn} kommune kan dessverre ikke ta i mot digitale søknader akkurat nå.",
-      "forslag": "<lenke>Søk på papirskjema</lenke>, eller prøv igjen senere."
+    "PabegyntSoknadView": {
+        "sistOppdatert": "Sist oppdatert",
+        "slettes": "Slettes"
+    },
+    "NySoknadPanel": {
+        "title": "Start en ny søknad"
+    },
+    "NySoknadInfo": {
+        "feilet": "Det oppstod en feil under opprettelsen av søknaden. Vennligst prøv igjen senere",
+        "start": "Start søknaden"
+    },
+    "NySoknadVelkomst": {
+        "intro": {
+            "title": "Opplysninger og dokumentasjon",
+            "text": {
+                "p1": "Vennligst fyll ut søknaden så godt du kan. Legg ved relevant dokumentasjon.",
+                "p2": "Se eksempler på <lenke>hvilken dokumentasjon vi kan be om</lenke>.",
+                "p3": "Hvis du med vilje holder tilbake eller gir uriktige opplysninger, kan du måtte betale tilbake stønaden."
+            },
+            "soknadUrl": "https://www.nav.no/okonomisk-sosialhjelp"
+        },
+        "innhenting": {
+            "title": "Innhenting og behandling av personopplysninger",
+            "text": {
+                "p1": "Vi innhenter automatisk opplysninger fra offentlige registre. Ved å trykke \"Start søknad\" godtar du dette.",
+                "p2": "<lenke>Les mer om innhenting og behandling av dine personopplysninger</lenke>."
+            },
+            "persondataUrl": "https://www.nav.no/personopplysninger-sosialhjelp"
+        },
+        "nodsituasjon": {
+            "title": "Er du i en nødssituasjon?",
+            "text": "Hvis du ikke har penger til mat eller et sted å overnatte det neste døgnet, bør du opplyse om dette i søknaden."
+        }
+    },
+    "SokerUnder18Feilmelding": {
+        "title": "For å søke om økonomisk sosialhjelp må du ha fylt 18 år",
+        "text1": "Er du under 18 år, må du ha samtykke av dine foresatte for å søke om økonomisk sosialhjelp.",
+        "text2": "Vil du vite mer om samtykke eller har spørsmål om hvordan dette fungerer, kan du kontakte <lenke>ditt Nav-kontor</lenke> der du bor eller oppholder deg, eller ringe oss på <phone>55 55 33 33</phone>."
+    },
+    "PersonbeskyttelseFeilmelding": {
+        "title": "Beklager",
+        "text": "Du kan dessverre ikke bruke den digitale søknaden om økonomisk sosialhjelp. \nTa kontakt med <lenke>ditt lokale Nav-kontor</lenke> for å få hjelp til å søke."
+    },
+    "TekniskFeil": {
+        "title": "Vi beklager!",
+        "feilmelding": "En teknisk feil har oppstått.",
+        "anbefaling": "Vi anbefaler at du prøver på nytt.",
+        "lenkeTilHovedmeny": "Til startsiden for søknad",
+        "problemetErLogget": "Hendelsen har blitt loggført og problemet utbedres så fort som mulig."
+    },
+    "TrengerDuRaskHjelp": {
+        "title": "Trenger du rask hjelp?",
+        "kontaktKontoret": "Hvis du ikke har penger til det aller mest nødvendige som mat, må du kontakte Nav-kontoret ditt.\n\nNav skal også hjelpe deg med å finne et midlertidig botilbud hvis du ikke har et sted å sove eller oppholde deg det nærmeste døgnet.",
+        "papirAlternativ": "Du kan også <lenke>søke om økonomisk sosialhjelp på papir</lenke> hos ditt Nav-kontor.",
+        "papirAlternativUrl": "https://www.nav.no/okonomisk-sosialhjelp/nb#soknad-papir",
+        "lenkeTilHovedmeny": "Gå til forsiden for sosialhjelp",
+        "lenkeTilNavForside": "Gå til nav.no",
+        "lenkeTilMinSide": "Gå til Min Side",
+        "sendBugRapport": "Send feilrapport",
+        "bugRapportUrl": "https://www.nav.no/person/kontakt-oss/nb/tilbakemeldinger/feil-og-mangler"
+    },
+    "AppHeader": {
+        "title": "Søknad om økonomisk sosialhjelp"
+    },
+    "IkkeFunnet": {
+        "title": "Side ikke funnet",
+        "feilmelding": "Om det gjelder en ferdig innsendt/slettet søknad, returner til startsiden.",
+        "lenkeTilHovedmeny": "Til startsiden for søknad"
+    },
+    "NavEnhetInaktiv": {
+        "varig": {
+            "melding": "{kommunenavn} kommune kan ikke ta i mot digitale søknader.",
+            "forslag": "Du kan <lenke>søke på papirskjema</lenke>."
+        },
+        "midlertidig": {
+            "melding": "{kommuneNavn} kommune kan dessverre ikke ta i mot digitale søknader akkurat nå.",
+            "forslag": "<lenke>Søk på papirskjema</lenke>, eller prøv igjen senere."
+        }
+    },
+    "NavEnhet": {
+        "kontor": "{enhetsnavn}, {kommunenavn} kommune.",
+        "blirSendtTil": "Din søknad vil bli sendt til:"
+    },
+    "NavYtelserTable": {
+        "utbetalt": "Utbetalt",
+        "ytelse": "Ytelse",
+        "belop": "Beløp"
+    },
+    "NavYtelser": {
+        "heading": "Dine utbetalinger fra NAV",
+        "empty": "Vi har ingen registrerte utbetalinger på deg fra NAV den siste måneden.",
+        "error": "På grunn av systemfeil klarte vi ikke å hente inn informasjon om ytelser fra NAV."
+    },
+    "PageFlipperButtons": {
+        "neste": "Neste side",
+        "forrige": "Forrige side"
     }
-  },
-  "NavEnhet": {
-    "kontor": "{enhetsnavn}, {kommunenavn} kommune.",
-    "blirSendtTil": "Din søknad vil bli sendt til:"
-  },
-  "NavYtelserTable": {
-    "utbetalt": "Utbetalt",
-    "ytelse": "Ytelse",
-    "belop": "Beløp"
-  },
-  "NavYtelser": {
-    "heading": "Dine utbetalinger fra NAV",
-    "empty": "Vi har ingen registrerte utbetalinger på deg fra NAV den siste måneden.",
-    "error": "På grunn av systemfeil klarte vi ikke å hente inn informasjon om ytelser fra NAV."
-  }
 }
