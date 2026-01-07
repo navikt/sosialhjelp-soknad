@@ -1,112 +1,116 @@
 {
-  "Informasjon": {
-    "title": "Application for financial assistance"
-  },
-  "EttersendDokuPanel": {
-    "title": "Send documentation for an application you have submitted",
-    "text": {
-      "p1": "Documentation can be sent to applications you have previously submitted.",
-      "p2": "Go to the list of <lenke>your social assistance applications</lenke>",
-      "p3": "Open the application that you would like to forward documentation to",
-      "p4": "Upload the documents you are going to send under “Your documents”"
-    }
-  },
-  "PabegynteSoknaderPanel": {
-    "title": "Continue with an application you have started",
-    "pabegynte": "{count, plural, =1 {One started application} other {# started applications}}",
-    "slettesEtter": "Please note that the started applications will be deleted after {count} days."
-  },
-  "PabegyntSoknadView": {
-    "sistOppdatert": "Last updated",
-    "slettes": "Will be deleted"
-  },
-  "NySoknadPanel": {
-    "title": "Start a new application"
-  },
-  "NySoknadInfo": {
-    "feilet": "An error occurred when setting up the application. Please try later",
-    "start": "Start application"
-  },
-  "NySoknadVelkomst": {
-    "intro": {
-      "title": "Information and documentation",
-      "text": {
-        "p1": "Please complete the application as best you can. Attach relevant documentation.",
-        "p2": "See examples of <lenke>what documentation we might ask for</lenke>.",
-        "p3": "If you intentionally withhold or provide incorrect information, you may have to pay back the benefit."
-      },
-      "soknadUrl": "https://www.nav.no/okonomisk-sosialhjelp/en"
+    "Informasjon": {
+        "title": "Application for financial assistance"
     },
-    "innhenting": {
-      "title": "Collecting and processing of personal data",
-      "text": {
-        "p1": "We automatically collect information from public registers. By pressing \"Start application\" you accept this.",
-        "p2": "<lenke>Read more about collecting and processing of your personal data</lenke>."
-      },
-      "persondataUrl": "https://www.nav.no/personopplysninger-sosialhjelp/en"
+    "EttersendDokuPanel": {
+        "title": "Send documentation for an application you have submitted",
+        "text": {
+            "p1": "Documentation can be sent to applications you have previously submitted.",
+            "p2": "Go to the list of <lenke>your social assistance applications</lenke>",
+            "p3": "Open the application that you would like to forward documentation to",
+            "p4": "Upload the documents you are going to send under “Your documents”"
+        }
     },
-    "nodsituasjon": {
-      "title": "Are you in an emergency situation?",
-      "text": "If you do not have money for food or a place to stay for the next 24 hours, you should mention this in your application."
-    }
-  },
-  "SokerUnder18Feilmelding": {
-    "title": "To apply for financial assistance, you must be at least 18 years old.",
-    "text1": "If you are under 18, you must have consent from your guardians to apply for financial social assistance.",
-    "text2": "If you want to know more about consent or have questions about how this works, you can contact <lenke>your local Nav office</lenke> where you live or stay, or call us at <phone>55 55 33 33</phone>."
-  },
-  "PersonbeskyttelseFeilmelding": {
-    "title": "Sorry",
-    "text": "Unfortunately, you cannot use the digital application for financial assistance. Contact your local <lenke>Nav office</lenke> to receive help applying."
-  },
-  "TekniskFeil": {
-    "title": "We're sorry!",
-    "feilmelding": "A technical error has occurred.",
-    "anbefaling": "We recommend that you try again.",
-    "lenkeTilHovedmeny": "To the home page for the application",
-    "problemetErLogget": "The issue has been logged and the problem will be rectified as soon as possible."
-  },
-  "TrengerDuRaskHjelp": {
-    "title": "Do you need immediate help?",
-    "kontaktKontoret": "If you do not have money for necessary things such as food, you must contact your Nav office. Nav will also help you to find a temporary place of residence if you have nowhere to sleep or to stay in the next 24 hours.",
-    "papirAlternativ": "You can also <lenke>apply for financial assistance on paper</lenke> at your Nav office.",
-    "papirAlternativUrl": "https://www.nav.no/okonomisk-sosialhjelp/en#soknad-papir",
-    "lenkeTilHovedmeny": "Go to the front page for financial assistance",
-    "lenkeTilNavForside": "Go to nav.no",
-    "lenkeTilMinSide": "Go to My Page",
-    "sendBugRapport": "Send bug report",
-    "bugRapportUrl": "https://www.nav.no/person/kontakt-oss/en/tilbakemeldinger/feil-og-mangler"
-  },
-  "AppHeader": {
-    "title": "Application for financial assistance"
-  },
-  "IkkeFunnet": {
-    "title": "Page not found",
-    "feilmelding": "If this concerns a submitted/deleted application, return to the home page.",
-    "lenkeTilHovedmeny": "To the home page for the application"
-  },
-  "NavEnhetInaktiv": {
-    "varig": {
-      "melding": "{kommunenavn} municipality cannot accept digital applications.",
-      "forslag": "You can <lenke>apply using a paper form</lenke>."
+    "PabegynteSoknaderPanel": {
+        "title": "Continue with an application you have started",
+        "pabegynte": "{count, plural, =1 {One started application} other {# started applications}}",
+        "slettesEtter": "Please note that the started applications will be deleted after {count} days."
     },
-    "midlertidig": {
-      "melding": "{kommunenavn} municipality cannot accept digital applications right now.",
-      "forslag": "<lenke>Apply using a paper form</lenke>, or try again later."
+    "PabegyntSoknadView": {
+        "sistOppdatert": "Last updated",
+        "slettes": "Will be deleted"
+    },
+    "NySoknadPanel": {
+        "title": "Start a new application"
+    },
+    "NySoknadInfo": {
+        "feilet": "An error occurred when setting up the application. Please try later",
+        "start": "Start application"
+    },
+    "NySoknadVelkomst": {
+        "intro": {
+            "title": "Information and documentation",
+            "text": {
+                "p1": "Please complete the application as best you can. Attach relevant documentation.",
+                "p2": "See examples of <lenke>what documentation we might ask for</lenke>.",
+                "p3": "If you intentionally withhold or provide incorrect information, you may have to pay back the benefit."
+            },
+            "soknadUrl": "https://www.nav.no/okonomisk-sosialhjelp/en"
+        },
+        "innhenting": {
+            "title": "Collecting and processing of personal data",
+            "text": {
+                "p1": "We automatically collect information from public registers. By pressing \"Start application\" you accept this.",
+                "p2": "<lenke>Read more about collecting and processing of your personal data</lenke>."
+            },
+            "persondataUrl": "https://www.nav.no/personopplysninger-sosialhjelp/en"
+        },
+        "nodsituasjon": {
+            "title": "Are you in an emergency situation?",
+            "text": "If you do not have money for food or a place to stay for the next 24 hours, you should mention this in your application."
+        }
+    },
+    "SokerUnder18Feilmelding": {
+        "title": "To apply for financial assistance, you must be at least 18 years old.",
+        "text1": "If you are under 18, you must have consent from your guardians to apply for financial social assistance.",
+        "text2": "If you want to know more about consent or have questions about how this works, you can contact <lenke>your local Nav office</lenke> where you live or stay, or call us at <phone>55 55 33 33</phone>."
+    },
+    "PersonbeskyttelseFeilmelding": {
+        "title": "Sorry",
+        "text": "Unfortunately, you cannot use the digital application for financial assistance. Contact your local <lenke>Nav office</lenke> to receive help applying."
+    },
+    "TekniskFeil": {
+        "title": "We're sorry!",
+        "feilmelding": "A technical error has occurred.",
+        "anbefaling": "We recommend that you try again.",
+        "lenkeTilHovedmeny": "To the home page for the application",
+        "problemetErLogget": "The issue has been logged and the problem will be rectified as soon as possible."
+    },
+    "TrengerDuRaskHjelp": {
+        "title": "Do you need immediate help?",
+        "kontaktKontoret": "If you do not have money for necessary things such as food, you must contact your Nav office. Nav will also help you to find a temporary place of residence if you have nowhere to sleep or to stay in the next 24 hours.",
+        "papirAlternativ": "You can also <lenke>apply for financial assistance on paper</lenke> at your Nav office.",
+        "papirAlternativUrl": "https://www.nav.no/okonomisk-sosialhjelp/en#soknad-papir",
+        "lenkeTilHovedmeny": "Go to the front page for financial assistance",
+        "lenkeTilNavForside": "Go to nav.no",
+        "lenkeTilMinSide": "Go to My Page",
+        "sendBugRapport": "Send bug report",
+        "bugRapportUrl": "https://www.nav.no/person/kontakt-oss/en/tilbakemeldinger/feil-og-mangler"
+    },
+    "AppHeader": {
+        "title": "Application for financial assistance"
+    },
+    "IkkeFunnet": {
+        "title": "Page not found",
+        "feilmelding": "If this concerns a submitted/deleted application, return to the home page.",
+        "lenkeTilHovedmeny": "To the home page for the application"
+    },
+    "NavEnhetInaktiv": {
+        "varig": {
+            "melding": "{kommunenavn} municipality cannot accept digital applications.",
+            "forslag": "You can <lenke>apply using a paper form</lenke>."
+        },
+        "midlertidig": {
+            "melding": "{kommunenavn} municipality cannot accept digital applications right now.",
+            "forslag": "<lenke>Apply using a paper form</lenke>, or try again later."
+        }
+    },
+    "NavEnhet": {
+        "kontor": "{enhetsnavn}, {kommunenavn} municipality.",
+        "blirSendtTil": "Your application will be sent to:"
+    },
+    "NavYtelserTable": {
+        "utbetalt": "Paid out",
+        "ytelse": "Benefit",
+        "belop": "Amount"
+    },
+    "NavYtelser": {
+        "heading": "Your payments from NAV",
+        "empty": "You have no payments registered from NAV in the last month.",
+        "error": "Due to a system fault we have not been able to obtain information about benefits from NAV."
+    },
+    "PageFlipperButtons": {
+        "neste": "Next page",
+        "forrige": "Previous page"
     }
-  },
-  "NavEnhet": {
-    "kontor": "{enhetsnavn}, {kommunenavn} municipality.",
-    "blirSendtTil": "Your application will be sent to:"
-  },
-  "NavYtelserTable": {
-    "utbetalt": "Paid out",
-    "ytelse": "Benefit",
-    "belop": "Amount"
-  },
-  "NavYtelser": {
-    "heading": "Your payments from NAV",
-    "empty": "You have no payments registered from NAV in the last month.",
-    "error": "Due to a system fault we have not been able to obtain information about benefits from NAV."
-  }
 }
