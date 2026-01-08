@@ -55,7 +55,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: "Build npm project"
-        uses: navikt/sosialhjelp-ci/actions/build-node@v13
+        uses: navikt/sosialhjelp-ci/actions/build-node@v15
         with:
           node-version: 24
           build-less: "false"
