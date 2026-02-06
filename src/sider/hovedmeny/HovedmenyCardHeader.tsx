@@ -20,7 +20,7 @@ export const HovedmenyCardHeader = ({children, icon}: {children: React.ReactNode
 
 const HovedmenyCardIcon = ({children}: {children: React.ReactNode}) => (
     <div
-        className={"rounded-full bg-green-500/40 w-11 h-11 justify-center items-center tw-hidden lg:flex mr-6"}
+        className={"rounded-full bg-ax-success-600/40 w-11 h-11 justify-center items-center tw-hidden ax-lg:flex mr-6"}
         aria-hidden="true"
     >
         {children}

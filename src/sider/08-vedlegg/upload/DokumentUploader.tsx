@@ -62,7 +62,7 @@ export const DokumentUploader = ({
                     resetAlerts();
                     vedleggElement?.current?.click();
                 }}
-                className="last-opp-vedlegg-knapp bg-(--a-surface-default)!"
+                className="last-opp-vedlegg-knapp bg-(--ax-bg-default)!"
             >
                 <div className={"flex gap-1 items-center"}>
                     <PlusIcon aria-hidden={true} /> {t("opplysninger.vedlegg.knapp.tekst")}

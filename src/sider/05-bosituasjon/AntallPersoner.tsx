@@ -15,7 +15,7 @@ export const AntallPersoner = () => {
 
     return (
         <TextField
-            className={"mb-12 lg:mb-24"}
+            className={"mb-12 ax-lg:mb-24"}
             description={t("bosituasjon.antallpersoner.label")}
             label={t("bosituasjon.antallpersoner.sporsmal")}
             id={ValidationArea.BosituasjonAntallPersoner}

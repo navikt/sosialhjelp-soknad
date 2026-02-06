@@ -44,10 +44,10 @@ export const FilePreviewThumbs = ({
                 {pages.map((pageNumber) => (
                     <div
                         key={pageNumber}
-                        className={cx("snap-start p-2", {"font-bold bg-gray-200": currentPage === pageNumber})}
+                        className={cx("snap-start p-2", {"font-ax-bold bg-ax-neutral-300": currentPage === pageNumber})}
                         onClick={() => setPageNumber(pageNumber)}
                     >
-                        <div className={"border-2 border-blue-200 bg-red-300 h-[100px]"} key={pageNumber}>
+                        <div className={"border-2 border-ax-accent-300 bg-ax-danger-400 h-[100px]"} key={pageNumber}>
                             <Thumbnail pageNumber={1} height={96} onItemClick={() => {}} />
                         </div>
                         <div className={"text-center"}>{pageNumber}</div>

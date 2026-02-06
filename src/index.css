@@ -59,7 +59,7 @@ body {
 
 .top-stepper .navds-stepper__step--active > .navds-stepper__circle {
     color: white;
-    background-color: var(--a-blue-700);
+    background-color: var(--ax-accent-800);
 }
 
 .top-stepper .navds-stepper__circle {

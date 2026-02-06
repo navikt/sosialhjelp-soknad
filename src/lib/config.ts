@@ -102,7 +102,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             port: "8181",
         },
         driftsmeldingUrl: "http://localhost:3005/sosialhjelp/driftsmeldinger/api",
-        baseURL: "http://localhost:3000/sosialhjelp/soknad/api/soknad-api/",
+        baseURL: "/sosialhjelp/soknad/api/soknad-api/",
         innsynURL: "http://localhost:3000/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",

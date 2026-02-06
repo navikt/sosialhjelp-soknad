@@ -15,7 +15,7 @@ export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_B
         return <Loader />;
     }
     return (
-        <div className={"rounded-md bg-surface-action-subtle p-8"}>
+        <div className={"rounded-md bg-ax-bg-accent-soft p-8"}>
             <Heading level={"4"} size={"small"} spacing>
                 {t("utbetalinger.inntekt.skattbar.kort_saldo_tittel")}
             </Heading>

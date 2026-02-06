@@ -12,7 +12,7 @@ export const Botype = () => {
     const erAnnet = () => !["EIER", "LEIER", "KOMMUNAL", "INGEN", null].includes(botype || null);
 
     return (
-        <div className={"mt-12 lg:mt-24 mb-12 lg:mb-24"}>
+        <div className={"mt-12 ax-lg:mt-24 mb-12 ax-lg:mb-24"}>
             <RadioGroup
                 legend={t("bosituasjon.sporsmal")}
                 value={erAnnet() ? "ANNET" : botype || ""}

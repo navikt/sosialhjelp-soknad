@@ -7,7 +7,7 @@ export const NySoknadVelkomst = () => {
     const t = useTranslations("NySoknadVelkomst");
 
     return (
-        <div className={"p-8 lg:py-12 lg:px-24 flex flex-col"}>
+        <div className={"p-8 ax-lg:py-12 ax-lg:px-24 flex flex-col"}>
             <div className={"flex flex-col items-center mb-12"}>
                 <StartNySoknadIllustrasjon />
             </div>

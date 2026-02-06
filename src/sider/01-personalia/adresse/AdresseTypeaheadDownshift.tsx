@@ -36,9 +36,9 @@ const FetchAddress = ({children, searchvalue, isOpen}: FetchAddressProps) => {
 const SelectMenu = styled.ul`
     position: relative;
     z-index: 3;
-    border: 1px solid var(--a-border-default);
-    border-radius: var(--a-spacing-2);
-    background-color: var(--a-surface-default);
+    border: 1px solid var(--ax-border-neutral);
+    border-radius: var(--ax-space-8);
+    background-color: var(--ax-bg-default);
     padding: 0.5rem 0;
     width: 100%;
 `;
@@ -46,8 +46,8 @@ const SelectMenu = styled.ul`
 const Item = styled.li<{$isHighlighted: boolean}>`
     padding: 0.25rem 0.5rem;
 
-    color: ${(props) => (props.$isHighlighted ? "var(--a-surface-default)" : "inherit")};
-    background-color: ${(props) => (props.$isHighlighted ? "var(--a-blue-400)" : "inherit")};
+    color: ${(props) => (props.$isHighlighted ? "var(--ax-bg-default)" : "inherit")};
+    background-color: ${(props) => (props.$isHighlighted ? "var(--ax-accent-500)" : "inherit")};
 `;
 
 const AdressesokHeading = () => {

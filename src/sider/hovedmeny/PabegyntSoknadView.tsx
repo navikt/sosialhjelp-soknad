@@ -31,7 +31,7 @@ export const PabegyntSoknadView = ({
             border
             className={"p-4! group text-[#222]! hover:text-[#000]!"}
         >
-            <LinkPanel.Title as={"h3"} className={"flex flex-col lg:flex-row align-center"}>
+            <LinkPanel.Title as={"h3"} className={"flex flex-col ax-lg:flex-row align-center"}>
                 <Label style={{marginRight: "1rem"}}>
                     {t("sistOppdatert")} <LocalizedDate date={sistOppdatert} />
                 </Label>

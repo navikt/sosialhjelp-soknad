@@ -33,7 +33,7 @@ const BegrunnelseForm = ({
             <SkjemaStegErrorSummary errors={errors} />
             <form
                 onBlur={handleSubmit(onSubmit)}
-                className={"space-y-12 lg:space-y-24"}
+                className={"space-y-12 ax-lg:space-y-24"}
                 onSubmit={(e) => e.preventDefault()}
             >
                 {isError && <Alert variant={"error"}>{t("skjema.navigering.feil")}</Alert>}
