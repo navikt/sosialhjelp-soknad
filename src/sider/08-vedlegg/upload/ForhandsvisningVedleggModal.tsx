@@ -53,7 +53,7 @@ export const ForhandsvisningVedleggModal = ({
             open={true}
             onClose={handleClose}
             closeOnBackdropClick={false}
-            className="bg-white"
+            className="bg-ax-bg-default"
             aria-label={header ?? ""}
         >
             <Modal.Header>

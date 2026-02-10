@@ -10,6 +10,6 @@ const UnderskjemaArrow = () => (
 export const NyttUnderskjema = ({hidden, children}: {hidden?: boolean; children: React.ReactNode}) => (
     <UnmountClosed isOpened={!hidden}>
         <UnderskjemaArrow />
-        <div className={"bg-[var(--ax-bg-accent-soft)] rounded-lg p-4 shadow-lg"}>{children}</div>
+        <div className={"bg-ax-bg-accent-soft rounded-lg p-4 shadow-lg"}>{children}</div>
     </UnmountClosed>
 );

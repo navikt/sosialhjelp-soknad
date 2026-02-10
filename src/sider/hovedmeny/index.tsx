@@ -27,7 +27,7 @@ export const Informasjon = () => {
                 >
                     {t("title")}
                 </Heading>
-                <VStack gap={"5"}>
+                <VStack gap="space-20">
                     <NySoknadPanel defaultOpen={open?.length === 0} />
                     <PabegynteSoknaderPanel />
                     {!!numRecentlySent && <EttersendDokuPanel />}

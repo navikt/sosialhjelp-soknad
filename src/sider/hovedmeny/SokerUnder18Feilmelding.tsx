@@ -16,7 +16,7 @@ export const SokerUnder18Feilmelding = () => {
                     <Heading level={"2"} size={"medium"}>
                         {t("title")}
                     </Heading>
-                    <VStack gap="5">
+                    <VStack gap="space-6">
                         <BodyLong>{t("text1")}</BodyLong>
                         <BodyLong>
                             {t.rich("text2", {

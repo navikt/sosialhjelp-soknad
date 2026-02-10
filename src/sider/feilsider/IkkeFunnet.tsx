@@ -8,7 +8,7 @@ import {useTranslations} from "next-intl";
 const IkkeFunnet = () => {
     const tN = useTranslations("IkkeFunnet");
     return (
-        <section className="bg-white grow flex flex-col">
+        <section className="bg-ax-bg-default grow flex flex-col">
             <ErrorPageColumnarLayout
                 leftMargin={<SystemError className={"text-[var(--ax-bg-danger-strong)] w-20 h-20"} />}
                 className={"lg:py-8"}

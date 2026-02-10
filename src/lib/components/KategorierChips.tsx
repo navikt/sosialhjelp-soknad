@@ -18,7 +18,13 @@ const KategorierChips = ({categories, toggle}: Props) => {
             </Label>
             <BodyShort>{t("begrunnelse.kategorier.description")}</BodyShort>
             <VStack align="start">
-                <HStack align="start" gap="2" id={"kategorier"} aria-labelledby={"kategorier-label"} className={"pt-4"}>
+                <HStack
+                    align="start"
+                    gap="space-2"
+                    id={"kategorier"}
+                    aria-labelledby={"kategorier-label"}
+                    className={"pt-4"}
+                >
                     {categories.map((category) => (
                         <Category
                             key={category.key}
@@ -50,9 +56,9 @@ const Category = ({category, toggle, showXMark}: CategoryProps) => {
             key={category.text}
             onClick={() => toggle(category.text)}
         >
-            <VStack gap="2" margin="6" className={`w-full`}>
+            <VStack gap="space-2" margin="space-6" className={`w-full`}>
                 <HStack justify="space-between" align="center">
-                    <HStack gap="2" align="center">
+                    <HStack gap="space-2" align="center">
                         <HStack>
                             {category.icons.map((Icon, index) => (
                                 <Icon key={index} className="w-6 h-6" />
@@ -79,7 +85,7 @@ const SubCategories = ({category, toggle}: SubCategoriesProps) => {
         return null;
     }
     return (
-        <VStack gap="4">
+        <VStack gap="space-4">
             {category.ingressKey && <BodyShort align="start">{t(category.ingressKey)}</BodyShort>}
             <Box
                 style={

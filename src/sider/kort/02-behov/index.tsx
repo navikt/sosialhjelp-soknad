@@ -100,7 +100,7 @@ const Behov = () => {
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={2} onStepChange={goto} />
-            <VStack gap="4">
+            <VStack gap="space-4">
                 <Alert variant="info">
                     <BodyShort>{t("arbeidOgFamilie.alert")}</BodyShort>
                 </Alert>

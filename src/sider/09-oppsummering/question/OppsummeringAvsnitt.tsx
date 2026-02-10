@@ -15,8 +15,10 @@ export const OppsummeringAvsnitt = ({avsnitt: {tittel, sporsmal}}: {avsnitt: Avs
                     {t(tittel as DigisosLanguageKey)}
                 </Heading>
             </div>
-            <VStack gap="4">
-                {sporsmal?.map((sporsmal, i) => <OppsummeringSporsmal sporsmal={sporsmal} key={i} />)}
+            <VStack gap="space-4">
+                {sporsmal?.map((sporsmal, i) => (
+                    <OppsummeringSporsmal sporsmal={sporsmal} key={i} />
+                ))}
             </VStack>
         </div>
     );
