@@ -33,8 +33,8 @@ export const AdresseSok = ({
 }) => {
     return (
         <div className={className}>
-            <Triangle className={"border-b-blue-50! ml-4"} />
-            <div className={"space-y-4 bg-blue-50 rounded-lg p-4 pt-3 shadow-lg"}>
+            <Triangle className={"border-b-ax-accent-100! ml-4"} />
+            <div className={"space-y-4 bg-ax-accent-100 rounded-lg p-4 pt-3 shadow-lg"}>
                 <AdresseTypeahead
                     defaultValue={defaultValue}
                     onChange={async (adresse) => onChange(adresse ? adresseForslagTilAdresse(adresse) : null)}

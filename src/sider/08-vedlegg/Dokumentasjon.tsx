@@ -9,7 +9,7 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
     const {sporsmal, undertekst} = useDokumentasjonTekster(opplysningstype);
 
     return (
-        <div className={"rounded-md bg-surface-action-subtle p-8"}>
+        <div className={"rounded-md bg-ax-bg-accent-soft p-8"}>
             <Heading level={"4"} size={"small"} spacing>
                 {sporsmal}
             </Heading>

@@ -5,7 +5,7 @@ export const UnderskjemaArrow = styled.div`
     height: 0;
     border-style: solid;
     border-width: 0 0.75rem 0.75rem 0.75rem;
-    border-color: transparent transparent var(--a-lightblue-50) transparent;
+    border-color: transparent transparent var(--ax-bg-info-soft) transparent;
     margin: 0;
     margin-left: 1rem;
     padding: 0;

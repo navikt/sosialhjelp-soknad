@@ -15,7 +15,7 @@ export const FilePreviewButtons = ({
 
     if (isFullscreen)
         return (
-            <div className={"bg-white flex justify-between items-center px-4 py-2 w-full h-fit"}>
+            <div className="bg-ax-bg-default flex justify-between items-center px-4 py-2 w-full h-fit">
                 <div className={"pl-8"}>
                     <NavLogoBlack />
                 </div>

@@ -8,7 +8,7 @@ export const TrengerDuRaskHjelp = () => {
     const t = useTranslations("TrengerDuRaskHjelp");
 
     return (
-        <ErrorPageColumnarLayout className={"bg-[var(--a-surface-action-subtle)] grow"}>
+        <ErrorPageColumnarLayout className={"bg-[var(--ax-bg-accent-soft)] grow"}>
             <Heading level={"3"} size={"xlarge"} spacing>
                 {t("title")}
             </Heading>

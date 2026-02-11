@@ -9,7 +9,7 @@ export const TekniskFeil = ({error, reset}: {error: Error; reset?: () => void}) 
     const t = useTranslations("TekniskFeil");
 
     return (
-        <ErrorPageColumnarLayout leftMargin={<SystemError className={"text-[var(--a-surface-danger)] w-20 h-20"} />}>
+        <ErrorPageColumnarLayout leftMargin={<SystemError className={"text-[var(--ax-bg-danger-strong)] w-20 h-20"} />}>
             <Heading level="1" size="xlarge" spacing>
                 {t("title")}
             </Heading>
