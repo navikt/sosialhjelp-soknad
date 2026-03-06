@@ -1,3 +1,4 @@
+import {useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {BodyShort, Button, Checkbox} from "@navikt/ds-react";
@@ -16,13 +17,20 @@ export const KontonrEdit = ({
 }) => {
     const {t} = useTranslation("skjema");
 
-    const {handleSubmit, register, watch, control} = useForm({
+    const {handleSubmit, register, watch, control, setValue} = useForm({
         defaultValues,
         resolver: zodResolver(KontonummerFormSchema),
     });
 
     /* eslint-disable-next-line react-hooks/incompatible-library */
     const kontonummerInputDisabled = watch("harIkkeKonto") === true;
+
+    useEffect(() => {
+        if (kontonummerInputDisabled) {
+            setValue("kontonummerBruker", undefined);
+        }
+    }, [kontonummerInputDisabled, setValue]);
+
     return (
         <form onSubmit={handleSubmit(onSave)} className={"space-y-4"}>
             <BodyShort weight={"semibold"}>{t("kontakt.kontonummer.label")}</BodyShort>
