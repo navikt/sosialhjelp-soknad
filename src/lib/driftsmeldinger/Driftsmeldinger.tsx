@@ -1,4 +1,4 @@
-import {Alert} from "@navikt/ds-react";
+import {Alert, Link} from "@navikt/ds-react";
 import Markdown from "markdown-to-jsx";
 import {getDriftsmeldinger} from "./getDriftsmeldinger.ts";
 
@@ -11,7 +11,7 @@ export const Driftsmeldinger = async () => {
             fullWidth
             className={"justify-center [&>div]:max-w-lg lg:[&>div]:max-w-3xl md:[&>svg]:ml-8 [&>div]:w-full"}
         >
-            <Markdown>{text}</Markdown>
+            <Markdown options={{overrides: {a: {component: Link, props: {inlineText: true}}}}}>{text}</Markdown>
         </Alert>
     ));
 };
