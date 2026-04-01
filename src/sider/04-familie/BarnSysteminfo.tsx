@@ -1,7 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {useAnsvar} from "../../lib/hooks/data/useAnsvar";
 import {Systeminfo, SysteminfoItem} from "../../lib/components/systeminfo/Systeminfo";
-import {FullName} from "../../lib/components/FullName.tsx";
 import {LocalizedDate} from "../../lib/components/LocalizedDate";
 import {LocalizedYesNo} from "../../lib/components/LocalizedYesNo";
 import * as React from "react";
@@ -13,9 +12,6 @@ export const BarnSysteminfo = ({barnIndex}: {barnIndex: number}) => {
 
     return (
         <Systeminfo>
-            <SysteminfoItem as="div" label={t("kontakt.system.personalia.navn")}>
-                <FullName name={ansvar.navn} />
-            </SysteminfoItem>
             <SysteminfoItem as="div" label={t("familierelasjon.fodselsdato")}>
                 <LocalizedDate date={ansvar.fodselsdato} />
             </SysteminfoItem>
