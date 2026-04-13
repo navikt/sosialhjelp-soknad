@@ -84,7 +84,7 @@
         "@types/react-scroll": "^1.8.10",
         "@types/styled-components": "^5.1.36",
         "ajv": "^8.18.0",
-        "eslint": "^10.2.0",
+        "eslint": "^9.39.4",
         "husky": "^9.1.7",
         "lint-staged": "^16.4.0",
         "orval": "^7.21.0",
