@@ -1,4 +1,4 @@
-FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/node/24-slim AS runtime
+FROM gcr.io/distroless/nodejs24-debian12 AS runtime
 
 WORKDIR /app
 
