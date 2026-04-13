@@ -135,5 +135,10 @@
             "prettier --write",
             "eslint --fix --max-warnings 1"
         ]
+    },
+    "pnpm": {
+        "overrides": {
+            "lru-cache": "11.2.7"
+        }
     }
 }
