@@ -7,9 +7,9 @@ env:
   LOGIN_SESSION_API_URL: "https://www.nav.no/sosialhjelp/soknad/oauth2/session"
   UMAMI_ID: "82a0745a-b0b1-419a-82cb-cd4b0849b6bf"
 limits:
-  memory: 800Mi
+  memory: 600Mi
 requests:
-  cpu: 500m
+  cpu: 50m
   memory: 400Mi
 replicas:
   min: 2
