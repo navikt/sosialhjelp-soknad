@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: navikt/sosialhjelp-ci/actions/playwright/build@v14
+      - uses: navikt/sosialhjelp-ci/actions/playwright/build@v19
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run-orval: "true"
