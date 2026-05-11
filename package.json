@@ -2,7 +2,6 @@
     "name": "sosialhjelp-soknad",
     "version": "0.1.0",
     "private": true,
-    "packageManager": "pnpm@10.28.0",
     "homepage": "/sosialhjelp/soknad/",
     "dependencies": {
         "@fremtind/jkl-formatters-util": "^6.0.59",
