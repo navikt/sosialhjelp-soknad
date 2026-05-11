@@ -41,7 +41,7 @@
         "jsdom": "^29.0.1",
         "libphonenumber-js": "^1.12.41",
         "markdown-to-jsx": "^9.7.13",
-        "next": "16.2.2",
+        "next": "16.2.3",
         "next-intl": "^4.9.0",
         "next-logger": "^5.0.2",
         "pino": "^10.3.1",
