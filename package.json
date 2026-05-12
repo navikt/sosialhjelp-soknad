@@ -138,7 +138,8 @@
     },
     "pnpm": {
         "overrides": {
-            "lru-cache": "11.2.7"
+            "lru-cache": "11.2.7",
+            "follow-redirects": ">=1.16.0"
         }
     }
 }
