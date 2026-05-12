@@ -138,7 +138,8 @@
     },
     "pnpm": {
         "overrides": {
-            "lru-cache": "11.2.7"
+            "lru-cache": "11.2.7",
+            "minimatch@3.1.2": "3.1.4"
         }
     }
 }
