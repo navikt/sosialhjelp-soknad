@@ -116,7 +116,7 @@
         "fetch-api": "pnpm run fetch-old-api && pnpm run fetch-new-api",
         "orval": "rm -rf ./src/generated && orval --prettier",
         "lint": "eslint",
-        "preinstall": "pnpm dlx -y only-allow pnpm"
+        "preinstall": "npx -y only-allow pnpm"
     },
     "browserslist": {
         "production": [
@@ -136,10 +136,5 @@
             "prettier --write",
             "eslint --fix --max-warnings 1"
         ]
-    },
-    "pnpm": {
-        "overrides": {
-            "lru-cache": "11.2.7"
-        }
     }
 }
