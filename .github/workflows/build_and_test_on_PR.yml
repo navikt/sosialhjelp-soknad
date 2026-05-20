@@ -17,9 +17,10 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: navikt/sosialhjelp-ci/actions/build-node@v14
+      - uses: navikt/sosialhjelp-ci/actions/build-node@v20
         with:
-          node-version: "24"
+          pnpm-version: '11'
+          node-version: '24'
           reader-token: ${{ secrets.GITHUB_TOKEN }}
           run-orval: "true"
           run-test: "true"
@@ -38,4 +39,3 @@ jobs:
     permissions:
       contents: read
       id-token: write
-      packages: write
