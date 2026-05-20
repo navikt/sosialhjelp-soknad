@@ -28,6 +28,7 @@ on:
 permissions:
   contents: read
   id-token: write
+  packages: write
 
 jobs:
   playwright-tests:
