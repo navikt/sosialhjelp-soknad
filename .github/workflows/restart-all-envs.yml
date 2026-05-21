@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        env: [dev, mock]
+        env: [dev, mock, preprod]
     uses: ./.github/workflows/build_deploy_gcp_dev.yml
     with:
       environment: ${{ matrix.env }}

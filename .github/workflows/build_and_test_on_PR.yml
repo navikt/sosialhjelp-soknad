@@ -11,9 +11,8 @@ jobs:
     name: "Build Code and run Tests"
     runs-on: ubuntu-latest
     permissions:
-      packages: write
       contents: read
-      id-token: write
+      packages: read
     env:
       NEXT_PUBLIC_DIGISOS_ENV: dev # tester er pr. nå avhengig av denne
     steps:
