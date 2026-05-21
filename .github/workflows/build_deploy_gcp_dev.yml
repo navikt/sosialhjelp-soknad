@@ -18,6 +18,10 @@ on:
       environment:
         required: true
         type: string
+      skip_playwright:
+        required: false
+        type: boolean
+        default: false
   push:
     branches:
       - "main"
@@ -29,6 +33,11 @@ permissions:
 jobs:
   playwright-tests:
     name: Playwright Tests
+    if: ${{ !inputs.skip_playwright }}
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
     uses: ./.github/workflows/playwright-tests.yml
   prepare:
     runs-on: ubuntu-latest
