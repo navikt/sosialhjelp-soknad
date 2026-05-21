@@ -1,0 +1,36 @@
+name: "Redeploy Wonderwall"
+
+on:
+  schedule:
+    - cron: "0 2 * * 0"
+  workflow_dispatch:
+
+jobs:
+  deploy-wonderwall-dev:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        env: [ dev, mock, preprod, prod ]
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Set cluster based on env"
+        run: |
+          if [ "${{ matrix.env }}" = "prod" ]; then
+            echo "CLUSTER=prod-gcp" >> $GITHUB_ENV
+          else
+            echo "CLUSTER=dev-gcp" >> $GITHUB_ENV
+          fi
+
+      - name: "Deploy ${{ matrix.env }} to ${{ env.CLUSTER }}"
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          RESOURCE: wonderwall/${{ matrix.env }}/wonderwall.yml
+          CLUSTER: ${{ env.CLUSTER }}
+          REF: ${{ github.sha }}
+          PRINT_PAYLOAD: true
