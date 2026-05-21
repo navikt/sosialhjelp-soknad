@@ -5,6 +5,11 @@ name: "Build and deploy to prod-gcp"
 on:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      skip_playwright:
+        required: false
+        type: boolean
+        default: false
   push:
     branches:
       - "main"
@@ -17,6 +22,7 @@ permissions:
 jobs:
   playwright-tests:
     name: Playwright Tests
+    if: ${{ !inputs.skip_playwright }}
     permissions:
       contents: read
       id-token: write
