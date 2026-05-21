@@ -4,6 +4,7 @@ name: "Build and deploy to prod-gcp"
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - "main"

@@ -12,10 +12,12 @@ on:
         default: "dev"
         type: choice
         options:
-          - dev
-          - mock
-          - preprod
           - alle
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
   push:
     branches:
       - "main"
@@ -23,7 +25,6 @@ on:
 permissions:
   contents: read
   id-token: write
-  packages: write
 
 jobs:
   playwright-tests:
@@ -39,10 +40,10 @@ jobs:
         run: |
           if [[ "${{ github.event_name }}" == "push" ]]; then
             echo '{"include": [{"environment": "preprod"}]}' > matrix.json
-          elif [[ "${{ github.event.inputs.environment }}" == "alle" ]]; then
+          elif [[ "${{ inputs.environment }}" == "alle" ]]; then
             echo '{"include": [{"environment": "preprod"}, {"environment": "mock"}, {"environment": "dev"}]}' > matrix.json
           else
-            echo '{"include": [{"environment": "'${{ github.event.inputs.environment }}'"}]}' > matrix.json
+            echo '{"include": [{"environment": "${{ inputs.environment }}"}]}' > matrix.json
           fi
           echo "matrix=$(cat matrix.json)" >> $GITHUB_OUTPUT
 
