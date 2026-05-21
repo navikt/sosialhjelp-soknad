@@ -18,12 +18,9 @@ jobs:
     uses: ./.github/workflows/build_deploy_gcp_dev.yml
     with:
       environment: ${{ matrix.env }}
-      skip_playwright: ${{ github.event_name == 'schedule' }}
     secrets: inherit
 
   deploy_prod:
     needs: deploy_test_envs
     uses: ./.github/workflows/build_deploy_gcp_prod.yml
-    with:
-      skip_playwright: ${{ github.event_name == 'schedule' }}
     secrets: inherit
