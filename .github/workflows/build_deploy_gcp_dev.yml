@@ -1,7 +1,7 @@
 # Denne filen vil erstatte build_prod, build_deploy_mock, etc.
 
 name: "Build and deploy to dev-gcp"
-run-name: "Deploy '${{ github.ref_name }}' to '${{ inputs.environment || 'preprod' }}'"
+run-name: "Deploy '${{ github.ref_name }}' to '${{ github.event.inputs.environment }}' (preprod on push to main)"
 
 on:
   workflow_dispatch:
@@ -12,19 +12,12 @@ on:
         default: "dev"
         type: choice
         options:
-          - dev
-          - mock
-          - preprod
           - alle
   workflow_call:
     inputs:
       environment:
         required: true
         type: string
-      skip_playwright:
-        required: false
-        type: boolean
-        default: false
   push:
     branches:
       - "main"
@@ -32,16 +25,10 @@ on:
 permissions:
   contents: read
   id-token: write
-  packages: write
 
 jobs:
   playwright-tests:
     name: Playwright Tests
-    if: ${{ !inputs.skip_playwright }}
-    permissions:
-      contents: read
-      id-token: write
-      packages: write
     uses: ./.github/workflows/playwright-tests.yml
   prepare:
     runs-on: ubuntu-latest
@@ -69,10 +56,9 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: "Build npm project"
-        uses: navikt/sosialhjelp-ci/actions/build-node@v20
+        uses: navikt/sosialhjelp-ci/actions/build-node@v13
         with:
-          node-version: "24"
-          pnpm-version: "11"
+          node-version: 24
           build-less: "false"
           run-orval: "true"
           reader-token: ${{ secrets.READER_TOKEN }}

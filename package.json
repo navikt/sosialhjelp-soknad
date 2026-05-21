@@ -116,7 +116,7 @@
         "fetch-api": "pnpm run fetch-old-api && pnpm run fetch-new-api",
         "orval": "rm -rf ./src/generated && orval --prettier",
         "lint": "eslint",
-        "preinstall": "pnpm dlx only-allow pnpm"
+        "preinstall": "npx -y only-allow pnpm"
     },
     "browserslist": {
         "production": [

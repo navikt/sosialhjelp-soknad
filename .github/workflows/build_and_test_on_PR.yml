@@ -11,17 +11,15 @@ jobs:
     name: "Build Code and run Tests"
     runs-on: ubuntu-latest
     permissions:
-      contents: read
       packages: read
     env:
       NEXT_PUBLIC_DIGISOS_ENV: dev # tester er pr. nå avhengig av denne
     steps:
       - uses: actions/checkout@v6
 
-      - uses: navikt/sosialhjelp-ci/actions/build-node@v20
+      - uses: navikt/sosialhjelp-ci/actions/build-node@v14
         with:
-          pnpm-version: '11'
-          node-version: '24'
+          node-version: "24"
           reader-token: ${{ secrets.GITHUB_TOKEN }}
           run-orval: "true"
           run-test: "true"
@@ -40,4 +38,3 @@ jobs:
     permissions:
       contents: read
       id-token: write
-      packages: write

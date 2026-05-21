@@ -1,14 +1,1 @@
 minimumReleaseAge: 10080
-
-# pnpm 10 krever eksplisitt konfigurasjon for pakker med build-scripts.
-# Uten disse linjene feiler `pnpm install` med ERR_PNPM_IGNORED_BUILDS.
-# Disse pakkene trenger ikke kjøre build-scripts for at prosjektet skal fungere.
-allowBuilds:
-  "@parcel/watcher": false
-  "@swc/core": false
-  esbuild: false
-  msw: false
-  protobufjs: false
-  sharp: false
-  unrs-resolver: false
-
