@@ -25,6 +25,7 @@ on:
 permissions:
   contents: read
   id-token: write
+  packages: write
 
 jobs:
   playwright-tests:
@@ -43,7 +44,7 @@ jobs:
           elif [[ "${{ github.event.inputs.environment }}" == "alle" ]]; then
             echo '{"include": [{"environment": "preprod"}, {"environment": "mock"}, {"environment": "dev"}]}' > matrix.json
           else
-            echo '{"include": [{"environment": "${{ github.event.inputs.environment }}"}]}' > matrix.json
+            echo '{"include": [{"environment": "'${{ github.event.inputs.environment }}'"}]}' > matrix.json
           fi
           echo "matrix=$(cat matrix.json)" >> $GITHUB_OUTPUT
 
