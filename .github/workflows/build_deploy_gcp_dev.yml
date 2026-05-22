@@ -1,7 +1,7 @@
 # Denne filen vil erstatte build_prod, build_deploy_mock, etc.
 
 name: "Build and deploy to dev-gcp"
-run-name: "Deploy '${{ github.ref_name }}' to '${{ github.event.inputs.environment }}' (preprod on push to main)"
+run-name: "Deploy '${{ github.ref_name }}' to '${{ inputs.environment }}' (preprod on push to main)"
 
 on:
   workflow_dispatch:
@@ -12,6 +12,9 @@ on:
         default: "dev"
         type: choice
         options:
+          - dev
+          - mock
+          - preprod
           - alle
   workflow_call:
     inputs:
