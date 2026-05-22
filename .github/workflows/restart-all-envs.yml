@@ -10,17 +10,59 @@ permissions:
   packages: write
 
 jobs:
-  deploy_test_envs:
+  deploy-gcp:
     strategy:
-      fail-fast: false
       matrix:
-        env: [dev, mock, preprod]
-    uses: ./.github/workflows/build_deploy_gcp_dev.yml
-    with:
-      environment: ${{ matrix.env }}
-    secrets: inherit
+        environment: [preprod, mock, dev, prod]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
 
-  deploy_prod:
-    needs: deploy_test_envs
-    uses: ./.github/workflows/build_deploy_gcp_prod.yml
-    secrets: inherit
+      - name: "Build npm project"
+        uses: navikt/sosialhjelp-ci/actions/build-node@v13
+        with:
+          node-version: 24
+          build-less: "false"
+          run-orval: "true"
+          reader-token: ${{ secrets.READER_TOKEN }}
+          run-test: "false"
+          build-env: '{"NEXT_PUBLIC_DIGISOS_ENV": "${{ matrix.environment }}"}'
+
+      - name: "Upload static files to cdn"
+        id: upload
+        uses: nais/deploy/actions/cdn-upload/v2@master
+        with:
+          team: teamdigisos
+          source: ./.next/static
+          destination: "/sosialhjelp-soknad/_next"
+
+      - name: Build and push docker image to GAR
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: teamdigisos
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          image_suffix: ${{ matrix.environment }}
+          build_args: |
+            DIGISOS_ENV=${{ matrix.environment }}
+          build_secrets: |
+            NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
+
+      - name: "Set cluster based on env"
+        run: |
+          if [ "${{ matrix.env }}" = "prod" ]; then
+            echo "CLUSTER=prod-gcp" >> $GITHUB_ENV
+          else
+            echo "CLUSTER=dev-gcp" >> $GITHUB_ENV
+          fi
+
+      - name: "Deploy to ${{ matrix.environment }}"
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          RESOURCE: .nais/app.yaml
+          CLUSTER: ${{ env.CLUSTER }}
+          REF: ${{ github.sha }}
+          PRINT_PAYLOAD: true
+          IMAGE: ${{ steps.docker-build-push.outputs.image }}
+          VARS: .nais/vars/${{ matrix.environment }}.yaml
