@@ -16,11 +16,6 @@ on:
           - mock
           - preprod
           - alle
-  workflow_call:
-    inputs:
-      environment:
-        required: true
-        type: string
   push:
     branches:
       - "main"
