@@ -1,1 +1,10 @@
-minimumReleaseAge: 10080
+allowBuilds:
+  '@swc/core': false
+  protobufjs: false
+  unrs-resolver: false
+
+minimumReleaseAge: 2880
+
+overrides:
+  lru-cache: 11.2.7
+
