@@ -5,6 +5,14 @@ allowBuilds:
 
 minimumReleaseAge: 2880
 
+minimumReleaseAgeExclude:
+  - lodash@4.17.24
+  - postcss@8.5.10
+  - next@16.2.6
+  - js-cookie@3.0.6
+
 overrides:
   lru-cache: 11.2.7
-
+  lodash@<=4.17.23: '>=4.17.24'
+  js-cookie@<=3.0.5: '>=3.0.6'
+  postcss@<8.5.10: '>=8.5.10'
