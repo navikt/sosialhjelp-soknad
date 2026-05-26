@@ -11,7 +11,7 @@ import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurr
 import {useValgtKategoriContext} from "../../../lib/providers/KortKategorierContextProvider.tsx";
 import {DokumentasjonDtoType} from "../../../generated/new/model";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 interface ForhandsvisningModalProps {
     file: File;

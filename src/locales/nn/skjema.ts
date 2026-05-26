@@ -2163,6 +2163,32 @@ export const skjema = {
         tittel: "Arbeid og familie",
         alert: "Du får ein ny og kortare søknad sidan du har søkt før.",
     },
+    tusUpload: {
+        title: "Last opp dokumentasjon",
+        selectFiles: "Vel filer",
+        or: "eller",
+        dragAndDrop: "Dra og slepp filer her",
+        uploading: "Lastar opp...",
+        uploadedFiles: "Valde filer ({{count}})",
+        converted: "Nokre filer har blitt konvertert til PDF. Klikk på filnamnet for å sjå resultatet.",
+        processing: "Filer blir handsama. Dette kan ta nokre sekund.",
+        folderNotAllowed: "Mapper er ikkje tillatne. Vel enkeltfiler i staden.",
+        uploadFailed: "Opplasting feila. Prøv igjen.",
+        validation: {
+            FILE_TOO_LARGE: "Fila er for stor. Maks filstorleik er 10 MB.",
+            INVALID_FILENAME: "Ugyldig filnamn.",
+            POSSIBLY_INFECTED: "Fila vart stoppa av virusskanning.",
+            FILETYPE_NOT_SUPPORTED: "Filtypen er ikkje støtta.",
+            ENCRYPTED_PDF: "PDF-fila er kryptert og kan ikkje handsamast.",
+            INVALID_PDF: "PDF-fila er ugyldig.",
+            TOO_MANY_FILES: "For mange filer. Maks tal er 30.",
+            TOTAL_TOO_LARGE: "Total filstorleik er for stor. Maks er 150 MB til saman.",
+        },
+        submissionError: {
+            TOO_MANY_FILES: "For mange filer. Maks tal er 30.",
+            TOTAL_TOO_LARGE: "Total filstorleik er for stor. Maks er 150 MB til saman.",
+        },
+    },
 };
 
 export default skjema;

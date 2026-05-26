@@ -19,6 +19,8 @@ import {useContextFeatureToggles} from "../../../lib/providers/useContextFeature
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";
+import FileSelectTus from "../../../lib/components/fileupload/tus/FileSelectTus.tsx";
+import {DocumentState, useDocumentState} from "../../../lib/components/fileupload/tus";
 
 const Behov = () => {
     const {t} = useTranslation("skjema");
@@ -96,6 +98,10 @@ const Behov = () => {
 
     const featureFlagData = useContextFeatureToggles();
     const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
+    const isTusUploadEnabled = featureFlagData?.["sosialhjelp.soknad.tusUpload"] ?? false;
+
+    const behovContextId = `${soknadId}-behov`;
+    const {state: docState} = useDocumentState(isTusUploadEnabled ? behovContextId : "");
 
     return (
         <SkjemaSteg>
@@ -127,10 +133,10 @@ const Behov = () => {
                                     hvaSokesOm={begrunnelse?.hvaSokesOm}
                                 />
                             )}
-                            <FileUploadBox
-                                sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
-                                undertekst="begrunnelse.kort.behov.dokumentasjon.beskrivelse"
-                                liste="begrunnelse.kort.behov.dokumentasjon.liste"
+                            <FileUploadSection
+                                isTusUploadEnabled={isTusUploadEnabled}
+                                docState={docState}
+                                contextId={behovContextId}
                             />
                         </>
                     )}
@@ -142,3 +148,32 @@ const Behov = () => {
 };
 
 export default Behov;
+
+const FileUploadSection = ({
+    isTusUploadEnabled,
+    docState,
+    contextId,
+}: {
+    isTusUploadEnabled: boolean;
+    docState: DocumentState;
+    contextId: string;
+}) => {
+    const {t} = useTranslation("skjema");
+    if (isTusUploadEnabled) {
+        return (
+            <FileSelectTus
+                contextId={contextId}
+                label={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+                description={t("begrunnelse.kort.behov.dokumentasjon.beskrivelse")}
+                docState={docState}
+            />
+        );
+    }
+    return (
+        <FileUploadBox
+            sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+            undertekst="begrunnelse.kort.behov.dokumentasjon.beskrivelse"
+            liste="begrunnelse.kort.behov.dokumentasjon.liste"
+        />
+    );
+};

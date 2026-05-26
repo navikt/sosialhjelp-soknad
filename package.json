@@ -58,6 +58,7 @@
         "stacktracey": "^2.2.0",
         "styled-components": "^6.4.2",
         "usehooks-ts": "^3.1.1",
+        "tus-js-client": "^4.3.1",
         "zod": "^3.25.76"
     },
     "devDependencies": {
@@ -115,8 +116,7 @@
         "fetch-new-api": "curl -o ./soknad-api-new.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs/new && npx --yes openapi-format soknad-api-new.json -o soknad-api-new.json",
         "fetch-api": "pnpm run fetch-old-api && pnpm run fetch-new-api",
         "orval": "rm -rf ./src/generated && orval --prettier",
-        "lint": "eslint",
-        "preinstall": "pnpm dlx only-allow pnpm"
+        "lint": "eslint"
     },
     "browserslist": {
         "production": [
