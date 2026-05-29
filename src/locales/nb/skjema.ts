@@ -2176,10 +2176,12 @@ export const skjema = {
         dragAndDrop: "Dra og slipp filer her",
         uploading: "Laster opp...",
         uploadedFiles: "Valgte filer ({{count}})",
-        converted: "Noen filer har blitt konvertert til PDF. Klikk på filnavnet for å se resultatet.",
+        converted: "En eller flere filer ble endret til et annet format (PDF) slik at det kan sendes inn.",
         processing: "Filer blir behandlet. Dette kan ta noen sekunder.",
         folderNotAllowed: "Mapper er ikke tillatt. Velg enkeltfiler i stedet.",
         uploadFailed: "Opplasting feilet. Prøv igjen.",
+        categoryLabel: "Velg kategori for dokumentet",
+        seOver: "Endret til PDF",
         validation: {
             FILE_TOO_LARGE: "Filen er for stor. Maks filstørrelse er 10 MB.",
             INVALID_FILENAME: "Ugyldig filnavn.",

@@ -10,15 +10,17 @@ import {DocumentState} from "./types";
 import {allowedFileTypes, maxFileCount, maxFileSize} from "./consts";
 import FileUploadItemTus from "./FileUploadItemTus";
 import {useSoknadId} from "../../../hooks/common/useSoknadId";
+import {DokumentasjonDtoType} from "../../../../generated/new/model";
 
 interface Props {
     contextId: string;
     label?: string;
     description?: string | ReactNode;
     docState: DocumentState;
+    onCategoryChange?: (uploadId: string, category: DokumentasjonDtoType) => void;
 }
 
-const FileSelectTus = ({contextId, label, description, docState}: Props) => {
+const FileSelectTus = ({contextId, label, description, docState, onCategoryChange}: Props) => {
     const {t} = useTranslation("skjema");
     const soknadId = useSoknadId();
     const isMobile = useMediaQuery("(max-width: 768px)");
@@ -97,7 +99,11 @@ const FileSelectTus = ({contextId, label, description, docState}: Props) => {
                 )}
 
                 {folderDropError && (
-                    <InlineMessage role="alert" status="error">
+                    <InlineMessage
+                        role="alert"
+                        status="error"
+                        className="border border-[var(--a-border-danger)] bg-[var(--a-surface-danger-subtle)] p-2 rounded-xl"
+                    >
                         {t("tusUpload.folderNotAllowed")}
                     </InlineMessage>
                 )}
@@ -108,20 +114,32 @@ const FileSelectTus = ({contextId, label, description, docState}: Props) => {
                             {t("tusUpload.uploadedFiles", {count: docState.uploads.length})}
                         </Heading>
                         {converted && (
-                            <InlineMessage status="info" role="alert">
+                            <InlineMessage
+                                status="info"
+                                role="alert"
+                                className="border border-[var(--a-border-info)] bg-[var(--a-surface-info-subtle)] p-2 rounded-xl"
+                            >
                                 {t("tusUpload.converted")}
                             </InlineMessage>
                         )}
                         {hasPendingOrProcessing && (
-                            <InlineMessage status="info" role="alert">
+                            <InlineMessage
+                                status="info"
+                                role="alert"
+                                className="border border-[var(--a-border-info)] bg-[var(--a-surface-info-subtle)] p-2 rounded-xl"
+                            >
                                 {t("tusUpload.processing")}
                             </InlineMessage>
                         )}
                         {(docState.validations?.length ?? 0) > 0 && (
                             <>
                                 {docState.validations?.map((error) => (
-                                    <InlineMessage key={`${error}`} status="error" role="alert">
-                                        {/* @ts-expect-error fuck you */}
+                                    <InlineMessage
+                                        key={`${error}`}
+                                        status="error"
+                                        role="alert"
+                                        className="border border-[var(--a-border-danger)] bg-[var(--a-surface-danger-subtle)] p-2 rounded-xl"
+                                    >
                                         {t(`tusUpload.submissionError.${error}`)}
                                     </InlineMessage>
                                 ))}
@@ -138,6 +156,7 @@ const FileSelectTus = ({contextId, label, description, docState}: Props) => {
                                     validations={upload.validations}
                                     status={upload.status}
                                     size={upload.size}
+                                    onCategoryChange={onCategoryChange}
                                 />
                             ))}
                         </VStack>

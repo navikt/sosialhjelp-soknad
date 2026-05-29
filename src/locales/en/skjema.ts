@@ -2244,10 +2244,12 @@ export const skjema = {
         dragAndDrop: "Drag and drop files here",
         uploading: "Uploading...",
         uploadedFiles: "Selected files ({{count}})",
-        converted: "Some files have been converted to PDF. Click the filename to see the result.",
+        converted: "One or more files were converted to a different format (PDF) so that they can be submitted.",
         processing: "Files are being processed. This may take a few seconds.",
         folderNotAllowed: "Folders are not allowed. Please select individual files instead.",
         uploadFailed: "Upload failed. Please try again.",
+        categoryLabel: "Select category for the document",
+        seOver: "Converted to PDF",
         validation: {
             FILE_TOO_LARGE: "The file is too large. Maximum file size is 10 MB.",
             INVALID_FILENAME: "Invalid filename.",
