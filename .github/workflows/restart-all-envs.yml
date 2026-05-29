@@ -51,7 +51,7 @@ jobs:
 
       - name: "Set cluster based on env"
         run: |
-          if [ "${{ matrix.env }}" = "prod" ]; then
+          if [ "${{ matrix.environment }}" = "prod" ]; then
             echo "CLUSTER=prod-gcp" >> $GITHUB_ENV
           else
             echo "CLUSTER=dev-gcp" >> $GITHUB_ENV
