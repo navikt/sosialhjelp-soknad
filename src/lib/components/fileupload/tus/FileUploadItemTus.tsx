@@ -37,6 +37,7 @@ interface Props {
     status: UploadStatus;
     size?: number;
     onCategoryChange?: (uploadId: string, category: DokumentasjonDtoType) => void;
+    category?: DokumentasjonDtoType;
 }
 
 const SeOverDescription = () => {
@@ -66,6 +67,18 @@ const FileUploadItemTus = ({
         mutationFn: () => Upload.terminate(`${UPLOAD_API_BASE}/tus/files/${uploadId}`, {}),
         retry: false,
     });
+    const {mutate: updateCategory} = useMutation({
+        mutationFn: async (variables: {kategori: string}) => {
+            const res = await fetch(`${UPLOAD_API_BASE}/vedlegg/${uploadId}/kategori`, {
+                method: "PATCH",
+                body: JSON.stringify(variables),
+                headers: {"Content-Type": "application/json"},
+            });
+            if (!res.ok) {
+                throw new Error(`Kunne ikke oppdatere kategori: ${res.status}`);
+            }
+        },
+    });
 
     const isUploading = !url && !validations && status !== "FAILED" && status !== "COMPLETE";
     const uploadStatus = isUploading ? "uploading" : "idle";
@@ -73,6 +86,7 @@ const FileUploadItemTus = ({
     const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const newCategory = (event.target.value || "UTGIFTER_ANDRE_UTGIFTER") as DokumentasjonDtoType;
         setCategory(newCategory);
+        updateCategory({kategori: event.target.value});
         onCategoryChange?.(uploadId, newCategory);
     };
 
