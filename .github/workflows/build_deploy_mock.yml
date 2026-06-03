@@ -12,7 +12,7 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.2
       - name: "Build npm project"
         uses: navikt/sosialhjelp-ci/actions/build-node@v21
         with:
