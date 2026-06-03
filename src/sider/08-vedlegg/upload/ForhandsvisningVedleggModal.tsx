@@ -10,6 +10,7 @@ import {FilePreviewDisplay} from "./FilePreviewDisplay";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useValgtKategoriContext} from "../../../lib/providers/KortKategorierContextProvider.tsx";
 import {DokumentasjonDtoType} from "../../../generated/new/model";
+import {umamiTrack} from "../../../app/umami.ts";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 
@@ -36,6 +37,10 @@ export const ForhandsvisningVedleggModal = ({
     const [selectedCategory, setSelectedCategory] = useState<string>("");
 
     const handleAccept = () => {
+        umamiTrack("fil lastet opp", {
+            valgtKategori: selectedCategory === "" ? "ingen" : selectedCategory,
+            visKategori,
+        });
         const categoryToSet = selectedCategory || "UTGIFTER_ANDRE_UTGIFTER";
         setValgtKategoriData({valgtKategorier: categoryToSet as DokumentasjonDtoType});
         setSelectedCategory("");
