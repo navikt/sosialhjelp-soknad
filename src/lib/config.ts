@@ -37,6 +37,7 @@ type SoknadConfig = {
 
     driftsmeldingUrl?: string;
     baseURL: string;
+    uploadBaseURL: string;
     innsynURL: string;
     minSideURL: string;
     dekoratorLoginBaseUrl: string;
@@ -83,6 +84,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         },
         driftsmeldingUrl: "http://localhost:3005/sosialhjelp/driftsmeldinger/api",
         baseURL: "http://localhost:3001/sosialhjelp/soknad/api/soknad-api/",
+        uploadBaseURL: "http://localhost:3001/sosialhjelp/soknad/api/upload-api",
         innsynURL: "http://localhost:3002/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
@@ -116,6 +118,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         },
         driftsmeldingUrl: "http://localhost:3005/sosialhjelp/driftsmeldinger/api",
         baseURL: "http://localhost:3000/sosialhjelp/soknad/api/soknad-api/",
+        uploadBaseURL: "http://localhost:3000/sosialhjelp/soknad/api/upload-api",
         innsynURL: "http://localhost:3000/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
@@ -148,6 +151,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         withCredentials: true,
         driftsmeldingUrl: "http://sosialhjelp-driftsmeldinger/sosialhjelp/driftsmeldinger/api",
         baseURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad/api/soknad-api/",
+        uploadBaseURL: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/api/upload-api",
         innsynURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://sosialhjelp-mock-alt-mock.ekstern.dev.nav.no/sosialhjelp/mock-alt/",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
@@ -186,6 +190,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         withCredentials: false,
         driftsmeldingUrl: "http://sosialhjelp-driftsmeldinger/sosialhjelp/driftsmeldinger/api",
         baseURL: "https://www.nav.no/sosialhjelp/soknad/api/soknad-api/",
+        uploadBaseURL: "https://www.nav.no/sosialhjelp/soknad/api/upload-api",
         innsynURL: "https://www.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         dekoratorLoginBaseUrl: "https://login.nav.no",
@@ -223,6 +228,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         withCredentials: false,
         driftsmeldingUrl: "http://sosialhjelp-driftsmeldinger/sosialhjelp/driftsmeldinger/api",
         baseURL: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/api/soknad-api/",
+        uploadBaseURL: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/api/upload-api",
         innsynURL: "https://www.ekstern.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.ansatt.dev.nav.no/minside/",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
@@ -260,6 +266,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         withCredentials: false,
         driftsmeldingUrl: "http://sosialhjelp-driftsmeldinger/sosialhjelp/driftsmeldinger/api",
         baseURL: "https://www.ansatt.dev.nav.no/sosialhjelp/soknad/api/soknad-api/",
+        uploadBaseURL: "https://www.ansatt.dev.nav.no/sosialhjelp/soknad/api/upload-api",
         innsynURL: "https://www.ansatt.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.ansatt.dev.nav.no/minside/",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",

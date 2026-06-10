@@ -6,8 +6,10 @@ import {Dokumenter} from "./upload/Dokumenter.tsx";
 import {FormSwitch} from "./form/components/FormSwitch.tsx";
 import {NewDokumenter} from "./upload/new/NewDokumenter.tsx";
 import {useNewUploadEnabled} from "../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
+import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 
 export const Dokumentasjon = ({opplysningstype}: {opplysningstype: DokumentasjonDtoType}) => {
+    const soknadId = useSoknadId();
     const {sporsmal, undertekst} = useDokumentasjonTekster(opplysningstype);
     const newUploadEnabled = useNewUploadEnabled();
 
@@ -21,7 +23,11 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
 
             <BodyShort spacing>{undertekst}</BodyShort>
             <FormSwitch opplysningstype={opplysningstype} />
-            {newUploadEnabled ? <NewDokumenter describedBy={id} /> : <Dokumenter opplysningstype={opplysningstype} />}
+            {newUploadEnabled ? (
+                <NewDokumenter describedBy={id} contextId={`${soknadId}-${opplysningstype}`} />
+            ) : (
+                <Dokumenter opplysningstype={opplysningstype} />
+            )}
         </div>
     );
 };

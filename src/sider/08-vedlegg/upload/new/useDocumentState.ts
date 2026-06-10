@@ -1,12 +1,16 @@
-import React, {useEffect} from "react";
-import config from "../../../../lib/config.ts";
-
-const eventstreamUrl = (contextId: string) => `${config}/status/${contextId}` as const;
+import {useEffect, useState} from "react";
+import {DocumentState, openEventChannel} from "./openEventChannel.ts";
 
 const useDocumentState = (contextId: string) => {
+    const [documentState, setDocumentState] = useState<DocumentState>();
+
     useEffect(() => {
-        new EventSource(eventstreamUrl(contextId));
+        return openEventChannel(contextId, (documentState) => {
+            setDocumentState(documentState);
+        });
     }, [contextId]);
+
+    return {documentState, resetDocumentState: () => setDocumentState(undefined)};
 };
 
 export default useDocumentState;
