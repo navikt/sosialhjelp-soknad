@@ -13,6 +13,7 @@ interface Props {
 export const NewDokumenter = ({describedBy}: Props) => {
     const isMobile = useMediaQuery("(min-width: 768px)");
     const [filer, setFiler] = useState<FileObject[]>([]);
+
     return (
         <FileUpload>
             {isMobile && (

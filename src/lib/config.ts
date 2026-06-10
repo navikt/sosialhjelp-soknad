@@ -16,7 +16,7 @@ type FeatureFlags = {
     publicFacingTestVersion?: true;
 };
 
-type SoknadApiProxyOptions = {
+type ProxyOptions = {
     hostname: string;
     basePath: string; // no trailing slash
     https: boolean;
@@ -42,7 +42,8 @@ type SoknadConfig = {
     dekoratorLoginBaseUrl: string;
 
     featureFlags: FeatureFlags;
-    proxy?: SoknadApiProxyOptions;
+    proxy?: ProxyOptions;
+    uploadProxy?: ProxyOptions;
     dekorator: DekoratorOptions;
 
     faro?: {
@@ -74,6 +75,12 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             https: false,
             port: "8181",
         },
+        uploadProxy: {
+            hostname: "localhost",
+            basePath: "/sosialhjelp/upload",
+            port: "3007",
+            https: false,
+        },
         driftsmeldingUrl: "http://localhost:3005/sosialhjelp/driftsmeldinger/api",
         baseURL: "http://localhost:3001/sosialhjelp/soknad/api/soknad-api/",
         innsynURL: "http://localhost:3002/sosialhjelp/innsyn",
@@ -101,6 +108,12 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             https: false,
             port: "8181",
         },
+        uploadProxy: {
+            hostname: "localhost",
+            basePath: "/sosialhjelp/upload",
+            port: "3007",
+            https: false,
+        },
         driftsmeldingUrl: "http://localhost:3005/sosialhjelp/driftsmeldinger/api",
         baseURL: "http://localhost:3000/sosialhjelp/soknad/api/soknad-api/",
         innsynURL: "http://localhost:3000/sosialhjelp/innsyn",
@@ -123,6 +136,11 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         proxy: {
             hostname: "sosialhjelp-soknad-api-mock",
             basePath: "/sosialhjelp/soknad-api",
+            https: false,
+        },
+        uploadProxy: {
+            hostname: "sosialhjelp-upload-mock.teamdigisos",
+            basePath: "/sosialhjelp/upload",
             https: false,
         },
         showDevPanel: false,
@@ -157,6 +175,11 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             basePath: "/sosialhjelp/soknad-api",
             https: false,
         },
+        uploadProxy: {
+            hostname: "sosialhjelp-upload.teamdigisos",
+            basePath: "/sosialhjelp/upload",
+            https: false,
+        },
 
         showDevPanel: false,
         logLocally: false,
@@ -189,6 +212,11 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             basePath: "/sosialhjelp/soknad-api",
             https: false,
         },
+        uploadProxy: {
+            hostname: "sosialhjelp-upload-dev.teamdigisos",
+            basePath: "/sosialhjelp/upload",
+            https: false,
+        },
 
         showDevPanel: false,
         logLocally: false,
@@ -219,6 +247,11 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         proxy: {
             hostname: "sosialhjelp-soknad-api-dev.teamdigisos",
             basePath: "/sosialhjelp/soknad-api",
+            https: false,
+        },
+        uploadProxy: {
+            hostname: "sosialhjelp-upload-dev.teamdigisos",
+            basePath: "/sosialhjelp/upload",
             https: false,
         },
 
