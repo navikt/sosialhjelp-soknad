@@ -16,6 +16,9 @@ import {KortDokumentasjon} from "./KortDokumentasjon.tsx";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";
+import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
+import FileSelectTus from "../../../lib/components/fileupload/tus/FileSelectTus.tsx";
+import {useDocumentState} from "../../../lib/components/fileupload/tus";
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
@@ -23,6 +26,12 @@ const Inntekt = () => {
     const navigate = useNavigate();
     const isKortSoknad = useCurrentSoknadIsKort();
     const soknadId = useSoknadId();
+
+    const featureFlagData = useContextFeatureToggles();
+    const isTusUploadEnabled = featureFlagData?.["sosialhjelp.soknad.tusUpload"] ?? false;
+
+    const inntektContextId = `${soknadId}-inntekt`;
+    const {state: docState} = useDocumentState(isTusUploadEnabled ? inntektContextId : "");
 
     const gotoPage = async (page: number) => {
         umamiTrack("Skjemasteg fullført", {
@@ -65,11 +74,20 @@ const Inntekt = () => {
                 <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
                 <NavYtelser />
                 <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
-                <FileUploadBox
-                    sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
-                    undertekst="situasjon.kort.dokumentasjon.description"
-                    liste="situasjon.kort.dokumentasjon.liste"
-                />
+                {isTusUploadEnabled ? (
+                    <FileSelectTus
+                        contextId={inntektContextId}
+                        label={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+                        description={t("situasjon.kort.dokumentasjon.description")}
+                        docState={docState}
+                    />
+                ) : (
+                    <FileUploadBox
+                        sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+                        undertekst="situasjon.kort.dokumentasjon.description"
+                        liste="situasjon.kort.dokumentasjon.liste"
+                    />
+                )}
                 <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
             </SkjemaStegBlock>
         </SkjemaSteg>

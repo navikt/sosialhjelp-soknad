@@ -2237,6 +2237,34 @@ export const skjema = {
         tittel: "Work and family",
         alert: "You are getting a new and shorter application because you have applied before.",
     },
+    tusUpload: {
+        title: "Upload documentation",
+        selectFiles: "Select files",
+        or: "or",
+        dragAndDrop: "Drag and drop files here",
+        uploading: "Uploading...",
+        uploadedFiles: "Selected files ({{count}})",
+        converted: "One or more files were converted to a different format (PDF) so that they can be submitted.",
+        processing: "Files are being processed. This may take a few seconds.",
+        folderNotAllowed: "Folders are not allowed. Please select individual files instead.",
+        uploadFailed: "Upload failed. Please try again.",
+        categoryLabel: "Select category for the document",
+        seOver: "Converted to PDF",
+        validation: {
+            FILE_TOO_LARGE: "The file is too large. Maximum file size is 10 MB.",
+            INVALID_FILENAME: "Invalid filename.",
+            POSSIBLY_INFECTED: "The file was blocked by virus scanning.",
+            FILETYPE_NOT_SUPPORTED: "The file type is not supported.",
+            ENCRYPTED_PDF: "The PDF file is encrypted and cannot be processed.",
+            INVALID_PDF: "The PDF file is invalid.",
+            TOO_MANY_FILES: "Too many files. Maximum is 30.",
+            TOTAL_TOO_LARGE: "Total file size is too large. Maximum is 150 MB combined.",
+        },
+        submissionError: {
+            TOO_MANY_FILES: "Too many files. Maximum is 30.",
+            TOTAL_TOO_LARGE: "Total file size is too large. Maximum is 150 MB combined.",
+        },
+    },
 };
 
 export default skjema;
