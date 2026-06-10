@@ -1,18 +1,20 @@
-import {Button, FileObject, FileUpload, VStack} from "@navikt/ds-react";
+import {Button, FileUpload, VStack} from "@navikt/ds-react";
 import {useMediaQuery} from "usehooks-ts";
 import {UploadIcon} from "@navikt/aksel-icons";
-import {useState} from "react";
+import useDocumentState from "./useDocumentState.ts";
 
 const MAX_FILES = 10;
 const MAX_SIZE_MB = 10 * 1024 * 1024;
 
 interface Props {
     describedBy: string;
+    contextId: string;
 }
 
-export const NewDokumenter = ({describedBy}: Props) => {
+export const NewDokumenter = ({describedBy, contextId}: Props) => {
     const isMobile = useMediaQuery("(min-width: 768px)");
-    const [filer, setFiler] = useState<FileObject[]>([]);
+    const {documentState} = useDocumentState(contextId);
+
     return (
         <FileUpload>
             {isMobile && (
@@ -20,26 +22,22 @@ export const NewDokumenter = ({describedBy}: Props) => {
                     label="Last opp filer til søknaden"
                     description={`Du kan laste opp Word- og PDF-filer. Maks 3 filer. Maks størrelse ${MAX_SIZE_MB} MB.`}
                     accept=".doc,.docx,.pdf"
-                    fileLimit={{max: MAX_FILES, current: filer.length}}
+                    fileLimit={{max: MAX_FILES, current: documentState?.uploads?.length ?? 0}}
                     maxSizeInBytes={MAX_SIZE_MB}
-                    onSelect={setFiler}
+                    onSelect={() => {}}
                 />
             )}
             {!isMobile && (
-                <FileUpload.Trigger accept=".pdf,.doc,.docx" maxSizeInBytes={MAX_SIZE_MB} onSelect={setFiler}>
+                <FileUpload.Trigger accept=".pdf,.doc,.docx" maxSizeInBytes={MAX_SIZE_MB} onSelect={() => {}}>
                     <Button aria-describedby={describedBy} variant="secondary" icon={<UploadIcon aria-hidden />}>
                         Velg filer
                     </Button>
                 </FileUpload.Trigger>
             )}
-            {filer.length > 0 && (
+            {(documentState?.uploads?.length ?? 0) > 0 && (
                 <VStack as="ul">
-                    {filer.map((fil, index) => (
-                        <FileUpload.Item
-                            key={index}
-                            as="li"
-                            file={{name: fil.file.name, size: fil.file.size, type: fil.file.type}}
-                        />
+                    {documentState?.uploads?.map((fil) => (
+                        <FileUpload.Item key={fil.id} as="li" file={{name: fil.finalFilename ?? "", size: fil.size}} />
                     ))}
                 </VStack>
             )}

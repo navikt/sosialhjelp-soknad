@@ -2,7 +2,7 @@ appName: sosialhjelp-soknad-mock
 idportenEnabled: false
 ingresses: []
 outboundExternalHosts: []
-outboundRules: [sosialhjelp-soknad-api-mock]
+outboundRules: [sosialhjelp-soknad-api-mock, sosialhjelp-upload-mock]
 wonderwallInstance: wonderwall-soknad-mock
 livenessPath: /sosialhjelp/soknad/internal/isAlive
 env:
