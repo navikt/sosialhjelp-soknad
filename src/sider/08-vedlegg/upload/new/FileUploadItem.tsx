@@ -1,4 +1,3 @@
-import {UploadStatus, ValidationCode} from "@components/filopplasting/api/useDocumentState";
 import {InformationSquareFillIcon, TrashIcon} from "@navikt/aksel-icons";
 import {BodyShort, Button, HStack} from "@navikt/ds-react";
 import {FileUpload} from "@navikt/ds-react/FileUpload";
@@ -6,6 +5,7 @@ import {useMutation} from "@tanstack/react-query";
 import {useTranslations} from "next-intl";
 import {Upload} from "tus-js-client";
 import {digisosConfig} from "../../../../lib/config";
+import {UploadStatus, ValidationCode} from "./openEventChannel";
 
 interface Props {
     originalFilename: string;
