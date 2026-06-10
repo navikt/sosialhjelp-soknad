@@ -36,8 +36,8 @@ export const NewDokumenter = ({describedBy, contextId}: Props) => {
             )}
             {(documentState?.uploads?.length ?? 0) > 0 && (
                 <VStack as="ul">
-                    {documentState?.uploads?.map((fil, index) => (
-                        <FileUpload.Item key={index} as="li" file={{name: fil.finalFilename ?? "", size: fil.size}} />
+                    {documentState?.uploads?.map((fil) => (
+                        <FileUpload.Item key={fil.id} as="li" file={{name: fil.finalFilename ?? "", size: fil.size}} />
                     ))}
                 </VStack>
             )}
