@@ -1,13 +1,13 @@
-import {Button, FileObject, FileUpload, Heading, VStack} from "@navikt/ds-react";
-import {useMediaQuery} from "usehooks-ts";
 import {UploadIcon} from "@navikt/aksel-icons";
-import useDocumentState from "./useDocumentState.ts";
-import {Upload} from "tus-js-client";
-import digisosConfig from "../../../../lib/config.ts";
+import {Button, FileObject, FileUpload, Heading, Label, VStack} from "@navikt/ds-react";
 import {logger} from "@navikt/next-logger";
+import {useTranslations} from "next-intl";
+import {Upload} from "tus-js-client";
+import {useMediaQuery} from "usehooks-ts";
+import digisosConfig from "../../../../lib/config.ts";
 import FileUploadItem from "./FileUploadItem.tsx";
 import InlineStatusMessage from "./InlineStatusMessage.tsx";
-import {useTranslations} from "next-intl";
+import useDocumentState from "./useDocumentState.ts";
 
 const MAX_FILES = 10;
 const MAX_SIZE_MB = 10 * 1024 * 1024;
@@ -48,7 +48,7 @@ const uploadFile = (file: File, contextId: string, soknadId: string) => {
 
 export const NewDokumenter = ({describedBy, contextId, soknadId}: Props) => {
     const t = useTranslations("NewDokumenter");
-    const isMobile = useMediaQuery("(min-width: 768px)");
+    const isMobile = useMediaQuery("(max-width: 768px)");
     const {documentState} = useDocumentState(contextId);
     const _onSelect = (files: FileObject[]) =>
         files.forEach((file: FileObject) => uploadFile(file.file, contextId, soknadId));
@@ -57,23 +57,47 @@ export const NewDokumenter = ({describedBy, contextId, soknadId}: Props) => {
     );
 
     return (
-        <FileUpload>
-            {isMobile && (
+        <FileUpload
+            translations={{
+                dropzone: {
+                    buttonMultiple: t("button"),
+                    or: t("eller"),
+                    dragAndDropMultiple: t("dragAndDrop"),
+                },
+                item: {
+                    uploading: t("uploading"),
+                    deleteButtonTitle: t("delete"),
+                },
+            }}
+        >
+            {!isMobile && (
                 <FileUpload.Dropzone
-                    label="Last opp filer til søknaden"
-                    description={`Du kan laste opp Word- og PDF-filer. Maks 3 filer. Maks størrelse ${MAX_SIZE_MB} MB.`}
+                    label={t("label")}
                     accept={ALLOWED_FILE_TYPES}
                     fileLimit={{max: MAX_FILES, current: documentState?.uploads?.length ?? 0}}
                     maxSizeInBytes={MAX_SIZE_MB}
                     onSelect={_onSelect}
                 />
             )}
-            {!isMobile && (
-                <FileUpload.Trigger accept={ALLOWED_FILE_TYPES} maxSizeInBytes={MAX_SIZE_MB} onSelect={_onSelect}>
-                    <Button aria-describedby={describedBy} variant="secondary" icon={<UploadIcon aria-hidden />}>
-                        Velg filer
-                    </Button>
-                </FileUpload.Trigger>
+            {isMobile && (
+                <>
+                    <VStack gap="space-16" align="start">
+                        <Label>{t("label")}</Label>
+                        <FileUpload.Trigger
+                            accept={ALLOWED_FILE_TYPES}
+                            maxSizeInBytes={MAX_SIZE_MB}
+                            onSelect={_onSelect}
+                        >
+                            <Button
+                                aria-describedby={describedBy}
+                                variant="secondary"
+                                icon={<UploadIcon aria-hidden />}
+                            >
+                                {t("button")}
+                            </Button>
+                        </FileUpload.Trigger>
+                    </VStack>
+                </>
             )}
             {(documentState?.uploads?.length ?? 0) > 0 && (
                 <VStack gap="space-8">

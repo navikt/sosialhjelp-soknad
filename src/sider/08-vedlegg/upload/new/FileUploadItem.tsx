@@ -1,6 +1,5 @@
 import {InformationSquareFillIcon, TrashIcon} from "@navikt/aksel-icons";
-import {BodyShort, Button, HStack} from "@navikt/ds-react";
-import {FileUpload} from "@navikt/ds-react/FileUpload";
+import {BodyShort, Button, FileUpload, HStack} from "@navikt/ds-react";
 import {useMutation} from "@tanstack/react-query";
 import {useTranslations} from "next-intl";
 import {Upload} from "tus-js-client";

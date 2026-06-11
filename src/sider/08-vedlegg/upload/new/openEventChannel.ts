@@ -23,7 +23,7 @@ export enum ValidationCode {
     ENCRYPTED_PDF = "ENCRYPTED_PDF",
     INVALID_PDF = "INVALID_PDF",
     TOO_MANY_FILES = "TOO_MANY_FILES",
-    TOTAL_TOO_LARGE = "TOTAL_TOO_LARGE",
+    TOTAL_SIZE_TOO_LARGE = "TOTAL_SIZE_TOO_LARGE",
 }
 
 export type DocumentState = {
