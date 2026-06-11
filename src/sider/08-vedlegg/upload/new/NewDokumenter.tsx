@@ -109,11 +109,6 @@ export const NewDokumenter = ({describedBy, contextId, soknadId}: Props) => {
                             {t("konvertert")}
                         </InlineStatusMessage>
                     )}
-                    {/* {showSlowProcessingWarning && (
-                        <InlineStatusMessage variant="info" role="status">
-                            {t("processingWarning")}
-                        </InlineStatusMessage>
-                    )} */}
                     {(documentState?.validations?.length ?? 0) > 0 && (
                         <>
                             {documentState?.validations?.map((error) => (
@@ -134,24 +129,10 @@ export const NewDokumenter = ({describedBy, contextId, soknadId}: Props) => {
                                 validations={upload.validations}
                                 status={upload.status}
                                 size={upload.size}
-                                // showCancelButton={
-                                //     showSlowProcessingWarning &&
-                                //     (upload.status === "PENDING" || upload.status === "PROCESSING")
-                                // }
-                                // onTerminate={() =>
-                                //     oppdaterSkjermleserBeskjed(
-                                //         t("filSlettet", {count: (documentState.uploads?.length ?? 1) - 1})
-                                //     )
-                                // }
                             />
                         ))}
                     </VStack>
                 </VStack>
-                // <VStack as="ul">
-                //     {documentState?.uploads?.map((fil) => (
-                //         <FileUpload.Item key={fil.id} as="li" file={{name: fil.finalFilename ?? "", size: fil.size}} />
-                //     ))}
-                // </VStack>
             )}
         </FileUpload>
     );
