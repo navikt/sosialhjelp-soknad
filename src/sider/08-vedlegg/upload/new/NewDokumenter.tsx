@@ -31,7 +31,7 @@ interface Props {
     soknadId: string;
 }
 
-const upload = (file: File, contextId: string, soknadId: string) => {
+const uploadFile = (file: File, contextId: string, soknadId: string) => {
     const upload = new Upload(file, {
         endpoint: `${digisosConfig.uploadBaseURL}/tus/files`,
         retryDelays: [0, 1000, 3000, 5000],
@@ -51,7 +51,7 @@ export const NewDokumenter = ({describedBy, contextId, soknadId}: Props) => {
     const isMobile = useMediaQuery("(min-width: 768px)");
     const {documentState} = useDocumentState(contextId);
     const _onSelect = (files: FileObject[]) =>
-        files.forEach((file: FileObject) => upload(file.file, contextId, soknadId));
+        files.forEach((file: FileObject) => uploadFile(file.file, contextId, soknadId));
     const converted = documentState?.uploads?.some(
         (upload) => !!upload.finalFilename && upload.finalFilename !== upload.originalFilename
     );
