@@ -112,5 +112,34 @@
     "PageFlipperButtons": {
         "neste": "Neste side",
         "forrige": "Forrige side"
+    },
+    "NewDokumenter": {
+        "label": "Last opp filer",
+        "dragAndDrop": "Dra og slipp filer her",
+        "eller": "eller",
+        "button": "Velg filer",
+        "uploading": "Laster opp...",
+        "delete": "Fjern fil",
+        "valgteFiler": "Valgte filer ({antall_filer})",
+        "filSlettet": "{count, plural, =0 {Fil slettet. Ingen filer gjenstår.} one {Fil slettet. # fil gjenstår.} other {Fil slettet. # filer gjenstår.}}",
+        "konvertert": "En eller flere filer ble endret til et annet format (PDF) slik at det kan sendes inn.",
+        "processingWarning": "Opplasting kan ta litt tid. Opplastingen avbrytes automatisk etter 3 minutter.",
+        "submissionError": {
+            "TOO_MANY_FILES": "Du har valgt for mange filer. Maks antall filer er 30.",
+            "TOTAL_SIZE_TOO_LARGE": "Filene er for store (maks 150 MB), fjern filer og prøv igjen."
+        }
+    },
+    "FileUploadItem": {
+        "uploadFailed": "Opplasting feilet. Prøv på nytt senere.",
+        "validation": {
+            "ENCRYPTED_PDF": "PDFen er passordbeskyttet og vi kan ikke behandle den",
+            "FILETYPE_NOT_SUPPORTED": "Filtypen støttes ikke",
+            "FILE_TOO_LARGE": "Filen er for stor (maks 10 MB)",
+            "INVALID_FILENAME": "Filnavn kan kun inneholde a-å, 0-9 og tegnene - _ . , ( )",
+            "INVALID_PDF": "PDFen er ikke gyldig",
+            "POSSIBLY_INFECTED": "Filen kan være virusinfisert"
+        },
+        "seOver": "Endret til PDF",
+        "slett": "Slett fil"
     }
 }

@@ -13,7 +13,7 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
     const {sporsmal, undertekst} = useDokumentasjonTekster(opplysningstype);
     const newUploadEnabled = useNewUploadEnabled();
 
-    const id = sporsmal;
+    const id = opplysningstype;
 
     return (
         <div className={"rounded-md bg-surface-action-subtle p-8"}>
@@ -24,7 +24,7 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
             <BodyShort spacing>{undertekst}</BodyShort>
             <FormSwitch opplysningstype={opplysningstype} />
             {newUploadEnabled ? (
-                <NewDokumenter describedBy={id} contextId={`${soknadId}-${opplysningstype}`} />
+                <NewDokumenter describedBy={id} contextId={`${soknadId}-${opplysningstype}`} soknadId={soknadId} />
             ) : (
                 <Dokumenter opplysningstype={opplysningstype} />
             )}
