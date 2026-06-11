@@ -2,7 +2,7 @@ appName: sosialhjelp-soknad-dev
 idportenEnabled: false
 ingresses: []
 wonderwallInstance: wonderwall-soknad-dev
-outboundRules: [sosialhjelp-soknad-api-dev, sosialhjelp-upload-dev]
+outboundRules: [sosialhjelp-soknad-api-dev,sosialhjelp-upload-dev]
 outboundExternalHosts: []
 livenessPath: /sosialhjelp/soknad/internal/isAlive
 env:

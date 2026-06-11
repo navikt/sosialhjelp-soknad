@@ -15,4 +15,4 @@ replicas:
   min: 2
   max: 4
 wonderwallInstance: wonderwall-soknad
-outboundRules: [sosialhjelp-soknad-api, sosialhjelp-upload]
+outboundRules: [sosialhjelp-soknad-api,sosialhjelp-upload]
