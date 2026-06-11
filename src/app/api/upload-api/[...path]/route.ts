@@ -1,7 +1,15 @@
 import {proxyRouteHandler} from "@navikt/next-api-proxy";
 import digisosConfig from "../../../../lib/config.ts";
 
-type RouteHandlerProxyTarget = {hostname: string; path: string; https: boolean; bearerToken?: string; port?: string};
+type RouteHandlerProxyTarget = {
+    hostname: string;
+    path: string;
+    https: boolean;
+    bearerToken?: string;
+    port?: string;
+    forwardedHost?: boolean;
+    forwardedPrefix?: string;
+};
 type ProxyRequestContext = {params: Promise<{path: string[]}>};
 type ProxyRequestHandler = (request: Request, context: ProxyRequestContext) => Promise<Response>;
 
@@ -10,7 +18,15 @@ const getRouteHandlerProxyTarget = (headers: Headers, requestPath: string[]): Ro
     const {hostname, basePath, https, port} = digisosConfig.uploadProxy;
     const path = `${basePath}/${requestPath.join("/")}`;
     const bearerToken = `${headers.get("Authorization")?.split(" ")[1]}`;
-    return {hostname, path: encodeURI(path), bearerToken, https, port};
+    return {
+        hostname,
+        path: encodeURI(path),
+        bearerToken,
+        https,
+        port,
+        forwardedHost: true,
+        forwardedPrefix: "/sosialhjelp/soknad/api/upload-api",
+    };
 };
 
 const uploadApiProxy: ProxyRequestHandler = async (request, {params}): Promise<Response> =>

@@ -14,6 +14,7 @@ minimumReleaseAgeExclude:
   - postcss@8.5.15
   - next@16.2.6
   - js-cookie@3.0.7
+  - '@navikt/next-api-proxy@5.0.5'
 
 overrides:
   lru-cache: 11.2.7
