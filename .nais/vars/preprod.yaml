@@ -10,7 +10,7 @@ env:
 requests:
   cpu: 50m
   memory: 100Mi
-limts:
+limits:
   memory: 400Mi
 replicas:
   min: 1
