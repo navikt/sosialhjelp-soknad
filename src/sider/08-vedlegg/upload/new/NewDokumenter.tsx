@@ -2,6 +2,7 @@ import {UploadIcon} from "@navikt/aksel-icons";
 import {Button, FileObject, FileUpload, Heading, Label, VStack} from "@navikt/ds-react";
 import {logger} from "@navikt/next-logger";
 import {useTranslations} from "next-intl";
+import {useState} from "react";
 import {Upload} from "tus-js-client";
 import {useMediaQuery} from "usehooks-ts";
 import digisosConfig from "../../../../lib/config.ts";
@@ -50,8 +51,12 @@ export const NewDokumenter = ({describedBy, contextId, soknadId}: Props) => {
     const t = useTranslations("NewDokumenter");
     const isMobile = useMediaQuery("(max-width: 768px)");
     const {documentState} = useDocumentState(contextId);
-    const _onSelect = (files: FileObject[]) =>
+    const [filesAdded, setFilesAdded] = useState(0);
+    const _onSelect = (files: FileObject[]) => {
+        setFilesAdded(files.length);
+        setTimeout(() => setFilesAdded(0), 500);
         files.forEach((file: FileObject) => uploadFile(file.file, contextId, soknadId));
+    };
     const converted = documentState?.uploads?.some(
         (upload) => !!upload.finalFilename && upload.finalFilename !== upload.originalFilename
     );
@@ -70,6 +75,9 @@ export const NewDokumenter = ({describedBy, contextId, soknadId}: Props) => {
                 },
             }}
         >
+            <span className="sr-only" role="status">
+                {filesAdded > 0 ? t("filLagtTil", {count: filesAdded}) : ""}
+            </span>
             {!isMobile && (
                 <FileUpload.Dropzone
                     label={t("label")}

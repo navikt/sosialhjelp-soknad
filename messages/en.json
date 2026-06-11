@@ -129,6 +129,9 @@
             "TOTAL_SIZE_TOO_LARGE": "The files are too large (max 150 MB), remove files and try again."
         }
     },
+    "NewDokumenter": {
+        "filLagtTil": "{count, plural, one {# file added to the list.} other {# files added to the list.}}"
+    },
     "FileUploadItem": {
         "uploadFailed": "Upload failed. Please try again later.",
         "validation": {
