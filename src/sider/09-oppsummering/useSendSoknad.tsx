@@ -1,11 +1,11 @@
 import {useRef, useTransition} from "react";
 import {useSendSoknad as useSendSoknadMutation} from "../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
 import digisosConfig from "../../lib/config";
-import {useContextFeatureToggles} from "../../lib/providers/useContextFeatureToggles.ts";
 import {useRouter} from "next/navigation";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../app/umami.ts";
+import {useLocale} from "next-intl";
 
 export const useSendSoknad = () => {
     const router = useRouter();
@@ -15,7 +15,7 @@ export const useSendSoknad = () => {
     const deletionDateRef = useRef("");
     const soknadId = useSoknadId();
 
-    const featureFlagData = useContextFeatureToggles();
+    const locale = useLocale();
 
     const {mutate, isPending, error} = useSendSoknadMutation({
         mutation: {
@@ -25,12 +25,7 @@ export const useSendSoknad = () => {
                     isKortSoknad: isKortSoknad,
                     soknadId: soknadId,
                 });
-                const shouldAddParam = featureFlagData?.["sosialhjelp.innsyn.uxsignals_kort_soknad"] && isKortSoknad;
-                startTransition(() =>
-                    router.push(
-                        `${digisosConfig.innsynURL}/${digisosId}/status${shouldAddParam ? "?kortSoknad=true" : ""}`
-                    )
-                );
+                startTransition(() => router.push(`${digisosConfig.innsynURL}/${locale}/soknad/${digisosId}`));
                 deletionDateRef.current = "";
             },
         },
