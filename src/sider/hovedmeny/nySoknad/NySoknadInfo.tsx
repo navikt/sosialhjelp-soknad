@@ -7,11 +7,15 @@ import {SoknadstypeValg} from "./SoknadstypeValg.tsx";
 import {useCreateSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
 import {useRouter} from "next/navigation";
 import {umamiTrack} from "../../../app/umami.ts";
+import {useHentAntallInnsendteSoknader} from "../../../generated/mine-saker-metadata-ressurs/mine-saker-metadata-ressurs.ts";
+import {InnsendteSoknaderVarselContainer} from "../../../lib/components/InnsendteSoknaderVarselContainer.tsx";
 
 export const NySoknadInfo = () => {
     const [soknadstype, setSoknadstype] = useState<"kort" | "standard" | undefined>(undefined);
     const router = useRouter();
     const [isTransitioning, startTransition] = useTransition();
+    const {data: innsendteSoknaderSisteDogn} = useHentAntallInnsendteSoknader({query: {retry: 0}});
+
     const {mutate, isPending, error} = useCreateSoknad({
         mutation: {
             onSuccess: async (data) => {
@@ -29,6 +33,11 @@ export const NySoknadInfo = () => {
             {error && <Alert variant="error">{t("feilet")}</Alert>}
             <div className={"text-center"}>
                 <SoknadstypeValg valg={soknadstype} setValg={setSoknadstype} />
+                <InnsendteSoknaderVarselContainer
+                    antall={innsendteSoknaderSisteDogn?.antall}
+                    innsendingTillattFra={innsendteSoknaderSisteDogn?.innsendingTillattFra}
+                    className="mb-4"
+                />
                 <Button
                     variant="primary"
                     id="start_soknad_button"

@@ -16,6 +16,11 @@ import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButto
 import {isAxiosError} from "axios";
 import {InnsendingFeiletError, SendSoknad400, SoknadApiError, UnauthorizedMelding} from "../../generated/new/model";
 import {ErrorType} from "../../lib/api/axiosInstance.ts";
+import {useHentAntallInnsendteSoknader} from "../../generated/mine-saker-metadata-ressurs/mine-saker-metadata-ressurs.ts";
+import {
+    InnsendteSoknaderVarselContainer,
+    isInnsendingBlocked,
+} from "../../lib/components/InnsendteSoknaderVarselContainer.tsx";
 
 type InnsendingError = SendSoknad400 | UnauthorizedMelding | SoknadApiError | InnsendingFeiletError | null;
 
@@ -67,6 +72,7 @@ export const Oppsummering = () => {
     const soknadId = useSoknadId();
     const navigate = useNavigate();
     const {isLoading, data: oppsummering} = useGetOppsummering(soknadId);
+    const {data: innsendteSoknaderSisteDogn} = useHentAntallInnsendteSoknader({query: {retry: 0}});
 
     const {sendSoknad, isPending, isKortSoknad, error} = useSendSoknad();
 
@@ -91,9 +97,15 @@ export const Oppsummering = () => {
                         </Alert>
                     )}
                 </div>
+                <InnsendteSoknaderVarselContainer
+                    antall={innsendteSoknaderSisteDogn?.antall}
+                    innsendingTillattFra={innsendteSoknaderSisteDogn?.innsendingTillattFra}
+                    className="mb-4"
+                />
                 <SkjemaStegButtons
                     isFinalStep
                     isNextPending={isPending}
+                    nextButtonDisabled={isInnsendingBlocked(innsendteSoknaderSisteDogn?.antall)}
                     onPrevious={async () => navigate("../" + (isKortSoknad ? 4 : 8))}
                     onNext={async () => sendSoknad({soknadId})}
                 />

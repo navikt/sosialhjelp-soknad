@@ -86,7 +86,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -169,7 +169,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -260,7 +260,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -340,7 +340,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -423,7 +423,87 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "mine-saker-metadata-ressurs"
+        ]
+      }
+    },
+    "/minesaker/innsendte/antallSisteDogn": {
+      "get": {
+        "operationId": "hentAntallInnsendteSoknader",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AntallInnsendteSoknaderDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -503,7 +583,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -583,7 +663,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -676,7 +756,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -759,7 +839,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -842,7 +922,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -870,6 +950,26 @@
   },
   "components": {
     "schemas": {
+      "InnsendingFeiletError": {
+        "type": "object",
+        "properties": {
+          "deletionDate": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
       "SoknadApiError": {
         "type": "object",
         "properties": {
@@ -896,17 +996,24 @@
               "DokumentUploadPossibleVirus",
               "SoknadUpdateConflict",
               "PdlKallFeilet",
-              "SokerUnder18"
+              "SokerUnder18",
+              "AntallSoknaderSendt"
             ]
           },
           "responseType": {
             "type": "string"
           },
           "message": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "id": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         "discriminator": {
@@ -914,11 +1021,7 @@
           "mapping": {
             "SoknadApiError": "#/components/schemas/SoknadApiError"
           }
-        },
-        "required": [
-          "error",
-          "responseType"
-        ]
+        }
       },
       "UnauthorizedMelding": {
         "type": "object",
@@ -927,31 +1030,7 @@
             "type": "string",
             "format": "uri"
           }
-        },
-        "required": [
-          "loginUrl"
-        ]
-      },
-      "InnsendingFeiletError": {
-        "type": "object",
-        "properties": {
-          "deletionDate": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
-          }
-        },
-        "required": [
-          "deletionDate",
-          "type"
-        ]
+        }
       },
       "Logg": {
         "type": "object",
@@ -965,27 +1044,42 @@
             ]
           },
           "message": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "jsFileUrl": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "lineNumber": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "columnNumber": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "url": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "userAgent": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
-        },
-        "required": [
-          "level"
-        ]
+        }
       },
       "Avsnitt": {
         "type": "object",
@@ -999,23 +1093,32 @@
               "$ref": "#/components/schemas/Sporsmal"
             }
           }
-        },
-        "required": [
-          "sporsmal",
-          "tittel"
-        ]
+        }
       },
       "Felt": {
         "type": "object",
         "properties": {
           "label": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "svar": {
-            "$ref": "#/components/schemas/Svar"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Svar"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "labelSvarMap": {
-            "type": "object",
+            "type": [
+              "object",
+              "null"
+            ],
             "additionalProperties": {
               "$ref": "#/components/schemas/Svar"
             }
@@ -1031,15 +1134,15 @@
             ]
           },
           "vedlegg": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/Vedlegg"
             }
           }
-        },
-        "required": [
-          "type"
-        ]
+        }
       },
       "Oppsummering": {
         "type": "object",
@@ -1050,19 +1153,22 @@
               "$ref": "#/components/schemas/Steg"
             }
           }
-        },
-        "required": [
-          "steg"
-        ]
+        }
       },
       "Sporsmal": {
         "type": "object",
         "properties": {
           "tittel": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "felt": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/Felt"
             }
@@ -1070,10 +1176,7 @@
           "erUtfylt": {
             "type": "boolean"
           }
-        },
-        "required": [
-          "erUtfylt"
-        ]
+        }
       },
       "Steg": {
         "type": "object",
@@ -1091,18 +1194,16 @@
               "$ref": "#/components/schemas/Avsnitt"
             }
           }
-        },
-        "required": [
-          "avsnitt",
-          "stegNr",
-          "tittel"
-        ]
+        }
       },
       "Svar": {
         "type": "object",
         "properties": {
           "value": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "type": {
             "type": "string",
@@ -1113,10 +1214,7 @@
               "TIDSPUNKT"
             ]
           }
-        },
-        "required": [
-          "type"
-        ]
+        }
       },
       "Vedlegg": {
         "type": "object",
@@ -1125,12 +1223,12 @@
             "type": "string"
           },
           "uuid": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
-        },
-        "required": [
-          "filnavn"
-        ]
+        }
       },
       "InnsendtSoknadDto": {
         "type": "object",
@@ -1144,12 +1242,23 @@
           "sistEndret": {
             "type": "string"
           }
-        },
-        "required": [
-          "kode",
-          "navn",
-          "sistEndret"
-        ]
+        }
+      },
+      "AntallInnsendteSoknaderDto": {
+        "type": "object",
+        "properties": {
+          "antall": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "innsendingTillattFra": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        }
       },
       "PabegyntSoknad": {
         "type": "object",
@@ -1165,89 +1274,100 @@
           "isKort": {
             "type": "boolean"
           }
-        },
-        "required": [
-          "isKort",
-          "sistOppdatert",
-          "soknadId"
-        ]
+        }
       },
       "SessionResponse": {
         "description": "Informasjon om brukerøkt",
         "type": "object",
         "properties": {
           "userBlocked": {
-            "description": "Bruker har adressebeskyttelse og kan ikke bruke digital søknad",
             "type": "boolean"
           },
           "daysBeforeDeletion": {
-            "description": "Antall dager før søknader slettes",
             "type": "integer",
             "format": "int64"
           },
           "open": {
-            "description": "Påbegynte men ikke innleverte søknader",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PabegyntSoknad"
             }
           },
           "numRecentlySent": {
-            "description": "Antall nylig innsendte søknader",
             "type": "integer",
             "format": "int32"
           },
           "maxUploadSizeBytes": {
-            "description": "Max file upload size, in bytes",
             "type": "integer",
             "format": "int64"
           },
           "personId": {
-            "description": "Personid for innlogget bruker",
             "type": "string"
           }
-        },
-        "required": [
-          "daysBeforeDeletion",
-          "maxUploadSizeBytes",
-          "numRecentlySent",
-          "open",
-          "personId",
-          "userBlocked"
-        ]
+        }
       },
       "AdresseForslag": {
         "type": "object",
         "properties": {
           "adresse": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "husnummer": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "husbokstav": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "kommunenummer": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "kommunenavn": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "postnummer": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "poststed": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "geografiskTilknytning": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "gatekode": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
-          "bydel": {
-            "type": "string"
+          "bydelsnummer": {
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "type": {
             "type": "string",
@@ -1256,10 +1376,7 @@
               "MATRIKKELADRESSE"
             ]
           }
-        },
-        "required": [
-          "type"
-        ]
+        }
       },
       "PabegyntSoknadDto": {
         "type": "object",
@@ -1286,25 +1403,14 @@
           "sistOppdatert": {
             "type": "string"
           },
-          "isAktiv": {
-            "type": "boolean"
-          },
           "soknadId": {
             "type": "string",
             "format": "uuid"
+          },
+          "isAktiv": {
+            "type": "boolean"
           }
-        },
-        "required": [
-          "eventId",
-          "eventTidspunkt",
-          "grupperingsId",
-          "isAktiv",
-          "link",
-          "sikkerhetsnivaa",
-          "sistOppdatert",
-          "soknadId",
-          "tekst"
-        ]
+        }
       }
     }
   }
