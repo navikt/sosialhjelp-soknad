@@ -37,6 +37,11 @@ export const NySoknadInfo = () => {
                     antall={innsendteSoknaderSisteDogn?.antall}
                     innsendingTillattFra={innsendteSoknaderSisteDogn?.innsendingTillattFra}
                     className="mb-4"
+                    oneLeftText={t("innsendteSoknaderVarsel.oneLeft")}
+                    blockedWithoutDateText={t("innsendteSoknaderVarsel.blockedWithoutDate")}
+                    getBlockedWithDateText={(innsendingTillattFra) =>
+                        t("innsendteSoknaderVarsel.blockedWithDate", {innsendingTillattFra})
+                    }
                 />
                 <Button
                     variant="primary"

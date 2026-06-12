@@ -25,7 +25,12 @@
     },
     "NySoknadInfo": {
         "feilet": "Det oppstod en feil under opprettelsen av søknaden. Vennligst prøv igjen senere",
-        "start": "Start søknaden"
+        "start": "Start søknaden",
+        "innsendteSoknaderVarsel": {
+            "oneLeft": "Du har sendt mange søknader de siste 24 timene. Du kan bare sende 1 søknad til nå.",
+            "blockedWithoutDate": "Du har sendt mange søknader de siste 24 timene. Du kan ikke sende ny søknad akkurat nå.",
+            "blockedWithDate": "Du har sendt mange søknader de siste 24 timene. Du kan ikke sende ny søknad før {innsendingTillattFra}."
+        }
     },
     "NySoknadVelkomst": {
         "intro": {

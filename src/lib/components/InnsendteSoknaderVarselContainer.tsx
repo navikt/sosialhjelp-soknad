@@ -4,28 +4,48 @@ interface Props {
     antall?: number;
     innsendingTillattFra?: string | null;
     className?: string;
+    oneLeftText: string;
+    blockedWithoutDateText: string;
+    getBlockedWithDateText: (innsendingTillattFra: string) => string;
 }
 
 export function isInnsendingBlocked(antall?: number) {
     return antall !== undefined && antall >= 10;
 }
 
-export function getInnsendteSoknaderVarselText(antall?: number, innsendingTillattFra?: string | null) {
+export function getInnsendteSoknaderVarselText(
+    antall: number | undefined,
+    innsendingTillattFra: string | null | undefined,
+    oneLeftText: string,
+    blockedWithoutDateText: string,
+    getBlockedWithDateText: (innsendingTillattFra: string) => string
+) {
     if (antall === 9) {
-        return "Du har sendt mange soknader de siste 24 timene. Du kan bare sende 1 soknad til na.";
+        return oneLeftText;
     }
 
     if (isInnsendingBlocked(antall)) {
-        return innsendingTillattFra
-            ? `Du har sendt mange soknader de siste 24 timene. Du kan ikke sende ny soknad for ${innsendingTillattFra}.`
-            : "Du har sendt mange soknader de siste 24 timene. Du kan ikke sende ny soknad akkurat na.";
+        return innsendingTillattFra ? getBlockedWithDateText(innsendingTillattFra) : blockedWithoutDateText;
     }
 
     return null;
 }
 
-export const InnsendteSoknaderVarselContainer = ({antall, innsendingTillattFra, className}: Props) => {
-    const varslingstekst = getInnsendteSoknaderVarselText(antall, innsendingTillattFra);
+export const InnsendteSoknaderVarselContainer = ({
+    antall,
+    innsendingTillattFra,
+    className,
+    oneLeftText,
+    blockedWithoutDateText,
+    getBlockedWithDateText,
+}: Props) => {
+    const varslingstekst = getInnsendteSoknaderVarselText(
+        antall,
+        innsendingTillattFra,
+        oneLeftText,
+        blockedWithoutDateText,
+        getBlockedWithDateText
+    );
 
     if (!varslingstekst) {
         return null;

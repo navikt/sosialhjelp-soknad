@@ -1563,6 +1563,13 @@ export const skjema = {
             nodssituasjon: "Are you in an emergency?",
             generelt: "Contact <lenke>your local Nav office</lenke> or call us at 55 55 33 33.",
         },
+        innsendteSoknaderVarsel: {
+            oneLeft: "You have sent many applications in the last 24 hours. You can only send 1 more application now.",
+            blockedWithoutDate:
+                "You have sent many applications in the last 24 hours. You cannot send a new application right now.",
+            blockedWithDate:
+                "You have sent many applications in the last 24 hours. You cannot send a new application before {{innsendingTillattFra}}.",
+        },
     },
     soknadsmottaker: {
         enhetsnavn: {

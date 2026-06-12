@@ -1561,6 +1561,13 @@ export const skjema = {
             nodssituasjon: "Er du i en nødssituasjon?",
             generelt: "Kontakt <lenke>ditt Nav-kontor</lenke> eller ring oss på 55 55 33 33.",
         },
+        innsendteSoknaderVarsel: {
+            oneLeft: "Du har sendt mange søknader de siste 24 timene. Du kan bare sende 1 søknad til nå.",
+            blockedWithoutDate:
+                "Du har sendt mange søknader de siste 24 timene. Du kan ikke sende ny søknad akkurat nå.",
+            blockedWithDate:
+                "Du har sendt mange søknader de siste 24 timene. Du kan ikke sende ny søknad før {{innsendingTillattFra}}.",
+        },
     },
     soknadsmottaker: {
         enhetsnavn: {

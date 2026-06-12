@@ -25,7 +25,12 @@
     },
     "NySoknadInfo": {
         "feilet": "An error occurred when setting up the application. Please try later",
-        "start": "Start application"
+        "start": "Start application",
+        "innsendteSoknaderVarsel": {
+            "oneLeft": "You have sent many applications in the last 24 hours. You can only send 1 more application now.",
+            "blockedWithoutDate": "You have sent many applications in the last 24 hours. You cannot send a new application right now.",
+            "blockedWithDate": "You have sent many applications in the last 24 hours. You cannot send a new application before {innsendingTillattFra}."
+        }
     },
     "NySoknadVelkomst": {
         "intro": {
