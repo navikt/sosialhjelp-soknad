@@ -13,7 +13,7 @@ import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegBu
 import {useAnalyticsContext} from "../../../lib/providers/useAnalyticsContext.ts";
 import {useBegrunnelse} from "../../../lib/hooks/data/useBegrunnelse.tsx";
 import BehovForm, {FormValues} from "./BehovForm.tsx";
-import type {HarKategorierInputAllOfKategorierItem} from "../../../generated/new-ssr/model";
+import type {HarKategorierInputKategorierItem} from "../../../generated/new-ssr/model";
 import KategorierForm, {FormValues as KategorierFormValues} from "./KategorierForm.tsx";
 import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
@@ -71,7 +71,7 @@ const Behov = () => {
             updateCategories({
                 kategorier: formValues.categories.filter(
                     (it) => it !== "NØDHJELP"
-                ) as HarKategorierInputAllOfKategorierItem[],
+                ) as HarKategorierInputKategorierItem[],
                 annet: formValues.annet ?? "",
             });
         }
@@ -118,11 +118,11 @@ const Behov = () => {
                                 <KategorierForm
                                     kategorier={begrunnelse?.kategorier}
                                     onSubmit={onSubmitKategorier}
-                                    hvaErEndret={data?.hvaErEndret}
+                                    hvaErEndret={data?.hvaErEndret ?? undefined}
                                 />
                             ) : (
                                 <BehovForm
-                                    hvaErEndret={data?.hvaErEndret}
+                                    hvaErEndret={data?.hvaErEndret ?? undefined}
                                     onSubmit={onSubmit}
                                     hvaSokesOm={begrunnelse?.hvaSokesOm}
                                 />

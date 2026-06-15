@@ -86,7 +86,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -169,7 +169,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -260,7 +260,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -340,7 +340,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -423,7 +423,87 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "mine-saker-metadata-ressurs"
+        ]
+      }
+    },
+    "/minesaker/innsendte/antallSisteDogn": {
+      "get": {
+        "operationId": "hentAntallInnsendteSoknader",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AntallInnsendteSoknaderDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -503,7 +583,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -583,7 +663,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -676,7 +756,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -759,7 +839,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -842,7 +922,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -903,10 +983,16 @@
             "type": "string"
           },
           "message": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "id": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         "discriminator": {
@@ -965,22 +1051,40 @@
             ]
           },
           "message": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "jsFileUrl": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "lineNumber": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "columnNumber": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "url": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "userAgent": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         "required": [
@@ -1009,13 +1113,26 @@
         "type": "object",
         "properties": {
           "label": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "svar": {
-            "$ref": "#/components/schemas/Svar"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Svar"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "labelSvarMap": {
-            "type": "object",
+            "type": [
+              "object",
+              "null"
+            ],
             "additionalProperties": {
               "$ref": "#/components/schemas/Svar"
             }
@@ -1031,7 +1148,10 @@
             ]
           },
           "vedlegg": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/Vedlegg"
             }
@@ -1059,10 +1179,16 @@
         "type": "object",
         "properties": {
           "tittel": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "felt": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/Felt"
             }
@@ -1102,7 +1228,10 @@
         "type": "object",
         "properties": {
           "value": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "type": {
             "type": "string",
@@ -1125,7 +1254,10 @@
             "type": "string"
           },
           "uuid": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         "required": [
@@ -1149,6 +1281,25 @@
           "kode",
           "navn",
           "sistEndret"
+        ]
+      },
+      "AntallInnsendteSoknaderDto": {
+        "type": "object",
+        "properties": {
+          "antall": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "innsendingTillattFra": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "antall"
         ]
       },
       "PabegyntSoknad": {
@@ -1220,34 +1371,64 @@
         "type": "object",
         "properties": {
           "adresse": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "husnummer": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "husbokstav": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "kommunenummer": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "kommunenavn": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "postnummer": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "poststed": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "geografiskTilknytning": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "gatekode": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
-          "bydel": {
-            "type": "string"
+          "bydelsnummer": {
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "type": {
             "type": "string",

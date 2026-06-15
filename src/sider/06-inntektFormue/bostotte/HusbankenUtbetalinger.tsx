@@ -36,7 +36,7 @@ export const HusbankenUtbetalinger = ({utbetalinger}: {utbetalinger?: Utbetaling
                         <Table.DataCell>{t(getMottakerText(utbetaling.mottaker))}</Table.DataCell>
 
                         <Table.DataCell align={"left"}>
-                            <LocalizedCurrency value={utbetaling.netto} />
+                            <LocalizedCurrency value={utbetaling.netto ?? undefined} />
                         </Table.DataCell>
                     </Table.Row>
                 ))}

@@ -2,7 +2,9 @@ import {AdresseForslag} from "../../../generated/model";
 import {AdresseTypeahead} from "./AdresseTypeaheadDownshift";
 import * as React from "react";
 import styled from "styled-components";
-import {AdresserInputBrukerAdresse} from "../../../generated/new/model";
+import {MatrikkelAdresse, VegAdresse} from "../../../generated/new/model";
+
+type AdresserInputBrukerAdresse = MatrikkelAdresse | VegAdresse;
 
 // TODO: Make this unnecessary by making the input type on the backend to soknad
 //       equal to the output type from adressesok

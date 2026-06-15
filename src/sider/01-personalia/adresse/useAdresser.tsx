@@ -5,11 +5,9 @@ import {
     useGetAdresser,
     useUpdateAdresser,
 } from "../../../generated/new/adresse-controller/adresse-controller.ts";
-import {
-    AdresserDtoAdresseValg,
-    AdresserInputAdresseValg,
-    AdresserInputBrukerAdresse,
-} from "../../../generated/new/model";
+import {AdresserInputAdresseValg, MatrikkelAdresse, VegAdresse} from "../../../generated/new/model";
+
+type AdresserInputBrukerAdresse = MatrikkelAdresse | VegAdresse;
 import {useState} from "react";
 
 export const mutationKey = (soknadId: string) => ["updateAdresser", soknadId];
@@ -38,7 +36,7 @@ export const useAdresser = () => {
         },
     });
 
-    const setAdressevalg = (value: AdresserDtoAdresseValg) => mutate({soknadId, data: {adresseValg: value}});
+    const setAdressevalg = (value: AdresserInputAdresseValg) => mutate({soknadId, data: {adresseValg: value}});
 
     const setAdresse = (value: AdresserInputBrukerAdresse | null) =>
         mutate({soknadId, data: {adresseValg: AdresserInputAdresseValg.SOKNAD, brukerAdresse: value ?? undefined}});

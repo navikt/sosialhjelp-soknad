@@ -14,13 +14,13 @@ export const BarnSysteminfo = ({barnIndex}: {barnIndex: number}) => {
     return (
         <Systeminfo>
             <SysteminfoItem as="div" label={t("kontakt.system.personalia.navn")}>
-                <FullName name={ansvar.navn} />
+                <FullName name={ansvar.navn ?? undefined} />
             </SysteminfoItem>
             <SysteminfoItem as="div" label={t("familierelasjon.fodselsdato")}>
                 <LocalizedDate date={ansvar.fodselsdato} />
             </SysteminfoItem>
             <SysteminfoItem as="div" label={t("familierelasjon.samme_folkeregistrerte_adresse")}>
-                <LocalizedYesNo value={ansvar.folkeregistrertSammen} />
+                <LocalizedYesNo value={ansvar.folkeregistrertSammen ?? undefined} />
             </SysteminfoItem>
         </Systeminfo>
     );

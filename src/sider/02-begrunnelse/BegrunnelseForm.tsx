@@ -23,7 +23,10 @@ const BegrunnelseForm = ({
         handleSubmit,
         formState: {errors},
     } = useForm({
-        defaultValues: begrunnelse,
+        defaultValues: {
+            hvaSokesOm: begrunnelse?.hvaSokesOm,
+            hvorforSoke: begrunnelse?.hvorforSoke ?? undefined,
+        },
         resolver: zodResolver(BegrunnelseSchema),
         mode: "onChange",
     });

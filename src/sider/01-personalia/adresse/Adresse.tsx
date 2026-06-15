@@ -57,11 +57,11 @@ export const AdresseData = () => {
                     data-testid="addresse-valg"
                 >
                     {t("kontakt.system.oppholdsadresse.folkeregistrertAdresse")}
-                    <AdresseVisning adresse={folkeregistrert} />
+                    <AdresseVisning adresse={folkeregistrert ?? undefined} />
                 </Radio>
                 <Radio value={AdresserDtoAdresseValg.MIDLERTIDIG} className={cx({hidden: !midlertidig})}>
                     {t("kontakt.system.oppholdsadresse.midlertidigAdresse")}
-                    <AdresseVisning adresse={midlertidig} />
+                    <AdresseVisning adresse={midlertidig ?? undefined} />
                 </Radio>
                 <Radio value={AdresserDtoAdresseValg.SOKNAD} className={"mb-0!"}>
                     {t("kontakt.system.oppholdsadresse.valg.soknad")}
