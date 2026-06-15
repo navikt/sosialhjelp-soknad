@@ -51,13 +51,27 @@ export const EktefellePersonaliaForm = ({sivilstatus, ektefelle, setEktefelle}: 
         resolver: zodResolver(SivilstatusSchema),
         defaultValues: {
             ...ektefelle,
+            navn: ektefelle?.navn
+                ? {
+                      fornavn: ektefelle.navn.fornavn ?? undefined,
+                      mellomnavn: ektefelle.navn.mellomnavn ?? undefined,
+                      etternavn: ektefelle.navn.etternavn ?? undefined,
+                  }
+                : undefined,
+            borSammen: ektefelle?.borSammen ?? undefined,
+            personId: ektefelle?.personId ?? undefined,
             fodselsdato: reformatEktefelleDato(ektefelle?.fodselsdato ?? ""),
         },
     });
     if (!sivilstatus) return null;
     return (
         <Panel className={"bg-gray-100! mb-4"}>
-            <form onSubmit={handleSubmit(setEktefelle, getLogger().error)}>
+            <form
+                onSubmit={handleSubmit(
+                    (values) => setEktefelle(values as unknown as EktefelleInput),
+                    getLogger().error
+                )}
+            >
                 <div className="space-y-4 pb-4">
                     <Heading size={"small"} level={"3"} spacing>
                         {t("familie.sivilstatus.gift.ektefelle.sporsmal")}

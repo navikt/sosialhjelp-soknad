@@ -22,7 +22,7 @@ const BruttoNetto = ({
         mode: "onBlur",
         shouldFocusError: false,
         resolver: zodResolver(BruttoNettoFormSchema),
-        defaultValues: {brutto: opplysning?.brutto, netto: opplysning?.netto},
+        defaultValues: {brutto: opplysning?.brutto ?? undefined, netto: opplysning?.netto ?? undefined},
     });
 
     const onSubmit = (formValues: BruttoNettoFormValues) => {

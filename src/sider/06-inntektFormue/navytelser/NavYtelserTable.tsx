@@ -25,7 +25,7 @@ export const NavYtelserTable = ({navUtbetalinger}: {navUtbetalinger: NavUtbetali
                         </Table.DataCell>
                         <Table.DataCell>{ytelsestype}</Table.DataCell>
                         <Table.DataCell align={"left"}>
-                            <LocalizedCurrency value={belop} />
+                            <LocalizedCurrency value={belop ?? undefined} />
                         </Table.DataCell>
                     </Table.Row>
                 ))}

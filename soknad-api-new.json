@@ -77,7 +77,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -183,7 +183,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -274,7 +274,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -380,7 +380,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -471,7 +471,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -577,7 +577,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -668,7 +668,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -767,7 +767,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -858,7 +858,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -957,7 +957,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -1048,7 +1048,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -1147,7 +1147,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -1238,7 +1238,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -1392,7 +1392,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -1483,7 +1483,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -1589,7 +1589,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -1680,7 +1680,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -1786,7 +1786,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -1877,7 +1877,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -1976,7 +1976,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -2077,7 +2077,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -2168,7 +2168,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -2267,7 +2267,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -2358,7 +2358,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -2457,7 +2457,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -2548,7 +2548,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -2647,7 +2647,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -2738,7 +2738,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -2837,7 +2837,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -2928,7 +2928,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -3027,7 +3027,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -3118,7 +3118,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -3224,7 +3224,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -3315,7 +3315,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -3414,7 +3414,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -3505,7 +3505,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -3604,7 +3604,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -3695,7 +3695,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -3786,7 +3786,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -3885,7 +3885,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -3975,7 +3975,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -4092,7 +4092,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -4183,7 +4183,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -4273,7 +4273,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -4364,7 +4364,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -4455,7 +4455,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -4477,6 +4477,97 @@
         },
         "tags": [
           "nav-ytelse-controller"
+        ]
+      }
+    },
+    "/soknad/hide/{digisosId}": {
+      "get": {
+        "operationId": "skalSkjuleOriginalSoknad",
+        "parameters": [
+          {
+            "name": "digisosId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "skjule-orginal-soknad-controller"
         ]
       }
     },
@@ -4551,7 +4642,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -4642,7 +4733,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -4734,7 +4825,7 @@
             }
           },
           "413": {
-            "description": "Payload Too Large",
+            "description": "Content Too Large",
             "content": {
               "*/*": {
                 "schema": {
@@ -4795,10 +4886,16 @@
             "type": "string"
           },
           "message": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "id": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         "discriminator": {
@@ -4889,7 +4986,10 @@
                 "type": "boolean"
               },
               "beskrivelseAnnenBoutgift": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
               }
             }
           }
@@ -4914,7 +5014,10 @@
         "type": "object",
         "properties": {
           "bekreftelse": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "husleie": {
             "type": "boolean"
@@ -5013,7 +5116,10 @@
             "type": "boolean"
           },
           "hasBekreftelse": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "hasFritidsaktiviteter": {
             "type": "boolean"
@@ -5067,7 +5173,10 @@
             "type": "object",
             "properties": {
               "studentgrad": {
-                "type": "string",
+                "type": [
+                  "string",
+                  "null"
+                ],
                 "enum": [
                   "HELTID",
                   "DELTID"
@@ -5098,10 +5207,16 @@
         "type": "object",
         "properties": {
           "erStudent": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "studentgrad": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "enum": [
               "HELTID",
               "DELTID"
@@ -5113,10 +5228,16 @@
         "type": "object",
         "properties": {
           "hvaErEndret": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "endring": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           }
         }
       },
@@ -5124,7 +5245,10 @@
         "type": "object",
         "properties": {
           "telefonnummerBruker": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         }
       },
@@ -5132,10 +5256,16 @@
         "type": "object",
         "properties": {
           "telefonnummerRegister": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "telefonnummerBruker": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         }
       },
@@ -5143,10 +5273,16 @@
         "type": "object",
         "properties": {
           "harIkkeKonto": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "kontonummerBruker": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         }
       },
@@ -5154,13 +5290,22 @@
         "type": "object",
         "properties": {
           "harIkkeKonto": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "kontonummerRegister": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "kontonummerBruker": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         }
       },
@@ -5191,11 +5336,17 @@
             "type": "object",
             "properties": {
               "avdrag": {
-                "type": "number",
+                "type": [
+                  "number",
+                  "null"
+                ],
                 "format": "double"
               },
               "renter": {
-                "type": "number",
+                "type": [
+                  "number",
+                  "null"
+                ],
                 "format": "double"
               }
             }
@@ -5211,10 +5362,16 @@
             "type": "object",
             "properties": {
               "beskrivelse": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "belop": {
-                "type": "number",
+                "type": [
+                  "number",
+                  "null"
+                ],
                 "format": "double"
               }
             }
@@ -5272,11 +5429,17 @@
             "type": "object",
             "properties": {
               "brutto": {
-                "type": "number",
+                "type": [
+                  "number",
+                  "null"
+                ],
                 "format": "double"
               },
               "netto": {
-                "type": "number",
+                "type": [
+                  "number",
+                  "null"
+                ],
                 "format": "double"
               }
             }
@@ -5363,7 +5526,10 @@
             ]
           },
           "detaljer": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "oneOf": [
                 {
@@ -5442,7 +5608,10 @@
                 "type": "boolean"
               },
               "beskrivelseVerdi": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
               }
             }
           }
@@ -5477,7 +5646,10 @@
         "type": "object",
         "properties": {
           "bekreftelse": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "hasBolig": {
             "type": "boolean"
@@ -5495,7 +5667,10 @@
             "type": "boolean"
           },
           "beskrivelseVerdi": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         "required": [
@@ -5545,7 +5720,10 @@
                 "type": "boolean"
               },
               "beskrivelseUtbetaling": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
               }
             }
           }
@@ -5578,7 +5756,10 @@
         "type": "object",
         "properties": {
           "hasBekreftelse": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "hasUtbytte": {
             "type": "boolean"
@@ -5593,10 +5774,16 @@
             "type": "boolean"
           },
           "beskrivelseUtbetaling": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "utbetalingerFraNavFeilet": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           }
         },
         "required": [
@@ -5621,10 +5808,16 @@
         "type": "object",
         "properties": {
           "erStudent": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "mottarStudielan": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           }
         }
       },
@@ -5652,16 +5845,28 @@
             }
           },
           "organisasjonsnavn": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "orgnr": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "fom": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "tom": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         "required": [
@@ -5693,10 +5898,20 @@
             }
           },
           "inntektFraSkatteetatenFeilet": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "samtykke": {
-            "$ref": "#/components/schemas/SamtykkeDto"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SamtykkeDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -5707,15 +5922,24 @@
         "type": "object",
         "properties": {
           "brutto": {
-            "type": "number",
+            "type": [
+              "number",
+              "null"
+            ],
             "format": "double"
           },
           "forskuddstrekk": {
-            "type": "number",
+            "type": [
+              "number",
+              "null"
+            ],
             "format": "double"
           },
           "tittel": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         }
       },
@@ -5741,7 +5965,10 @@
             "type": "boolean"
           },
           "beskrivelseSparing": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         "required": [
@@ -5775,7 +6002,10 @@
             "type": "boolean"
           },
           "beskrivelseSparing": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         "required": [
@@ -5791,16 +6021,25 @@
         "type": "object",
         "properties": {
           "personId": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "navn": {
             "$ref": "#/components/schemas/NavnInput"
           },
           "fodselsdato": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "borSammen": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           }
         },
         "required": [
@@ -5811,13 +6050,22 @@
         "type": "object",
         "properties": {
           "fornavn": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "mellomnavn": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "etternavn": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         }
       },
@@ -5837,7 +6085,14 @@
             ]
           },
           "ektefelle": {
-            "$ref": "#/components/schemas/EktefelleInput"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EktefelleInput"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -5848,25 +6103,50 @@
         "type": "object",
         "properties": {
           "personId": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "navn": {
-            "$ref": "#/components/schemas/Navn"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Navn"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "fodselsdato": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "harDiskresjonskode": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "folkeregistrertMedEktefelle": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "borSammen": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "kildeErSystem": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           }
         }
       },
@@ -5874,13 +6154,22 @@
         "type": "object",
         "properties": {
           "fornavn": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "mellomnavn": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "etternavn": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         }
       },
@@ -5888,7 +6177,10 @@
         "type": "object",
         "properties": {
           "sivilstatus": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "enum": [
               "GIFT",
               "UGIFT",
@@ -5900,7 +6192,14 @@
             ]
           },
           "ektefelle": {
-            "$ref": "#/components/schemas/EktefelleDto"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EktefelleDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         }
       },
@@ -5908,21 +6207,36 @@
         "type": "object",
         "properties": {
           "uuid": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uuid"
           },
           "personId": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "deltBosted": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "samvarsgrad": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "int32"
           },
           "folkeregistrertSammen": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           }
         }
       },
@@ -5930,7 +6244,10 @@
         "type": "object",
         "properties": {
           "barnebidrag": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "enum": [
               "BETALER",
               "MOTTAR",
@@ -5957,22 +6274,44 @@
             "format": "uuid"
           },
           "navn": {
-            "$ref": "#/components/schemas/Navn"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Navn"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "fodselsdato": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "borSammen": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "folkeregistrertSammen": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "deltBosted": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "samvarsgrad": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "int32"
           }
         },
@@ -5984,10 +6323,16 @@
         "type": "object",
         "properties": {
           "harForsorgerplikt": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "barnebidrag": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "enum": [
               "BETALER",
               "MOTTAR",
@@ -6170,7 +6515,10 @@
         "type": "object",
         "properties": {
           "botype": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "enum": [
               "EIER",
               "LEIER",
@@ -6186,7 +6534,10 @@
             ]
           },
           "antallPersoner": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "int32"
           }
         }
@@ -6217,7 +6568,10 @@
             "type": "object",
             "properties": {
               "hvorforSoke": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "hvaSokesOm": {
                 "type": "string"
@@ -6270,7 +6624,10 @@
             "type": "string"
           },
           "hvorforSoke": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "kategorier": {
             "$ref": "#/components/schemas/KategorierDto"
@@ -6312,7 +6669,10 @@
         "type": "object",
         "properties": {
           "kommentarTilArbeidsforhold": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         }
       },
@@ -6326,7 +6686,10 @@
             }
           },
           "kommentar": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         "required": [
@@ -6337,23 +6700,41 @@
         "type": "object",
         "properties": {
           "arbeidsgivernavn": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "orgnummer": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "start": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "slutt": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "fastStillingsprosent": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "int32"
           },
           "harFastStilling": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           }
         }
       },
@@ -6386,6 +6767,7 @@
             ]
           },
           "brukerAdresse": {
+            "type": "null",
             "oneOf": [
               {
                 "$ref": "#/components/schemas/MatrikkelAdresse"
@@ -6418,13 +6800,28 @@
                 "type": "string"
               },
               "festenummer": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "seksjonsnummer": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "undernummer": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "bydelsnummer": {
+                "type": [
+                  "string",
+                  "null"
+                ]
               }
             }
           },
@@ -6450,7 +6847,10 @@
                 "type": "string"
               },
               "kommunenummer": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "adresselinjer": {
                 "type": "array",
@@ -6459,22 +6859,46 @@
                 }
               },
               "bolignummer": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "postnummer": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "poststed": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "gatenavn": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "husnummer": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "husbokstav": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "bydelsnummer": {
+                "type": [
+                  "string",
+                  "null"
+                ]
               }
             }
           },
@@ -6510,7 +6934,10 @@
         "type": "object",
         "properties": {
           "adresseValg": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "enum": [
               "FOLKEREGISTRERT",
               "MIDLERTIDIG",
@@ -6518,6 +6945,7 @@
             ]
           },
           "folkeregistrertAdresse": {
+            "type": "null",
             "oneOf": [
               {
                 "$ref": "#/components/schemas/MatrikkelAdresse"
@@ -6534,6 +6962,7 @@
             ]
           },
           "midlertidigAdresse": {
+            "type": "null",
             "oneOf": [
               {
                 "$ref": "#/components/schemas/MatrikkelAdresse"
@@ -6550,6 +6979,7 @@
             ]
           },
           "brukerAdresse": {
+            "type": "null",
             "oneOf": [
               {
                 "$ref": "#/components/schemas/MatrikkelAdresse"
@@ -6566,7 +6996,14 @@
             ]
           },
           "navenhet": {
-            "$ref": "#/components/schemas/NavEnhetDto"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NavEnhetDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         }
       },
@@ -6574,25 +7011,46 @@
         "type": "object",
         "properties": {
           "enhetsnavn": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "orgnummer": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "enhetsnummer": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "kommunenummer": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "kommunenavn": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "isMottakMidlertidigDeaktivert": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "isMottakDeaktivert": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           }
         }
       },
@@ -6664,10 +7122,16 @@
         "type": "object",
         "properties": {
           "hasBostotte": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "hasSamtykke": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           }
         }
       },
@@ -6675,13 +7139,22 @@
         "type": "object",
         "properties": {
           "hasBostotte": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "hasSamtykke": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "samtykkeTidspunkt": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time"
           },
           "utbetalinger": {
@@ -6697,7 +7170,10 @@
             }
           },
           "fetchHusbankenFeilet": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           }
         },
         "required": [
@@ -6720,10 +7196,16 @@
             ]
           },
           "beskrivelse": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "vedtaksstatus": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "enum": [
               "INNVILGET",
               "AVSLAG",
@@ -6740,18 +7222,27 @@
         "type": "object",
         "properties": {
           "mottaker": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "enum": [
               "HUSSTAND",
               "KOMMUNE"
             ]
           },
           "netto": {
-            "type": "number",
+            "type": [
+              "number",
+              "null"
+            ],
             "format": "double"
           },
           "utbetalingsdato": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date"
           },
           "type": {
@@ -6799,7 +7290,10 @@
             "type": "string"
           },
           "mellomnavn": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "etternavn": {
             "type": "string"
@@ -6821,13 +7315,22 @@
             "$ref": "#/components/schemas/NavnDto"
           },
           "fodselsnummer": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "statsborgerskap": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "nordiskBorger": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           }
         },
         "required": [
@@ -6838,7 +7341,10 @@
         "type": "object",
         "properties": {
           "type": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "enum": [
               "BARNEBIDRAG_MOTTAR",
               "STUDIELAN_INNTEKT",
@@ -6855,13 +7361,22 @@
             ]
           },
           "ytelsestype": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "utbetalingsdato": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "belop": {
-            "type": "number",
+            "type": [
+              "number",
+              "null"
+            ],
             "format": "double"
           }
         }
@@ -6876,7 +7391,10 @@
             }
           },
           "fetchUtbetalingerFeilet": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           }
         },
         "required": [

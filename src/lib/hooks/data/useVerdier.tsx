@@ -1,7 +1,9 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {useGetVerdier, useUpdateVerdier} from "../../../generated/new/verdi-controller/verdi-controller.ts";
-import {HarVerdierInput, UpdateVerdierBody, VerdierDto} from "../../../generated/new/model";
+import {HarIkkeVerdierInput, HarVerdierInput, VerdierDto} from "../../../generated/new/model";
+
+type UpdateVerdierBody = HarIkkeVerdierInput | HarVerdierInput;
 
 const mapToDto = (vars?: UpdateVerdierBody): Partial<VerdierDto> | undefined => {
     if (!vars) {

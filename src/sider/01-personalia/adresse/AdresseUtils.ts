@@ -1,6 +1,14 @@
 import {AdresseForslag} from "../../../generated/model";
-import {AdresserDtoBrukerAdresse, VegAdresseType} from "../../../generated/new/model";
+import {
+    MatrikkelAdresse,
+    PostboksAdresse,
+    UstrukturertAdresse,
+    VegAdresse,
+    VegAdresseType,
+} from "../../../generated/new/model";
 import getLogger from "@log/logger";
+
+export type AdresserDtoBrukerAdresse = MatrikkelAdresse | PostboksAdresse | UstrukturertAdresse | VegAdresse;
 
 const formaterAdresseString = (sokTreff: AdresseForslag | null | undefined) => {
     if (!sokTreff) return "";
