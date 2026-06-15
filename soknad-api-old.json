@@ -950,26 +950,6 @@
   },
   "components": {
     "schemas": {
-      "InnsendingFeiletError": {
-        "type": "object",
-        "properties": {
-          "deletionDate": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
-          }
-        },
-        "required": [
-          "type"
-        ]
-      },
       "SoknadApiError": {
         "type": "object",
         "properties": {
@@ -1021,7 +1001,11 @@
           "mapping": {
             "SoknadApiError": "#/components/schemas/SoknadApiError"
           }
-        }
+        },
+        "required": [
+          "error",
+          "responseType"
+        ]
       },
       "UnauthorizedMelding": {
         "type": "object",
@@ -1030,7 +1014,31 @@
             "type": "string",
             "format": "uri"
           }
-        }
+        },
+        "required": [
+          "loginUrl"
+        ]
+      },
+      "InnsendingFeiletError": {
+        "type": "object",
+        "properties": {
+          "deletionDate": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
+          }
+        },
+        "required": [
+          "deletionDate",
+          "type"
+        ]
       },
       "Logg": {
         "type": "object",
@@ -1079,7 +1087,10 @@
               "null"
             ]
           }
-        }
+        },
+        "required": [
+          "level"
+        ]
       },
       "Avsnitt": {
         "type": "object",
@@ -1093,7 +1104,11 @@
               "$ref": "#/components/schemas/Sporsmal"
             }
           }
-        }
+        },
+        "required": [
+          "sporsmal",
+          "tittel"
+        ]
       },
       "Felt": {
         "type": "object",
@@ -1142,7 +1157,10 @@
               "$ref": "#/components/schemas/Vedlegg"
             }
           }
-        }
+        },
+        "required": [
+          "type"
+        ]
       },
       "Oppsummering": {
         "type": "object",
@@ -1153,7 +1171,10 @@
               "$ref": "#/components/schemas/Steg"
             }
           }
-        }
+        },
+        "required": [
+          "steg"
+        ]
       },
       "Sporsmal": {
         "type": "object",
@@ -1176,7 +1197,10 @@
           "erUtfylt": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "erUtfylt"
+        ]
       },
       "Steg": {
         "type": "object",
@@ -1194,7 +1218,12 @@
               "$ref": "#/components/schemas/Avsnitt"
             }
           }
-        }
+        },
+        "required": [
+          "avsnitt",
+          "stegNr",
+          "tittel"
+        ]
       },
       "Svar": {
         "type": "object",
@@ -1214,7 +1243,10 @@
               "TIDSPUNKT"
             ]
           }
-        }
+        },
+        "required": [
+          "type"
+        ]
       },
       "Vedlegg": {
         "type": "object",
@@ -1228,7 +1260,10 @@
               "null"
             ]
           }
-        }
+        },
+        "required": [
+          "filnavn"
+        ]
       },
       "InnsendtSoknadDto": {
         "type": "object",
@@ -1242,23 +1277,12 @@
           "sistEndret": {
             "type": "string"
           }
-        }
-      },
-      "AntallInnsendteSoknaderDto": {
-        "type": "object",
-        "properties": {
-          "antall": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "innsendingTillattFra": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          }
-        }
+        },
+        "required": [
+          "kode",
+          "navn",
+          "sistEndret"
+        ]
       },
       "AntallInnsendteSoknaderDto": {
         "type": "object",
@@ -1293,37 +1317,56 @@
           "isKort": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "isKort",
+          "sistOppdatert",
+          "soknadId"
+        ]
       },
       "SessionResponse": {
         "description": "Informasjon om brukerøkt",
         "type": "object",
         "properties": {
           "userBlocked": {
+            "description": "Bruker har adressebeskyttelse og kan ikke bruke digital søknad",
             "type": "boolean"
           },
           "daysBeforeDeletion": {
+            "description": "Antall dager før søknader slettes",
             "type": "integer",
             "format": "int64"
           },
           "open": {
+            "description": "Påbegynte men ikke innleverte søknader",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PabegyntSoknad"
             }
           },
           "numRecentlySent": {
+            "description": "Antall nylig innsendte søknader",
             "type": "integer",
             "format": "int32"
           },
           "maxUploadSizeBytes": {
+            "description": "Max file upload size, in bytes",
             "type": "integer",
             "format": "int64"
           },
           "personId": {
+            "description": "Personid for innlogget bruker",
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "daysBeforeDeletion",
+          "maxUploadSizeBytes",
+          "numRecentlySent",
+          "open",
+          "personId",
+          "userBlocked"
+        ]
       },
       "AdresseForslag": {
         "type": "object",
@@ -1395,7 +1438,10 @@
               "MATRIKKELADRESSE"
             ]
           }
-        }
+        },
+        "required": [
+          "type"
+        ]
       },
       "PabegyntSoknadDto": {
         "type": "object",
@@ -1422,14 +1468,25 @@
           "sistOppdatert": {
             "type": "string"
           },
+          "isAktiv": {
+            "type": "boolean"
+          },
           "soknadId": {
             "type": "string",
             "format": "uuid"
-          },
-          "isAktiv": {
-            "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "eventId",
+          "eventTidspunkt",
+          "grupperingsId",
+          "isAktiv",
+          "link",
+          "sikkerhetsnivaa",
+          "sistOppdatert",
+          "soknadId",
+          "tekst"
+        ]
       }
     }
   }
