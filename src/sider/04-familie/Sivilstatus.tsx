@@ -39,7 +39,7 @@ export const Sivilstatus = () => {
                     {editMode ? (
                         <EktefellePersonaliaForm
                             sivilstatus={sivilstatus}
-                            ektefelle={ektefelle}
+                            ektefelle={ektefelle ?? undefined}
                             setEktefelle={(ektefelle) => {
                                 setEktefelle(ektefelle);
                                 setEditMode(false);

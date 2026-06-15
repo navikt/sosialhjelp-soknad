@@ -22,7 +22,8 @@ const tomtNavn: Navn = {
 export type EktefelleDtoOrInput =
     | EktefelleDto
     | (Partial<EktefelleInput> & {kildeErSystem: false; folkeregistrertMedEktefelle?: never})
-    | undefined;
+    | undefined
+    | null;
 
 export const useSivilstatus = () => {
     const soknadId = useSoknadId();

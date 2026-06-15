@@ -4,14 +4,11 @@ import {
     useGetUtbetalinger,
     useUpdateUtbetalinger,
 } from "../../../generated/new/utbetaling-controller/utbetaling-controller.ts";
-import {
-    type HarIkkeUtbetalingerInput,
-    HarUtbetalingerInput,
-    UpdateUtbetalingerBody,
-    UtbetalingerDto,
-} from "../../../generated/new/model";
+import {type HarIkkeUtbetalingerInput, HarUtbetalingerInput, UtbetalingerDto} from "../../../generated/new/model";
 import {CHECKBOX_VALUES} from "../../../sider/06-inntektFormue/Utbetalinger.tsx";
 import {useEffect, useState} from "react";
+
+type UpdateUtbetalingerBody = HarIkkeUtbetalingerInput | HarUtbetalingerInput;
 
 const merge = (data?: UtbetalingerDto, variables?: UpdateUtbetalingerBody): UtbetalingerDto | undefined => {
     if (!variables || !data) {
@@ -40,7 +37,6 @@ export const useUtbetalinger = () => {
     });
     const [harBekreftelse, setHarBekreftelse] = useState<boolean | null>(null);
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setHarBekreftelse(utbetalinger?.hasBekreftelse ?? null);
     }, [utbetalinger?.hasBekreftelse]);
 

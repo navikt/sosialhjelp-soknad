@@ -1,8 +1,8 @@
 import Detaljeliste, {DetaljelisteElement} from "../../../lib/components/detaljeliste/Detaljeliste";
 import * as React from "react";
 import {useTranslation} from "react-i18next";
-import {AdresserDtoBrukerAdresse} from "../../../generated/new/model";
 import getLogger from "@log/logger.ts";
+import {AdresserDtoBrukerAdresse} from "./AdresseUtils";
 
 export const AdresseVisning = ({adresse}: {adresse?: AdresserDtoBrukerAdresse}) => {
     const {t} = useTranslation();

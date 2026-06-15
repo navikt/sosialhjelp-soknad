@@ -73,7 +73,7 @@ export const ArbeidOgUtdanning = () => {
                 <ArbeidsforholdListe arbeidsforhold={arbeid?.arbeidsforholdList ?? []} />
                 <LocalizedTextarea
                     onChange={onKommentarChange}
-                    defaultValue={arbeid?.kommentar}
+                    defaultValue={arbeid?.kommentar ?? undefined}
                     error={kommentarError ? t("validering.maksLengde") : undefined}
                     id={"arbeid.kommentar"}
                     maxLength={MAX_LENGTH}

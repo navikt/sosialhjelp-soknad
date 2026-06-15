@@ -12,7 +12,7 @@ export const SystemData = (props: {felter?: Felt[]}) => {
                 ?.filter((felt): felt is Felt & {svar: Svar} => !!felt.svar)
                 .map(({label, svar: {value, type}}) => (
                     <li key={label}>
-                        <FormattedText value={value!} type={type} labelBackendKey={label} />
+                        <FormattedText value={value!} type={type} labelBackendKey={label ?? undefined} />
                     </li>
                 ))}
         </ul>

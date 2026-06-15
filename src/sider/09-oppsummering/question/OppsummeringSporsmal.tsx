@@ -21,7 +21,7 @@ export const OppsummeringSporsmal = ({sporsmal}: {sporsmal: Sporsmal}) => {
                 !sporsmal.erUtfylt
             ) &&
                 !sporsmal.erUtfylt && <Warning />}
-            <SporsmalFelt felt={sporsmal.felt} />
+            <SporsmalFelt felt={sporsmal.felt ?? undefined} />
         </div>
     );
 };

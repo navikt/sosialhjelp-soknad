@@ -1,7 +1,9 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {useGetBoutgifter, useUpdateBoutgifter} from "../../../generated/new/boutgift-controller/boutgift-controller.ts";
-import {BoutgifterDto, UpdateBoutgifterBody} from "../../../generated/new/model";
+import {BoutgifterDto, HarBoutgifterInput, HarIkkeBoutgifterInput} from "../../../generated/new/model";
+
+type UpdateBoutgifterBody = HarBoutgifterInput | HarIkkeBoutgifterInput;
 
 const mapToDto = (
     variables?: UpdateBoutgifterBody,
@@ -36,7 +38,7 @@ export const useBoutgifter = () => {
     const setBoutgifter = async (valg: (keyof Omit<BoutgifterDto, "bekreftelse" | "skalViseInfoVedBekreftelse">)[]) => {
         if (!boutgifter) return;
 
-        const oppdatert: UpdateBoutgifterBody = {
+        const oppdatert: HarBoutgifterInput = {
             ...boutgifter,
             type: "HarBoutgifterInput",
             hasHusleie: valg.includes("husleie"),

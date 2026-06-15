@@ -20,7 +20,7 @@ const BelopEn = ({
         mode: "onBlur",
         shouldFocusError: false,
         resolver: zodResolver(BelopEnFormSchema),
-        defaultValues: {belop: opplysning?.belop},
+        defaultValues: {belop: opplysning?.belop ?? undefined},
     });
 
     const {belop} = useDokumentasjonTekster(opplysningstype);

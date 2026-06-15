@@ -1260,6 +1260,25 @@
           }
         }
       },
+      "AntallInnsendteSoknaderDto": {
+        "type": "object",
+        "properties": {
+          "antall": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "innsendingTillattFra": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "antall"
+        ]
+      },
       "PabegyntSoknad": {
         "type": "object",
         "properties": {

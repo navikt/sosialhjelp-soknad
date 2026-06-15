@@ -4853,26 +4853,6 @@
   },
   "components": {
     "schemas": {
-      "InnsendingFeiletError": {
-        "type": "object",
-        "properties": {
-          "deletionDate": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
-          }
-        },
-        "required": [
-          "type"
-        ]
-      },
       "SoknadApiError": {
         "type": "object",
         "properties": {
@@ -4899,8 +4879,7 @@
               "DokumentUploadPossibleVirus",
               "SoknadUpdateConflict",
               "PdlKallFeilet",
-              "SokerUnder18",
-              "AntallSoknaderSendt"
+              "SokerUnder18"
             ]
           },
           "responseType": {
@@ -4924,7 +4903,11 @@
           "mapping": {
             "SoknadApiError": "#/components/schemas/SoknadApiError"
           }
-        }
+        },
+        "required": [
+          "error",
+          "responseType"
+        ]
       },
       "UnauthorizedMelding": {
         "type": "object",
@@ -4933,7 +4916,31 @@
             "type": "string",
             "format": "uri"
           }
-        }
+        },
+        "required": [
+          "loginUrl"
+        ]
+      },
+      "InnsendingFeiletError": {
+        "type": "object",
+        "properties": {
+          "deletionDate": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
+          }
+        },
+        "required": [
+          "deletionDate",
+          "type"
+        ]
       },
       "BoutgifterInput": {
         "properties": {
@@ -4986,6 +4993,14 @@
               }
             }
           }
+        ],
+        "required": [
+          "hasAnnenBoutgift",
+          "hasBoliglan",
+          "hasHusleie",
+          "hasKommunalAvgift",
+          "hasOppvarming",
+          "hasStrom"
         ]
       },
       "HarIkkeBoutgifterInput": {
@@ -5025,7 +5040,16 @@
           "skalViseInfoVedBekreftelse": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "annet",
+          "boliglan",
+          "husleie",
+          "kommunalAvgift",
+          "oppvarming",
+          "skalViseInfoVedBekreftelse",
+          "strom"
+        ]
       },
       "BarneutgifterInput": {
         "properties": {
@@ -5069,6 +5093,13 @@
               }
             }
           }
+        ],
+        "required": [
+          "hasAnnenUtgiftBarn",
+          "hasBarnehage",
+          "hasFritidsaktiviteter",
+          "hasSfo",
+          "hasTannregulering"
         ]
       },
       "HarIkkeBarneutgifterInput": {
@@ -5105,7 +5136,15 @@
           "hasAnnenUtgiftBarn": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "hasAnnenUtgiftBarn",
+          "hasBarnehage",
+          "hasForsorgerplikt",
+          "hasFritidsaktiviteter",
+          "hasSfo",
+          "hasTannregulering"
+        ]
       },
       "IkkeStudentInput": {
         "allOf": [
@@ -5120,6 +5159,9 @@
               }
             }
           }
+        ],
+        "required": [
+          "erStudent"
         ]
       },
       "StudentgradInput": {
@@ -5352,6 +5394,9 @@
               }
             }
           }
+        ],
+        "required": [
+          "detaljer"
         ]
       },
       "GenericOkonomiInput": {
@@ -5370,6 +5415,9 @@
               }
             }
           }
+        ],
+        "required": [
+          "detaljer"
         ]
       },
       "LonnsInntektDto": {
@@ -5411,6 +5459,9 @@
               }
             }
           }
+        ],
+        "required": [
+          "detalj"
         ]
       },
       "OkonomiDetaljDto": {
@@ -5493,7 +5544,10 @@
               ]
             }
           }
-        }
+        },
+        "required": [
+          "type"
+        ]
       },
       "OkonomiskeOpplysningerDto": {
         "type": "object",
@@ -5504,7 +5558,10 @@
               "$ref": "#/components/schemas/OkonomiskOpplysningDto"
             }
           }
-        }
+        },
+        "required": [
+          "opplysninger"
+        ]
       },
       "HarIkkeVerdierInput": {
         "allOf": [
@@ -5519,6 +5576,9 @@
               }
             }
           }
+        ],
+        "required": [
+          "hasBekreftelse"
         ]
       },
       "HarVerdierInput": {
@@ -5555,6 +5615,14 @@
               }
             }
           }
+        ],
+        "required": [
+          "hasBekreftelse",
+          "hasBeskrivelseVerdi",
+          "hasBolig",
+          "hasCampingvogn",
+          "hasFritidseiendom",
+          "hasKjoretoy"
         ]
       },
       "VerdierInput": {
@@ -5604,7 +5672,14 @@
               "null"
             ]
           }
-        }
+        },
+        "required": [
+          "hasAnnetVerdi",
+          "hasBolig",
+          "hasCampingvogn",
+          "hasFritidseiendom",
+          "hasKjoretoy"
+        ]
       },
       "HarIkkeUtbetalingerInput": {
         "allOf": [
@@ -5619,6 +5694,9 @@
               }
             }
           }
+        ],
+        "required": [
+          "harIkkeUtbetalinger"
         ]
       },
       "HarUtbetalingerInput": {
@@ -5649,6 +5727,12 @@
               }
             }
           }
+        ],
+        "required": [
+          "hasAnnet",
+          "hasForsikring",
+          "hasSalg",
+          "hasUtbytte"
         ]
       },
       "UtbetalingerInput": {
@@ -5701,7 +5785,13 @@
               "null"
             ]
           }
-        }
+        },
+        "required": [
+          "hasAnnenUtbetaling",
+          "hasForsikring",
+          "hasSalg",
+          "hasUtbytte"
+        ]
       },
       "StudielanInput": {
         "type": "object",
@@ -5709,7 +5799,10 @@
           "mottarStudielan": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "mottarStudielan"
+        ]
       },
       "StudielanDto": {
         "type": "object",
@@ -5737,7 +5830,10 @@
               "$ref": "#/components/schemas/OrganisasjonDto"
             }
           }
-        }
+        },
+        "required": [
+          "organisasjoner"
+        ]
       },
       "OrganisasjonDto": {
         "type": "object",
@@ -5772,7 +5868,10 @@
               "null"
             ]
           }
-        }
+        },
+        "required": [
+          "utbetalinger"
+        ]
       },
       "SamtykkeDto": {
         "type": "object",
@@ -5783,7 +5882,11 @@
           "samtykkeTidspunkt": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "samtykkeTidspunkt",
+          "verdi"
+        ]
       },
       "SkattbarInntektDto": {
         "type": "object",
@@ -5810,7 +5913,10 @@
               }
             ]
           }
-        }
+        },
+        "required": [
+          "inntektSkatteetaten"
+        ]
       },
       "UtbetalingFraSkatteetatenDto": {
         "type": "object",
@@ -5864,7 +5970,15 @@
               "null"
             ]
           }
-        }
+        },
+        "required": [
+          "hasBeskrivelseSparing",
+          "hasBrukskonto",
+          "hasBsu",
+          "hasLivsforsikring",
+          "hasSparekonto",
+          "hasVerdipapirer"
+        ]
       },
       "FormueDto": {
         "type": "object",
@@ -5893,7 +6007,15 @@
               "null"
             ]
           }
-        }
+        },
+        "required": [
+          "hasBrukskonto",
+          "hasBsu",
+          "hasLivsforsikring",
+          "hasSparekonto",
+          "hasSparing",
+          "hasVerdipapirer"
+        ]
       },
       "EktefelleInput": {
         "type": "object",
@@ -5919,7 +6041,10 @@
               "null"
             ]
           }
-        }
+        },
+        "required": [
+          "navn"
+        ]
       },
       "NavnInput": {
         "type": "object",
@@ -5969,7 +6094,10 @@
               }
             ]
           }
-        }
+        },
+        "required": [
+          "sivilstatus"
+        ]
       },
       "EktefelleDto": {
         "type": "object",
@@ -6133,7 +6261,10 @@
               "$ref": "#/components/schemas/BarnInput"
             }
           }
-        }
+        },
+        "required": [
+          "ansvar"
+        ]
       },
       "BarnDto": {
         "type": "object",
@@ -6183,7 +6314,10 @@
             ],
             "format": "int32"
           }
-        }
+        },
+        "required": [
+          "uuid"
+        ]
       },
       "ForsorgerDto": {
         "type": "object",
@@ -6212,7 +6346,10 @@
               "$ref": "#/components/schemas/BarnDto"
             }
           }
-        }
+        },
+        "required": [
+          "ansvar"
+        ]
       },
       "DokumentasjonInput": {
         "type": "object",
@@ -6260,7 +6397,11 @@
           "hasLevert": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "hasLevert",
+          "type"
+        ]
       },
       "DokumentDto": {
         "type": "object",
@@ -6272,7 +6413,11 @@
           "filnavn": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "dokumentId",
+          "filnavn"
+        ]
       },
       "DokumentasjonDto": {
         "type": "object",
@@ -6344,7 +6489,13 @@
               "$ref": "#/components/schemas/DokumentDto"
             }
           }
-        }
+        },
+        "required": [
+          "dokumentasjonStatus",
+          "dokumenter",
+          "gruppe",
+          "type"
+        ]
       },
       "ForventetDokumentasjonDto": {
         "type": "object",
@@ -6355,7 +6506,10 @@
               "$ref": "#/components/schemas/DokumentasjonDto"
             }
           }
-        }
+        },
+        "required": [
+          "dokumentasjon"
+        ]
       },
       "BosituasjonDto": {
         "type": "object",
@@ -6424,6 +6578,9 @@
               }
             }
           }
+        ],
+        "required": [
+          "hvaSokesOm"
         ]
       },
       "HarKategorierInput": {
@@ -6454,6 +6611,10 @@
               }
             }
           }
+        ],
+        "required": [
+          "annet",
+          "kategorier"
         ]
       },
       "BegrunnelseDto": {
@@ -6471,7 +6632,11 @@
           "kategorier": {
             "$ref": "#/components/schemas/KategorierDto"
           }
-        }
+        },
+        "required": [
+          "hvaSokesOm",
+          "kategorier"
+        ]
       },
       "KategorierDto": {
         "type": "object",
@@ -6494,7 +6659,11 @@
           "annet": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "annet",
+          "definerte"
+        ]
       },
       "ArbeidInput": {
         "type": "object",
@@ -6522,7 +6691,10 @@
               "null"
             ]
           }
-        }
+        },
+        "required": [
+          "arbeidsforholdList"
+        ]
       },
       "ArbeidsforholdDto": {
         "type": "object",
@@ -6605,7 +6777,10 @@
               }
             ]
           }
-        }
+        },
+        "required": [
+          "adresseValg"
+        ]
       },
       "MatrikkelAdresse": {
         "allOf": [
@@ -6653,6 +6828,11 @@
           {
             "$ref": "#/components/schemas/Adresse"
           }
+        ],
+        "required": [
+          "bruksnummer",
+          "gaardsnummer",
+          "kommunenummer"
         ]
       },
       "VegAdresse": {
@@ -6725,6 +6905,10 @@
           {
             "$ref": "#/components/schemas/Adresse"
           }
+        ],
+        "required": [
+          "adresselinjer",
+          "landkode"
         ]
       },
       "Adresse": {
@@ -6856,11 +7040,17 @@
               "null"
             ]
           },
-          "mottakMidlertidigDeaktivert": {
-            "type": "boolean"
+          "isMottakMidlertidigDeaktivert": {
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
-          "mottakDeaktivert": {
-            "type": "boolean"
+          "isMottakDeaktivert": {
+            "type": [
+              "boolean",
+              "null"
+            ]
           }
         }
       },
@@ -6883,6 +7073,11 @@
               }
             }
           }
+        ],
+        "required": [
+          "postboks",
+          "postnummer",
+          "poststed"
         ]
       },
       "UstrukturertAdresse": {
@@ -6901,6 +7096,9 @@
               }
             }
           }
+        ],
+        "required": [
+          "adresse"
         ]
       },
       "SoknadSendtDto": {
@@ -6914,7 +7112,11 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "required": [
+          "digisosId",
+          "tidspunkt"
+        ]
       },
       "BostotteInput": {
         "type": "object",
@@ -6973,7 +7175,11 @@
               "null"
             ]
           }
-        }
+        },
+        "required": [
+          "saker",
+          "utbetalinger"
+        ]
       },
       "BostotteSakDto": {
         "type": "object",
@@ -7006,7 +7212,11 @@
               "AVVIST"
             ]
           }
-        }
+        },
+        "required": [
+          "dato",
+          "status"
+        ]
       },
       "UtbetalingBostotteDto": {
         "type": "object",
@@ -7052,7 +7262,10 @@
               "UTBETALING_HUSBANKEN"
             ]
           }
-        }
+        },
+        "required": [
+          "type"
+        ]
       },
       "StartSoknadResponseDto": {
         "type": "object",
@@ -7064,7 +7277,11 @@
           "useKortSoknad": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "soknadId",
+          "useKortSoknad"
+        ]
       },
       "NavnDto": {
         "type": "object",
@@ -7084,7 +7301,12 @@
           "fulltNavn": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "etternavn",
+          "fornavn",
+          "fulltNavn"
+        ]
       },
       "PersonaliaDto": {
         "type": "object",
@@ -7110,7 +7332,10 @@
               "null"
             ]
           }
-        }
+        },
+        "required": [
+          "navn"
+        ]
       },
       "NavUtbetalingerDto": {
         "type": "object",
@@ -7171,7 +7396,10 @@
               "null"
             ]
           }
-        }
+        },
+        "required": [
+          "utbetalinger"
+        ]
       }
     }
   }

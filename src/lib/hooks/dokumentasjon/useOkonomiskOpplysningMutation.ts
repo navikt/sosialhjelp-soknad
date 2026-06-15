@@ -5,13 +5,19 @@ import {
     useUpdateOkonomiskOpplysning,
 } from "../../../generated/new/okonomiske-opplysninger-controller/okonomiske-opplysninger-controller.ts";
 import {
+    AvdragRenterDto,
+    BelopDto,
+    BoliglanInput,
     DokumentasjonDtoType,
-    OkonomiskOpplysningDtoDetaljerItem,
-    UpdateOkonomiskOpplysningBody,
+    GenericOkonomiInput,
+    LonnsInput,
+    LonnsInntektDto,
     UpdateOkonomiskOpplysningParams,
 } from "../../../generated/new/model";
 
-const useOkonomiskOpplysningMutation = <T extends OkonomiskOpplysningDtoDetaljerItem>(
+type UpdateOkonomiskOpplysningBody = BoliglanInput | GenericOkonomiInput | LonnsInput;
+
+const useOkonomiskOpplysningMutation = <T extends AvdragRenterDto | BelopDto | LonnsInntektDto>(
     opplysningstype: DokumentasjonDtoType
 ) => {
     const soknadId = useSoknadId();
