@@ -113,13 +113,14 @@
         "neste": "Next page",
         "forrige": "Previous page"
     },
-    "Opplastingsboks": {
+    "NewDokumenter": {
         "label": "Upload files",
         "dragAndDrop": "Drag and drop files here",
         "eller": "or",
         "button": "Choose files",
         "uploading": "Uploading...",
         "delete": "Remove file",
+        "filLagtTil": "{count, plural, one {# file added to the list.} other {# files added to the list.}}",
         "valgteFiler": "Selected files ({antall_filer})",
         "filSlettet": "{count, plural, =0 {File deleted. No files remaining.} one {File deleted. # file remaining.} other {File deleted. # files remaining.}}",
         "konvertert": "One or more files were changed to another format (PDF) so that it can be submitted.",
