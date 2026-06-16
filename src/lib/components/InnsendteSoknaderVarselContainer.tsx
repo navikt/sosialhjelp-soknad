@@ -1,12 +1,9 @@
 import {Alert} from "@navikt/ds-react";
+import {useTranslation} from "react-i18next";
 
 interface Props {
     antall?: number;
-    innsendingTillattFra?: string | null;
-    className?: string;
-    oneLeftText: string;
-    blockedWithoutDateText: string;
-    getBlockedWithDateText: (innsendingTillattFra: string) => string;
+    innsendingTillatt?: string | null;
 }
 
 export function isInnsendingBlocked(antall?: number) {
@@ -31,20 +28,18 @@ export function getInnsendteSoknaderVarselText(
     return null;
 }
 
-export const InnsendteSoknaderVarselContainer = ({
-    antall,
-    innsendingTillattFra,
-    className,
-    oneLeftText,
-    blockedWithoutDateText,
-    getBlockedWithDateText,
-}: Props) => {
+export const InnsendteSoknaderVarselContainer = ({antall, innsendingTillatt}: Props) => {
+    const {t} = useTranslation("skjema");
+
     const varslingstekst = getInnsendteSoknaderVarselText(
         antall,
-        innsendingTillattFra,
-        oneLeftText,
-        blockedWithoutDateText,
-        getBlockedWithDateText
+        innsendingTillatt,
+        t("soknad.innsendteSoknaderVarsel.oneLeft"),
+        t("soknad.innsendteSoknaderVarsel.blockedWithoutDate"),
+        (innsendingTillattFra) =>
+            t("soknad.innsendteSoknaderVarsel.blockedWithDate", {
+                innsendingTillattFra,
+            })
     );
 
     if (!varslingstekst) {
@@ -52,7 +47,7 @@ export const InnsendteSoknaderVarselContainer = ({
     }
 
     return (
-        <Alert variant="warning" className={className}>
+        <Alert variant="warning" className="mb-4">
             {varslingstekst}
         </Alert>
     );

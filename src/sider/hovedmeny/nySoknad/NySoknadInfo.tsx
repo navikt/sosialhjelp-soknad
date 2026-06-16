@@ -35,13 +35,7 @@ export const NySoknadInfo = () => {
                 <SoknadstypeValg valg={soknadstype} setValg={setSoknadstype} />
                 <InnsendteSoknaderVarselContainer
                     antall={innsendteSoknaderSisteDogn?.antall}
-                    innsendingTillattFra={innsendteSoknaderSisteDogn?.innsendingTillattFra}
-                    className="mb-4"
-                    oneLeftText={t("innsendteSoknaderVarsel.oneLeft")}
-                    blockedWithoutDateText={t("innsendteSoknaderVarsel.blockedWithoutDate")}
-                    getBlockedWithDateText={(innsendingTillattFra) =>
-                        t("innsendteSoknaderVarsel.blockedWithDate", {innsendingTillattFra})
-                    }
+                    innsendingTillatt={innsendteSoknaderSisteDogn?.innsendingTillattFra}
                 />
                 <Button
                     variant="primary"

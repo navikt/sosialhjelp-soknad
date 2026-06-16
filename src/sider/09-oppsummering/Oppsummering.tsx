@@ -99,13 +99,7 @@ export const Oppsummering = () => {
                 </div>
                 <InnsendteSoknaderVarselContainer
                     antall={innsendteSoknaderSisteDogn?.antall}
-                    innsendingTillattFra={innsendteSoknaderSisteDogn?.innsendingTillattFra}
-                    className="mb-4"
-                    oneLeftText={t("soknad.innsendteSoknaderVarsel.oneLeft")}
-                    blockedWithoutDateText={t("soknad.innsendteSoknaderVarsel.blockedWithoutDate")}
-                    getBlockedWithDateText={(innsendingTillattFra) =>
-                        t("soknad.innsendteSoknaderVarsel.blockedWithDate", {innsendingTillattFra})
-                    }
+                    innsendingTillatt={innsendteSoknaderSisteDogn?.innsendingTillattFra}
                 />
                 <SkjemaStegButtons
                     isFinalStep
