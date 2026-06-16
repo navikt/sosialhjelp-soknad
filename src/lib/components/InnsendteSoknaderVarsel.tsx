@@ -26,16 +26,13 @@ export const InnsendteSoknaderVarsel = ({antall, innsendingTillatt}: Props) => {
     }
 
     return (
-        <Alert variant="warning" className="mb-4">
+        <Alert variant="warning" className="mb-4 text-left">
             {antall === 9
-                ? t("soknad.innsendteSoknaderVarsel.oneLeft")
-                : getInnsendteSoknaderVarselText(
-                      innsendingTillatt,
-                      t("soknad.innsendteSoknaderVarsel.blockedWithoutDate"),
-                      (innsendingTillattFra) =>
-                          t("soknad.innsendteSoknaderVarsel.blockedWithDate", {
-                              innsendingTillattFra,
-                          })
+                ? t("oneLeft")
+                : getInnsendteSoknaderVarselText(innsendingTillatt, t("blockedWithoutDate"), (innsendingTillattFra) =>
+                      t("blockedWithDate", {
+                          innsendingTillattFra,
+                      })
                   )}
         </Alert>
     );
