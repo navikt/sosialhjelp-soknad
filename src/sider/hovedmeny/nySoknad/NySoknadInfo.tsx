@@ -33,10 +33,12 @@ export const NySoknadInfo = () => {
             {error && <Alert variant="error">{t("feilet")}</Alert>}
             <div className={"text-center"}>
                 <SoknadstypeValg valg={soknadstype} setValg={setSoknadstype} />
-                <InnsendteSoknaderVarsel
-                    antall={innsendteSoknaderSisteDogn?.antall}
-                    innsendingTillatt={innsendteSoknaderSisteDogn?.innsendingTillattFra}
-                />
+                <div className={"max-w-xl mx-auto text-left"}>
+                    <InnsendteSoknaderVarsel
+                        antall={innsendteSoknaderSisteDogn?.antall}
+                        innsendingTillatt={innsendteSoknaderSisteDogn?.innsendingTillattFra}
+                    />
+                </div>
                 <Button
                     variant="primary"
                     id="start_soknad_button"
