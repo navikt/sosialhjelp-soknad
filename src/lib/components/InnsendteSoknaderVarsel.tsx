@@ -1,4 +1,5 @@
 import {Alert} from "@navikt/ds-react";
+import {format, isValid, parseISO} from "date-fns";
 import {useTranslations} from "next-intl";
 
 interface Props {
@@ -15,7 +16,19 @@ export function getInnsendteSoknaderVarselText(
     blockedWithoutDateText: string,
     getBlockedWithDateText: (innsendingTillattFra: string) => string
 ) {
-    return innsendingTillatt ? getBlockedWithDateText(innsendingTillatt) : blockedWithoutDateText;
+    return innsendingTillatt
+        ? getBlockedWithDateText(formatInnsendingTillattFra(innsendingTillatt))
+        : blockedWithoutDateText;
+}
+
+export function formatInnsendingTillattFra(innsendingTillattFra: string) {
+    const parsedDate = parseISO(innsendingTillattFra);
+
+    if (!isValid(parsedDate)) {
+        return innsendingTillattFra;
+    }
+
+    return format(parsedDate, "HH:mm:ss dd-MM-yyyy");
 }
 
 export const InnsendteSoknaderVarsel = ({antall, innsendingTillatt}: Props) => {
