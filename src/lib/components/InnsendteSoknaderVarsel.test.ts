@@ -1,5 +1,5 @@
 import {describe, expect, it} from "vitest";
-import {formatInnsendingTillattFra, isInnsendingBlocked} from "./InnsendteSoknaderVarsel";
+import {formatInnsendingTillattFra, resolveInnsendingBlocked} from "./InnsendteSoknaderVarsel";
 
 describe("formatInnsendingTillattFra", () => {
     it("formats ISO datetime to dd.MM.yyyy 'kl.' HH:mm", () => {
@@ -11,17 +11,20 @@ describe("formatInnsendingTillattFra", () => {
     });
 });
 
-describe("isInnsendingBlocked", () => {
+describe("resolveInnsendingBlocked", () => {
     it("returns false when antall is undefined", () => {
-        expect(isInnsendingBlocked(undefined)).toBe(false);
+        expect(resolveInnsendingBlocked(undefined, 10)).toBe(false);
     });
 
-    it("returns false when antall is below 10", () => {
-        expect(isInnsendingBlocked(9)).toBe(false);
+    it("returns false when antall is below maxAntall", () => {
+        expect(resolveInnsendingBlocked(9, 10)).toBe(false);
     });
 
-    it("returns true when antall is 10 or more", () => {
-        expect(isInnsendingBlocked(10)).toBe(true);
-        expect(isInnsendingBlocked(11)).toBe(true);
+    it("returns true when antall reaches maxAntall", () => {
+        expect(resolveInnsendingBlocked(10, 10)).toBe(true);
+    });
+
+    it("returns true when antall is above maxAntall", () => {
+        expect(resolveInnsendingBlocked(11, 10)).toBe(true);
     });
 });

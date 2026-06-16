@@ -17,7 +17,7 @@ import {isAxiosError} from "axios";
 import {InnsendingFeiletError, SendSoknad400, SoknadApiError, UnauthorizedMelding} from "../../generated/new/model";
 import {ErrorType} from "../../lib/api/axiosInstance.ts";
 import {useHentAntallInnsendteSoknader} from "../../generated/mine-saker-metadata-ressurs/mine-saker-metadata-ressurs.ts";
-import {InnsendteSoknaderVarsel, isInnsendingBlocked} from "../../lib/components/InnsendteSoknaderVarsel.tsx";
+import {InnsendteSoknaderVarsel, resolveInnsendingBlocked} from "../../lib/components/InnsendteSoknaderVarsel.tsx";
 
 type InnsendingError = SendSoknad400 | UnauthorizedMelding | SoknadApiError | InnsendingFeiletError | null;
 
@@ -77,12 +77,16 @@ export const Oppsummering = () => {
 
     const {tittel, ikon} = isKortSoknad ? KortSkjemaHeadings[5] : SkjemaHeadings[9];
 
+    const isInnsendingBlocked = resolveInnsendingBlocked(
+        innsendteSoknaderSisteDogn?.antall,
+        innsendteSoknaderSisteDogn?.maxAntall
+    );
+
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={isKortSoknad ? 5 : 9} onStepChange={async (page) => navigate(`../${page}`)} />
             <SkjemaStegBlock>
                 <SkjemaStegTitle title={t(tittel)} icon={ikon} />
-
                 <div>
                     {oppsummering?.steg.map((steg) => (
                         <OppsummeringSteg steg={steg} key={steg.stegNr} />
@@ -94,14 +98,11 @@ export const Oppsummering = () => {
                         </Alert>
                     )}
                 </div>
-                <InnsendteSoknaderVarsel
-                    antall={innsendteSoknaderSisteDogn?.antall}
-                    innsendingTillatt={innsendteSoknaderSisteDogn?.innsendingTillattFra}
-                />
+                <InnsendteSoknaderVarsel innsendteSoknader={innsendteSoknaderSisteDogn} />
                 <SkjemaStegButtons
                     isFinalStep
                     isNextPending={isPending}
-                    nextButtonDisabled={isInnsendingBlocked(innsendteSoknaderSisteDogn?.antall)}
+                    nextButtonDisabled={isInnsendingBlocked}
                     onPrevious={async () => navigate("../" + (isKortSoknad ? 4 : 8))}
                     onNext={async () => sendSoknad({soknadId})}
                 />

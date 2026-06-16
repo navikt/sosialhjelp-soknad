@@ -34,10 +34,7 @@ export const NySoknadInfo = () => {
             <div className={"text-center"}>
                 <SoknadstypeValg valg={soknadstype} setValg={setSoknadstype} />
                 <div className={"max-w-xl mx-auto text-left"}>
-                    <InnsendteSoknaderVarsel
-                        antall={innsendteSoknaderSisteDogn?.antall}
-                        innsendingTillatt={innsendteSoknaderSisteDogn?.innsendingTillattFra}
-                    />
+                    <InnsendteSoknaderVarsel innsendteSoknader={innsendteSoknaderSisteDogn} />
                 </div>
                 <Button
                     variant="primary"
