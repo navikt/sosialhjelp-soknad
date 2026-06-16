@@ -8,7 +8,7 @@ import {useCreateSoknad} from "../../../generated/new/soknad-lifecycle-controlle
 import {useRouter} from "next/navigation";
 import {umamiTrack} from "../../../app/umami.ts";
 import {useHentAntallInnsendteSoknader} from "../../../generated/mine-saker-metadata-ressurs/mine-saker-metadata-ressurs.ts";
-import {InnsendteSoknaderVarselContainer} from "../../../lib/components/InnsendteSoknaderVarselContainer.tsx";
+import {InnsendteSoknaderVarsel} from "../../../lib/components/InnsendteSoknaderVarsel.tsx";
 
 export const NySoknadInfo = () => {
     const [soknadstype, setSoknadstype] = useState<"kort" | "standard" | undefined>(undefined);
@@ -33,7 +33,7 @@ export const NySoknadInfo = () => {
             {error && <Alert variant="error">{t("feilet")}</Alert>}
             <div className={"text-center"}>
                 <SoknadstypeValg valg={soknadstype} setValg={setSoknadstype} />
-                <InnsendteSoknaderVarselContainer
+                <InnsendteSoknaderVarsel
                     antall={innsendteSoknaderSisteDogn?.antall}
                     innsendingTillatt={innsendteSoknaderSisteDogn?.innsendingTillattFra}
                 />

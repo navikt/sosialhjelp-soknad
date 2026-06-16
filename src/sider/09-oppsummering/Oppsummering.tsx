@@ -17,10 +17,7 @@ import {isAxiosError} from "axios";
 import {InnsendingFeiletError, SendSoknad400, SoknadApiError, UnauthorizedMelding} from "../../generated/new/model";
 import {ErrorType} from "../../lib/api/axiosInstance.ts";
 import {useHentAntallInnsendteSoknader} from "../../generated/mine-saker-metadata-ressurs/mine-saker-metadata-ressurs.ts";
-import {
-    InnsendteSoknaderVarselContainer,
-    isInnsendingBlocked,
-} from "../../lib/components/InnsendteSoknaderVarselContainer.tsx";
+import {InnsendteSoknaderVarsel, isInnsendingBlocked} from "../../lib/components/InnsendteSoknaderVarsel.tsx";
 
 type InnsendingError = SendSoknad400 | UnauthorizedMelding | SoknadApiError | InnsendingFeiletError | null;
 
@@ -97,7 +94,7 @@ export const Oppsummering = () => {
                         </Alert>
                     )}
                 </div>
-                <InnsendteSoknaderVarselContainer
+                <InnsendteSoknaderVarsel
                     antall={innsendteSoknaderSisteDogn?.antall}
                     innsendingTillatt={innsendteSoknaderSisteDogn?.innsendingTillattFra}
                 />

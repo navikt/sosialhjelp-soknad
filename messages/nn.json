@@ -25,12 +25,12 @@
     },
     "NySoknadInfo": {
         "feilet": "Det oppstod ein feil då søknaden skulle opprettast. Prøv igjen seinare.",
-        "start": "Start søknaden",
-        "innsendteSoknaderVarsel": {
-            "oneLeft": "Du har sendt mange søknader dei siste 24 timane. Du kan berre sende 1 søknad til no.",
-            "blockedWithoutDate": "Du har sendt mange søknader dei siste 24 timane. Du kan ikkje sende ny søknad akkurat no.",
-            "blockedWithDate": "Du har sendt mange søknader dei siste 24 timane. Du kan ikkje sende ny søknad før {innsendingTillattFra}."
-        }
+        "start": "Start søknaden"
+    },
+    "InnsendteSoknaderVarsel": {
+        "oneLeft": "Du har sendt mange søknader dei siste 24 timane. Du kan berre sende 1 søknad til no.",
+        "blockedWithoutDate": "Du har sendt mange søknader dei siste 24 timane. Du kan ikkje sende ny søknad akkurat no.",
+        "blockedWithDate": "Du har sendt mange søknader dei siste 24 timane. Du kan ikkje sende ny søknad før {innsendingTillattFra}."
     },
     "NySoknadVelkomst": {
         "intro": {
