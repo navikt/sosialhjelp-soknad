@@ -28,9 +28,8 @@
         "start": "Start søknaden"
     },
     "InnsendteSoknaderVarsel": {
-        "oneLeft": "Du har sendt mange søknader de siste 24 timene. Du kan bare sende 1 søknad til nå.",
-        "blockedWithoutDate": "Du har sendt mange søknader de siste 24 timene. Du kan ikke sende ny søknad akkurat nå.",
-        "blockedWithDate": "Du har sendt mange søknader de siste 24 timene. Du kan ikke sende ny søknad før {innsendingTillattFra}."
+        "oneLeft": "Du har sendt 2 søknader de siste 24 timene. Ved 10 søknader vil digital søknad om økonomisk sosialhjelp sperres i et døgn.",
+        "blockedWithDate": "Du har sendt 3 søknader de siste 24 timene, og kan derfor ikke sende flere søknader om økonomisk sosialhjelp før {innsendingTillattFra}."
     },
     "NySoknadVelkomst": {
         "intro": {

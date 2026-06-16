@@ -28,9 +28,8 @@
         "start": "Start application"
     },
     "InnsendteSoknaderVarsel": {
-        "oneLeft": "You have sent many applications in the last 24 hours. You can only send 1 more application now.",
-        "blockedWithoutDate": "You have sent many applications in the last 24 hours. You cannot send a new application right now.",
-        "blockedWithDate": "You have sent many applications in the last 24 hours. You cannot send a new application before {innsendingTillattFra}."
+        "oneLeft": "You have sent 2 applications in the last 24 hours. At 10 applications, the digital application for financial assistance will be blocked for 24 hours.",
+        "blockedWithDate": "You have sent 3 applications in the last 24 hours, and therefore cannot send more applications for financial assistance before {innsendingTillattFra}."
     },
     "NySoknadVelkomst": {
         "intro": {

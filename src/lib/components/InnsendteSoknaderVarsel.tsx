@@ -11,16 +11,6 @@ export function isInnsendingBlocked(antall?: number) {
     return antall !== undefined && antall >= 10;
 }
 
-export function getInnsendteSoknaderVarselText(
-    innsendingTillatt: string | null | undefined,
-    blockedWithoutDateText: string,
-    getBlockedWithDateText: (innsendingTillattFra: string) => string
-) {
-    return innsendingTillatt
-        ? getBlockedWithDateText(formatInnsendingTillattFra(innsendingTillatt))
-        : blockedWithoutDateText;
-}
-
 export function formatInnsendingTillattFra(innsendingTillattFra: string) {
     const parsedDate = parseISO(innsendingTillattFra);
 
@@ -28,7 +18,7 @@ export function formatInnsendingTillattFra(innsendingTillattFra: string) {
         return innsendingTillattFra;
     }
 
-    return format(parsedDate, "HH:mm:ss dd-MM-yyyy");
+    return format(parsedDate, "dd.MM.yyyy 'kl.' HH:mm");
 }
 
 export const InnsendteSoknaderVarsel = ({antall, innsendingTillatt}: Props) => {
@@ -38,15 +28,23 @@ export const InnsendteSoknaderVarsel = ({antall, innsendingTillatt}: Props) => {
         return null;
     }
 
+    if (antall === 2) {
+        return (
+            <Alert variant="warning" className="mb-4 text-left">
+                {t("oneLeft")}
+            </Alert>
+        );
+    }
+
+    if (!innsendingTillatt) {
+        return null;
+    }
+
     return (
-        <Alert variant="warning" className="mb-4 text-left">
-            {antall === 9
-                ? t("oneLeft")
-                : getInnsendteSoknaderVarselText(innsendingTillatt, t("blockedWithoutDate"), (innsendingTillattFra) =>
-                      t("blockedWithDate", {
-                          innsendingTillattFra,
-                      })
-                  )}
+        <Alert variant="warning" className="mb-4 text-left whitespace-pre-line">
+            {t("blockedWithDate", {
+                innsendingTillattFra: `\n${formatInnsendingTillattFra(innsendingTillatt)}`,
+            })}
         </Alert>
     );
 };

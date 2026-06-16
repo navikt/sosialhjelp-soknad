@@ -1,30 +1,9 @@
 import {describe, expect, it} from "vitest";
-import {
-    formatInnsendingTillattFra,
-    getInnsendteSoknaderVarselText,
-    isInnsendingBlocked,
-} from "./InnsendteSoknaderVarsel";
-
-const blockedWithoutDateText = "blocked without date";
-const getBlockedWithDateText = (innsendingTillattFra: string) => `blocked before ${innsendingTillattFra}`;
-
-describe("getInnsendteSoknaderVarselText", () => {
-    it("returns blocked warning with date when date exists", () => {
-        expect(
-            getInnsendteSoknaderVarselText("2026-06-17T08:30:00", blockedWithoutDateText, getBlockedWithDateText)
-        ).toBe("blocked before 08:30:00 17-06-2026");
-    });
-
-    it("returns fallback blocked warning without date when date does not exist", () => {
-        expect(getInnsendteSoknaderVarselText(null, blockedWithoutDateText, getBlockedWithDateText)).toBe(
-            blockedWithoutDateText
-        );
-    });
-});
+import {formatInnsendingTillattFra, isInnsendingBlocked} from "./InnsendteSoknaderVarsel";
 
 describe("formatInnsendingTillattFra", () => {
-    it("formats ISO datetime to HH:mm:ss dd-MM-yyyy", () => {
-        expect(formatInnsendingTillattFra("2026-06-17T08:30:00")).toBe("08:30:00 17-06-2026");
+    it("formats ISO datetime to dd.MM.yyyy 'kl.' HH:mm", () => {
+        expect(formatInnsendingTillattFra("2026-04-24T12:00:00")).toBe("24.04.2026 kl. 12:00");
     });
 
     it("returns original value for invalid datetime", () => {
