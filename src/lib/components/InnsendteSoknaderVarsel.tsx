@@ -30,7 +30,11 @@ export const InnsendteSoknaderVarsel = ({innsendteSoknader}: Props) => {
     const innsendingTillatt = innsendteSoknader?.innsendingTillattFra;
     const maxAntall = innsendteSoknader?.maxAntall;
 
-    if (antall !== undefined && maxAntall !== undefined && antall < maxAntall - 1) {
+    if (antall === undefined || maxAntall === undefined) {
+        return null;
+    }
+
+    if (antall < maxAntall - 1) {
         return null;
     }
 
