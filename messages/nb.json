@@ -27,6 +27,10 @@
         "feilet": "Det oppstod en feil under opprettelsen av søknaden. Vennligst prøv igjen senere",
         "start": "Start søknaden"
     },
+    "InnsendteSoknaderVarsel": {
+        "oneLeft": "Du har sendt {antall} søknader de siste 24 timene. Ved {maxAntall} søknader vil digital søknad om økonomisk sosialhjelp sperres i et døgn.",
+        "blockedWithDate": "Du har sendt {antall} søknader de siste 24 timene og maks er {maxAntall}. Du kan derfor ikke sende flere søknader om økonomisk sosialhjelp før {innsendingTillattFra}."
+    },
     "NySoknadVelkomst": {
         "intro": {
             "title": "Opplysninger og dokumentasjon",

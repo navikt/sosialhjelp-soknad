@@ -448,7 +448,7 @@
         ]
       }
     },
-    "/minesaker/innsendte/antallSisteDogn": {
+    "/minesaker/antallSisteDogn": {
       "get": {
         "operationId": "hentAntallInnsendteSoknader",
         "responses": {
@@ -976,7 +976,8 @@
               "DokumentUploadPossibleVirus",
               "SoknadUpdateConflict",
               "PdlKallFeilet",
-              "SokerUnder18"
+              "SokerUnder18",
+              "AntallSoknaderSendt"
             ]
           },
           "responseType": {
@@ -1296,10 +1297,15 @@
               "null"
             ],
             "format": "date-time"
+          },
+          "maxAntall": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "required": [
-          "antall"
+          "antall",
+          "maxAntall"
         ]
       },
       "PabegyntSoknad": {

@@ -4879,7 +4879,8 @@
               "DokumentUploadPossibleVirus",
               "SoknadUpdateConflict",
               "PdlKallFeilet",
-              "SokerUnder18"
+              "SokerUnder18",
+              "AntallSoknaderSendt"
             ]
           },
           "responseType": {

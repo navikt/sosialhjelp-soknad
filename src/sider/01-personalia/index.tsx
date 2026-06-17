@@ -52,7 +52,6 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
 
     // Midlertidig hack til komponentene under kan behandles som react-hook-form-inputs
     useEffect(() => {
-         
         if (erAktiv(navEnhet) && !erMidlDeaktivert(navEnhet ?? undefined)) setError(null);
     }, [navEnhet]);
 

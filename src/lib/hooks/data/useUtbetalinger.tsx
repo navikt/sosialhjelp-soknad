@@ -37,7 +37,6 @@ export const useUtbetalinger = () => {
     });
     const [harBekreftelse, setHarBekreftelse] = useState<boolean | null>(null);
     useEffect(() => {
-         
         setHarBekreftelse(utbetalinger?.hasBekreftelse ?? null);
     }, [utbetalinger?.hasBekreftelse]);
 

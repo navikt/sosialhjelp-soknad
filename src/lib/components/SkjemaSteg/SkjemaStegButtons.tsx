@@ -10,9 +10,10 @@ interface Props {
     onNext: () => Promise<any>;
     onPrevious?: () => Promise<any> | any;
     isNextPending?: boolean;
+    nextButtonDisabled?: boolean;
 }
 
-export const SkjemaStegButtons = ({onNext, onPrevious, isFinalStep, isNextPending}: Props) => {
+export const SkjemaStegButtons = ({onNext, onPrevious, isFinalStep, isNextPending, nextButtonDisabled}: Props) => {
     const {t} = useTranslation("skjema");
     const [isPending, setIsPending] = useState<boolean>(false);
 
@@ -47,7 +48,7 @@ export const SkjemaStegButtons = ({onNext, onPrevious, isFinalStep, isNextPendin
                 <Button
                     variant="primary"
                     onClick={onClickNext}
-                    disabled={isPending || isNextPending}
+                    disabled={isPending || isNextPending || nextButtonDisabled}
                     icon={nextButtonIcon}
                     iconPosition={"right"}
                 >

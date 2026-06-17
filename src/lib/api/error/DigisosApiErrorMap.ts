@@ -31,4 +31,5 @@ export const DigisosApiErrorMap: Record<SoknadApiErrorError, DigisosLanguageKey>
     DokumentKonverteringFeilet: REST_FEIL.KONVERTERING_FEILET,
     DokumentUploadPossibleVirus: REST_FEIL.MULIG_VIRUS,
     NotFound: ValideringsFeilKode.FIL_EKSISTERER_IKKE,
+    AntallSoknaderSendt: REST_FEIL.GENERELL_FEIL,
 } as const;
