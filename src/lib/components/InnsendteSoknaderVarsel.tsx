@@ -8,7 +8,10 @@ interface Props {
 }
 
 export function resolveInnsendingBlocked(antall?: number, maxAntall?: number): boolean {
-    return antall !== undefined && maxAntall !== undefined && antall >= maxAntall;
+    if (antall === undefined || maxAntall === undefined) {
+        return false;
+    }
+    return antall >= maxAntall;
 }
 
 export function formatInnsendingTillattFra(innsendingTillattFra: string) {
@@ -49,6 +52,7 @@ export const InnsendteSoknaderVarsel = ({innsendteSoknader}: Props) => {
     return (
         <Alert variant="warning" className="mb-4 text-left whitespace-pre-line">
             {t("blockedWithDate", {
+                antall: `${antall}`,
                 maxAntall: `${maxAntall}`,
                 innsendingTillattFra: `\n${formatInnsendingTillattFra(innsendingTillatt)}`,
             })}

@@ -29,7 +29,7 @@
     },
     "InnsendteSoknaderVarsel": {
         "oneLeft": "You have sent {antall} applications in the last 24 hours. At {maxAntall} applications, the digital application for financial assistance will be blocked for 24 hours.",
-        "blockedWithDate": "You have sent {maxAntall} applications in the last 24 hours, and therefore cannot send more applications for financial assistance before {innsendingTillattFra}."
+        "blockedWithDate": "You have sent {antall} applications in the last 24 hours and max is {maxAntall}. Therefore you cannot send more applications for financial assistance before {innsendingTillattFra}."
     },
     "NySoknadVelkomst": {
         "intro": {
