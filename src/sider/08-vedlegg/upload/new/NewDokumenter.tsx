@@ -30,9 +30,10 @@ interface Props {
     describedBy: string;
     contextId: string;
     soknadId: string;
+    kategori: string;
 }
 
-const uploadFile = (file: File, contextId: string, soknadId: string) => {
+const uploadFile = (file: File, contextId: string, soknadId: string, kategori: string) => {
     const upload = new Upload(file, {
         endpoint: `${digisosConfig.uploadBaseURL}/tus/files`,
         retryDelays: [0, 1000, 3000, 5000],
@@ -40,6 +41,7 @@ const uploadFile = (file: File, contextId: string, soknadId: string) => {
             filename: file.name,
             contextId,
             navEksternRefId: soknadId,
+            kategori,
         },
         uploadSize: file.size,
         onError: (error: unknown) => logger.error(`Upload failed: ${error}`),
@@ -47,7 +49,7 @@ const uploadFile = (file: File, contextId: string, soknadId: string) => {
     upload.start();
 };
 
-export const NewDokumenter = ({describedBy, contextId, soknadId}: Props) => {
+export const NewDokumenter = ({describedBy, contextId, soknadId, kategori}: Props) => {
     const t = useTranslations("NewDokumenter");
     const isMobile = useMediaQuery("(max-width: 768px)");
     const {documentState} = useDocumentState(contextId);
@@ -55,7 +57,7 @@ export const NewDokumenter = ({describedBy, contextId, soknadId}: Props) => {
     const _onSelect = (files: FileObject[]) => {
         setFilesAdded(files.length);
         setTimeout(() => setFilesAdded(0), 500);
-        files.forEach((file: FileObject) => uploadFile(file.file, contextId, soknadId));
+        files.forEach((file: FileObject) => uploadFile(file.file, contextId, soknadId, kategori));
     };
     const converted = documentState?.uploads?.some(
         (upload) => !!upload.finalFilename && upload.finalFilename !== upload.originalFilename

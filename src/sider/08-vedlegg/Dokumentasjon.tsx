@@ -24,7 +24,12 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
             <BodyShort spacing>{undertekst}</BodyShort>
             <FormSwitch opplysningstype={opplysningstype} />
             {newUploadEnabled ? (
-                <NewDokumenter describedBy={id} contextId={`${soknadId}-${opplysningstype}`} soknadId={soknadId} />
+                <NewDokumenter
+                    describedBy={id}
+                    contextId={`${soknadId}-${opplysningstype}`}
+                    soknadId={soknadId}
+                    kategori={opplysningstype}
+                />
             ) : (
                 <Dokumenter opplysningstype={opplysningstype} />
             )}
