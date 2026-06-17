@@ -46,7 +46,15 @@ export const InnsendteSoknaderVarsel = ({innsendteSoknader}: Props) => {
     }
 
     if (!innsendingTillatt) {
-        return null;
+        return (
+            <Alert variant="warning" className="mb-4 text-left whitespace-pre-line">
+                {t("blockedWithDate", {
+                    antall: `${antall}`,
+                    maxAntall: `${maxAntall}`,
+                    innsendingTillattFra: `\n-ukjent-`,
+                })}
+            </Alert>
+        );
     }
 
     return (
