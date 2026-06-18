@@ -16,7 +16,7 @@ jobs:
         environment: [preprod, mock, dev, prod]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
 
       - name: "Build npm project"
         uses: navikt/sosialhjelp-ci/actions/build-node@v21
