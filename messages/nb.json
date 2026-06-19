@@ -132,7 +132,8 @@
         "submissionError": {
             "TOO_MANY_FILES": "Du har valgt for mange filer. Maks antall filer er 30.",
             "TOTAL_SIZE_TOO_LARGE": "Filene er for store (maks 150 MB), fjern filer og prøv igjen."
-        }
+        },
+        "mappeIkkeTillatt": "Mapper kan ikke lastes opp. Velg enkeltfiler i stedet."
     },
     "FileUploadItem": {
         "uploadFailed": "Opplasting feilet. Prøv på nytt senere.",
