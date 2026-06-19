@@ -20,11 +20,7 @@ test.describe("Session Info 403 Error", () => {
 
         await page.goto("/sosialhjelp/soknad");
 
-        const alert = page
-            .locator('[role="alert"]')
-            .filter({hasClass: /warning/})
-            .or(page.getByRole("alert").filter({hasText: /Du kan dessverre ikke/}))
-            .first();
+        const alert = page.getByText(/Du kan dessverre ikke/).first();
         await expect(alert).toBeVisible();
 
         const errorMessage = page.getByText(
