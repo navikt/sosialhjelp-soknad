@@ -7,7 +7,7 @@ export const ListAddButton = ({
 }: {
     children: ReactNode;
     className?: string;
-} & React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+} & React.ButtonHTMLAttributes<HTMLAnchorElement>) => (
     <li className={`pt-3 pb-4`}>
         <LinkButton {...rest}>
             <span aria-hidden={true}>+ </span>
