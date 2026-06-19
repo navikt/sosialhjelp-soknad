@@ -100,7 +100,7 @@ test.describe("Session Info 403 Error", () => {
         const startButton = page.getByRole("button", {name: /Start søknaden/});
         await startButton.click();
 
-        const alert = page.getByRole("alert").filter({hasText: /For å søke om økonomisk sosialhjelp/});
+        const alert = page.locator('[class*="aksel-alert--info"]');
         await expect(alert).toBeVisible();
 
         const heading = page.getByRole("heading", {
