@@ -100,16 +100,12 @@ const Behov = () => {
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={2} onStepChange={goto} />
-            <VStack gap="4">
+            <VStack gap="space-16">
                 <Alert variant="info">
                     <BodyShort>{t("arbeidOgFamilie.alert")}</BodyShort>
                 </Alert>
                 <SkjemaStegBlock className={"lg:space-y-12"}>
-                    <SkjemaStegTitle
-                        className={"lg:mb-12"}
-                        title={t(KortSkjemaHeadings[2].tittel)}
-                        icon={KortSkjemaHeadings[2].ikon}
-                    />
+                    <SkjemaStegTitle title={t(KortSkjemaHeadings[2].tittel)} icon={KortSkjemaHeadings[2].ikon} />
                     {isLoading ? (
                         <ApplicationSpinner />
                     ) : (

@@ -47,7 +47,7 @@ const Inntekt = () => {
     useEffect(() => {
         if (!hasInitialized && formue && !formue.hasBrukskonto) {
             setFormue(["hasBrukskonto", "hasSparing"]);
-            // eslint-disable-next-line react-hooks/set-state-in-effect
+             
             setHasInitialized(true);
         }
     }, [formue, hasInitialized, setFormue]);
@@ -56,11 +56,7 @@ const Inntekt = () => {
         <SkjemaSteg>
             <SkjemaStegStepper page={4} onStepChange={gotoPage} />
             <SkjemaStegBlock className={"lg:space-y-12"}>
-                <SkjemaStegTitle
-                    className={"lg:mb-12"}
-                    title={t(KortSkjemaHeadings[4].tittel)}
-                    icon={KortSkjemaHeadings[4].ikon}
-                />
+                <SkjemaStegTitle title={t(KortSkjemaHeadings[4].tittel)} icon={KortSkjemaHeadings[4].ikon} />
                 <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
                 <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
                 <NavYtelser />

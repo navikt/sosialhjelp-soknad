@@ -36,7 +36,7 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
                 {isError && <Alert variant={"error"}>Beklager, en feil oppstod ved sletting.</Alert>}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="danger" disabled={isLoading} onClick={deleteAndRedirect}>
+                <Button variant="primary" data-color="danger" disabled={isLoading} onClick={deleteAndRedirect}>
                     <div className={"flex items-center gap-2"}>
                         <TrashIcon aria-hidden={true} />
                         {t("avbryt.slett")}

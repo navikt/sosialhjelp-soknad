@@ -28,7 +28,11 @@ export const NavYtelser = () => {
             {!systeminntekter?.length ? (
                 <BodyShort>{t("empty")}</BodyShort>
             ) : (
-                <div className={"bg-lightblue-50 border-l-[var(--a-surface-info)] p-4 space-y-4 rounded-md"}>
+                <div
+                    className={
+                        "bg-[var(--ax-bg-info-moderate)] border-l-[var(--ax-bg-info-strong)] p-4 space-y-4 rounded-md"
+                    }
+                >
                     <NavYtelserTable navUtbetalinger={systeminntekter} />
                 </div>
             )}

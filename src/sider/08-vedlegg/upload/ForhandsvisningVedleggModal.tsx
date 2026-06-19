@@ -71,7 +71,7 @@ export const ForhandsvisningVedleggModal = ({
                     className={cx(
                         {
                             "w-full min-h-full gap-4 pb-4": isFullscreen,
-                            "p-2 bg-surface-neutral-subtle rounded-md w-fit": !isFullscreen,
+                            "p-2 bg-[var(--ax-bg-neutral-soft)] rounded-md w-fit": !isFullscreen,
                         },
                         "grow flex flex-col"
                     )}

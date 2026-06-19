@@ -20,7 +20,11 @@ test.describe("Session Info 403 Error", () => {
 
         await page.goto("/sosialhjelp/soknad");
 
-        const alert = page.locator('[class*="navds-alert--warning"]');
+        const alert = page
+            .locator('[role="alert"]')
+            .filter({hasClass: /warning/})
+            .or(page.getByRole("alert").filter({hasText: /Du kan dessverre ikke/}))
+            .first();
         await expect(alert).toBeVisible();
 
         const errorMessage = page.getByText(
@@ -96,7 +100,7 @@ test.describe("Session Info 403 Error", () => {
         const startButton = page.getByRole("button", {name: /Start søknaden/});
         await startButton.click();
 
-        const alert = page.locator('[class*="navds-alert--info"]');
+        const alert = page.getByRole("alert").filter({hasText: /For å søke om økonomisk sosialhjelp/});
         await expect(alert).toBeVisible();
 
         const heading = page.getByRole("heading", {

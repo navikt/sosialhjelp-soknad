@@ -4,9 +4,10 @@ import {ExpansionCard} from "@navikt/ds-react";
 /**
  * react-ds puts a border around expansion cards by default,
  * but we're slightly abusing ExpansionCard so we unset it like this.
+ * In v8, the border-color is controlled via the className prop using the zero-specificity CSS layer.
  */
 export const EXPANSION_CARD_BORDER_STYLE_HACK = {
-    "--__ac-expansioncard-border-color": "transparent",
+    borderColor: "transparent",
 } as React.CSSProperties;
 
 export const HovedmenyCardHeader = ({children, icon}: {children: React.ReactNode; icon: React.ReactNode}) => (

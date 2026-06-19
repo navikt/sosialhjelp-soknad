@@ -1,7 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 
-import navDs from "@navikt/ds-tailwind";
-
 export default {
     content: ["./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
@@ -11,5 +9,4 @@ export default {
             },
         },
     },
-    presets: [navDs],
 };

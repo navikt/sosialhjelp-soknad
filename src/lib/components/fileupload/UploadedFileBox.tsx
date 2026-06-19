@@ -18,9 +18,9 @@ const StyledCircle = styled.div`
         height: 1.5rem;
         width: 1.5rem;
     }
-    background-color: var(--a-surface-neutral-subtle);
-    color: var(--a-icon-default);
-    border-radius: var(--a-border-radius-full);
+    background-color: var(--ax-bg-neutral-soft);
+    color: var(--ax-icon-neutral);
+    border-radius: var(--ax-radius-full);
     min-height: 3rem;
     min-width: 3rem;
     max-height: 3rem;
@@ -65,7 +65,7 @@ export const UploadedFileBox = ({
     const kategoriTekst = key ? tSkjema(key as any) : dokumentasjonsType;
 
     return (
-        <li className="mt-4 flex justify-between items-center border-2 border-[var(--a-border-subtle)] border-solid rounded-md p-4">
+        <li className="mt-4 flex justify-between items-center border-2 border-[var(--ax-border-neutral-subtle)] border-solid rounded-md p-4">
             <div className="flex gap-4">
                 <StyledCircle>
                     <FilIllustrasjon />

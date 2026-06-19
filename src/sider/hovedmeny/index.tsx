@@ -19,15 +19,10 @@ export const Informasjon = () => {
                 className="max-w-lg lg:max-w-3xl w-full mx-auto gap-6 max-lg:px-2 py-6 lg:gap-16 lg:py-16 flex flex-col grow"
                 role={"none"}
             >
-                <Heading
-                    id={"app-heading"}
-                    level="1"
-                    size="small"
-                    className={"lg:text-heading-xlarge! w-full! p-0! text-left!"}
-                >
+                <Heading id={"app-heading"} level="1" size={"large"}>
                     {t("title")}
                 </Heading>
-                <VStack gap={"5"}>
+                <VStack gap={"space-20"}>
                     <NySoknadPanel defaultOpen={open?.length === 0} />
                     <PabegynteSoknaderPanel />
                     {!!numRecentlySent && <EttersendDokuPanel />}
