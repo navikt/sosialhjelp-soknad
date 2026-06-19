@@ -6,10 +6,10 @@ export const LinkButton = ({
     className,
     ...rest
 }: {className?: string; children: React.ReactNode} & Omit<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    React.ButtonHTMLAttributes<HTMLAnchorElement>,
     "color" | "data-color"
 >) => (
-    <Link as="button" className={className} {...(rest as any)}>
+    <Link as="button" className={className} {...rest}>
         {children}
     </Link>
 );

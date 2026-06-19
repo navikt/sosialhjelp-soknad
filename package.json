@@ -14,7 +14,6 @@
         "@navikt/aksel-icons": "^8.13.0",
         "@navikt/ds-css": "^8.13.0",
         "@navikt/ds-react": "^8.13.0",
-        "@navikt/ds-tailwind": "^8.13.0",
         "@navikt/fnrvalidator": "^2.2.1",
         "@navikt/nav-dekoratoren-moduler": "^3.7.1",
         "@navikt/next-api-proxy": "^5.0.5",
