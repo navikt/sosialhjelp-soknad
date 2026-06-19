@@ -6,17 +6,22 @@ import {
     useUpdateAdresser,
 } from "../../../generated/new/adresse-controller/adresse-controller.ts";
 import {AdresserInputAdresseValg, MatrikkelAdresse, VegAdresse} from "../../../generated/new/model";
+import {isAxiosError} from "axios";
+import {useState} from "react";
 
 type AdresserInputBrukerAdresse = MatrikkelAdresse | VegAdresse;
-import {useState} from "react";
 
 export const mutationKey = (soknadId: string) => ["updateAdresser", soknadId];
 
 export const useAdresser = () => {
     const soknadId = useSoknadId();
+    const [adresseError, setAdresseError] = useState(false);
     const {data, isLoading, error} = useGetAdresser(soknadId);
     const queryClient = useQueryClient();
     const [showSpinner, setShowSpinner] = useState(false);
+
+    const isAdresseConflictError = (error: unknown) => isAxiosError(error) && error.response?.status === 406; // adapt to your backend payload
+
     const {
         mutate,
         variables,
@@ -24,15 +29,25 @@ export const useAdresser = () => {
     } = useUpdateAdresser({
         mutation: {
             mutationKey: mutationKey(soknadId),
-            onMutate: () =>
+            onMutate: () => {
+                setAdresseError(false);
                 setTimeout(() => {
                     setShowSpinner(true);
-                }, 500),
+                }, 500);
+            },
+            onError: (error) => {
+                if (isAdresseConflictError(error)) {
+                    setAdresseError(true); // handle this one locally
+                }
+            },
             onSettled: (_data, _error, _variables, context) => {
                 clearTimeout(context);
                 setShowSpinner(false);
                 return queryClient.invalidateQueries({queryKey: getGetAdresserQueryKey(soknadId)});
             },
+            // Keep existing global behavior for all other errors (403 handling etc.)
+            // Only needed if your special case would otherwise be thrown globally:
+            throwOnError: (error) => !isAdresseConflictError(error),
         },
     });
 
@@ -46,6 +61,7 @@ export const useAdresser = () => {
         setAdresse,
         variables,
         error,
+        adresseError,
         isUpdatePending,
         folkeregistrert: data?.folkeregistrertAdresse,
         midlertidig: data?.midlertidigAdresse,

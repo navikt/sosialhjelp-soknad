@@ -1909,6 +1909,7 @@ export const skjema = {
     },
     validering: {
         adresseMangler: "Du må velge en gyldig adresse før du kan gå videre",
+        forMangeMottakere: "Kan ikke velge enda en mottaker på dette tidspunktet",
         erFdato: "Ugyldig dato",
         erFdatoEtterIdag: "Fødselsdato kan ikke være etter dagens dato",
         erKontonummer: "Ugyldig kontonummer",

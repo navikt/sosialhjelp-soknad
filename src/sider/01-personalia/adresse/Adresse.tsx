@@ -26,6 +26,7 @@ export const AdresseData = () => {
         setAdressevalg,
         isUpdatePending,
         showSpinner,
+        adresseError,
     } = useAdresser();
 
     if (isLoading) {
@@ -70,7 +71,8 @@ export const AdresseData = () => {
                     <AdresseSok defaultValue={formaterSoknadsadresse(brukerAdresse)} onChange={setAdresse} />
                 )}
             </HorizontalRadioGroup>
-            {navEnhet && <NavEnhet navEnhet={navEnhet} />}
+            {adresseError && <Alert variant={"error"}>{t("validering.forMangeMottakere")}</Alert>}
+            {!adresseError && navEnhet && <NavEnhet navEnhet={navEnhet} />}
         </section>
     );
 };

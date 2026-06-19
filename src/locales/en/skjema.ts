@@ -1913,6 +1913,7 @@ export const skjema = {
     },
     validering: {
         adresseMangler: "You must select a valid address before you can continue",
+        forMangeMottakere: "Can not choose another receipient at this time",
         erFdato: "Invalid date",
         erFdatoEtterIdag: "Date of birth cannot be after today’s date",
         erKontonummer: "Invalid account number",
