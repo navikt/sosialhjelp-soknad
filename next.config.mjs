@@ -18,6 +18,7 @@ const nextConfig = {
     basePath: process.env.NEXT_PUBLIC_BASE_PATH ?? "/sosialhjelp/soknad",
     serverExternalPackages: ["@navikt/next-logger", "next-logger", "pino"],
     experimental: {
+        turbopackServerFastRefresh: false,
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
     },
 };
