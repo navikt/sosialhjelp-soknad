@@ -47,6 +47,11 @@ body {
     min-height: 100dvh;
 }
 
+/* Override connector lines to neutral grey */
+.top-stepper .aksel-stepper__line {
+    background-color: var(--ax-border-neutral-strong);
+}
+
 .top-stepper .aksel-stepper__item {
     flex: 1 1 0;
     gap: 0;
@@ -57,16 +62,19 @@ body {
     margin-bottom: -10px;
 }
 
-.top-stepper .aksel-stepper__step--active > .aksel-stepper__circle {
-    color: white;
-    background-color: var(--ax-bg-accent-strong);
-}
-
+/* Override all circles: white background, black text, no border */
 .top-stepper .aksel-stepper__circle {
     font-weight: normal;
     border: none;
     background-color: white;
     color: black;
+}
+
+/* Override active circle: Nav primary blue (#004ea3 ≈ old #00459c) */
+.top-stepper .aksel-stepper__step[data-active="true"] > .aksel-stepper__circle {
+    color: white;
+    background-color: var(--ax-accent-900);
+    border-color: var(--ax-accent-900);
 }
 
 .top-stepper .aksel-stepper__content {

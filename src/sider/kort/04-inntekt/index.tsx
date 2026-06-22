@@ -47,7 +47,6 @@ const Inntekt = () => {
     useEffect(() => {
         if (!hasInitialized && formue && !formue.hasBrukskonto) {
             setFormue(["hasBrukskonto", "hasSparing"]);
-             
             setHasInitialized(true);
         }
     }, [formue, hasInitialized, setFormue]);
