@@ -44,6 +44,9 @@ importers:
       '@navikt/ds-react':
         specifier: ^8.13.0
         version: 8.13.0(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@navikt/ds-tailwind':
+        specifier: ^8.13.0
+        version: 8.13.0
       '@navikt/fnrvalidator':
         specifier: ^2.2.1
         version: 2.2.1
@@ -1872,6 +1875,9 @@ packages:
       '@types/react': ^17.0.30 || ^18 || ^19
       react: ^17 || ^18 || ^19
       react-dom: ^17 || ^18 || ^19
+
+  '@navikt/ds-tailwind@8.13.0':
+    resolution: {integrity: sha512-s5O/tjdBP9pPEh5A/PDrlekPzRex/GgHACPBJu0uW8H3SyRL8MeXcMce6sMQAbWw6EDvxgenTEGGpvccQbyW6w==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tailwind/8.13.0/23b2a8adf921fe1c85fefcabafb2c2801a63c194}
 
   '@navikt/ds-tokens@8.13.0':
     resolution: {integrity: sha512-rtdyubAcoP4f8onbtghjjCyL5UlOLvz9eK53bR7CJbUUTEGovebgoUwB6S10LFGj3BktFe7m91Vu6vtsCpmEZw==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.13.0/63a58bf567e0a95c1ced6a3d7356de06c19a2457}
@@ -8202,6 +8208,8 @@ snapshots:
       react: 19.2.7
       react-day-picker: 9.14.0(react@19.2.7)
       react-dom: 19.2.7(react@19.2.7)
+
+  '@navikt/ds-tailwind@8.13.0': {}
 
   '@navikt/ds-tokens@8.13.0': {}
 
