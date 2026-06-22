@@ -23,10 +23,7 @@ export const SysteminfoItem = ({
 
 export const Systeminfo = ({children, className}: {children: React.ReactNode; className?: string}) => (
     <div
-        className={cx(
-            "flex flex-col gap-1 p-3 bg-ax-bg-info-moderate border-l-ax-bg-info-strong rounded-md",
-            className
-        )}
+        className={cx("flex flex-col gap-1 p-3 bg-ax-bg-info-soft border-l-ax-bg-info-strong rounded-md", className)}
         role={"none"}
     >
         {children}
