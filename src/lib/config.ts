@@ -151,7 +151,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         withCredentials: true,
         driftsmeldingUrl: "http://sosialhjelp-driftsmeldinger/sosialhjelp/driftsmeldinger/api",
         baseURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad/api/soknad-api/",
-        uploadBaseURL: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/api/upload-api",
+        uploadBaseURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad/api/upload-api",
         innsynURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://sosialhjelp-mock-alt-mock.ekstern.dev.nav.no/sosialhjelp/mock-alt/",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
