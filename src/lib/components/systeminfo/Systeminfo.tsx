@@ -17,7 +17,9 @@ export const SysteminfoItem = ({
 }) => (
     <Cmp className={cx("leading-5! ", className)} aria-label={label}>
         {label && <Label className="pr-1.5 after:content-[':']">{label}</Label>}
-        <BodyShort className={cx({inline: !multiline, "font-bold!": !label})}>{children}</BodyShort>
+        <BodyShort weight={!label ? "semibold" : "regular"} className={cx({inline: !multiline})}>
+            {children}
+        </BodyShort>
     </Cmp>
 );
 

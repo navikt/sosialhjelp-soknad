@@ -22,7 +22,7 @@ export const Skatteetaten = () => {
         );
 
     return (
-        <Box>
+        <Box padding="space-16">
             {inntekt.map(({organisasjoner}) =>
                 organisasjoner?.map((o) => <SkatteetatenOrganisasjon key={o.orgnr} organisasjon={o} />)
             )}

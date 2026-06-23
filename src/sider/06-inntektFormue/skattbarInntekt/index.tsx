@@ -34,7 +34,7 @@ export const SkattbarInntekt = ({legend}: Props) => {
             {samtykke && (
                 <div>
                     <UnderskjemaArrow />
-                    <div className={"bg-[var(--ax-bg-info-moderate)] border-l-[var(--ax-bg-info-strong)] rounded-md"}>
+                    <div className={"bg-ax-bg-info-moderate border-l-ax-bg-info-strong rounded-md"}>
                         <Skatteetaten />
                     </div>
                 </div>
