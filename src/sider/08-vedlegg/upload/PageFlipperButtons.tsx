@@ -14,7 +14,7 @@ export const PageFlipperButtons = ({
 }) => {
     const t = useTranslations("PageFlipperButtons");
     if (numPages === undefined) return null;
-    const ICON_STYLE = "bg-blue-800/10 hover:bg-blue-100 text-5xl rounded-full";
+    const ICON_STYLE = "bg-ax-bg-accent-strong hover:bg-ax-bg-accent-strong-hover text-5xl rounded-full";
 
     const navigate = (direction: "next" | "prev") => {
         if (direction === "next") {

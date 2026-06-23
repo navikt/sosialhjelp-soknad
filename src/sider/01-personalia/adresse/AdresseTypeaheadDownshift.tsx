@@ -47,7 +47,7 @@ const Item = styled.li<{$isHighlighted: boolean}>`
     padding: 0.25rem 0.5rem;
 
     color: ${(props) => (props.$isHighlighted ? "var(--ax-bg-default)" : "inherit")};
-    background-color: ${(props) => (props.$isHighlighted ? "var(--ax-bg-accent-moderate)" : "inherit")};
+    background-color: ${(props) => (props.$isHighlighted ? "var(--ax-bg-accent-strong)" : "inherit")};
 `;
 
 const AdressesokHeading = () => {
