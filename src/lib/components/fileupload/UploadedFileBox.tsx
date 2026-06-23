@@ -19,7 +19,7 @@ const StyledCircle = styled.div`
         width: 1.5rem;
     }
     background-color: var(--ax-bg-neutral-soft);
-    color: var(--ax-icon-neutral);
+    color: var(--ax-text-neutral-decoration);
     border-radius: var(--ax-radius-full);
     min-height: 3rem;
     min-width: 3rem;
