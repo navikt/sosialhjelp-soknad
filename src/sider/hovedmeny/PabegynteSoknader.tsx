@@ -4,7 +4,7 @@ import {BodyShort, ExpansionCard} from "@navikt/ds-react";
 import React from "react";
 import {useTranslations} from "next-intl";
 import {PabegyntSoknadView} from "./PabegyntSoknadView.tsx";
-import {EXPANSION_CARD_BORDER_STYLE_HACK, HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
+import {HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
 import {useContextSessionInfo} from "../../lib/providers/useContextSessionInfo.ts";
 import {PabegyntSoknad} from "../../generated/model";
 
@@ -19,7 +19,7 @@ export const PabegynteSoknaderPanel = () => {
     if (!count) return null;
 
     return (
-        <ExpansionCard style={EXPANSION_CARD_BORDER_STYLE_HACK} aria-labelledby={"pabegyntesoknader-title"}>
+        <ExpansionCard aria-labelledby={"pabegyntesoknader-title"}>
             <HovedmenyCardHeader icon={<FileTextIcon className={"w-6 h-6"} />}>
                 <ExpansionCard.Title id={"pabegyntesoknader-title"} as={"h2"} className={"m-0!"} size={"small"}>
                     {t("title")}
