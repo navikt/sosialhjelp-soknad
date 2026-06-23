@@ -57,7 +57,7 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props) => {
     const isPending = conversionPending || conversionPending;
     return (
         <>
-            <div className={"rounded-md bg-surface-action-subtle p-8"}>
+            <div className={"rounded-md bg-ax-bg-accent-soft p-8"}>
                 {sporsmal && (
                     <Heading level={"4"} size={"small"} spacing>
                         {sporsmal}
@@ -198,7 +198,7 @@ const DokumentUploader = ({
                     resetAlerts();
                     vedleggElement?.current?.click();
                 }}
-                className="last-opp-vedlegg-knapp bg-(--a-surface-default)!"
+                className="last-opp-vedlegg-knapp bg-(--ax-bg-default)!"
             >
                 <div className={"flex gap-1 items-center"}>
                     <PlusIcon aria-hidden={true} /> {t("opplysninger.vedlegg.knapp.tekst")}

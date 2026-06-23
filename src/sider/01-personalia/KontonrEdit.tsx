@@ -22,7 +22,6 @@ export const KontonrEdit = ({
         resolver: zodResolver(KontonummerFormSchema),
     });
 
-    /* eslint-disable-next-line react-hooks/incompatible-library */
     const kontonummerInputDisabled = watch("harIkkeKonto") === true;
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import {useTranslation} from "react-i18next";
-import {Button, Heading, Panel, TextField} from "@navikt/ds-react";
+import {Button, Heading, Box, TextField} from "@navikt/ds-react";
 import YesNoInput from "../../lib/components/form/YesNoInput";
 import {z} from "zod";
 import {format, isValid, parse} from "date-fns";
@@ -65,7 +65,7 @@ export const EktefellePersonaliaForm = ({sivilstatus, ektefelle, setEktefelle}: 
     });
     if (!sivilstatus) return null;
     return (
-        <Panel className={"bg-gray-100! mb-4"}>
+        <Box className={"bg-gray-100! mb-4"} padding="space-16" borderRadius="4">
             <form
                 onSubmit={handleSubmit(
                     (values) => setEktefelle(values as unknown as EktefelleInput),
@@ -134,6 +134,6 @@ export const EktefellePersonaliaForm = ({sivilstatus, ektefelle, setEktefelle}: 
                     {t("lagreEndring")}
                 </Button>
             </form>
-        </Panel>
+        </Box>
     );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import {Warning as WarningIcon} from "@navikt/ds-icons";
+import {ExclamationmarkTriangleIcon} from "@navikt/aksel-icons";
 import {BodyShort} from "@navikt/ds-react";
 import styled from "styled-components";
 import {useTranslation} from "react-i18next";
@@ -21,7 +21,7 @@ export const Warning = () => {
 
     return (
         <StyledWarning>
-            <WarningIcon focusable={false} aria-label="Advarsel" role="img" />
+            <ExclamationmarkTriangleIcon focusable={false} aria-label="Advarsel" role="img" />
             <BodyShort>{t("oppsummering.ikkeutfylt")}</BodyShort>
         </StyledWarning>
     );

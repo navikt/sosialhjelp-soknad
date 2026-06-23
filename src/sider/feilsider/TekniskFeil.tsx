@@ -1,5 +1,5 @@
 import * as React from "react";
-import {SystemError} from "@navikt/ds-icons";
+import {ExclamationmarkTriangleFillIcon} from "@navikt/aksel-icons";
 import {BodyShort, Button, Heading} from "@navikt/ds-react";
 import {useTranslations} from "next-intl";
 import {ErrorPageColumnarLayout} from "./ErrorPageColumnarLayout.tsx";
@@ -9,7 +9,9 @@ export const TekniskFeil = ({error, reset}: {error: Error; reset?: () => void}) 
     const t = useTranslations("TekniskFeil");
 
     return (
-        <ErrorPageColumnarLayout leftMargin={<SystemError className={"text-[var(--a-surface-danger)] w-20 h-20"} />}>
+        <ErrorPageColumnarLayout
+            leftMargin={<ExclamationmarkTriangleFillIcon className={"text-ax-text-danger w-20 h-20"} />}
+        >
             <Heading level="1" size="xlarge" spacing>
                 {t("title")}
             </Heading>

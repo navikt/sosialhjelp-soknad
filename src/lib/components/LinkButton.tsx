@@ -1,13 +1,15 @@
 import * as React from "react";
-import classNames from "classnames";
-import {BodyShort} from "@navikt/ds-react";
+import {Link} from "@navikt/ds-react";
 
 export const LinkButton = ({
     children,
     className,
     ...rest
-}: {className?: string; children: React.ReactNode} & React.ButtonHTMLAttributes<HTMLButtonElement>) => (
-    <button className={classNames("navds-link", className)} {...rest}>
-        <BodyShort>{children}</BodyShort>
-    </button>
+}: {className?: string; children: React.ReactNode} & Omit<
+    React.ButtonHTMLAttributes<HTMLAnchorElement>,
+    "color" | "data-color"
+>) => (
+    <Link as="button" className={className} {...rest}>
+        {children}
+    </Link>
 );

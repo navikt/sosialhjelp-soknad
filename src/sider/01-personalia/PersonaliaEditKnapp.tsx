@@ -1,8 +1,7 @@
 import {useTranslation} from "react-i18next";
 import {PencilIcon} from "@navikt/aksel-icons";
 import * as React from "react";
-import {Button} from "@navikt/ds-react/Button";
-import {BodyShort} from "@navikt/ds-react";
+import {Button, BodyShort} from "@navikt/ds-react";
 
 export const PersonaliaEditKnapp = ({onClick, disabled}: {onClick: () => void; disabled?: boolean}) => {
     const {t} = useTranslation("skjema");

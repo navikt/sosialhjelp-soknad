@@ -17,7 +17,6 @@ export const useBeskrivelse = (value: string | undefined, onSave: (beskrivelse: 
     useEffect(() => {
         try {
             BeskrivelseAvAnnetSchema.parse(value);
-            // eslint-disable-next-line react-hooks/set-state-in-effect
             setError(undefined);
         } catch (e: any) {
             setError(t(e.issues[0].message));
@@ -25,7 +24,6 @@ export const useBeskrivelse = (value: string | undefined, onSave: (beskrivelse: 
     }, [value, t]);
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         if (value) setBeskrivelse(value);
     }, [value]);
 

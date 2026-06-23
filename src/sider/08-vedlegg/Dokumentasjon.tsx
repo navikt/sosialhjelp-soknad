@@ -16,7 +16,7 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
     const id = opplysningstype;
 
     return (
-        <div className={"rounded-md bg-surface-action-subtle p-8"}>
+        <div className={"rounded-md bg-ax-bg-accent-soft p-8"}>
             <Heading level={"4"} size={"small"} spacing id={id}>
                 {sporsmal}
             </Heading>

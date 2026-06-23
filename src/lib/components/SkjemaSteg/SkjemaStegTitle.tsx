@@ -13,7 +13,7 @@ const HtmlPageTitle = ({title}: {title: string}) => {
 export const SkjemaStegTitle = ({className, title, icon}: {className?: string; title: string; icon: ReactNode}) => (
     <>
         <HtmlPageTitle title={title} />
-        <Heading tabIndex={-1} className={cx("text-center mb-12 lg:mb-24", className)} level={"2"} size={"large"}>
+        <Heading tabIndex={-1} className={cx("text-center", className)} level={"2"} size={"large"}>
             <div className="mx-auto w-fit mb-2" aria-hidden="true">
                 {icon}
             </div>

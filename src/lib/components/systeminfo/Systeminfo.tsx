@@ -17,16 +17,15 @@ export const SysteminfoItem = ({
 }) => (
     <Cmp className={cx("leading-5! ", className)} aria-label={label}>
         {label && <Label className="pr-1.5 after:content-[':']">{label}</Label>}
-        <BodyShort className={cx({inline: !multiline, "font-bold!": !label})}>{children}</BodyShort>
+        <BodyShort weight={!label ? "semibold" : "regular"} className={cx({inline: !multiline})}>
+            {children}
+        </BodyShort>
     </Cmp>
 );
 
 export const Systeminfo = ({children, className}: {children: React.ReactNode; className?: string}) => (
     <div
-        className={cx(
-            "flex flex-col items-between gap-1 p-3 bg-lightblue-50 border-l-surface-info rounded-md",
-            className
-        )}
+        className={cx("flex flex-col gap-1 p-3 bg-ax-bg-info-soft border-l-ax-bg-info-strong rounded-md", className)}
         role={"none"}
     >
         {children}

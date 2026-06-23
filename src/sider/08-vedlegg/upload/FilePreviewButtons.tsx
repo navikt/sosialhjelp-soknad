@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {Button} from "@navikt/ds-react";
-import {FullscreenEnter, FullscreenExit} from "@navikt/ds-icons";
+import {ExpandIcon, ShrinkIcon} from "@navikt/aksel-icons";
 import React from "react";
 import {NavLogoBlack} from "../../../lib/components/NavLogoBlack";
 
@@ -21,7 +21,7 @@ export const FilePreviewButtons = ({
                 </div>
                 <Button variant="primary" onClick={() => setFullscreen(false)}>
                     <div className={"flex items-center gap-2"}>
-                        <FullscreenExit />
+                        <ShrinkIcon />
                         {t("vedlegg.forhandsvisning.fullskjerm.lukk")}
                     </div>
                 </Button>
@@ -32,7 +32,7 @@ export const FilePreviewButtons = ({
         <div className={"w-fit ml-auto"}>
             <Button variant="tertiary" onClick={() => setFullscreen(true)}>
                 <div className={"flex items-center gap-2"}>
-                    <FullscreenEnter />
+                    <ExpandIcon />
                     {t("vedlegg.forhandsvisning.fullskjerm.stringValue")}
                 </div>
             </Button>

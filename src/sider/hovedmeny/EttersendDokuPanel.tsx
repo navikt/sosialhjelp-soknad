@@ -1,6 +1,6 @@
 "use client";
 
-import {Attachment} from "@navikt/ds-icons";
+import {PaperclipIcon} from "@navikt/aksel-icons";
 import {BodyShort, ExpansionCard, Heading} from "@navikt/ds-react";
 import React, {ReactNode} from "react";
 import digisosConfig from "../../lib/config.ts";
@@ -14,7 +14,7 @@ export const EttersendDokuPanel = () => {
 
     return (
         <ExpansionCard style={EXPANSION_CARD_BORDER_STYLE_HACK} aria-labelledby={"ettersend-heading"}>
-            <HovedmenyCardHeader icon={<Attachment className={"w-6 h-6"} />}>
+            <HovedmenyCardHeader icon={<PaperclipIcon className={"w-6 h-6"} />}>
                 <Heading level={"2"} size={"small"} id={"ettersend-heading"}>
                     {t("title")}
                 </Heading>
