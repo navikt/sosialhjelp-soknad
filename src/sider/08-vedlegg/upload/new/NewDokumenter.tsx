@@ -29,10 +29,11 @@ const ALLOWED_FILE_TYPES =
     ".html,.htm,.xhtml,.epub,.pdf,.pdb,.ltx,.mml,.smf,.sxm,.sxg,.oth,.odm,.swf";
 
 interface Props {
-    describedBy: string;
+    className?: string;
     contextId: string;
-    soknadId: string;
+    describedBy: string;
     kategori: string;
+    soknadId: string;
 }
 
 const uploadFile = (file: File, contextId: string, soknadId: string, kategori: string) => {
@@ -53,7 +54,7 @@ const uploadFile = (file: File, contextId: string, soknadId: string, kategori: s
 
 export const isFolder = (f: FileObject) => f.file.size === 0 && f.file.type === "";
 
-export const NewDokumenter = ({describedBy, contextId, soknadId, kategori}: Props) => {
+export const NewDokumenter = ({className, contextId, describedBy, kategori, soknadId}: Props) => {
     const t = useTranslations("NewDokumenter");
     const isMobile = useMediaQuery("(max-width: 768px)");
     const {documentState} = useDocumentState(contextId);
@@ -79,6 +80,7 @@ export const NewDokumenter = ({describedBy, contextId, soknadId, kategori}: Prop
 
     return (
         <FileUpload
+            className={className}
             translations={{
                 dropzone: {
                     buttonMultiple: t("button"),
@@ -106,7 +108,7 @@ export const NewDokumenter = ({describedBy, contextId, soknadId, kategori}: Prop
                 )}
                 {isMobile && (
                     <>
-                        <VStack gap="space-16" align="start">
+                        <VStack gap="space-8" align="start">
                             <Label>{t("label")}</Label>
                             <FileUpload.Trigger
                                 accept={ALLOWED_FILE_TYPES}
