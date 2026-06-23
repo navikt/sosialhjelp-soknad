@@ -57,7 +57,7 @@ const FileUploadBox = ({sporsmal, undertekst, liste}: Props) => {
     const isPending = conversionPending || conversionPending;
     return (
         <>
-            <div className={"rounded-md bg-[var(--ax-bg-accent-soft)] p-8"}>
+            <div className={"rounded-md bg-ax-bg-accent-soft p-8"}>
                 {sporsmal && (
                     <Heading level={"4"} size={"small"} spacing>
                         {sporsmal}

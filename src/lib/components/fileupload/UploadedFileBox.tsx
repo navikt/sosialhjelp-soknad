@@ -65,7 +65,7 @@ export const UploadedFileBox = ({
     const kategoriTekst = key ? tSkjema(key as any) : dokumentasjonsType;
 
     return (
-        <li className="mt-4 flex justify-between items-center border-2 border-[var(--ax-border-neutral-subtle)] border-solid rounded-md p-4">
+        <li className="mt-4 flex justify-between items-center border-2 border-ax-border-neutral-subtle border-solid rounded-md p-4">
             <div className="flex gap-4">
                 <StyledCircle>
                     <FilIllustrasjon />

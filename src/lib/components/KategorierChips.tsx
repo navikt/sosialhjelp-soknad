@@ -49,7 +49,7 @@ const Category = ({category, toggle, showXMark}: CategoryProps) => {
     return (
         <Box
             role="button"
-            className={`flex rounded-lg cursor-pointer ${category.selected ? (category.text === "NØDHJELP" ? "bg-[var(--ax-bg-warning-moderate)]" : "bg-blue-200") : "bg-blue-50"} ${
+            className={`flex rounded-lg cursor-pointer ${category.selected ? (category.text === "NØDHJELP" ? "bg-ax-bg-warning-moderate" : "bg-blue-200") : "bg-blue-50"} ${
                 category.selected && "NØDHJELP" === category.text ? "w-full min-w-full" : ""
             }`}
             key={category.text}

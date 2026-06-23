@@ -10,7 +10,7 @@ const IkkeFunnet = () => {
     return (
         <section className={"bg-white grow flex flex-col"}>
             <ErrorPageColumnarLayout
-                leftMargin={<ExclamationmarkTriangleFillIcon className={"text-[var(--ax-text-danger)] w-20 h-20"} />}
+                leftMargin={<ExclamationmarkTriangleFillIcon className={"text-ax-text-danger w-20 h-20"} />}
                 className={"lg:py-8"}
             >
                 <Heading level="1" size="xlarge" spacing>

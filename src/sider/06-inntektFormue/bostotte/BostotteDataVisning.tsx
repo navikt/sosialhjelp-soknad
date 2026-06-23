@@ -10,7 +10,7 @@ export const BostotteDataVisning = ({bostotte}: {bostotte: BostotteDto}) => {
     if (bostotte.samtykkeTidspunkt && bostotte.fetchHusbankenFeilet) throw new Error("Feil ved nedlasting av data");
 
     return (
-        <div className={"bg-[var(--ax-bg-info-moderate)] border-l-[var(--ax-bg-info-strong)] p-4 space-y-4 rounded-md"}>
+        <div className={"bg-ax-bg-info-moderate border-l-ax-bg-info-strong p-4 space-y-4 rounded-md"}>
             <Heading size={"small"} level={"4"}>
                 {t("inntekt.bostotte.husbanken.utbetalinger")}
             </Heading>

@@ -10,7 +10,7 @@ export const TekniskFeil = ({error, reset}: {error: Error; reset?: () => void}) 
 
     return (
         <ErrorPageColumnarLayout
-            leftMargin={<ExclamationmarkTriangleFillIcon className={"text-[var(--ax-text-danger)] w-20 h-20"} />}
+            leftMargin={<ExclamationmarkTriangleFillIcon className={"text-ax-text-danger w-20 h-20"} />}
         >
             <Heading level="1" size="xlarge" spacing>
                 {t("title")}
