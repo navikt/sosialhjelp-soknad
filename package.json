@@ -54,6 +54,7 @@
         "react-router": "^7.15.1",
         "react-scroll": "^1.9.3",
         "react-use": "^17.6.0",
+        "remeda": "^2.39.0",
         "server-only": "^0.0.1",
         "stacktracey": "^2.2.0",
         "styled-components": "^6.4.2",

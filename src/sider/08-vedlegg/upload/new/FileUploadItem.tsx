@@ -49,32 +49,30 @@ const FileUploadItem = ({
     const isUploading = !url && !validations && status !== "FAILED" && status !== "COMPLETE" && !showCancelButton;
     const uploadStatus = isUploading ? "uploading" : "idle";
     return (
-        <>
-            <FileUpload.Item
-                file={{name: convertedFilename ?? originalFilename, size}}
-                as="li"
-                status={uploadStatus}
-                button={
-                    <Button
-                        variant="tertiary"
-                        data-color="neutral"
-                        icon={<TrashIcon title={t("slett")} />}
-                        onClick={() => mutate()}
-                        loading={isPending}
-                    />
-                }
-                onFileClick={url ? () => window.open(url, "_blank", "noopener,noreferrer") : undefined}
-                /* @ts-expect-error Funker fint med ReactNode */
-                description={isConverted ? <SeOverDescription /> : undefined}
-                error={
-                    validations?.length
-                        ? t(`validation.${validations[0]}`)
-                        : status === "FAILED"
-                          ? t("uploadFailed")
-                          : undefined
-                }
-            />
-        </>
+        <FileUpload.Item
+            file={{name: convertedFilename ?? originalFilename, size}}
+            as="li"
+            status={uploadStatus}
+            button={
+                <Button
+                    variant="tertiary"
+                    data-color="neutral"
+                    icon={<TrashIcon title={t("slett")} />}
+                    onClick={() => mutate()}
+                    loading={isPending}
+                />
+            }
+            onFileClick={url ? () => window.open(url, "_blank", "noopener,noreferrer") : undefined}
+            /* @ts-expect-error Funker fint med ReactNode */
+            description={isConverted ? <SeOverDescription /> : undefined}
+            error={
+                validations?.length
+                    ? t(`validation.${validations[0]}`)
+                    : status === "FAILED"
+                      ? t("uploadFailed")
+                      : undefined
+            }
+        />
     );
 };
 

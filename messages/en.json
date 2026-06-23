@@ -132,7 +132,8 @@
         "submissionError": {
             "TOO_MANY_FILES": "You have selected too many files. The maximum number of files is 30.",
             "TOTAL_SIZE_TOO_LARGE": "The files are too large (max 150 MB), remove files and try again."
-        }
+        },
+        "mappeIkkeTillatt": "Folders cannot be uploaded. Please select individual files instead."
     },
     "FileUploadItem": {
         "uploadFailed": "Upload failed. Please try again later.",
