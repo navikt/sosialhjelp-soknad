@@ -25,6 +25,7 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
             <FormSwitch opplysningstype={opplysningstype} />
             {newUploadEnabled ? (
                 <NewDokumenter
+                    className={"mt-6"}
                     describedBy={id}
                     contextId={`${soknadId}-${opplysningstype}`}
                     soknadId={soknadId}
