@@ -5,22 +5,49 @@ import {
     useGetAdresser,
     useUpdateAdresser,
 } from "../../../generated/new/adresse-controller/adresse-controller.ts";
-import {AdresserInputAdresseValg, MatrikkelAdresse, VegAdresse} from "../../../generated/new/model";
-import {isAxiosError} from "axios";
+import {
+    AdresserInputAdresseValg,
+    ForMangeMottakereInfo,
+    MatrikkelAdresse,
+    VegAdresse,
+} from "../../../generated/new/model";
+import {AxiosError, isAxiosError} from "axios";
 import {useState} from "react";
 
 type AdresserInputBrukerAdresse = MatrikkelAdresse | VegAdresse;
+type AdresseErrorState = {
+    hasError: boolean;
+    info: ForMangeMottakereInfo | null;
+};
 
 export const mutationKey = (soknadId: string) => ["updateAdresser", soknadId];
 
 export const useAdresser = () => {
     const soknadId = useSoknadId();
-    const [adresseError, setAdresseError] = useState(false);
+    const [forMangeMottakereError, setForMangeMottakereError] = useState<AdresseErrorState>({
+        hasError: false,
+        info: null,
+    });
     const {data, isLoading, error} = useGetAdresser(soknadId);
     const queryClient = useQueryClient();
     const [showSpinner, setShowSpinner] = useState(false);
 
-    const isAdresseConflictError = (error: unknown) => isAxiosError(error) && error.response?.status === 406; // adapt to your backend payload
+    const isForMangeMottakereInfo = (data: unknown): data is ForMangeMottakereInfo => {
+        if (!data || typeof data !== "object") {
+            return false;
+        }
+        const typedData = data as Record<string, unknown>;
+
+        return (
+            typeof typedData.innsendingGyldigFra === "string" &&
+            typeof typedData.antallMottakere === "number" &&
+            typeof typedData.maksAntallMottakere === "number" &&
+            typeof typedData.begrensetPeriode === "number"
+        );
+    };
+
+    const isForMangeMottakereError = (error: unknown): error is AxiosError<ForMangeMottakereInfo> =>
+        isAxiosError(error) && error.response?.status === 406 && isForMangeMottakereInfo(error.response?.data);
 
     const {
         mutate,
@@ -30,14 +57,15 @@ export const useAdresser = () => {
         mutation: {
             mutationKey: mutationKey(soknadId),
             onMutate: () => {
-                setAdresseError(false);
-                setTimeout(() => {
+                setForMangeMottakereError({hasError: false, info: null});
+
+                return setTimeout(() => {
                     setShowSpinner(true);
                 }, 500);
             },
             onError: (error) => {
-                if (isAdresseConflictError(error)) {
-                    setAdresseError(true); // handle this one locally
+                if (isForMangeMottakereError(error)) {
+                    setForMangeMottakereError({hasError: true, info: error.response?.data ?? null});
                 }
             },
             onSettled: (_data, _error, _variables, context) => {
@@ -47,7 +75,7 @@ export const useAdresser = () => {
             },
             // Keep existing global behavior for all other errors (403 handling etc.)
             // Only needed if your special case would otherwise be thrown globally:
-            throwOnError: (error) => !isAdresseConflictError(error),
+            throwOnError: (error) => !isForMangeMottakereError(error),
         },
     });
 
@@ -61,7 +89,7 @@ export const useAdresser = () => {
         setAdresse,
         variables,
         error,
-        adresseError,
+        adresseError: forMangeMottakereError,
         isUpdatePending,
         folkeregistrert: data?.folkeregistrertAdresse,
         midlertidig: data?.midlertidigAdresse,
