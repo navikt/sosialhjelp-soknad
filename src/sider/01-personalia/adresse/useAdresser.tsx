@@ -36,13 +36,12 @@ export const useAdresser = () => {
         if (!data || typeof data !== "object") {
             return false;
         }
-        const typedData = data as Record<string, unknown>;
 
         return (
-            typeof typedData.innsendingGyldigFra === "string" &&
-            typeof typedData.antallMottakere === "number" &&
-            typeof typedData.maksAntallMottakere === "number" &&
-            typeof typedData.begrensetPeriode === "number"
+            "innsendingGyldigFra" in data &&
+            "antallMottakere" in data &&
+            "maksAntallMottakere" in data &&
+            "begrensetPeriode" in data
         );
     };
 
