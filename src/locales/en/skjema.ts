@@ -1913,6 +1913,8 @@ export const skjema = {
     },
     validering: {
         adresseMangler: "You must select a valid address before you can continue",
+        forMangeMottakere:
+            "You got {{antallMottakere}} applications last {{begrensetPeriode}} days. The maximum is {{maksAntallMottakere}} and you will be able to send to a new recipient {{innsendingGyldigFra}}. Please contact your local Nav office or call 5555 3333 if you need assistance.",
         erFdato: "Invalid date",
         erFdatoEtterIdag: "Date of birth cannot be after today’s date",
         erKontonummer: "Invalid account number",

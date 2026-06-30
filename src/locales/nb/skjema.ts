@@ -1909,6 +1909,8 @@ export const skjema = {
     },
     validering: {
         adresseMangler: "Du må velge en gyldig adresse før du kan gå videre",
+        forMangeMottakere:
+            "Du har sendt søknader til {{antallMottakere}} mottakere siste {{begrensetPeriode}} dager. Du kan maksimalt sende {{maksAntallMottakere}} iløpet av denne perioden. Du vil kunne velge ny mottaker {{innsendingGyldigFra}}. Kontakt ditt lokale Nav-kontor eller ring 5555 3333 ved behov for hjelp.",
         erFdato: "Ugyldig dato",
         erFdatoEtterIdag: "Fødselsdato kan ikke være etter dagens dato",
         erKontonummer: "Ugyldig kontonummer",
