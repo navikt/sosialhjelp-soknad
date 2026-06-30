@@ -8,12 +8,17 @@ type AdresserInputBrukerAdresse = MatrikkelAdresse | VegAdresse;
 
 // TODO: Make this unnecessary by making the input type on the backend to soknad
 //       equal to the output type from adressesok
-export const adresseForslagTilAdresse = ({adresse, kommunenummer}: AdresseForslag): AdresserInputBrukerAdresse => {
+export const adresseForslagTilAdresse = ({
+    adresse,
+    kommunenummer,
+    ...rest
+}: AdresseForslag): AdresserInputBrukerAdresse => {
     if (!kommunenummer) {
         throw new Error("Mangler kommunenummer i adresseforslag");
     }
 
     return {
+        ...rest,
         type: "VegAdresse",
         kommunenummer,
         gatenavn: adresse,
