@@ -5353,6 +5353,27 @@
   },
   "components": {
     "schemas": {
+      "InnsendingFeiletError": {
+        "type": "object",
+        "properties": {
+          "deletionDate": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
+          }
+        },
+        "required": [
+          "deletionDate",
+          "type"
+        ]
+      },
       "ForMangeMottakereInfo": {
         "type": "object",
         "properties": {
@@ -5380,25 +5401,16 @@
           "maksAntallMottakere"
         ]
       },
-      "InnsendingFeiletError": {
+      "UnauthorizedMelding": {
         "type": "object",
         "properties": {
-          "deletionDate": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
+          "loginUrl": {
+            "type": "string",
+            "format": "uri"
           }
         },
         "required": [
-          "deletionDate",
-          "type"
+          "loginUrl"
         ]
       },
       "SoknadApiError": {
@@ -5456,18 +5468,6 @@
         "required": [
           "error",
           "responseType"
-        ]
-      },
-      "UnauthorizedMelding": {
-        "type": "object",
-        "properties": {
-          "loginUrl": {
-            "type": "string",
-            "format": "uri"
-          }
-        },
-        "required": [
-          "loginUrl"
         ]
       },
       "BoutgifterInput": {
