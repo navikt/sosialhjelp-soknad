@@ -11,6 +11,8 @@ import FileUploadItem from "./FileUploadItem.tsx";
 import InlineStatusMessage from "./InlineStatusMessage.tsx";
 import useDocumentState from "./useDocumentState.ts";
 import useSlowProcessingWarning from "./useSlowProcessingWarning.ts";
+import {useDokumentasjonTekster} from "../../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
+import {DokumentasjonDtoType} from "../../../../generated/new/model";
 
 const MAX_FILES = 10;
 const MAX_SIZE_MB = 10 * 1024 * 1024;
@@ -32,7 +34,7 @@ interface Props {
     className?: string;
     contextId: string;
     describedBy: string;
-    kategori: string;
+    kategori: DokumentasjonDtoType;
     soknadId: string;
 }
 
@@ -59,6 +61,7 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
     const isMobile = useMediaQuery("(max-width: 768px)");
     const {documentState} = useDocumentState(contextId);
     const [filesAdded, setFilesAdded] = useState(0);
+    const {dokumentBeskrivelse} = useDokumentasjonTekster(kategori);
     const [folderDropError, setFolderDropError] = useState(false);
     const hasPendingOrProcessing = documentState?.uploads?.some(
         (u) => u.status === "PENDING" || u.status === "PROCESSING"
@@ -99,7 +102,7 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
             <VStack gap="space-24">
                 {!isMobile && (
                     <FileUpload.Dropzone
-                        label={t("label")}
+                        label={dokumentBeskrivelse}
                         accept={ALLOWED_FILE_TYPES}
                         fileLimit={{max: MAX_FILES, current: documentState?.uploads?.length ?? 0}}
                         maxSizeInBytes={MAX_SIZE_MB}
@@ -109,7 +112,7 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
                 {isMobile && (
                     <>
                         <VStack gap="space-8" align="start">
-                            <Label>{t("label")}</Label>
+                            <Label>{dokumentBeskrivelse}</Label>
                             <FileUpload.Trigger
                                 accept={ALLOWED_FILE_TYPES}
                                 maxSizeInBytes={MAX_SIZE_MB}
