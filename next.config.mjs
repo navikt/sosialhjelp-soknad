@@ -19,6 +19,7 @@ const nextConfig = {
     serverExternalPackages: ["@navikt/next-logger", "next-logger", "pino"],
     experimental: {
         turbopackServerFastRefresh: false,
+        proxyClientMaxBodySize: "150mb",
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
     },
 };

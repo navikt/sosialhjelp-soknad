@@ -1,14 +1,13 @@
 import {UploadIcon} from "@navikt/aksel-icons";
 import * as R from "remeda";
 import {Button, FileObject, FileUpload, Heading, Label, VStack} from "@navikt/ds-react";
-import {logger} from "@navikt/next-logger";
 import {useTranslations} from "next-intl";
 import {useState} from "react";
-import {Upload} from "tus-js-client";
 import {useMediaQuery} from "usehooks-ts";
 import digisosConfig from "../../../../lib/config.ts";
 import FileUploadItem from "./FileUploadItem.tsx";
 import InlineStatusMessage from "./InlineStatusMessage.tsx";
+import PendingFileUpload from "./PendingFileUpload.tsx";
 import useDocumentState from "./useDocumentState.ts";
 import useSlowProcessingWarning from "./useSlowProcessingWarning.ts";
 import {useDokumentasjonTekster} from "../../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
@@ -40,22 +39,6 @@ interface Props {
     soknadId: string;
 }
 
-const uploadFile = (file: File, contextId: string, soknadId: string, kategori: string) => {
-    const upload = new Upload(file, {
-        endpoint: `${digisosConfig.uploadBaseURL}/tus/files`,
-        retryDelays: [0, 1000, 3000, 5000],
-        metadata: {
-            filename: file.name,
-            contextId,
-            navEksternRefId: soknadId,
-            kategori,
-        },
-        uploadSize: file.size,
-        onError: (error: unknown) => logger.error(`Upload failed: ${error}`),
-    });
-    upload.start();
-};
-
 export const isFolder = (f: FileObject) => f.file.size === 0 && f.file.type === "";
 
 export const NewDokumenter = ({className, contextId, describedBy, kategori, soknadId}: Props) => {
@@ -65,11 +48,18 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
     const [filesAdded, setFilesAdded] = useState(0);
     const {dokumentBeskrivelse} = useDokumentasjonTekster(kategori);
     const [folderDropError, setFolderDropError] = useState(false);
+    const [pendingFiles, setPendingFiles] = useState<FileObject[]>([]);
+
+    const confirmedFilenames = new Set(documentState?.uploads?.map((u) => u.originalFilename) ?? []);
+    const sortedUploads = R.sortBy(documentState?.uploads ?? [], R.prop("originalFilename"));
+    const totalCount = sortedUploads.length + pendingFiles.filter((f) => !confirmedFilenames.has(f.file.name)).length;
+
     const hasPendingOrProcessing = documentState?.uploads?.some(
         (u) => u.status === "PENDING" || u.status === "PROCESSING"
     );
     const {updateAlleredeLevert, alleredeLevert} = useAlleredeLevert(kategori);
     const showSlowProcessingWarning = useSlowProcessingWarning(hasPendingOrProcessing);
+
     const _onSelect = (files: FileObject[]) => {
         const [folders, valid] = R.partition(files, (f) => isFolder(f));
 
@@ -78,8 +68,9 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
         if (valid.length === 0) return;
         setFilesAdded(valid.length);
         setTimeout(() => setFilesAdded(0), 500);
-        valid.forEach((file: FileObject) => uploadFile(file.file, contextId, soknadId, kategori));
+        setPendingFiles((prev) => [...prev, ...valid]);
     };
+
     const converted = documentState?.uploads?.some(
         (upload) => !!upload.finalFilename && upload.finalFilename !== upload.originalFilename
     );
@@ -108,7 +99,7 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
                         label={dokumentBeskrivelse}
                         accept={ALLOWED_FILE_TYPES}
                         disabled={alleredeLevert}
-                        fileLimit={{max: MAX_FILES, current: documentState?.uploads?.length ?? 0}}
+                        fileLimit={{max: MAX_FILES, current: totalCount}}
                         maxSizeInBytes={MAX_SIZE_MB}
                         onSelect={_onSelect}
                     />
@@ -139,10 +130,10 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
                     </InlineStatusMessage>
                 )}
 
-                {(documentState?.uploads?.length ?? 0) > 0 && (
+                {totalCount > 0 && (
                     <VStack gap="space-8">
                         <Heading size="xsmall" level="3">
-                            {t("valgteFiler", {antall_filer: documentState?.uploads?.length ?? 0})}
+                            {t("valgteFiler", {antall_filer: totalCount})}
                         </Heading>
                         {converted && (
                             <InlineStatusMessage variant="info" role="status">
@@ -164,7 +155,17 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
                             </>
                         )}
                         <VStack as="ul" gap="space-8">
-                            {documentState?.uploads?.map((upload) => (
+                            {pendingFiles.map((f) => (
+                                <PendingFileUpload
+                                    key={f.file.name}
+                                    file={f}
+                                    contextId={contextId}
+                                    soknadId={soknadId}
+                                    kategori={kategori}
+                                    confirmed={confirmedFilenames.has(f.file.name)}
+                                />
+                            ))}
+                            {sortedUploads.map((upload) => (
                                 <FileUploadItem
                                     key={upload.id}
                                     url={upload.url ? `${digisosConfig.uploadBaseURL}/${upload.url}` : undefined}
