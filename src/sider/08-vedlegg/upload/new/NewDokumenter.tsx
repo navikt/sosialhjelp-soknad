@@ -13,6 +13,8 @@ import useDocumentState from "./useDocumentState.ts";
 import useSlowProcessingWarning from "./useSlowProcessingWarning.ts";
 import {useDokumentasjonTekster} from "../../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
 import {DokumentasjonDtoType} from "../../../../generated/new/model";
+import useAlleredeLevert from "../../../../lib/hooks/dokumentasjon/useAlleredeLevert.ts";
+import {AlreadyUploadedCheckbox} from "../AlreadyUploadedCheckbox.tsx";
 
 const MAX_FILES = 10;
 const MAX_SIZE_MB = 10 * 1024 * 1024;
@@ -66,6 +68,7 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
     const hasPendingOrProcessing = documentState?.uploads?.some(
         (u) => u.status === "PENDING" || u.status === "PROCESSING"
     );
+    const {updateAlleredeLevert, alleredeLevert} = useAlleredeLevert(kategori);
     const showSlowProcessingWarning = useSlowProcessingWarning(hasPendingOrProcessing);
     const _onSelect = (files: FileObject[]) => {
         const [folders, valid] = R.partition(files, (f) => isFolder(f));
@@ -104,6 +107,7 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
                     <FileUpload.Dropzone
                         label={dokumentBeskrivelse}
                         accept={ALLOWED_FILE_TYPES}
+                        disabled={alleredeLevert}
                         fileLimit={{max: MAX_FILES, current: documentState?.uploads?.length ?? 0}}
                         maxSizeInBytes={MAX_SIZE_MB}
                         onSelect={_onSelect}
@@ -179,6 +183,12 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
                         </VStack>
                     </VStack>
                 )}
+                <AlreadyUploadedCheckbox
+                    opplysningstype={kategori}
+                    disabled={!!documentState?.uploads?.length || !!hasPendingOrProcessing}
+                    alleredeLevert={alleredeLevert}
+                    updateAlleredeLevert={updateAlleredeLevert}
+                />
             </VStack>
         </FileUpload>
     );
