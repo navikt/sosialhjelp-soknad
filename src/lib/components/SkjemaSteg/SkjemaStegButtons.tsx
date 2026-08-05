@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import {useTransition} from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {ArrowLeftIcon, ArrowRightIcon, PaperplaneIcon} from "@navikt/aksel-icons";
@@ -15,7 +15,7 @@ interface Props {
 
 export const SkjemaStegButtons = ({onNext, onPrevious, isFinalStep, isNextPending, nextButtonDisabled}: Props) => {
     const {t} = useTranslation("skjema");
-    const [isPending, setIsPending] = useState<boolean>(false);
+    const [isPending, startTransition] = useTransition();
 
     const nextButtonText = isFinalStep ? "skjema.knapper.send" : "skjema.knapper.neste";
     const nextButtonIcon =
@@ -26,12 +26,6 @@ export const SkjemaStegButtons = ({onNext, onPrevious, isFinalStep, isNextPendin
         ) : (
             <ArrowRightIcon aria-hidden={true} />
         );
-
-    const onClickNext = async () => {
-        setIsPending(true);
-        await onNext();
-        setIsPending(false);
-    };
 
     return (
         <nav>
@@ -47,7 +41,7 @@ export const SkjemaStegButtons = ({onNext, onPrevious, isFinalStep, isNextPendin
                 </Button>
                 <Button
                     variant="primary"
-                    onClick={onClickNext}
+                    onClick={() => startTransition(onNext)}
                     disabled={isPending || isNextPending || nextButtonDisabled}
                     icon={nextButtonIcon}
                     iconPosition={"right"}

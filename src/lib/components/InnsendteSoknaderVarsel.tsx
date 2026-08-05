@@ -8,6 +8,9 @@ interface Props {
 }
 
 export function resolveInnsendingBlocked(antall?: number, maxAntall?: number): boolean {
+    if (process.env.NODE_ENV !== "test" && process.env.NEXT_PUBLIC_DIGISOS_ENV !== "prod") {
+        return false;
+    }
     if (antall === undefined || maxAntall === undefined) {
         return false;
     }
