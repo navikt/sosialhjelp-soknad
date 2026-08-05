@@ -35,7 +35,8 @@ const ALLOWED_FILE_TYPES =
 
 interface Props {
     className?: string;
-    describedBy: string;
+    describedBy?: string;
+    hideAlreadyUploaded?: boolean;
     kategori: DokumentasjonDtoType;
     soknadId: string;
     contextId: string;
@@ -62,7 +63,7 @@ const uploadFile = (file: File, contextId: string, soknadId: string, kategori: s
 
 export const isFolder = (f: FileObject) => f.file.size === 0 && f.file.type === "";
 
-export const NewDokumenter = ({className, describedBy, kategori, soknadId, contextId}: Props) => {
+export const NewDokumenter = ({className, describedBy, hideAlreadyUploaded, kategori, soknadId, contextId}: Props) => {
     const t = useTranslations("NewDokumenter");
     const isMobile = useMediaQuery("(max-width: 768px)");
     const {uploads, validations, dispatch} = useDocumentContext();
@@ -209,12 +210,14 @@ export const NewDokumenter = ({className, describedBy, kategori, soknadId, conte
                         </VStack>
                     </VStack>
                 )}
-                <AlreadyUploadedCheckbox
-                    opplysningstype={kategori}
-                    disabled={!!uploads.length || !!hasPendingOrProcessing}
-                    alleredeLevert={alleredeLevert}
-                    updateAlleredeLevert={updateAlleredeLevert}
-                />
+                {!hideAlreadyUploaded && (
+                    <AlreadyUploadedCheckbox
+                        opplysningstype={kategori}
+                        disabled={!!uploads.length || !!hasPendingOrProcessing}
+                        alleredeLevert={alleredeLevert}
+                        updateAlleredeLevert={updateAlleredeLevert}
+                    />
+                )}
             </VStack>
         </FileUpload>
     );

@@ -5,9 +5,15 @@ import BelopBeskrivelse from "../../08-vedlegg/form/BelopBeskrivelse.tsx";
 import {FileUploadBoxNoStyle} from "../../../lib/components/fileupload/FileUploadBox.tsx";
 import React from "react";
 import {BelopDto} from "../../../generated/new/model/belopDto.ts";
+import {NewDokumenter} from "../../08-vedlegg/upload/new/NewDokumenter.tsx";
+import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
+import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
+import {DokumentasjonDtoType} from "../../../generated/new/model";
 
 export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_BRUKSKONTO"}) => {
     const {t} = useTranslation("skjema");
+    const soknadId = useSoknadId();
+    const newUploadEnabled = useNewUploadEnabled();
     const {updateOkonomiskOpplysning, opplysning, isLoading} =
         useOkonomiskOpplysningMutation<BelopDto>(opplysningstype);
 
@@ -16,7 +22,7 @@ export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_B
     }
     return (
         <div className={"rounded-md bg-ax-bg-accent-soft p-8"}>
-            <Heading level={"4"} size={"small"} spacing>
+            <Heading level={"4"} size={"small"} spacing id={"kort-dokumentasjon-formue-saldo"}>
                 {t("utbetalinger.inntekt.skattbar.kort_saldo_tittel")}
             </Heading>
             <BodyShort spacing>{t("utbetalinger.inntekt.skattbar.kort_saldo_undertekst")}</BodyShort>
@@ -32,10 +38,20 @@ export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_B
                 }
                 leggTilTekst={t("utbetalinger.inntekt.skattbar.kort_saldo_leggTil")}
             />
-            <FileUploadBoxNoStyle
-                bunntekst={t("utbetalinger.inntekt.skattbar.kort_saldo_lastOpp")}
-                dokumentasjonType={opplysningstype}
-            />
+            {newUploadEnabled ? (
+                <NewDokumenter
+                    contextId={`${soknadId}-${DokumentasjonDtoType.FORMUE_BRUKSKONTO}`}
+                    describedBy={"kort-dokumentasjon-formue-saldo"}
+                    kategori={DokumentasjonDtoType.FORMUE_BRUKSKONTO}
+                    soknadId={soknadId}
+                    hideAlreadyUploaded
+                />
+            ) : (
+                <FileUploadBoxNoStyle
+                    bunntekst={t("utbetalinger.inntekt.skattbar.kort_saldo_lastOpp")}
+                    dokumentasjonType={opplysningstype}
+                />
+            )}
         </div>
     );
 };
