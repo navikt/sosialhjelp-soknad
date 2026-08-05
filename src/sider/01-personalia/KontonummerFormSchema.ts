@@ -4,7 +4,7 @@ export const KontonummerSchema = z.preprocess((val) => {
     if (typeof val !== "string") return val;
     const digitsOnly = val.replace(/\D/g, "").trim();
     return digitsOnly === "" ? undefined : digitsOnly;
-}, z.string().optional()) as z.ZodEffects<z.ZodOptional<z.ZodString>, string | undefined, string | undefined>;
+}, z.string().optional());
 
 export const KontonummerFormSchema = z
     .object({

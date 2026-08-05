@@ -9,8 +9,7 @@ const TelefonnummerSchema = z.preprocess(
         .min(6, "kontakt.telefon.feil.ugyldig")
         .max(11, "kontakt.telefon.feil.maxLength")
         .nullable()
-) as z.ZodEffects<z.ZodNullable<z.ZodString>, string | null, string | null>;
-//   ^^^ https://github.com/colinhacks/zod/issues/3537#issuecomment-2829790481
+);
 
 export const TelefonnummerFormSchema = z
     .object({phoneNumber: TelefonnummerSchema})
