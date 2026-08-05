@@ -16,7 +16,7 @@
         "@navikt/ds-react": "^8.16.1",
         "@navikt/ds-tailwind": "^8.16.1",
         "@navikt/fnrvalidator": "^2.2.1",
-        "@navikt/nav-dekoratoren-moduler": "^3.7.1",
+        "@navikt/nav-dekoratoren-moduler": "^4.2.2",
         "@navikt/next-api-proxy": "^5.0.5",
         "@navikt/next-logger": "^5.0.0",
         "@swan-io/boxed": "^3.2.1",
@@ -84,6 +84,7 @@
         "@types/react-modal": "^3.16.3",
         "@types/react-scroll": "^1.8.10",
         "@types/styled-components": "^5.1.36",
+        "@vitejs/plugin-react": "^6.0.5",
         "ajv": "^8.20.0",
         "eslint": "^9.39.4",
         "husky": "^9.1.7",
@@ -98,7 +99,6 @@
         "typescript": "^6.0.3",
         "vite": "^8.2.0",
         "vite-tsconfig-paths": "^6.1.1",
-        "@vitejs/plugin-react": "^6.0.5",
         "vitest": "^4.1.10"
     },
     "scripts": {
