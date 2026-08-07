@@ -13084,7 +13084,6 @@ snapshots:
       picomatch: 4.0.5
       postcss: 8.5.25
       rolldown: 1.2.1
-      esbuild: 0.27.7
       fdir: 6.5.0(picomatch@4.0.4)
       rollup: 4.62.0
       tinyglobby: 0.2.17
