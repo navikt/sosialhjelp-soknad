@@ -16,6 +16,8 @@ import {KortDokumentasjon} from "./KortDokumentasjon.tsx";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";
+import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
+import {NewDokumenter} from "../../08-vedlegg/upload/new/NewDokumenter.tsx";
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
@@ -23,6 +25,7 @@ const Inntekt = () => {
     const navigate = useNavigate();
     const isKortSoknad = useCurrentSoknadIsKort();
     const soknadId = useSoknadId();
+    const newUploadEnabled = useNewUploadEnabled();
 
     const gotoPage = async (page: number) => {
         umamiTrack("Skjemasteg fullført", {
@@ -60,11 +63,20 @@ const Inntekt = () => {
                 <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
                 <NavYtelser />
                 <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
-                <FileUploadBox
-                    sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
-                    undertekst="situasjon.kort.dokumentasjon.description"
-                    liste="situasjon.kort.dokumentasjon.liste"
-                />
+                {newUploadEnabled ? (
+                    <NewDokumenter
+                        contextId={`${soknadId}-${DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}-inntekt`}
+                        kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
+                        soknadId={soknadId}
+                        hideAlreadyUploaded
+                    />
+                ) : (
+                    <FileUploadBox
+                        sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+                        undertekst="situasjon.kort.dokumentasjon.description"
+                        liste="situasjon.kort.dokumentasjon.liste"
+                    />
+                )}
                 <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
             </SkjemaStegBlock>
         </SkjemaSteg>
