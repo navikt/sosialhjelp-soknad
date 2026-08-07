@@ -1,4 +1,4 @@
-import {createContext, ReactNode, useContext, useEffect, useReducer} from "react";
+import {createContext, Dispatch, ReactNode, useContext, useEffect, useReducer} from "react";
 import {DocumentState, openEventChannel, UploadState, ValidationCode} from "./openEventChannel.ts";
 
 type State = {
@@ -21,15 +21,20 @@ const reducer = (state: State, action: Action): State => {
         case "SSE_UPDATE": {
             const incoming = action.payload.uploads ?? [];
 
-            // Update existing entries in place by correlationId
+            // Update existing entries in place, matching by correlationId or id
             const updated = state.uploads.map((existing) => {
-                const match = incoming.find((u) => u.correlationId && u.correlationId === existing.correlationId);
+                const match = incoming.find(
+                    (u) => (u.correlationId && u.correlationId === existing.correlationId) || u.id === existing.id
+                );
                 return match ?? existing;
             });
 
-            // Append SSE uploads with no match in current state (e.g. from another session)
+            // Append only genuinely new uploads (no match by correlationId or id)
+            const existingIds = new Set(state.uploads.map((u) => u.id));
             const existingCorrelationIds = new Set(state.uploads.map((u) => u.correlationId).filter(Boolean));
-            const newFromSSE = incoming.filter((u) => !u.correlationId || !existingCorrelationIds.has(u.correlationId));
+            const newFromSSE = incoming.filter(
+                (u) => !existingIds.has(u.id) && (!u.correlationId || !existingCorrelationIds.has(u.correlationId))
+            );
 
             return {
                 uploads: [...updated, ...newFromSSE],
@@ -54,7 +59,7 @@ const reducer = (state: State, action: Action): State => {
 type ContextValue = {
     uploads: UploadState[];
     validations: ValidationCode[];
-    dispatch: React.Dispatch<Action>;
+    dispatch: Dispatch<Action>;
 };
 
 const DocumentContext = createContext<ContextValue | undefined>(undefined);
