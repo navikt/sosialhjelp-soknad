@@ -9,12 +9,13 @@ import {useMediaQuery} from "usehooks-ts";
 import digisosConfig from "../../../../lib/config.ts";
 import FileUploadItem from "./FileUploadItem.tsx";
 import InlineStatusMessage from "./InlineStatusMessage.tsx";
-import useDocumentState from "./useDocumentState.ts";
 import useSlowProcessingWarning from "./useSlowProcessingWarning.ts";
 import {useDokumentasjonTekster} from "../../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
 import {DokumentasjonDtoType} from "../../../../generated/new/model";
 import useAlleredeLevert from "../../../../lib/hooks/dokumentasjon/useAlleredeLevert.ts";
 import {AlreadyUploadedCheckbox} from "../AlreadyUploadedCheckbox.tsx";
+import {useDocumentContext} from "./DocumentContext.tsx";
+import {UploadStatus} from "./openEventChannel.ts";
 
 const MAX_FILES = 10;
 const MAX_SIZE_MB = 10 * 1024 * 1024;
@@ -34,13 +35,15 @@ const ALLOWED_FILE_TYPES =
 
 interface Props {
     className?: string;
-    contextId: string;
-    describedBy: string;
+    describedBy?: string;
+    hideAlreadyUploaded?: boolean;
     kategori: DokumentasjonDtoType;
     soknadId: string;
+    contextId: string;
 }
 
-const uploadFile = (file: File, contextId: string, soknadId: string, kategori: string) => {
+const uploadFile = (file: File, contextId: string, soknadId: string, kategori: string): string => {
+    const correlationId = crypto.randomUUID();
     const upload = new Upload(file, {
         endpoint: `${digisosConfig.uploadBaseURL}/tus/files`,
         retryDelays: [0, 1000, 3000, 5000],
@@ -49,27 +52,28 @@ const uploadFile = (file: File, contextId: string, soknadId: string, kategori: s
             contextId,
             navEksternRefId: soknadId,
             kategori,
+            correlationId,
         },
         uploadSize: file.size,
         onError: (error: unknown) => logger.error(`Upload failed: ${error}`),
     });
     upload.start();
+    return correlationId;
 };
 
 export const isFolder = (f: FileObject) => f.file.size === 0 && f.file.type === "";
 
-export const NewDokumenter = ({className, contextId, describedBy, kategori, soknadId}: Props) => {
+export const NewDokumenter = ({className, describedBy, hideAlreadyUploaded, kategori, soknadId, contextId}: Props) => {
     const t = useTranslations("NewDokumenter");
     const isMobile = useMediaQuery("(max-width: 768px)");
-    const {documentState} = useDocumentState(contextId);
+    const {uploads, validations, dispatch} = useDocumentContext();
     const [filesAdded, setFilesAdded] = useState(0);
     const {dokumentBeskrivelse} = useDokumentasjonTekster(kategori);
     const [folderDropError, setFolderDropError] = useState(false);
-    const hasPendingOrProcessing = documentState?.uploads?.some(
-        (u) => u.status === "PENDING" || u.status === "PROCESSING"
-    );
+    const hasPendingOrProcessing = uploads.some((u) => u.status === "PENDING" || u.status === "PROCESSING");
     const {updateAlleredeLevert, alleredeLevert} = useAlleredeLevert(kategori);
     const showSlowProcessingWarning = useSlowProcessingWarning(hasPendingOrProcessing);
+
     const _onSelect = (files: FileObject[]) => {
         const [folders, valid] = R.partition(files, (f) => isFolder(f));
 
@@ -78,9 +82,23 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
         if (valid.length === 0) return;
         setFilesAdded(valid.length);
         setTimeout(() => setFilesAdded(0), 500);
-        valid.forEach((file: FileObject) => uploadFile(file.file, contextId, soknadId, kategori));
+
+        dispatch({
+            type: "ADD_UPLOADS",
+            uploads: valid.map((f) => {
+                const correlationId = uploadFile(f.file, contextId, soknadId, kategori);
+                return {
+                    id: correlationId,
+                    correlationId,
+                    originalFilename: f.file.name,
+                    size: f.file.size,
+                    status: "PENDING" as UploadStatus,
+                };
+            }),
+        });
     };
-    const converted = documentState?.uploads?.some(
+
+    const converted = uploads.some(
         (upload) => !!upload.finalFilename && upload.finalFilename !== upload.originalFilename
     );
 
@@ -108,7 +126,7 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
                         label={dokumentBeskrivelse}
                         accept={ALLOWED_FILE_TYPES}
                         disabled={alleredeLevert}
-                        fileLimit={{max: MAX_FILES, current: documentState?.uploads?.length ?? 0}}
+                        fileLimit={{max: MAX_FILES, current: uploads.length}}
                         maxSizeInBytes={MAX_SIZE_MB}
                         onSelect={_onSelect}
                     />
@@ -139,10 +157,10 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
                     </InlineStatusMessage>
                 )}
 
-                {(documentState?.uploads?.length ?? 0) > 0 && (
+                {uploads.length > 0 && (
                     <VStack gap="space-8">
                         <Heading size="xsmall" level="3">
-                            {t("valgteFiler", {antall_filer: documentState?.uploads?.length ?? 0})}
+                            {t("valgteFiler", {antall_filer: uploads.length})}
                         </Heading>
                         {converted && (
                             <InlineStatusMessage variant="info" role="status">
@@ -154,9 +172,9 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
                                 {t("processingWarning")}
                             </InlineStatusMessage>
                         )}
-                        {(documentState?.validations?.length ?? 0) > 0 && (
+                        {validations.length > 0 && (
                             <>
-                                {documentState?.validations?.map((error) => (
+                                {validations.map((error) => (
                                     <InlineStatusMessage key={error} variant="error" role="alert">
                                         {t(`submissionError.${error}`)}
                                     </InlineStatusMessage>
@@ -164,7 +182,7 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
                             </>
                         )}
                         <VStack as="ul" gap="space-8">
-                            {documentState?.uploads?.map((upload) => (
+                            {uploads.map((upload) => (
                                 <FileUploadItem
                                     key={upload.id}
                                     url={upload.url ? `${digisosConfig.uploadBaseURL}/${upload.url}` : undefined}
@@ -178,17 +196,28 @@ export const NewDokumenter = ({className, contextId, describedBy, kategori, sokn
                                         showSlowProcessingWarning &&
                                         (upload.status === "PENDING" || upload.status === "PROCESSING")
                                     }
+                                    onTerminate={
+                                        upload.correlationId
+                                            ? () =>
+                                                  dispatch({
+                                                      type: "REMOVE_UPLOAD",
+                                                      correlationId: upload.correlationId!,
+                                                  })
+                                            : undefined
+                                    }
                                 />
                             ))}
                         </VStack>
                     </VStack>
                 )}
-                <AlreadyUploadedCheckbox
-                    opplysningstype={kategori}
-                    disabled={!!documentState?.uploads?.length || !!hasPendingOrProcessing}
-                    alleredeLevert={alleredeLevert}
-                    updateAlleredeLevert={updateAlleredeLevert}
-                />
+                {!hideAlreadyUploaded && (
+                    <AlreadyUploadedCheckbox
+                        opplysningstype={kategori}
+                        disabled={!!uploads.length || !!hasPendingOrProcessing}
+                        alleredeLevert={alleredeLevert}
+                        updateAlleredeLevert={updateAlleredeLevert}
+                    />
+                )}
             </VStack>
         </FileUpload>
     );

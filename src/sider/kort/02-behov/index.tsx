@@ -16,6 +16,9 @@ import BehovForm, {FormValues} from "./BehovForm.tsx";
 import type {HarKategorierInputKategorierItem} from "../../../generated/new-ssr/model";
 import KategorierForm, {FormValues as KategorierFormValues} from "./KategorierForm.tsx";
 import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
+import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
+import {NewDokumenter} from "../../08-vedlegg/upload/new/NewDokumenter.tsx";
+import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";
@@ -96,6 +99,7 @@ const Behov = () => {
 
     const featureFlagData = useContextFeatureToggles();
     const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
+    const newUploadEnabled = useNewUploadEnabled();
 
     return (
         <SkjemaSteg>
@@ -123,11 +127,20 @@ const Behov = () => {
                                     hvaSokesOm={begrunnelse?.hvaSokesOm}
                                 />
                             )}
-                            <FileUploadBox
-                                sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
-                                undertekst="begrunnelse.kort.behov.dokumentasjon.beskrivelse"
-                                liste="begrunnelse.kort.behov.dokumentasjon.liste"
-                            />
+                            {newUploadEnabled ? (
+                                <NewDokumenter
+                                    contextId={`${soknadId}-${DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}-behov`}
+                                    kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
+                                    soknadId={soknadId}
+                                    hideAlreadyUploaded
+                                />
+                            ) : (
+                                <FileUploadBox
+                                    sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+                                    undertekst="begrunnelse.kort.behov.dokumentasjon.beskrivelse"
+                                    liste="begrunnelse.kort.behov.dokumentasjon.liste"
+                                />
+                            )}
                         </>
                     )}
                     <SkjemaStegButtons onPrevious={async () => navigate("../1")} onNext={async () => goto(3)} />

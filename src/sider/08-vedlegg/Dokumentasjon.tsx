@@ -7,6 +7,7 @@ import {FormSwitch} from "./form/components/FormSwitch.tsx";
 import {NewDokumenter} from "./upload/new/NewDokumenter.tsx";
 import {useNewUploadEnabled} from "../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
+import {DocumentProvider} from "./upload/new/DocumentContext.tsx";
 
 export const Dokumentasjon = ({opplysningstype}: {opplysningstype: DokumentasjonDtoType}) => {
     const soknadId = useSoknadId();
@@ -14,6 +15,7 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
     const newUploadEnabled = useNewUploadEnabled();
 
     const id = opplysningstype;
+    const contextId = `${soknadId}-${opplysningstype}`;
 
     return (
         <div className={"rounded-md bg-ax-bg-accent-soft p-8"}>
@@ -24,13 +26,15 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
             <BodyShort spacing>{undertekst}</BodyShort>
             <FormSwitch opplysningstype={opplysningstype} />
             {newUploadEnabled ? (
-                <NewDokumenter
-                    className={"mt-6"}
-                    describedBy={id}
-                    contextId={`${soknadId}-${opplysningstype}`}
-                    soknadId={soknadId}
-                    kategori={opplysningstype}
-                />
+                <DocumentProvider contextId={contextId}>
+                    <NewDokumenter
+                        className={"mt-6"}
+                        describedBy={id}
+                        contextId={contextId}
+                        soknadId={soknadId}
+                        kategori={opplysningstype}
+                    />
+                </DocumentProvider>
             ) : (
                 <Dokumenter opplysningstype={opplysningstype} />
             )}
