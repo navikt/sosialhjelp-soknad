@@ -13,6 +13,7 @@ export type UploadState = {
     url?: string;
     status: UploadStatus;
     size?: number;
+    correlationId?: string;
 };
 
 export enum ValidationCode {
