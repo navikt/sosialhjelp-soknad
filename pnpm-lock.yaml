@@ -190,7 +190,7 @@ importers:
         specifier: ^10.5.0
         version: 10.5.0
       '@next/env':
-        specifier: ^16.2.6
+        specifier: ^16.2.12
         version: 16.2.12
       '@playwright/test':
         specifier: ^1.62.1
