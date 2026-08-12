@@ -1,4 +1,4 @@
-import {BodyShort} from "@navikt/ds-react";
+import {BodyShort, VStack} from "@navikt/ds-react";
 import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";
 import React from "react";
 import {FieldError, useForm} from "react-hook-form";
@@ -51,7 +51,12 @@ const BehovForm = ({hvaErEndret, hvaSokesOm, onSubmit}: Props) => {
     return (
         <>
             <SkjemaStegErrorSummary errors={errors} />
-            <form className={"space-y-12"} onBlur={handleSubmit(onSubmit)} onSubmit={(e) => e.preventDefault()}>
+            <VStack
+                as="form"
+                gap={{sm: "space-48", lg: "space-64"}}
+                onBlur={handleSubmit(onSubmit)}
+                onSubmit={(e) => e.preventDefault()}
+            >
                 <LocalizedTextArea
                     {...register("hvaSokesOm")}
                     id={"hvaSokesOm"}
@@ -68,7 +73,7 @@ const BehovForm = ({hvaErEndret, hvaSokesOm, onSubmit}: Props) => {
                     label={t("situasjon.kort.hvaErEndret.label")}
                     description={<BodyShort>{t("situasjon.kort.hvaErEndret.description")}</BodyShort>}
                 />
-            </form>
+            </VStack>
         </>
     );
 };

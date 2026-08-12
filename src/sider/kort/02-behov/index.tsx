@@ -17,7 +17,7 @@ import type {HarKategorierInputKategorierItem} from "../../../generated/new-ssr/
 import KategorierForm, {FormValues as KategorierFormValues} from "./KategorierForm.tsx";
 import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
 import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
-import {NewDokumenter} from "../../08-vedlegg/upload/new/NewDokumenter.tsx";
+import {KortDokumenter} from "../../08-vedlegg/upload/new/KortDokumenter.tsx";
 import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
@@ -115,7 +115,7 @@ const Behov = () => {
                     {isLoading ? (
                         <ApplicationSpinner />
                     ) : (
-                        <>
+                        <VStack gap={{sm: "space-48", lg: "space-64"}}>
                             {isKategorierEnabled ? (
                                 <KategorierForm
                                     kategorier={begrunnelse?.kategorier}
@@ -131,11 +131,17 @@ const Behov = () => {
                             )}
                             {newUploadEnabled ? (
                                 <DocumentProvider contextId={contextId}>
-                                    <NewDokumenter
+                                    <KortDokumenter
                                         contextId={contextId}
                                         kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
                                         soknadId={soknadId}
                                         hideAlreadyUploaded
+                                        label={t("begrunnelse.kort.behov.dokumentasjon.utgifterTittel")}
+                                        description={
+                                            <BodyShort>
+                                                {t("begrunnelse.kort.behov.dokumentasjon.utgifterBeskrivelse")}
+                                            </BodyShort>
+                                        }
                                     />
                                 </DocumentProvider>
                             ) : (
@@ -145,7 +151,7 @@ const Behov = () => {
                                     liste="begrunnelse.kort.behov.dokumentasjon.liste"
                                 />
                             )}
-                        </>
+                        </VStack>
                     )}
                     <SkjemaStegButtons onPrevious={async () => navigate("../1")} onNext={async () => goto(3)} />
                 </SkjemaStegBlock>

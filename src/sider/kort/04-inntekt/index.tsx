@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {useTranslation} from "react-i18next";
+import {BodyShort, VStack} from "@navikt/ds-react";
 import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
 import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
@@ -17,7 +18,7 @@ import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurr
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";
 import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
-import {NewDokumenter} from "../../08-vedlegg/upload/new/NewDokumenter.tsx";
+import {KortDokumenter} from "../../08-vedlegg/upload/new/KortDokumenter.tsx";
 import {DocumentProvider} from "../../08-vedlegg/upload/new/DocumentContext.tsx";
 
 const Inntekt = () => {
@@ -60,27 +61,33 @@ const Inntekt = () => {
         <SkjemaSteg>
             <SkjemaStegStepper page={4} onStepChange={gotoPage} />
             <SkjemaStegBlock className={"lg:space-y-12"}>
-                <SkjemaStegTitle title={t(KortSkjemaHeadings[4].tittel)} icon={KortSkjemaHeadings[4].ikon} />
-                <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
-                <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
-                <NavYtelser />
-                <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
-                {newUploadEnabled ? (
-                    <DocumentProvider contextId={contextId}>
-                        <NewDokumenter
-                            contextId={contextId}
-                            kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
-                            soknadId={soknadId}
-                            hideAlreadyUploaded
+                <VStack gap={{sm: "space-48", lg: "space-64"}}>
+                    <SkjemaStegTitle title={t(KortSkjemaHeadings[4].tittel)} icon={KortSkjemaHeadings[4].ikon} />
+                    <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
+                    <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
+                    <NavYtelser />
+                    <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
+                    {newUploadEnabled ? (
+                        <DocumentProvider contextId={contextId}>
+                            <KortDokumenter
+                                contextId={contextId}
+                                kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
+                                soknadId={soknadId}
+                                hideAlreadyUploaded
+                                label={t("situasjon.kort.dokumentasjon.inntekterTittel")}
+                                description={
+                                    <BodyShort>{t("situasjon.kort.dokumentasjon.inntekterBeskrivelse")}</BodyShort>
+                                }
+                            />
+                        </DocumentProvider>
+                    ) : (
+                        <FileUploadBox
+                            sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+                            undertekst="situasjon.kort.dokumentasjon.description"
+                            liste="situasjon.kort.dokumentasjon.liste"
                         />
-                    </DocumentProvider>
-                ) : (
-                    <FileUploadBox
-                        sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
-                        undertekst="situasjon.kort.dokumentasjon.description"
-                        liste="situasjon.kort.dokumentasjon.liste"
-                    />
-                )}
+                    )}
+                </VStack>
                 <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
             </SkjemaStegBlock>
         </SkjemaSteg>
