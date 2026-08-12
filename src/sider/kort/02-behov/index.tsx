@@ -22,6 +22,7 @@ import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";
+import {DocumentProvider} from "../../08-vedlegg/upload/new/DocumentContext.tsx";
 
 const Behov = () => {
     const {t} = useTranslation("skjema");
@@ -101,6 +102,7 @@ const Behov = () => {
     const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
     const newUploadEnabled = useNewUploadEnabled();
 
+    const contextId = `${soknadId}-${DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}-behov`;
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={2} onStepChange={goto} />
@@ -128,12 +130,14 @@ const Behov = () => {
                                 />
                             )}
                             {newUploadEnabled ? (
-                                <NewDokumenter
-                                    contextId={`${soknadId}-${DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}-behov`}
-                                    kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
-                                    soknadId={soknadId}
-                                    hideAlreadyUploaded
-                                />
+                                <DocumentProvider contextId={contextId}>
+                                    <NewDokumenter
+                                        contextId={contextId}
+                                        kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
+                                        soknadId={soknadId}
+                                        hideAlreadyUploaded
+                                    />
+                                </DocumentProvider>
                             ) : (
                                 <FileUploadBox
                                     sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
