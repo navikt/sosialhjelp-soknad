@@ -9,6 +9,7 @@ import {NewDokumenter} from "../../08-vedlegg/upload/new/NewDokumenter.tsx";
 import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {DokumentasjonDtoType} from "../../../generated/new/model";
+import {DocumentProvider} from "../../08-vedlegg/upload/new/DocumentContext.tsx";
 
 export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_BRUKSKONTO"}) => {
     const {t} = useTranslation("skjema");
@@ -20,6 +21,7 @@ export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_B
     if (isLoading) {
         return <Loader />;
     }
+    const contextId = `${soknadId}-${DokumentasjonDtoType.FORMUE_BRUKSKONTO}`;
     return (
         <div className={"rounded-md bg-ax-bg-accent-soft p-8"}>
             <Heading level={"4"} size={"small"} spacing id={"kort-dokumentasjon-formue-saldo"}>
@@ -39,13 +41,15 @@ export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_B
                 leggTilTekst={t("utbetalinger.inntekt.skattbar.kort_saldo_leggTil")}
             />
             {newUploadEnabled ? (
-                <NewDokumenter
-                    contextId={`${soknadId}-${DokumentasjonDtoType.FORMUE_BRUKSKONTO}`}
-                    describedBy={"kort-dokumentasjon-formue-saldo"}
-                    kategori={DokumentasjonDtoType.FORMUE_BRUKSKONTO}
-                    soknadId={soknadId}
-                    hideAlreadyUploaded
-                />
+                <DocumentProvider contextId={contextId}>
+                    <NewDokumenter
+                        contextId={contextId}
+                        describedBy={"kort-dokumentasjon-formue-saldo"}
+                        kategori={DokumentasjonDtoType.FORMUE_BRUKSKONTO}
+                        soknadId={soknadId}
+                        hideAlreadyUploaded
+                    />
+                </DocumentProvider>
             ) : (
                 <FileUploadBoxNoStyle
                     bunntekst={t("utbetalinger.inntekt.skattbar.kort_saldo_lastOpp")}

@@ -18,6 +18,7 @@ import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";
 import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
 import {NewDokumenter} from "../../08-vedlegg/upload/new/NewDokumenter.tsx";
+import {DocumentProvider} from "../../08-vedlegg/upload/new/DocumentContext.tsx";
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
@@ -54,6 +55,7 @@ const Inntekt = () => {
         }
     }, [formue, hasInitialized, setFormue]);
 
+    const contextId = `${soknadId}-${DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}-inntekt`;
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={4} onStepChange={gotoPage} />
@@ -64,12 +66,14 @@ const Inntekt = () => {
                 <NavYtelser />
                 <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
                 {newUploadEnabled ? (
-                    <NewDokumenter
-                        contextId={`${soknadId}-${DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}-inntekt`}
-                        kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
-                        soknadId={soknadId}
-                        hideAlreadyUploaded
-                    />
+                    <DocumentProvider contextId={contextId}>
+                        <NewDokumenter
+                            contextId={contextId}
+                            kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
+                            soknadId={soknadId}
+                            hideAlreadyUploaded
+                        />
+                    </DocumentProvider>
                 ) : (
                     <FileUploadBox
                         sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
