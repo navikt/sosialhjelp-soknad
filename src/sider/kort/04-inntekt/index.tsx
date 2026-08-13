@@ -18,8 +18,8 @@ import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurr
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";
 import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
-import {KortDokumenter} from "../../08-vedlegg/upload/new/KortDokumenter.tsx";
-import {DocumentProvider} from "../../08-vedlegg/upload/new/DocumentContext.tsx";
+import {DocumentProvider} from "../../../lib/upload/new/DocumentContext.tsx";
+import {UploadByKategori} from "../../../lib/upload/new/UploadByKategori.tsx";
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
@@ -69,7 +69,7 @@ const Inntekt = () => {
                     <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
                     {newUploadEnabled ? (
                         <DocumentProvider contextId={contextId}>
-                            <KortDokumenter
+                            <UploadByKategori
                                 contextId={contextId}
                                 kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
                                 soknadId={soknadId}

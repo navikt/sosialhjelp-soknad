@@ -17,12 +17,12 @@ import type {HarKategorierInputKategorierItem} from "../../../generated/new-ssr/
 import KategorierForm, {FormValues as KategorierFormValues} from "./KategorierForm.tsx";
 import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
 import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
-import {KortDokumenter} from "../../08-vedlegg/upload/new/KortDokumenter.tsx";
 import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";
-import {DocumentProvider} from "../../08-vedlegg/upload/new/DocumentContext.tsx";
+import {DocumentProvider} from "../../../lib/upload/new/DocumentContext.tsx";
+import {UploadByKategori} from "../../../lib/upload/new/UploadByKategori.tsx";
 
 const Behov = () => {
     const {t} = useTranslation("skjema");
@@ -131,7 +131,7 @@ const Behov = () => {
                             )}
                             {newUploadEnabled ? (
                                 <DocumentProvider contextId={contextId}>
-                                    <KortDokumenter
+                                    <UploadByKategori
                                         contextId={contextId}
                                         kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
                                         soknadId={soknadId}

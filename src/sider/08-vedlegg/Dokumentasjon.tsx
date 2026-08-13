@@ -2,12 +2,12 @@ import {BodyShort, Heading} from "@navikt/ds-react";
 import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
 import React from "react";
 import {DokumentasjonDtoType} from "../../generated/new/model";
-import {Dokumenter} from "./upload/Dokumenter.tsx";
+import {Dokumenter} from "../../lib/upload/Dokumenter.tsx";
 import {FormSwitch} from "./form/components/FormSwitch.tsx";
-import {NewDokumenter} from "./upload/new/NewDokumenter.tsx";
+import {UploadByKategori} from "../../lib/upload/new/UploadByKategori.tsx";
 import {useNewUploadEnabled} from "../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
-import {DocumentProvider} from "./upload/new/DocumentContext.tsx";
+import {DocumentProvider} from "../../lib/upload/new/DocumentContext.tsx";
 
 export const Dokumentasjon = ({opplysningstype}: {opplysningstype: DokumentasjonDtoType}) => {
     const soknadId = useSoknadId();
@@ -27,7 +27,7 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
             <FormSwitch opplysningstype={opplysningstype} />
             {newUploadEnabled ? (
                 <DocumentProvider contextId={contextId}>
-                    <NewDokumenter
+                    <UploadByKategori
                         className={"mt-6"}
                         describedBy={id}
                         contextId={contextId}

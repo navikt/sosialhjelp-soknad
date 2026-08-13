@@ -6,12 +6,12 @@ import {useTranslations} from "next-intl";
 import React, {useId, useState} from "react";
 import {Upload} from "tus-js-client";
 import {useMediaQuery} from "usehooks-ts";
-import digisosConfig from "../../../../lib/config.ts";
+import digisosConfig from "../../config.ts";
 import FileUploadItem from "./FileUploadItem.tsx";
 import InlineStatusMessage from "./InlineStatusMessage.tsx";
 import useSlowProcessingWarning from "./useSlowProcessingWarning.ts";
-import {DokumentasjonDtoType} from "../../../../generated/new/model";
-import useAlleredeLevert from "../../../../lib/hooks/dokumentasjon/useAlleredeLevert.ts";
+import {DokumentasjonDtoType} from "../../../generated/new/model";
+import useAlleredeLevert from "../../hooks/dokumentasjon/useAlleredeLevert.ts";
 import {AlreadyUploadedCheckbox} from "../AlreadyUploadedCheckbox.tsx";
 import {useDocumentContext} from "./DocumentContext.tsx";
 import {UploadStatus} from "./openEventChannel.ts";
@@ -39,9 +39,7 @@ export interface DokumenterUploadProps {
     kategori: DokumentasjonDtoType;
     soknadId: string;
     contextId: string;
-    /** Ledetekst for opplastingsfeltet. */
     label: string;
-    /** Utfyllende beskrivelse. Kan være flere linjer / rikt innhold. */
     description?: React.ReactNode;
 }
 
@@ -73,7 +71,7 @@ export const isFolder = (f: FileObject) => f.file.size === 0 && f.file.type === 
  * Presentasjonen av ledetekst og beskrivelse er lik i begge tilfeller – det er kun
  * selve kontrollen som varierer mellom desktop (dropzone) og mobil (knapp).
  */
-export const DokumenterUpload = ({
+export const VedleggUpload = ({
     className,
     describedBy,
     hideAlreadyUploaded,

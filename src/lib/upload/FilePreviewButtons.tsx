@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 import {Button} from "@navikt/ds-react";
 import {ExpandIcon, ShrinkIcon} from "@navikt/aksel-icons";
 import React from "react";
-import {NavLogoBlack} from "../../../lib/components/NavLogoBlack";
+import {NavLogoBlack} from "../components/NavLogoBlack.tsx";
 
 export const FilePreviewButtons = ({
     isFullscreen,

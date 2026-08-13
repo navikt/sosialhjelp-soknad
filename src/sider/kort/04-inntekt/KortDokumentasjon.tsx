@@ -4,12 +4,12 @@ import {BodyShort, Heading, Loader} from "@navikt/ds-react";
 import BelopBeskrivelse from "../../08-vedlegg/form/BelopBeskrivelse.tsx";
 import {FileUploadBoxNoStyle} from "../../../lib/components/fileupload/FileUploadBox.tsx";
 import React from "react";
-import {BelopDto} from "../../../generated/new/model/belopDto.ts";
-import {NewDokumenter} from "../../08-vedlegg/upload/new/NewDokumenter.tsx";
+import {BelopDto} from "../../../generated/new/model";
+import {UploadByKategori} from "../../../lib/upload/new/UploadByKategori.tsx";
 import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {DokumentasjonDtoType} from "../../../generated/new/model";
-import {DocumentProvider} from "../../08-vedlegg/upload/new/DocumentContext.tsx";
+import {DocumentProvider} from "../../../lib/upload/new/DocumentContext.tsx";
 
 export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_BRUKSKONTO"}) => {
     const {t} = useTranslation("skjema");
@@ -42,7 +42,7 @@ export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_B
             />
             {newUploadEnabled ? (
                 <DocumentProvider contextId={contextId}>
-                    <NewDokumenter
+                    <UploadByKategori
                         contextId={contextId}
                         describedBy={"kort-dokumentasjon-formue-saldo"}
                         kategori={DokumentasjonDtoType.FORMUE_BRUKSKONTO}
