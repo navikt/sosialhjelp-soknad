@@ -5,12 +5,12 @@ import {pdfjs} from "react-pdf";
 import cx from "classnames";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
-import {FilePreviewButtons} from "./FilePreviewButtons";
-import {FilePreviewDisplay} from "./FilePreviewDisplay";
-import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
-import {useValgtKategoriContext} from "../../../lib/providers/KortKategorierContextProvider.tsx";
-import {DokumentasjonDtoType} from "../../../generated/new/model";
-import {umamiTrack} from "../../../app/umami.ts";
+import {FilePreviewButtons} from "./FilePreviewButtons.tsx";
+import {FilePreviewDisplay} from "./FilePreviewDisplay.tsx";
+import {useCurrentSoknadIsKort} from "../components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
+import {useValgtKategoriContext} from "../providers/KortKategorierContextProvider.tsx";
+import {DokumentasjonDtoType} from "../../generated/new/model";
+import {umamiTrack} from "../../app/umami.ts";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 

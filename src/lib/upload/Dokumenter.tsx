@@ -3,14 +3,14 @@ import {Alert, BodyShort} from "@navikt/ds-react";
 import {FaroErrorBoundary} from "@grafana/faro-react";
 import {useTranslation} from "react-i18next";
 
-import {DokumentUploader} from "./DokumentUploader";
-import {OpplastetVedlegg} from "../OpplastetVedlegg";
-import {UploadError} from "./UploadError";
-import {AlreadyUploadedCheckbox} from "./AlreadyUploadedCheckbox";
-import {useDokumentasjonTekster} from "../../../lib/hooks/dokumentasjon/useDokumentasjonTekster";
-import {useVedlegg} from "../../../lib/hooks/dokumentasjon/useVedlegg";
-import {DokumentasjonDtoType} from "../../../generated/new/model";
-import useAlleredeLevert from "../../../lib/hooks/dokumentasjon/useAlleredeLevert.ts";
+import {DokumentUploader} from "./DokumentUploader.tsx";
+import {OpplastetVedlegg} from "../../sider/08-vedlegg/OpplastetVedlegg.tsx";
+import {UploadError} from "./UploadError.tsx";
+import {AlreadyUploadedCheckbox} from "./AlreadyUploadedCheckbox.tsx";
+import {useDokumentasjonTekster} from "../hooks/dokumentasjon/useDokumentasjonTekster.ts";
+import {useVedlegg} from "../hooks/dokumentasjon/useVedlegg.ts";
+import {DokumentasjonDtoType} from "../../generated/new/model";
+import useAlleredeLevert from "../hooks/dokumentasjon/useAlleredeLevert.ts";
 
 export const Dokumenter = ({opplysningstype}: {opplysningstype: DokumentasjonDtoType}) => {
     const {t} = useTranslation();

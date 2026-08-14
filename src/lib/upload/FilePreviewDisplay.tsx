@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Document, Page} from "react-pdf";
-import {PdfEncryptionError, PdfLoadError} from "./UploadError";
-import {PageFlipperButtons} from "./PageFlipperButtons";
+import {PdfEncryptionError, PdfLoadError} from "./UploadError.tsx";
+import {PageFlipperButtons} from "./PageFlipperButtons.tsx";
 
 /**
  * Display a PDF file. Grows vertically to fit the container.

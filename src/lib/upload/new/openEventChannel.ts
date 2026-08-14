@@ -1,5 +1,5 @@
 import {logger} from "@navikt/next-logger";
-import config from "../../../../lib/config.ts";
+import config from "../../config.ts";
 
 export type UploadStatus = "PROCESSING" | "FAILED" | "COMPLETE" | "PENDING";
 

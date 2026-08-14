@@ -187,6 +187,9 @@ export const skjema = {
                     beskrivelse: "Here you can upload documentation related to your expenses.<br />For example:",
                     liste: ["Rent invoice", "Household expenses (home expenses)", "Electricity bill", "Other"],
                     bunntekst: "You can take pictures and screenshots.",
+                    utgifterTittel: "Documentation - expenses",
+                    utgifterBeskrivelse:
+                        "Here you can upload documentation related to your expenses. For example a rent invoice, household expenses or electricity bill.",
                 },
                 oppsummeringstittel: "Your needs",
             },
@@ -1498,6 +1501,9 @@ export const skjema = {
                 description:
                     "Here you can upload documentation that you think can be important for your application. <br/>  For example:",
                 liste: ["Your bank account balance", "Payslip", "Introductory benefit", "Other income"],
+                inntekterTittel: "Documentation - income",
+                inntekterBeskrivelse:
+                    "If you have income, such as a payslip, child support or introductory benefit, you can upload documentation of it here.",
             },
             endring: {
                 description: "For example income, expenses, family situation or living situation.",

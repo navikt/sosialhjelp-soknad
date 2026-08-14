@@ -1,7 +1,7 @@
 import React from "react";
 import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {ApplicationSpinner} from "../../../lib/components/animasjoner/ApplicationSpinner";
-import {Alert, BodyShort, VStack} from "@navikt/ds-react";
+import {Alert, BodyShort, Box, VStack} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox";
 import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
@@ -17,12 +17,12 @@ import type {HarKategorierInputKategorierItem} from "../../../generated/new-ssr/
 import KategorierForm, {FormValues as KategorierFormValues} from "./KategorierForm.tsx";
 import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
 import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
-import {NewDokumenter} from "../../08-vedlegg/upload/new/NewDokumenter.tsx";
 import {DokumentasjonDtoType} from "../../../generated/new/model";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";
-import {DocumentProvider} from "../../08-vedlegg/upload/new/DocumentContext.tsx";
+import {DocumentProvider} from "../../../lib/upload/new/DocumentContext.tsx";
+import {UploadByKategori} from "../../../lib/upload/new/UploadByKategori.tsx";
 
 const Behov = () => {
     const {t} = useTranslation("skjema");
@@ -115,7 +115,7 @@ const Behov = () => {
                     {isLoading ? (
                         <ApplicationSpinner />
                     ) : (
-                        <>
+                        <VStack gap={{sm: "space-48", lg: "space-64"}}>
                             {isKategorierEnabled ? (
                                 <KategorierForm
                                     kategorier={begrunnelse?.kategorier}
@@ -130,14 +130,22 @@ const Behov = () => {
                                 />
                             )}
                             {newUploadEnabled ? (
-                                <DocumentProvider contextId={contextId}>
-                                    <NewDokumenter
-                                        contextId={contextId}
-                                        kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
-                                        soknadId={soknadId}
-                                        hideAlreadyUploaded
-                                    />
-                                </DocumentProvider>
+                                <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
+                                    <DocumentProvider contextId={contextId}>
+                                        <UploadByKategori
+                                            contextId={contextId}
+                                            kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
+                                            soknadId={soknadId}
+                                            hideAlreadyUploaded
+                                            label={t("begrunnelse.kort.behov.dokumentasjon.utgifterTittel")}
+                                            description={
+                                                <BodyShort>
+                                                    {t("begrunnelse.kort.behov.dokumentasjon.utgifterBeskrivelse")}
+                                                </BodyShort>
+                                            }
+                                        />
+                                    </DocumentProvider>
+                                </Box>
                             ) : (
                                 <FileUploadBox
                                     sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
@@ -145,7 +153,7 @@ const Behov = () => {
                                     liste="begrunnelse.kort.behov.dokumentasjon.liste"
                                 />
                             )}
-                        </>
+                        </VStack>
                     )}
                     <SkjemaStegButtons onPrevious={async () => navigate("../1")} onNext={async () => goto(3)} />
                 </SkjemaStegBlock>

@@ -1,15 +1,12 @@
 import React, {ChangeEvent} from "react";
 import {Alert, BodyShort, Button, Heading, Loader} from "@navikt/ds-react";
 import {FaroErrorBoundary} from "@grafana/faro-react";
-import {PdfConversionError, UploadError} from "../../../sider/08-vedlegg/upload/UploadError";
+import {PdfConversionError, UploadError} from "../../upload/UploadError";
 import {Trans, useTranslation} from "react-i18next";
 import {usePDFConverter} from "../../hooks/dokumentasjon/usePDFConverter";
 import {PlusIcon} from "@navikt/aksel-icons";
-import {ForhandsvisningVedleggModal} from "../../../sider/08-vedlegg/upload/ForhandsvisningVedleggModal";
-import {
-    SUPPORTED_WITH_CONVERSION,
-    SUPPORTED_WITHOUT_CONVERSION,
-} from "../../../sider/08-vedlegg/upload/DokumentUploader";
+import {ForhandsvisningVedleggModal} from "../../upload/ForhandsvisningVedleggModal";
+import {SUPPORTED_WITH_CONVERSION, SUPPORTED_WITHOUT_CONVERSION} from "../../upload/DokumentUploader";
 import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
 import {UploadedFileBox} from "./UploadedFileBox.tsx";
 import {DokumentasjonDtoType} from "../../../generated/new/model";

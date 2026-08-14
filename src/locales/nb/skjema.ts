@@ -187,6 +187,9 @@ export const skjema = {
                     beskrivelse: "Her kan du laste opp dokumentasjon knyttet til utgiftene dine.<br />Forslag:",
                     liste: ["Husleiefaktura", "Boutgifter", "Strømfaktura", "Annet"],
                     bunntekst: "Du kan ta bilder og skjermbilder.",
+                    utgifterTittel: "Dokumentasjon - utgifter",
+                    utgifterBeskrivelse:
+                        "Her kan du laste opp dokumentasjon knyttet til utgiftene dine. Det kan for eksempel være husleiefaktura, boutgifter eller strømfaktura.",
                 },
                 oppsummeringstittel: "Ditt behov",
             },
@@ -1493,6 +1496,9 @@ export const skjema = {
                 title: "Dokumentasjon",
                 description: "Her kan du laste opp dokumentasjon du tenker er viktig for søknaden din.<br/> Forslag:",
                 liste: ["Saldo", "Lønnslipp", "Introduksjonsstønad", "Annet inntekt"],
+                inntekterTittel: "Dokumentasjon - inntekter",
+                inntekterBeskrivelse:
+                    "Hvis du har inntekter, som for eksempel lønnslipp, barnebidrag eller introduksjonsstønad, kan du laste opp dokumentasjon av det her.",
             },
             endring: {
                 description: "For eksempel inntekter, utgifter, familiesituasjon eller bosituasjon.",

@@ -117,24 +117,6 @@
         "neste": "Neste side",
         "forrige": "Førre side"
     },
-    "NewDokumenter": {
-        "label": "Last opp filer",
-        "dragAndDrop": "Dra og slepp filer her",
-        "eller": "eller",
-        "button": "Vel filer",
-        "uploading": "Lastar opp...",
-        "delete": "Fjern fila",
-        "valgteFiler": "Valde filer ({antall_filer})",
-        "filSlettet": "{count, plural, =0 {Fil sletta. Ingen filer att.} one {Fil sletta. # fil att.} other {Fil sletta. # filer att.}}",
-        "filLagtTil": "{count, plural, one {# fil vart lagt til lista.} other {# filer vart lagt til lista.}}",
-        "konvertert": "Ein eller fleire filer vart endra til eit anna format (PDF) slik at det kan sendast inn.",
-        "processingWarning": "Opplasting kan ta litt tid. Opplastinga vert avbroten automatisk etter 3 minutt.",
-        "submissionError": {
-            "TOO_MANY_FILES": "Du har valt for mange filer. Maks tal på filer er 30.",
-            "TOTAL_SIZE_TOO_LARGE": "Filene er for store (maks 150 MB), fjern filer og prøv igjen."
-        },
-        "mappeIkkeTillatt": "Mapper kan ikkje lastast opp. Vel enkeltfiler i staden."
-    },
     "FileUploadItem": {
         "uploadFailed": "Opplasting feila. Prøv på nytt seinare.",
         "validation": {
@@ -147,5 +129,28 @@
         },
         "seOver": "Endra til PDF",
         "slett": "Slett fil"
+    },
+    "VedleggUpload": {
+        "dragAndDrop": "Dra og slepp filer her",
+        "eller": "eller",
+        "button": "Vel filer",
+        "uploading": "Lastar opp...",
+        "delete": "Fjern fila",
+        "filLagtTil": "{count, plural, one {# fil vart lagt til lista.} other {# filer vart lagt til lista.}}",
+        "mappeIkkeTillatt": "Mapper kan ikkje lastast opp. Vel enkeltfiler i staden."
+    },
+    "VedleggUploadTrigger": {
+        "button": "Vel filer"
+    },
+    "UploadedFileList": {
+        "valgteFiler": "Valde filer ({antall_filer})"
+    },
+    "UploadStatusMessages": {
+        "konvertert": "Ein eller fleire filer vart endra til eit anna format (PDF) slik at det kan sendast inn.",
+        "processingWarning": "Opplasting kan ta litt tid. Opplastinga vert avbroten automatisk etter 3 minutt.",
+        "submissionError": {
+            "TOO_MANY_FILES": "Du har valt for mange filer. Maks tal på filer er 30.",
+            "TOTAL_SIZE_TOO_LARGE": "Filene er for store (maks 150 MB), fjern filer og prøv igjen."
+        }
     }
 }

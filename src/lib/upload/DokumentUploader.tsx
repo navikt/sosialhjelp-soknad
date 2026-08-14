@@ -1,12 +1,12 @@
 import * as React from "react";
 import {Button, Loader} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import {ForhandsvisningVedleggModal} from "./ForhandsvisningVedleggModal";
+import {ForhandsvisningVedleggModal} from "./ForhandsvisningVedleggModal.tsx";
 import {PlusIcon} from "@navikt/aksel-icons";
-import {PdfConversionError} from "./UploadError";
-import {usePDFConverter} from "../../../lib/hooks/dokumentasjon/usePDFConverter";
-import {useDokumentasjonTekster} from "../../../lib/hooks/dokumentasjon/useDokumentasjonTekster";
-import {DokumentasjonDtoType} from "../../../generated/new/model";
+import {PdfConversionError} from "./UploadError.tsx";
+import {usePDFConverter} from "../hooks/dokumentasjon/usePDFConverter.ts";
+import {useDokumentasjonTekster} from "../hooks/dokumentasjon/useDokumentasjonTekster.ts";
+import {DokumentasjonDtoType} from "../../generated/new/model";
 
 export const SUPPORTED_WITHOUT_CONVERSION = ["image/jpeg", "image/png", "application/pdf"];
 export const SUPPORTED_WITH_CONVERSION = [
