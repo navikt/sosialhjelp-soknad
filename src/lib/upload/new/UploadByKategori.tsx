@@ -18,12 +18,6 @@ interface Props {
     description?: React.ReactNode;
 }
 
-/**
- * Opplasting av dokumentasjon i standard søknad.
- *
- * Ledeteksten hentes fra dokumentasjonstekstene for kategorien.
- * For kort søknad, se `KortDokumenter`.
- */
 export const UploadByKategori = (props: Props) => {
     const {dokumentBeskrivelse} = useDokumentasjonTekster(props.kategori);
     const label = props.label ?? dokumentBeskrivelse;

@@ -1,7 +1,7 @@
 import React from "react";
 import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {ApplicationSpinner} from "../../../lib/components/animasjoner/ApplicationSpinner";
-import {Alert, BodyShort, VStack} from "@navikt/ds-react";
+import {Alert, BodyShort, Box, VStack} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox";
 import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
@@ -130,20 +130,22 @@ const Behov = () => {
                                 />
                             )}
                             {newUploadEnabled ? (
-                                <DocumentProvider contextId={contextId}>
-                                    <UploadByKategori
-                                        contextId={contextId}
-                                        kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
-                                        soknadId={soknadId}
-                                        hideAlreadyUploaded
-                                        label={t("begrunnelse.kort.behov.dokumentasjon.utgifterTittel")}
-                                        description={
-                                            <BodyShort>
-                                                {t("begrunnelse.kort.behov.dokumentasjon.utgifterBeskrivelse")}
-                                            </BodyShort>
-                                        }
-                                    />
-                                </DocumentProvider>
+                                <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
+                                    <DocumentProvider contextId={contextId}>
+                                        <UploadByKategori
+                                            contextId={contextId}
+                                            kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
+                                            soknadId={soknadId}
+                                            hideAlreadyUploaded
+                                            label={t("begrunnelse.kort.behov.dokumentasjon.utgifterTittel")}
+                                            description={
+                                                <BodyShort>
+                                                    {t("begrunnelse.kort.behov.dokumentasjon.utgifterBeskrivelse")}
+                                                </BodyShort>
+                                            }
+                                        />
+                                    </DocumentProvider>
+                                </Box>
                             ) : (
                                 <FileUploadBox
                                     sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}

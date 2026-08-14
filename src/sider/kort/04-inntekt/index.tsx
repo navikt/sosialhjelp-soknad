@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {useTranslation} from "react-i18next";
-import {BodyShort, VStack} from "@navikt/ds-react";
+import {BodyShort, Box, VStack} from "@navikt/ds-react";
 import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
 import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
@@ -68,18 +68,20 @@ const Inntekt = () => {
                     <NavYtelser />
                     <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
                     {newUploadEnabled ? (
-                        <DocumentProvider contextId={contextId}>
-                            <UploadByKategori
-                                contextId={contextId}
-                                kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
-                                soknadId={soknadId}
-                                hideAlreadyUploaded
-                                label={t("situasjon.kort.dokumentasjon.inntekterTittel")}
-                                description={
-                                    <BodyShort>{t("situasjon.kort.dokumentasjon.inntekterBeskrivelse")}</BodyShort>
-                                }
-                            />
-                        </DocumentProvider>
+                        <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
+                            <DocumentProvider contextId={contextId}>
+                                <UploadByKategori
+                                    contextId={contextId}
+                                    kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
+                                    soknadId={soknadId}
+                                    hideAlreadyUploaded
+                                    label={t("situasjon.kort.dokumentasjon.inntekterTittel")}
+                                    description={
+                                        <BodyShort>{t("situasjon.kort.dokumentasjon.inntekterBeskrivelse")}</BodyShort>
+                                    }
+                                />
+                            </DocumentProvider>
+                        </Box>
                     ) : (
                         <FileUploadBox
                             sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
