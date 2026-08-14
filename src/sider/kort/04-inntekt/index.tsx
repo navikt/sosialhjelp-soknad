@@ -65,7 +65,7 @@ const Inntekt = () => {
                     <SkjemaStegTitle title={t(KortSkjemaHeadings[4].tittel)} icon={KortSkjemaHeadings[4].ikon} />
                     <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
                     <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
-                    <NavYtelser />
+                    <NavYtelser isKortSoknad />
                     <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
                     {newUploadEnabled ? (
                         <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
@@ -79,6 +79,7 @@ const Inntekt = () => {
                                     description={
                                         <BodyShort>{t("situasjon.kort.dokumentasjon.inntekterBeskrivelse")}</BodyShort>
                                     }
+                                    fileListHeadingLevel={"3"}
                                 />
                             </DocumentProvider>
                         </Box>

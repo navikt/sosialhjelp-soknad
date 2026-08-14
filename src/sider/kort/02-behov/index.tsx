@@ -143,6 +143,7 @@ const Behov = () => {
                                                     {t("begrunnelse.kort.behov.dokumentasjon.utgifterBeskrivelse")}
                                                 </BodyShort>
                                             }
+                                            fileListHeadingLevel={"3"}
                                         />
                                     </DocumentProvider>
                                 </Box>
