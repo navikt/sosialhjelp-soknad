@@ -16,6 +16,7 @@ interface Props {
      */
     label?: string;
     description?: React.ReactNode;
+    fileListHeadingLevel: "2" | "3" | "4" | "5" | "6";
 }
 
 export const UploadByKategori = (props: Props) => {

@@ -11,6 +11,7 @@ interface UploadedFileListProps {
     validations: ValidationCode[];
     converted: boolean;
     showSlowProcessingWarning: boolean;
+    headingLevel: "2" | "3" | "4" | "5" | "6";
     onRemove: (correlationId: string) => void;
 }
 
@@ -19,13 +20,14 @@ export const UploadedFileList = ({
     validations,
     converted,
     showSlowProcessingWarning,
+    headingLevel,
     onRemove,
 }: UploadedFileListProps) => {
     const t = useTranslations("UploadedFileList");
 
     return (
         <VStack gap="space-8">
-            <Heading size="xsmall" level="3">
+            <Heading size="xsmall" level={headingLevel}>
                 {t("valgteFiler", {antall_filer: uploads.length})}
             </Heading>
             <UploadStatusMessages

@@ -33,6 +33,7 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
                         contextId={contextId}
                         soknadId={soknadId}
                         kategori={opplysningstype}
+                        fileListHeadingLevel={"5"}
                     />
                 </DocumentProvider>
             ) : (

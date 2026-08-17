@@ -21,6 +21,7 @@ export interface DokumenterUploadProps {
     contextId: string;
     label: string;
     description?: React.ReactNode;
+    fileListHeadingLevel: "2" | "3" | "4" | "5" | "6";
 }
 
 export const VedleggUpload = ({
@@ -32,6 +33,7 @@ export const VedleggUpload = ({
     contextId,
     label,
     description,
+    fileListHeadingLevel,
 }: DokumenterUploadProps) => {
     const t = useTranslations("VedleggUpload");
     const isMobile = useMediaQuery("(max-width: 768px)");
@@ -90,6 +92,7 @@ export const VedleggUpload = ({
                         converted={converted}
                         showSlowProcessingWarning={showSlowProcessingWarning}
                         onRemove={onRemove}
+                        headingLevel={fileListHeadingLevel}
                     />
                 )}
                 {!hideAlreadyUploaded && (
