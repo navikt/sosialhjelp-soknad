@@ -8,7 +8,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "150M"
 spec:
-  image: europe-north1-docker.pkg.dev/nais-io/nais/images/wonderwall:2026-07-28-130111-aa74b67
+  image: europe-north1-docker.pkg.dev/nais-io/nais/images/wonderwall:2026-08-14-123343-d0fccc8
   port: 8080
   ingresses:
     - "https://www.ekstern.dev.nav.no/sosialhjelp/soknad"
