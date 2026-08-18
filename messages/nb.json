@@ -143,7 +143,7 @@
         "button": "Velg filer"
     },
     "UploadedFileList": {
-        "valgteFiler": "Valgte filer ({antall_filer})"
+        "valgteFiler": "Vedlegg ({antall_filer})"
     },
     "UploadStatusMessages": {
         "konvertert": "En eller flere filer ble endret til et annet format (PDF) slik at det kan sendes inn.",
