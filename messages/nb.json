@@ -128,7 +128,9 @@
             "POSSIBLY_INFECTED": "Filen kan være virusinfisert"
         },
         "seOver": "Endret til PDF",
-        "slett": "Slett fil"
+        "slett": "Slett fil",
+        "lasterOpp": "Laster opp...",
+        "cancel": "Avbryt"
     },
     "VedleggUpload": {
         "dragAndDrop": "Dra og slipp filer her",

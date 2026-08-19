@@ -98,7 +98,7 @@ export const VedleggUpload = ({
                 {!hideAlreadyUploaded && (
                     <AlreadyUploadedCheckbox
                         opplysningstype={kategori}
-                        disabled={!!uploads.length || !!hasPendingOrProcessing}
+                        disabled={!!uploads.length || hasPendingOrProcessing}
                         alleredeLevert={alleredeLevert}
                         updateAlleredeLevert={updateAlleredeLevert}
                     />

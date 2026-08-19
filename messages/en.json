@@ -128,7 +128,9 @@
             "POSSIBLY_INFECTED": "The file may be infected with a virus"
         },
         "seOver": "Changed to PDF",
-        "slett": "Delete file"
+        "slett": "Delete file",
+        "lasterOpp": "Uploading...",
+        "cancel": "Cancel"
     },
     "VedleggUpload": {
         "dragAndDrop": "Drag and drop files here",
