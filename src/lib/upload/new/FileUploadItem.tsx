@@ -1,5 +1,5 @@
-import {InformationSquareFillIcon, TrashIcon} from "@navikt/aksel-icons";
-import {BodyShort, Button, FileUpload, HStack} from "@navikt/ds-react";
+import {InformationSquareFillIcon, TrashIcon, XMarkIcon} from "@navikt/aksel-icons";
+import {BodyShort, Button, FileUpload, HStack, Loader} from "@navikt/ds-react";
 import {useMutation} from "@tanstack/react-query";
 import {useTranslations} from "next-intl";
 import {Upload} from "tus-js-client";
@@ -16,6 +16,7 @@ interface Props {
     size?: number;
     showCancelButton?: boolean;
     onTerminate?: () => void;
+    deleteDisabled?: boolean;
 }
 
 const SeOverDescription = () => {
@@ -42,7 +43,7 @@ const FileUploadItem = ({
     const t = useTranslations("FileUploadItem");
     const {mutate, isPending} = useMutation({
         mutationFn: () => Upload.terminate(`${digisosConfig.uploadBaseURL}/tus/files/${uploadId}`, {}),
-        onSuccess: () => onTerminate?.(),
+        onSettled: () => onTerminate?.(),
         retry: false,
     });
     const isConverted = !!convertedFilename && convertedFilename !== originalFilename;
@@ -54,17 +55,20 @@ const FileUploadItem = ({
             as="li"
             status={uploadStatus}
             button={
-                <Button
-                    variant="tertiary"
-                    data-color="neutral"
-                    icon={<TrashIcon title={t("slett")} />}
-                    onClick={() => mutate()}
-                    loading={isPending}
-                />
+                <HStack align="center" gap="space-4" flexShrink="0">
+                    {showCancelButton && <Loader />}
+                    <Button
+                        variant="tertiary"
+                        data-color="neutral"
+                        icon={showCancelButton ? <XMarkIcon title={t("cancel")} /> : <TrashIcon title={t("slett")} />}
+                        onClick={() => mutate()}
+                        loading={isPending}
+                    />
+                </HStack>
             }
             onFileClick={url ? () => window.open(url, "_blank", "noopener,noreferrer") : undefined}
             /* @ts-expect-error Funker fint med ReactNode */
-            description={isConverted ? <SeOverDescription /> : undefined}
+            description={isConverted ? <SeOverDescription /> : showCancelButton ? t("lasterOpp") : undefined}
             error={
                 validations?.length
                     ? t(`validation.${validations[0]}`)
