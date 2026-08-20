@@ -15,6 +15,16 @@ interface UploadedFileListProps {
     onRemove: (correlationId: string) => void;
 }
 
+const createUrl = (upload: UploadState) => {
+    if (!upload.url) {
+        return undefined;
+    }
+    if (upload.url.startsWith("http")) {
+        return upload.url;
+    }
+    return `${digisosConfig.uploadBaseURL}/${upload.url}`;
+};
+
 export const UploadedFileList = ({
     uploads,
     validations,
@@ -39,7 +49,7 @@ export const UploadedFileList = ({
                 {uploads.map((upload) => (
                     <FileUploadItem
                         key={upload.id}
-                        url={upload.url ? `${digisosConfig.uploadBaseURL}/${upload.url}` : undefined}
+                        url={createUrl(upload)}
                         uploadId={upload.id}
                         convertedFilename={upload.finalFilename}
                         originalFilename={upload.originalFilename}
