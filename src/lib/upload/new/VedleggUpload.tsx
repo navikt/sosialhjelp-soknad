@@ -72,7 +72,7 @@ export const VedleggUpload = ({
                         description={description}
                         accept={ALLOWED_FILE_TYPES}
                         disabled={alleredeLevert}
-                        fileLimit={{max: MAX_FILES, current: uploads.length}}
+                        fileLimit={{max: MAX_FILES, current: uploads.length + documents.length}}
                         maxSizeInBytes={MAX_SIZE_MB}
                         onSelect={onSelect}
                     />
@@ -113,7 +113,7 @@ export const VedleggUpload = ({
                 {!hideAlreadyUploaded && (
                     <AlreadyUploadedCheckbox
                         opplysningstype={kategori}
-                        disabled={!!uploads.length || hasPendingOrProcessing}
+                        disabled={!!uploads.length || !!documents.length || hasPendingOrProcessing}
                         alleredeLevert={alleredeLevert}
                         updateAlleredeLevert={updateAlleredeLevert}
                     />
