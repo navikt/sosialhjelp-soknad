@@ -11,6 +11,9 @@ import {DokumentasjonDtoType} from "../../../generated/new/model";
 import useAlleredeLevert from "../../hooks/dokumentasjon/useAlleredeLevert.ts";
 import {AlreadyUploadedCheckbox} from "../AlreadyUploadedCheckbox.tsx";
 import {useVedleggUpload} from "./useVedleggUpload.ts";
+import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg.ts";
+import {UploadState} from "./openEventChannel.ts";
+import digisosConfig from "../../config.ts";
 
 export interface DokumenterUploadProps {
     className?: string;
@@ -39,6 +42,8 @@ export const VedleggUpload = ({
     const isMobile = useMediaQuery("(max-width: 768px)");
     const {uploads, validations, filesAdded, folderDropError, onSelect, onRemove, hasPendingOrProcessing, converted} =
         useVedleggUpload({contextId, soknadId, kategori});
+    // TODO: For overgang til tus-flyt. Kan slettes 2 uker etter lansering
+    const {documents} = useVedlegg(kategori);
     const {updateAlleredeLevert, alleredeLevert} = useAlleredeLevert(kategori);
     const showSlowProcessingWarning = useSlowProcessingWarning(hasPendingOrProcessing);
 
@@ -67,7 +72,7 @@ export const VedleggUpload = ({
                         description={description}
                         accept={ALLOWED_FILE_TYPES}
                         disabled={alleredeLevert}
-                        fileLimit={{max: MAX_FILES, current: uploads.length}}
+                        fileLimit={{max: MAX_FILES, current: uploads.length + documents.length}}
                         maxSizeInBytes={MAX_SIZE_MB}
                         onSelect={onSelect}
                     />
@@ -85,9 +90,19 @@ export const VedleggUpload = ({
                         {t("mappeIkkeTillatt")}
                     </InlineStatusMessage>
                 )}
-                {uploads.length > 0 && (
+                {uploads.length + documents.length > 0 && (
                     <UploadedFileList
-                        uploads={uploads}
+                        uploads={[
+                            ...documents.map((dokument) => {
+                                return {
+                                    id: dokument.dokumentId,
+                                    originalFilename: dokument.filnavn,
+                                    status: "COMPLETE",
+                                    url: digisosConfig.baseURL + `/dokument/${soknadId}/${dokument.dokumentId}`,
+                                } satisfies UploadState;
+                            }),
+                            ...uploads,
+                        ]}
                         validations={validations}
                         converted={converted}
                         showSlowProcessingWarning={showSlowProcessingWarning}
@@ -98,7 +113,7 @@ export const VedleggUpload = ({
                 {!hideAlreadyUploaded && (
                     <AlreadyUploadedCheckbox
                         opplysningstype={kategori}
-                        disabled={!!uploads.length || hasPendingOrProcessing}
+                        disabled={!!uploads.length || !!documents.length || hasPendingOrProcessing}
                         alleredeLevert={alleredeLevert}
                         updateAlleredeLevert={updateAlleredeLevert}
                     />
