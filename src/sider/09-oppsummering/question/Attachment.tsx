@@ -13,7 +13,7 @@ export const Attachment = ({felter}: {felter?: Felt[]}) => {
             {felter.map(({vedlegg}) =>
                 vedlegg?.map(({filnavn, uuid}) => (
                     <li key={uuid}>
-                        <Link href={`${digisosConfig.baseURL}/dokument/${soknadId}/${uuid}`}>{filnavn}</Link>
+                        <Link href={`${digisosConfig.baseURL}dokument/${soknadId}/${uuid}`}>{filnavn}</Link>
                     </li>
                 ))
             )}
