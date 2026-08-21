@@ -145,7 +145,7 @@
         "button": "Choose files"
     },
     "UploadedFileList": {
-        "valgteFiler": "Selected files ({antall_filer})"
+        "valgteFiler": "Attachments ({antall_filer})"
     },
     "UploadStatusMessages": {
         "konvertert": "One or more files were changed to another format (PDF) so that it can be submitted.",

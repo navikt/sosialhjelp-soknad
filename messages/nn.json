@@ -145,7 +145,7 @@
         "button": "Vel filer"
     },
     "UploadedFileList": {
-        "valgteFiler": "Valde filer ({antall_filer})"
+        "valgteFiler": "Vedlegg ({antall_filer})"
     },
     "UploadStatusMessages": {
         "konvertert": "Ein eller fleire filer vart endra til eit anna format (PDF) slik at det kan sendast inn.",
