@@ -12,8 +12,13 @@ const withNextIntl = createNextIntlPlugin({
 });
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: "standalone",
+    assetPrefix: process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_ASSET_PREFIX : undefined,
+    reactStrictMode: true,
     basePath: process.env.NEXT_PUBLIC_BASE_PATH ?? "/sosialhjelp/soknad",
+    serverExternalPackages: ["@navikt/next-logger", "next-logger", "pino"],
     experimental: {
+        turbopackServerFastRefresh: false,
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
     },
 };

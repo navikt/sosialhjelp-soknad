@@ -1,5 +1,4 @@
-import {defineConfig} from "orval";
-import {pascal} from "@orval/core";
+import {defineConfig, pascal} from "orval";
 
 export default defineConfig({
     "soknad-api-client-old": {
@@ -9,6 +8,7 @@ export default defineConfig({
             target: "src/generated",
             schemas: "src/generated/model",
             client: "react-query",
+            httpClient: "axios",
             override: {
                 mutator: {
                     path: "./src/lib/api/axiosInstance.ts",
@@ -50,6 +50,7 @@ export default defineConfig({
             target: "src/generated/new",
             schemas: "src/generated/new/model",
             client: "react-query",
+            httpClient: "axios",
             override: {
                 mutator: {
                     path: "./src/lib/api/axiosInstance.ts",

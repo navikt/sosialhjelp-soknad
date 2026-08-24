@@ -5,7 +5,15 @@ import {
     useGetArbeid,
     useUpdateKommentarArbeidsforhold,
 } from "../../../generated/new/arbeid-controller/arbeid-controller.ts";
-import {ArbeidDto, ArbeidInput, UpdateUtdanningBody, UtdanningDto} from "../../../generated/new/model/index.ts";
+import {
+    ArbeidDto,
+    ArbeidInput,
+    IkkeStudentInput,
+    StudentgradInput,
+    UtdanningDto,
+} from "../../../generated/new/model/index.ts";
+
+type UpdateUtdanningBody = IkkeStudentInput | StudentgradInput;
 
 export const useArbeidOgUtdanning = () => {
     const soknadId = useSoknadId();

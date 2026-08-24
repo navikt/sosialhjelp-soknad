@@ -1,10 +1,10 @@
 "use client";
 
-import {Attachment} from "@navikt/ds-icons";
+import {PaperclipIcon} from "@navikt/aksel-icons";
 import {BodyShort, ExpansionCard, Heading} from "@navikt/ds-react";
 import React, {ReactNode} from "react";
 import digisosConfig from "../../lib/config.ts";
-import {EXPANSION_CARD_BORDER_STYLE_HACK, HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
+import {HovedmenyCardHeader} from "./HovedmenyCardHeader.tsx";
 import {useTranslations} from "next-intl";
 
 export const EttersendDokuPanel = () => {
@@ -13,8 +13,8 @@ export const EttersendDokuPanel = () => {
     const lenke = (chunks: ReactNode) => <a href={digisosConfig.innsynURL}>{chunks}</a>;
 
     return (
-        <ExpansionCard style={EXPANSION_CARD_BORDER_STYLE_HACK} aria-labelledby={"ettersend-heading"}>
-            <HovedmenyCardHeader icon={<Attachment className={"w-6 h-6"} />}>
+        <ExpansionCard aria-labelledby={"ettersend-heading"}>
+            <HovedmenyCardHeader icon={<PaperclipIcon className={"w-6 h-6"} />}>
                 <Heading level={"2"} size={"small"} id={"ettersend-heading"}>
                     {t("title")}
                 </Heading>

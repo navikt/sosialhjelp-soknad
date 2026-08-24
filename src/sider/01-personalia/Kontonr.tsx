@@ -22,7 +22,10 @@ export const Kontonr = () => {
                 </div>
             ) : (
                 <KontonrEdit
-                    defaultValues={kontoinformasjon}
+                    defaultValues={{
+                        harIkkeKonto: kontoinformasjon.harIkkeKonto ?? undefined,
+                        kontonummerBruker: kontoinformasjon.kontonummerBruker ?? undefined,
+                    }}
                     onCancel={() => setEditMode(false)}
                     onSave={(data) =>
                         startTransition(() => {

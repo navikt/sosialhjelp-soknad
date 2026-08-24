@@ -1,7 +1,7 @@
 import {Skatteetaten} from "./Skatteetaten";
 import {useTranslation} from "react-i18next";
 import {useSkatteetatenData} from "../../../lib/hooks/data/useSkatteetatenData";
-import {YesNoInput} from "../../../lib/components/form/YesNoInput";
+import YesNoInput from "../../../lib/components/form/YesNoInput";
 import * as React from "react";
 import {UnderskjemaArrow} from "./UnderskjemaArrow";
 import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlaceholder.tsx";
@@ -34,7 +34,7 @@ export const SkattbarInntekt = ({legend}: Props) => {
             {samtykke && (
                 <div>
                     <UnderskjemaArrow />
-                    <div className={"bg-lightblue-50 border-l-[var(--a-surface-info)] rounded-md"}>
+                    <div className={"bg-ax-bg-info-moderate border-l-ax-bg-info-strong rounded-md"}>
                         <Skatteetaten />
                     </div>
                 </div>

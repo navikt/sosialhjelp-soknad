@@ -27,7 +27,7 @@ export const EktefellePersonaliaSystem = () => {
                     </SysteminfoItem>
                 )}
                 <SysteminfoItem as="div" label={t(`system.familie.sivilstatus.gift.ektefelle.folkereg`)}>
-                    <LocalizedYesNo value={ektefelle?.folkeregistrertMedEktefelle} />
+                    <LocalizedYesNo value={ektefelle?.folkeregistrertMedEktefelle ?? undefined} />
                 </SysteminfoItem>
                 <BodyShort className={"pt-3"}>{t("system.familie.sivilstatus.stringValue")}</BodyShort>
             </>

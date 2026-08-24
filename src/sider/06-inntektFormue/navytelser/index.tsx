@@ -12,8 +12,11 @@ const useNavYtelser = () => {
 
     return {systeminntekter: data?.utbetalinger, isError: data?.fetchUtbetalingerFeilet || isError, isLoading};
 };
+interface Props {
+    isKortSoknad?: boolean;
+}
 
-export const NavYtelser = () => {
+export const NavYtelser = ({isKortSoknad = false}: Props) => {
     const t = useTranslations("NavYtelser");
     const {systeminntekter, isError, isLoading} = useNavYtelser();
 
@@ -22,13 +25,13 @@ export const NavYtelser = () => {
 
     return (
         <div className={"space-y-4"}>
-            <Heading size="medium" level="2" spacing>
+            <Heading size={isKortSoknad ? "small" : "medium"} level={isKortSoknad ? "3" : "2"} spacing>
                 {t("heading")}
             </Heading>
             {!systeminntekter?.length ? (
                 <BodyShort>{t("empty")}</BodyShort>
             ) : (
-                <div className={"bg-lightblue-50 border-l-[var(--a-surface-info)] p-4 space-y-4 rounded-md"}>
+                <div className={"bg-ax-bg-info-moderate border-l-ax-bg-info-strong p-4 space-y-4 rounded-md"}>
                     <NavYtelserTable navUtbetalinger={systeminntekter} />
                 </div>
             )}

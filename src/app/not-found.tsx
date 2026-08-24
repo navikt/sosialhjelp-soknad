@@ -5,10 +5,12 @@ import * as React from "react";
 import {ClientSideProvider} from "../lib/components/error/ClientSideProvider.tsx";
 import {ErrorPage} from "../lib/components/error/ErrorPage.tsx";
 
-export default () => (
+const NotFound = () => (
     <ClientSideProvider>
         <ErrorPage error={new Error("404")}>
             <IkkeFunnet />
         </ErrorPage>
     </ClientSideProvider>
 );
+
+export default NotFound;

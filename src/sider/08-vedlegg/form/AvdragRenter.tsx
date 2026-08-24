@@ -20,7 +20,9 @@ const AvdragRenter = ({
         shouldFocusError: false,
         resolver: zodResolver(AvdragRenterFormSchema),
         defaultValues: {
-            avdragRenter: !opplysning.length ? [{}] : opplysning.map(({avdrag, renter}) => ({avdrag, renter})),
+            avdragRenter: !opplysning.length
+                ? [{}]
+                : opplysning.map(({avdrag, renter}) => ({avdrag: avdrag ?? undefined, renter: renter ?? undefined})),
         },
     });
 

@@ -4,7 +4,13 @@ import {
     useGetBarneutgifter,
     useUpdateBarneutgifter,
 } from "../../../generated/new/barneutgift-controller/barneutgift-controller.ts";
-import {BarneutgifterDto, type HarBarneutgifterInput, UpdateBarneutgifterBody} from "../../../generated/new/model";
+import {
+    BarneutgifterDto,
+    type HarBarneutgifterInput,
+    type HarIkkeBarneutgifterInput,
+} from "../../../generated/new/model";
+
+type UpdateBarneutgifterBody = HarBarneutgifterInput | HarIkkeBarneutgifterInput;
 
 const mapToDto = (variables: UpdateBarneutgifterBody | undefined): Partial<BarneutgifterDto> | undefined => {
     if (!variables) return;

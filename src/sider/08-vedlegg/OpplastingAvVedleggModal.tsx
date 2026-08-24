@@ -1,22 +1,27 @@
-import React from "react";
+import React, {forwardRef, Ref} from "react";
 import {BodyLong, Modal, Heading} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 
-export const OpplastingAvVedleggModal = ({open, onClose}: {open: boolean; onClose: () => void}) => {
-    const {t} = useTranslation("skjema");
+interface Props {
+    onClose: () => void;
+}
 
+const OpplastingAvVedleggModal = ({onClose}: Props, ref: Ref<HTMLDialogElement>) => {
+    const {t} = useTranslation("skjema");
     return (
         <Modal
             className={"max-w-[600px] py-8 px-4"}
-            open={open}
+            ref={ref}
+            closeOnBackdropClick
             onClose={onClose}
             aria-label={t("opplysninger.informasjon.modal.overskrift")}
         >
-            <Modal.Body>
+            <Modal.Header>
                 <Heading level="1" size="medium" spacing>
                     {t("opplysninger.informasjon.modal.overskrift")}
                 </Heading>
-
+            </Modal.Header>
+            <Modal.Body>
                 <Heading level="2" size="small" spacing>
                     {t("opplysninger.informasjon.modal.bolk1.tittel")}
                 </Heading>
@@ -39,3 +44,5 @@ export const OpplastingAvVedleggModal = ({open, onClose}: {open: boolean; onClos
         </Modal>
     );
 };
+
+export default forwardRef(OpplastingAvVedleggModal);

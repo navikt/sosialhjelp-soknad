@@ -1,7 +1,7 @@
 # Denne filen vil erstatte build_prod, build_deploy_mock, etc.
 
 name: "Build and deploy to dev-gcp"
-run-name: "Deploy '${{ github.ref_name }}' to '${{ github.event.inputs.environment }}' (preprod on push to main)"
+run-name: "Deploy '${{ github.ref_name }}' to '${{ inputs.environment }}' (preprod on push to main)"
 
 on:
   workflow_dispatch:
@@ -20,7 +20,15 @@ on:
     branches:
       - "main"
 
+permissions:
+  contents: read
+  id-token: write
+  packages: write
+
 jobs:
+  playwright-tests:
+    name: Playwright Tests
+    uses: ./.github/workflows/playwright-tests.yml
   prepare:
     runs-on: ubuntu-latest
     outputs:
@@ -29,7 +37,7 @@ jobs:
       - name: Filter matrix
         id: filter_matrix
         run: |
-          if [[ "${{ github.ref_name }}" == "main" ]]; then
+          if [[ "${{ github.event_name }}" == "push" ]]; then
             echo '{"include": [{"environment": "preprod"}]}' > matrix.json
           elif [[ "${{ github.event.inputs.environment }}" == "alle" ]]; then
             echo '{"include": [{"environment": "preprod"}, {"environment": "mock"}, {"environment": "dev"}]}' > matrix.json
@@ -42,13 +50,27 @@ jobs:
     strategy:
       matrix: ${{fromJson(needs.prepare.outputs.matrix)}}
     runs-on: ubuntu-latest
-    needs: prepare
-    permissions:
-      contents: read
-      id-token: write
-
+    needs: [ prepare, playwright-tests ]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
+
+      - name: "Build npm project"
+        uses: navikt/sosialhjelp-ci/actions/build-node@v21
+        with:
+          node-version: 24
+          build-less: "false"
+          run-orval: "true"
+          reader-token: ${{ secrets.READER_TOKEN }}
+          run-test: "false"
+          build-env: '{"NEXT_PUBLIC_DIGISOS_ENV": "${{ matrix.environment }}"}'
+
+      - name: "Upload static files to cdn"
+        id: upload
+        uses: nais/deploy/actions/cdn-upload/v2@master
+        with:
+          team: teamdigisos
+          source: ./.next/static
+          destination: "/sosialhjelp-soknad/_next"
 
       - name: Build and push docker image to GAR
         uses: nais/docker-build-push@v0

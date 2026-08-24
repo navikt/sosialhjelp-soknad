@@ -10,7 +10,7 @@ import {useNavigate} from "react-router";
 import {useContextFeatureToggles} from "../../lib/providers/useContextFeatureToggles.ts";
 import BegrunnelseForm from "./BegrunnelseForm.tsx";
 import KategorierForm from "./KategorierForm.tsx";
-import type {HarKategorierInputAllOfKategorierItem} from "../../generated/new-ssr/model";
+import type {HarKategorierInputKategorierItem} from "../../generated/new-ssr/model";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../app/umami.ts";
@@ -49,7 +49,7 @@ export const Begrunnelse = () => {
                             updateCategories({
                                 kategorier: formValues.categories.filter(
                                     (it) => it !== "NØDHJELP"
-                                ) as HarKategorierInputAllOfKategorierItem[],
+                                ) as HarKategorierInputKategorierItem[],
                                 annet: formValues.annet ?? "",
                             });
                         }}

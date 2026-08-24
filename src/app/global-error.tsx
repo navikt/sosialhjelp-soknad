@@ -6,7 +6,7 @@ import {TrengerDuRaskHjelp} from "../sider/feilsider/TrengerDuRaskHjelp.tsx";
 import {ErrorPage} from "../lib/components/error/ErrorPage.tsx";
 import {ClientSideProvider} from "../lib/components/error/ClientSideProvider.tsx";
 
-export default ({error, reset}: {error: Error & {digest?: string}; reset: () => void}) => (
+const GlobalError = ({error, reset}: {error: Error & {digest?: string}; reset: () => void}) => (
     <html>
         <body>
             <ClientSideProvider>
@@ -18,3 +18,5 @@ export default ({error, reset}: {error: Error & {digest?: string}; reset: () => 
         </body>
     </html>
 );
+
+export default GlobalError;

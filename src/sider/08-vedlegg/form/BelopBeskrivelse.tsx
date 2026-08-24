@@ -41,7 +41,10 @@ const BelopBeskrivelse = ({
         resolver: zodResolver(BelopBeskrivelseFormSchema),
         defaultValues: {
             belopBeskrivelse: opplysning?.length
-                ? opplysning?.map((belopDto) => ({belop: belopDto.belop, beskrivelse: belopDto.beskrivelse}))
+                ? opplysning?.map((belopDto) => ({
+                      belop: belopDto.belop ?? undefined,
+                      beskrivelse: belopDto.beskrivelse ?? undefined,
+                  }))
                 : [{}],
         },
     });

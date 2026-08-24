@@ -27,7 +27,7 @@ export const Gruppe = ({gruppeKey}: Props) => {
 
     const {forventetDokumentasjon, isLoading} = useGruppe(gruppeKey);
 
-    const sorted = forventetDokumentasjon.toSorted((a, b) => {
+    const sorted = [...forventetDokumentasjon].sort((a, b) => {
         const aKey = opplysningSpec[a.type].sortKey;
         const bKey = opplysningSpec[b.type].sortKey;
 

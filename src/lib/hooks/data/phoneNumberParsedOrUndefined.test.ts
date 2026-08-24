@@ -3,7 +3,7 @@ import {phoneNumberParsedOrUndefined} from "./phoneNumberParsedOrUndefined";
 
 vi.mock("@navikt/next-logger", () => ({
     logger: {
-        error: vi.fn(),
+        child: vi.fn().mockReturnValue(vi.mockObject({error: vi.fn()})),
     },
 }));
 
@@ -42,18 +42,20 @@ describe("phoneNumberParsedOrUndefined", () => {
     it("returns undefined for invalid number", () => {
         const result = phoneNumberParsedOrUndefined("1232345234545");
         expect(result).toBeUndefined();
-        expect(logger.error).toHaveBeenCalledWith("attempt to parse invalid phone number, returning undefined");
+        expect(logger.child({}).error).toHaveBeenCalledWith(
+            "attempt to parse invalid phone number, returning undefined"
+        );
     });
 
     it("returns undefined for gibberish input", () => {
         const result = phoneNumberParsedOrUndefined("not-a-phone-number");
         expect(result).toBeUndefined();
-        expect(logger.error).toHaveBeenCalled();
+        expect(logger.child({}).error).toHaveBeenCalled();
     });
 
     it("returns undefined for empty string", () => {
         const result = phoneNumberParsedOrUndefined("");
         expect(result).toBeUndefined();
-        expect(logger.error).not.toHaveBeenCalled(); // early return
+        expect(logger.child({}).error).not.toHaveBeenCalled(); // early return
     });
 });

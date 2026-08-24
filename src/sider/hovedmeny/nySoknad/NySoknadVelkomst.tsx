@@ -1,4 +1,4 @@
-import {BodyLong, Heading} from "@navikt/ds-react";
+import {BodyLong, Heading, Link} from "@navikt/ds-react";
 import * as React from "react";
 import StartNySoknadIllustrasjon from "../../../lib/components/svg/illustrasjoner/StartNySoknadIllustrasjon.tsx";
 import {useTranslations} from "next-intl";
@@ -18,9 +18,9 @@ export const NySoknadVelkomst = () => {
             <BodyLong className={"pb-4"}>
                 {t.rich("intro.text.p2", {
                     lenke: (chunks) => (
-                        <a href={t("intro.soknadUrl")} target="_blank" rel="noreferrer">
+                        <Link inlineText href={t("intro.soknadUrl")} target="_blank" rel="noreferrer">
                             {chunks}
-                        </a>
+                        </Link>
                     ),
                 })}
             </BodyLong>
@@ -36,9 +36,9 @@ export const NySoknadVelkomst = () => {
             <BodyLong>
                 {t.rich("innhenting.text.p2", {
                     lenke: (chunks) => (
-                        <a href={t("innhenting.persondataUrl")} target="_blank" rel="noreferrer">
+                        <Link inlineText href={t("innhenting.persondataUrl")} target="_blank" rel="noreferrer">
                             {chunks}
-                        </a>
+                        </Link>
                     ),
                 })}
             </BodyLong>

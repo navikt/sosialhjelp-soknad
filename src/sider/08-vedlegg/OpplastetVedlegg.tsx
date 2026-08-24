@@ -19,7 +19,7 @@ export const OpplastetVedlegg = ({
     const lastNedUrl = `/dokument/${soknadId}/${dokumentId}`;
 
     return (
-        <li className="mt-4 flex gap-2 justify-between bg-surface-action-subtle-hover rounded-md p-2">
+        <li className="mt-4 flex gap-2 justify-between bg-ax-bg-accent-moderate-hover rounded-md p-2">
             <BekreftSlettDokumentModal
                 open={showConfirmDelete}
                 onSelect={(shouldDelete) => {

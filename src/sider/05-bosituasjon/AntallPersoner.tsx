@@ -23,7 +23,7 @@ export const AntallPersoner = () => {
             pattern="[0-9]*"
             maxLength={2}
             htmlSize={5}
-            defaultValue={antallPersoner}
+            defaultValue={antallPersoner ?? undefined}
             onBlur={async ({target: {value}}) => {
                 try {
                     setBosituasjon({antallPersoner: validerAntallPersoner(value)});

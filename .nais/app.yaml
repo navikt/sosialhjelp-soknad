@@ -14,7 +14,8 @@ spec:
   {{#if ingresses}}
   ingresses:
     {{#each ingresses as |url|}}
-    - {{url}}{{/each}}
+    - {{url}}
+    {{/each}}
   {{/if}}
   accessPolicy:
 {{#if wonderwallInstance}}
@@ -25,14 +26,16 @@ spec:
     outbound:
       rules:
         {{#each outboundRules as |rule|}}
-        - application: {{rule}}{{/each}}
+        - application: {{rule}}
+        {{/each}}
         - application: sosialhjelp-driftsmeldinger
         - application: nav-dekoratoren
           namespace: personbruker
 {{#if outboundExternalHosts}}
       external:
         {{#each outboundExternalHosts as |url|}}
-        - host: {{url}}{{/each}}
+        - host: {{url}}
+        {{/each}}
 {{/if}}
   liveness:
     path: {{ livenessPath }}

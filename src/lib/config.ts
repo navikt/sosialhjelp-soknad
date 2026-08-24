@@ -1,4 +1,4 @@
-export const DigisosEnvironments = ["localhost", "mock", "prod", "preprod", "dev"] as const;
+export const DigisosEnvironments = ["localhost", "mock", "prod", "preprod", "dev", "e2e"] as const;
 export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 
 type FeatureFlags = {
@@ -14,9 +14,12 @@ type FeatureFlags = {
     // Dette er en testversjon som er blitt gitt en ingress på nav.no.
     // Forhindrer at siden blir indeksert, og viser en synlig advarsel.
     publicFacingTestVersion?: true;
+
+    // Kommuner som får tilgang til ny vedlegg-opplasting (TUS-upload)
+    tusUploadKommuner: string[];
 };
 
-type SoknadApiProxyOptions = {
+type ProxyOptions = {
     hostname: string;
     basePath: string; // no trailing slash
     https: boolean;
@@ -37,12 +40,14 @@ type SoknadConfig = {
 
     driftsmeldingUrl?: string;
     baseURL: string;
+    uploadBaseURL: string;
     innsynURL: string;
     minSideURL: string;
     dekoratorLoginBaseUrl: string;
 
     featureFlags: FeatureFlags;
-    proxy?: SoknadApiProxyOptions;
+    proxy?: ProxyOptions;
+    uploadProxy?: ProxyOptions;
     dekorator: DekoratorOptions;
 
     faro?: {
@@ -54,12 +59,47 @@ const isValidDigisosEnvironment = (miljo: unknown): miljo is DigisosEnvironment 
     DigisosEnvironments.includes(miljo as DigisosEnvironment);
 
 const configMap: Record<DigisosEnvironment, SoknadConfig> = {
+    e2e: {
+        featureFlags: {
+            nyOppsummering: false,
+            oppsummeringNavEnhet: false,
+            soknadstypeValg: true,
+            publicFacingTestVersion: true,
+            tusUploadKommuner: ["0301"],
+        },
+        dekorator: {
+            env: "dev",
+            serviceDiscovery: false,
+        },
+        logLocally: true,
+        showDevPanel: true,
+        withCredentials: true,
+        proxy: {
+            hostname: "localhost",
+            basePath: "/sosialhjelp/soknad-api",
+            https: false,
+            port: "8181",
+        },
+        uploadProxy: {
+            hostname: "localhost",
+            basePath: "/sosialhjelp/upload",
+            port: "3007",
+            https: false,
+        },
+        driftsmeldingUrl: "http://localhost:3005/sosialhjelp/driftsmeldinger/api",
+        baseURL: "http://localhost:3001/sosialhjelp/soknad/api/soknad-api/",
+        uploadBaseURL: "http://localhost:3001/sosialhjelp/soknad/api/upload-api",
+        innsynURL: "http://localhost:3002/sosialhjelp/innsyn",
+        minSideURL: "https://www.nav.no/minside/",
+        dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
+    },
     localhost: {
         featureFlags: {
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
             publicFacingTestVersion: true,
+            tusUploadKommuner: ["0301"],
         },
 
         dekorator: {
@@ -75,8 +115,15 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             https: false,
             port: "8181",
         },
+        uploadProxy: {
+            hostname: "localhost",
+            basePath: "/sosialhjelp/upload",
+            port: "3007",
+            https: false,
+        },
         driftsmeldingUrl: "http://localhost:3005/sosialhjelp/driftsmeldinger/api",
         baseURL: "http://localhost:3000/sosialhjelp/soknad/api/soknad-api/",
+        uploadBaseURL: "http://localhost:3000/sosialhjelp/soknad/api/upload-api",
         innsynURL: "http://localhost:3000/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
@@ -89,6 +136,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
+            tusUploadKommuner: ["0301"],
         },
         dekorator: {
             env: "dev",
@@ -99,11 +147,17 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             basePath: "/sosialhjelp/soknad-api",
             https: false,
         },
+        uploadProxy: {
+            hostname: "sosialhjelp-upload-mock.teamdigisos",
+            basePath: "/sosialhjelp/upload",
+            https: false,
+        },
         showDevPanel: false,
         logLocally: false,
         withCredentials: true,
         driftsmeldingUrl: "http://sosialhjelp-driftsmeldinger/sosialhjelp/driftsmeldinger/api",
         baseURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad/api/soknad-api/",
+        uploadBaseURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/soknad/api/upload-api",
         innsynURL: "https://digisos.ekstern.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://sosialhjelp-mock-alt-mock.ekstern.dev.nav.no/sosialhjelp/mock-alt/",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
@@ -117,6 +171,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
             publicFacingTestVersion: true,
+            tusUploadKommuner: ["0301"],
         },
 
         dekorator: {
@@ -131,12 +186,18 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             basePath: "/sosialhjelp/soknad-api",
             https: false,
         },
+        uploadProxy: {
+            hostname: "sosialhjelp-upload.teamdigisos",
+            basePath: "/sosialhjelp/upload",
+            https: false,
+        },
 
         showDevPanel: false,
         logLocally: false,
         withCredentials: false,
         driftsmeldingUrl: "http://sosialhjelp-driftsmeldinger/sosialhjelp/driftsmeldinger/api",
         baseURL: "https://www.nav.no/sosialhjelp/soknad/api/soknad-api/",
+        uploadBaseURL: "https://www.nav.no/sosialhjelp/soknad/api/upload-api",
         innsynURL: "https://www.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.nav.no/minside/",
         dekoratorLoginBaseUrl: "https://login.nav.no",
@@ -149,6 +210,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
+            tusUploadKommuner: ["0301"],
         },
 
         dekorator: {
@@ -163,12 +225,18 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             basePath: "/sosialhjelp/soknad-api",
             https: false,
         },
+        uploadProxy: {
+            hostname: "sosialhjelp-upload-dev.teamdigisos",
+            basePath: "/sosialhjelp/upload",
+            https: false,
+        },
 
         showDevPanel: false,
         logLocally: false,
         withCredentials: false,
         driftsmeldingUrl: "http://sosialhjelp-driftsmeldinger/sosialhjelp/driftsmeldinger/api",
         baseURL: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/api/soknad-api/",
+        uploadBaseURL: "https://www.ekstern.dev.nav.no/sosialhjelp/soknad/api/upload-api",
         innsynURL: "https://www.ekstern.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.ansatt.dev.nav.no/minside/",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
@@ -181,6 +249,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
+            tusUploadKommuner: ["0301"],
         },
 
         dekorator: {
@@ -195,12 +264,18 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             basePath: "/sosialhjelp/soknad-api",
             https: false,
         },
+        uploadProxy: {
+            hostname: "sosialhjelp-upload-dev.teamdigisos",
+            basePath: "/sosialhjelp/upload",
+            https: false,
+        },
 
         showDevPanel: true,
         logLocally: false,
         withCredentials: false,
         driftsmeldingUrl: "http://sosialhjelp-driftsmeldinger/sosialhjelp/driftsmeldinger/api",
         baseURL: "https://www.ansatt.dev.nav.no/sosialhjelp/soknad/api/soknad-api/",
+        uploadBaseURL: "https://www.ansatt.dev.nav.no/sosialhjelp/soknad/api/upload-api",
         innsynURL: "https://www.ansatt.dev.nav.no/sosialhjelp/innsyn",
         minSideURL: "https://www.ansatt.dev.nav.no/minside/",
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
@@ -211,7 +286,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
 };
 
 const getConfig = (miljo: unknown): SoknadConfig => {
-    if (process.env.NODE_ENV === "test") return configMap.localhost;
+    if (miljo !== "e2e" && process.env.NODE_ENV === "test") return configMap.localhost;
     if (!isValidDigisosEnvironment(miljo)) throw new Error(`Unknown SoknadMiljo: "${miljo}"`);
     return configMap[miljo];
 };

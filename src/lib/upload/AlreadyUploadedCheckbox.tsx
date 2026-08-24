@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 import {ChangeEvent} from "react";
 import {Checkbox} from "@navikt/ds-react";
 import cx from "classnames";
-import {DokumentasjonDtoType} from "../../../generated/new/model";
+import {DokumentasjonDtoType} from "../../generated/new/model";
 
 interface Props {
     opplysningstype: DokumentasjonDtoType;

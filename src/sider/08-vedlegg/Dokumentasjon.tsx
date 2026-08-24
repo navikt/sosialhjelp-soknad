@@ -2,21 +2,43 @@ import {BodyShort, Heading} from "@navikt/ds-react";
 import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
 import React from "react";
 import {DokumentasjonDtoType} from "../../generated/new/model";
-import {Dokumenter} from "./upload/Dokumenter.tsx";
+import {Dokumenter} from "../../lib/upload/Dokumenter.tsx";
 import {FormSwitch} from "./form/components/FormSwitch.tsx";
+import {UploadByKategori} from "../../lib/upload/new/UploadByKategori.tsx";
+import {useNewUploadEnabled} from "../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
+import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
+import {DocumentProvider} from "../../lib/upload/new/DocumentContext.tsx";
 
 export const Dokumentasjon = ({opplysningstype}: {opplysningstype: DokumentasjonDtoType}) => {
+    const soknadId = useSoknadId();
     const {sporsmal, undertekst} = useDokumentasjonTekster(opplysningstype);
+    const newUploadEnabled = useNewUploadEnabled();
+
+    const id = opplysningstype;
+    const contextId = `${soknadId}-${opplysningstype}`;
 
     return (
-        <div className={"rounded-md bg-surface-action-subtle p-8"}>
-            <Heading level={"4"} size={"small"} spacing>
+        <div className={"rounded-md bg-ax-bg-accent-soft p-8"}>
+            <Heading level={"4"} size={"small"} spacing id={id}>
                 {sporsmal}
             </Heading>
 
             <BodyShort spacing>{undertekst}</BodyShort>
             <FormSwitch opplysningstype={opplysningstype} />
-            <Dokumenter opplysningstype={opplysningstype} />
+            {newUploadEnabled ? (
+                <DocumentProvider contextId={contextId}>
+                    <UploadByKategori
+                        className={"mt-6"}
+                        describedBy={id}
+                        contextId={contextId}
+                        soknadId={soknadId}
+                        kategori={opplysningstype}
+                        fileListHeadingLevel={"5"}
+                    />
+                </DocumentProvider>
+            ) : (
+                <Dokumenter opplysningstype={opplysningstype} />
+            )}
         </div>
     );
 };

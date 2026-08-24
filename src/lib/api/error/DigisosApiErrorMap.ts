@@ -13,6 +13,7 @@ export const DigisosApiErrorMap: Record<SoknadApiErrorError, DigisosLanguageKey>
     Forbidden: REST_FEIL.GENERELL_FEIL,
     NoAccess: REST_FEIL.GENERELL_FEIL,
     GeneralError: REST_FEIL.GENERELL_FEIL,
+    SokerUnder18: REST_FEIL.GENERELL_FEIL,
     InnsendingIkkeAktivert: REST_FEIL.GENERELL_FEIL,
     InnsendingMidlertidigUtilgjengelig: REST_FEIL.GENERELL_FEIL,
     InnsendingUtilgjengelig: REST_FEIL.GENERELL_FEIL,
@@ -30,4 +31,5 @@ export const DigisosApiErrorMap: Record<SoknadApiErrorError, DigisosLanguageKey>
     DokumentKonverteringFeilet: REST_FEIL.KONVERTERING_FEILET,
     DokumentUploadPossibleVirus: REST_FEIL.MULIG_VIRUS,
     NotFound: ValideringsFeilKode.FIL_EKSISTERER_IKKE,
+    AntallSoknaderSendt: REST_FEIL.GENERELL_FEIL,
 } as const;

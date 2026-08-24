@@ -1,9 +1,9 @@
+import navikt from "@navikt/ds-tailwind";
 /** @type {import('tailwindcss').Config} */
-
-import navDs from "@navikt/ds-tailwind";
 
 export default {
     content: ["./src/**/*.{js,ts,jsx,tsx}"],
+    presets: [navikt],
     theme: {
         extend: {
             screens: {
@@ -11,5 +11,4 @@ export default {
             },
         },
     },
-    presets: [navDs],
 };

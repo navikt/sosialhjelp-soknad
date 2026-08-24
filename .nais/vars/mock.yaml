@@ -2,7 +2,7 @@ appName: sosialhjelp-soknad-mock
 idportenEnabled: false
 ingresses: []
 outboundExternalHosts: []
-outboundRules: [sosialhjelp-soknad-api-mock]
+outboundRules: [sosialhjelp-soknad-api-mock,sosialhjelp-upload-mock]
 wonderwallInstance: wonderwall-soknad-mock
 livenessPath: /sosialhjelp/soknad/internal/isAlive
 env:
@@ -10,7 +10,7 @@ env:
 requests:
   cpu: 50m
   memory: 100Mi
-limts:
+limits:
   memory: 200Mi
 replicas:
   min: 1

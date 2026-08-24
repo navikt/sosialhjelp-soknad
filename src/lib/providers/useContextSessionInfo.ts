@@ -10,7 +10,7 @@ export const useContextSessionInfo = () => {
 
     useEffect(() => {
         getSessionInfo().then(setSessionInfo);
-    }, [window.location.pathname]);
+    }, []);
 
     return sessionInfo;
 };

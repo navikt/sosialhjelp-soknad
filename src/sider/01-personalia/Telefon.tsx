@@ -16,8 +16,8 @@ export const Telefon = () => {
         return <Loader />;
     }
 
-    const bruker = phoneNumberParsedOrUndefined(telefonnummer.telefonnummerBruker);
-    const register = phoneNumberParsedOrUndefined(telefonnummer.telefonnummerRegister);
+    const bruker = phoneNumberParsedOrUndefined(telefonnummer.telefonnummerBruker ?? undefined);
+    const register = phoneNumberParsedOrUndefined(telefonnummer.telefonnummerRegister ?? undefined);
 
     return (
         <Systeminfo>

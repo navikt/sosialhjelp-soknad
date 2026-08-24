@@ -52,17 +52,13 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
 
     // Midlertidig hack til komponentene under kan behandles som react-hook-form-inputs
     useEffect(() => {
-        if (erAktiv(navEnhet) && !erMidlDeaktivert(navEnhet)) setError(null);
+        if (erAktiv(navEnhet) && !erMidlDeaktivert(navEnhet ?? undefined)) setError(null);
     }, [navEnhet]);
 
     return (
         <SkjemaSteg>
             <SkjemaStegBlock className={shortSpacing ? "lg:space-y-12" : ""}>
-                <SkjemaStegTitle
-                    className={shortSpacing ? "lg:mb-12" : ""}
-                    title={t(SkjemaHeadings[1].tittel)}
-                    icon={SkjemaHeadings[1].ikon}
-                />
+                <SkjemaStegTitle title={t(SkjemaHeadings[1].tittel)} icon={SkjemaHeadings[1].ikon} />
                 <SkjemaStegErrorSummary errors={errors} />
                 <BasisPersonalia />
                 <AdresseData />

@@ -5,13 +5,14 @@ import {pdfjs} from "react-pdf";
 import cx from "classnames";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
-import {FilePreviewButtons} from "./FilePreviewButtons";
-import {FilePreviewDisplay} from "./FilePreviewDisplay";
-import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
-import {useValgtKategoriContext} from "../../../lib/providers/KortKategorierContextProvider.tsx";
-import {DokumentasjonDtoType} from "../../../generated/new/model";
+import {FilePreviewButtons} from "./FilePreviewButtons.tsx";
+import {FilePreviewDisplay} from "./FilePreviewDisplay.tsx";
+import {useCurrentSoknadIsKort} from "../components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
+import {useValgtKategoriContext} from "../providers/KortKategorierContextProvider.tsx";
+import {DokumentasjonDtoType} from "../../generated/new/model";
+import {umamiTrack} from "../../app/umami.ts";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 interface ForhandsvisningModalProps {
     file: File;
@@ -36,6 +37,10 @@ export const ForhandsvisningVedleggModal = ({
     const [selectedCategory, setSelectedCategory] = useState<string>("");
 
     const handleAccept = () => {
+        umamiTrack("fil lastet opp", {
+            valgtKategori: selectedCategory === "" ? "ingen" : selectedCategory,
+            visKategori,
+        });
         const categoryToSet = selectedCategory || "UTGIFTER_ANDRE_UTGIFTER";
         setValgtKategoriData({valgtKategorier: categoryToSet as DokumentasjonDtoType});
         setSelectedCategory("");
@@ -66,7 +71,7 @@ export const ForhandsvisningVedleggModal = ({
                     className={cx(
                         {
                             "w-full min-h-full gap-4 pb-4": isFullscreen,
-                            "p-2 bg-surface-neutral-subtle rounded-md w-fit": !isFullscreen,
+                            "p-2 bg-ax-bg-neutral-soft rounded-md w-fit": !isFullscreen,
                         },
                         "grow flex flex-col"
                     )}

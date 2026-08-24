@@ -1,5 +1,6 @@
 import {isServer, QueryClient} from "@tanstack/react-query";
 import {invalidateForventetDokumentasjonQuery} from "./utils.ts";
+import {isAxiosError} from "axios";
 
 function makeQueryClient() {
     return new QueryClient({
@@ -11,8 +12,10 @@ function makeQueryClient() {
                     _onMutateResult,
                     context
                 ): Promise<void> | undefined => invalidateForventetDokumentasjonQuery(context, variables),
+                throwOnError: (error) => isAxiosError(error) && error.response?.status === 403,
             },
             queries: {
+                throwOnError: (error) => isAxiosError(error) && error.response?.status === 403,
                 staleTime: 60 * 1000,
             },
         },

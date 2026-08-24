@@ -2,5 +2,4 @@
 scripts/
 node_modules/
 src/generated
-.next/
 Dockerfile

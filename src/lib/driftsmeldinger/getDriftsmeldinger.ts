@@ -1,6 +1,6 @@
 import digisosConfig from "../config.ts";
-import {logger} from "@navikt/next-logger";
 import {Driftsmelding, DriftsmeldingAudienceParam, DriftsmeldingAudience} from "./types.ts";
+import getLogger from "@log/logger";
 
 export const getDriftsmeldinger = async () => {
     if (!digisosConfig.driftsmeldingUrl) return [];
@@ -13,12 +13,12 @@ export const getDriftsmeldinger = async () => {
             signal: AbortSignal.timeout(500),
         });
         if (!res.ok) {
-            logger.warn(`fetching driftsmeldinger: HTTP error response: ${res.status} ${res.statusText}`);
+            getLogger().warn(`fetching driftsmeldinger: HTTP error response: ${res.status} ${res.statusText}`);
             return [];
         }
         return (await res.json()) as Driftsmelding[];
     } catch (e: any) {
-        logger.warn({error: e?.message}, "fetching driftsmeldinger: error");
+        getLogger().warn({error: e?.message}, "fetching driftsmeldinger: error");
         return [];
     }
 };

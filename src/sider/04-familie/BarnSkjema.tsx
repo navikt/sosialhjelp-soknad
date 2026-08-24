@@ -1,4 +1,4 @@
-import {YesNoInput} from "../../lib/components/form/YesNoInput";
+import YesNoInput from "../../lib/components/form/YesNoInput";
 import {DigisosReadMore} from "../../lib/components/DigisosReadMore";
 import {Loader, TextField} from "@navikt/ds-react";
 import * as React from "react";
