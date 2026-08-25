@@ -24,9 +24,10 @@ const SivilstatusSchema = z.object({
         .optional()
         .transform((str) => (str?.length ? parse(str, "ddMMyyyy", 0) : undefined))
         .refine((date) => (date ? isValid(date) : true), ValideringsFeilKode.ER_FDATO)
-        .transform((date) => date && format(date, "yyyy-MM-dd")),
+        .transform((date) => date && format(date, "yyyy-MM-dd")) as z.ZodType<string | undefined, string | undefined>,
+    //   ^^^ https://github.com/colinhacks/zod/issues/3537#issuecomment-2829790481
     personId: z.string().optional(),
-    borSammen: z.boolean({invalid_type_error: "validering.pakrevd"}),
+    borSammen: z.boolean({message: "validering.pakrevd"}),
 });
 
 // Transforms dato from yyyy-MM-dd to ddMMYYYY
