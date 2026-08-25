@@ -2,17 +2,24 @@ version: 2
 updates:
     - package-ecosystem: "npm"
       directory: "/"
-      cooldown:
-          default-days: 7
       schedule:
           interval: daily
+      groups:
+          patch-dependencies:
+              patterns:
+                  - "*"
+              update-types:
+                  - "patch"
+          minor-dependencies:
+              patterns:
+                  - "*"
+              update-types:
+                  - "minor"
       commit-message:
           prefix: "[npm]"
 
     - package-ecosystem: "github-actions"
       directory: "/"
-      cooldown:
-        default-days: 7
       schedule:
           interval: daily
       commit-message:
@@ -20,8 +27,6 @@ updates:
 
     - package-ecosystem: "docker"
       directory: "/"
-      cooldown:
-        default-days: 7
       schedule:
           interval: daily
       commit-message:
