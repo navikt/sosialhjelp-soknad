@@ -8,6 +8,11 @@ updates:
           interval: daily
       commit-message:
           prefix: "[npm]"
+      groups:
+          npm-patch:
+              update-types: ["patch"]
+          npm-minor:
+              update-types: ["minor"]
 
     - package-ecosystem: "github-actions"
       directory: "/"
@@ -17,6 +22,11 @@ updates:
           interval: daily
       commit-message:
           prefix: "[gha]"
+      groups:
+          gha-patch:
+              update-types: ["patch"]
+          gha-minor:
+              update-types: ["minor"]
 
     - package-ecosystem: "docker"
       directory: "/"
@@ -26,6 +36,11 @@ updates:
           interval: daily
       commit-message:
           prefix: "[docker]"
+      groups:
+          docker-patch:
+              update-types: ["patch"]
+          docker-minor:
+              update-types: ["minor"]
       # We had stability issues with Next 14 and Node 22.
       # When we do make the jump, please remove this kommentar.
       ignore:
