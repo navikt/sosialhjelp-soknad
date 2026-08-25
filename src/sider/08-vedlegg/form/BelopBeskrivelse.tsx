@@ -82,7 +82,9 @@ const BelopBeskrivelse = ({
                         {!!index && <ListRemoveButton onClick={onRemove(index)} />}
                     </li>
                 ))}
-                <ListAddButton onClick={() => append({})}>{leggTilTekst ? leggTilTekst : leggtil}</ListAddButton>
+                <ListAddButton onClick={() => append({belop: undefined})}>
+                    {leggTilTekst ? leggTilTekst : leggtil}
+                </ListAddButton>
             </ul>
         </form>
     );

@@ -9,7 +9,7 @@ import {z} from "zod";
 import {ValideringsFeilKode} from "../../lib/validering";
 
 const SamvaersgradSchema = z.coerce
-    .number({invalid_type_error: ValideringsFeilKode.ER_TALL})
+    .number({message: ValideringsFeilKode.ER_TALL})
     .min(0, ValideringsFeilKode.ER_SAMVAERSGRAD)
     .max(100, ValideringsFeilKode.ER_SAMVAERSGRAD);
 
