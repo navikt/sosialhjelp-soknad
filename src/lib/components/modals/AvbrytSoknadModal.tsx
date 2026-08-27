@@ -45,6 +45,8 @@ export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () =
                 <Button
                     variant="primary"
                     onClick={async () => {
+                        // Bevisst full reload for å nullstille app-state, ikke intern Next-ruting.
+                        // eslint-disable-next-line @next/next/no-location-assign-relative-destination
                         window.location.href = "/sosialhjelp/soknad/informasjon?reason=soknadDeleteModal";
                     }}
                 >

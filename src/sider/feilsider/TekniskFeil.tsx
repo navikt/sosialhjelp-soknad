@@ -33,7 +33,14 @@ export const TekniskFeil = ({error, reset}: {error: Error; reset?: () => void}) 
             )}
 
             <div className={"my-4"}>
-                <Button variant="secondary" onClick={() => (window.location.href = "/sosialhjelp/soknad")}>
+                <Button
+                    variant="secondary"
+                    onClick={() => {
+                        // Bevisst full reload for å nullstille app-state etter en teknisk feil.
+                        // eslint-disable-next-line @next/next/no-location-assign-relative-destination
+                        window.location.href = "/sosialhjelp/soknad";
+                    }}
+                >
                     {t("lenkeTilHovedmeny")}
                 </Button>
             </div>

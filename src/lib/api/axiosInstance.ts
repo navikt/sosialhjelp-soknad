@@ -61,6 +61,8 @@ export const axiosInstance = <T>(
             if (response.status === 401) {
                 const loginUrl = `/sosialhjelp/soknad/oauth2/login?redirect=${origin}${decodeURIComponent(window.location.pathname)}`;
                 getLogger().info(`Fikk 401 på kall, redirecter til login: ${loginUrl}`);
+                // Bevisst full reload (utenfor React-render) for å starte innloggingsflyten på nytt.
+                // eslint-disable-next-line @next/next/no-location-assign-relative-destination
                 window.location.assign(loginUrl);
                 return neverResolves();
             }
@@ -73,6 +75,8 @@ export const axiosInstance = <T>(
                 if (status === 403 && (errorType === "NoAccess" || errorType === "SokerUnder18")) {
                     throw e;
                 }
+                // Bevisst full reload (utenfor React-render) for å nullstille app-state ved denne feilen.
+                // eslint-disable-next-line @next/next/no-location-assign-relative-destination
                 window.location.href = `/sosialhjelp/soknad/informasjon?reason=axios${status}`;
                 return neverResolves();
             }
