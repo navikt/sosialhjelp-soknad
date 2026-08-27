@@ -52,6 +52,8 @@ const Inntekt = () => {
     useEffect(() => {
         if (!hasInitialized && formue && !formue.hasBrukskonto) {
             setFormue(["hasBrukskonto", "hasSparing"]);
+            // TODO: react-hooks/set-state-in-effect - bruk useRef som engangs-vakt i stedet for useState. Se fix/react-compiler-lint-regler
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setHasInitialized(true);
         }
     }, [formue, hasInitialized, setFormue]);
