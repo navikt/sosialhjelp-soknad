@@ -9,15 +9,7 @@ allowBuilds:
 
 minimumReleaseAge: 2880
 
-minimumReleaseAgeExclude:
-  - lodash@4.18.1
-  - postcss@8.5.15
-  - next@16.2.6
-  - js-cookie@3.0.7
-  - '@navikt/next-api-proxy@5.0.5'
-
 overrides:
-  lru-cache: 11.2.7
-  lodash@<=4.17.23: '>=4.17.24'
-  js-cookie@<=3.0.5: '>=3.0.6'
-  postcss@<8.5.10: '>=8.5.10'
+  brace-expansion@<1.1.18: '>=1.1.18 <2'
+  fast-uri@<3.1.5: '>=3.1.5 <4'
+  nanoid@<3.3.18: '>=3.3.18 <4'

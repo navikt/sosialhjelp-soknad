@@ -34,6 +34,8 @@ export default function App() {
     //  Polyfill for react-pdf, se https://github.com/wojtekmaj/react-pdf/issues/1831
     if (typeof Promise.withResolvers === "undefined") {
         // @ts-expect-error this is expected to not work
+        // TODO: react-hooks/immutability - flytt polyfill til modulnivå. Se fix/react-compiler-lint-regler
+        // eslint-disable-next-line react-hooks/immutability
         Promise.withResolvers = function () {
             let resolve, reject;
             const promise = new Promise((res, rej) => {
@@ -45,7 +47,11 @@ export default function App() {
     }
     const {prefix, path} = getPathPrefixIncludingLocale();
     onLanguageSelect(({locale: language, url}) =>
-        setParams({language}).then(() => window.location.assign(`${url}${path}`))
+        setParams({language}).then(() => {
+            // Bevisst full reload til ny locale-URL fra dekoratøren, ikke intern Next-ruting.
+            // eslint-disable-next-line @next/next/no-location-assign-relative-destination
+            window.location.assign(`${url}${path}`);
+        })
     );
 
     const {isLoading} = useDecoratorLogin();

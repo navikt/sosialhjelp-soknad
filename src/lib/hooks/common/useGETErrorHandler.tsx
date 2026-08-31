@@ -8,6 +8,8 @@ export const handleAxiosError = (error: AxiosError) => {
     }
 
     getLogger().error(`GET-feil ${error.request.path}: ${error.code} ${error.message}`);
+    // Bevisst full reload for å nullstille app-state ved denne feilen.
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
     window.location.href = "/sosialhjelp/soknad/feil?reason=handleAxiosError";
 };
 
@@ -22,6 +24,8 @@ export const useGETErrorHandler = () => ({
             handleAxiosError(error);
         } else {
             getLogger().error(`Feil i expectOK: ${error}`);
+            // Bevisst full reload for å nullstille app-state ved denne feilen.
+            // eslint-disable-next-line @next/next/no-location-assign-relative-destination
             window.location.href = "/sosialhjelp/soknad/feil?reason=useGETErrorHandler";
         }
         return null;
