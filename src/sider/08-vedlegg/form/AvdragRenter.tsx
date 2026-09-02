@@ -15,7 +15,7 @@ const AvdragRenter = ({
     mutate: (data: BoliglanInput) => void;
     opplysning: AvdragRenterDto[];
 }) => {
-    const {control, handleSubmit, getValues} = useForm({
+    const {control, handleSubmit} = useForm({
         mode: "onBlur",
         shouldFocusError: false,
         resolver: zodResolver(AvdragRenterFormSchema),
@@ -33,7 +33,7 @@ const AvdragRenter = ({
 
     return (
         <form onBlur={handleSubmit(onSubmit)} onSubmit={(e) => e.preventDefault()}>
-            <AvdragRenterInputList name={"avdragRenter"} control={control} onSubmit={() => onSubmit(getValues())} />
+            <AvdragRenterInputList name={"avdragRenter"} control={control} onSubmit={handleSubmit(onSubmit)} />
         </form>
     );
 };

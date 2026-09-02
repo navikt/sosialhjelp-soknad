@@ -35,7 +35,7 @@ const BelopBeskrivelse = ({
     belopLabel,
     leggTilTekst,
 }: Props) => {
-    const {control, handleSubmit, getValues} = useForm({
+    const {control, handleSubmit} = useForm({
         mode: "onBlur",
         shouldFocusError: false,
         resolver: zodResolver(BelopBeskrivelseFormSchema),
@@ -58,8 +58,7 @@ const BelopBeskrivelse = ({
 
     const onRemove = (index: number) => () => {
         remove(index);
-        // Må trigge submit manuelt her, da blur på formet ikke blir trigga ikke trigges
-        onSubmit(getValues());
+        handleSubmit(onSubmit)();
     };
 
     return (
