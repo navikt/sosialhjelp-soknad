@@ -16,7 +16,7 @@
         "@navikt/ds-react": "^8.16.1",
         "@navikt/ds-tailwind": "^8.16.1",
         "@navikt/fnrvalidator": "^2.2.1",
-        "@navikt/nav-dekoratoren-moduler": "^3.7.1",
+        "@navikt/nav-dekoratoren-moduler": "^4.3.0",
         "@navikt/next-api-proxy": "^5.0.5",
         "@navikt/next-logger": "^5.0.1",
         "@swan-io/boxed": "^3.2.1",
