@@ -75,6 +75,16 @@
               }
             }
           },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForMangeMottakereInfo"
+                }
+              }
+            }
+          },
           "409": {
             "description": "Conflict",
             "content": {
@@ -154,6 +164,16 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForMangeMottakereInfo"
                 }
               }
             }
@@ -249,6 +269,16 @@
               }
             }
           },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForMangeMottakereInfo"
+                }
+              }
+            }
+          },
           "409": {
             "description": "Conflict",
             "content": {
@@ -325,6 +355,16 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForMangeMottakereInfo"
                 }
               }
             }
@@ -412,6 +452,16 @@
               }
             }
           },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForMangeMottakereInfo"
+                }
+              }
+            }
+          },
           "409": {
             "description": "Conflict",
             "content": {
@@ -488,6 +538,16 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForMangeMottakereInfo"
                 }
               }
             }
@@ -572,6 +632,16 @@
               }
             }
           },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForMangeMottakereInfo"
+                }
+              }
+            }
+          },
           "409": {
             "description": "Conflict",
             "content": {
@@ -648,6 +718,16 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForMangeMottakereInfo"
                 }
               }
             }
@@ -745,6 +825,16 @@
               }
             }
           },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForMangeMottakereInfo"
+                }
+              }
+            }
+          },
           "409": {
             "description": "Conflict",
             "content": {
@@ -824,6 +914,16 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForMangeMottakereInfo"
                 }
               }
             }
@@ -911,6 +1011,16 @@
               }
             }
           },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForMangeMottakereInfo"
+                }
+              }
+            }
+          },
           "409": {
             "description": "Conflict",
             "content": {
@@ -950,6 +1060,66 @@
   },
   "components": {
     "schemas": {
+      "InnsendingFeiletError": {
+        "type": "object",
+        "properties": {
+          "deletionDate": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
+          }
+        },
+        "required": [
+          "deletionDate",
+          "type"
+        ]
+      },
+      "ForMangeMottakereInfo": {
+        "type": "object",
+        "properties": {
+          "innsendingGyldigFra": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "antallMottakere": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maksAntallMottakere": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "begrensetPeriode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "required": [
+          "antallMottakere",
+          "begrensetPeriode",
+          "innsendingGyldigFra",
+          "maksAntallMottakere"
+        ]
+      },
+      "UnauthorizedMelding": {
+        "type": "object",
+        "properties": {
+          "loginUrl": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "loginUrl"
+        ]
+      },
       "SoknadApiError": {
         "type": "object",
         "properties": {
@@ -1005,39 +1175,6 @@
         "required": [
           "error",
           "responseType"
-        ]
-      },
-      "UnauthorizedMelding": {
-        "type": "object",
-        "properties": {
-          "loginUrl": {
-            "type": "string",
-            "format": "uri"
-          }
-        },
-        "required": [
-          "loginUrl"
-        ]
-      },
-      "InnsendingFeiletError": {
-        "type": "object",
-        "properties": {
-          "deletionDate": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
-          }
-        },
-        "required": [
-          "deletionDate",
-          "type"
         ]
       },
       "Logg": {
