@@ -14,9 +14,6 @@ type FeatureFlags = {
     // Dette er en testversjon som er blitt gitt en ingress på nav.no.
     // Forhindrer at siden blir indeksert, og viser en synlig advarsel.
     publicFacingTestVersion?: true;
-
-    // Kommuner som får tilgang til ny vedlegg-opplasting (TUS-upload)
-    tusUploadKommuner: string[];
 };
 
 type ProxyOptions = {
@@ -65,7 +62,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
             publicFacingTestVersion: true,
-            tusUploadKommuner: ["0301"],
         },
         dekorator: {
             env: "dev",
@@ -99,7 +95,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
             publicFacingTestVersion: true,
-            tusUploadKommuner: ["0301"],
         },
 
         dekorator: {
@@ -136,7 +131,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
-            tusUploadKommuner: ["0301"],
         },
         dekorator: {
             env: "dev",
@@ -171,7 +165,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
             publicFacingTestVersion: true,
-            tusUploadKommuner: ["0301"],
         },
 
         dekorator: {
@@ -210,7 +203,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
-            tusUploadKommuner: ["0301"],
         },
 
         dekorator: {
@@ -249,7 +241,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
-            tusUploadKommuner: ["0301"],
         },
 
         dekorator: {
