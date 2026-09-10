@@ -7,7 +7,7 @@ import {AdresseSok} from "./AdresseSok";
 import cx from "classnames";
 import {useTranslation} from "react-i18next";
 import {HorizontalRadioGroup} from "../../../lib/components/form/HorizontalRadioGroup";
-import {AdresserDtoAdresseValg} from "../../../generated/new/model/adresserDtoAdresseValg.ts";
+import {AdresserDtoAdresseValg} from "../../../generated/new/model";
 import {useAdresser} from "./useAdresser.tsx";
 
 export const AdresseData = () => {
@@ -26,6 +26,7 @@ export const AdresseData = () => {
         setAdressevalg,
         isUpdatePending,
         showSpinner,
+        adresseError,
     } = useAdresser();
 
     if (isLoading) {
@@ -70,7 +71,17 @@ export const AdresseData = () => {
                     <AdresseSok defaultValue={formaterSoknadsadresse(brukerAdresse)} onChange={setAdresse} />
                 )}
             </HorizontalRadioGroup>
-            {navEnhet && <NavEnhet navEnhet={navEnhet} />}
+            {adresseError.hasError && (
+                <Alert variant={"warning"}>
+                    {t("validering.forMangeMottakere", {
+                        innsendingGyldigFra: adresseError.info?.innsendingGyldigFra ?? "",
+                        antallMottakere: adresseError.info?.antallMottakere ?? "",
+                        maksAntallMottakere: adresseError.info?.maksAntallMottakere ?? "",
+                        begrensetPeriode: adresseError.info?.begrensetPeriode ?? "",
+                    })}
+                </Alert>
+            )}
+            {!adresseError.hasError && navEnhet && <NavEnhet navEnhet={navEnhet} />}
         </section>
     );
 };

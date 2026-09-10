@@ -14,12 +14,24 @@ import React from "react";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {isAxiosError} from "axios";
-import {InnsendingFeiletError, SendSoknad400, SoknadApiError, UnauthorizedMelding} from "../../generated/new/model";
+import {
+    ForMangeMottakereInfo,
+    InnsendingFeiletError,
+    SendSoknad400,
+    SoknadApiError,
+    UnauthorizedMelding,
+} from "../../generated/new/model";
 import {ErrorType} from "../../lib/api/axiosInstance.ts";
 import {useHentAntallInnsendteSoknader} from "../../generated/mine-saker-metadata-ressurs/mine-saker-metadata-ressurs.ts";
 import {InnsendteSoknaderVarsel, resolveInnsendingBlocked} from "../../lib/components/InnsendteSoknaderVarsel.tsx";
 
-type InnsendingError = SendSoknad400 | UnauthorizedMelding | SoknadApiError | InnsendingFeiletError | null;
+type InnsendingError =
+    | SendSoknad400
+    | UnauthorizedMelding
+    | SoknadApiError
+    | InnsendingFeiletError
+    | ForMangeMottakereInfo
+    | null;
 
 function extractDeletionDate(error: ErrorType<InnsendingError>) {
     if (isAxiosError<InnsendingFeiletError>(error)) {
