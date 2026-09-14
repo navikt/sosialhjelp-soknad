@@ -4,6 +4,7 @@ import config from "../../config.ts";
 export type UploadStatus = "PROCESSING" | "FAILED" | "COMPLETE" | "PENDING";
 
 export type UploadState = {
+    converted: boolean;
     originalFilename: string;
     finalFilename?: string;
     id: string;

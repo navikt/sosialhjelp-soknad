@@ -98,6 +98,7 @@ export const VedleggUpload = ({
                                     id: dokument.dokumentId,
                                     originalFilename: dokument.filnavn,
                                     status: "COMPLETE",
+                                    converted: false,
                                     url: digisosConfig.baseURL + `/dokument/${soknadId}/${dokument.dokumentId}`,
                                 } satisfies UploadState;
                             }),

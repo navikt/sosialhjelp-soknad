@@ -56,6 +56,7 @@ export const UploadedFileList = ({
                         validations={upload.validations}
                         status={upload.status}
                         size={upload.size}
+                        isConverted={upload.converted}
                         showCancelButton={
                             showSlowProcessingWarning && (upload.status === "PENDING" || upload.status === "PROCESSING")
                         }

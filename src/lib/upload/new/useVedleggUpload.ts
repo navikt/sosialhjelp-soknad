@@ -21,9 +21,7 @@ export const useVedleggUpload = ({contextId, soknadId, kategori}: UseVedleggUplo
 
     const hasPendingOrProcessing = uploads.some((u) => u.status === "PENDING" || u.status === "PROCESSING");
 
-    const converted = uploads.some(
-        (upload) => !!upload.finalFilename && upload.finalFilename !== upload.originalFilename
-    );
+    const converted = uploads.some((upload) => upload.converted);
 
     const onSelect = (files: FileObject[]) => {
         const [folders, valid] = R.partition(files, (f) => isFolder(f));
@@ -43,6 +41,7 @@ export const useVedleggUpload = ({contextId, soknadId, kategori}: UseVedleggUplo
                     correlationId,
                     originalFilename: f.file.name,
                     size: f.file.size,
+                    converted: false,
                     status: "PENDING" as UploadStatus,
                 };
             }),
