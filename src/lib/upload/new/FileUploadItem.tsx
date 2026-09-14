@@ -12,6 +12,7 @@ interface Props {
     uploadId: string;
     validations?: ValidationCode[];
     url?: string;
+    isConverted: boolean;
     status: UploadStatus;
     size?: number;
     showCancelButton?: boolean;
@@ -39,6 +40,7 @@ const FileUploadItem = ({
     size,
     showCancelButton,
     onTerminate,
+    isConverted,
 }: Props) => {
     const t = useTranslations("FileUploadItem");
     const {mutate, isPending} = useMutation({
@@ -46,7 +48,6 @@ const FileUploadItem = ({
         onSettled: () => onTerminate?.(),
         retry: false,
     });
-    const isConverted = !!convertedFilename && convertedFilename !== originalFilename;
     const isUploading = !url && !validations && status !== "FAILED" && status !== "COMPLETE" && !showCancelButton;
     const uploadStatus = isUploading ? "uploading" : "idle";
     return (
