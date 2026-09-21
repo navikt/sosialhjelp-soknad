@@ -977,7 +977,8 @@
               "SoknadUpdateConflict",
               "PdlKallFeilet",
               "SokerUnder18",
-              "AntallSoknaderSendt"
+              "AntallSoknaderSendt",
+              "BrokenSoknad"
             ]
           },
           "responseType": {

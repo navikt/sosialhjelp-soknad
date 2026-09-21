@@ -3659,7 +3659,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/SoknadApiError"
                 }
               }
             }
@@ -4880,7 +4880,8 @@
               "SoknadUpdateConflict",
               "PdlKallFeilet",
               "SokerUnder18",
-              "AntallSoknaderSendt"
+              "AntallSoknaderSendt",
+              "BrokenSoknad"
             ]
           },
           "responseType": {
