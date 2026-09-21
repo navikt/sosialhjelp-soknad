@@ -1569,6 +1569,13 @@ export const skjema = {
             nodssituasjon: "Are you in an emergency?",
             generelt: "Contact <lenke>your local Nav office</lenke> or call us at 55 55 33 33.",
         },
+        soknadKanIkkeSendes: {
+            overskrift: "Error while sending the application",
+            infotekst:
+                "Your application cannot be submitted as it is now. Trying again will not help. Contact your Nav office for help submitting your application.",
+            nodssituasjon: "Are you in an emergency?",
+            generelt: "Contact <lenke>your local Nav office</lenke> or call us at 55 55 33 33.",
+        },
     },
     soknadsmottaker: {
         enhetsnavn: {

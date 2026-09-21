@@ -1562,6 +1562,13 @@ export const skjema = {
             nodssituasjon: "Er du i ein nødssituasjon?",
             generelt: "Kontakt <lenke>ditt Nav-kontor</lenke> eller ring oss på 55 55 33 33.",
         },
+        soknadKanIkkeSendes: {
+            overskrift: "Feil ved sending av søknaden",
+            infotekst:
+                "Søknaden din kan ikkje sendast inn slik ho er no. Å prøve på nytt vil ikkje hjelpe. Ta kontakt med Nav-kontoret ditt, så får du hjelp til å sende inn søknaden.",
+            nodssituasjon: "Er du i ein nødssituasjon?",
+            generelt: "Kontakt <lenke>ditt Nav-kontor</lenke> eller ring oss på 55 55 33 33.",
+        },
     },
     soknadsmottaker: {
         enhetsnavn: {
