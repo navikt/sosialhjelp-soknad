@@ -10,10 +10,10 @@ import {useNavigate} from "react-router";
 import {useContextFeatureToggles} from "../../lib/providers/useContextFeatureToggles.ts";
 import BegrunnelseForm from "./BegrunnelseForm.tsx";
 import KategorierForm from "./KategorierForm.tsx";
-import type {HarKategorierInputKategorierItem} from "../../generated/new-ssr/model";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../app/umami.ts";
+import {HarKategorierInputKategorierItem} from "../../generated/new/model";
 
 export const Begrunnelse = () => {
     const {begrunnelse, updateBegrunnelse, updateCategories, isLoading, isError, invalidate} = useBegrunnelse();
