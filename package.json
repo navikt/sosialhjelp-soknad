@@ -114,7 +114,7 @@
         "checkUpdates": "npx npm-check-updates -u -c 7",
         "fetch-old-api": "curl -o ./soknad-api-old.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs/old && npx --yes openapi-format soknad-api-old.json -o soknad-api-old.json",
         "fetch-new-api": "curl -o ./soknad-api-new.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs/new && npx --yes openapi-format soknad-api-new.json -o soknad-api-new.json",
-        "fetch-api": "pnpm run fetch-old-api && pnpm run fetch-new-api",
+        "fetch-api": "curl -o ./soknad-api.json http://localhost:8181/sosialhjelp/soknad-api/v3/api-docs",
         "orval": "rm -rf ./src/generated && orval",
         "lint": "eslint",
         "preinstall": "pnpm dlx only-allow pnpm"
