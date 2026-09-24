@@ -14,7 +14,13 @@ import React from "react";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {isAxiosError} from "axios";
-import {InnsendingFeiletError, SendSoknad400, SoknadApiError, UnauthorizedMelding} from "../../generated/new/model";
+import {
+    InnsendingFeiletError,
+    SendSoknad400,
+    SoknadApiError,
+    SoknadApiErrorError,
+    UnauthorizedMelding,
+} from "../../generated/new/model";
 import {ErrorType} from "../../lib/api/axiosInstance.ts";
 import {useHentAntallInnsendteSoknader} from "../../generated/mine-saker-metadata-ressurs/mine-saker-metadata-ressurs.ts";
 import {InnsendteSoknaderVarsel, resolveInnsendingBlocked} from "../../lib/components/InnsendteSoknaderVarsel.tsx";
@@ -30,9 +36,49 @@ function extractDeletionDate(error: ErrorType<InnsendingError>) {
     }
 }
 
+/**
+ * Søknaden er i en tilstand FIKS aldri vil kunne motta (400). Retry hjelper ikke, så brukeren
+ * skal ikke få beskjed om å prøve igjen senere slik som ved forbigående feil (500).
+ */
+function isBrokenSoknad(error: ErrorType<InnsendingError>) {
+    return isAxiosError<SoknadApiError>(error) && error.response?.data?.error === SoknadApiErrorError.BrokenSoknad;
+}
+
 const Feilmelding = ({error}: {error: ErrorType<InnsendingError>}) => {
     const {t} = useTranslation("skjema");
     const deletionDate = extractDeletionDate(error);
+
+    if (isBrokenSoknad(error)) {
+        return (
+            <>
+                <Heading level={"3"} size={"small"} spacing>
+                    {t("soknad.soknadKanIkkeSendes.overskrift")}
+                </Heading>
+                <BodyLong>{t("soknad.soknadKanIkkeSendes.infotekst")}</BodyLong>
+                <br />
+                <Heading level={"3"} size={"small"}>
+                    {t("soknad.soknadKanIkkeSendes.nodssituasjon")}
+                </Heading>
+                <BodyShort>
+                    <Trans
+                        t={t}
+                        i18nKey={"soknad.soknadKanIkkeSendes.generelt"}
+                        components={{
+                            lenke: (
+                                <Link
+                                    href="https://www.nav.no/sok-nav-kontor"
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                >
+                                    {null}
+                                </Link>
+                            ),
+                        }}
+                    />
+                </BodyShort>
+            </>
+        );
+    }
 
     return (
         <>
