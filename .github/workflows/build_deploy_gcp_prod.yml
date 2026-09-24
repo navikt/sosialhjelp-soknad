@@ -66,7 +66,7 @@ jobs:
             NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
 
       - name: "Deploy to ${{ matrix.environment }}"
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@v3
         env:
           RESOURCE: .nais/app.yaml
           CLUSTER: ${{ matrix.cluster }}
