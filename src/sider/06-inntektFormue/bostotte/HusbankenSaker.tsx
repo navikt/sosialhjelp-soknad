@@ -1,4 +1,4 @@
-import {BostotteSakDto, BostotteSakDtoVedtaksstatus} from "../../../generated/new/model";
+import {BostotteSakDto, BostotteSakDtoVedtaksstatus} from "../../../generated/model";
 import {useTranslation} from "react-i18next";
 import {Table} from "@navikt/ds-react";
 import {format} from "date-fns";

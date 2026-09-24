@@ -1,10 +1,7 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {
-    useGetBegrunnelse,
-    useUpdateBegrunnelse,
-} from "../../../generated/new/begrunnelse-controller/begrunnelse-controller.ts";
-import {BegrunnelseDto, type HarHvaSokesOmInput, HarKategorierInput} from "../../../generated/new/model";
+import {useGetBegrunnelse, useUpdateBegrunnelse} from "../../../generated";
+import {BegrunnelseDto, type HarHvaSokesOmInput, HarKategorierInput} from "../../../generated/model";
 
 export const useBegrunnelse = () => {
     const soknadId = useSoknadId();

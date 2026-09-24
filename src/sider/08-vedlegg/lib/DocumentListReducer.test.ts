@@ -5,7 +5,7 @@ import {
     DocumentListState,
     initialDocumentListState,
 } from "./DocumentListReducer";
-import {DokumentasjonDto, DokumentasjonDtoType} from "../../../generated/new/model";
+import {DokumentasjonDto, DokumentasjonDtoType} from "../../../generated/model";
 
 // Constants for repeated values
 const DOCUMENT_TYPE: DokumentasjonDtoType = "FORMUE_BRUKSKONTO";

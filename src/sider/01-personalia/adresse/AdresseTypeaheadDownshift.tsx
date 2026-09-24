@@ -9,7 +9,7 @@ import {AdresseForslag} from "../../../generated/model";
 import * as React from "react";
 import {Trans, useTranslation} from "react-i18next";
 import {UseQueryResult} from "@tanstack/react-query";
-import {useAdresseSok} from "../../../generated/informasjon-ressurs/informasjon-ressurs.ts";
+import {useAdresseSok} from "../../../generated";
 
 type AdresseSokChildProps = Pick<UseQueryResult<AdresseForslag[]>, "isPending" | "data">;
 

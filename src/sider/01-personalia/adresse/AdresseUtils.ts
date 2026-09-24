@@ -5,7 +5,7 @@ import {
     UstrukturertAdresse,
     VegAdresse,
     VegAdresseType,
-} from "../../../generated/new/model";
+} from "../../../generated/model";
 import getLogger from "@log/logger";
 
 export type AdresserDtoBrukerAdresse = MatrikkelAdresse | PostboksAdresse | UstrukturertAdresse | VegAdresse;

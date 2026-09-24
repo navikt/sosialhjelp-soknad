@@ -1,6 +1,6 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
-import {type DokumentasjonDtoType} from "../../../generated/new/model";
-import {useGetForventetDokumentasjon} from "../../../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
+import {type DokumentasjonDtoType} from "../../../generated/model";
+import {useGetForventetDokumentasjon} from "../../../generated";
 import {useMemo} from "react";
 
 export enum GruppeKey {

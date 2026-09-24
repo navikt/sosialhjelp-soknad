@@ -1,4 +1,4 @@
-import {useGetBostotte, useUpdateBostotte} from "../../../generated/new/bostotte-controller/bostotte-controller";
+import {useGetBostotte, useUpdateBostotte} from "../../../generated";
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 

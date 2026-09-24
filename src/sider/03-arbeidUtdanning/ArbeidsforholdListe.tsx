@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {BodyShort} from "@navikt/ds-react";
-import {ArbeidsforholdDto} from "../../generated/new/model";
+import {ArbeidsforholdDto} from "../../generated/model";
 import {ArbeidsforholdDetalj} from "./ArbeidsforholdDetalj.tsx";
 
 export const ArbeidsforholdListe = ({arbeidsforhold}: {arbeidsforhold: ArbeidsforholdDto[]}) => {

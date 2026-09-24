@@ -1,10 +1,7 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {
-    useGetForsorgerplikt,
-    useUpdateForsorgerplikt,
-} from "../../../generated/new/forsorgerplikt-controller/forsorgerplikt-controller.ts";
-import {ForsorgerInputBarnebidrag} from "../../../generated/new/model";
+import {useGetForsorgerplikt, useUpdateForsorgerplikt} from "../../../generated";
+import {ForsorgerInputBarnebidrag} from "../../../generated/model";
 import {useState} from "react";
 
 export const useBarnebidrag = () => {

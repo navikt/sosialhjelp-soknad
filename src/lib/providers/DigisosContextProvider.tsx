@@ -4,8 +4,7 @@ import {ReactNode, useReducer, useState} from "react";
 import {initialValideringState, valideringsReducer} from "../validering.ts";
 import {AnalyticsData, DigisosContext} from "./DigisosContext.ts";
 import {SupportedLanguage} from "../i18n/common.ts";
-import {useGetSessionInfo} from "../../generated/informasjon-ressurs/informasjon-ressurs.ts";
-import {useFeatureToggles} from "../../generated/feature-toggle-ressurs/feature-toggle-ressurs.ts";
+import {useGetSessionInfo, useFeatureToggles} from "../../generated";
 
 interface Props {
     children: ReactNode;

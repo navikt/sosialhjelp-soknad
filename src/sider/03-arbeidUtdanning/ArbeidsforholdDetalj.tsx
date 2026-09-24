@@ -3,7 +3,7 @@ import {Systeminfo, SysteminfoItem} from "../../lib/components/systeminfo/System
 import {BodyShort} from "@navikt/ds-react";
 import {LocalizedDate} from "../../lib/components/LocalizedDate.tsx";
 import * as React from "react";
-import {ArbeidsforholdDto} from "../../generated/new/model/arbeidsforholdDto.ts";
+import {ArbeidsforholdDto} from "../../generated/model";
 
 export const ArbeidsforholdDetalj = ({arbeidsforhold}: {arbeidsforhold: ArbeidsforholdDto}) => {
     const {arbeidsgivernavn, fastStillingsprosent, start, slutt} = arbeidsforhold;

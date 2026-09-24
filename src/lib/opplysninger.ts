@@ -1,4 +1,4 @@
-import {DokumentasjonDtoType} from "../generated/new/model";
+import {DokumentasjonDtoType} from "../generated/model";
 
 export type OpplysningInputType = "beskrivelse" | "belop" | "brutto" | "netto" | "avdrag" | "renter";
 

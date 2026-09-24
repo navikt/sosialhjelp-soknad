@@ -1,4 +1,4 @@
-import {KategorierDtoDefinerteItem} from "../../../generated/new/model";
+import {KategorierDtoDefinerteItem} from "../../../generated/model";
 
 export const nodhjelpCategories: KategorierDtoDefinerteItem[] = [
     "NODHJELP_IKKE_BOSTED",

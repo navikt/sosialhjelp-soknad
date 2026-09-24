@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {useForm} from "react-hook-form";
-import {KategorierDto} from "../../../generated/new/model";
+import {KategorierDto} from "../../../generated/model";
 import KategorierChips from "../../../lib/components/KategorierChips.tsx";
 import {CATEGORIES} from "../../../lib/hooks/data/useKategorier.tsx";
 import LocalizedTextArea from "../../../lib/components/LocalizedTextArea.tsx";

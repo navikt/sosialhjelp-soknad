@@ -12,7 +12,7 @@ import LocalizedTextarea from "../../lib/components/LocalizedTextArea.tsx";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
-import {UtdanningDtoStudentgrad} from "../../generated/new/model";
+import {UtdanningDtoStudentgrad} from "../../generated/model";
 import {TextPlaceholder} from "../../lib/components/animasjoner/TextPlaceholder.tsx";
 import {PropsWithChildren, useState} from "react";
 

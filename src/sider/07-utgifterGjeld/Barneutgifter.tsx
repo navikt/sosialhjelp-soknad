@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import {Checkbox, CheckboxGroup} from "@navikt/ds-react";
 import YesNoInput from "../../lib/components/form/YesNoInput";
 import {useBarneutgifter} from "../../lib/hooks/data/useBarneutgifter";
-import {BarneutgifterDto} from "../../generated/new/model";
+import {BarneutgifterDto} from "../../generated/model";
 
 const UTGIFTSTYPER = [
     {languageKey: "fritidsaktiviteter", value: "hasFritidsaktiviteter"},

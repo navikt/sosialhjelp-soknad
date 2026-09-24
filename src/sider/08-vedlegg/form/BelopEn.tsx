@@ -5,7 +5,7 @@ import {OpplysningBelopInput} from "./components/OpplysningBelopInput.tsx";
 import {useDokumentasjonTekster} from "../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
 import {BelopEnFormSchema, BelopEnFormValues} from "./schema/belopEnForm.ts";
 import {belopEnFormToGenericOkonomiInput} from "./lib/formToInputMappers.ts";
-import {BelopDto, GenericOkonomiInput, DokumentasjonDtoType} from "../../../generated/new/model";
+import {BelopDto, GenericOkonomiInput, DokumentasjonDtoType} from "../../../generated/model";
 
 const BelopEn = ({
     opplysningstype,

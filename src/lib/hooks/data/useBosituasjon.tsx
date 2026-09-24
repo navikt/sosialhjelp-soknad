@@ -1,10 +1,7 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {
-    useGetBosituasjon,
-    useUpdateBosituasjon,
-} from "../../../generated/new/bosituasjon-controller/bosituasjon-controller.ts";
-import type {BosituasjonDto, BosituasjonDtoBotype} from "../../../generated/new/model";
+import {useGetBosituasjon, useUpdateBosituasjon} from "../../../generated";
+import type {BosituasjonDto, BosituasjonDtoBotype} from "../../../generated/model";
 
 export const useBosituasjon = () => {
     const soknadId = useSoknadId();

@@ -4,7 +4,7 @@ import {BegrunnelseSchema, MAX_LEN_HVA, MAX_LEN_HVORFOR} from "./schema.ts";
 import {TranslatedError} from "../../lib/components/TranslatedError.tsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {BegrunnelseDto} from "../../generated/new/model/index.ts";
+import {BegrunnelseDto} from "../../generated/model/index.ts";
 import {useTranslation} from "react-i18next";
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/SkjemaStegErrorSummary.tsx";
 import {z} from "zod";

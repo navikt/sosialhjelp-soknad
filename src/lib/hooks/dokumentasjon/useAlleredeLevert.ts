@@ -1,8 +1,5 @@
-import {
-    useGetForventetDokumentasjon,
-    useUpdateDokumentasjonStatus,
-} from "../../../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
-import {DokumentasjonDtoType} from "../../../generated/new/model/index.ts";
+import {useGetForventetDokumentasjon, useUpdateDokumentasjonStatus} from "../../../generated";
+import {DokumentasjonDtoType} from "../../../generated/model";
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
 

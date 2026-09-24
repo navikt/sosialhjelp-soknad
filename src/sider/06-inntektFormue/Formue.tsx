@@ -6,7 +6,7 @@ import {MAX_CHARS, useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";
 import {UnmountClosed} from "react-collapse";
 import {useFormue} from "../../lib/hooks/data/useFormue";
 import LocalizedTextarea from "../../lib/components/LocalizedTextArea.tsx";
-import {FormueDto} from "../../generated/new/model";
+import {FormueDto} from "../../generated/model";
 
 export const Formue = () => {
     const {formue, setFormue, setBeskrivelse} = useFormue();

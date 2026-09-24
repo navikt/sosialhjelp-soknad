@@ -16,7 +16,7 @@ import BehovForm, {FormValues} from "./BehovForm.tsx";
 import KategorierForm, {FormValues as KategorierFormValues} from "./KategorierForm.tsx";
 import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
 import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
-import {DokumentasjonDtoType, HarKategorierInputKategorierItem} from "../../../generated/new/model";
+import {DokumentasjonDtoType, HarKategorierInputKategorierItem} from "../../../generated/model";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";

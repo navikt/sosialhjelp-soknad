@@ -5,7 +5,7 @@ import {OpplysningBelopInput} from "./components/OpplysningBelopInput.tsx";
 import {useDokumentasjonTekster} from "../../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
 import {bruttoNettoFormToLonnsInput} from "./lib/formToInputMappers.ts";
 import {BruttoNettoFormSchema, BruttoNettoFormValues} from "./schema/bruttoNettoForm.ts";
-import {DokumentasjonDtoType, LonnsInntektDto, LonnsInput} from "../../../generated/new/model";
+import {DokumentasjonDtoType, LonnsInntektDto, LonnsInput} from "../../../generated/model";
 
 const BruttoNetto = ({
     opplysningstype,

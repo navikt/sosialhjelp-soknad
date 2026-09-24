@@ -6,7 +6,7 @@ import {useUtbetalinger} from "../../lib/hooks/data/useUtbetalinger";
 import {MAX_CHARS, useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";
 import {UnmountClosed} from "react-collapse";
 import {NyttUnderskjema} from "../05-bosituasjon/NyttUnderskjema";
-import {UtbetalingerDto} from "../../generated/new/model";
+import {UtbetalingerDto} from "../../generated/model";
 
 type CheckboxValue = "utbytte" | "salg" | "forsikring" | "annet";
 export const CHECKBOX_VALUES: CheckboxValue[] = ["utbytte", "salg", "forsikring", "annet"];

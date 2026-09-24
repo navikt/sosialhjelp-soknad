@@ -3,7 +3,7 @@ import {Alert, BodyShort, Heading} from "@navikt/ds-react";
 import {erAktiv} from "../../../lib/navEnhetStatus";
 import {NavEnhetInaktiv} from "./NavEnhetInaktiv";
 import {useTranslations} from "next-intl";
-import {NavEnhetDto} from "../../../generated/new/model";
+import {NavEnhetDto} from "../../../generated/model";
 
 export const NavEnhet = ({navEnhet: {enhetsnavn, kommunenavn, ...navEnhet}}: {navEnhet: NavEnhetDto}) => {
     const t = useTranslations("NavEnhet");

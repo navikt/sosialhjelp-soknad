@@ -1,7 +1,7 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {useGetVerdier, useUpdateVerdier} from "../../../generated/new/verdi-controller/verdi-controller.ts";
-import {HarIkkeVerdierInput, HarVerdierInput, VerdierDto} from "../../../generated/new/model";
+import {useGetVerdier, useUpdateVerdier} from "../../../generated";
+import {HarIkkeVerdierInput, HarVerdierInput, VerdierDto} from "../../../generated/model";
 
 type UpdateVerdierBody = HarIkkeVerdierInput | HarVerdierInput;
 

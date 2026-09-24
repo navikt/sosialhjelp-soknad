@@ -1,7 +1,7 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosResponse, isCancel} from "axios";
 import digisosConfig from "../config";
 import getLogger from "@log/logger";
-import {SoknadApiError} from "../../generated/new/model";
+import {SoknadApiError} from "../../generated/model";
 
 const AXIOS_INSTANCE = Axios.create({
     baseURL: digisosConfig.baseURL,

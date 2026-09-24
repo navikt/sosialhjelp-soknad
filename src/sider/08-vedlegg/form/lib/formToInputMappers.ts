@@ -2,9 +2,7 @@ import {BelopBeskrivelseFormValues} from "../schema/belopBeskrivelseForm.ts";
 import {AvdragRenterFormValues} from "../schema/avdragRenterForm.ts";
 import {BelopEnFormValues} from "../schema/belopEnForm.ts";
 import {BruttoNettoFormValues} from "../schema/bruttoNettoForm.ts";
-import {LonnsInput} from "../../../../generated/new/model/lonnsInput.ts";
-import {GenericOkonomiInput} from "../../../../generated/new/model/genericOkonomiInput.ts";
-import {BoliglanInput} from "../../../../generated/new/model/boliglanInput.ts";
+import {LonnsInput, GenericOkonomiInput, BoliglanInput} from "../../../../generated/model";
 
 export const avdragRenterFormToBoliglanInput = (
     avdragRenter: AvdragRenterFormValues["avdragRenter"]

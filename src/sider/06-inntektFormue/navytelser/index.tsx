@@ -3,7 +3,7 @@ import {TextPlaceholder} from "../../../lib/components/animasjoner/TextPlacehold
 import {Alert, BodyShort, Heading} from "@navikt/ds-react";
 import {NavYtelserTable} from "./NavYtelserTable";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
-import {useGetNavYtelse} from "../../../generated/new/nav-ytelse-controller/nav-ytelse-controller.ts";
+import {useGetNavYtelse} from "../../../generated";
 import {useTranslations} from "next-intl";
 
 const useNavYtelser = () => {

@@ -1,12 +1,12 @@
-import {getUpdateOkonomiskOpplysningMutationOptions} from "../generated/new/okonomiske-opplysninger-controller/okonomiske-opplysninger-controller.ts";
 import {
+    getUpdateOkonomiskOpplysningMutationOptions,
+    getKonverterVedleggMutationOptions,
+    getUpdateAdresserMutationOptions,
     getCreateSoknadMutationOptions,
     getSendSoknadMutationOptions,
-} from "../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
-import {getKonverterVedleggMutationOptions} from "../generated/file-converter-controller/file-converter-controller.ts";
-import {getUpdateAdresserMutationOptions} from "../generated/new/adresse-controller/adresse-controller.ts";
+    getGetForventetDokumentasjonQueryKey,
+} from "../generated";
 import {MutationFunctionContext} from "@tanstack/react-query";
-import {getGetForventetDokumentasjonQueryKey} from "../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
 
 // List of mutation keys that do NOT require invalidation of forventetDokumentasjonQuery
 const nonInvalidatingMutationKeys: string[] = [

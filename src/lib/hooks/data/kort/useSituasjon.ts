@@ -1,10 +1,7 @@
 import {useSoknadId} from "../../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {
-    useGetSituasjonsendring,
-    useUpdateSituasjonsendring,
-} from "../../../../generated/new/situasjonsendring-controller/situasjonsendring-controller.ts";
-import {SituasjonsendringDto} from "../../../../generated/new/model/index.ts";
+import {useGetSituasjonsendring, useUpdateSituasjonsendring} from "../../../../generated";
+import {SituasjonsendringDto} from "../../../../generated/model";
 
 const useSituasjon = () => {
     const soknadId = useSoknadId();

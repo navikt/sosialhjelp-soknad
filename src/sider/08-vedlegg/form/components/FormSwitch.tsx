@@ -6,10 +6,7 @@ import BelopBeskrivelse from "../BelopBeskrivelse.tsx";
 import BruttoNetto from "../BruttoNetto.tsx";
 import BelopEn from "../BelopEn.tsx";
 import React from "react";
-import {DokumentasjonDtoType} from "../../../../generated/new/model/dokumentasjonDtoType.ts";
-import {AvdragRenterDto} from "../../../../generated/new/model/avdragRenterDto.ts";
-import {BelopDto} from "../../../../generated/new/model/belopDto.ts";
-import {LonnsInntektDto} from "../../../../generated/new/model/lonnsInntektDto.ts";
+import {DokumentasjonDtoType, AvdragRenterDto, BelopDto, LonnsInntektDto} from "../../../../generated/model";
 
 export const FormSwitch = ({opplysningstype}: {opplysningstype: DokumentasjonDtoType}) => {
     const {updateOkonomiskOpplysning, opplysning, isLoading} = useOkonomiskOpplysningMutation(opplysningstype);

@@ -7,7 +7,7 @@ import {AdresseSok} from "./AdresseSok";
 import cx from "classnames";
 import {useTranslation} from "react-i18next";
 import {HorizontalRadioGroup} from "../../../lib/components/form/HorizontalRadioGroup";
-import {AdresserDtoAdresseValg} from "../../../generated/new/model/adresserDtoAdresseValg.ts";
+import {AdresserDtoAdresseValg} from "../../../generated/model/adresserDtoAdresseValg.ts";
 import {useAdresser} from "./useAdresser.tsx";
 
 export const AdresseData = () => {

@@ -5,7 +5,7 @@ import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {erAktiv} from "../../lib/navEnhetStatus";
 import {NavEnhetInaktiv} from "../01-personalia/adresse/NavEnhetInaktiv";
-import {useGetAdresser} from "../../generated/new/adresse-controller/adresse-controller.ts";
+import {useGetAdresser} from "../../generated";
 
 const URL = "https://www.nav.no/personopplysninger-sosialhjelp";
 

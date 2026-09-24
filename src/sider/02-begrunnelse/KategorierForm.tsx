@@ -3,7 +3,7 @@ import KategorierChips from "../../lib/components/KategorierChips.tsx";
 import {TranslatedError} from "../../lib/components/TranslatedError.tsx";
 import {MAX_LEN_ANNET} from "./schema.ts";
 import LocalizedTextArea from "../../lib/components/LocalizedTextArea.tsx";
-import {KategorierDto} from "../../generated/new/model";
+import {KategorierDto} from "../../generated/model";
 import {CATEGORIES} from "../../lib/hooks/data/useKategorier.tsx";
 import {useTranslation} from "react-i18next";
 import useCategories, {defaultCategories} from "../../lib/hooks/data/useCategories.ts";
@@ -34,6 +34,7 @@ const KategorierForm = ({kategorier, onSubmit}: Props) => {
         },
     });
 
+    // eslint-disable-next-line react-hooks/incompatible-library
     const selectedCategories = watch("categories");
     const {toggle} = useCategories(
         selectedCategories,

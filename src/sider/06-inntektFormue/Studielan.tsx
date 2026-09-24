@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import YesNoInput from "../../lib/components/form/YesNoInput";
 import {SkalIkkeFinansiereStudier} from "./SkalIkkeFinansiereStudier";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
-import {useGetHasStudielan, useUpdateStudielan} from "../../generated/new/studielan-controller/studielan-controller.ts";
+import {useGetHasStudielan, useUpdateStudielan} from "../../generated";
 import {useQueryClient} from "@tanstack/react-query";
 import {TextPlaceholder} from "../../lib/components/animasjoner/TextPlaceholder.tsx";
 

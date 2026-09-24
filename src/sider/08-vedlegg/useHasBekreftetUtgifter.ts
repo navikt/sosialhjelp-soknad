@@ -1,6 +1,6 @@
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
-import {useGetBoutgifter} from "../../generated/new/boutgift-controller/boutgift-controller.ts";
-import {useGetBarneutgifter} from "../../generated/new/barneutgift-controller/barneutgift-controller.ts";
+import {useGetBoutgifter} from "../../generated";
+import {useGetBarneutgifter} from "../../generated";
 
 const useHasBekreftetUtgifter = () => {
     const soknadId = useSoknadId();

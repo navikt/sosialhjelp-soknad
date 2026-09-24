@@ -9,7 +9,7 @@ import {ForhandsvisningVedleggModal} from "../../upload/ForhandsvisningVedleggMo
 import {SUPPORTED_WITH_CONVERSION, SUPPORTED_WITHOUT_CONVERSION} from "../../upload/DokumentUploader";
 import {useVedlegg} from "../../hooks/dokumentasjon/useVedlegg";
 import {UploadedFileBox} from "./UploadedFileBox.tsx";
-import {DokumentasjonDtoType} from "../../../generated/new/model";
+import {DokumentasjonDtoType} from "../../../generated/model";
 import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
 
 type TranslationKeys = "begrunnelse.kort.behov.dokumentasjon.beskrivelse" | "situasjon.kort.dokumentasjon.description";

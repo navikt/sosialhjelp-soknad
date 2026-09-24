@@ -7,7 +7,7 @@ import {LocalizedDate} from "../../lib/components/LocalizedDate";
 import {FullName} from "../../lib/components/FullName.tsx";
 import {LocalizedYesNo} from "../../lib/components/LocalizedYesNo";
 import {BodyShort} from "@navikt/ds-react";
-import {useGetSivilstand} from "../../generated/new/sivilstand-controller/sivilstand-controller.ts";
+import {useGetSivilstand} from "../../generated";
 
 export const EktefellePersonaliaSystem = () => {
     const {t} = useTranslation("skjema");

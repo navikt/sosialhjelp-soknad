@@ -1,5 +1,5 @@
 import {useRef, useTransition} from "react";
-import {useSendSoknad as useSendSoknadMutation} from "../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
+import {useSendSoknad as useSendSoknadMutation} from "../../generated";
 import digisosConfig from "../../lib/config";
 import {useRouter} from "next/navigation";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";

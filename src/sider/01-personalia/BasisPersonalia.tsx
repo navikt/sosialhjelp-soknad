@@ -5,7 +5,7 @@ import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {useTranslation} from "react-i18next";
 import {formatFodselsnummer} from "@fremtind/jkl-formatters-util";
 import {BodyShort, Heading} from "@navikt/ds-react";
-import {useGetBasisPersonalia} from "../../generated/new/basis-personalia-controller/basis-personalia-controller.ts";
+import {useGetBasisPersonalia} from "../../generated";
 
 export const BasisPersonalia = () => {
     const {expectOK} = useAlgebraic(useGetBasisPersonalia(useSoknadId()));

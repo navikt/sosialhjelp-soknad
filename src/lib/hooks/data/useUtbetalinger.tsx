@@ -1,10 +1,7 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {
-    useGetUtbetalinger,
-    useUpdateUtbetalinger,
-} from "../../../generated/new/utbetaling-controller/utbetaling-controller.ts";
-import {type HarIkkeUtbetalingerInput, HarUtbetalingerInput, UtbetalingerDto} from "../../../generated/new/model";
+import {useGetUtbetalinger, useUpdateUtbetalinger} from "../../../generated";
+import {type HarIkkeUtbetalingerInput, HarUtbetalingerInput, UtbetalingerDto} from "../../../generated/model";
 import {CHECKBOX_VALUES} from "../../../sider/06-inntektFormue/Utbetalinger.tsx";
 import {useEffect, useState} from "react";
 

@@ -2,7 +2,7 @@ import {Table} from "@navikt/ds-react";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate";
 import * as React from "react";
 import {LocalizedCurrency} from "../../../lib/components/LocalizedCurrency";
-import {NavUtbetalingerDto} from "../../../generated/new/model";
+import {NavUtbetalingerDto} from "../../../generated/model";
 import {useTranslations} from "next-intl";
 
 export const NavYtelserTable = ({navUtbetalinger}: {navUtbetalinger: NavUtbetalingerDto[]}) => {

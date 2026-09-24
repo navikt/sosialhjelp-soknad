@@ -1,14 +1,7 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {
-    useGetBarneutgifter,
-    useUpdateBarneutgifter,
-} from "../../../generated/new/barneutgift-controller/barneutgift-controller.ts";
-import {
-    BarneutgifterDto,
-    type HarBarneutgifterInput,
-    type HarIkkeBarneutgifterInput,
-} from "../../../generated/new/model";
+import {useGetBarneutgifter, useUpdateBarneutgifter} from "../../../generated";
+import {BarneutgifterDto, type HarBarneutgifterInput, type HarIkkeBarneutgifterInput} from "../../../generated/model";
 
 type UpdateBarneutgifterBody = HarBarneutgifterInput | HarIkkeBarneutgifterInput;
 
