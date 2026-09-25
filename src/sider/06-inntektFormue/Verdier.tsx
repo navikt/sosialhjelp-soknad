@@ -7,7 +7,7 @@ import {useVerdier} from "../../lib/hooks/data/useVerdier";
 import {useBeskrivelse} from "../../lib/hooks/common/useBeskrivelse";
 import {UnmountClosed} from "react-collapse";
 import {NyttUnderskjema} from "../05-bosituasjon/NyttUnderskjema";
-import {VerdierDto} from "../../generated/new/model";
+import {VerdierDto} from "../../generated/model";
 
 export const Verdier = () => {
     const {verdier, setBekreftelse, setBeskrivelseAvAnnet, setVerdier} = useVerdier();

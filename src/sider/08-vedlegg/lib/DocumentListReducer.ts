@@ -1,4 +1,4 @@
-import {DokumentasjonDto, DokumentasjonDtoType, DokumentDto} from "../../../generated/new/model";
+import {DokumentasjonDto, DokumentasjonDtoType, DokumentDto} from "../../../generated/model";
 
 export type DocumentListState = {
     dokumentasjonType: DokumentasjonDtoType;

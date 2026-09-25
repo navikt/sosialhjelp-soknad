@@ -5,7 +5,7 @@ import {TrashIcon} from "@navikt/aksel-icons";
 import {Button} from "@navikt/ds-react";
 import digisosConfig from "../../lib/config";
 import {BekreftSlettDokumentModal} from "../../lib/components/modals/BekreftSlettDokumentModal";
-import {DokumentDto} from "../../generated/new/model";
+import {DokumentDto} from "../../generated/model";
 
 export const OpplastetVedlegg = ({
     onDelete,

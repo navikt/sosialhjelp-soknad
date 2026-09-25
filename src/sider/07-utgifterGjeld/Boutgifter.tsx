@@ -4,7 +4,7 @@ import {Trans, useTranslation} from "react-i18next";
 import {useBoutgifter} from "../../lib/hooks/data/useBoutgifter";
 import {useBosituasjon} from "../../lib/hooks/data/useBosituasjon.tsx";
 import {useInntekterBostotte} from "../../lib/hooks/data/useInntekterBostotte.tsx";
-import {BoutgifterDto} from "../../generated/new/model/index.ts";
+import {BoutgifterDto} from "../../generated/model/index.ts";
 
 export const Boutgifter = () => {
     const {t} = useTranslation("skjema");

@@ -1,7 +1,7 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {useGetBoutgifter, useUpdateBoutgifter} from "../../../generated/new/boutgift-controller/boutgift-controller.ts";
-import {BoutgifterDto, HarBoutgifterInput, HarIkkeBoutgifterInput} from "../../../generated/new/model";
+import {useGetBoutgifter, useUpdateBoutgifter} from "../../../generated";
+import {BoutgifterDto, HarBoutgifterInput, HarIkkeBoutgifterInput} from "../../../generated/model";
 
 type UpdateBoutgifterBody = HarBoutgifterInput | HarIkkeBoutgifterInput;
 

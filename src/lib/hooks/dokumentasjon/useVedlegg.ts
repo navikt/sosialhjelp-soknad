@@ -7,14 +7,15 @@ import {isSoknadApiError} from "../../api/error/isSoknadApiError";
 import {DigisosApiErrorMap} from "../../api/error/DigisosApiErrorMap";
 import {REST_FEIL} from "../../api/error/restFeil";
 import {humanizeFilesize} from "../../../sider/08-vedlegg/lib/humanizeFilesize";
-import {DokumentasjonDtoType} from "../../../generated/new/model";
-import {saveDokument, useDeleteDokument} from "../../../generated/new/dokument-controller/dokument-controller.ts";
-import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
-import {useQueryClient} from "@tanstack/react-query";
+import {DokumentasjonDtoType} from "../../../generated/model";
 import {
+    saveDokument,
+    useDeleteDokument,
     getGetForventetDokumentasjonQueryKey,
     useGetForventetDokumentasjon,
-} from "../../../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
+} from "../../../generated";
+import {useValgtKategoriContext} from "../../providers/KortKategorierContextProvider.tsx";
+import {useQueryClient} from "@tanstack/react-query";
 
 const TEN_MEGABYTE_COMPAT_FALLBACK = 10 * 1024 * 1024;
 

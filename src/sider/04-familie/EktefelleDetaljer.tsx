@@ -6,7 +6,7 @@ import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
 import {EktefellePersonaliaSystem} from "./EktefellePersonaliaSystem";
 import {EktefellerPlikterForsorge} from "./EktefellePlikterForsorge";
-import {useGetSivilstand} from "../../generated/new/sivilstand-controller/sivilstand-controller.ts";
+import {useGetSivilstand} from "../../generated";
 
 export const EktefelleDetaljer = () => {
     const {expectOK} = useAlgebraic(useGetSivilstand(useSoknadId()));

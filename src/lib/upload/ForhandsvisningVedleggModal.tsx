@@ -9,7 +9,7 @@ import {FilePreviewButtons} from "./FilePreviewButtons.tsx";
 import {FilePreviewDisplay} from "./FilePreviewDisplay.tsx";
 import {useCurrentSoknadIsKort} from "../components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useValgtKategoriContext} from "../providers/KortKategorierContextProvider.tsx";
-import {DokumentasjonDtoType} from "../../generated/new/model";
+import {DokumentasjonDtoType} from "../../generated/model";
 import {umamiTrack} from "../../app/umami.ts";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;

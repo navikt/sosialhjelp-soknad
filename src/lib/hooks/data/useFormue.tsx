@@ -1,7 +1,7 @@
 import {useQueryClient} from "@tanstack/react-query";
 import {useSoknadId} from "../common/useSoknadId.ts";
-import {useUpdateFormue, useGetFormue} from "../../../generated/new/formue-controller/formue-controller";
-import {FormueDto, FormueInput} from "../../../generated/new/model";
+import {useUpdateFormue, useGetFormue} from "../../../generated";
+import {FormueDto, FormueInput} from "../../../generated/model";
 
 function mapToDto(vars?: FormueInput): FormueDto | undefined {
     if (!vars) {

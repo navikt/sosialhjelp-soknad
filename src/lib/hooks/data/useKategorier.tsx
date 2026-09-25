@@ -1,7 +1,7 @@
 import {DigisosLanguageKey} from "../../i18n/common.ts";
 import {ExclamationmarkTriangleIcon, HouseIcon, LightningIcon} from "@navikt/aksel-icons";
 import Eple from "../../components/svg/illustrasjoner/Eple.tsx";
-import {KategorierDtoDefinerteItem} from "../../../generated/new/model";
+import {KategorierDtoDefinerteItem} from "../../../generated/model";
 
 interface Category {
     key: DigisosLanguageKey;

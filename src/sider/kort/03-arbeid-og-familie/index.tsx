@@ -13,7 +13,7 @@ import {ForsorgerPlikt} from "../../04-familie/ForsorgerPlikt.tsx";
 import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
-import {useGetArbeid} from "../../../generated/new/arbeid-controller/arbeid-controller.ts";
+import {useGetArbeid} from "../../../generated";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {umamiTrack} from "../../../app/umami.ts";

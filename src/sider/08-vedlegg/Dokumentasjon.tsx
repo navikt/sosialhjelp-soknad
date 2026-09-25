@@ -1,7 +1,7 @@
 import {BodyShort, Heading} from "@navikt/ds-react";
 import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
 import React from "react";
-import {DokumentasjonDtoType} from "../../generated/new/model";
+import {DokumentasjonDtoType} from "../../generated/model";
 import {Dokumenter} from "../../lib/upload/Dokumenter.tsx";
 import {FormSwitch} from "./form/components/FormSwitch.tsx";
 import {UploadByKategori} from "../../lib/upload/new/UploadByKategori.tsx";

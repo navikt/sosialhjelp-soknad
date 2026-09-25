@@ -3,7 +3,7 @@ import {useRouter} from "next/navigation";
 import digisosConfig from "../../config.ts";
 import {useEffect, useState} from "react";
 import getLogger from "@log/logger";
-import {getSessionInfo} from "../../../generated/informasjon-ressurs/informasjon-ressurs.ts";
+import {getSessionInfo} from "../../../generated";
 
 type SessionResponse = {session: {active?: boolean}};
 

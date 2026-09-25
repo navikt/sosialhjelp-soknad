@@ -4,11 +4,11 @@ import {BodyShort, Heading, Loader} from "@navikt/ds-react";
 import BelopBeskrivelse from "../../08-vedlegg/form/BelopBeskrivelse.tsx";
 import {FileUploadBoxNoStyle} from "../../../lib/components/fileupload/FileUploadBox.tsx";
 import React from "react";
-import {BelopDto} from "../../../generated/new/model";
+import {BelopDto} from "../../../generated/model";
 import {UploadByKategori} from "../../../lib/upload/new/UploadByKategori.tsx";
 import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
-import {DokumentasjonDtoType} from "../../../generated/new/model";
+import {DokumentasjonDtoType} from "../../../generated/model";
 import {DocumentProvider} from "../../../lib/upload/new/DocumentContext.tsx";
 
 export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_BRUKSKONTO"}) => {

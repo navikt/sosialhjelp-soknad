@@ -13,10 +13,8 @@ import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegBu
 import {useAnalyticsContext} from "../../../lib/providers/useAnalyticsContext.ts";
 import {useBegrunnelse} from "../../../lib/hooks/data/useBegrunnelse.tsx";
 import BehovForm, {FormValues} from "./BehovForm.tsx";
-import KategorierForm, {FormValues as KategorierFormValues} from "./KategorierForm.tsx";
-import {useContextFeatureToggles} from "../../../lib/providers/useContextFeatureToggles.ts";
 import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
-import {DokumentasjonDtoType, HarKategorierInputKategorierItem} from "../../../generated/new/model";
+import {DokumentasjonDtoType} from "../../../generated/model";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";
@@ -36,7 +34,6 @@ const Behov = () => {
     const {
         updateBegrunnelse,
         begrunnelse,
-        updateCategories,
         isLoading: isBegrunnelseLoading,
         invalidate: invalidateBegrunnelse,
     } = useBegrunnelse();
@@ -59,32 +56,6 @@ const Behov = () => {
 
     const isLoading = isBegrunnelseLoading || isSituasjonLoading;
 
-    const onSubmitKategorier = (formValues: KategorierFormValues) => {
-        if ((formValues.hvaErEndret ?? "") !== (data?.hvaErEndret ?? "")) {
-            updateSituasjonsendring({
-                hvaErEndret: formValues.hvaErEndret ?? undefined,
-                endring: !!formValues.hvaErEndret && formValues.hvaErEndret.trim() !== "",
-            });
-        }
-        if (
-            begrunnelse?.kategorier?.definerte.length !==
-                formValues.categories.filter((it) => it !== "NØDHJELP").length ||
-            begrunnelse?.kategorier.annet !== formValues.annet
-        ) {
-            updateCategories({
-                kategorier: formValues.categories.filter(
-                    (it) => it !== "NØDHJELP"
-                ) as HarKategorierInputKategorierItem[],
-                annet: formValues.annet ?? "",
-            });
-        }
-        const situasjonEndret = formValues.hvaErEndret?.trim() ? "Ja" : "Ikke utfylt";
-        setAnalyticsData({
-            situasjonEndret,
-            selectedKategorier: formValues.categories,
-        });
-    };
-
     const onSubmit = (formValues: FormValues) => {
         const situasjonEndret = formValues.hvaErEndret?.trim() ? "Ja" : "Ikke utfylt";
         const hvaErEndret = formValues.hvaErEndret ?? undefined;
@@ -97,8 +68,6 @@ const Behov = () => {
         });
     };
 
-    const featureFlagData = useContextFeatureToggles();
-    const isKategorierEnabled = featureFlagData?.["sosialhjelp.soknad.kategorier"] ?? false;
     const newUploadEnabled = useNewUploadEnabled();
 
     const contextId = `${soknadId}-${DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}-behov`;
@@ -115,19 +84,11 @@ const Behov = () => {
                         <ApplicationSpinner />
                     ) : (
                         <VStack gap={{sm: "space-48", lg: "space-64"}}>
-                            {isKategorierEnabled ? (
-                                <KategorierForm
-                                    kategorier={begrunnelse?.kategorier}
-                                    onSubmit={onSubmitKategorier}
-                                    hvaErEndret={data?.hvaErEndret ?? undefined}
-                                />
-                            ) : (
-                                <BehovForm
-                                    hvaErEndret={data?.hvaErEndret ?? undefined}
-                                    onSubmit={onSubmit}
-                                    hvaSokesOm={begrunnelse?.hvaSokesOm}
-                                />
-                            )}
+                            <BehovForm
+                                hvaErEndret={data?.hvaErEndret ?? undefined}
+                                onSubmit={onSubmit}
+                                hvaSokesOm={begrunnelse?.hvaSokesOm}
+                            />
                             {newUploadEnabled ? (
                                 <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
                                     <DocumentProvider contextId={contextId}>

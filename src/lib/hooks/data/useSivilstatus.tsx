@@ -6,11 +6,8 @@ import {
     Navn,
     SivilstandInput,
     SivilstandInputSivilstatus,
-} from "../../../generated/new/model";
-import {
-    useGetSivilstand,
-    useUpdateSivilstand,
-} from "../../../generated/new/sivilstand-controller/sivilstand-controller.ts";
+} from "../../../generated/model";
+import {useGetSivilstand, useUpdateSivilstand} from "../../../generated";
 import {useState} from "react";
 
 const tomtNavn: Navn = {

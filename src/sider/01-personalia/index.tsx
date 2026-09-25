@@ -17,7 +17,7 @@ import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
 import {mutationKey, useAdresser} from "./adresse/useAdresser.tsx";
 import {useIsMutating} from "@tanstack/react-query";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
-import {NavEnhetDto} from "../../generated/new/model";
+import {NavEnhetDto} from "../../generated/model";
 import {Heading} from "@navikt/ds-react";
 import {Telefon} from "./Telefon.tsx";
 import {umamiTrack} from "../../app/umami.ts";

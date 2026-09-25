@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {BodyShort, Heading as DSHeading} from "@navikt/ds-react";
 import {useAlgebraic} from "../../lib/hooks/common/useAlgebraic";
-import {useGetForsorgerplikt} from "../../generated/new/forsorgerplikt-controller/forsorgerplikt-controller.ts";
+import {useGetForsorgerplikt} from "../../generated";
 import {ReactNode} from "react";
 
 interface Props {

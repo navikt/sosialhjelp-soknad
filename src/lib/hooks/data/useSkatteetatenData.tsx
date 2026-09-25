@@ -2,11 +2,7 @@ import {useQueryClient} from "@tanstack/react-query";
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {isValid} from "date-fns";
 import {formatTidspunkt} from "../../utils";
-import {
-    useGetSkattbarInntekt,
-    useUpdateSamtykke,
-} from "../../../generated/new/inntekt-skattetaten-controller/inntekt-skattetaten-controller.ts";
-import {getGetForventetDokumentasjonQueryKey} from "../../../generated/new/dokumentasjon-controller/dokumentasjon-controller.ts";
+import {useGetSkattbarInntekt, useUpdateSamtykke, getGetForventetDokumentasjonQueryKey} from "../../../generated";
 
 export const useSkatteetatenData = () => {
     const queryClient = useQueryClient();

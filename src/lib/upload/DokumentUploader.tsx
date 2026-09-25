@@ -6,7 +6,7 @@ import {PlusIcon} from "@navikt/aksel-icons";
 import {PdfConversionError} from "./UploadError.tsx";
 import {usePDFConverter} from "../hooks/dokumentasjon/usePDFConverter.ts";
 import {useDokumentasjonTekster} from "../hooks/dokumentasjon/useDokumentasjonTekster.ts";
-import {DokumentasjonDtoType} from "../../generated/new/model";
+import {DokumentasjonDtoType} from "../../generated/model";
 
 export const SUPPORTED_WITHOUT_CONVERSION = ["image/jpeg", "image/png", "application/pdf"];
 export const SUPPORTED_WITH_CONVERSION = [

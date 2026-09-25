@@ -9,7 +9,7 @@ import {UploadError} from "./UploadError.tsx";
 import {AlreadyUploadedCheckbox} from "./AlreadyUploadedCheckbox.tsx";
 import {useDokumentasjonTekster} from "../hooks/dokumentasjon/useDokumentasjonTekster.ts";
 import {useVedlegg} from "../hooks/dokumentasjon/useVedlegg.ts";
-import {DokumentasjonDtoType} from "../../generated/new/model";
+import {DokumentasjonDtoType} from "../../generated/model";
 import useAlleredeLevert from "../hooks/dokumentasjon/useAlleredeLevert.ts";
 
 export const Dokumenter = ({opplysningstype}: {opplysningstype: DokumentasjonDtoType}) => {

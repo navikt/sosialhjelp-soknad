@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {DokumentasjonDtoType} from "../../generated/new/model";
+import {DokumentasjonDtoType} from "../../generated/model";
 
 interface ValgtKategoriData {
     valgtKategorier?: DokumentasjonDtoType;

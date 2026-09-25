@@ -12,7 +12,7 @@ import {SkjemaStegStepper} from "../../../lib/components/SkjemaSteg/SkjemaStegSt
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {useFormue} from "../../../lib/hooks/data/useFormue.tsx";
-import {DokumentasjonDtoType} from "../../../generated/new/model";
+import {DokumentasjonDtoType} from "../../../generated/model";
 import {KortDokumentasjon} from "./KortDokumentasjon.tsx";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";

@@ -1,11 +1,7 @@
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {
-    getGetAdresserQueryKey,
-    useGetAdresser,
-    useUpdateAdresser,
-} from "../../../generated/new/adresse-controller/adresse-controller.ts";
-import {AdresserInputAdresseValg, MatrikkelAdresse, VegAdresse} from "../../../generated/new/model";
+import {getGetAdresserQueryKey, useGetAdresser, useUpdateAdresser} from "../../../generated";
+import {AdresserInputAdresseValg, MatrikkelAdresse, VegAdresse} from "../../../generated/model";
 
 type AdresserInputBrukerAdresse = MatrikkelAdresse | VegAdresse;
 import {useState} from "react";

@@ -1,6 +1,6 @@
 import {erAktiv, erMidlDeaktivert} from "./navEnhetStatus";
 import {expect, test} from "vitest";
-import {NavEnhetDto} from "../generated/new/model";
+import {NavEnhetDto} from "../generated/model";
 
 const aktivNavEnhet: NavEnhetDto = {
     orgnummer: "12345",

@@ -10,7 +10,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 
 import {ValideringsFeilKode} from "../../lib/validering";
 import {DigisosLanguageKey} from "../../lib/i18n/common.ts";
-import {EktefelleDto, EktefelleInput, SivilstandDtoSivilstatus} from "../../generated/new/model";
+import {EktefelleDto, EktefelleInput, SivilstandDtoSivilstatus} from "../../generated/model";
 import getLogger from "@log/logger.ts";
 
 const SivilstatusSchema = z.object({

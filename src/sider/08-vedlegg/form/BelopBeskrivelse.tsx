@@ -9,7 +9,7 @@ import {OpplysningTextInput} from "./components/OpplysningTextInput.tsx";
 import {DokumentasjonTypesForVariant} from "../../../lib/opplysninger.ts";
 import {BelopBeskrivelseFormSchema, BelopBeskrivelseFormValues} from "./schema/belopBeskrivelseForm.ts";
 import {belopBeskrivelseFormToGenericOkonomiInput} from "./lib/formToInputMappers.ts";
-import {BelopDto, GenericOkonomiInput} from "../../../generated/new/model";
+import {BelopDto, GenericOkonomiInput} from "../../../generated/model";
 
 type Props = (
     | {

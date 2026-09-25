@@ -1,10 +1,7 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {
-    useGetBegrunnelse,
-    useUpdateBegrunnelse,
-} from "../../../generated/new/begrunnelse-controller/begrunnelse-controller.ts";
-import {BegrunnelseDto, type HarHvaSokesOmInput, HarKategorierInput} from "../../../generated/new/model";
+import {useGetBegrunnelse, useUpdateBegrunnelse} from "../../../generated";
+import {BegrunnelseDto, type HarHvaSokesOmInput} from "../../../generated/model";
 
 export const useBegrunnelse = () => {
     const soknadId = useSoknadId();
@@ -24,10 +21,6 @@ export const useBegrunnelse = () => {
         });
     };
 
-    const updateCategories = (kategorier: Omit<HarKategorierInput, "type">) => {
-        mutate({soknadId, data: {type: "HarKategorier", ...kategorier}});
-    };
-
     const begrunnelse: BegrunnelseDto | undefined = isPending
         ? {
               hvaSokesOm: variables.data.type === "HarHvaSokesOm" ? variables.data.hvaSokesOm : "",
@@ -39,5 +32,5 @@ export const useBegrunnelse = () => {
           }
         : data;
 
-    return {begrunnelse, updateBegrunnelse, updateCategories, isLoading, isError, invalidate};
+    return {begrunnelse, updateBegrunnelse, isLoading, isError, invalidate};
 };

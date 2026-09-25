@@ -2,7 +2,7 @@ import {AdresseForslag} from "../../../generated/model";
 import {AdresseTypeahead} from "./AdresseTypeaheadDownshift";
 import * as React from "react";
 import styled from "styled-components";
-import {MatrikkelAdresse, VegAdresse} from "../../../generated/new/model";
+import {MatrikkelAdresse, VegAdresse} from "../../../generated/model";
 
 type AdresserInputBrukerAdresse = MatrikkelAdresse | VegAdresse;
 

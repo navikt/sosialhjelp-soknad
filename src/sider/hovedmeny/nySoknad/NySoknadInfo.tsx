@@ -4,10 +4,10 @@ import {useState, useTransition} from "react";
 import {NySoknadVelkomst} from "./NySoknadVelkomst.tsx";
 import {useTranslations} from "next-intl";
 import {SoknadstypeValg} from "./SoknadstypeValg.tsx";
-import {useCreateSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
+import {useCreateSoknad} from "../../../generated";
 import {useRouter} from "next/navigation";
 import {umamiTrack} from "../../../app/umami.ts";
-import {useHentAntallInnsendteSoknader} from "../../../generated/mine-saker-metadata-ressurs/mine-saker-metadata-ressurs.ts";
+import {useHentAntallInnsendteSoknader} from "../../../generated";
 import {InnsendteSoknaderVarsel} from "../../../lib/components/InnsendteSoknaderVarsel.tsx";
 
 export const NySoknadInfo = () => {

@@ -1,17 +1,8 @@
 import {useSoknadId} from "../common/useSoknadId.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import {useGetUtdanning, useUpdateUtdanning} from "../../../generated/new/utdanning-controller/utdanning-controller.ts";
-import {
-    useGetArbeid,
-    useUpdateKommentarArbeidsforhold,
-} from "../../../generated/new/arbeid-controller/arbeid-controller.ts";
-import {
-    ArbeidDto,
-    ArbeidInput,
-    IkkeStudentInput,
-    StudentgradInput,
-    UtdanningDto,
-} from "../../../generated/new/model/index.ts";
+import {useGetUtdanning, useUpdateUtdanning} from "../../../generated";
+import {useGetArbeid, useUpdateKommentarArbeidsforhold} from "../../../generated";
+import {ArbeidDto, ArbeidInput, IkkeStudentInput, StudentgradInput, UtdanningDto} from "../../../generated/model";
 
 type UpdateUtdanningBody = IkkeStudentInput | StudentgradInput;
 

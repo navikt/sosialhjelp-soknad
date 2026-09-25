@@ -1,7 +1,7 @@
 import * as R from "remeda";
 import {FileObject} from "@navikt/ds-react";
 import {useState} from "react";
-import {DokumentasjonDtoType} from "../../../generated/new/model";
+import {DokumentasjonDtoType} from "../../../generated/model";
 import {useDocumentContext} from "./DocumentContext.tsx";
 import {uploadFile} from "./tusUpload.ts";
 import {UploadStatus} from "./openEventChannel.ts";

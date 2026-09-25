@@ -3,7 +3,7 @@ import {HusbankenUtbetalinger} from "./HusbankenUtbetalinger";
 import {Heading, Link} from "@navikt/ds-react";
 import {HusbankenSaker, MonkeypatchedJsonBostotteSak} from "./HusbankenSaker";
 import * as React from "react";
-import {BostotteDto} from "../../../generated/new/model";
+import {BostotteDto} from "../../../generated/model";
 
 export const BostotteDataVisning = ({bostotte}: {bostotte: BostotteDto}) => {
     const {t} = useTranslation("skjema");

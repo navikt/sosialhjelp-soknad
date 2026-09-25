@@ -1,5 +1,5 @@
 import {useDokumentasjonTekster} from "../../hooks/dokumentasjon/useDokumentasjonTekster.ts";
-import {DokumentasjonDtoType} from "../../../generated/new/model";
+import {DokumentasjonDtoType} from "../../../generated/model";
 import {VedleggUpload} from "./VedleggUpload.tsx";
 import React from "react";
 

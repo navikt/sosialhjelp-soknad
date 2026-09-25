@@ -1,5 +1,5 @@
 import {DokumentasjonTexts} from "../types";
-import {type DokumentasjonDtoType} from "../../generated/new/model";
+import {type DokumentasjonDtoType} from "../../generated/model";
 
 export const dokumentasjon: Record<DokumentasjonDtoType, DokumentasjonTexts> = {
     JOBB: {

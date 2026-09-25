@@ -2,7 +2,7 @@ import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {Alert, BodyShort, Link} from "@navikt/ds-react";
 import * as React from "react";
 import {useTranslations} from "next-intl";
-import {useGetAdresser} from "../../../generated/new/adresse-controller/adresse-controller.ts";
+import {useGetAdresser} from "../../../generated";
 
 export const NavEnhetInaktiv = () => {
     const t = useTranslations("NavEnhetInaktiv");

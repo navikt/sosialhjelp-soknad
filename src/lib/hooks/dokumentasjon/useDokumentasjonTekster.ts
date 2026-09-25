@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
 import {opplysningSpec, formVariants} from "../../opplysninger";
 import {DokumentasjonTexts} from "../../../locales/types";
-import type {DokumentasjonDtoType} from "../../../generated/new/model";
+import type {DokumentasjonDtoType} from "../../../generated/model";
 
 /**
  * Skiller ut i18n-tekstbehandling til en hook slik at det lettere lar seg gjøre å

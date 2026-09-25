@@ -8,7 +8,7 @@ import {TrashIcon} from "@navikt/aksel-icons";
 import {useTranslation} from "react-i18next";
 import {FilIllustrasjon} from "../svg/illustrasjoner/FilIllustrasjon.tsx";
 import styled from "styled-components";
-import {DokumentDto} from "../../../generated/new/model";
+import {DokumentDto} from "../../../generated/model";
 
 const StyledCircle = styled.div`
     display: flex;

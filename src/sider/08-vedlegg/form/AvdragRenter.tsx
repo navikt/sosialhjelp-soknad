@@ -5,7 +5,7 @@ import {AvdragRenterInputList} from "./AvdragRenterInputList.tsx";
 import {DokumentasjonTypesForVariant} from "../../../lib/opplysninger.ts";
 import {AvdragRenterFormSchema, AvdragRenterFormValues} from "./schema/avdragRenterForm.ts";
 import {avdragRenterFormToBoliglanInput} from "./lib/formToInputMappers.ts";
-import {AvdragRenterDto, BoliglanInput} from "../../../generated/new/model";
+import {AvdragRenterDto, BoliglanInput} from "../../../generated/model";
 
 const AvdragRenter = ({
     mutate,

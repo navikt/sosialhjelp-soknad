@@ -5,7 +5,7 @@ import {faro} from "@grafana/faro-react";
 import {TrashIcon} from "@navikt/aksel-icons";
 import {useSoknadId} from "../../hooks/common/useSoknadId.ts";
 import digisosConfig from "../../config";
-import {useDeleteSoknad} from "../../../generated/new/soknad-lifecycle-controller/soknad-lifecycle-controller.ts";
+import {useDeleteSoknad} from "../../../generated";
 import getLogger from "@log/logger.ts";
 
 export const AvbrytSoknadModal = ({open, onClose}: {open: boolean; onClose: () => void}) => {
