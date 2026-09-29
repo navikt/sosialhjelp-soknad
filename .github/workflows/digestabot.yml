@@ -1,0 +1,119 @@
+name: "Digestabot – oppdater wonderwall-digest"
+
+# Sjekker daglig (hverdager) om Nais har publisert et nytt wonderwall-bygg
+# (:latest peker på ny digest), oppretter PR, auto-merger og deployer.
+#
+# Merge og deploy skjer i samme workflow-run (egne jobber, koblet med
+# "needs"), IKKE via en separat push-trigget workflow. Årsak: GITHUB_TOKEN
+# trigger ikke nye workflow-runs (anti-rekursjon), så en separat
+# "on: push"-workflow ville sannsynligvis aldri kjørt etter en bot-utført
+# merge. Å holde alt i én kjøring omgår problemet helt.
+#
+# Samme mønster som sosialhjelp-wonderwall sin digestabot.yml, tilpasset
+# denne repoens katalogstruktur (wonderwall/<env>/wonderwall.yml, 4 miljøer)
+# og eksisterende deploy-versjon (nais/deploy v2, uten APIKEY - se
+# redeploy_wonderwall.yml).
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * 1-5" # 08:00 UTC = 09:00 norsk tid, mandag–fredag
+
+# Kø fremfor kansellering: en manuell workflow_dispatch mens cron-kjøringen
+# allerede pågår (eller en dobbeltfyrt cron) skal ikke kunne race en
+# pågående deploy.
+concurrency:
+  group: digestabot-wonderwall
+  cancel-in-progress: false
+
+jobs:
+  digest-update:
+    name: "Sjekk digest og merge PR"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      merged: ${{ steps.merge.outputs.merged }}
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+
+      - name: "Sjekk for ny digest og opprett PR ved behov"
+        id: digestabot
+        uses: navikt/digestabot@3302a753e533ceb9ec216de7f78345436cd636e3 # v1.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          working-dir: wonderwall
+          branch-for-pr: update-wonderwall-digest
+          title-for-pr: "Oppdater wonderwall-digest"
+          commit-message: "Oppdater wonderwall-digest"
+
+      - name: "Vent til PR er mergeable, merge deretter"
+        id: merge
+        if: steps.digestabot.outputs.pull_request_number != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.digestabot.outputs.pull_request_number }}
+        run: |
+          mergeable=false
+          for i in 1 2 3 4 5; do
+            state=$(gh pr view "$PR_NUMBER" --json mergeStateStatus --jq .mergeStateStatus)
+            echo "Forsøk $i: mergeStateStatus=$state"
+            if [ "$state" = "CLEAN" ] || [ "$state" = "MERGEABLE" ] || [ "$state" = "UNSTABLE" ]; then
+              mergeable=true
+              break
+            fi
+            sleep 5
+          done
+
+          if [ "$mergeable" = false ]; then
+            echo "::warning::PR #$PR_NUMBER ble ikke mergeable innen forventet tid, prøver likevel"
+          fi
+
+          if gh pr merge "$PR_NUMBER" --squash --delete-branch; then
+            echo "merged=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::Klarte ikke å merge PR #$PR_NUMBER"
+            echo "merged=false" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
+
+  deploy:
+    name: "Deploy oppdatert wonderwall-digest"
+    needs: digest-update
+    if: needs.digest-update.outputs.merged == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        env: [ dev, mock, preprod, prod ]
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      # Henter main på nytt (ikke gjenbruk av digest-update sin checkout),
+      # slik at vi garantert deployer det som faktisk er merget, uansett
+      # hva peter-evans/create-pull-request (brukt internt av digestabot)
+      # etterlot i sin egen jobbs arbeidstre.
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: "Set cluster based on env"
+        run: |
+          if [ "${{ matrix.env }}" = "prod" ]; then
+            echo "CLUSTER=prod-gcp" >> $GITHUB_ENV
+          else
+            echo "CLUSTER=dev-gcp" >> $GITHUB_ENV
+          fi
+
+      - name: "Deploy ${{ matrix.env }} til ${{ env.CLUSTER }}"
+        uses: nais/deploy/actions/deploy@1de80da70ad26556ecdc5964a8b7ec3bbed98120 # v2
+        env:
+          RESOURCE: wonderwall/${{ matrix.env }}/wonderwall.yml
+          CLUSTER: ${{ env.CLUSTER }}
+          REF: main
+          PRINT_PAYLOAD: true
