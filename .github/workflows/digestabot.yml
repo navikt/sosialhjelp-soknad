@@ -18,7 +18,7 @@ name: "Digestabot – oppdater wonderwall-digest"
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 8 * * 1-5" # 08:00 UTC = 09:00 norsk tid, mandag–fredag
+    - cron: "0 8 * * 2" # 08:00 UTC = 09:00 (vinter) / 10:00 (sommer) norsk tid, tirsdag
 
 # Kø fremfor kansellering, for å unngå at to samtidige kjøringer racer
 # en pågående deploy.
