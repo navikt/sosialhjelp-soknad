@@ -1,27 +1,27 @@
 name: "Digestabot – oppdater wonderwall-digest"
 
+# Automatiserer sikkerhetsoppdateringer av wonderwall (DSOS-735): sjekker
+# jevnlig etter nye Nais-bygg og ruller dem ut uten manuelt arbeid.
+#
 # Merge og deploy skjer i samme jobb, ikke separat push-trigget workflow:
 # GITHUB_TOKEN trigger ikke nye workflow-runs, så en egen deploy-workflow
 # ville sannsynligvis aldri kjørt etter en bot-utført merge.
 #
-# Governance: auto-merger og auto-deployer uten manuell PR-godkjenning
-# (ingen branch protection er satt opp). Valgt bort til fordel for lav
-# friksjon og for å slippe å følge manuelt med på nye Nais-bygg av
-# wonderwall. Se DSOS-735 for full vurdering.
+# Auto-merger uten manuell PR-godkjenning (ingen branch protection er
+# satt opp) - et bevisst valg for lavest mulig friksjon, siden hele
+# poenget er å slippe å følge manuelt med på nye bygg.
 #
 # Samme mønster som sosialhjelp-wonderwall sin digestabot.yml, tilpasset
-# denne repoens katalogstruktur (wonderwall/<env>/wonderwall.yml, 4 miljøer)
-# og eksisterende deploy-versjon (nais/deploy v2, uten APIKEY - se
-# redeploy_wonderwall.yml).
+# denne repoens katalogstruktur og eksisterende deploy-versjon
+# (se redeploy_wonderwall.yml).
 
 on:
   workflow_dispatch:
   schedule:
     - cron: "0 8 * * 1-5" # 08:00 UTC = 09:00 norsk tid, mandag–fredag
 
-# Kø fremfor kansellering: en manuell workflow_dispatch mens cron-kjøringen
-# allerede pågår (eller en dobbeltfyrt cron) skal ikke kunne race en
-# pågående deploy.
+# Kø fremfor kansellering, for å unngå at to samtidige kjøringer racer
+# en pågående deploy.
 concurrency:
   group: digestabot-wonderwall
   cancel-in-progress: false
@@ -93,12 +93,6 @@ jobs:
       contents: read
       id-token: write
     steps:
-      # Ingen "ref:" overstyring: jobber kjører på egne, isolerte VM-er, så
-      # det er ingen arbeidstre å "gjenbruke" fra digest-update i utgangs-
-      # punktet. Default checkout-ref følger alltid det workflowen faktisk
-      # ble trigget med (main ved vanlig schedule-kjøring, riktig branch
-      # ved manuell workflow_dispatch-testing) - å hardkode "main" her
-      # ville deployet feil innhold ved testing på en annen branch.
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
