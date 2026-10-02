@@ -1,13 +1,13 @@
 name: "Digestabot – oppdater wonderwall-digest"
 
-# Sjekker daglig (hverdager) om Nais har publisert et nytt wonderwall-bygg
-# (:latest peker på ny digest), oppretter PR, auto-merger og deployer.
+# Merge og deploy skjer i samme jobb, ikke separat push-trigget workflow:
+# GITHUB_TOKEN trigger ikke nye workflow-runs, så en egen deploy-workflow
+# ville sannsynligvis aldri kjørt etter en bot-utført merge.
 #
-# Merge og deploy skjer i samme workflow-run (egne jobber, koblet med
-# "needs"), IKKE via en separat push-trigget workflow. Årsak: GITHUB_TOKEN
-# trigger ikke nye workflow-runs (anti-rekursjon), så en separat
-# "on: push"-workflow ville sannsynligvis aldri kjørt etter en bot-utført
-# merge. Å holde alt i én kjøring omgår problemet helt.
+# Governance: auto-merger og auto-deployer uten manuell PR-godkjenning
+# (ingen branch protection er satt opp). Valgt bort til fordel for lav
+# friksjon og for å slippe å følge manuelt med på nye Nais-bygg av
+# wonderwall. Se DSOS-735 for full vurdering.
 #
 # Samme mønster som sosialhjelp-wonderwall sin digestabot.yml, tilpasset
 # denne repoens katalogstruktur (wonderwall/<env>/wonderwall.yml, 4 miljøer)
@@ -93,13 +93,14 @@ jobs:
       contents: read
       id-token: write
     steps:
-      # Henter main på nytt (ikke gjenbruk av digest-update sin checkout),
-      # slik at vi garantert deployer det som faktisk er merget, uansett
-      # hva peter-evans/create-pull-request (brukt internt av digestabot)
-      # etterlot i sin egen jobbs arbeidstre.
+      # Ingen "ref:" overstyring: jobber kjører på egne, isolerte VM-er, så
+      # det er ingen arbeidstre å "gjenbruke" fra digest-update i utgangs-
+      # punktet. Default checkout-ref følger alltid det workflowen faktisk
+      # ble trigget med (main ved vanlig schedule-kjøring, riktig branch
+      # ved manuell workflow_dispatch-testing) - å hardkode "main" her
+      # ville deployet feil innhold ved testing på en annen branch.
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
-          ref: main
           persist-credentials: false
 
       - name: "Set cluster based on env"
@@ -115,5 +116,5 @@ jobs:
         env:
           RESOURCE: wonderwall/${{ matrix.env }}/wonderwall.yml
           CLUSTER: ${{ env.CLUSTER }}
-          REF: main
+          REF: ${{ github.sha }}
           PRINT_PAYLOAD: true
