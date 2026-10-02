@@ -3659,7 +3659,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/SoknadApiError"
+                  "type": "object"
                 }
               }
             }
@@ -6769,7 +6769,6 @@
             ]
           },
           "brukerAdresse": {
-            "type": "null",
             "oneOf": [
               {
                 "$ref": "#/components/schemas/MatrikkelAdresse"
@@ -6947,7 +6946,6 @@
             ]
           },
           "folkeregistrertAdresse": {
-            "type": "null",
             "oneOf": [
               {
                 "$ref": "#/components/schemas/MatrikkelAdresse"
@@ -6964,7 +6962,6 @@
             ]
           },
           "midlertidigAdresse": {
-            "type": "null",
             "oneOf": [
               {
                 "$ref": "#/components/schemas/MatrikkelAdresse"
@@ -6981,7 +6978,6 @@
             ]
           },
           "brukerAdresse": {
-            "type": "null",
             "oneOf": [
               {
                 "$ref": "#/components/schemas/MatrikkelAdresse"

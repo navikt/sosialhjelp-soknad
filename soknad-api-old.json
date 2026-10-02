@@ -194,6 +194,90 @@
         ]
       }
     },
+    "/admin/soknad/{soknadId}/resolve": {
+      "post": {
+        "operationId": "resolveApplication",
+        "parameters": [
+          {
+            "name": "soknadId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "admin-controller"
+        ]
+      }
+    },
     "/soknader/{soknadId}/oppsummering": {
       "get": {
         "operationId": "getOppsummering",
@@ -946,6 +1030,89 @@
           "ditt-nav-metadata-ressurs"
         ]
       }
+    },
+    "/admin/unresolved": {
+      "get": {
+        "operationId": "hentIkkeMottattSoknader",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IkkeMottattSoknadDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnsendingFeiletError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "admin-controller"
+        ]
+      }
     }
   },
   "components": {
@@ -1492,6 +1659,51 @@
           "sistOppdatert",
           "soknadId",
           "tekst"
+        ]
+      },
+      "IkkeMottattSoknadDto": {
+        "type": "object",
+        "properties": {
+          "innsendtTidspunkt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "soknadId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "digisosId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kommunenummer": {
+            "type": "string"
+          },
+          "soknadType": {
+            "type": "string",
+            "enum": [
+              "STANDARD",
+              "KORT"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "OPPRETTET",
+              "INNSENDING_FEILET",
+              "SENDT",
+              "MOTTATT_FSL",
+              "MANUELT_KVITTERT_UT"
+            ]
+          }
+        },
+        "required": [
+          "digisosId",
+          "innsendtTidspunkt",
+          "kommunenummer",
+          "soknadId",
+          "soknadType",
+          "status"
         ]
       }
     }
