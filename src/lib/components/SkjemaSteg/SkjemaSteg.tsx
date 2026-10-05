@@ -50,7 +50,7 @@ export const SkjemaSteg = ({children}: {children?: ReactNode | ReactNode[]}) => 
             <Link href="#main-content" className="sr-only sr-only-focusable">
                 {t("hoppTilHovedinnhold")}
             </Link>
-            <div className="pb-4 lg:pb-40 flex gap-10 items-center flex-col">
+            <div className="pb-4 lg:pb-40 flex gap-6 items-center flex-col">
                 <AppHeader />
                 <Box
                     as={"main"}
