@@ -50,9 +50,6 @@ const Feilmelding = ({error}: {error: ErrorType<InnsendingError>}) => {
                 </Heading>
                 <BodyLong>{t("soknad.soknadKanIkkeSendes.infotekst")}</BodyLong>
                 <br />
-                <Heading level={"3"} size={"small"}>
-                    {t("soknad.soknadKanIkkeSendes.nodssituasjon")}
-                </Heading>
                 <BodyShort>
                     <Trans
                         t={t}

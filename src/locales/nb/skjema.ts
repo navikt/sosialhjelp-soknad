@@ -1568,11 +1568,11 @@ export const skjema = {
             generelt: "Kontakt <lenke>ditt Nav-kontor</lenke> eller ring oss på 55 55 33 33.",
         },
         soknadKanIkkeSendes: {
-            overskrift: "Feil ved innsendelse",
+            overskrift: "Beklager, noe gikk galt",
             infotekst:
-                "Det oppstod en feil, og søknaden ble ikke sendt inn. Vi anbefaler at du sletter søknaden og sender inn en ny. Vi beklager ulempene dette medfører.",
-            nodssituasjon: "Er du i en nødssituasjon?",
-            generelt: "Kontakt <lenke>ditt Nav-kontor</lenke> eller ring oss på 55 55 33 33.",
+                "Det oppstod en teknisk feil, og søknaden ble ikke sendt inn. Vi anbefaler at du sletter søknaden og sender inn en ny. Vi beklager ulempene dette medfører.",
+            generelt:
+                "Har du ikke penger til mat, bolig eller strøm det neste døgnet, ber vi deg ta kontakt med <lenke>ditt Nav-kontor</lenke> eller ring oss på 55 55 33 33.",
         },
     },
     soknadsmottaker: {

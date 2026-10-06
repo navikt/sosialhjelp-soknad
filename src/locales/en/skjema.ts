@@ -1570,11 +1570,11 @@ export const skjema = {
             generelt: "Contact <lenke>your local Nav office</lenke> or call us at 55 55 33 33.",
         },
         soknadKanIkkeSendes: {
-            overskrift: "Error while sending the application",
+            overskrift: "Sorry, something went wrong",
             infotekst:
-                "Your application cannot be submitted as it is now. Trying again will not help. Contact your Nav office for help submitting your application.",
-            nodssituasjon: "Are you in an emergency?",
-            generelt: "Contact <lenke>your local Nav office</lenke> or call us at 55 55 33 33.",
+                "A technical error occurred, and your application was not submitted. We recommend that you delete the application and start a new one. We’re sorry for the inconvenience.",
+            generelt:
+                "If you do not have enough money for food, housing or electricity for the next 24 hours, please contact <lenke>your local Nav office</lenke> or call us at 55 55 33 33.",
         },
     },
     soknadsmottaker: {
