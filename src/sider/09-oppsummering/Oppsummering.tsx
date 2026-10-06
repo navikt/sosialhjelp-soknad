@@ -1,8 +1,8 @@
-import {Alert, BodyLong, BodyShort, Heading, Link} from "@navikt/ds-react";
+import {Alert} from "@navikt/ds-react";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
-import {Trans, useTranslation} from "react-i18next";
+import {useTranslation} from "react-i18next";
 import {useGetOppsummering, useHentAntallInnsendteSoknader} from "../../generated";
 import {OppsummeringSteg} from "./OppsummeringSteg";
 import {useSendSoknad} from "./useSendSoknad";
@@ -13,93 +13,8 @@ import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepp
 import React from "react";
 import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
-import {isAxiosError} from "axios";
-import {InnsendingFeiletError, SendSoknad400, SoknadApiError, UnauthorizedMelding} from "../../generated/model";
-import {SoknadApiErrorError} from "../../generated/model";
-import {ErrorType} from "../../lib/api/axiosInstance.ts";
+import {InnsendingFeilmelding} from "./InnsendingFeilmelding";
 import {InnsendteSoknaderVarsel, resolveInnsendingBlocked} from "../../lib/components/InnsendteSoknaderVarsel.tsx";
-
-type InnsendingError = SendSoknad400 | UnauthorizedMelding | SoknadApiError | InnsendingFeiletError | null;
-
-function extractDeletionDate(error: ErrorType<InnsendingError>) {
-    if (isAxiosError<InnsendingFeiletError>(error)) {
-        const deletionDate = error.response?.data?.deletionDate;
-        if (deletionDate) {
-            return deletionDate;
-        }
-    }
-}
-
-/**
- * Søknaden er i en tilstand FIKS aldri vil kunne motta (400). Retry hjelper ikke, så brukeren
- * skal ikke få beskjed om å prøve igjen senere slik som ved forbigående feil (500).
- */
-function isBrokenSoknad(error: ErrorType<InnsendingError>) {
-    return isAxiosError<SoknadApiError>(error) && error.response?.data?.error === SoknadApiErrorError.BrokenSoknad;
-}
-
-const Feilmelding = ({error}: {error: ErrorType<InnsendingError>}) => {
-    const {t} = useTranslation("skjema");
-    const deletionDate = extractDeletionDate(error);
-
-    if (isBrokenSoknad(error)) {
-        return (
-            <>
-                <Heading level={"3"} size={"small"} spacing>
-                    {t("soknad.soknadKanIkkeSendes.overskrift")}
-                </Heading>
-                <BodyLong>{t("soknad.soknadKanIkkeSendes.infotekst")}</BodyLong>
-                <br />
-                <BodyShort>
-                    <Trans
-                        t={t}
-                        i18nKey={"soknad.soknadKanIkkeSendes.generelt"}
-                        components={{
-                            lenke: (
-                                <Link
-                                    href="https://www.nav.no/sok-nav-kontor"
-                                    target="_blank"
-                                    rel="noreferrer noopener"
-                                >
-                                    {null}
-                                </Link>
-                            ),
-                        }}
-                    />
-                </BodyShort>
-            </>
-        );
-    }
-
-    return (
-        <>
-            <Heading level={"3"} size={"small"} spacing>
-                {t("soknad.innsendingFeilet.overskrift")}
-            </Heading>
-            <BodyLong>{t("soknad.innsendingFeilet.infotekst1")}</BodyLong>
-            {deletionDate && (
-                <BodyLong>{t("soknad.innsendingFeilet.infotekst2", {deletionDate: deletionDate})}</BodyLong>
-            )}
-            <br />
-            <Heading level={"3"} size={"small"}>
-                {t("soknad.innsendingFeilet.nodssituasjon")}
-            </Heading>
-            <BodyShort>
-                <Trans
-                    t={t}
-                    i18nKey={"soknad.innsendingFeilet.generelt"}
-                    components={{
-                        lenke: (
-                            <Link href="https://www.nav.no/sok-nav-kontor" target="_blank" rel="noreferrer noopener">
-                                {null}
-                            </Link>
-                        ),
-                    }}
-                />
-            </BodyShort>
-        </>
-    );
-};
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
@@ -131,7 +46,7 @@ export const Oppsummering = () => {
                     <SoknadsmottakerInfoPanel />
                     {error && (
                         <Alert variant="error" className="mt-4">
-                            <Feilmelding error={error} />
+                            <InnsendingFeilmelding error={error} />
                         </Alert>
                     )}
                 </div>
