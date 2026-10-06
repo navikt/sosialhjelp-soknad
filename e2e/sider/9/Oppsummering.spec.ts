@@ -2,6 +2,8 @@ import {test, expect} from "@playwright/test";
 import {AntallInnsendteSoknaderDto, Oppsummering} from "../../../src/generated/model";
 import {
     AdresserDto,
+    InnsendingFeiletError,
+    InnsendingFeiletErrorType,
     SoknadApiError,
     SoknadApiErrorError,
     SoknadApiErrorResponseType,
@@ -9,7 +11,7 @@ import {
 
 const TEST_SOKNAD_ID = "d33f8757-3182-4fa3-b273-5d26c5974fd7";
 
-test("should display the specific error message when submission fails with BrokenSoknad", async ({page}) => {
+test.beforeEach(async ({page}) => {
     await page.route("**/informasjon/session", async (route) => {
         await route.fulfill({
             status: 200,
@@ -56,7 +58,9 @@ test("should display the specific error message when submission fails with Broke
             body: JSON.stringify({antall: 0, maxAntall: 3} satisfies AntallInnsendteSoknaderDto),
         });
     });
+});
 
+test("should display the specific error message when submission fails with BrokenSoknad", async ({page}) => {
     await page.route(`**/soknad/${TEST_SOKNAD_ID}/send`, async (route) => {
         expect(route.request().method()).toBe("POST");
         await route.fulfill({
@@ -88,4 +92,42 @@ test("should display the specific error message when submission fails with Broke
     );
     await expect(page.getByRole("heading", {name: "Feil ved innsendelse"})).not.toBeVisible();
     await expect(oppsummering).not.toContainText("prøve igjen senere");
+});
+
+test("should display the general error message when submission fails with InnsendingFeilet", async ({page}) => {
+    const deletionDate = "20.10.2026";
+
+    await page.route(`**/soknad/${TEST_SOKNAD_ID}/send`, async (route) => {
+        expect(route.request().method()).toBe("POST");
+        await route.fulfill({
+            status: 500,
+            contentType: "application/json",
+            body: JSON.stringify({
+                type: InnsendingFeiletErrorType.InnsendingFeilet,
+                deletionDate,
+            } satisfies InnsendingFeiletError),
+        });
+    });
+
+    await page.goto(`/sosialhjelp/soknad/nb/skjema/${TEST_SOKNAD_ID}/9`, {waitUntil: "domcontentloaded"});
+    await page.getByRole("button", {name: "Send søknaden", exact: true}).click();
+
+    const oppsummering = page.getByRole("main", {name: "Oppsummering"});
+    await expect(oppsummering.getByRole("heading", {name: "Feil ved innsendelse"})).toBeVisible();
+    await expect(
+        oppsummering.getByText("Beklager, vi kan ikke sende søknaden din akkurat nå på grunn av en teknisk feil.")
+    ).toBeVisible();
+    await expect(
+        oppsummering.getByText(
+            `Søknaden din ligger på Min side frem til ${deletionDate}, så du kan prøve igjen senere.`
+        )
+    ).toBeVisible();
+    await expect(oppsummering.getByRole("heading", {name: "Er du i en nødssituasjon?"})).toBeVisible();
+    await expect(oppsummering).toContainText("Kontakt ditt Nav-kontor eller ring oss på 55 55 33 33.");
+    await expect(oppsummering.getByRole("link", {name: "ditt Nav-kontor"})).toHaveAttribute(
+        "href",
+        "https://www.nav.no/sok-nav-kontor"
+    );
+    await expect(oppsummering.getByRole("heading", {name: "Beklager, noe gikk galt"})).not.toBeVisible();
+    await expect(oppsummering).not.toContainText("Vi anbefaler at du sletter søknaden og sender inn en ny.");
 });
