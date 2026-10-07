@@ -35,6 +35,7 @@ jobs:
       pull-requests: write
     outputs:
       merged: ${{ steps.merge.outputs.merged }}
+      sha: ${{ steps.merge.outputs.sha }}
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
@@ -73,7 +74,19 @@ jobs:
           fi
 
           if gh pr merge "$PR_NUMBER" --squash --delete-branch; then
+            sha=""
+            for i in 1 2 3 4 5; do
+              sha=$(gh pr view "$PR_NUMBER" --json mergeCommit --jq '.mergeCommit.oid // empty')
+              [ -n "$sha" ] && break
+              sleep 3
+            done
+            if [ -z "$sha" ]; then
+              echo "::error::Fant ikke merge-commit for PR #$PR_NUMBER, hopper over deploy"
+              echo "merged=false" >> "$GITHUB_OUTPUT"
+              exit 1
+            fi
             echo "merged=true" >> "$GITHUB_OUTPUT"
+            echo "sha=$sha" >> "$GITHUB_OUTPUT"
           else
             echo "::error::Klarte ikke å merge PR #$PR_NUMBER"
             echo "merged=false" >> "$GITHUB_OUTPUT"
@@ -95,6 +108,7 @@ jobs:
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
+          ref: ${{ needs.digest-update.outputs.sha }}
           persist-credentials: false
 
       - name: "Set cluster based on env"
@@ -110,5 +124,5 @@ jobs:
         env:
           RESOURCE: wonderwall/${{ matrix.env }}/wonderwall.yml
           CLUSTER: ${{ env.CLUSTER }}
-          REF: ${{ github.sha }}
+          REF: ${{ needs.digest-update.outputs.sha }}
           PRINT_PAYLOAD: true
