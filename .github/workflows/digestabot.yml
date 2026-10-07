@@ -19,6 +19,10 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 8 * * 2" # 08:00 UTC = 09:00 (vinter) / 10:00 (sommer) norsk tid, tirsdag
+  # MIDLERTIDIG (DSOS-735): registrerer workflowen for testing fra branch. Fjernes før merge.
+  push:
+    branches:
+      - DSOS-735_Sikkerhet-Automatisk-pull-av-nytt-image-for-wonderwall
 
 # Kø fremfor kansellering, for å unngå at to samtidige kjøringer racer
 # en pågående deploy.
@@ -29,6 +33,7 @@ concurrency:
 jobs:
   digest-update:
     name: "Sjekk digest og merge PR"
+    if: github.event_name != 'push' # MIDLERTIDIG (DSOS-735): se push-trigger over
     runs-on: ubuntu-latest
     permissions:
       contents: write
