@@ -32,6 +32,21 @@ function isMottakPabegynt(error: ErrorType<InnsendingError>) {
 export const InnsendingFeilmelding = ({error}: {error: ErrorType<InnsendingError>}) => {
     const {t} = useTranslation("skjema");
     const deletionDate = extractDeletionDate(error);
+    const generelt = (
+        <BodyShort>
+            <Trans
+                t={t}
+                i18nKey={"soknad.soknadKanIkkeSendes.generelt"}
+                components={{
+                    lenke: (
+                        <Link href="https://www.nav.no/sok-nav-kontor" target="_blank" rel="noreferrer noopener">
+                            {null}
+                        </Link>
+                    ),
+                }}
+            />
+        </BodyShort>
+    );
 
     if (isMottakPabegynt(error)) {
         return (
@@ -41,26 +56,7 @@ export const InnsendingFeilmelding = ({error}: {error: ErrorType<InnsendingError
                 </Heading>
                 <BodyLong>{t("soknad.mottakPabegynt.infotekst")}</BodyLong>
                 <br />
-                <Heading level={"3"} size={"small"}>
-                    {t("soknad.innsendingFeilet.nodssituasjon")}
-                </Heading>
-                <BodyShort>
-                    <Trans
-                        t={t}
-                        i18nKey={"soknad.soknadKanIkkeSendes.generelt"}
-                        components={{
-                            lenke: (
-                                <Link
-                                    href="https://www.nav.no/sok-nav-kontor"
-                                    target="_blank"
-                                    rel="noreferrer noopener"
-                                >
-                                    {null}
-                                </Link>
-                            ),
-                        }}
-                    />
-                </BodyShort>
+                {generelt}
             </>
         );
     }
@@ -73,23 +69,7 @@ export const InnsendingFeilmelding = ({error}: {error: ErrorType<InnsendingError
                 </Heading>
                 <BodyLong>{t("soknad.soknadKanIkkeSendes.infotekst")}</BodyLong>
                 <br />
-                <BodyShort>
-                    <Trans
-                        t={t}
-                        i18nKey={"soknad.soknadKanIkkeSendes.generelt"}
-                        components={{
-                            lenke: (
-                                <Link
-                                    href="https://www.nav.no/sok-nav-kontor"
-                                    target="_blank"
-                                    rel="noreferrer noopener"
-                                >
-                                    {null}
-                                </Link>
-                            ),
-                        }}
-                    />
-                </BodyShort>
+                {generelt}
             </>
         );
     }
@@ -104,22 +84,7 @@ export const InnsendingFeilmelding = ({error}: {error: ErrorType<InnsendingError
                 <BodyLong>{t("soknad.innsendingFeilet.infotekst2", {deletionDate: deletionDate})}</BodyLong>
             )}
             <br />
-            <Heading level={"3"} size={"small"}>
-                {t("soknad.innsendingFeilet.nodssituasjon")}
-            </Heading>
-            <BodyShort>
-                <Trans
-                    t={t}
-                    i18nKey={"soknad.innsendingFeilet.generelt"}
-                    components={{
-                        lenke: (
-                            <Link href="https://www.nav.no/sok-nav-kontor" target="_blank" rel="noreferrer noopener">
-                                {null}
-                            </Link>
-                        ),
-                    }}
-                />
-            </BodyShort>
+            {generelt}
         </>
     );
 };

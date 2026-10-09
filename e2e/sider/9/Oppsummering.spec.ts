@@ -116,7 +116,7 @@ test("should display a separate message when submission fails with MottakPabegyn
             "Sjekk innsynet ditt på Min side innen 15 minutter for å se om søknaden er mottatt. Hvis søknaden ikke vises etter 15 minutter, kan du prøve å sende den på nytt eller kontakte Nav-kontoret ditt."
         )
     ).toBeVisible();
-    await expect(oppsummering.getByRole("heading", {name: "Er du i en nødssituasjon?"})).toBeVisible();
+    await expect(oppsummering.getByRole("heading", {name: "Er du i en nødssituasjon?"})).not.toBeVisible();
     await expect(oppsummering).toContainText(
         "Har du ikke penger til mat, bolig eller strøm det neste døgnet, ber vi deg ta kontakt med ditt Nav-kontor eller ring oss på 55 55 33 33."
     );
@@ -156,8 +156,10 @@ test("should display the general error message when submission fails with Innsen
             `Søknaden din ligger på Min side frem til ${deletionDate}, så du kan prøve igjen senere.`
         )
     ).toBeVisible();
-    await expect(oppsummering.getByRole("heading", {name: "Er du i en nødssituasjon?"})).toBeVisible();
-    await expect(oppsummering).toContainText("Kontakt ditt Nav-kontor eller ring oss på 55 55 33 33.");
+    await expect(oppsummering.getByRole("heading", {name: "Er du i en nødssituasjon?"})).not.toBeVisible();
+    await expect(oppsummering).toContainText(
+        "Har du ikke penger til mat, bolig eller strøm det neste døgnet, ber vi deg ta kontakt med ditt Nav-kontor eller ring oss på 55 55 33 33."
+    );
     await expect(oppsummering.getByRole("link", {name: "ditt Nav-kontor"})).toHaveAttribute(
         "href",
         "https://www.nav.no/sok-nav-kontor"
