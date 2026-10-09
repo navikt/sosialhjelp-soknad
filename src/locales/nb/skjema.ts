@@ -1567,6 +1567,18 @@ export const skjema = {
             nodssituasjon: "Er du i en nødssituasjon?",
             generelt: "Kontakt <lenke>ditt Nav-kontor</lenke> eller ring oss på 55 55 33 33.",
         },
+        soknadKanIkkeSendes: {
+            overskrift: "Beklager, noe gikk galt",
+            infotekst:
+                "Det oppstod en teknisk feil, og søknaden ble ikke sendt inn. Vi anbefaler at du sletter søknaden og sender inn en ny. Vi beklager ulempene dette medfører.",
+            generelt:
+                "Har du ikke penger til mat, bolig eller strøm det neste døgnet, ber vi deg ta kontakt med <lenke>ditt Nav-kontor</lenke> eller ring oss på 55 55 33 33.",
+        },
+        mottakPabegynt: {
+            overskrift: "Innsending av søknaden er gjort",
+            infotekst:
+                "Sjekk innsynet ditt på Min side innen 15 minutter for å se om søknaden er mottatt. Hvis søknaden ikke vises etter 15 minutter, kan du prøve å sende den på nytt eller kontakte Nav-kontoret ditt.",
+        },
     },
     soknadsmottaker: {
         enhetsnavn: {
