@@ -3,7 +3,7 @@ name: "Digestabot – oppdater wonderwall-digest"
 # Automatiserer sikkerhetsoppdateringer av wonderwall (DSOS-735): sjekker
 # jevnlig etter nye Nais-bygg og ruller dem ut uten manuelt arbeid.
 #
-# Merge og deploy skjer i samme jobb, ikke separat push-trigget workflow:
+# Merge og deploy skjer i samme workflow, ikke separat push-trigget workflow:
 # GITHUB_TOKEN trigger ikke nye workflow-runs, så en egen deploy-workflow
 # ville sannsynligvis aldri kjørt etter en bot-utført merge.
 #
