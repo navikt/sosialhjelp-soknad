@@ -1,12 +1,14 @@
 import {test, expect} from "@playwright/test";
 import {
+    AdresserDto,
     AntallInnsendteSoknaderDto,
+    InnsendingFeiletError,
+    InnsendingFeiletErrorType,
     Oppsummering,
     SoknadApiError,
     SoknadApiErrorError,
     SoknadApiErrorResponseType,
 } from "../../../src/generated/model";
-import {AdresserDto, InnsendingFeiletError, InnsendingFeiletErrorType} from "../../../src/generated/new/model";
 
 const TEST_SOKNAD_ID = "d33f8757-3182-4fa3-b273-5d26c5974fd7";
 
