@@ -55,6 +55,9 @@ jobs:
           pnpm install --prefer-offline --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate API client
+        shell: bash
+        run: pnpm run orval
       - uses: navikt/sosialhjelp-ci/actions/playwright/run@v21
         with:
           shardIndex: ${{ matrix.shardIndex }}
