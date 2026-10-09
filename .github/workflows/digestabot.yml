@@ -7,8 +7,8 @@ name: "Digestabot – oppdater wonderwall-digest"
 # GITHUB_TOKEN trigger ikke nye workflow-runs, så en egen deploy-workflow
 # ville sannsynligvis aldri kjørt etter en bot-utført merge.
 #
-# Auto-merger uten manuell PR-godkjenning (ingen branch protection er
-# satt opp) - et bevisst valg for lavest mulig friksjon, siden hele
+# Auto-merger uten manuell PR-godkjenning (main krever ikke godkjenning
+# eller PR) - et bevisst valg for lavest mulig friksjon, siden hele
 # poenget er å slippe å følge manuelt med på nye bygg.
 #
 # Samme mønster som sosialhjelp-wonderwall sin digestabot.yml, tilpasset
@@ -79,7 +79,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        env: [ dev, mock, preprod ]
+        env: [ dev, mock, preprod, prod ]
     permissions:
       contents: read
       id-token: write
