@@ -19,10 +19,6 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 8 * * 2" # 08:00 UTC = 09:00 (vinter) / 10:00 (sommer) norsk tid, tirsdag
-  # MIDLERTIDIG (DSOS-735): registrerer workflowen for testing fra branch. Fjernes før merge.
-  push:
-    branches:
-      - DSOS-735_Sikkerhet-Automatisk-pull-av-nytt-image-for-wonderwall
 
 # Kø fremfor kansellering, for å unngå at to samtidige kjøringer racer
 # en pågående deploy.
@@ -33,13 +29,11 @@ concurrency:
 jobs:
   digest-update:
     name: "Sjekk digest og merge PR"
-    if: github.event_name != 'push' # MIDLERTIDIG (DSOS-735): se push-trigger over
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
     outputs:
-      merged: ${{ steps.merge.outputs.merged }}
       sha: ${{ steps.merge.outputs.sha }}
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
@@ -56,52 +50,31 @@ jobs:
           title-for-pr: "Oppdater wonderwall-digest"
           commit-message: "Oppdater wonderwall-digest"
 
-      - name: "Vent til PR er mergeable, merge deretter"
+      - name: "Merge PR"
         id: merge
         if: steps.digestabot.outputs.pull_request_number != ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ steps.digestabot.outputs.pull_request_number }}
         run: |
-          mergeable=false
+          # Merge-API-et returnerer merge-commiten direkte. Nye forsøk dekker at
+          # GitHub kan trenge noen sekunder på å beregne mergeability for ny PR.
           for i in 1 2 3 4 5; do
-            state=$(gh pr view "$PR_NUMBER" --json mergeStateStatus --jq .mergeStateStatus)
-            echo "Forsøk $i: mergeStateStatus=$state"
-            if [ "$state" = "CLEAN" ] || [ "$state" = "MERGEABLE" ] || [ "$state" = "UNSTABLE" ]; then
-              mergeable=true
-              break
+            if sha=$(gh api -X PUT "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/merge" \
+                       -f merge_method=squash --jq .sha); then
+              echo "sha=$sha" >> "$GITHUB_OUTPUT"
+              exit 0
             fi
+            echo "Forsøk $i: PR #$PR_NUMBER kunne ikke merges ennå"
             sleep 5
           done
-
-          if [ "$mergeable" = false ]; then
-            echo "::warning::PR #$PR_NUMBER ble ikke mergeable innen forventet tid, prøver likevel"
-          fi
-
-          if gh pr merge "$PR_NUMBER" --squash --delete-branch; then
-            sha=""
-            for i in 1 2 3 4 5; do
-              sha=$(gh pr view "$PR_NUMBER" --json mergeCommit --jq '.mergeCommit.oid // empty')
-              [ -n "$sha" ] && break
-              sleep 3
-            done
-            if [ -z "$sha" ]; then
-              echo "::error::Fant ikke merge-commit for PR #$PR_NUMBER, hopper over deploy"
-              echo "merged=false" >> "$GITHUB_OUTPUT"
-              exit 1
-            fi
-            echo "merged=true" >> "$GITHUB_OUTPUT"
-            echo "sha=$sha" >> "$GITHUB_OUTPUT"
-          else
-            echo "::error::Klarte ikke å merge PR #$PR_NUMBER"
-            echo "merged=false" >> "$GITHUB_OUTPUT"
-            exit 1
-          fi
+          echo "::error::Klarte ikke å merge PR #$PR_NUMBER"
+          exit 1
 
   deploy:
     name: "Deploy oppdatert wonderwall-digest"
     needs: digest-update
-    if: needs.digest-update.outputs.merged == 'true'
+    if: needs.digest-update.outputs.sha != ''
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
