@@ -1,0 +1,106 @@
+name: "Digestabot – oppdater wonderwall-digest"
+
+# Automatiserer sikkerhetsoppdateringer av wonderwall (DSOS-735): sjekker
+# jevnlig etter nye Nais-bygg og ruller dem ut uten manuelt arbeid.
+#
+# Merge og deploy skjer i samme workflow, ikke separat push-trigget workflow:
+# GITHUB_TOKEN trigger ikke nye workflow-runs, så en egen deploy-workflow
+# ville sannsynligvis aldri kjørt etter en bot-utført merge.
+#
+# Auto-merger uten manuell PR-godkjenning (main krever ikke godkjenning
+# eller PR) - et bevisst valg for lavest mulig friksjon, siden hele
+# poenget er å slippe å følge manuelt med på nye bygg.
+#
+# Samme mønster som sosialhjelp-wonderwall sin digestabot.yml, tilpasset
+# denne repoens katalogstruktur og eksisterende deploy-versjon
+# (se redeploy_wonderwall.yml).
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * 2" # 08:00 UTC = 09:00 (vinter) / 10:00 (sommer) norsk tid, tirsdag
+
+# Kø fremfor kansellering, for å unngå at to samtidige kjøringer racer
+# en pågående deploy.
+concurrency:
+  group: digestabot-wonderwall
+  cancel-in-progress: false
+
+jobs:
+  digest-update:
+    name: "Sjekk digest og merge PR"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      sha: ${{ steps.merge.outputs.sha }}
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+
+      - name: "Sjekk for ny digest og opprett PR ved behov"
+        id: digestabot
+        uses: navikt/digestabot@3302a753e533ceb9ec216de7f78345436cd636e3 # v1.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          working-dir: wonderwall
+          branch-for-pr: update-wonderwall-digest
+          title-for-pr: "Oppdater wonderwall-digest"
+          commit-message: "Oppdater wonderwall-digest"
+
+      - name: "Merge PR"
+        id: merge
+        if: steps.digestabot.outputs.pull_request_number != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.digestabot.outputs.pull_request_number }}
+        run: |
+          # Merge-API-et returnerer merge-commiten direkte. Nye forsøk dekker at
+          # GitHub kan trenge noen sekunder på å beregne mergeability for ny PR.
+          for i in 1 2 3 4 5; do
+            if sha=$(gh api -X PUT "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/merge" \
+                       -f merge_method=squash --jq .sha); then
+              echo "sha=$sha" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "Forsøk $i: PR #$PR_NUMBER kunne ikke merges ennå"
+            sleep 5
+          done
+          echo "::error::Klarte ikke å merge PR #$PR_NUMBER"
+          exit 1
+
+  deploy:
+    name: "Deploy oppdatert wonderwall-digest"
+    needs: digest-update
+    if: needs.digest-update.outputs.sha != ''
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        env: [ dev, mock, preprod, prod ]
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          ref: ${{ needs.digest-update.outputs.sha }}
+          persist-credentials: false
+
+      - name: "Set cluster based on env"
+        run: |
+          if [ "${{ matrix.env }}" = "prod" ]; then
+            echo "CLUSTER=prod-gcp" >> $GITHUB_ENV
+          else
+            echo "CLUSTER=dev-gcp" >> $GITHUB_ENV
+          fi
+
+      - name: "Deploy ${{ matrix.env }} til ${{ env.CLUSTER }}"
+        uses: nais/deploy/actions/deploy@1de80da70ad26556ecdc5964a8b7ec3bbed98120 # v2
+        env:
+          RESOURCE: wonderwall/${{ matrix.env }}/wonderwall.yml
+          CLUSTER: ${{ env.CLUSTER }}
+          REF: ${{ needs.digest-update.outputs.sha }}
+          PRINT_PAYLOAD: true
