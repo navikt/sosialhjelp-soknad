@@ -1576,6 +1576,11 @@ export const skjema = {
             generelt:
                 "If you do not have enough money for food, housing or electricity for the next 24 hours, please contact <lenke>your local Nav office</lenke> or call us at 55 55 33 33.",
         },
+        mottakPabegynt: {
+            overskrift: "Your application has been submitted",
+            infotekst:
+                "Check your application overview on My page within 15 minutes to see if it has been received. If it is not there after 15 minutes, you can try submitting it again or contact your local Nav office.",
+        },
     },
     soknadsmottaker: {
         enhetsnavn: {

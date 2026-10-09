@@ -33,4 +33,5 @@ export const DigisosApiErrorMap: Record<SoknadApiErrorError, DigisosLanguageKey>
     NotFound: ValideringsFeilKode.FIL_EKSISTERER_IKKE,
     AntallSoknaderSendt: REST_FEIL.GENERELL_FEIL,
     BrokenSoknad: REST_FEIL.GENERELL_FEIL,
+    MottakPabegynt: REST_FEIL.GENERELL_FEIL,
 } as const;

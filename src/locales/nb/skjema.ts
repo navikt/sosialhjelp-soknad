@@ -1574,6 +1574,11 @@ export const skjema = {
             generelt:
                 "Har du ikke penger til mat, bolig eller strøm det neste døgnet, ber vi deg ta kontakt med <lenke>ditt Nav-kontor</lenke> eller ring oss på 55 55 33 33.",
         },
+        mottakPabegynt: {
+            overskrift: "Innsending av søknaden er gjort",
+            infotekst:
+                "Sjekk innsynet ditt på Min side innen 15 minutter for å se om søknaden er mottatt. Hvis søknaden ikke vises etter 15 minutter, kan du prøve å sende den på nytt eller kontakte Nav-kontoret ditt.",
+        },
     },
     soknadsmottaker: {
         enhetsnavn: {

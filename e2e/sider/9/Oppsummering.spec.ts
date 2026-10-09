@@ -1,13 +1,12 @@
 import {test, expect} from "@playwright/test";
-import {AntallInnsendteSoknaderDto, Oppsummering} from "../../../src/generated/model";
 import {
-    AdresserDto,
-    InnsendingFeiletError,
-    InnsendingFeiletErrorType,
+    AntallInnsendteSoknaderDto,
+    Oppsummering,
     SoknadApiError,
     SoknadApiErrorError,
     SoknadApiErrorResponseType,
-} from "../../../src/generated/new/model";
+} from "../../../src/generated/model";
+import {AdresserDto, InnsendingFeiletError, InnsendingFeiletErrorType} from "../../../src/generated/new/model";
 
 const TEST_SOKNAD_ID = "d33f8757-3182-4fa3-b273-5d26c5974fd7";
 
@@ -92,6 +91,41 @@ test("should display the specific error message when submission fails with Broke
     );
     await expect(page.getByRole("heading", {name: "Feil ved innsendelse"})).not.toBeVisible();
     await expect(oppsummering).not.toContainText("prøve igjen senere");
+});
+
+test("should display a separate message when submission fails with MottakPabegynt", async ({page}) => {
+    await page.route(`**/soknad/${TEST_SOKNAD_ID}/send`, async (route) => {
+        expect(route.request().method()).toBe("POST");
+        await route.fulfill({
+            status: 400,
+            contentType: "application/json",
+            body: JSON.stringify({
+                error: SoknadApiErrorError.MottakPabegynt,
+                responseType: SoknadApiErrorResponseType.SoknadApiError,
+            } satisfies SoknadApiError),
+        });
+    });
+
+    await page.goto(`/sosialhjelp/soknad/nb/skjema/${TEST_SOKNAD_ID}/9`, {waitUntil: "domcontentloaded"});
+    await page.getByRole("button", {name: "Send søknaden", exact: true}).click();
+
+    const oppsummering = page.getByRole("main", {name: "Oppsummering"});
+    await expect(oppsummering.getByRole("heading", {name: "Innsending av søknaden er gjort"})).toBeVisible();
+    await expect(
+        oppsummering.getByText(
+            "Sjekk innsynet ditt på Min side innen 15 minutter for å se om søknaden er mottatt. Hvis søknaden ikke vises etter 15 minutter, kan du prøve å sende den på nytt eller kontakte Nav-kontoret ditt."
+        )
+    ).toBeVisible();
+    await expect(oppsummering.getByRole("heading", {name: "Er du i en nødssituasjon?"})).toBeVisible();
+    await expect(oppsummering).toContainText(
+        "Har du ikke penger til mat, bolig eller strøm det neste døgnet, ber vi deg ta kontakt med ditt Nav-kontor eller ring oss på 55 55 33 33."
+    );
+    await expect(oppsummering.getByRole("link", {name: "ditt Nav-kontor"})).toHaveAttribute(
+        "href",
+        "https://www.nav.no/sok-nav-kontor"
+    );
+    await expect(oppsummering.getByRole("heading", {name: "Beklager, noe gikk galt"})).not.toBeVisible();
+    await expect(oppsummering.getByRole("heading", {name: "Feil ved innsendelse"})).not.toBeVisible();
 });
 
 test("should display the general error message when submission fails with InnsendingFeilet", async ({page}) => {
