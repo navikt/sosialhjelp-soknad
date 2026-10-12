@@ -75,7 +75,7 @@ const Behov = () => {
         <SkjemaSteg>
             <SkjemaStegStepper page={2} onStepChange={goto} />
             <VStack gap="space-16">
-                <Alert variant="info">
+                <Alert variant="info" className={"mx-4 md:mx-12 lg:mx-24"}>
                     <BodyShort>{t("arbeidOgFamilie.alert")}</BodyShort>
                 </Alert>
                 <SkjemaStegBlock className={"lg:space-y-12"}>
