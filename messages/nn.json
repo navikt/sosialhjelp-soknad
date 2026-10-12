@@ -63,6 +63,21 @@
         "title": "Beklagar",
         "text": "Du kan diverre ikkje bruke den digitale søknaden om økonomisk sosialhjelp. \nTa kontakt med <lenke>det lokale Nav-kontoret ditt</lenke> for å få hjelp til å søkja."
     },
+    "InnsendingFeilmelding": {
+        "innsendingFeilet": {
+            "overskrift": "Feil ved sending av søknaden",
+            "infotekst1": "Beklager, vi kan ikkje sende søknad din akkurat no på grunn av ein teknisk feil. ",
+            "infotekst2": "Søknaden din ligg på Mi side til {deletionDate}, så du kan prøve igjen seinare. "
+        },
+        "soknadKanIkkeSendes": {
+            "overskrift": "Beklagar, noko gjekk gale",
+            "infotekst": "Det oppstod ein teknisk feil, og søknaden vart ikkje sendt inn. Vi tilrår at du slettar søknaden og sender inn ein ny. Vi beklagar ulempene dette medfører."
+        },
+        "mottakPabegynt": {
+            "overskrift": "Søknaden blir send...",
+            "infotekst": "Dette kan ta opptil 15 minutt. Når det har gått 15 minutt, kan du logge inn på Mi side for økonomisk sosialhjelp for å sjå søknaden din. <lenke> Gå til Mi side for økonomisk sosialhjelp.</lenke>"
+        }
+    },
     "TekniskFeil": {
         "title": "Me beklagar!",
         "feilmelding": "Ein teknisk feil har oppstått.",
