@@ -7,7 +7,7 @@ export const SkjemaStegBlock = ({children, className}: {children: ReactNode; cla
     <Box
         as="section"
         background="default"
-        className={cx("rounded-2xl px-4 md:px-12 lg:px-24 pt-8 pb-8 mb-16 space-y-12", className)}
+        className={cx("rounded-2xl px-4 md:px-12 lg:px-24 pt-8 pb-8 mb-16 space-y-12 lg:space-y-24", className)}
         role={"none"}
     >
         {children}
