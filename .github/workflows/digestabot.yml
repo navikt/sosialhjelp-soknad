@@ -57,12 +57,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ steps.digestabot.outputs.pull_request_number }}
         run: |
-          # Merge-API-et returnerer merge-commiten direkte. Nye forsøk dekker at
-          # GitHub kan trenge noen sekunder på å beregne mergeability for ny PR.
+          # Nye forsøk dekker at GitHub kan trenge noen sekunder på å vurdere
+          # om en ny PR kan merges. SHA-en til merge-commiten sendes til deploy.
           for i in 1 2 3 4 5; do
-            if sha=$(gh api -X PUT "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/merge" \
-                       -f merge_method=squash --jq .sha); then
-              echo "sha=$sha" >> "$GITHUB_OUTPUT"
+            if gh pr merge "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --squash; then
+              echo "sha=$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json mergeCommit --jq .mergeCommit.oid)" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             echo "Forsøk $i: PR #$PR_NUMBER kunne ikke merges ennå"
