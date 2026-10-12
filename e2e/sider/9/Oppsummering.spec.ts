@@ -84,13 +84,7 @@ test("should display the specific error message when submission fails with Broke
             "Det oppstod en teknisk feil, og søknaden ble ikke sendt inn. Vi anbefaler at du sletter søknaden og sender inn en ny. Vi beklager ulempene dette medfører."
         )
     ).toBeVisible();
-    await expect(oppsummering).toContainText(
-        "Har du ikke penger til mat, bolig eller strøm det neste døgnet, ber vi deg ta kontakt med ditt Nav-kontor eller ring oss på 55 55 33 33."
-    );
-    await expect(oppsummering.getByRole("link", {name: "ditt Nav-kontor"})).toHaveAttribute(
-        "href",
-        "https://www.nav.no/sok-nav-kontor"
-    );
+    await expect(oppsummering.getByRole("link")).toHaveCount(0);
     await expect(page.getByRole("heading", {name: "Feil ved innsendelse"})).not.toBeVisible();
     await expect(oppsummering).not.toContainText("prøve igjen senere");
 });
@@ -112,19 +106,15 @@ test("should display a separate message when submission fails with MottakPabegyn
     await page.getByRole("button", {name: "Send søknaden", exact: true}).click();
 
     const oppsummering = page.getByRole("main", {name: "Oppsummering"});
-    await expect(oppsummering.getByRole("heading", {name: "Innsending av søknaden er gjort"})).toBeVisible();
+    await expect(oppsummering.getByRole("heading", {name: "Søknaden sendes..."})).toBeVisible();
     await expect(
         oppsummering.getByText(
-            "Sjekk innsynet ditt på Min side innen 15 minutter for å se om søknaden er mottatt. Hvis søknaden ikke vises etter 15 minutter, kan du prøve å sende den på nytt eller kontakte Nav-kontoret ditt."
+            "Dette kan ta opptil 15 minutter. Når det har gått 15 minutter, kan du logge inn på Min side for økonomisk sosialhjelp for å se søknaden din."
         )
     ).toBeVisible();
-    await expect(oppsummering.getByRole("heading", {name: "Er du i en nødssituasjon?"})).not.toBeVisible();
-    await expect(oppsummering).toContainText(
-        "Har du ikke penger til mat, bolig eller strøm det neste døgnet, ber vi deg ta kontakt med ditt Nav-kontor eller ring oss på 55 55 33 33."
-    );
-    await expect(oppsummering.getByRole("link", {name: "ditt Nav-kontor"})).toHaveAttribute(
+    await expect(oppsummering.getByRole("link", {name: "Gå til min side for økonomisk sosialhjelp."})).toHaveAttribute(
         "href",
-        "https://www.nav.no/sok-nav-kontor"
+        "http://localhost:3002/sosialhjelp/innsyn/nb"
     );
     await expect(oppsummering.getByRole("heading", {name: "Beklager, noe gikk galt"})).not.toBeVisible();
     await expect(oppsummering.getByRole("heading", {name: "Feil ved innsendelse"})).not.toBeVisible();
@@ -149,7 +139,7 @@ test("should display the general error message when submission fails with Innsen
     await page.getByRole("button", {name: "Send søknaden", exact: true}).click();
 
     const oppsummering = page.getByRole("main", {name: "Oppsummering"});
-    await expect(oppsummering.getByRole("heading", {name: "Feil ved innsendelse"})).toBeVisible();
+    await expect(oppsummering.getByRole("heading", {name: "Beklager, noe gikk galt"})).toBeVisible();
     await expect(
         oppsummering.getByText("Beklager, vi kan ikke sende søknaden din akkurat nå på grunn av en teknisk feil.")
     ).toBeVisible();
@@ -158,14 +148,6 @@ test("should display the general error message when submission fails with Innsen
             `Søknaden din ligger på Min side frem til ${deletionDate}, så du kan prøve igjen senere.`
         )
     ).toBeVisible();
-    await expect(oppsummering.getByRole("heading", {name: "Er du i en nødssituasjon?"})).not.toBeVisible();
-    await expect(oppsummering).toContainText(
-        "Har du ikke penger til mat, bolig eller strøm det neste døgnet, ber vi deg ta kontakt med ditt Nav-kontor eller ring oss på 55 55 33 33."
-    );
-    await expect(oppsummering.getByRole("link", {name: "ditt Nav-kontor"})).toHaveAttribute(
-        "href",
-        "https://www.nav.no/sok-nav-kontor"
-    );
-    await expect(oppsummering.getByRole("heading", {name: "Beklager, noe gikk galt"})).not.toBeVisible();
+    await expect(oppsummering.getByRole("link")).toHaveCount(0);
     await expect(oppsummering).not.toContainText("Vi anbefaler at du sletter søknaden og sender inn en ny.");
 });
