@@ -16,16 +16,14 @@ type InnsendingError = SendSoknad400 | UnauthorizedMelding | SoknadApiError | In
 
 interface HeadingBodyLongProps {
     heading: React.ReactNode;
-    body: React.ReactNode;
     children?: React.ReactNode;
 }
 
-const FeilmeldingStructure = ({heading, body, children}: HeadingBodyLongProps) => (
+const Feilmelding = ({heading, children}: HeadingBodyLongProps) => (
     <>
         <Heading level={"3"} size={"small"} spacing>
             {heading}
         </Heading>
-        <BodyLong>{body}</BodyLong>
         {children}
     </>
 );
@@ -54,31 +52,32 @@ export const InnsendingFeilmelding = ({error}: {error: ErrorType<InnsendingError
 
     if (isMottakPabegynt(error)) {
         return (
-            <FeilmeldingStructure
-                heading={t("mottakPabegynt.overskrift")}
-                body={t.rich("mottakPabegynt.infotekst", {
-                    lenke: (chunks) => (
-                        <Link href={`${digisosConfig.innsynURL}/${locale}`} target="_blank">
-                            {chunks}
-                        </Link>
-                    ),
-                })}
-            />
+            <Feilmelding heading={t("mottakPabegynt.overskrift")}>
+                <BodyLong>
+                    {t.rich("mottakPabegynt.infotekst", {
+                        lenke: (chunks) => (
+                            <Link href={`${digisosConfig.innsynURL}/${locale}`} target="_blank">
+                                {chunks}
+                            </Link>
+                        ),
+                    })}
+                </BodyLong>
+            </Feilmelding>
         );
     }
 
     if (isBrokenSoknad(error)) {
         return (
-            <FeilmeldingStructure
-                heading={t("soknadKanIkkeSendes.overskrift")}
-                body={t("soknadKanIkkeSendes.infotekst")}
-            />
+            <Feilmelding heading={t("soknadKanIkkeSendes.overskrift")}>
+                <BodyLong>{t("soknadKanIkkeSendes.infotekst")}</BodyLong>
+            </Feilmelding>
         );
     }
 
     return (
-        <FeilmeldingStructure heading={t("innsendingFeilet.overskrift")} body={t("innsendingFeilet.infotekst1")}>
+        <Feilmelding heading={t("innsendingFeilet.overskrift")}>
+            <BodyLong>{t("innsendingFeilet.infotekst1")}</BodyLong>
             {deletionDate && <BodyLong>{t("innsendingFeilet.infotekst2", {deletionDate: deletionDate})}</BodyLong>}
-        </FeilmeldingStructure>
+        </Feilmelding>
     );
 };
