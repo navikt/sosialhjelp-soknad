@@ -14,6 +14,22 @@ import * as React from "react";
 
 type InnsendingError = SendSoknad400 | UnauthorizedMelding | SoknadApiError | InnsendingFeiletError | null;
 
+interface HeadingBodyLongProps {
+    heading: React.ReactNode;
+    body: React.ReactNode;
+    children?: React.ReactNode;
+}
+
+const FeilmeldingStructure = ({heading, body, children}: HeadingBodyLongProps) => (
+    <>
+        <Heading level={"3"} size={"small"} spacing>
+            {heading}
+        </Heading>
+        <BodyLong>{body}</BodyLong>
+        {children}
+    </>
+);
+
 function extractDeletionDate(error: ErrorType<InnsendingError>) {
     if (isAxiosError<InnsendingFeiletError>(error)) {
         const deletionDate = error.response?.data?.deletionDate;
@@ -38,41 +54,31 @@ export const InnsendingFeilmelding = ({error}: {error: ErrorType<InnsendingError
 
     if (isMottakPabegynt(error)) {
         return (
-            <>
-                <Heading level={"3"} size={"small"} spacing>
-                    {t("mottakPabegynt.overskrift")}
-                </Heading>
-                <BodyLong>
-                    {t.rich("mottakPabegynt.infotekst", {
-                        lenke: (chunks) => (
-                            <Link href={`${digisosConfig.innsynURL}/${locale}`} target="_blank">
-                                {chunks}
-                            </Link>
-                        ),
-                    })}
-                </BodyLong>
-            </>
+            <FeilmeldingStructure
+                heading={t("mottakPabegynt.overskrift")}
+                body={t.rich("mottakPabegynt.infotekst", {
+                    lenke: (chunks) => (
+                        <Link href={`${digisosConfig.innsynURL}/${locale}`} target="_blank">
+                            {chunks}
+                        </Link>
+                    ),
+                })}
+            />
         );
     }
 
     if (isBrokenSoknad(error)) {
         return (
-            <>
-                <Heading level={"3"} size={"small"} spacing>
-                    {t("soknadKanIkkeSendes.overskrift")}
-                </Heading>
-                <BodyLong>{t("soknadKanIkkeSendes.infotekst")}</BodyLong>
-            </>
+            <FeilmeldingStructure
+                heading={t("soknadKanIkkeSendes.overskrift")}
+                body={t("soknadKanIkkeSendes.infotekst")}
+            />
         );
     }
 
     return (
-        <>
-            <Heading level={"3"} size={"small"} spacing>
-                {t("innsendingFeilet.overskrift")}
-            </Heading>
-            <BodyLong>{t("innsendingFeilet.infotekst1")}</BodyLong>
+        <FeilmeldingStructure heading={t("innsendingFeilet.overskrift")} body={t("innsendingFeilet.infotekst1")}>
             {deletionDate && <BodyLong>{t("innsendingFeilet.infotekst2", {deletionDate: deletionDate})}</BodyLong>}
-        </>
+        </FeilmeldingStructure>
     );
 };
