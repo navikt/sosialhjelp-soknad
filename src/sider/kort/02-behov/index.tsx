@@ -79,7 +79,7 @@ const Behov = () => {
                     <BodyShort>{t("arbeidOgFamilie.alert")}</BodyShort>
                 </Alert>
                 <SkjemaStegBlock className={"lg:space-y-12"}>
-                    <SkjemaStegTitle title={t(KortSkjemaHeadings[2].tittel)} icon={KortSkjemaHeadings[2].ikon} />
+                    <SkjemaStegTitle title={t(KortSkjemaHeadings[2].tittel)} />
                     {isLoading ? (
                         <ApplicationSpinner />
                     ) : (

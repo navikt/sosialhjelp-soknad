@@ -74,7 +74,7 @@ export const Oppsummering = () => {
 
     if (isLoading) return <ApplicationSpinner />;
 
-    const {tittel, ikon} = isKortSoknad ? KortSkjemaHeadings[5] : SkjemaHeadings[9];
+    const {tittel} = isKortSoknad ? KortSkjemaHeadings[5] : SkjemaHeadings[9];
 
     const isInnsendingBlocked = resolveInnsendingBlocked(
         innsendteSoknaderSisteDogn?.antall,
@@ -85,7 +85,7 @@ export const Oppsummering = () => {
         <SkjemaSteg>
             <SkjemaStegStepper page={isKortSoknad ? 5 : 9} onStepChange={async (page) => navigate(`../${page}`)} />
             <SkjemaStegBlock>
-                <SkjemaStegTitle title={t(tittel)} icon={ikon} />
+                <SkjemaStegTitle title={t(tittel)} />
                 <div>
                     {oppsummering?.steg.map((steg) => (
                         <OppsummeringSteg steg={steg} key={steg.stegNr} />

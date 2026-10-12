@@ -18,7 +18,7 @@ export const UtgifterGjeld = () => {
             <SkjemaStegStepper page={7} onStepChange={handleStepChange} />
             <Feiloppsummering />
             <SkjemaStegBlock>
-                <SkjemaStegTitle title={t(SkjemaHeadings[7].tittel)} icon={SkjemaHeadings[7].ikon} />
+                <SkjemaStegTitle title={t(SkjemaHeadings[7].tittel)} />
                 <Boutgifter />
                 <Barneutgifter />
                 <SkjemaStegButtons onNext={handleNext} onPrevious={handlePrevious} />

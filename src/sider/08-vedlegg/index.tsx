@@ -44,11 +44,7 @@ export const OkonomiskeOpplysningerView = () => {
                 }}
             />
             <SkjemaStegBlock className={cx("lg:space-y-8 mb-0! pb-0! rounded-b-none")}>
-                <SkjemaStegTitle
-                    title={t(SkjemaHeadings[8].tittel)}
-                    icon={SkjemaHeadings[8].ikon}
-                    className={"lg:mb-8"}
-                />
+                <SkjemaStegTitle title={t(SkjemaHeadings[8].tittel)} className={"lg:mb-8"} />
                 {hasBekreftet ? <InfopanelOpplysninger /> : <UbesvarteOpplysninger />}
             </SkjemaStegBlock>
             {grupper.map((gruppe, i) => (

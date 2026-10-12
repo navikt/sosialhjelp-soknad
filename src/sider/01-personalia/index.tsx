@@ -60,7 +60,7 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
     return (
         <SkjemaSteg>
             <SkjemaStegBlock className={shortSpacing ? "lg:space-y-12" : ""}>
-                <SkjemaStegTitle title={t(SkjemaHeadings[1].tittel)} icon={SkjemaHeadings[1].ikon} />
+                <SkjemaStegTitle title={t(SkjemaHeadings[1].tittel)} />
                 <SkjemaStegErrorSummary errors={errors} />
                 <BasisPersonalia />
                 <AdresseData />
