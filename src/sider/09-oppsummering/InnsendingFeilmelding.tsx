@@ -1,6 +1,7 @@
-import {BodyLong, BodyShort, Heading, Link} from "@navikt/ds-react";
+import {BodyLong, Heading, Link} from "@navikt/ds-react";
 import {isAxiosError} from "axios";
-import {Trans, useTranslation} from "react-i18next";
+import {useLocale, useTranslations} from "next-intl";
+import digisosConfig from "../../lib/config";
 import {
     InnsendingFeiletError,
     SendSoknad400,
@@ -9,6 +10,7 @@ import {
     UnauthorizedMelding,
 } from "../../generated/model";
 import {ErrorType} from "../../lib/api/axiosInstance.ts";
+import * as React from "react";
 
 type InnsendingError = SendSoknad400 | UnauthorizedMelding | SoknadApiError | InnsendingFeiletError | null;
 
@@ -30,33 +32,25 @@ function isMottakPabegynt(error: ErrorType<InnsendingError>) {
 }
 
 export const InnsendingFeilmelding = ({error}: {error: ErrorType<InnsendingError>}) => {
-    const {t} = useTranslation("skjema");
+    const t = useTranslations("InnsendingFeilmelding");
     const deletionDate = extractDeletionDate(error);
-    const generelt = (
-        <BodyShort>
-            <Trans
-                t={t}
-                i18nKey={"soknad.soknadKanIkkeSendes.generelt"}
-                components={{
-                    lenke: (
-                        <Link href="https://www.nav.no/sok-nav-kontor" target="_blank" rel="noreferrer noopener">
-                            {null}
-                        </Link>
-                    ),
-                }}
-            />
-        </BodyShort>
-    );
+    const locale = useLocale();
 
     if (isMottakPabegynt(error)) {
         return (
             <>
                 <Heading level={"3"} size={"small"} spacing>
-                    {t("soknad.mottakPabegynt.overskrift")}
+                    {t("mottakPabegynt.overskrift")}
                 </Heading>
-                <BodyLong>{t("soknad.mottakPabegynt.infotekst")}</BodyLong>
-                <br />
-                {generelt}
+                <BodyLong>
+                    {t.rich("mottakPabegynt.infotekst", {
+                        lenke: (chunks) => (
+                            <Link href={`${digisosConfig.innsynURL}/${locale}`} target="_blank">
+                                {chunks}
+                            </Link>
+                        ),
+                    })}
+                </BodyLong>
             </>
         );
     }
@@ -65,11 +59,9 @@ export const InnsendingFeilmelding = ({error}: {error: ErrorType<InnsendingError
         return (
             <>
                 <Heading level={"3"} size={"small"} spacing>
-                    {t("soknad.soknadKanIkkeSendes.overskrift")}
+                    {t("soknadKanIkkeSendes.overskrift")}
                 </Heading>
-                <BodyLong>{t("soknad.soknadKanIkkeSendes.infotekst")}</BodyLong>
-                <br />
-                {generelt}
+                <BodyLong>{t("soknadKanIkkeSendes.infotekst")}</BodyLong>
             </>
         );
     }
@@ -77,14 +69,10 @@ export const InnsendingFeilmelding = ({error}: {error: ErrorType<InnsendingError
     return (
         <>
             <Heading level={"3"} size={"small"} spacing>
-                {t("soknad.innsendingFeilet.overskrift")}
+                {t("innsendingFeilet.overskrift")}
             </Heading>
-            <BodyLong>{t("soknad.innsendingFeilet.infotekst1")}</BodyLong>
-            {deletionDate && (
-                <BodyLong>{t("soknad.innsendingFeilet.infotekst2", {deletionDate: deletionDate})}</BodyLong>
-            )}
-            <br />
-            {generelt}
+            <BodyLong>{t("innsendingFeilet.infotekst1")}</BodyLong>
+            {deletionDate && <BodyLong>{t("innsendingFeilet.infotekst2", {deletionDate: deletionDate})}</BodyLong>}
         </>
     );
 };

@@ -1562,25 +1562,6 @@ export const skjema = {
     },
     soknad: {
         ferdigstilt: "The application has already been submitted.",
-        innsendingFeilet: {
-            overskrift: "Error while sending the application",
-            infotekst1: "Sorry, we cannot send your application right now due to a technical error. ",
-            infotekst2: "Your application is available on My page until {{deletionDate}}, so you can try again later. ",
-            nodssituasjon: "Are you in an emergency?",
-            generelt: "Contact <lenke>your local Nav office</lenke> or call us at 55 55 33 33.",
-        },
-        soknadKanIkkeSendes: {
-            overskrift: "Sorry, something went wrong",
-            infotekst:
-                "A technical error occurred, and your application was not submitted. We recommend that you delete the application and start a new one. We’re sorry for the inconvenience.",
-            generelt:
-                "If you do not have enough money for food, housing or electricity for the next 24 hours, please contact <lenke>your local Nav office</lenke> or call us at 55 55 33 33.",
-        },
-        mottakPabegynt: {
-            overskrift: "Your application has been submitted",
-            infotekst:
-                "Check your application overview on My page within 15 minutes to see if it has been received. If it is not there after 15 minutes, you can try submitting it again or contact your local Nav office.",
-        },
     },
     soknadsmottaker: {
         enhetsnavn: {

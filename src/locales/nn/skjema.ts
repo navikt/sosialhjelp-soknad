@@ -1555,25 +1555,6 @@ export const skjema = {
     },
     soknad: {
         ferdigstilt: "Søknaden er allereie send.",
-        innsendingFeilet: {
-            overskrift: "Feil ved sending av søknaden",
-            infotekst1: "Beklager, vi kan ikkje sende søknad din akkurat no på grunn av ein teknisk feil. ",
-            infotekst2: "Søknaden din ligg på Mi side til {{deletionDate}}, så du kan prøve igjen seinare. ",
-            nodssituasjon: "Er du i ein nødssituasjon?",
-            generelt: "Kontakt <lenke>ditt Nav-kontor</lenke> eller ring oss på 55 55 33 33.",
-        },
-        soknadKanIkkeSendes: {
-            overskrift: "Beklagar, noko gjekk gale",
-            infotekst:
-                "Det oppstod ein teknisk feil, og søknaden vart ikkje sendt inn. Vi tilrår at du slettar søknaden og sender inn ein ny. Vi beklagar ulempene dette medfører.",
-            generelt:
-                "Har du ikkje pengar til mat, bustad eller straum det neste døgnet, ber vi deg ta kontakt med <lenke>ditt Nav-kontor</lenke> eller ringje oss på 55 55 33 33.",
-        },
-        mottakPabegynt: {
-            overskrift: "Innsendinga av søknaden er fullført",
-            infotekst:
-                "Sjekk innsynet ditt på Mi side innan 15 minutt for å sjå om søknaden er motteken. Viss søknaden ikkje viser der etter 15 minutt, kan du prøve å sende han på nytt eller kontakte Nav-kontoret ditt.",
-        },
     },
     soknadsmottaker: {
         enhetsnavn: {
