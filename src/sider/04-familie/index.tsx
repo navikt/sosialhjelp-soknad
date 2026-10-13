@@ -19,7 +19,7 @@ export const Familie = () => {
             <SkjemaStegStepper page={4} onStepChange={handleStepChange} />
             <Feiloppsummering />
             <SkjemaStegBlock>
-                <SkjemaStegTitle title={t(SkjemaHeadings[4].tittel)} icon={SkjemaHeadings[4].ikon} />
+                <SkjemaStegTitle title={t(SkjemaHeadings[4].tittel)} />
                 <DinSivilstatus />
                 <ForsorgerPlikt />
                 <SkjemaStegButtons onNext={handleNext} onPrevious={handlePrevious} />
