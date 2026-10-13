@@ -78,7 +78,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        env: [ dev, mock, preprod ]
+        env: [ dev, mock, preprod, prod ]
     permissions:
       contents: read
       id-token: write

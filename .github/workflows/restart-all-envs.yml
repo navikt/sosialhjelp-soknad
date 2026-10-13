@@ -13,7 +13,7 @@ jobs:
   deploy-gcp:
     strategy:
       matrix:
-        environment: [preprod, mock, dev]
+        environment: [preprod, mock, dev, prod]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
