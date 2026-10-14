@@ -44,7 +44,7 @@ const ArbeidOgFamilie = () => {
         <SkjemaSteg>
             <SkjemaStegStepper page={3} onStepChange={gotoPage} />
             <SkjemaStegBlock className={"lg:space-y-12"}>
-                <SkjemaStegTitle title={t(KortSkjemaHeadings[3].tittel)} icon={KortSkjemaHeadings[3].ikon} />
+                <SkjemaStegTitle title={t(KortSkjemaHeadings[3].tittel)} />
                 <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
                     <Box className="space-y-2">
                         <Heading size="small">{t("arbeidsforhold.sporsmal")}</Heading>

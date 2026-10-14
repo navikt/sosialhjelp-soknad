@@ -22,7 +22,7 @@ export const SoknadsmottakerInfoPanel = () => {
 
         return (
             <>
-                <GuidePanel poster className={"mt-6 mb-6"}>
+                <GuidePanel poster className={"mt-12 lg:mt-16 mb-6"}>
                     <Heading level="2" size="medium" spacing>
                         {t("soknadsosialhjelp.oppsummering.hvorsendes_del1", {valgtEnhetsNavn})}
                     </Heading>
