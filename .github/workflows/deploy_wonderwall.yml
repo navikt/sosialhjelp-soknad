@@ -9,6 +9,7 @@ on:
   push:
     branches:
       - main
+      - DSOS-735_Sikkerhet-Automatisk-pull-av-nytt-image-for-wonderwall # MIDLERTIDIG: kun for test, fjernes før merge
     paths:
       - 'wonderwall/**'
   workflow_dispatch:
@@ -30,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        env: [ dev, mock, preprod, prod ]
+        env: [ dev, mock, preprod ] # MIDLERTIDIG: prod fjernet under test
     permissions:
       contents: read
       id-token: write
