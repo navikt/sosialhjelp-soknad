@@ -10,7 +10,7 @@ metadata:
 spec:
   # Tag + digest: digest bestemmer hvilket image som kjøres (reproduserbart).
   # :latest er kun ankerpunktet digestabot bruker for å oppdage nye bygg – ikke fjern den.
-  image: europe-north1-docker.pkg.dev/nais-io/nais/images/wonderwall:latest@sha256:1627d88a41687389a4d13ca9fc25b70167c030a99213b50caf6c5b591ea9b1ae
+  image: europe-north1-docker.pkg.dev/nais-io/nais/images/wonderwall:latest@sha256:e61f8d66eb389ce28ad4fb08ee7f4378e4b6eec54905cd413506a29f25958a7f
   port: 8080
   ingresses:
     - "https://www.nav.no/sosialhjelp/soknad"
