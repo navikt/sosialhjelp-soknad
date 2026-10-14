@@ -7,8 +7,24 @@
         "skjemaId": "NAV 35-18.01",
         "dialog": {
             "hei": "Hei!",
-            "avsnitt1": "Økonomisk sosialhjelp er ei mellombels støtte når du ikkje kan dekkje nødvendige utgifter sjølv.",
+            "avsnitt1": "Økonomisk sosialhjelp er ei mellombels støtte når du ikkje kan dekkja nødvendige utgifter sjølv.",
             "avsnitt2": "I søknaden blir du beden om å fylle ut opplysningar om deg sjølv og situasjonen din. Ver venleg og fyll ut søknaden så godt du kan."
+        },
+        "forDuSoker": {
+            "title": "Før du søkjer",
+            "tekst": "Sjå kva som kan vere nyttig å vite før du søkjer, og kva dokumentasjon vi kan be om.",
+            "accordion": {
+                "item1": {
+                    "title": "Nyttig å vite før du søkjer",
+                    "liste": "<li>Fyll ut søknaden så godt du kan, og skriv tydeleg kva du treng hjelp eller pengar til.</li><li>Du kan sende inn søknaden sjølv om du ikkje har lasta opp dokumentasjon. Nokre av opplysningane du gir undervegs, kan du bli beden om å dokumentere.</li><li>Vi lagrar svara dine automatisk medan du fyller ut, så du kan ta pausar undervegs. Du kan også trykkje på Lagre søknaden dersom du vil avslutte og halde fram seinare. Påbyrja søknader blir lagra i 14 dagar.</li><li>Søknaden din blir behandla så fort som mogleg.</li>",
+                    "tekst": "Vil du vite meir? <a>Les meir om økonomisk sosialhjelp (opnar i ny fane).</a>"
+                },
+                "item2": {
+                    "title": "Sjå døme på kva dokumentasjon vi kan be om",
+                    "liste": "<li>Fakturaer/kvitteringar for det du har søkt om støtte til, til dømes husleige og straum</li><li>Skattemelding</li><li>Skatteoppgjer</li><li>Lønnsslipp (dersom du er i jobb)</li><li>Kontooversikt som viser saldoen på kontoane dine</li><li>Opplysningar om buforhold (husleigekontrakt)</li>",
+                    "tekst": "Dokumentasjon kan sendast som dokument, bilete eller andre filtypar."
+                }
+            }
         }
     },
     "EttersendDokuPanel": {

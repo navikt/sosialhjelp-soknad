@@ -9,6 +9,22 @@
             "hei": "Hello!",
             "avsnitt1": "Financial assistance is temporary support when you are unable to cover necessary expenses yourself.",
             "avsnitt2": "In the application, you will be asked to provide information about yourself and your situation. Please fill in the application as best you can."
+        },
+        "forDuSoker": {
+            "title": "Before you apply",
+            "tekst": "See what may be useful to know before you apply, and which documentation we may ask for.",
+            "accordion": {
+                "item1": {
+                    "title": "Useful to know before you apply",
+                    "liste": "<li>Fill in the application as best you can, and state clearly what you need help or money for.</li><li>You can submit the application even if you have not uploaded any documentation. You may be asked to document some of the information you provide along the way.</li><li>Your answers are saved automatically while you fill in the application, so you can take breaks. You can also click Save application if you want to stop and continue later. Applications you have started are saved for 14 days.</li><li>Your application will be processed as quickly as possible.</li>",
+                    "tekst": "Want to know more? <a>Read more about financial assistance (opens in a new tab).</a>"
+                },
+                "item2": {
+                    "title": "See examples of documentation we may ask for",
+                    "liste": "<li>Invoices/receipts for what you have applied for support for, such as rent and electricity</li><li>Tax return</li><li>Tax assessment notice</li><li>Payslip (if you are employed)</li><li>Account statement showing the balance of your accounts</li><li>Information about your housing situation (tenancy agreement)</li>",
+                    "tekst": "Documentation can be sent as documents, images or other file types."
+                }
+            }
         }
     },
     "EttersendDokuPanel": {
