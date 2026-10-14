@@ -1,5 +1,5 @@
 name: "Deploy Wonderwall for App"
-run-name: "Deploy Wonderwall for '${{ github.event.inputs.app-name }}'"
+run-name: "Deploy Wonderwall"
 
 # Push-jobben deployer alle miljøer ved merge til main når en wonderwall-fil
 # er endret, også når digestabot merger (token fra GitHub-appen).
