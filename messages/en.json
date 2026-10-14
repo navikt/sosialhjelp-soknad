@@ -2,6 +2,15 @@
     "Informasjon": {
         "title": "Application for financial assistance"
     },
+    "Introside": {
+        "title": "Application for financial assistance",
+        "skjemaId": "NAV 35-18.01",
+        "dialog": {
+            "hei": "Hello!",
+            "avsnitt1": "Financial assistance is temporary support when you are unable to cover necessary expenses yourself.",
+            "avsnitt2": "In the application, you will be asked to provide information about yourself and your situation. Please fill in the application as best you can."
+        }
+    },
     "EttersendDokuPanel": {
         "title": "Send documentation for an application you have submitted",
         "text": {

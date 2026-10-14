@@ -2,6 +2,15 @@
     "Informasjon": {
         "title": "Søknad om økonomisk sosialhjelp"
     },
+    "Introside": {
+        "title": "Søknad om økonomisk sosialhjelp",
+        "skjemaId": "NAV 35-18.01",
+        "dialog": {
+            "hei": "Hei!",
+            "avsnitt1": "Økonomisk sosialhjelp er en midlertidig støtte når du ikke kan dekke nødvendige utgifter selv.",
+            "avsnitt2": "I søknaden blir du beden om fylla ut opplysningar om deg sjølv og situasjonen din. Ver vennleg og fyll ut søknaden såg godt du kan."
+        }
+    },
     "EttersendDokuPanel": {
         "title": "Send dokumentasjon til en søknad du har sendt inn",
         "text": {

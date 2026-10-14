@@ -1,8 +1,8 @@
 export const SkjemaIllustrasjon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="96"
-        height="96"
+        width="72"
+        height="72"
         viewBox="0 0 72 72"
         fill="none"
         aria-hidden

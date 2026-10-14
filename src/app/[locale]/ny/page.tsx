@@ -1,31 +1,36 @@
-import {Bleed, BodyShort, GuidePanel, Heading, Hide, HStack, VStack} from "@navikt/ds-react";
+import {Bleed, BodyLong, BodyShort, GuidePanel, Heading, Hide, HStack, VStack} from "@navikt/ds-react";
 import {SkjemaIllustrasjon} from "../../../lib/components/svg/illustrasjoner/SkjemaIllustrasjon";
+import {useTranslations} from "next-intl";
 
 const Page = () => {
+    const t = useTranslations("Introside");
     return (
         <main
-            className="max-w-lg lg:max-w-3xl w-full mx-auto gap-6 p-3 py-6 lg:gap-16 lg:py-16 flex flex-col grow"
+            className="max-w-lg lg:max-w-xl w-full mx-auto gap-6 p-3 py-6 lg:gap-16 lg:py-16 flex flex-col grow"
             aria-labelledby={"app-heading"}
         >
-            <HStack>
+            <HStack wrap={false}>
                 <Hide below="lg">
-                    <Bleed marginInline="space-128 space-0">
-                        <div className="pr-6">
+                    <Bleed marginInline="space-96 space-0">
+                        <div>
                             <SkjemaIllustrasjon />
                         </div>
                     </Bleed>
                 </Hide>
                 <VStack gap="space-12" as="hgroup" className={"flex-col-reverse"}>
                     <Heading level="1" size="xlarge">
-                        Søknad om økonomisk sosialhjelp
+                        {t("title")}
                     </Heading>
-                    <BodyShort size="small">NAV 35-18.01</BodyShort>
+                    <BodyShort size="small">{t("skjemaId")}</BodyShort>
                 </VStack>
             </HStack>
 
             <GuidePanel poster>
-                Saksbehandlingstiden varierer fra kommune til kommune. Hvis det går mer enn X måneder siden du søkte,
-                skal du få brev om at saksbehandlingstiden er forlenget.
+                <Heading level="2" size="medium" spacing>
+                    {t("dialog.hei")}
+                </Heading>
+                <BodyLong spacing>{t("dialog.avsnitt1")}</BodyLong>
+                <BodyLong>{t("dialog.avsnitt2")}</BodyLong>
             </GuidePanel>
         </main>
     );
