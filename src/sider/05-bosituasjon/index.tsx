@@ -19,7 +19,7 @@ export const Bosituasjon = () => {
             <SkjemaStegStepper page={5} onStepChange={handleStepChange} />
             <Feiloppsummering />
             <SkjemaStegBlock>
-                <SkjemaStegTitle title={t(SkjemaHeadings[5].tittel)} icon={SkjemaHeadings[5].ikon} />
+                <SkjemaStegTitle title={t(SkjemaHeadings[5].tittel)} />
                 <Botype />
                 <AntallPersoner />
                 <SkjemaStegButtons onNext={handleNext} onPrevious={handlePrevious} />

@@ -26,7 +26,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             </head>
             <body>
                 <Decorator.Header />
-                <div id="root" className={"bg-digisos-surface"} role={"none"}>
+                <div id="root" role={"none"}>
                     <Providers locale={language}>{children}</Providers>
                 </div>
                 <Decorator.Footer />

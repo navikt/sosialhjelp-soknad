@@ -29,7 +29,7 @@ const Side3 = ({children}: PropsWithChildren) => {
         <SkjemaSteg>
             <SkjemaStegStepper page={3} onStepChange={goto} />
             <SkjemaStegBlock>
-                <SkjemaStegTitle title={t(SkjemaHeadings[3].tittel)} icon={SkjemaHeadings[3].ikon} />
+                <SkjemaStegTitle title={t(SkjemaHeadings[3].tittel)} />
                 {children}
                 <SkjemaStegButtons onPrevious={async () => navigate("../2")} onNext={async () => await goto(4)} />
             </SkjemaStegBlock>

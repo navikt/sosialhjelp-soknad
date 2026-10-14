@@ -38,11 +38,10 @@ export const Gruppe = ({gruppeKey}: Props) => {
         return <Loader />;
     }
     return (
-        <div className={"grid gap-4 py-4"}>
-            <Heading level={"3"} size={"medium"} className={"pb-6"}>
+        <div className={"grid gap-4"}>
+            <Heading level={"3"} size={"medium"}>
                 {t(`${Gruppetittel[gruppeKey]}`)}
             </Heading>
-
             {sorted.map((forventetDokumentasjon) => (
                 <Dokumentasjon key={forventetDokumentasjon.type} opplysningstype={forventetDokumentasjon.type} />
             ))}

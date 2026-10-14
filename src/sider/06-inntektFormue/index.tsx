@@ -25,7 +25,7 @@ export const InntektFormue = () => {
             <SkjemaStegStepper page={6} onStepChange={handleStepChange} />
             <Feiloppsummering />
             <SkjemaStegBlock>
-                <SkjemaStegTitle title={t(SkjemaHeadings[6].tittel)} icon={SkjemaHeadings[6].ikon} />
+                <SkjemaStegTitle title={t(SkjemaHeadings[6].tittel)} />
 
                 <div>
                     <Heading size="medium" level="2" spacing>

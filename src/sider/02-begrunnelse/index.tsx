@@ -34,7 +34,7 @@ export const Begrunnelse = () => {
         <SkjemaSteg>
             <SkjemaStegStepper page={2} onStepChange={goto} />
             <SkjemaStegBlock>
-                <SkjemaStegTitle title={t(SkjemaHeadings[2].tittel)} icon={SkjemaHeadings[2].ikon} />
+                <SkjemaStegTitle title={t(SkjemaHeadings[2].tittel)} />
                 {isLoading ? (
                     <ApplicationSpinner />
                 ) : (
