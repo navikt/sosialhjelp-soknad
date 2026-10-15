@@ -8,9 +8,13 @@ export default defineConfig({
     workers: process.env.CI ? 1 : undefined,
     reporter: process.env.CI ? "blob" : "html",
     timeout: 30 * 1000,
+
+    globalSetup: "./e2e/global-setup",
+
     use: {
         baseURL: "http://localhost:3001",
         trace: "on-first-retry",
+        storageState: "e2e/.auth/storage.json",
     },
 
     projects: [
