@@ -14,20 +14,6 @@ export const SkatteetatenOrganisasjon = ({
 
     return (
         <>
-            <Table key={orgnr}>
-                <Table.Header>
-                    <Table.Row>
-                        <Table.HeaderCell className={"border-hidden!"} colSpan={2}>
-                            {t("utbetalinger.inntekt.skattbar.inntekt.tittel")}
-                        </Table.HeaderCell>
-                    </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                    {utbetalinger?.map((u, i) => (
-                        <SkatteetatenUtbetalingView utbetaling={u} key={i} />
-                    ))}
-                </Table.Body>
-            </Table>
             <BodyShort size={"small"} className={"pt-4"}>
                 {organisasjonsnavn}
             </BodyShort>
@@ -35,6 +21,13 @@ export const SkatteetatenOrganisasjon = ({
                 {t("utbetalinger.inntekt.fra")} <LocalizedDate date={fom} /> {t("utbetalinger.inntekt.til")}{" "}
                 <LocalizedDate date={tom} />
             </BodyShort>
+            <Table key={orgnr}>
+                <Table.Body>
+                    {utbetalinger?.map((u, i) => (
+                        <SkatteetatenUtbetalingView utbetaling={u} key={i} />
+                    ))}
+                </Table.Body>
+            </Table>
         </>
     );
 };
