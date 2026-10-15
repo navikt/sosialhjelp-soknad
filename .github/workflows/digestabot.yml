@@ -1,0 +1,61 @@
+name: "Digestabot – oppdater wonderwall-digest"
+
+# Automatiserer sikkerhetsoppdateringer av wonderwall (DSOS-735): sjekker
+# jevnlig etter nye Nais-bygg og lager PR med ny digest.
+#
+# PR-en lages og auto-merges med token fra GitHub-appen (ikke GITHUB_TOKEN),
+# slik at mergen trigger deploy_wonderwall.yml, som deployer alle miljøer.
+# Merger gjort med GITHUB_TOKEN trigger ikke andre workflows.
+#
+# Auto-merger uten manuell PR-godkjenning - et bevisst valg for lavest mulig
+# friksjon, siden hele poenget er å slippe å følge manuelt med på nye bygg.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * 2" # 08:00 UTC = 09:00 (vinter) / 10:00 (sommer) norsk tid, tirsdag
+
+# Kø fremfor kansellering, så to kjøringer ikke lager PR samtidig.
+concurrency:
+  group: digestabot-wonderwall
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  digest-update:
+    name: "Sjekk digest og auto-merge PR"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: "Hent token fra GitHub-appen"
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ vars.CLIENT_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+          # Begrens tokenet til det digestabot og auto-merge trenger.
+          permission-contents: write
+          permission-pull-requests: write
+
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+
+      - name: "Sjekk for ny digest og opprett PR ved behov"
+        id: digestabot
+        uses: navikt/digestabot@3302a753e533ceb9ec216de7f78345436cd636e3 # v1.2
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          working-dir: wonderwall
+          branch-for-pr: update-wonderwall-digest
+          title-for-pr: "Oppdater wonderwall-digest"
+          commit-message: "Oppdater wonderwall-digest"
+
+      - name: "Slå på auto-merge"
+        if: steps.digestabot.outputs.pull_request_number != ''
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_NUMBER: ${{ steps.digestabot.outputs.pull_request_number }}
+        run: gh pr merge "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --auto --squash

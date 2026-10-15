@@ -1,7 +1,16 @@
 name: "Deploy Wonderwall for App"
-run-name: "Deploy Wonderwall for '${{ github.event.inputs.app-name }}'"
+run-name: "Deploy Wonderwall"
+
+# Push-jobben deployer alle miljøer ved merge til main når en wonderwall-fil
+# er endret, også når digestabot merger (token fra GitHub-appen).
+# Uendrede miljøer får samme manifest og ruller ikke ut nye pods.
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'wonderwall/**'
   workflow_dispatch:
     inputs:
       app-name:
@@ -15,7 +24,41 @@ on:
           - 'prod'
 
 jobs:
+  deploy-on-push:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        env: [ dev, mock, preprod, prod ]
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+
+      - name: "Set cluster based on env"
+        env:
+          ENV: ${{ matrix.env }}
+        run: |
+          if [ "$ENV" = "prod" ]; then
+            echo "CLUSTER=prod-gcp" >> "$GITHUB_ENV"
+          else
+            echo "CLUSTER=dev-gcp" >> "$GITHUB_ENV"
+          fi
+
+      - name: "Deploy ${{ matrix.env }} to ${{ env.CLUSTER }}"
+        uses: nais/deploy/actions/deploy@1de80da70ad26556ecdc5964a8b7ec3bbed98120 # v2
+        env:
+          RESOURCE: wonderwall/${{ matrix.env }}/wonderwall.yml
+          CLUSTER: ${{ env.CLUSTER }}
+          REF: ${{ github.sha }}
+          PRINT_PAYLOAD: true
+
   deploy-wonderwall:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: read
