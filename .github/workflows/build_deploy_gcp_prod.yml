@@ -7,6 +7,9 @@ on:
   push:
     branches:
       - "main"
+    # Endringer kun i wonderwall/ deployes av deploy_wonderwall.yml, ikke appen.
+    paths-ignore:
+      - "wonderwall/**"
 
 permissions:
   contents: read
