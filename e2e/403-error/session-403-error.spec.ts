@@ -91,8 +91,6 @@ test.describe("Session Info 403 Error", () => {
         await page.goto("/sosialhjelp/soknad/nb");
 
         // Click the "Start søknaden" button
-        await page.getByRole("button", {name: "Nei"}).click();
-
         const startButton = page.getByRole("button", {name: /Start søknaden/});
         await startButton.click();
 
