@@ -14,14 +14,14 @@ export const SkatteetatenOrganisasjon = ({
 
     return (
         <>
-            <BodyShort size={"small"} className={"pt-4"}>
+            <BodyShort size={"medium"} className={"pt-4"}>
                 {organisasjonsnavn}
             </BodyShort>
-            <BodyShort size={"small"}>
+            <BodyShort size={"medium"}>
                 {t("utbetalinger.inntekt.fra")} <LocalizedDate date={fom} /> {t("utbetalinger.inntekt.til")}{" "}
                 <LocalizedDate date={tom} />
             </BodyShort>
-            <Table key={orgnr}>
+            <Table key={orgnr} className={"border-hidden"}>
                 <Table.Body>
                     {utbetalinger?.map((u, i) => (
                         <SkatteetatenUtbetalingView utbetaling={u} key={i} />
