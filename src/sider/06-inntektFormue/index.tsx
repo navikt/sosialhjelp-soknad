@@ -28,10 +28,7 @@ export const InntektFormue = () => {
                 <SkjemaStegTitle title={t(SkjemaHeadings[6].tittel)} />
 
                 <div>
-                    <Heading size="medium" level="2" spacing>
-                        {t("utbetalinger.inntekt.skattbar.tittel")}
-                    </Heading>
-                    <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v2")} />
+                    <SkattbarInntekt />
                 </div>
 
                 <NavYtelser />
