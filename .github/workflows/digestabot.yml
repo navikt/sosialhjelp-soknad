@@ -3,12 +3,14 @@ name: "Digestabot – oppdater wonderwall-digest"
 # Automatiserer sikkerhetsoppdateringer av wonderwall (DSOS-735): sjekker
 # jevnlig etter nye Nais-bygg og lager PR med ny digest.
 #
-# PR-en lages og auto-merges med token fra GitHub-appen (ikke GITHUB_TOKEN),
+# PR-en lages og merges med token fra GitHub-appen (ikke GITHUB_TOKEN),
 # slik at mergen trigger deploy_wonderwall.yml, som deployer alle miljøer.
 # Merger gjort med GITHUB_TOKEN trigger ikke andre workflows.
 #
-# Auto-merger uten manuell PR-godkjenning - et bevisst valg for lavest mulig
+# Merger uten manuell PR-godkjenning - et bevisst valg for lavest mulig
 # friksjon, siden hele poenget er å slippe å følge manuelt med på nye bygg.
+# Appen står i bypass-listen i rulesettet for main. Bypass gjelder bare ved
+# direkte merge, ikke ved auto-merge (--auto venter på godkjenning).
 
 on:
   workflow_dispatch:
@@ -24,7 +26,7 @@ permissions: {}
 
 jobs:
   digest-update:
-    name: "Sjekk digest og auto-merge PR"
+    name: "Sjekk digest og merge PR"
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -35,7 +37,7 @@ jobs:
         with:
           client-id: ${{ vars.CLIENT_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
-          # Begrens tokenet til det digestabot og auto-merge trenger.
+          # Begrens tokenet til det digestabot og merge trenger.
           permission-contents: write
           permission-pull-requests: write
 
@@ -53,9 +55,18 @@ jobs:
           title-for-pr: "Oppdater wonderwall-digest"
           commit-message: "Oppdater wonderwall-digest"
 
-      - name: "Slå på auto-merge"
+      - name: "Merge PR"
         if: steps.digestabot.outputs.pull_request_number != ''
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           PR_NUMBER: ${{ steps.digestabot.outputs.pull_request_number }}
-        run: gh pr merge "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --auto --squash
+        run: |
+          # --admin: direkte merge som bruker appens bypass-rett i rulesettet.
+          # Nye forsøk fordi GitHub trenger noen sekunder på å vurdere en ny PR.
+          for i in 1 2 3 4 5; do
+            gh pr merge "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --squash --admin && exit 0
+            echo "Forsøk $i: PR #$PR_NUMBER kunne ikke merges ennå"
+            sleep 5
+          done
+          echo "::error::Klarte ikke å merge PR #$PR_NUMBER"
+          exit 1
