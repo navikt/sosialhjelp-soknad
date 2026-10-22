@@ -125,7 +125,7 @@
     },
     "NavYtelser": {
         "heading": "Dine utbetalinger fra NAV",
-        "empty": "Vi har ingen registrerte utbetalinger på deg fra NAV den siste måneden.",
+        "empty": "Ingen utbetalinger de siste 40 dagene å vise fra NAV.",
         "error": "På grunn av systemfeil klarte vi ikke å hente inn informasjon om ytelser fra NAV."
     },
     "PageFlipperButtons": {
