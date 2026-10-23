@@ -1,23 +1,47 @@
+"use client";
+import {ArrowRightIcon} from "@navikt/aksel-icons";
 import {
     Accordion,
+    Alert,
     Bleed,
     BodyLong,
     BodyShort,
+    Button,
+    Checkbox,
+    ErrorMessage,
     GuidePanel,
     Heading,
     Hide,
     HStack,
     Link,
     List,
+    Loader,
     VStack,
 } from "@navikt/ds-react";
-import {SkjemaIllustrasjon} from "../../../lib/components/svg/illustrasjoner/SkjemaIllustrasjon";
-import {useTranslations} from "next-intl";
-import {AccordionItem, AccordionHeader, AccordionContent} from "@navikt/ds-react/Accordion";
+import {AccordionContent, AccordionHeader, AccordionItem} from "@navikt/ds-react/Accordion";
 import {ListItem} from "@navikt/ds-react/List";
+import {useTranslations} from "next-intl";
+import {useRouter} from "next/navigation";
+import {useState, useTransition} from "react";
+import {useCreateSoknad} from "../../../generated";
+import {SkjemaIllustrasjon} from "../../../lib/components/svg/illustrasjoner/SkjemaIllustrasjon";
+import {umamiTrack} from "../../umami";
 
 const Page = () => {
     const t = useTranslations("Introside");
+    const router = useRouter();
+    const [isTransitioning, startTransition] = useTransition();
+    const {mutate, isPending, error} = useCreateSoknad({
+        mutation: {
+            onSuccess: async (data) => {
+                startTransition(() => router.push(`/skjema/${data.soknadId}/1`));
+                umamiTrack("Skjema startet");
+            },
+        },
+    });
+    const [checked, setChecked] = useState(false);
+    const [checkboxError, setCheckboxError] = useState(false);
+
     return (
         <main
             className="max-w-lg lg:max-w-xl w-full mx-auto gap-6 p-3 py-6 lg:gap-16 lg:py-16 flex flex-col grow"
@@ -46,6 +70,7 @@ const Page = () => {
                 <BodyLong spacing>{t("dialog.avsnitt1")}</BodyLong>
                 <BodyLong>{t("dialog.avsnitt2")}</BodyLong>
             </GuidePanel>
+
             <HStack>
                 <Heading level="2" size="medium" spacing>
                     {t("forDuSoker.title")}
@@ -89,6 +114,106 @@ const Page = () => {
                     </AccordionItem>
                 </Accordion>
             </HStack>
+
+            <HStack>
+                <Heading level="2" size="medium" spacing>
+                    {t("personopplysninger.title")}
+                </Heading>
+                <BodyLong spacing>{t("personopplysninger.tekst")}</BodyLong>
+                <Accordion>
+                    <AccordionItem>
+                        <AccordionHeader>{t("personopplysninger.accordion.item1.title")}</AccordionHeader>
+                        <AccordionContent>
+                            <BodyLong spacing>{t("personopplysninger.accordion.item1.p1")}</BodyLong>
+                            <List as="ul" className="mb-7">
+                                {t.rich("personopplysninger.accordion.item1.liste", {
+                                    li: (chuncks) => <ListItem>{chuncks}</ListItem>,
+                                })}
+                            </List>
+                            <BodyLong spacing>{t("personopplysninger.accordion.item1.p2")}</BodyLong>
+                            <BodyLong>
+                                {t.rich("personopplysninger.accordion.item1.p3", {
+                                    a: (chuncks) => (
+                                        <Link
+                                            href="https://www.nav.no/personopplysninger-sosialhjelp"
+                                            inlineText
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {chuncks}
+                                        </Link>
+                                    ),
+                                })}
+                            </BodyLong>
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem>
+                        <AccordionHeader>{t("personopplysninger.accordion.item2.title")}</AccordionHeader>
+                        <AccordionContent>
+                            <BodyLong spacing>{t("personopplysninger.accordion.item2.p1")}</BodyLong>
+                            <BodyLong>
+                                {t.rich("personopplysninger.accordion.item2.p2", {
+                                    a: (chuncks) => (
+                                        <Link
+                                            href="https://www.nav.no/personopplysninger-sosialhjelp"
+                                            inlineText
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {chuncks}
+                                        </Link>
+                                    ),
+                                })}
+                            </BodyLong>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+            </HStack>
+
+            <div>
+                <BodyLong className="mb-4">
+                    {t.rich("bekreftelse.tekst", {
+                        a: (chuncks) => (
+                            <Link
+                                href="https://www.nav.no/personopplysninger-sosialhjelp"
+                                inlineText
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {chuncks}
+                            </Link>
+                        ),
+                    })}
+                </BodyLong>
+                <Checkbox onChange={(e) => setChecked(e.target.checked)} error={!!checkboxError}>
+                    {t("bekreftelse.checkboxLabel")}
+                </Checkbox>
+                {checkboxError && (
+                    <ErrorMessage className="font-normal ml-8" size="small">
+                        {t("bekreftelse.checkboxError")}
+                    </ErrorMessage>
+                )}
+            </div>
+
+            {error && <Alert variant="error">{t("bekreftelse.feilet")}</Alert>}
+
+            <Button
+                variant="primary"
+                iconPosition="right"
+                icon={isTransitioning || isPending ? <Loader aria-hidden /> : <ArrowRightIcon aria-hidden />}
+                disabled={isTransitioning || isPending}
+                onClick={(event) => {
+                    event.preventDefault();
+                    if (checked) {
+                        setCheckboxError(false);
+                        mutate({});
+                    } else {
+                        setCheckboxError(true);
+                    }
+                }}
+            >
+                {t("bekreftelse.button")}
+            </Button>
         </main>
     );
 };

@@ -25,6 +25,31 @@
                     "tekst": "Dokumentasjon kan sendes som dokumenter, bilder eller andre filtyper."
                 }
             }
+        },
+        "personopplysninger": {
+            "title": "Innhenting og behandling av personopplysninger",
+            "tekst": "Vi innhenter opplysninger automatisk fra offentlige registre. Ved å trykke på knappen Start søknaden nederst på siden, godtar du dette.",
+            "accordion": {
+                "item1": {
+                    "title": "Informasjon vi henter om deg",
+                    "p1": "I tillegg til opplysningene du gir i søknaden, henter vi automatisk inn disse opplysningene om deg fra andre offentlige registre når du starter søknaden:",
+                    "liste": "<li>Statsborgerskap, adresse og familieforhold fra Folkeregisteret</li><li>Kontonummer</li><li>Telefonnummer fra Kontakt- og reservasjonsregisteret</li><li>Arbeidsforhold fra Arbeidsgiver- og arbeidstakerregisteret</li><li>Utbetalinger fra Nav</li>",
+                    "p2": "I søknaden kan du selv velge å samtykke til at vi henter opplysninger om dine inntekter (hentes fra Skatteetaten) og bostøtte fra Husbanken.",
+                    "p3": "Du kan <a>lese mer om hvordan Nav behandler personopplysninger (åpnes i ny fane)</a>"
+                },
+                "item2": {
+                    "title": "Slik behandler vi personopplysninger",
+                    "p1": "Vi skal behandle personopplysningene dine på en sikker og riktig måte, og skal ikke innhente flere opplysninger enn det som er nødvendig.",
+                    "p2": "Du kan <a>lese mer om hvordan vi behandler personopplysninger (åpnes i ny fane)</a>"
+                }
+            }
+        },
+        "bekreftelse": {
+            "tekst": "Det er viktig at du gir oss riktige opplysninger slik at vi kan behandle saken din. <a>Les mer om viktigheten av å gi riktige opplysninger.</a>",
+            "checkboxLabel": "Jeg vil svare så godt jeg kan på spørsmålene i søknaden.",
+            "checkboxError": "Du må bekrefte før du kan starte søknaden",
+            "feilet": "Det oppstod en feil under opprettelsen av søknaden. Vennligst prøv igjen senere",
+            "button": "Start søknaden"
         }
     },
     "EttersendDokuPanel": {

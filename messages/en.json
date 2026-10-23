@@ -25,6 +25,31 @@
                     "tekst": "Documentation can be sent as documents, images or other file types."
                 }
             }
+        },
+        "personopplysninger": {
+            "title": "Collection and processing of personal data",
+            "tekst": "We automatically collect information from public registers. By clicking the Start application button at the bottom of the page, you agree to this.",
+            "accordion": {
+                "item1": {
+                    "title": "Information we collect about you",
+                    "p1": "In addition to the information you provide in the application, we automatically collect the following information about you from other public registers when you start the application:",
+                    "liste": "<li>Citizenship, address and family relationships from the National Population Register</li><li>Bank account number</li><li>Telephone number from the Contact and Reservation Register</li><li>Employment relationships from the Employer and Employee Register</li><li>Payments from Nav</li>",
+                    "p2": "In the application, you can choose to consent to us collecting information about your income (from the Norwegian Tax Administration) and housing benefit from Husbanken.",
+                    "p3": "You can <a>read more about how Nav processes personal data (opens in a new tab)</a>"
+                },
+                "item2": {
+                    "title": "How we process personal data",
+                    "p1": "We will process your personal data securely and correctly, and will not collect more information than is necessary.",
+                    "p2": "You can <a>read more about how we process personal data (opens in a new tab)</a>"
+                }
+            }
+        },
+        "bekreftelse": {
+            "tekst": "It is important that you provide us with correct information so that we can process your case. <a>Read more about the importance of providing correct information.</a>",
+            "checkboxLabel": "I will answer the questions in the application as best I can.",
+            "checkboxError": "You must confirm before you can start the application",
+            "feilet": "An error occurred when creating the application. Please try again later.",
+            "button": "Start application"
         }
     },
     "EttersendDokuPanel": {
