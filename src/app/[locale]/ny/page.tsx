@@ -21,13 +21,19 @@ import {
 import {AccordionContent, AccordionHeader, AccordionItem} from "@navikt/ds-react/Accordion";
 import {ListItem} from "@navikt/ds-react/List";
 import {useTranslations} from "next-intl";
-import {useRouter} from "next/navigation";
+import {redirect, useRouter} from "next/navigation";
 import {useState, useTransition} from "react";
 import {useCreateSoknad} from "../../../generated";
 import {SkjemaIllustrasjon} from "../../../lib/components/svg/illustrasjoner/SkjemaIllustrasjon";
+import {useConfigFeatureFlags} from "../../../lib/config";
 import {umamiTrack} from "../../umami";
 
 const Page = () => {
+    const featureToggles = useConfigFeatureFlags();
+    if (!featureToggles.nyIntroside) {
+        redirect("/");
+    }
+
     const t = useTranslations("Introside");
     const router = useRouter();
     const [isTransitioning, startTransition] = useTransition();
