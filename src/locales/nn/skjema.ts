@@ -1760,27 +1760,19 @@ export const skjema = {
                 beskrivelse: "Du har henta informasjon om inntekta di frå Skatteetaten.",
                 bruttoinntekt: "Inntekt før skatt",
                 forskuddstrekk: "Skattetrekk",
-                gi_samtykke: "Hent frå Skatteetaten",
-                har_gitt_samtykke: "Du har henta informasjon frå Skatteetaten",
                 hent: {
                     info: {
                         skatteetaten: "Hent informasjonen frå Skatteetaten",
                     },
                 },
-                ingen: "Du er ikkje registrert med inntekt hos Skatteetaten for siste månad.",
+                ingen: "Inga inntekt å visa for denne månaden eller førre månad.",
                 inntekt: {
-                    tittel: "Inntekt henta frå Skatteetaten",
+                    tittel: "Inntekta di henta frå Skatteetaten",
                 },
-                mangler_samtykke: "Du har ikkje henta informasjon frå Skatteetaten",
                 nettoinntekt: "Inntekt etter skatt",
                 oppsummering:
                     "Vi har registrert at du{ antall, plural,=0 { ikkje har hatt }other {har hatt{ antall, plural,=1 {{éi}}=2 {{to}}=3 {{tre}}=4 {{fire}}=5 {{fem}}=6 {{seks}}=7 {{sju}}=8 {{åtte}}=9 {{ni}}=10 {{ti}}=11 {{elleve}}=12 {{tolv}}other {{#}}}}}skattbare inntekter.",
-                samtykke_info:
-                    "Desse opplysningane kan vere nødvendige for å behandle søknaden. Dersom du ikkje ønskjer at vi hentar inn denne informasjonen om deg, kan du laste opp dokumentasjon på det siste trinnet i søknaden.",
-                samtykke_sporsmal_v1: "Vil du hente informasjon om inntekta di frå Skatteetaten?",
-                samtykke_sporsmal_v2: "Vil du hente informasjon om inntekta di frå Skatteetaten?",
                 skatteetaten: "Sjå detaljar hjå Skatteetaten.",
-                ta_bort_samtykke: "Fjern informasjon frå Skatteetaten",
                 tidspunkt: "Informasjonen blei henta",
                 tittel: "Inntekt",
                 undertittel: "Innrapportert inntekt til Skatteetaten",
