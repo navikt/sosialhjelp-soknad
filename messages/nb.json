@@ -1,6 +1,64 @@
 {
-    "Informasjon": {
-        "title": "Søknad om økonomisk sosialhjelp"
+    "NyEllerFortsettSoknad": {
+        "title": "Søknad om økonomisk sosialhjelp",
+        "nySoknad": "Start en ny søknad",
+        "fortsettSoknadTitle": "Fortsett på en søknad du har begynt på",
+        "fortsettSoknadDescription": "Du har {count} påbegynte søknader"
+    },
+    "NySoknad": {
+        "title": "Søknad om økonomisk sosialhjelp",
+        "skjemaId": "NAV 35-18.01",
+        "dialog": {
+            "hei": "Hei!",
+            "avsnitt1": "Økonomisk sosialhjelp er en midlertidig støtte når du ikke kan dekke nødvendige utgifter selv.",
+            "avsnitt2": "I søknaden blir du bedt om fylle ut opplysninger om deg selv og situasjonen din. Vennligst fyll ut søknaden så godt du kan."
+        },
+        "forDuSoker": {
+            "title": "Før du søker",
+            "tekst": "Se hva som kan være nyttig å vite før du søker, og hvilken dokumentasjon vi kan be om.",
+            "accordion": {
+                "item1": {
+                    "title": "Nyttig å vite før du søker",
+                    "liste": "<li>Fyll ut søknaden så godt du kan, og skriv tydelig hva du trenger hjelp eller penger til.</li><li> Du kan sende inn søknaden selv om du ikke har lastet opp dokumentasjon. Noen av opplysningene du gir underveis, kan du bli bedt om å dokumentere. </li><li>Vi lagrer svarene dine automatisk mens du fyller ut, så du kan ta pauser underveis. Du kan også trykke på Lagre søknaden, hvis du vil avslutte og fortsette på et senere tidspunkt. Påbegynte søknader lagres i 14 dager.</li><li>Søknaden din behandles så fort som mulig.</li>",
+                    "tekst": "Ønsker du å vite mer? <a>Les mer om økonomisk sosialhjelp (åpnes i ny fane).</a>"
+                },
+                "item2": {
+                    "title": "Se eksempler på hvilken dokumentasjon vi kan be om",
+                    "liste": "<li>Fakturaer/kvitteringer for det du har søkt om støtte til, for eksempel husleie og strøm</li><li>Skattemelding</li><li>Skatteoppgjør</li><li>Lønnsslipp (hvis du er i jobb)</li><li>Kontooversikt som viser saldo på kontoene dine</li><li>Opplysninger om boforhold (husleiekontrakt)</li>",
+                    "tekst": "Dokumentasjon kan sendes som dokumenter, bilder eller andre filtyper."
+                }
+            }
+        },
+        "personopplysninger": {
+            "title": "Innhenting og behandling av personopplysninger",
+            "tekst": "Vi innhenter opplysninger automatisk fra offentlige registre. Ved å trykke på knappen Start søknaden nederst på siden, godtar du dette.",
+            "accordion": {
+                "item1": {
+                    "title": "Informasjon vi henter om deg",
+                    "p1": "I tillegg til opplysningene du gir i søknaden, henter vi automatisk inn disse opplysningene om deg fra andre offentlige registre når du starter søknaden:",
+                    "liste": "<li>Statsborgerskap, adresse og familieforhold fra Folkeregisteret</li><li>Kontonummer</li><li>Telefonnummer fra Kontakt- og reservasjonsregisteret</li><li>Arbeidsforhold fra Arbeidsgiver- og arbeidstakerregisteret</li><li>Utbetalinger fra Nav</li>",
+                    "p2": "I søknaden kan du selv velge å samtykke til at vi henter opplysninger om dine inntekter (hentes fra Skatteetaten) og bostøtte fra Husbanken.",
+                    "p3": "Du kan <a>lese mer om hvordan Nav behandler personopplysninger (åpnes i ny fane)</a>"
+                },
+                "item2": {
+                    "title": "Slik behandler vi personopplysninger",
+                    "p1": "Vi skal behandle personopplysningene dine på en sikker og riktig måte, og skal ikke innhente flere opplysninger enn det som er nødvendig.",
+                    "p2": "Du kan <a>lese mer om hvordan vi behandler personopplysninger (åpnes i ny fane)</a>"
+                }
+            }
+        },
+        "bekreftelse": {
+            "tekst": "Det er viktig at du gir oss riktige opplysninger slik at vi kan behandle saken din. <a>Les mer om viktigheten av å gi riktige opplysninger.</a>",
+            "checkboxLabel": "Jeg vil svare så godt jeg kan på spørsmålene i søknaden.",
+            "checkboxError": "Du må bekrefte før du kan starte søknaden",
+            "feilet": "Det oppstod en feil under opprettelsen av søknaden. Vennligst prøv igjen senere",
+            "button": "Start søknaden"
+        }
+    },
+    "FortsettSoknad": {
+        "title": "Dine påbegynte søknader",
+        "cardTitle": "Sist oppdatert",
+        "cardDescription": "Slettes"
     },
     "EttersendDokuPanel": {
         "title": "Send dokumentasjon til en søknad du har sendt inn",
@@ -168,6 +226,12 @@
         "submissionError": {
             "TOO_MANY_FILES": "Du har valgt for mange filer. Maks antall filer er 30.",
             "TOTAL_SIZE_TOO_LARGE": "Filene er for store (maks 150 MB), fjern filer og prøv igjen."
+        }
+    },
+    "Components": {
+        "SoknadHeader": {
+            "title": "Søknad om økonomisk sosialhjelp",
+            "code": "NAV 35-18.01"
         }
     }
 }
