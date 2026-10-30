@@ -1,8 +1,11 @@
 {
-    "Informasjon": {
-        "title": "Søknad om økonomisk sosialhjelp"
+    "NyEllerFortsettSoknad": {
+        "title": "Søknad om økonomisk sosialhjelp",
+        "nySoknad": "Start ein ny søknad",
+        "fortsettSoknadTitle": "Hald fram på ein søknad du har byrja på",
+        "fortsettSoknadDescription": "Du har {count} påbyrja søknader"
     },
-    "Introside": {
+    "NySoknad": {
         "title": "Søknad om økonomisk sosialhjelp",
         "skjemaId": "NAV 35-18.01",
         "dialog": {
@@ -51,6 +54,11 @@
             "feilet": "Det oppstod ein feil under skipinga av søknaden. Ver vennleg og prøv igjen seinare",
             "button": "Start søknaden"
         }
+    },
+    "FortsettSoknad": {
+        "title": "Dine påbyrja søknader",
+        "cardTitle": "Sist oppdatert",
+        "cardDescription": "Blir sletta"
     },
     "EttersendDokuPanel": {
         "title": "Send dokumentasjon til ein søknad du har sendt inn",
@@ -218,6 +226,12 @@
         "submissionError": {
             "TOO_MANY_FILES": "Du har valt for mange filer. Maks tal på filer er 30.",
             "TOTAL_SIZE_TOO_LARGE": "Filene er for store (maks 150 MB), fjern filer og prøv igjen."
+        }
+    },
+    "Components": {
+        "SoknadHeader": {
+            "title": "Søknad om økonomisk sosialhjelp",
+            "code": "NAV 35-18.01"
         }
     }
 }

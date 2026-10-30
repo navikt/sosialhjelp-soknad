@@ -3,20 +3,16 @@ import {ArrowRightIcon} from "@navikt/aksel-icons";
 import {
     Accordion,
     Alert,
-    Bleed,
     BodyLong,
-    BodyShort,
     Button,
     Checkbox,
     ErrorMessage,
     GuidePanel,
     Heading,
-    Hide,
     HStack,
     Link,
     List,
     Loader,
-    VStack,
 } from "@navikt/ds-react";
 import {AccordionContent, AccordionHeader, AccordionItem} from "@navikt/ds-react/Accordion";
 import {ListItem} from "@navikt/ds-react/List";
@@ -24,17 +20,17 @@ import {useTranslations} from "next-intl";
 import {redirect, useRouter} from "next/navigation";
 import {useState, useTransition} from "react";
 import {useCreateSoknad} from "../../../generated";
-import {SkjemaIllustrasjon} from "../../../lib/components/svg/illustrasjoner/SkjemaIllustrasjon";
+import {SoknadHeader} from "../../../lib/components/SoknadHeader";
 import {useConfigFeatureFlags} from "../../../lib/config";
 import {umamiTrack} from "../../umami";
 
 const Page = () => {
     const featureToggles = useConfigFeatureFlags();
     if (!featureToggles.nyIntroside) {
-        redirect("/");
+        redirect("/sosialhjelp/soknad");
     }
 
-    const t = useTranslations("Introside");
+    const t = useTranslations("NySoknad");
     const router = useRouter();
     const [isTransitioning, startTransition] = useTransition();
     const {mutate, isPending, error} = useCreateSoknad({
@@ -49,25 +45,8 @@ const Page = () => {
     const [checkboxError, setCheckboxError] = useState(false);
 
     return (
-        <main
-            className="max-w-lg lg:max-w-xl w-full mx-auto gap-6 p-3 py-6 lg:gap-16 lg:py-16 flex flex-col grow"
-            aria-labelledby={"app-heading"}
-        >
-            <HStack wrap={false}>
-                <Hide below="lg">
-                    <Bleed marginInline="space-96 space-0">
-                        <div>
-                            <SkjemaIllustrasjon />
-                        </div>
-                    </Bleed>
-                </Hide>
-                <VStack gap="space-12" as="hgroup" className={"flex-col-reverse"}>
-                    <Heading level="1" size="xlarge">
-                        {t("title")}
-                    </Heading>
-                    <BodyShort size="small">{t("skjemaId")}</BodyShort>
-                </VStack>
-            </HStack>
+        <main className="max-w-lg lg:max-w-xl w-full mx-auto gap-8 p-3 py-6 lg:gap-16 lg:py-16 flex flex-col grow">
+            <SoknadHeader />
 
             <GuidePanel poster>
                 <Heading level="2" size="medium" spacing>
@@ -78,7 +57,7 @@ const Page = () => {
             </GuidePanel>
 
             <HStack>
-                <Heading level="2" size="medium" spacing>
+                <Heading level="2" size="medium" spacing className="lg:text-[32px]">
                     {t("forDuSoker.title")}
                 </Heading>
                 <BodyLong spacing>{t("forDuSoker.tekst")}</BodyLong>
@@ -122,7 +101,7 @@ const Page = () => {
             </HStack>
 
             <HStack>
-                <Heading level="2" size="medium" spacing>
+                <Heading level="2" size="medium" spacing className="lg:text-[32px]">
                     {t("personopplysninger.title")}
                 </Heading>
                 <BodyLong spacing>{t("personopplysninger.tekst")}</BodyLong>

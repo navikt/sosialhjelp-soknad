@@ -249,7 +249,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             nyOppsummering: false,
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
-            nyIntroside: false,
+            nyIntroside: true,
         },
 
         dekorator: {

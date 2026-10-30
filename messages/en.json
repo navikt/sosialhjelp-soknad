@@ -1,8 +1,11 @@
 {
-    "Informasjon": {
-        "title": "Application for financial assistance"
+    "NyEllerFortsettSoknad": {
+        "title": "Application for financial assistance",
+        "nySoknad": "Start a new application",
+        "fortsettSoknadTitle": "Continue an application you have started",
+        "fortsettSoknadDescription": "You have {count} started applications"
     },
-    "Introside": {
+    "NySoknad": {
         "title": "Application for financial assistance",
         "skjemaId": "NAV 35-18.01",
         "dialog": {
@@ -51,6 +54,11 @@
             "feilet": "An error occurred when creating the application. Please try again later.",
             "button": "Start application"
         }
+    },
+    "FortsettSoknad": {
+        "title": "Your started applications",
+        "cardTitle": "Last updated",
+        "cardDescription": "Will be deleted"
     },
     "EttersendDokuPanel": {
         "title": "Send documentation for an application you have submitted",
@@ -218,6 +226,12 @@
         "submissionError": {
             "TOO_MANY_FILES": "You have selected too many files. The maximum number of files is 30.",
             "TOTAL_SIZE_TOO_LARGE": "The files are too large (max 150 MB), remove files and try again."
+        }
+    },
+    "Components": {
+        "SoknadHeader": {
+            "title": "Application for financial assistance",
+            "code": "NAV 35-18.01"
         }
     }
 }
