@@ -228,6 +228,40 @@
             "TOTAL_SIZE_TOO_LARGE": "Filene er for store (maks 150 MB), fjern filer og prøv igjen."
         }
     },
+    "Kvittering": {
+        "tittel": "Søknaden er send inn",
+        "undertittel": "Dette skjer vidare",
+        "steg": {
+            "sendt": {
+                "tittel": "Søknaden din er send",
+                "tekst": "Saka di er no send til Nav-kontoret ditt."
+            },
+            "behandles": {
+                "tittel": "Søknaden din blir behandla",
+                "tekst": "Søknaden din blir behandla så fort som mogleg, vanlegvis innan 4 veker.",
+                "tekst2": "Dersom Nav-kontoret treng fleire opplysningar, tek dei kontakt med deg."
+            },
+            "svar": {
+                "tittel": "Du får svar på søknaden din",
+                "tekst": "Du får beskjed når saka er behandla og du har fått eit vedtak."
+            }
+        },
+        "sporsmal": {
+            "tittel": "Har du spørsmål om søknaden din?",
+            "tekst": "Du kan ta <navKontor>kontakt med Nav-kontoret ditt</navKontor>, eller <telefon>ringje oss på nummer 55 55 33 33</telefon>."
+        },
+        "dokumentasjon": {
+            "tittel": "Manglar du dokumentasjon?",
+            "tekst": "Du treng ikkje ha lagt ved dokumentasjon for at vi skal starte å behandle søknaden din. Dersom vi treng fleire opplysningar, tek Nav-kontoret kontakt med deg. Du kan også <dokumentasjon>sende inn dokumentasjon i etterkant på Mi side for økonomisk sosialhjelp</dokumentasjon>."
+        },
+        "status": {
+            "tittel": "Sjå status på søknaden din på Mi side",
+            "tekst": "Du kan når som helst logge inn på Mi side for økonomisk sosialhjelp for å sjå søknaden din, ettersende dokumentasjon og følgje status i saka di."
+        },
+        "tidspunkt": "{dato}, kl. {klokkeslett}",
+        "minSide": "Gå til søknaden din på Mi side",
+        "lastNed": "Last ned søknaden din (PDF)"
+    },
     "Components": {
         "SoknadHeader": {
             "title": "Søknad om økonomisk sosialhjelp",

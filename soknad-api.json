@@ -5550,6 +5550,103 @@
         ]
       }
     },
+    "/kvittering/{digisosId}": {
+      "get": {
+        "operationId": "hentKvittering",
+        "parameters": [
+          {
+            "name": "digisosId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KvitteringDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedMelding"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoknadApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/SoknadApiError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InnsendingFeiletError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "kvittering-controller"
+        ]
+      }
+    },
     "/internal/isAlive": {
       "get": {
         "operationId": "isAlive",
@@ -6397,27 +6494,6 @@
   },
   "components": {
     "schemas": {
-      "InnsendingFeiletError": {
-        "type": "object",
-        "properties": {
-          "deletionDate": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
-          }
-        },
-        "required": [
-          "deletionDate",
-          "type"
-        ]
-      },
       "SoknadApiError": {
         "type": "object",
         "properties": {
@@ -6487,6 +6563,27 @@
         },
         "required": [
           "loginUrl"
+        ]
+      },
+      "InnsendingFeiletError": {
+        "type": "object",
+        "properties": {
+          "deletionDate": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "InnsendingFeilet": "#/components/schemas/InnsendingFeiletError"
+          }
+        },
+        "required": [
+          "deletionDate",
+          "type"
         ]
       },
       "BoutgifterInput": {
@@ -9210,6 +9307,35 @@
         "required": [
           "antall",
           "maxAntall"
+        ]
+      },
+      "KvitteringDto": {
+        "type": "object",
+        "properties": {
+          "digisosId": {
+            "type": "string"
+          },
+          "tidspunktSendt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "filnavn": {
+            "type": "string"
+          },
+          "storrelse": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "soknadPdfUrl": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "digisosId",
+          "filnavn",
+          "soknadPdfUrl",
+          "storrelse",
+          "tidspunktSendt"
         ]
       },
       "PabegyntSoknad": {
