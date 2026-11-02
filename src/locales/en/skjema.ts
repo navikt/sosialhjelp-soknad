@@ -1768,29 +1768,19 @@ export const skjema = {
                 beskrivelse: "You have obtained information about your income from the Tax Administration.",
                 bruttoinntekt: "Income before tax",
                 forskuddstrekk: "Tax deduction",
-                gi_samtykke: "Obtain from the Tax Administration",
-                har_gitt_samtykke: "You have obtained information from the Tax Administration",
                 hent: {
                     info: {
                         skatteetaten: "Retrieve the information from the Tax Administration",
                     },
                 },
-                ingen: "You have no income registered with the Tax Administration for the last month.",
+                ingen: "No income to show for this month or last month.",
                 inntekt: {
-                    tittel: "Income retrieved from the Tax Administration",
+                    tittel: "Your income retrieved from the Tax Administration",
                 },
-                mangler_samtykke: "You have not obtained information from the Tax Administration",
                 nettoinntekt: "Income after tax",
                 oppsummering:
                     "We have registered that you{ antall, plural,=0 { have not had }other {have had{ antall, plural,=1 {{en}}=2 {{to}}=3 {{tre}}=4 {{fire}}=5 {{fem}}=6 {{seks}}=7 {{sju}}=8 {{åtte}}=9 {{ni}}=10 {{ti}}=11 {{elleve}}=12 {{tolv}}other {{#}}}}} incomes.",
-                samtykke_info:
-                    "This information can be necessary to process the application. If you do not wish us to obtain this personal information, you can upload documentation in the last stage of the application.",
-                samtykke_sporsmal_v1:
-                    "Would you like to retrieve information about your income from The Norwegian Tax Administration?",
-                samtykke_sporsmal_v2:
-                    "Would you like to retrieve information about your income from The Norwegian Tax Administration?",
                 skatteetaten: "See details from the Tax Administration",
-                ta_bort_samtykke: "Remove information from the Tax Administration",
                 tidspunkt: "Information was obtained",
                 tittel: "Income",
                 undertittel: "Reported income to the Tax Administration",

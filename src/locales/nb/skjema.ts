@@ -597,7 +597,6 @@ export const skjema = {
             info_del2:
                 "Det kan ha skjedd endringer i disse opplysningene og vi kan oppdatere dem for deg. Hvis du vil kan du slette opplysningene før du sender søknaden.",
             knapp: "Fortsett søknad",
-            skatteetaten_samtykke: "Skatteetaten",
             sporsmal: "Oppdater opplysningene fra",
         },
         student: {
@@ -1766,27 +1765,19 @@ export const skjema = {
                 beskrivelse: "Du har hentet informasjon om inntekten din fra Skatteetaten.",
                 bruttoinntekt: "Inntekt før skatt",
                 forskuddstrekk: "Skattetrekk",
-                gi_samtykke: "Hent fra Skatteetaten",
-                har_gitt_samtykke: "Du har hentet informasjon fra Skatteetaten",
                 hent: {
                     info: {
                         skatteetaten: "Hent informasjonen fra Skatteetaten",
                     },
                 },
-                ingen: "Du har ingen inntekt registrert hos Skatteetaten for siste måned.",
+                ingen: "Ingen inntekt å vise for denne måneden eller forrige måned.",
                 inntekt: {
-                    tittel: "Inntekt hentet fra Skatteetaten",
+                    tittel: "Din inntekt hentet fra Skatteetaten",
                 },
-                mangler_samtykke: "Du har ikke hentet informasjon fra Skatteetaten",
                 nettoinntekt: "Inntekt etter skatt",
                 oppsummering:
                     "Vi har registrert at du{ antall, plural,=0 { ikke har hatt }other {har hatt{ antall, plural,=1 {{en}}=2 {{to}}=3 {{tre}}=4 {{fire}}=5 {{fem}}=6 {{seks}}=7 {{sju}}=8 {{åtte}}=9 {{ni}}=10 {{ti}}=11 {{elleve}}=12 {{tolv}}other {{#}}}}}skattbare inntekter.",
-                samtykke_info:
-                    "Disse opplysningene kan være nødvendig for å behandle søknaden. Hvis du ikke ønsker at vi henter denne informasjonen om deg, så kan du laste opp dokumentasjon i siste steg av søknaden.",
-                samtykke_sporsmal_v1: "Vil du hente inntekten din fra Skatteetaten?",
-                samtykke_sporsmal_v2: "Vil du hente informasjon om inntekten din fra Skatteetaten automatisk?",
                 skatteetaten: "Se detaljer hos Skatteetaten.",
-                ta_bort_samtykke: "Fjern informasjon fra Skatteetaten",
                 tidspunkt: "Informasjonen ble hentet",
                 tittel: "Inntekt",
                 undertittel: "Innrapportert inntekt til Skatteetaten",
