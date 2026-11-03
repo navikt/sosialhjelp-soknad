@@ -239,7 +239,7 @@
             "behandles": {
                 "tittel": "Your application is being processed",
                 "tekst": "Your application is processed as quickly as possible, usually within 4 weeks.",
-                "tekst2": "If the Nav office needs more information, they will contact you."
+                "tekst2": "If the Nav office needs more information to process your application, they will contact you."
             },
             "svar": {
                 "tittel": "You will receive a response to your application",

@@ -229,17 +229,17 @@
         }
     },
     "Kvittering": {
-        "tittel": "Søknaden er send inn",
+        "tittel": "Søknaden er sendt",
         "undertittel": "Dette skjer vidare",
         "steg": {
             "sendt": {
-                "tittel": "Søknaden din er send",
+                "tittel": "Søknaden din er sendt",
                 "tekst": "Saka di er no send til Nav-kontoret ditt."
             },
             "behandles": {
                 "tittel": "Søknaden din blir behandla",
                 "tekst": "Søknaden din blir behandla så fort som mogleg, vanlegvis innan 4 veker.",
-                "tekst2": "Dersom Nav-kontoret treng fleire opplysningar, tek dei kontakt med deg."
+                "tekst2": "Dersom Nav-kontoret treng fleire opplysningar for å behandle søknaden din, tek dei kontakt med deg."
             },
             "svar": {
                 "tittel": "Du får svar på søknaden din",
@@ -247,7 +247,7 @@
             }
         },
         "sporsmal": {
-            "tittel": "Har du spørsmål om søknaden din?",
+            "tittel": "Har du spørsmål angåande søknaden din?",
             "tekst": "Du kan ta <navKontor>kontakt med Nav-kontoret ditt</navKontor>, eller <telefon>ringje oss på nummer 55 55 33 33</telefon>."
         },
         "dokumentasjon": {
@@ -256,7 +256,7 @@
         },
         "utbetaling": {
             "tittel": "Når blir pengane utbetalte?",
-            "tekst": "Utbetalingsdatoen kan variere frå kommune til kommune. Du finn informasjon om utbetalingar under <utbetalinger>Mine utbetalingar av økonomisk sosialhjelp</utbetalinger> eller i vedtaksbrevet."
+            "tekst": "Utbetalingsdato kan variere frå kommune til kommune. Du finn informasjon om utbetalingar under <utbetalinger>Mine utbetalingar av økonomisk sosialhjelp</utbetalinger> eller i vedtaksbrevet."
         },
         "status": {
             "tittel": "Sjå status på søknaden din på Mi side",

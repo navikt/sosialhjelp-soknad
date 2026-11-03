@@ -7,6 +7,7 @@ import {useParams} from "next/navigation";
 import digisosConfig from "../../../../lib/config.ts";
 import {supportedLanguageOrFallback} from "../../../../lib/i18n/common.ts";
 import {CheckmarkCircleFillIcon, LightBulbIcon} from "@navikt/aksel-icons";
+import {AppHeader} from "../../../../lib/components/appHeader/AppHeader.tsx";
 import KvitteringKnapper from "./KvitteringKnapper.tsx";
 import KvitteringProsess from "./KvitteringProsess.tsx";
 import {useKvittering} from "../../../../lib/hooks/data/useKvittering.ts";
@@ -23,71 +24,74 @@ export default function KvitteringPage() {
     const href = `${digisosConfig.innsynURL}/${language}/soknad/${encodeURIComponent(digisosId)}`;
 
     return (
-        <Box
-            as="main"
-            width="100%"
-            marginInline="auto"
-            className="max-w-lg lg:max-w-3xl"
-            paddingInline={{xs: "space-12", lg: "space-96"}}
-            paddingBlock={{xs: "space-24", lg: "space-64"}}
-        >
-            <HStack align="center" gap="space-12" wrap={false}>
-                <CheckmarkCircleFillIcon
-                    className="size-(--ax-space-40) shrink-0 md:size-(--ax-space-64)"
-                    style={{color: "var(--ax-text-success-decoration)"}}
-                    aria-hidden="true"
-                />
-                <Heading level="1" size="large">
-                    {t("tittel")}
+        <>
+            <AppHeader />
+            <Box
+                as="main"
+                width="100%"
+                marginInline="auto"
+                className="max-w-lg lg:max-w-3xl"
+                paddingInline={{xs: "space-12", lg: "space-24"}}
+                paddingBlock={{xs: "space-24", lg: "space-64"}}
+            >
+                <HStack align="center" gap="space-12" wrap={false}>
+                    <CheckmarkCircleFillIcon
+                        className="size-(--ax-space-40) shrink-0 md:size-(--ax-space-64)"
+                        style={{color: "var(--ax-text-success-decoration)"}}
+                        aria-hidden="true"
+                    />
+                    <Heading level="2" size="large">
+                        {t("tittel")}
+                    </Heading>
+                </HStack>
+
+                <KvitteringProsess tidspunktSendt={tidspunktSendt} />
+
+                <Heading size={"small"} level="3" className="mt-(--ax-space-32) lg:mt-(--ax-space-64)" spacing>
+                    {t("dokumentasjon.tittel")}
                 </Heading>
-            </HStack>
+                <BodyLong spacing className="lg:mb-(--ax-space-0)">
+                    {t.rich("dokumentasjon.tekst", {
+                        dokumentasjon: (chunks) => (
+                            <Link href={href} rel="noreferrer">
+                                {chunks}
+                            </Link>
+                        ),
+                    })}
+                </BodyLong>
 
-            <KvitteringProsess tidspunktSendt={tidspunktSendt} />
+                <Heading size={"small"} level="3" className="mt-(--ax-space-32) lg:mt-(--ax-space-64)" spacing>
+                    {t("utbetaling.tittel")}
+                </Heading>
+                <BodyLong spacing className="lg:mb-(--ax-space-0)">
+                    {t.rich("utbetaling.tekst", {
+                        utbetalinger: (chunks) => (
+                            <Link href="https://www.nav.no/minside/utbetalinger" rel="noreferrer">
+                                {chunks}
+                            </Link>
+                        ),
+                    })}
+                </BodyLong>
 
-            <Heading size={"small"} level="3" className="mt-8" spacing>
-                {t("sporsmal.tittel")}
-            </Heading>
-            <BodyLong spacing>
-                {t.rich("sporsmal.tekst", {
-                    navKontor: (chunks) => <Link href="#todo">{chunks}</Link>,
-                    telefon: (chunks) => <Link href="tel:+4755553333">{chunks}</Link>,
-                })}
-            </BodyLong>
+                <Heading size={"small"} level="3" className="mt-(--ax-space-32) lg:mt-(--ax-space-64)" spacing>
+                    {t("sporsmal.tittel")}
+                </Heading>
+                <BodyLong spacing className="lg:mb-(--ax-space-0)">
+                    {t.rich("sporsmal.tekst", {
+                        navKontor: (chunks) => <Link href="#todo">{chunks}</Link>,
+                        telefon: (chunks) => <Link href="tel:+4755553333">{chunks}</Link>,
+                    })}
+                </BodyLong>
 
-            <Heading size={"small"} level="3" className="mt-8" spacing>
-                {t("utbetaling.tittel")}
-            </Heading>
-            <BodyLong spacing>
-                {t.rich("utbetaling.tekst", {
-                    utbetalinger: (chunks) => (
-                        <Link href="https://www.nav.no/minside/utbetalinger" rel="noreferrer">
-                            {chunks}
-                        </Link>
-                    ),
-                })}
-            </BodyLong>
+                <InfoCard as="section" data-color="info" className="lg:mt-(--ax-space-64)">
+                    <InfoCardHeader icon={<LightBulbIcon aria-hidden />}>
+                        <InfoCardTitle as="h3">{t("status.tittel")}</InfoCardTitle>
+                    </InfoCardHeader>
+                    <InfoCardContent>{t("status.tekst")}</InfoCardContent>
+                </InfoCard>
 
-            <Heading size={"small"} level="3" className="mt-8" spacing>
-                {t("dokumentasjon.tittel")}
-            </Heading>
-            <BodyLong spacing>
-                {t.rich("dokumentasjon.tekst", {
-                    dokumentasjon: (chunks) => (
-                        <Link href={href} rel="noreferrer">
-                            {chunks}
-                        </Link>
-                    ),
-                })}
-            </BodyLong>
-
-            <InfoCard as="section" data-color="info">
-                <InfoCardHeader icon={<LightBulbIcon aria-hidden />}>
-                    <InfoCardTitle>{t("status.tittel")}</InfoCardTitle>
-                </InfoCardHeader>
-                <InfoCardContent>{t("status.tekst")}</InfoCardContent>
-            </InfoCard>
-
-            <KvitteringKnapper innsynHref={href} soknadPdfUrl={soknadPdfUrl} />
-        </Box>
+                <KvitteringKnapper innsynHref={href} soknadPdfUrl={soknadPdfUrl} />
+            </Box>
+        </>
     );
 }

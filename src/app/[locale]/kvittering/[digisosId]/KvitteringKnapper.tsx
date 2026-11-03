@@ -1,4 +1,4 @@
-import {Button, VStack} from "@navikt/ds-react";
+import {Button, Stack} from "@navikt/ds-react";
 import {ArrowRightIcon, DownloadIcon} from "@navikt/aksel-icons";
 import {useTranslations} from "next-intl";
 
@@ -6,18 +6,20 @@ export default function KvitteringKnapper({innsynHref, soknadPdfUrl}: {innsynHre
     const t = useTranslations("Kvittering");
 
     return (
-        <VStack
+        <Stack
             align="stretch"
+            direction={{xs: "column", lg: "row"}}
+            wrap={false}
             gap="space-12"
             width="100%"
             maxWidth="100%"
             marginInline="auto"
-            marginBlock="space-24 space-0"
+            marginBlock={{xs: "space-24 space-0", lg: "space-64 space-0"}}
         >
             <Button
                 as="a"
                 href={innsynHref}
-                className="w-full text-center"
+                className="w-full text-center lg:flex-1 lg:min-w-0"
                 iconPosition={"right"}
                 icon={<ArrowRightIcon aria-hidden="true" />}
                 size={"medium"}
@@ -30,15 +32,15 @@ export default function KvitteringKnapper({innsynHref, soknadPdfUrl}: {innsynHre
                     as="a"
                     href={soknadPdfUrl}
                     download
-                    className="w-full text-center"
+                    className="w-full text-center lg:flex-1 lg:min-w-0"
                     variant={"tertiary"}
-                    iconPosition={"right"}
+                    iconPosition={"left"}
                     icon={<DownloadIcon aria-hidden="true" />}
                     size={"medium"}
                 >
                     {t("lastNed")}
                 </Button>
             )}
-        </VStack>
+        </Stack>
     );
 }
