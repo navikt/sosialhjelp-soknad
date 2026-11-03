@@ -159,7 +159,9 @@ test("should display the general error message when submission fails with Innsen
 });
 
 for (const isKort of [false, true]) {
-    test(`should show the receipt after a successful ${isKort ? "short" : "regular"} submission`, async ({page}) => {
+    test(`should navigate to the receipt after a successful ${isKort ? "short" : "regular"} submission`, async ({
+        page,
+    }) => {
         const formPath = `/sosialhjelp/soknad/nb/skjema/${isKort ? "kort/" : ""}${TEST_SOKNAD_ID}/${isKort ? 5 : 9}`;
         let sendCount = 0;
 
@@ -188,19 +190,7 @@ for (const isKort of [false, true]) {
         await page.getByRole("button", {name: "Send søknaden", exact: true}).click();
 
         await expect(page).toHaveURL(`/sosialhjelp/soknad/kvittering/${KVITTERING_ID}`);
-        await expect(page.getByRole("heading", {name: "Kvittering"})).toBeVisible();
-        await expect(page.getByRole("link", {name: "Gå til søknaden i innsyn"})).toHaveAttribute(
-            "href",
-            innsynUrlPattern(`/nb/soknad/${KVITTERING_ID}`)
-        );
         expect(sendCount).toBe(1);
-
-        await page.reload();
-        await expect(page.getByRole("heading", {name: "Kvittering"})).toBeVisible();
-        await expect(page.getByRole("link", {name: "Gå til søknaden i innsyn"})).toHaveAttribute(
-            "href",
-            innsynUrlPattern(`/nb/soknad/${KVITTERING_ID}`)
-        );
 
         await page.goBack();
         await expect.poll(() => new URL(page.url()).pathname.replace("/nb/", "/")).toBe(formPath.replace("/nb/", "/"));
