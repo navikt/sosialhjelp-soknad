@@ -10,12 +10,16 @@ import {CheckmarkCircleFillIcon, LightBulbIcon} from "@navikt/aksel-icons";
 import KvitteringKnapper from "./KvitteringKnapper.tsx";
 import KvitteringProsess from "./KvitteringProsess.tsx";
 import {useKvittering} from "../../../../lib/hooks/data/useKvittering.ts";
+import {ApplicationSpinner} from "../../../../lib/components/animasjoner/ApplicationSpinner.tsx";
 
 export default function KvitteringPage() {
     const {digisosId} = useParams<{digisosId: string}>();
     const language = supportedLanguageOrFallback(useLocale());
     const t = useTranslations("Kvittering");
-    const {tidspunktSendt, soknadPdfUrl} = useKvittering(digisosId);
+    const {tidspunktSendt, soknadPdfUrl, isPending} = useKvittering(digisosId);
+
+    if (isPending) return <ApplicationSpinner />;
+
     const href = `${digisosConfig.innsynURL}/${language}/soknad/${encodeURIComponent(digisosId)}`;
 
     return (

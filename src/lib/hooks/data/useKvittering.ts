@@ -8,7 +8,7 @@ const delTidspunkt = (tidspunkt: string): {dato: string; klokkeslett: string} | 
 };
 
 export const useKvittering = (digisosId: string) => {
-    const {data, isPending, isError} = useHentKvittering(digisosId);
+    const {data, isPending, isError} = useHentKvittering(digisosId, {query: {retry: 0}});
 
     return {
         tidspunktSendt: data ? delTidspunkt(data.tidspunktSendt) : undefined,
