@@ -1,18 +1,9 @@
 import {Button, VStack} from "@navikt/ds-react";
 import {ArrowRightIcon, DownloadIcon} from "@navikt/aksel-icons";
-import {getTranslations} from "next-intl/server";
-import type {SupportedLanguage} from "../../../../lib/i18n/common.ts";
+import {useTranslations} from "next-intl";
 
-export default async function KvitteringKnapper({
-    language,
-    innsynHref,
-    pdfUrl,
-}: {
-    language: SupportedLanguage;
-    innsynHref: string;
-    pdfUrl?: string;
-}) {
-    const t = await getTranslations({locale: language, namespace: "Kvittering"});
+export default function KvitteringKnapper({innsynHref, soknadPdfUrl}: {innsynHref: string; soknadPdfUrl?: string}) {
+    const t = useTranslations("Kvittering");
 
     return (
         <VStack
@@ -34,10 +25,10 @@ export default async function KvitteringKnapper({
                 {t("minSide")}
             </Button>
 
-            {pdfUrl && (
+            {soknadPdfUrl && (
                 <Button
                     as="a"
-                    href={pdfUrl}
+                    href={soknadPdfUrl}
                     download
                     className="w-full text-center"
                     variant={"tertiary"}

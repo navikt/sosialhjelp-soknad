@@ -1,18 +1,21 @@
+"use client";
+
 import {BodyLong, Box, Heading, HStack, Link} from "@navikt/ds-react";
 import {InfoCard, InfoCardHeader, InfoCardTitle, InfoCardContent} from "@navikt/ds-react/InfoCard";
-import {getTranslations} from "next-intl/server";
+import {useLocale, useTranslations} from "next-intl";
+import {useParams} from "next/navigation";
 import digisosConfig from "../../../../lib/config.ts";
 import {supportedLanguageOrFallback} from "../../../../lib/i18n/common.ts";
 import {CheckmarkCircleFillIcon, LightBulbIcon} from "@navikt/aksel-icons";
 import KvitteringKnapper from "./KvitteringKnapper.tsx";
 import KvitteringProsess from "./KvitteringProsess.tsx";
-import {hentKvittering} from "../../../../lib/api/ssr/hentKvittering.ts";
+import {useKvittering} from "../../../../lib/hooks/data/useKvittering.ts";
 
-export default async function KvitteringPage({params}: {params: Promise<{locale: string; digisosId: string}>}) {
-    const {locale, digisosId} = await params;
-    const language = supportedLanguageOrFallback(locale);
-    const t = await getTranslations({locale: language, namespace: "Kvittering"});
-    const kvittering = await hentKvittering(digisosId);
+export default function KvitteringPage() {
+    const {digisosId} = useParams<{digisosId: string}>();
+    const language = supportedLanguageOrFallback(useLocale());
+    const t = useTranslations("Kvittering");
+    const {tidspunktSendt, soknadPdfUrl} = useKvittering(digisosId);
     const href = `${digisosConfig.innsynURL}/${language}/soknad/${encodeURIComponent(digisosId)}`;
 
     return (
@@ -35,7 +38,7 @@ export default async function KvitteringPage({params}: {params: Promise<{locale:
                 </Heading>
             </HStack>
 
-            <KvitteringProsess language={language} tidspunktSendt={kvittering?.tidspunktSendt} />
+            <KvitteringProsess tidspunktSendt={tidspunktSendt} />
 
             <Heading size={"small"} level="3" className="mt-8" spacing>
                 {t("sporsmal.tittel")}
@@ -67,7 +70,7 @@ export default async function KvitteringPage({params}: {params: Promise<{locale:
                 <InfoCardContent>{t("status.tekst")}</InfoCardContent>
             </InfoCard>
 
-            <KvitteringKnapper language={language} innsynHref={href} pdfUrl={kvittering?.soknadPdfUrl} />
+            <KvitteringKnapper innsynHref={href} soknadPdfUrl={soknadPdfUrl} />
         </Box>
     );
 }

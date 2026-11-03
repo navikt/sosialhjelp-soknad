@@ -1,18 +1,9 @@
 import {BodyLong, Heading} from "@navikt/ds-react";
 import {Process, ProcessEvent} from "@navikt/ds-react/Process";
-import {getTranslations} from "next-intl/server";
-import {delTidspunkt} from "../../../../lib/api/ssr/hentKvittering.ts";
-import type {SupportedLanguage} from "../../../../lib/i18n/common.ts";
+import {useTranslations} from "next-intl";
 
-export default async function KvitteringProsess({
-    language,
-    tidspunktSendt,
-}: {
-    language: SupportedLanguage;
-    tidspunktSendt?: string;
-}) {
-    const t = await getTranslations({locale: language, namespace: "Kvittering"});
-    const deler = tidspunktSendt ? delTidspunkt(tidspunktSendt) : undefined;
+export default function KvitteringProsess({tidspunktSendt}: {tidspunktSendt?: {dato: string; klokkeslett: string}}) {
+    const t = useTranslations("Kvittering");
 
     return (
         <>
@@ -23,7 +14,7 @@ export default async function KvitteringProsess({
                 <ProcessEvent
                     status="completed"
                     title={t("steg.sendt.tittel")}
-                    timestamp={deler ? t("tidspunkt", deler) : undefined}
+                    timestamp={tidspunktSendt ? t("tidspunkt", tidspunktSendt) : undefined}
                     bullet={1}
                 >
                     {t("steg.sendt.tekst")}
