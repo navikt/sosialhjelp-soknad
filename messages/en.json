@@ -254,6 +254,10 @@
             "tittel": "Missing documentation?",
             "tekst": "You do not need to have attached documentation for us to start processing your application. If we need more information, the Nav office will contact you. You can also <dokumentasjon>submit documentation later on My Page for Financial Assistance</dokumentasjon>."
         },
+        "utbetaling": {
+            "tittel": "When will the money be paid out?",
+            "tekst": "The payment date can vary from one municipality to another. You can find information about payments under <utbetalinger>My payments of financial assistance</utbetalinger> or in your decision letter."
+        },
         "status": {
             "tittel": "See the status of your application on My Page",
             "tekst": "You can sign in to My Page for Financial Assistance at any time to view your application, submit documentation later and follow the status of your case."

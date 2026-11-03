@@ -49,8 +49,21 @@ export default function KvitteringPage() {
             </Heading>
             <BodyLong spacing>
                 {t.rich("sporsmal.tekst", {
-                    navKontor: (chunks) => <Link href="#">{chunks}</Link>,
+                    navKontor: (chunks) => <Link href="#todo">{chunks}</Link>,
                     telefon: (chunks) => <Link href="tel:+4755553333">{chunks}</Link>,
+                })}
+            </BodyLong>
+
+            <Heading size={"small"} level="3" className="mt-8" spacing>
+                {t("utbetaling.tittel")}
+            </Heading>
+            <BodyLong spacing>
+                {t.rich("utbetaling.tekst", {
+                    utbetalinger: (chunks) => (
+                        <Link href="https://www.nav.no/minside/utbetalinger" rel="noreferrer">
+                            {chunks}
+                        </Link>
+                    ),
                 })}
             </BodyLong>
 

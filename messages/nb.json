@@ -254,6 +254,10 @@
             "tittel": "Mangler du dokumentasjon?",
             "tekst": "Du trenger ikke å ha lagt ved dokumentasjon for at vi skal starte å behandle søknaden din. Hvis vi trenger flere opplysninger, tar Nav-kontoret kontakt med deg. Du kan også <dokumentasjon>sende inn dokumentasjon i etterkant på Min side for økonomisk sosialhjelp.</dokumentasjon>"
         },
+        "utbetaling": {
+            "tittel": "Når utbetales pengene?",
+            "tekst": "Utbetalingsdato kan variere fra kommune til kommune. Du finner informasjon om utbetalinger under <utbetalinger>Mine utbetalinger av økonomisk sosialhjelp</utbetalinger> eller i vedtaksbrevet."
+        },
         "status": {
             "tittel": "Se status på søknaden din på Min side",
             "tekst": "Du kan når som helst logge inn på Min side for økonomisk sosialhjelp for å se søknaden din, ettersende dokumentasjon og følge status i saken din."

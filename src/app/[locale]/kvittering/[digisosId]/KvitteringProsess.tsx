@@ -1,6 +1,7 @@
 import {BodyLong, Heading} from "@navikt/ds-react";
 import {Process, ProcessEvent} from "@navikt/ds-react/Process";
 import {useTranslations} from "next-intl";
+import {CheckmarkHeavyIcon} from "@navikt/aksel-icons";
 
 export default function KvitteringProsess({tidspunktSendt}: {tidspunktSendt?: {dato: string; klokkeslett: string}}) {
     const t = useTranslations("Kvittering");
@@ -15,17 +16,15 @@ export default function KvitteringProsess({tidspunktSendt}: {tidspunktSendt?: {d
                     status="completed"
                     title={t("steg.sendt.tittel")}
                     timestamp={tidspunktSendt ? t("tidspunkt", tidspunktSendt) : undefined}
-                    bullet={1}
+                    bullet={<CheckmarkHeavyIcon />}
                 >
                     {t("steg.sendt.tekst")}
                 </ProcessEvent>
-                <ProcessEvent title={t("steg.behandles.tittel")} bullet={2}>
+                <ProcessEvent title={t("steg.behandles.tittel")}>
                     <BodyLong spacing>{t("steg.behandles.tekst")}</BodyLong>
                     <BodyLong>{t("steg.behandles.tekst2")}</BodyLong>
                 </ProcessEvent>
-                <ProcessEvent title={t("steg.svar.tittel")} bullet={3}>
-                    {t("steg.svar.tekst")}
-                </ProcessEvent>
+                <ProcessEvent title={t("steg.svar.tittel")}>{t("steg.svar.tekst")}</ProcessEvent>
             </Process>
         </>
     );
