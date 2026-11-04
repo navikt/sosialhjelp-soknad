@@ -1,7 +1,7 @@
 "use client";
 
-import {BodyLong, Box, Heading, HStack, Link} from "@navikt/ds-react";
-import {InfoCard, InfoCardHeader, InfoCardTitle, InfoCardContent} from "@navikt/ds-react/InfoCard";
+import {Heading, HStack} from "@navikt/ds-react";
+import {InfoCard, InfoCardContent, InfoCardHeader, InfoCardTitle} from "@navikt/ds-react/InfoCard";
 import {useLocale, useTranslations} from "next-intl";
 import {useParams} from "next/navigation";
 import digisosConfig from "../../../../lib/config.ts";
@@ -10,6 +10,7 @@ import {CheckmarkCircleFillIcon, LightBulbIcon} from "@navikt/aksel-icons";
 import {AppHeader} from "../../../../lib/components/appHeader/AppHeader.tsx";
 import KvitteringKnapper from "./KvitteringKnapper.tsx";
 import KvitteringProsess from "./KvitteringProsess.tsx";
+import KvitteringInformasjon from "./KvitteringInformasjon.tsx";
 import {useKvittering} from "../../../../lib/hooks/data/useKvittering.ts";
 import {ApplicationSpinner} from "../../../../lib/components/animasjoner/ApplicationSpinner.tsx";
 
@@ -26,64 +27,25 @@ export default function KvitteringPage() {
     return (
         <>
             <AppHeader />
-            <Box
-                as="main"
-                width="100%"
-                marginInline="auto"
-                className="max-w-lg lg:max-w-3xl"
-                paddingInline={{xs: "space-12", lg: "space-24"}}
-                paddingBlock={{xs: "space-24", lg: "space-64"}}
+            <main
+                className="max-w-lg lg:max-w-3xl w-full mx-auto gap-6 p-3 py-6 lg:gap-16 lg:py-16 flex flex-col grow"
+                aria-labelledby={"kvittering-heading"}
             >
                 <HStack align="center" gap="space-12" wrap={false}>
                     <CheckmarkCircleFillIcon
-                        className="size-(--ax-space-40) shrink-0 md:size-(--ax-space-64)"
-                        style={{color: "var(--ax-text-success-decoration)"}}
+                        fontSize={"3rem"}
+                        className={"text-ax-text-success-subtle"}
                         aria-hidden="true"
                     />
-                    <Heading level="2" size="large">
+                    <Heading id="kvittering-heading" level="2" size="large">
                         {t("tittel")}
                     </Heading>
                 </HStack>
 
                 <KvitteringProsess tidspunktSendt={tidspunktSendt} />
+                <KvitteringInformasjon innsynHref={href} />
 
-                <Heading size={"small"} level="3" className="mt-(--ax-space-32) lg:mt-(--ax-space-64)" spacing>
-                    {t("dokumentasjon.tittel")}
-                </Heading>
-                <BodyLong spacing className="lg:mb-(--ax-space-0)">
-                    {t.rich("dokumentasjon.tekst", {
-                        dokumentasjon: (chunks) => (
-                            <Link href={href} rel="noreferrer">
-                                {chunks}
-                            </Link>
-                        ),
-                    })}
-                </BodyLong>
-
-                <Heading size={"small"} level="3" className="mt-(--ax-space-32) lg:mt-(--ax-space-64)" spacing>
-                    {t("utbetaling.tittel")}
-                </Heading>
-                <BodyLong spacing className="lg:mb-(--ax-space-0)">
-                    {t.rich("utbetaling.tekst", {
-                        utbetalinger: (chunks) => (
-                            <Link href="https://www.nav.no/minside/utbetalinger" rel="noreferrer">
-                                {chunks}
-                            </Link>
-                        ),
-                    })}
-                </BodyLong>
-
-                <Heading size={"small"} level="3" className="mt-(--ax-space-32) lg:mt-(--ax-space-64)" spacing>
-                    {t("sporsmal.tittel")}
-                </Heading>
-                <BodyLong spacing className="lg:mb-(--ax-space-0)">
-                    {t.rich("sporsmal.tekst", {
-                        navKontor: (chunks) => <Link href="#todo">{chunks}</Link>,
-                        telefon: (chunks) => <Link href="tel:+4755553333">{chunks}</Link>,
-                    })}
-                </BodyLong>
-
-                <InfoCard as="section" data-color="info" className="lg:mt-(--ax-space-64)">
+                <InfoCard as="section" data-color="info">
                     <InfoCardHeader icon={<LightBulbIcon aria-hidden />}>
                         <InfoCardTitle as="h3">{t("status.tittel")}</InfoCardTitle>
                     </InfoCardHeader>
@@ -91,7 +53,7 @@ export default function KvitteringPage() {
                 </InfoCard>
 
                 <KvitteringKnapper innsynHref={href} soknadPdfUrl={soknadPdfUrl} />
-            </Box>
+            </main>
         </>
     );
 }

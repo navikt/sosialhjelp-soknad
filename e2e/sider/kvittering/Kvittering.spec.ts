@@ -48,6 +48,7 @@ test("should show the receipt with submission time, link to innsyn and PDF downl
 });
 
 async function expectKvittering(page: Page) {
+    await expect(page.getByRole("main", {name: "Søknaden er sendt", exact: true})).toBeVisible();
     await expect(page.getByRole("heading", {name: "Søknaden er sendt", exact: true})).toBeVisible();
     await expect(page.getByRole("button", {name: "Gå til søknaden din på Min side", exact: true})).toHaveAttribute(
         "href",

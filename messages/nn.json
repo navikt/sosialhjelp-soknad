@@ -264,7 +264,8 @@
         },
         "tidspunkt": "{dato}, kl. {klokkeslett}",
         "minSide": "Gå til søknaden din på Mi side",
-        "lastNed": "Last ned søknaden din (PDF)"
+        "lastNed": "Last ned søknaden din (PDF)",
+        "info": "Nyttig å vite"
     },
     "Components": {
         "SoknadHeader": {

@@ -14,7 +14,6 @@ export default function KvitteringKnapper({innsynHref, soknadPdfUrl}: {innsynHre
             width="100%"
             maxWidth="100%"
             marginInline="auto"
-            marginBlock={{xs: "space-24 space-0", lg: "space-64 space-0"}}
         >
             <Button
                 as="a"

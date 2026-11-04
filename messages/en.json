@@ -264,7 +264,8 @@
         },
         "tidspunkt": "{dato} at {klokkeslett}",
         "minSide": "Go to your application on My Page",
-        "lastNed": "Download your application (PDF)"
+        "lastNed": "Download your application (PDF)",
+        "info": "Nice to know"
     },
     "Components": {
         "SoknadHeader": {

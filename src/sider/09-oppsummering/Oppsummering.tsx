@@ -1,4 +1,4 @@
-import {Alert, Button} from "@navikt/ds-react";
+import {Alert} from "@navikt/ds-react";
 import {SoknadsmottakerInfoPanel} from "./SoknadsmottakerInfoPanel";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
@@ -15,7 +15,6 @@ import {useNavigate} from "react-router";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {InnsendingFeilmelding} from "./InnsendingFeilmelding";
 import {InnsendteSoknaderVarsel, resolveInnsendingBlocked} from "../../lib/components/InnsendteSoknaderVarsel.tsx";
-import {Link} from "../../i18n/routing.ts";
 
 export const Oppsummering = () => {
     const {t} = useTranslation("skjema");
@@ -52,11 +51,6 @@ export const Oppsummering = () => {
                     )}
                 </div>
                 <InnsendteSoknaderVarsel innsendteSoknader={innsendteSoknaderSisteDogn} />
-                {process.env.NODE_ENV === "development" && (
-                    <Button as={Link} href="/kvittering/forhandsvisning" variant="secondary" className="mt-8">
-                        Forhåndsvis kvittering
-                    </Button>
-                )}
                 <SkjemaStegButtons
                     isFinalStep
                     isNextPending={isPending}
