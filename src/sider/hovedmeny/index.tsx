@@ -15,12 +15,12 @@ export const Informasjon = () => {
     const t = useTranslations("NyEllerFortsettSoknad");
 
     if (featureToggles.nyIntroside && open?.length === 0) {
-        redirect("/sosialhjelp/soknad/ny");
+        redirect("/ny");
     }
 
     return featureToggles.nyIntroside ? (
         <main className="max-w-lg lg:max-w-xl w-full mx-auto gap-6 p-3 py-6 lg:gap-8 lg:py-8 flex flex-col grow">
-            <SoknadHeader></SoknadHeader>
+            <SoknadHeader showCode={false}></SoknadHeader>
 
             <VStack gap={{xs: "space-24", lg: "space-32"}}>
                 <LinkCard data-color="accent">

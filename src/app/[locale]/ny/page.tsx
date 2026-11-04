@@ -2,7 +2,6 @@
 import {ArrowRightIcon} from "@navikt/aksel-icons";
 import {
     Accordion,
-    Alert,
     BodyLong,
     Button,
     Checkbox,
@@ -10,6 +9,7 @@ import {
     GuidePanel,
     Heading,
     HStack,
+    InlineMessage,
     Link,
     List,
     Loader,
@@ -174,13 +174,17 @@ const Page = () => {
                     {t("bekreftelse.checkboxLabel")}
                 </Checkbox>
                 {checkboxError && (
-                    <ErrorMessage className="font-normal ml-8" size="small">
+                    <ErrorMessage className="font-normal ml-8" size="small" role="alert">
                         {t("bekreftelse.checkboxError")}
                     </ErrorMessage>
                 )}
             </div>
 
-            {error && <Alert variant="error">{t("bekreftelse.feilet")}</Alert>}
+            {error && (
+                <InlineMessage status="error" role="alert">
+                    {t("bekreftelse.feilet")}
+                </InlineMessage>
+            )}
 
             <Button
                 variant="primary"

@@ -2,13 +2,13 @@
 import {Heading, LinkCard, VStack} from "@navikt/ds-react";
 import {addDays, formatDistance} from "date-fns";
 import {useTranslations} from "next-intl";
+import {redirect} from "next/navigation";
 import {PabegyntSoknad} from "../../../generated/model/pabegyntSoknad.ts";
 import {LocalizedDate} from "../../../lib/components/LocalizedDate.tsx";
 import {SoknadHeader} from "../../../lib/components/SoknadHeader.tsx";
+import {useConfigFeatureFlags} from "../../../lib/config.ts";
 import {getDateFnLocale} from "../../../lib/i18n/dateFns.ts";
 import {useContextSessionInfo} from "../../../lib/providers/useContextSessionInfo.ts";
-import {useConfigFeatureFlags} from "../../../lib/config.ts";
-import {redirect} from "next/navigation";
 
 const DAYS_BEFORE_DELETION = 14;
 
@@ -31,7 +31,7 @@ export const Page = () => {
 
     return (
         <main className="max-w-lg lg:max-w-xl w-full mx-auto gap-6 p-3 py-6 lg:gap-8 lg:py-8 flex flex-col grow">
-            <SoknadHeader></SoknadHeader>
+            <SoknadHeader showCode={false}></SoknadHeader>
 
             <VStack gap="space-8">
                 <Heading level="2" size="small" className="lg:text-2xl">

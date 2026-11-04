@@ -1,25 +1,21 @@
-import {Bleed, BodyShort, Heading, Hide, HStack, VStack} from "@navikt/ds-react";
+import {BodyShort, Heading, VStack} from "@navikt/ds-react";
 import {useTranslations} from "next-intl";
 import {SkjemaIllustrasjon} from "./svg/illustrasjoner/SkjemaIllustrasjon";
 
-export const SoknadHeader = () => {
+export const SoknadHeader = ({showCode = true}: {showCode?: boolean}) => {
     const t = useTranslations("Components.SoknadHeader");
 
     return (
-        <HStack paddingBlock="space-24" wrap={false}>
-            <Hide below="lg">
-                <Bleed marginInline="space-96 space-0">
-                    <div>
-                        <SkjemaIllustrasjon />
-                    </div>
-                </Bleed>
-            </Hide>
+        <VStack paddingBlock={{lg: "space-24"}} gap="space-16" className="relative">
+            <div className="lg:absolute -left-24">
+                <SkjemaIllustrasjon />
+            </div>
             <VStack gap="space-4" as="hgroup" className={"flex-col-reverse"}>
-                <Heading level="1" size="large" className="lg:text-[40px]">
+                <Heading level="1" size="large" className="lg:text-[40px] lg:leading-[52px]">
                     {t("title")}
                 </Heading>
-                <BodyShort size="small">{t("code")}</BodyShort>
+                {showCode && <BodyShort size="small">{t("code")}</BodyShort>}
             </VStack>
-        </HStack>
+        </VStack>
     );
 };
