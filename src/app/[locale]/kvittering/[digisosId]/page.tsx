@@ -3,8 +3,8 @@
 import {Heading, HStack} from "@navikt/ds-react";
 import {InfoCard, InfoCardContent, InfoCardHeader, InfoCardTitle} from "@navikt/ds-react/InfoCard";
 import {useLocale, useTranslations} from "next-intl";
-import {useParams} from "next/navigation";
-import digisosConfig from "../../../../lib/config.ts";
+import {redirect, useParams} from "next/navigation";
+import digisosConfig, {useConfigFeatureFlags} from "../../../../lib/config.ts";
 import {supportedLanguageOrFallback} from "../../../../lib/i18n/common.ts";
 import {CheckmarkCircleFillIcon, LightBulbIcon} from "@navikt/aksel-icons";
 import {AppHeader} from "../../../../lib/components/appHeader/AppHeader.tsx";
@@ -15,6 +15,11 @@ import {useKvittering} from "../../../../lib/hooks/data/useKvittering.ts";
 import {ApplicationSpinner} from "../../../../lib/components/animasjoner/ApplicationSpinner.tsx";
 
 export default function KvitteringPage() {
+    const featureToggles = useConfigFeatureFlags(); //todo fjern når testing ferdig
+    if (!featureToggles.kvittering) {
+        redirect("/");
+    }
+
     const {digisosId} = useParams<{digisosId: string}>();
     const language = supportedLanguageOrFallback(useLocale());
     const t = useTranslations("Kvittering");
