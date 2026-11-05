@@ -26,7 +26,11 @@ const Page = () => {
     const t = useTranslations("FortsettSoknad");
     const featureToggles = useConfigFeatureFlags();
     if (!featureToggles.nyIntroside) {
-        redirect("/sosialhjelp/soknad");
+        redirect("/");
+    }
+
+    if (open?.length === 0) {
+        redirect("/ny");
     }
 
     return (

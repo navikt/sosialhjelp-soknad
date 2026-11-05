@@ -8,7 +8,7 @@ import StartSoknadKnapp from "./StartSoknadKnapp";
 const Page = () => {
     const featureToggles = useConfigFeatureFlags();
     if (!featureToggles.nyIntroside) {
-        redirect("/sosialhjelp/soknad");
+        redirect("/");
     }
 
     return (
