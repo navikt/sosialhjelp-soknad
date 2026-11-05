@@ -11,7 +11,7 @@ export const SoknadHeader = ({showCode = true}: {showCode?: boolean}) => {
                 <SkjemaIllustrasjon />
             </div>
             <VStack gap="space-4" as="hgroup" className={"flex-col-reverse"}>
-                <Heading level="1" size="large" className="lg:text-[40px] lg:leading-[52px]">
+                <Heading level="1" size="xlarge">
                     {t("title")}
                 </Heading>
                 {showCode && <BodyShort size="small">{t("code")}</BodyShort>}

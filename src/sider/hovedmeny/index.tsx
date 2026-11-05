@@ -19,7 +19,7 @@ export const Informasjon = () => {
     }
 
     return featureToggles.nyIntroside ? (
-        <main className="max-w-lg lg:max-w-xl w-full mx-auto gap-6 p-3 py-6 lg:gap-8 lg:py-8 flex flex-col grow">
+        <main className="max-w-lg lg:max-w-xl w-full mx-auto gap-8 p-3 py-6 lg:py-8 flex flex-col grow">
             <SoknadHeader showCode={false}></SoknadHeader>
 
             <VStack gap={{xs: "space-24", lg: "space-32"}}>
