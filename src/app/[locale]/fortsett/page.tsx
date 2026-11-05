@@ -21,7 +21,7 @@ const getTimeBeforeDeletion = (sistOppdatert: string) =>
 const getSoknadUri = (soknadId: string, isKort: boolean) =>
     `/sosialhjelp/soknad/skjema${isKort ? "/kort" : ""}/${soknadId}/1`;
 
-export const Page = () => {
+const Page = () => {
     const {open} = useContextSessionInfo();
     const t = useTranslations("FortsettSoknad");
     const featureToggles = useConfigFeatureFlags();
