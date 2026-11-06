@@ -54,7 +54,7 @@ async function expectKvittering(page: Page) {
         "href",
         innsynUrlPattern
     );
-    await expect(page.getByText("15.01.2026, kl. 11:00")).toBeVisible();
+    await expect(page.getByText("15. januar 2026, kl. 11:00")).toBeVisible();
     await expect(page.getByRole("button", {name: "Last ned søknaden din (pdf)", exact: true})).toHaveAttribute(
         "href",
         KVITTERING.soknadPdfUrl
