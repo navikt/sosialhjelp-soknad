@@ -5,14 +5,19 @@ import {InfoCard, InfoCardContent, InfoCardHeader, InfoCardTitle} from "@navikt/
 import {useLocale, useTranslations} from "next-intl";
 import {redirect, useParams} from "next/navigation";
 import {isAxiosError} from "axios";
+import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
+import {useEffect} from "react";
 import digisosConfig, {useConfigFeatureFlags} from "../../../../lib/config.ts";
 import {supportedLanguageOrFallback} from "../../../../lib/i18n/common.ts";
+import {useRouter} from "../../../../i18n/routing.ts";
+import {getPathPrefixIncludingLocale} from "../../../../getPathPrefixIncludingLocale.ts";
 import {CheckmarkCircleFillIcon, LightBulbIcon} from "@navikt/aksel-icons";
 import {AppHeader} from "../../../../lib/components/appHeader/AppHeader.tsx";
 import KvitteringKnapper from "./KvitteringKnapper.tsx";
 import KvitteringProsess from "./KvitteringProsess.tsx";
 import KvitteringInformasjon from "./KvitteringInformasjon.tsx";
-import {useKvittering} from "../../../../lib/hooks/data/useKvittering.ts";
+import useDecoratorLogin from "../../../../lib/hooks/auth/useDecoratorLogin.ts";
+import {useHentKvittering} from "../../../../generated";
 import {ApplicationSpinner} from "../../../../lib/components/animasjoner/ApplicationSpinner.tsx";
 
 export default function KvitteringPage() {
@@ -24,13 +29,25 @@ export default function KvitteringPage() {
     const {digisosId} = useParams<{digisosId: string}>();
     const language = supportedLanguageOrFallback(useLocale());
     const t = useTranslations("Kvittering");
-    const {tidspunktSendt, soknadPdfUrl, isPending, error} = useKvittering(digisosId);
+    const {data, isPending, error} = useHentKvittering(digisosId, {query: {retry: 0}});
+    const router = useRouter();
+    const {isLoading} = useDecoratorLogin();
+
+    useEffect(() => {
+        document.documentElement.lang = language;
+        void setParams({language});
+
+        onLanguageSelect(({locale}) => {
+            const {path} = getPathPrefixIncludingLocale();
+            router.replace(path, {locale: supportedLanguageOrFallback(locale)});
+        });
+    }, [language, router]);
 
     if (isAxiosError(error) && error.response?.status === 400) {
         redirect("/");
     }
 
-    if (isPending) return <ApplicationSpinner />;
+    if (isLoading || isPending) return <ApplicationSpinner />;
 
     const href = `${digisosConfig.innsynURL}/${language}/soknad/${encodeURIComponent(digisosId)}`;
 
@@ -52,7 +69,7 @@ export default function KvitteringPage() {
                     </Heading>
                 </HStack>
 
-                <KvitteringProsess tidspunktSendt={tidspunktSendt} />
+                <KvitteringProsess tidspunktSendt={data?.tidspunktSendt} />
                 <KvitteringInformasjon innsynHref={href} />
 
                 <InfoCard as="section" data-color="info">
@@ -62,7 +79,7 @@ export default function KvitteringPage() {
                     <InfoCardContent>{t("status.tekst")}</InfoCardContent>
                 </InfoCard>
 
-                <KvitteringKnapper innsynHref={href} soknadPdfUrl={soknadPdfUrl} />
+                <KvitteringKnapper innsynHref={href} soknadPdfUrl={data?.soknadPdfUrl} />
             </main>
         </>
     );

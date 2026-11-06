@@ -1,9 +1,12 @@
-import {useTranslations} from "next-intl";
+import {useLocale, useTranslations} from "next-intl";
 import {Accordion, Heading, Link} from "@navikt/ds-react";
 import {AccordionContent, AccordionHeader, AccordionItem} from "@navikt/ds-react/Accordion";
+import digisosConfig from "../../../../lib/config.ts";
+import {supportedLanguageOrFallback} from "../../../../lib/i18n/common.ts";
 
 export default function KvitteringInformasjon({innsynHref}: {innsynHref: string}) {
     const t = useTranslations("Kvittering");
+    const language = supportedLanguageOrFallback(useLocale());
 
     return (
         <div>
@@ -28,7 +31,7 @@ export default function KvitteringInformasjon({innsynHref}: {innsynHref: string}
                     <AccordionContent>
                         {t.rich("utbetaling.tekst", {
                             utbetalinger: (chunks) => (
-                                <Link href="https://www.nav.no/sosialhjelp/innsyn/utbetaling" rel="noreferrer">
+                                <Link href={`${digisosConfig.innsynURL}/${language}/utbetalinger`} rel="noreferrer">
                                     {chunks}
                                 </Link>
                             ),

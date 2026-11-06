@@ -1,9 +1,19 @@
 import {BodyLong, Box, Heading} from "@navikt/ds-react";
 import {Process, ProcessEvent} from "@navikt/ds-react/Process";
-import {useTranslations} from "next-intl";
+import {useFormatter, useTranslations} from "next-intl";
 
-export default function KvitteringProsess({tidspunktSendt}: {tidspunktSendt?: {dato: string; klokkeslett: string}}) {
+export default function KvitteringProsess({tidspunktSendt}: {tidspunktSendt?: string}) {
     const t = useTranslations("Kvittering");
+    const format = useFormatter();
+
+    const sendt = tidspunktSendt ? new Date(tidspunktSendt) : undefined;
+    const tidspunkt =
+        sendt && !isNaN(sendt.getTime())
+            ? t("tidspunkt", {
+                  dato: format.dateTime(sendt, {dateStyle: "long"}),
+                  klokkeslett: format.dateTime(sendt, {hour: "2-digit", minute: "2-digit", hourCycle: "h23"}),
+              })
+            : undefined;
 
     return (
         <div>
@@ -18,11 +28,7 @@ export default function KvitteringProsess({tidspunktSendt}: {tidspunktSendt?: {d
                 padding="space-24"
             >
                 <Process>
-                    <ProcessEvent
-                        title={t("steg.sendt.tittel")}
-                        timestamp={tidspunktSendt ? t("tidspunkt", tidspunktSendt) : undefined}
-                        bullet={1}
-                    >
+                    <ProcessEvent title={t("steg.sendt.tittel")} timestamp={tidspunkt} bullet={1}>
                         <BodyLong spacing> {t("steg.sendt.tekst")} </BodyLong>
                     </ProcessEvent>
                     <ProcessEvent title={t("steg.behandles.tittel")} bullet={2}>
