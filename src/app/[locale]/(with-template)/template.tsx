@@ -1,15 +1,14 @@
 "use client";
-import Informasjon from "../../sider/hovedmeny";
-import {getPathPrefixIncludingLocale} from "../../getPathPrefixIncludingLocale.ts";
 import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
-import {useContext, useEffect} from "react";
-import {DigisosContext} from "../../lib/providers/DigisosContext.ts";
-import {BASE_PATH} from "../../lib/constants.ts";
 import {configureLogger} from "@navikt/next-logger";
-import useDecoratorLogin from "../../lib/hooks/auth/useDecoratorLogin.ts";
-import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner.tsx";
+import {useContext, useEffect} from "react";
+import {getPathPrefixIncludingLocale} from "../../../getPathPrefixIncludingLocale.ts";
+import {ApplicationSpinner} from "../../../lib/components/animasjoner/ApplicationSpinner.tsx";
+import {BASE_PATH} from "../../../lib/constants.ts";
+import useDecoratorLogin from "../../../lib/hooks/auth/useDecoratorLogin.ts";
+import {DigisosContext} from "../../../lib/providers/DigisosContext.ts";
 
-const Page = () => {
+export default function Template({children}: {children: React.ReactNode}) {
     configureLogger({basePath: BASE_PATH});
     const {path} = getPathPrefixIncludingLocale();
     const locale = useContext(DigisosContext)!.locale;
@@ -31,7 +30,5 @@ const Page = () => {
         return <ApplicationSpinner />;
     }
 
-    return <Informasjon />;
-};
-
-export default Page;
+    return children;
+}

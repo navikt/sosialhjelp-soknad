@@ -1,6 +1,64 @@
 {
-    "Informasjon": {
-        "title": "Application for financial assistance"
+    "NyEllerFortsettSoknad": {
+        "title": "Application for financial assistance",
+        "nySoknad": "Start a new application",
+        "fortsettSoknadTitle": "Continue an application you have started",
+        "fortsettSoknadDescription": "You have {count} started applications"
+    },
+    "NySoknad": {
+        "title": "Application for financial assistance",
+        "skjemaId": "NAV 35-18.01",
+        "dialog": {
+            "hei": "Hello!",
+            "avsnitt1": "Financial assistance is temporary support when you are unable to cover necessary expenses yourself.",
+            "avsnitt2": "In the application, you will be asked to provide information about yourself and your situation. Please fill in the application as best you can."
+        },
+        "forDuSoker": {
+            "title": "Before you apply",
+            "tekst": "See what may be useful to know before you apply, and which documentation we may ask for.",
+            "accordion": {
+                "item1": {
+                    "title": "Useful to know before you apply",
+                    "liste": "<li>Fill in the application as best you can, and state clearly what you need help or money for.</li><li>You can submit the application even if you have not uploaded any documentation. You may be asked to document some of the information you provide along the way.</li><li>Your answers are saved automatically while you fill in the application, so you can take breaks. You can also click Save application if you want to stop and continue later. Applications you have started are saved for 14 days.</li><li>Your application will be processed as quickly as possible.</li>",
+                    "tekst": "Want to know more? <a>Read more about financial assistance (opens in a new tab).</a>"
+                },
+                "item2": {
+                    "title": "See examples of documentation we may ask for",
+                    "liste": "<li>Invoices/receipts for what you have applied for support for, such as rent and electricity</li><li>Tax return</li><li>Tax assessment notice</li><li>Payslip (if you are employed)</li><li>Account statement showing the balance of your accounts</li><li>Information about your housing situation (tenancy agreement)</li>",
+                    "tekst": "Documentation can be sent as documents, images or other file types."
+                }
+            }
+        },
+        "personopplysninger": {
+            "title": "Collection and processing of personal data",
+            "tekst": "We automatically collect information from public registers. By clicking the Start application button at the bottom of the page, you agree to this.",
+            "accordion": {
+                "item1": {
+                    "title": "Information we collect about you",
+                    "p1": "In addition to the information you provide in the application, we automatically collect the following information about you from other public registers when you start the application:",
+                    "liste": "<li>Citizenship, address and family relationships from the National Population Register</li><li>Bank account number</li><li>Telephone number from the Contact and Reservation Register</li><li>Employment relationships from the Employer and Employee Register</li><li>Payments from Nav</li>",
+                    "p2": "In the application, you can choose to consent to us collecting information about your income (from the Norwegian Tax Administration) and housing benefit from Husbanken.",
+                    "p3": "You can <a>read more about how Nav processes personal data (opens in a new tab)</a>"
+                },
+                "item2": {
+                    "title": "How we process personal data",
+                    "p1": "We will process your personal data securely and correctly, and will not collect more information than is necessary.",
+                    "p2": "You can <a>read more about how we process personal data (opens in a new tab)</a>"
+                }
+            }
+        },
+        "bekreftelse": {
+            "tekst": "It is important that you provide us with correct information so that we can process your case. <a>Read more about the importance of providing correct information.</a>",
+            "checkboxLabel": "I will answer the questions in the application as best I can.",
+            "checkboxError": "You must confirm before you can start the application",
+            "feilet": "An error occurred when creating the application. Please try again later.",
+            "button": "Start application"
+        }
+    },
+    "FortsettSoknad": {
+        "title": "Your started applications",
+        "cardTitle": "Last updated",
+        "cardDescription": "Will be deleted"
     },
     "EttersendDokuPanel": {
         "title": "Send documentation for an application you have submitted",
@@ -168,6 +226,12 @@
         "submissionError": {
             "TOO_MANY_FILES": "You have selected too many files. The maximum number of files is 30.",
             "TOTAL_SIZE_TOO_LARGE": "The files are too large (max 150 MB), remove files and try again."
+        }
+    },
+    "Components": {
+        "SoknadHeader": {
+            "title": "Application for financial assistance",
+            "code": "NAV 35-18.01"
         }
     }
 }

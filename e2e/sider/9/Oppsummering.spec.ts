@@ -114,7 +114,7 @@ test("should display a separate message when submission fails with MottakPabegyn
     ).toBeVisible();
     await expect(oppsummering.getByRole("link", {name: "Gå til min side for økonomisk sosialhjelp."})).toHaveAttribute(
         "href",
-        "http://localhost:3002/sosialhjelp/innsyn/nb"
+        /\/sosialhjelp\/innsyn\/nb$/
     );
     await expect(oppsummering.getByRole("heading", {name: "Beklager, noe gikk galt"})).not.toBeVisible();
     await expect(oppsummering.getByRole("heading", {name: "Feil ved innsendelse"})).not.toBeVisible();

@@ -1,17 +1,44 @@
-import * as React from "react";
-import "./overrides.css";
-import {NySoknadPanel} from "./nySoknad/NySoknadPanel.tsx";
-import {PabegynteSoknaderPanel} from "./PabegynteSoknader.tsx";
-import {EttersendDokuPanel} from "./EttersendDokuPanel.tsx";
-import {Heading, VStack} from "@navikt/ds-react";
+import {Heading, LinkCard, VStack} from "@navikt/ds-react";
 import {useTranslations} from "next-intl";
+import {SoknadHeader} from "../../lib/components/SoknadHeader.tsx";
+import {useConfigFeatureFlags} from "../../lib/config.ts";
 import {useContextSessionInfo} from "../../lib/providers/useContextSessionInfo.ts";
+import {EttersendDokuPanel} from "./EttersendDokuPanel.tsx";
+import {NySoknadPanel} from "./nySoknad/NySoknadPanel.tsx";
+import "./overrides.css";
+import {PabegynteSoknaderPanel} from "./PabegynteSoknader.tsx";
+import {redirect} from "next/navigation";
 
 export const Informasjon = () => {
+    const featureToggles = useConfigFeatureFlags();
     const {open, numRecentlySent} = useContextSessionInfo();
-    const t = useTranslations("Informasjon");
+    const t = useTranslations("NyEllerFortsettSoknad");
 
-    return (
+    if (featureToggles.nyIntroside && open?.length === 0) {
+        redirect("/ny");
+    }
+
+    return featureToggles.nyIntroside ? (
+        <main className="max-w-lg lg:max-w-xl w-full mx-auto gap-8 p-3 py-6 lg:py-8 flex flex-col grow">
+            <SoknadHeader showCode={false}></SoknadHeader>
+
+            <VStack gap={{xs: "space-24", lg: "space-32"}}>
+                <LinkCard data-color="accent">
+                    <LinkCard.Title>
+                        <LinkCard.Anchor href="/sosialhjelp/soknad/ny">{t("nySoknad")}</LinkCard.Anchor>
+                    </LinkCard.Title>
+                </LinkCard>
+                <LinkCard data-color="accent">
+                    <LinkCard.Title>
+                        <LinkCard.Anchor href="/sosialhjelp/soknad/fortsett">
+                            {t("fortsettSoknadTitle")}
+                        </LinkCard.Anchor>
+                    </LinkCard.Title>
+                    <LinkCard.Description>{t("fortsettSoknadDescription", {count: open?.length})}</LinkCard.Description>
+                </LinkCard>
+            </VStack>
+        </main>
+    ) : (
         <main aria-labelledby={"app-heading"}>
             <title>{t("title")}</title>
             {/*{digisosConfig.showDevPanel && <DeveloperToolkit />}*/}
