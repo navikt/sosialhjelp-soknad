@@ -13,6 +13,9 @@ const KVITTERING = {
 
 const innsynUrlPattern = new RegExp(`^http://localhost:(?:3000|3002)/sosialhjelp/innsyn/nb/soknad/${DIGISOS_ID}$`);
 
+// Låser nettleserens språk og tidssone, så testen ikke avhenger av maskinen den kjører på (CI bruker en-US og UTC)
+test.use({locale: "nb-NO", timezoneId: "Europe/Oslo"});
+
 test.beforeEach(async ({page}) => {
     await page.route("**/api/**", (route) => route.abort());
     await page.route("**/informasjon/session", (route) =>
