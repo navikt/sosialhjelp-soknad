@@ -65,7 +65,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
             publicFacingTestVersion: true,
-            nyIntroside: true,
+            nyIntroside: false,
         },
         dekorator: {
             env: "dev",

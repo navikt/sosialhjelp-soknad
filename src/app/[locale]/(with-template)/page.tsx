@@ -1,5 +1,5 @@
 "use client";
-import Informasjon from "../../sider/hovedmeny";
+import Informasjon from "../../../sider/hovedmeny";
 
 const Page = () => {
     return <Informasjon />;

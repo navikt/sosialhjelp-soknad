@@ -2,11 +2,11 @@
 import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
 import {configureLogger} from "@navikt/next-logger";
 import {useContext, useEffect} from "react";
-import {getPathPrefixIncludingLocale} from "../../getPathPrefixIncludingLocale.ts";
-import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner.tsx";
-import {BASE_PATH} from "../../lib/constants.ts";
-import useDecoratorLogin from "../../lib/hooks/auth/useDecoratorLogin.ts";
-import {DigisosContext} from "../../lib/providers/DigisosContext.ts";
+import {getPathPrefixIncludingLocale} from "../../../getPathPrefixIncludingLocale.ts";
+import {ApplicationSpinner} from "../../../lib/components/animasjoner/ApplicationSpinner.tsx";
+import {BASE_PATH} from "../../../lib/constants.ts";
+import useDecoratorLogin from "../../../lib/hooks/auth/useDecoratorLogin.ts";
+import {DigisosContext} from "../../../lib/providers/DigisosContext.ts";
 
 export default function Template({children}: {children: React.ReactNode}) {
     configureLogger({basePath: BASE_PATH});

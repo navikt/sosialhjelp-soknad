@@ -7,7 +7,7 @@ export const SoknadHeader = ({showCode = true}: {showCode?: boolean}) => {
 
     return (
         <VStack paddingBlock={{lg: "space-24"}} gap="space-16" className="relative">
-            <div className="lg:absolute -left-24">
+            <div className="md:absolute -left-24">
                 <SkjemaIllustrasjon />
             </div>
             <VStack gap="space-4" as="hgroup" className={"flex-col-reverse"}>

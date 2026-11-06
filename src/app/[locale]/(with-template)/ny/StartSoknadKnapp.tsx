@@ -3,8 +3,8 @@ import {BodyLong, Button, Checkbox, ErrorMessage, InlineMessage, Link, Loader} f
 import {useTranslations} from "next-intl";
 import {useRouter} from "next/navigation";
 import {useState, useTransition} from "react";
-import {useCreateSoknad} from "../../../generated";
-import {umamiTrack} from "../../umami";
+import {useCreateSoknad} from "../../../../generated";
+import {umamiTrack} from "../../../umami";
 
 const StartSoknadKnapp = () => {
     const t = useTranslations("NySoknad");

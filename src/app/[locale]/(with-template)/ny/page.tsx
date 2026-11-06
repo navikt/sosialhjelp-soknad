@@ -1,9 +1,9 @@
 "use client";
 import {redirect} from "next/navigation";
-import {SoknadHeader} from "../../../lib/components/SoknadHeader";
-import {useConfigFeatureFlags} from "../../../lib/config";
 import NySoknadInnhold from "./NySoknadInnhold";
 import StartSoknadKnapp from "./StartSoknadKnapp";
+import {useConfigFeatureFlags} from "../../../../lib/config";
+import {SoknadHeader} from "../../../../lib/components/SoknadHeader";
 
 const Page = () => {
     const featureToggles = useConfigFeatureFlags();
