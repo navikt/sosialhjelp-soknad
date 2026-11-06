@@ -60,3 +60,14 @@ async function expectKvittering(page: Page) {
         KVITTERING.soknadPdfUrl
     );
 }
+
+test("should not show the receipt when the backend rejects the digisos id as malformed", async ({page}) => {
+    await page.route("**/api/soknad-api/kvittering/ikke-en-uuid", (route) =>
+        route.fulfill({status: 400, contentType: "application/json", body: JSON.stringify({})})
+    );
+
+    await page.goto("/sosialhjelp/soknad/nb/kvittering/ikke-en-uuid");
+
+    await expect(page).not.toHaveURL(/kvittering/);
+    await expect(page.getByRole("heading", {name: "Søknaden er sendt", exact: true})).not.toBeVisible();
+});

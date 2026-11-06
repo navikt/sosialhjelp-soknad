@@ -4,6 +4,7 @@ import {Heading, HStack} from "@navikt/ds-react";
 import {InfoCard, InfoCardContent, InfoCardHeader, InfoCardTitle} from "@navikt/ds-react/InfoCard";
 import {useLocale, useTranslations} from "next-intl";
 import {redirect, useParams} from "next/navigation";
+import {isAxiosError} from "axios";
 import digisosConfig, {useConfigFeatureFlags} from "../../../../lib/config.ts";
 import {supportedLanguageOrFallback} from "../../../../lib/i18n/common.ts";
 import {CheckmarkCircleFillIcon, LightBulbIcon} from "@navikt/aksel-icons";
@@ -23,7 +24,11 @@ export default function KvitteringPage() {
     const {digisosId} = useParams<{digisosId: string}>();
     const language = supportedLanguageOrFallback(useLocale());
     const t = useTranslations("Kvittering");
-    const {tidspunktSendt, soknadPdfUrl, isPending} = useKvittering(digisosId);
+    const {tidspunktSendt, soknadPdfUrl, isPending, error} = useKvittering(digisosId);
+
+    if (isAxiosError(error) && error.response?.status === 400) {
+        redirect("/");
+    }
 
     if (isPending) return <ApplicationSpinner />;
 
