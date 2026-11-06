@@ -5,14 +5,20 @@ import {
     InnsendingFeiletError,
     InnsendingFeiletErrorType,
     Oppsummering,
+    SoknadSendtDto,
     SoknadApiError,
     SoknadApiErrorError,
     SoknadApiErrorResponseType,
 } from "../../../src/generated/model";
 
 const TEST_SOKNAD_ID = "d33f8757-3182-4fa3-b273-5d26c5974fd7";
+const KVITTERING_ID = "kvittering-test-id";
+
+const innsynUrlPattern = (path: string) => new RegExp(`^http://localhost:(?:3000|3002)/sosialhjelp/innsyn${path}$`);
 
 test.beforeEach(async ({page}) => {
+    await page.route("**/api/**", (route) => route.abort());
+    await page.route("**/soknad/*/send", (route) => route.abort());
     await page.route("**/informasjon/session", async (route) => {
         await route.fulfill({
             status: 200,
@@ -84,7 +90,7 @@ test("should display the specific error message when submission fails with Broke
             "Det oppstod en teknisk feil, og søknaden ble ikke sendt inn. Vi anbefaler at du sletter søknaden og sender inn en ny. Vi beklager ulempene dette medfører."
         )
     ).toBeVisible();
-    await expect(oppsummering.getByRole("link")).toHaveCount(0);
+    await expect(oppsummering.getByRole("alert").getByRole("link")).toHaveCount(0);
     await expect(page.getByRole("heading", {name: "Feil ved innsendelse"})).not.toBeVisible();
     await expect(oppsummering).not.toContainText("prøve igjen senere");
 });
@@ -114,7 +120,7 @@ test("should display a separate message when submission fails with MottakPabegyn
     ).toBeVisible();
     await expect(oppsummering.getByRole("link", {name: "Gå til min side for økonomisk sosialhjelp."})).toHaveAttribute(
         "href",
-        /\/sosialhjelp\/innsyn\/nb$/
+        innsynUrlPattern("/nb")
     );
     await expect(oppsummering.getByRole("heading", {name: "Beklager, noe gikk galt"})).not.toBeVisible();
     await expect(oppsummering.getByRole("heading", {name: "Feil ved innsendelse"})).not.toBeVisible();
@@ -148,6 +154,47 @@ test("should display the general error message when submission fails with Innsen
             `Søknaden din ligger på Min side frem til ${deletionDate}, så du kan prøve igjen senere.`
         )
     ).toBeVisible();
-    await expect(oppsummering.getByRole("link")).toHaveCount(0);
+    await expect(oppsummering.getByRole("alert").getByRole("link")).toHaveCount(0);
     await expect(oppsummering).not.toContainText("Vi anbefaler at du sletter søknaden og sender inn en ny.");
 });
+
+for (const isKort of [false, true]) {
+    test(`should navigate to the receipt after a successful ${isKort ? "short" : "regular"} submission`, async ({
+        page,
+    }) => {
+        const formPath = `/sosialhjelp/soknad/nb/skjema/${isKort ? "kort/" : ""}${TEST_SOKNAD_ID}/${isKort ? 5 : 9}`;
+        let sendCount = 0;
+
+        await page.route(`**/${TEST_SOKNAD_ID}/isKort`, (route) =>
+            route.fulfill({
+                status: 200,
+                contentType: "application/json",
+                body: JSON.stringify(isKort),
+            })
+        );
+        await page.route(`**/soknad/${TEST_SOKNAD_ID}/send`, (route) => {
+            expect(route.request().method()).toBe("POST");
+            sendCount += 1;
+            const response = {
+                digisosId: KVITTERING_ID,
+                tidspunkt: "2026-01-01T12:00:00Z",
+            } satisfies SoknadSendtDto;
+            return route.fulfill({
+                status: 200,
+                contentType: "application/json",
+                body: JSON.stringify(response),
+            });
+        });
+
+        await page.goto(formPath);
+        await page.getByRole("button", {name: "Send søknaden", exact: true}).click();
+
+        await expect(page).toHaveURL(`/sosialhjelp/soknad/kvittering/${KVITTERING_ID}`);
+        expect(sendCount).toBe(1);
+
+        await page.goBack();
+        await expect.poll(() => new URL(page.url()).pathname.replace("/nb/", "/")).toBe(formPath.replace("/nb/", "/"));
+        await expect(page.getByRole("button", {name: "Send søknaden", exact: true})).toBeVisible();
+        expect(sendCount).toBe(1);
+    });
+}
