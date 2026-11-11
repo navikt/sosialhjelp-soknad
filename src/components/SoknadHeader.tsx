@@ -6,7 +6,7 @@ export const SoknadHeader = ({showCode = true}: {showCode?: boolean}) => {
     const t = useTranslations("Components.SoknadHeader");
 
     return (
-        <VStack paddingBlock={{lg: "space-24"}} className="relative">
+        <VStack paddingBlock={{xs: "space-12", lg: "space-24"}} className="relative">
             <div className="hidden lg:block lg:absolute lg:-left-24 lg:top-1/2 lg:-translate-y-1/2">
                 <SkjemaIllustrasjon />
             </div>

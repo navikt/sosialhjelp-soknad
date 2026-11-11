@@ -16,7 +16,7 @@ export const SkjemaStegStepper = ({
     const numSteps = kort ? 4 : 8;
 
     return (
-        <nav className={"max-w-md w-full mx-auto"} aria-label={`hopp til søknadssteg (${numSteps} steg)`}>
+        <nav className={"w-full mx-auto"} aria-label={`hopp til søknadssteg (${numSteps} steg)`}>
             <Stepper className={"top-stepper"} activeStep={page} orientation={"horizontal"} onStepChange={onStepChange}>
                 {[...Array(numSteps).keys()].map((key) => (
                     <Stepper.Step aria-label={`steg ${key + 1}`} key={key} as="button">

@@ -10,7 +10,7 @@ interface Props {
 
 /**
  * Felles ramme for sidene i søknaden: main, header, bredde og avstand.
- * Skal ikke avhenge av React Router eller react-i18next.
+ * TODO: Flyttes til layout når alle sider er skrevet over til next-routing.
  *
  * id="maincontent" og tabIndex={-1} gjør at dekoratøren viser sin skip-lenke og kan flytte fokus hit.
  */
