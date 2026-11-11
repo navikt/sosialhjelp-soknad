@@ -1,6 +1,6 @@
 import {Heading, LinkCard, VStack} from "@navikt/ds-react";
 import {useTranslations} from "next-intl";
-import {SoknadHeader} from "../../lib/components/SoknadHeader.tsx";
+import {SoknadSide} from "../../components/SoknadSide.tsx";
 import {useConfigFeatureFlags} from "../../lib/config.ts";
 import {useContextSessionInfo} from "../../lib/providers/useContextSessionInfo.ts";
 import {EttersendDokuPanel} from "./EttersendDokuPanel.tsx";
@@ -19,9 +19,7 @@ export const Informasjon = () => {
     }
 
     return featureToggles.nyIntroside ? (
-        <main className="max-w-lg lg:max-w-xl w-full mx-auto gap-8 p-3 py-6 lg:py-8 flex flex-col grow">
-            <SoknadHeader showCode={false}></SoknadHeader>
-
+        <SoknadSide showCode={false}>
             <VStack gap={{xs: "space-24", lg: "space-32"}}>
                 <LinkCard data-color="accent">
                     <LinkCard.Title>
@@ -37,7 +35,7 @@ export const Informasjon = () => {
                     <LinkCard.Description>{t("fortsettSoknadDescription", {count: open?.length})}</LinkCard.Description>
                 </LinkCard>
             </VStack>
-        </main>
+        </SoknadSide>
     ) : (
         <main aria-labelledby={"app-heading"}>
             <title>{t("title")}</title>

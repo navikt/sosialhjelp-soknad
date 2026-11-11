@@ -1,6 +1,6 @@
 import {BodyShort, Heading, VStack} from "@navikt/ds-react";
 import {useTranslations} from "next-intl";
-import {SkjemaIllustrasjon} from "./svg/illustrasjoner/SkjemaIllustrasjon";
+import {SkjemaIllustrasjon} from "../lib/components/svg/illustrasjoner/SkjemaIllustrasjon";
 
 export const SoknadHeader = ({showCode = true}: {showCode?: boolean}) => {
     const t = useTranslations("Components.SoknadHeader");

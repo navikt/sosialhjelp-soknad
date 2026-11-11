@@ -5,7 +5,7 @@ import {useTranslations} from "next-intl";
 import {redirect} from "next/navigation";
 import {PabegyntSoknad} from "../../../../generated/model/pabegyntSoknad.ts";
 import {LocalizedDate} from "../../../../lib/components/LocalizedDate.tsx";
-import {SoknadHeader} from "../../../../lib/components/SoknadHeader.tsx";
+import {SoknadSide} from "../../../../components/SoknadSide.tsx";
 import {useConfigFeatureFlags} from "../../../../lib/config.ts";
 import {getDateFnLocale} from "../../../../lib/i18n/dateFns.ts";
 import {useContextSessionInfo} from "../../../../lib/providers/useContextSessionInfo.ts";
@@ -34,9 +34,7 @@ const Page = () => {
     }
 
     return (
-        <main className="max-w-lg lg:max-w-xl w-full mx-auto gap-8 p-3 py-6 lg:py-8 flex flex-col grow">
-            <SoknadHeader showCode={false}></SoknadHeader>
-
+        <SoknadSide showCode={false}>
             <VStack gap="space-8">
                 <Heading level="2" size="small" className="lg:text-2xl">
                     {t("title")}
@@ -63,7 +61,7 @@ const Page = () => {
                     })}
                 </VStack>
             </VStack>
-        </main>
+        </SoknadSide>
     );
 };
 
