@@ -76,7 +76,7 @@ export default function App() {
                                 </Route>
                             </Route>
                             <Route path=":soknadId">
-                                <Route index path="1" element={<Personopplysninger shortSpacing />} />
+                                <Route index path="1" element={<Personopplysninger />} />
                                 <Route element={<SwitchSoknadType />}>
                                     <Route path="2" element={<Begrunnelse />} />
                                     <Route path="3" element={<ArbeidOgUtdanning />} />

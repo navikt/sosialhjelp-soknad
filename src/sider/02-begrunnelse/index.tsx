@@ -2,7 +2,6 @@ import {useTranslation} from "react-i18next";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {useBegrunnelse} from "../../lib/hooks/data/useBegrunnelse";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
-import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
@@ -33,24 +32,22 @@ export const Begrunnelse = () => {
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={2} onStepChange={goto} />
-            <SkjemaStegBlock>
-                <SkjemaStegTitle title={t(SkjemaHeadings[2].tittel)} />
-                {isLoading ? (
-                    <ApplicationSpinner />
-                ) : (
-                    <BegrunnelseForm
-                        begrunnelse={begrunnelse}
-                        onSubmit={(formValues) =>
-                            updateBegrunnelse({
-                                hvaSokesOm: formValues.hvaSokesOm ?? "",
-                                hvorforSoke: formValues.hvorforSoke ?? "",
-                            })
-                        }
-                        isError={isError}
-                    />
-                )}
-                <SkjemaStegButtons onPrevious={() => navigate("../1")} onNext={() => goto(3)} />
-            </SkjemaStegBlock>
+            <SkjemaStegTitle title={t(SkjemaHeadings[2].tittel)} />
+            {isLoading ? (
+                <ApplicationSpinner />
+            ) : (
+                <BegrunnelseForm
+                    begrunnelse={begrunnelse}
+                    onSubmit={(formValues) =>
+                        updateBegrunnelse({
+                            hvaSokesOm: formValues.hvaSokesOm ?? "",
+                            hvorforSoke: formValues.hvorforSoke ?? "",
+                        })
+                    }
+                    isError={isError}
+                />
+            )}
+            <SkjemaStegButtons onPrevious={() => navigate("../1")} onNext={() => goto(3)} />
         </SkjemaSteg>
     );
 };

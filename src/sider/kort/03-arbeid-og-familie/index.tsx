@@ -1,7 +1,6 @@
 import React from "react";
 import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {BodyShort, Box, Heading} from "@navikt/ds-react";
-import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import {useTranslation} from "react-i18next";
 import {ArbeidsforholdListe} from "../../03-arbeidUtdanning/ArbeidsforholdListe.tsx";
@@ -43,45 +42,43 @@ const ArbeidOgFamilie = () => {
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={3} onStepChange={gotoPage} />
-            <SkjemaStegBlock className={"lg:space-y-12"}>
-                <SkjemaStegTitle title={t(KortSkjemaHeadings[3].tittel)} />
-                <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
-                    <Box className="space-y-2">
-                        <Heading size="small">{t("arbeidsforhold.sporsmal")}</Heading>
-                        <ArbeidsforholdListe arbeidsforhold={arbeid?.arbeidsforholdList ?? []} />
-                    </Box>
-                    <Box className="space-y-2">
-                        <Heading size="small">{t("system.familie.sivilstatus.sporsmal")}</Heading>
-                        {ektefelle?.navn ? (
-                            <Systeminfo>
-                                <EktefellePersonaliaBruker ektefelle={ektefelle} />
-                            </Systeminfo>
-                        ) : (
-                            <>
-                                <BodyShort>{t("system.familie.sivilstatus.empty")}</BodyShort>
-                                <BodyShort>{t("system.familie.sivilstatus.stringValue")}</BodyShort>
-                            </>
-                        )}
-                    </Box>
-                    <Box className="space-y-2">
-                        {forsorgerplikt?.ansvar?.length ? (
-                            <ForsorgerPlikt
-                                skipForm
-                                heading={<Heading size="small">{t("familierelasjon.faktum.sporsmal")}</Heading>}
-                            />
-                        ) : (
-                            <>
-                                <BodyShort>
-                                    {t("system.familie.barn.empty")}
-                                    <br />
-                                    {t("system.familie.sivilstatus.stringValue")}
-                                </BodyShort>
-                            </>
-                        )}
-                    </Box>
-                </form>
-                <SkjemaStegButtons onPrevious={async () => navigate("../2")} onNext={async () => await gotoPage(4)} />
-            </SkjemaStegBlock>
+            <SkjemaStegTitle title={t(KortSkjemaHeadings[3].tittel)} />
+            <form className={"space-y-12"} onSubmit={(e) => e.preventDefault()}>
+                <Box className="space-y-2">
+                    <Heading size="small">{t("arbeidsforhold.sporsmal")}</Heading>
+                    <ArbeidsforholdListe arbeidsforhold={arbeid?.arbeidsforholdList ?? []} />
+                </Box>
+                <Box className="space-y-2">
+                    <Heading size="small">{t("system.familie.sivilstatus.sporsmal")}</Heading>
+                    {ektefelle?.navn ? (
+                        <Systeminfo>
+                            <EktefellePersonaliaBruker ektefelle={ektefelle} />
+                        </Systeminfo>
+                    ) : (
+                        <>
+                            <BodyShort>{t("system.familie.sivilstatus.empty")}</BodyShort>
+                            <BodyShort>{t("system.familie.sivilstatus.stringValue")}</BodyShort>
+                        </>
+                    )}
+                </Box>
+                <Box className="space-y-2">
+                    {forsorgerplikt?.ansvar?.length ? (
+                        <ForsorgerPlikt
+                            skipForm
+                            heading={<Heading size="small">{t("familierelasjon.faktum.sporsmal")}</Heading>}
+                        />
+                    ) : (
+                        <>
+                            <BodyShort>
+                                {t("system.familie.barn.empty")}
+                                <br />
+                                {t("system.familie.sivilstatus.stringValue")}
+                            </BodyShort>
+                        </>
+                    )}
+                </Box>
+            </form>
+            <SkjemaStegButtons onPrevious={async () => navigate("../2")} onNext={async () => await gotoPage(4)} />
         </SkjemaSteg>
     );
 };

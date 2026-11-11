@@ -12,7 +12,7 @@ const HtmlPageTitle = ({title}: {title: string}) => {
 export const SkjemaStegTitle = ({className, title}: {className?: string; title: string}) => (
     <>
         <HtmlPageTitle title={title} />
-        <Heading tabIndex={-1} className={cx(className, "lg:mb-12")} level={"2"} size={"medium"}>
+        <Heading tabIndex={-1} className={cx(className)} level={"2"} size={"large"}>
             <span id="skjemasteg-title">{title}</span>
         </Heading>
     </>

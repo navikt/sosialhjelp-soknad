@@ -6,7 +6,6 @@ import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.t
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {useTranslation} from "react-i18next";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
-import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import Feiloppsummering from "../../lib/components/Feiloppsummering.tsx";
 
 export const UtgifterGjeld = () => {
@@ -17,12 +16,10 @@ export const UtgifterGjeld = () => {
         <SkjemaSteg>
             <SkjemaStegStepper page={7} onStepChange={handleStepChange} />
             <Feiloppsummering />
-            <SkjemaStegBlock>
-                <SkjemaStegTitle title={t(SkjemaHeadings[7].tittel)} />
-                <Boutgifter />
-                <Barneutgifter />
-                <SkjemaStegButtons onNext={handleNext} onPrevious={handlePrevious} />
-            </SkjemaStegBlock>
+            <SkjemaStegTitle title={t(SkjemaHeadings[7].tittel)} />
+            <Boutgifter />
+            <Barneutgifter />
+            <SkjemaStegButtons onNext={handleNext} onPrevious={handlePrevious} />
         </SkjemaSteg>
     );
 };

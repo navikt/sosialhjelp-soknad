@@ -7,7 +7,6 @@ import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/Skjema
 import {FieldErrorsImpl} from "react-hook-form";
 import {erAktiv, erMidlDeaktivert} from "../../lib/navEnhetStatus";
 import {SkjemaStegErrorSummary} from "../../lib/components/SkjemaSteg/SkjemaStegErrorSummary.tsx";
-import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import {useTranslation} from "react-i18next";
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
@@ -22,7 +21,7 @@ import {Heading} from "@navikt/ds-react";
 import {Telefon} from "./Telefon.tsx";
 import {umamiTrack} from "../../app/umami.ts";
 
-export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => {
+export const Personopplysninger = () => {
     const [error, setError] = useState<DigisosLanguageKey | null>(null);
     const errors = !error ? undefined : ({adressefelt: {message: error}} as FieldErrorsImpl<NavEnhetDto>);
     const soknadId = useSoknadId();
@@ -59,26 +58,24 @@ export const Personopplysninger = ({shortSpacing}: {shortSpacing?: boolean}) => 
 
     return (
         <SkjemaSteg>
-            <SkjemaStegBlock className={shortSpacing ? "lg:space-y-12" : ""}>
-                <SkjemaStegTitle title={t(SkjemaHeadings[1].tittel)} />
-                <SkjemaStegErrorSummary errors={errors} />
-                <BasisPersonalia />
-                <AdresseData />
-                <section aria-labelledby={"telefon-heading"} className={"space-y-2"}>
-                    <Heading id={"telefon-heading"} size={"small"} level={"3"}>
-                        {t("kontakt.telefon.sporsmal")}
-                    </Heading>
-                    <Telefon />
-                </section>
+            <SkjemaStegTitle title={t(SkjemaHeadings[1].tittel)} />
+            <SkjemaStegErrorSummary errors={errors} />
+            <BasisPersonalia />
+            <AdresseData />
+            <section aria-labelledby={"telefon-heading"} className={"space-y-2"}>
+                <Heading id={"telefon-heading"} size={"small"} level={"3"}>
+                    {t("kontakt.telefon.sporsmal")}
+                </Heading>
+                <Telefon />
+            </section>
 
-                <section aria-labelledby={"kontonummer-heading"} className={"space-y-2"}>
-                    <Heading id={"kontonummer-heading"} size={"small"} level={"3"}>
-                        {t("kontakt.kontonummer.sporsmal")}
-                    </Heading>
-                    <Kontonr />
-                </section>
-                <SkjemaStegButtons onNext={onClickNext} isNextPending={isMutating} />
-            </SkjemaStegBlock>
+            <section aria-labelledby={"kontonummer-heading"} className={"space-y-2"}>
+                <Heading id={"kontonummer-heading"} size={"small"} level={"3"}>
+                    {t("kontakt.kontonummer.sporsmal")}
+                </Heading>
+                <Kontonr />
+            </section>
+            <SkjemaStegButtons onNext={onClickNext} isNextPending={isMutating} />
         </SkjemaSteg>
     );
 };
