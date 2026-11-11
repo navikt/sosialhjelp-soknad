@@ -1792,10 +1792,6 @@ export const skjema = {
                 oppsummering_kort_saldo_tittel: "Opplysninger om saldo på dine brukskontoer",
                 oppsummering_kort_saldo_sporsmal: "Saldo konto:",
                 oppsummering_kort_konto_saldo_ingen: "Ingen informasjon",
-                informasjon: {
-                    tittel: "Informasjon om inntekt fra Skatteetaten",
-                    tekst: "For at vi skal kunne behandle søknaden din, trenger vi opplysninger om din inntekt. \n\nArbeidsgivere, pensjonsutbetalere og andre sender hver måned opplysninger om dine inntekter og arbeidsforhold til Skatteetaten, Statistisk sentralbyrå og Nav. Opplysningene som er registrert på deg, vises under.",
-                },
             },
             til: "til",
         },

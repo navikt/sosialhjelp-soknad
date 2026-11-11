@@ -1775,10 +1775,6 @@ export const skjema = {
                 nettoinntekt: "Inntekt etter skatt",
                 oppsummering:
                     "Vi har registrert at du{ antall, plural,=0 { ikkje har hatt }other {har hatt{ antall, plural,=1 {{éi}}=2 {{to}}=3 {{tre}}=4 {{fire}}=5 {{fem}}=6 {{seks}}=7 {{sju}}=8 {{åtte}}=9 {{ni}}=10 {{ti}}=11 {{elleve}}=12 {{tolv}}other {{#}}}}}skattbare inntekter.",
-                informasjon: {
-                    tittel: "Informasjon om inntekt frå Skatteetaten",
-                    tekst: "For at vi skal kunne behandle søknaden din, treng vi opplysningar om inntekta di.\n\nArbeidsgivarar, pensjonsutbetalarar og andre sender kvar månad opplysningar om inntektene og arbeidsforholda dine til Skatteetaten, Statistisk sentralbyrå og Nav. Opplysningane som er registrerte på deg, blir viste nedanfor.",
-                },
                 skatteetaten: "Sjå detaljar hjå Skatteetaten.",
                 tidspunkt: "Informasjonen blei henta",
                 tittel: "Inntekt",
