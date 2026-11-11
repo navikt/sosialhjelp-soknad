@@ -17,6 +17,9 @@ type FeatureFlags = {
     // Dette er en testversjon som er blitt gitt en ingress på nav.no.
     // Forhindrer at siden blir indeksert, og viser en synlig advarsel.
     publicFacingTestVersion?: true;
+
+    //Vis kvittering
+    kvittering: boolean;
 };
 
 type ProxyOptions = {
@@ -66,6 +69,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             soknadstypeValg: true,
             publicFacingTestVersion: true,
             nyIntroside: false,
+            kvittering: true,
         },
         dekorator: {
             env: "dev",
@@ -100,6 +104,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             soknadstypeValg: true,
             publicFacingTestVersion: true,
             nyIntroside: true,
+            kvittering: true,
         },
 
         dekorator: {
@@ -137,6 +142,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
             nyIntroside: true,
+            kvittering: true,
         },
         dekorator: {
             env: "dev",
@@ -172,6 +178,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             soknadstypeValg: false,
             publicFacingTestVersion: true,
             nyIntroside: false,
+            kvittering: false,
         },
 
         dekorator: {
@@ -211,6 +218,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: false,
             nyIntroside: true,
+            kvittering: true,
         },
 
         dekorator: {
@@ -250,6 +258,7 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
             oppsummeringNavEnhet: false,
             soknadstypeValg: true,
             nyIntroside: true,
+            kvittering: true,
         },
 
         dekorator: {

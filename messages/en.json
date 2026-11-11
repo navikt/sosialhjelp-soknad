@@ -228,6 +228,45 @@
             "TOTAL_SIZE_TOO_LARGE": "The files are too large (max 150 MB), remove files and try again."
         }
     },
+    "Kvittering": {
+        "tittel": "Your application has been submitted",
+        "undertittel": "What happens next",
+        "steg": {
+            "sendt": {
+                "tittel": "Your application has been sent",
+                "tekst": "Your case has now been sent to your Nav office."
+            },
+            "behandles": {
+                "tittel": "Your application is being processed",
+                "tekst": "Your application is processed as quickly as possible, usually within 4 weeks.",
+                "tekst2": "If the Nav office needs more information to process your application, they will contact you."
+            },
+            "svar": {
+                "tittel": "You will receive a response to your application",
+                "tekst": "You will be notified when your case has been processed and you have received a decision."
+            }
+        },
+        "sporsmal": {
+            "tittel": "Do you have questions about your application?",
+            "tekst": "You can <navKontor>contact your Nav office</navKontor> or <telefon>call us on 55 55 33 33</telefon>."
+        },
+        "dokumentasjon": {
+            "tittel": "Missing documentation?",
+            "tekst": "You do not need to have attached documentation for us to start processing your application. If we need more information, the Nav office will contact you. You can also <dokumentasjon>submit documentation later on My Page for Financial Assistance</dokumentasjon>."
+        },
+        "utbetaling": {
+            "tittel": "When will I receive the payment?",
+            "tekst": "The payment date can vary from one municipality to another. You can find information about payments under <utbetalinger>My payments of financial assistance</utbetalinger> or in your decision letter."
+        },
+        "status": {
+            "tittel": "See the status of your application on My Page",
+            "tekst": "You can sign in to My Page for Financial Assistance at any time to view your application, submit documentation later and follow the status of your case."
+        },
+        "tidspunkt": "{dato} at {klokkeslett}",
+        "minSide": "Go to your application on My Page",
+        "lastNed": "Download your application (PDF)",
+        "info": "Nice to know"
+    },
     "Components": {
         "SoknadHeader": {
             "title": "Application for financial assistance",

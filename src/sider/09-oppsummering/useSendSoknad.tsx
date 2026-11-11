@@ -1,10 +1,10 @@
 import {useRef, useTransition} from "react";
 import {useSendSoknad as useSendSoknadMutation} from "../../generated";
-import digisosConfig from "../../lib/config";
-import {useRouter} from "next/navigation";
+import {useRouter} from "../../i18n/routing.ts";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../app/umami.ts";
+import {digisosConfig, useConfigFeatureFlags} from "../../lib/config.ts";
 import {useLocale} from "next-intl";
 
 export const useSendSoknad = () => {
@@ -15,6 +15,7 @@ export const useSendSoknad = () => {
     const deletionDateRef = useRef("");
     const soknadId = useSoknadId();
 
+    const featureToggles = useConfigFeatureFlags(); //todo fjern når testing ferdig
     const locale = useLocale();
 
     const {mutate, isPending, error} = useSendSoknadMutation({
@@ -25,7 +26,10 @@ export const useSendSoknad = () => {
                     isKortSoknad: isKortSoknad,
                     soknadId: soknadId,
                 });
-                startTransition(() => router.push(`${digisosConfig.innsynURL}/${locale}/soknad/${digisosId}`));
+                const href = featureToggles.kvittering
+                    ? `/kvittering/${encodeURIComponent(digisosId)}`
+                    : `${digisosConfig.innsynURL}/${locale}/soknad/${encodeURIComponent(digisosId)}`;
+                startTransition(() => router.push(href));
                 deletionDateRef.current = "";
             },
         },

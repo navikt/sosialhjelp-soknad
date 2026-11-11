@@ -1338,6 +1338,9 @@ export const skjema = {
     opplysningerbolk: {
         tittel: "Dokumentasjon",
     },
+    kvitteringsside: {
+        tittel: "Kvittering",
+    },
     oppsummering: {
         arbeidsforhold: {
             ingen: "Ingen arbeidsforhold",
