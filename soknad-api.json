@@ -2131,122 +2131,6 @@
                       "$ref": "#/components/schemas/InnsendingFeiletError"
                     }
                   ]
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/SoknadApiError"
-                    },
-                    {
-                      "$ref": "#/components/schemas/InnsendingFeiletError"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "studielan-controller"
-        ]
-      }
-    },
-    "/soknad/{soknadId}/inntekt/skattbarinntekt/samtykke": {
-      "put": {
-        "operationId": "updateSamtykke",
-        "parameters": [
-          {
-            "name": "soknadId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "boolean"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SkattbarInntektDto"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedMelding"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/SoknadApiError"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/SoknadApiError"
-                }
-              }
-            }
-          },
-          "413": {
-            "description": "Content Too Large",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/SoknadApiError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/SoknadApiError"
-                    },
-                    {
-                      "$ref": "#/components/schemas/InnsendingFeiletError"
-                    }
-                  ]
                 }
               }
             }
@@ -8304,6 +8188,9 @@
               },
               {
                 "$ref": "#/components/schemas/VegAdresse"
+              },
+              {
+                "type": "null"
               }
             ]
           }
@@ -8487,6 +8374,9 @@
               },
               {
                 "$ref": "#/components/schemas/VegAdresse"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -8503,6 +8393,9 @@
               },
               {
                 "$ref": "#/components/schemas/VegAdresse"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -8519,6 +8412,9 @@
               },
               {
                 "$ref": "#/components/schemas/VegAdresse"
+              },
+              {
+                "type": "null"
               }
             ]
           },
