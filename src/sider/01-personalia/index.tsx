@@ -58,7 +58,7 @@ export const Personopplysninger = () => {
 
     return (
         <SkjemaSteg>
-            <SkjemaStegTitle title={t(SkjemaHeadings[1].tittel)} />
+            <SkjemaStegTitle className="mt-8 lg:mt-16" title={t(SkjemaHeadings[1].tittel)} />
             <SkjemaStegErrorSummary errors={errors} />
             <BasisPersonalia />
             <AdresseData />

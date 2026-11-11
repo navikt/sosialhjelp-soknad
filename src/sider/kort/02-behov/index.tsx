@@ -73,49 +73,47 @@ const Behov = () => {
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={2} onStepChange={goto} />
-            <VStack gap="space-16">
-                <Alert variant="info">
-                    <BodyShort>{t("arbeidOgFamilie.alert")}</BodyShort>
-                </Alert>
-                <SkjemaStegTitle title={t(KortSkjemaHeadings[2].tittel)} />
-                {isLoading ? (
-                    <ApplicationSpinner />
-                ) : (
-                    <VStack gap={{sm: "space-48", lg: "space-64"}}>
-                        <BehovForm
-                            hvaErEndret={data?.hvaErEndret ?? undefined}
-                            onSubmit={onSubmit}
-                            hvaSokesOm={begrunnelse?.hvaSokesOm}
+            <Alert variant="info">
+                <BodyShort>{t("arbeidOgFamilie.alert")}</BodyShort>
+            </Alert>
+            <SkjemaStegTitle title={t(KortSkjemaHeadings[2].tittel)} />
+            {isLoading ? (
+                <ApplicationSpinner />
+            ) : (
+                <VStack gap={{sm: "space-48", lg: "space-64"}}>
+                    <BehovForm
+                        hvaErEndret={data?.hvaErEndret ?? undefined}
+                        onSubmit={onSubmit}
+                        hvaSokesOm={begrunnelse?.hvaSokesOm}
+                    />
+                    {newUploadEnabled ? (
+                        <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
+                            <DocumentProvider contextId={contextId}>
+                                <UploadByKategori
+                                    contextId={contextId}
+                                    kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
+                                    soknadId={soknadId}
+                                    hideAlreadyUploaded
+                                    label={t("begrunnelse.kort.behov.dokumentasjon.utgifterTittel")}
+                                    description={
+                                        <BodyShort>
+                                            {t("begrunnelse.kort.behov.dokumentasjon.utgifterBeskrivelse")}
+                                        </BodyShort>
+                                    }
+                                    fileListHeadingLevel={"3"}
+                                />
+                            </DocumentProvider>
+                        </Box>
+                    ) : (
+                        <FileUploadBox
+                            sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+                            undertekst="begrunnelse.kort.behov.dokumentasjon.beskrivelse"
+                            liste="begrunnelse.kort.behov.dokumentasjon.liste"
                         />
-                        {newUploadEnabled ? (
-                            <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
-                                <DocumentProvider contextId={contextId}>
-                                    <UploadByKategori
-                                        contextId={contextId}
-                                        kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
-                                        soknadId={soknadId}
-                                        hideAlreadyUploaded
-                                        label={t("begrunnelse.kort.behov.dokumentasjon.utgifterTittel")}
-                                        description={
-                                            <BodyShort>
-                                                {t("begrunnelse.kort.behov.dokumentasjon.utgifterBeskrivelse")}
-                                            </BodyShort>
-                                        }
-                                        fileListHeadingLevel={"3"}
-                                    />
-                                </DocumentProvider>
-                            </Box>
-                        ) : (
-                            <FileUploadBox
-                                sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
-                                undertekst="begrunnelse.kort.behov.dokumentasjon.beskrivelse"
-                                liste="begrunnelse.kort.behov.dokumentasjon.liste"
-                            />
-                        )}
-                    </VStack>
-                )}
-                <SkjemaStegButtons onPrevious={async () => navigate("../1")} onNext={async () => goto(3)} />
-            </VStack>
+                    )}
+                </VStack>
+            )}
+            <SkjemaStegButtons onPrevious={async () => navigate("../1")} onNext={async () => goto(3)} />
         </SkjemaSteg>
     );
 };

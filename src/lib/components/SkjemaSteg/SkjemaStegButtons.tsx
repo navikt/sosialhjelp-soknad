@@ -28,8 +28,8 @@ export const SkjemaStegButtons = ({onNext, onPrevious, isFinalStep, isNextPendin
         );
 
     return (
-        <nav>
-            <div className={"flex mt-12! md:mt-16! lg:mt-24! mb-8! lg:mb-16! gap-3"}>
+        <>
+            <div className={"flex gap-3"}>
                 <Button
                     variant="secondary"
                     onClick={onPrevious}
@@ -50,6 +50,6 @@ export const SkjemaStegButtons = ({onNext, onPrevious, isFinalStep, isNextPendin
                 </Button>
             </div>
             <SkjemaStegCancelButtons />
-        </nav>
+        </>
     );
 };
