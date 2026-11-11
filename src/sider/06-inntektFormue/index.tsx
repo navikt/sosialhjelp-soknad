@@ -12,7 +12,6 @@ import {useSkjemaNavigation} from "../../lib/components/SkjemaSteg/useSkjemaNavi
 import {SkjemaStegButtons} from "../../lib/components/SkjemaSteg/SkjemaStegButtons.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
-import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import Feiloppsummering from "../../lib/components/Feiloppsummering.tsx";
 
@@ -24,37 +23,35 @@ export const InntektFormue = () => {
         <SkjemaSteg>
             <SkjemaStegStepper page={6} onStepChange={handleStepChange} />
             <Feiloppsummering />
-            <SkjemaStegBlock>
-                <SkjemaStegTitle title={t(SkjemaHeadings[6].tittel)} />
+            <SkjemaStegTitle title={t(SkjemaHeadings[6].tittel)} />
 
-                <div>
-                    <Heading size="medium" level="2" spacing>
-                        {t("utbetalinger.inntekt.skattbar.tittel")}
-                    </Heading>
-                    <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v2")} />
-                </div>
+            <div>
+                <Heading size="medium" level="2" spacing>
+                    {t("utbetalinger.inntekt.skattbar.tittel")}
+                </Heading>
+                <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v2")} />
+            </div>
 
-                <NavYtelser />
-                <Bostotte />
+            <NavYtelser />
+            <Bostotte />
 
-                <Studielan />
-                <div>
-                    <Heading size="medium" level="2" spacing>
-                        {t("inntekt.inntekter.tittel")}
-                    </Heading>
-                    <Utbetalinger />
-                </div>
+            <Studielan />
+            <div>
+                <Heading size="medium" level="2" spacing>
+                    {t("inntekt.inntekter.tittel")}
+                </Heading>
+                <Utbetalinger />
+            </div>
 
-                <div>
-                    <Heading size={"medium"}>{t("opplysninger.formue.bank.undertittel")}</Heading>
-                    <Formue />
-                </div>
-                <div>
-                    <Heading size={"medium"}>{t("opplysninger.formue.annen.undertittel")}</Heading>
-                    <Verdier />
-                </div>
-                <SkjemaStegButtons onNext={handleNext} onPrevious={handlePrevious} />
-            </SkjemaStegBlock>
+            <div>
+                <Heading size={"medium"}>{t("opplysninger.formue.bank.undertittel")}</Heading>
+                <Formue />
+            </div>
+            <div>
+                <Heading size={"medium"}>{t("opplysninger.formue.annen.undertittel")}</Heading>
+                <Verdier />
+            </div>
+            <SkjemaStegButtons onNext={handleNext} onPrevious={handlePrevious} />
         </SkjemaSteg>
     );
 };

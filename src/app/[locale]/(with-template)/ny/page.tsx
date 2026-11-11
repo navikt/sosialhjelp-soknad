@@ -3,7 +3,7 @@ import {redirect} from "next/navigation";
 import NySoknadInnhold from "./NySoknadInnhold";
 import StartSoknadKnapp from "./StartSoknadKnapp";
 import {useConfigFeatureFlags} from "../../../../lib/config";
-import {SoknadHeader} from "../../../../lib/components/SoknadHeader";
+import {SoknadSide} from "../../../../components/SoknadSide";
 
 const Page = () => {
     const featureToggles = useConfigFeatureFlags();
@@ -12,11 +12,10 @@ const Page = () => {
     }
 
     return (
-        <main className="max-w-lg lg:max-w-xl w-full mx-auto gap-8 p-3 py-6 lg:gap-16 lg:py-16 flex flex-col grow">
-            <SoknadHeader />
+        <SoknadSide>
             <NySoknadInnhold />
             <StartSoknadKnapp />
-        </main>
+        </SoknadSide>
     );
 };
 

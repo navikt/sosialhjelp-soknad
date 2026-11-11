@@ -3,7 +3,6 @@ import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg
 import {useTranslation} from "react-i18next";
 import {BodyShort, Box} from "@navikt/ds-react";
 import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
-import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import {NavYtelser} from "../../06-inntektFormue/navytelser";
 import {SkattbarInntekt} from "../../06-inntektFormue/skattbarInntekt";
@@ -62,37 +61,35 @@ const Inntekt = () => {
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={4} onStepChange={gotoPage} />
-            <SkjemaStegBlock className={"lg:space-y-12"}>
-                <SkjemaStegTitle title={t(KortSkjemaHeadings[4].tittel)} />
-                <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
-                <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
-                <NavYtelser isKortSoknad />
-                <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
-                {newUploadEnabled ? (
-                    <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
-                        <DocumentProvider contextId={contextId}>
-                            <UploadByKategori
-                                contextId={contextId}
-                                kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
-                                soknadId={soknadId}
-                                hideAlreadyUploaded
-                                label={t("situasjon.kort.dokumentasjon.inntekterTittel")}
-                                description={
-                                    <BodyShort>{t("situasjon.kort.dokumentasjon.inntekterBeskrivelse")}</BodyShort>
-                                }
-                                fileListHeadingLevel={"3"}
-                            />
-                        </DocumentProvider>
-                    </Box>
-                ) : (
-                    <FileUploadBox
-                        sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
-                        undertekst="situasjon.kort.dokumentasjon.description"
-                        liste="situasjon.kort.dokumentasjon.liste"
-                    />
-                )}
-                <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
-            </SkjemaStegBlock>
+            <SkjemaStegTitle title={t(KortSkjemaHeadings[4].tittel)} />
+            <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
+            <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
+            <NavYtelser isKortSoknad />
+            <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
+            {newUploadEnabled ? (
+                <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
+                    <DocumentProvider contextId={contextId}>
+                        <UploadByKategori
+                            contextId={contextId}
+                            kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
+                            soknadId={soknadId}
+                            hideAlreadyUploaded
+                            label={t("situasjon.kort.dokumentasjon.inntekterTittel")}
+                            description={
+                                <BodyShort>{t("situasjon.kort.dokumentasjon.inntekterBeskrivelse")}</BodyShort>
+                            }
+                            fileListHeadingLevel={"3"}
+                        />
+                    </DocumentProvider>
+                </Box>
+            ) : (
+                <FileUploadBox
+                    sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+                    undertekst="situasjon.kort.dokumentasjon.description"
+                    liste="situasjon.kort.dokumentasjon.liste"
+                />
+            )}
+            <SkjemaStegButtons onPrevious={async () => navigate("../3")} onNext={async () => await gotoPage(5)} />
         </SkjemaSteg>
     );
 };
