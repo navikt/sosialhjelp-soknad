@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useTransition} from "react";
-import {Button, Loader} from "@navikt/ds-react";
+import {Button, Loader, VStack} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import {ArrowLeftIcon, ArrowRightIcon, PaperplaneIcon} from "@navikt/aksel-icons";
 import {SkjemaStegCancelButtons} from "./SkjemaStegCancelButtons.tsx";
@@ -28,7 +28,7 @@ export const SkjemaStegButtons = ({onNext, onPrevious, isFinalStep, isNextPendin
         );
 
     return (
-        <>
+        <VStack gap="space-24">
             <div className={"flex gap-3"}>
                 <Button
                     variant="secondary"
@@ -50,6 +50,6 @@ export const SkjemaStegButtons = ({onNext, onPrevious, isFinalStep, isNextPendin
                 </Button>
             </div>
             <SkjemaStegCancelButtons />
-        </>
+        </VStack>
     );
 };

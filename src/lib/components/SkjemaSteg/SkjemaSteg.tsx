@@ -47,7 +47,7 @@ export const SkjemaSteg = ({children}: {children?: ReactNode | ReactNode[]}) => 
                 className={"max-w-3xl w-full mx-auto p-3 py-6 lg:py-16"}
                 aria-labelledby={"skjemasteg-title"}
             >
-                <SoknadHeader />
+                <SoknadHeader showCode={false} />
                 <VStack gap={{xs: "space-32", lg: "space-64"}}>{children}</VStack>
             </VStack>
         </>
