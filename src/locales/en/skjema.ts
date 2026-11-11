@@ -1783,6 +1783,10 @@ export const skjema = {
                 nettoinntekt: "Income after tax",
                 oppsummering:
                     "We have registered that you{ antall, plural,=0 { have not had }other {have had{ antall, plural,=1 {{en}}=2 {{to}}=3 {{tre}}=4 {{fire}}=5 {{fem}}=6 {{seks}}=7 {{sju}}=8 {{åtte}}=9 {{ni}}=10 {{ti}}=11 {{elleve}}=12 {{tolv}}other {{#}}}}} incomes.",
+                informasjon: {
+                    tittel: "Information about income from the Tax Administration",
+                    tekst: "To process your application, we need information about your income.\n\nEmployers, pension providers and others send information about your income and employment details to the Norwegian Tax Administration, Statistics Norway and Nav every month. The information registered about you is shown below.",
+                },
                 skatteetaten: "See details from the Tax Administration",
                 tidspunkt: "Information was obtained",
                 tittel: "Income",
