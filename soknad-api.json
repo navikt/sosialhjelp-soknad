@@ -2141,114 +2141,6 @@
         ]
       }
     },
-    "/soknad/{soknadId}/inntekt/skattbarinntekt/samtykke": {
-      "put": {
-        "operationId": "updateSamtykke",
-        "parameters": [
-          {
-            "name": "soknadId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "boolean"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SkattbarInntektDto"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedMelding"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/SoknadApiError"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/SoknadApiError"
-                }
-              }
-            }
-          },
-          "413": {
-            "description": "Content Too Large",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/SoknadApiError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/SoknadApiError"
-                    },
-                    {
-                      "$ref": "#/components/schemas/InnsendingFeiletError"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "inntekt-skattetaten-controller"
-        ]
-      }
-    },
     "/soknad/{soknadId}/inntekt/formue": {
       "get": {
         "operationId": "getFormue",
@@ -7466,128 +7358,6 @@
           }
         }
       },
-      "InntektFraOrganisasjonDto": {
-        "type": "object",
-        "properties": {
-          "organisasjoner": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/OrganisasjonDto"
-            }
-          }
-        },
-        "required": [
-          "organisasjoner"
-        ]
-      },
-      "OrganisasjonDto": {
-        "type": "object",
-        "properties": {
-          "utbetalinger": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UtbetalingFraSkatteetatenDto"
-            }
-          },
-          "organisasjonsnavn": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "orgnr": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "fom": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "tom": {
-            "type": [
-              "string",
-              "null"
-            ]
-          }
-        },
-        "required": [
-          "utbetalinger"
-        ]
-      },
-      "SamtykkeDto": {
-        "type": "object",
-        "properties": {
-          "verdi": {
-            "type": "boolean"
-          },
-          "samtykkeTidspunkt": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "samtykkeTidspunkt",
-          "verdi"
-        ]
-      },
-      "SkattbarInntektDto": {
-        "type": "object",
-        "properties": {
-          "inntektSkatteetaten": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/InntektFraOrganisasjonDto"
-            }
-          },
-          "inntektFraSkatteetatenFeilet": {
-            "type": [
-              "boolean",
-              "null"
-            ]
-          },
-          "samtykke": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/SamtykkeDto"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        },
-        "required": [
-          "inntektSkatteetaten"
-        ]
-      },
-      "UtbetalingFraSkatteetatenDto": {
-        "type": "object",
-        "properties": {
-          "brutto": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "format": "double"
-          },
-          "forskuddstrekk": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "format": "double"
-          },
-          "tittel": {
-            "type": [
-              "string",
-              "null"
-            ]
-          }
-        }
-      },
       "FormueInput": {
         "type": "object",
         "properties": {
@@ -8418,6 +8188,9 @@
               },
               {
                 "$ref": "#/components/schemas/VegAdresse"
+              },
+              {
+                "type": "null"
               }
             ]
           }
@@ -8601,6 +8374,9 @@
               },
               {
                 "$ref": "#/components/schemas/VegAdresse"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -8617,6 +8393,9 @@
               },
               {
                 "$ref": "#/components/schemas/VegAdresse"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -8633,6 +8412,9 @@
               },
               {
                 "$ref": "#/components/schemas/VegAdresse"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -9202,6 +8984,103 @@
         "required": [
           "navn"
         ]
+      },
+      "InntektFraOrganisasjonDto": {
+        "type": "object",
+        "properties": {
+          "organisasjoner": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrganisasjonDto"
+            }
+          }
+        },
+        "required": [
+          "organisasjoner"
+        ]
+      },
+      "OrganisasjonDto": {
+        "type": "object",
+        "properties": {
+          "utbetalinger": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UtbetalingFraSkatteetatenDto"
+            }
+          },
+          "organisasjonsnavn": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "orgnr": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "fom": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "tom": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "utbetalinger"
+        ]
+      },
+      "SkattbarInntektDto": {
+        "type": "object",
+        "properties": {
+          "inntektSkatteetaten": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InntektFraOrganisasjonDto"
+            }
+          },
+          "inntektFraSkatteetatenFeilet": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "inntektSkatteetaten"
+        ]
+      },
+      "UtbetalingFraSkatteetatenDto": {
+        "type": "object",
+        "properties": {
+          "brutto": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double"
+          },
+          "forskuddstrekk": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double"
+          },
+          "tittel": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
       },
       "NavUtbetalingerDto": {
         "type": "object",

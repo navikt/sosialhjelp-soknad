@@ -64,7 +64,7 @@ const Inntekt = () => {
             <SkjemaStegStepper page={4} onStepChange={gotoPage} />
             <SkjemaStegBlock className={"lg:space-y-12"}>
                 <SkjemaStegTitle title={t(KortSkjemaHeadings[4].tittel)} />
-                <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
+                <SkattbarInntekt isKortSoknad />
                 <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
                 <NavYtelser isKortSoknad />
                 <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
