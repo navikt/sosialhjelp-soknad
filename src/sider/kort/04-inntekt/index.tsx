@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
-import {useTranslation} from "react-i18next";
 import {BodyShort, Box} from "@navikt/ds-react";
 import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
@@ -21,8 +20,6 @@ import {DocumentProvider} from "../../../lib/upload/new/DocumentContext.tsx";
 import {UploadByKategori} from "../../../lib/upload/new/UploadByKategori.tsx";
 
 const Inntekt = () => {
-    const {t} = useTranslation("skjema");
-
     const navigate = useNavigate();
     const isKortSoknad = useCurrentSoknadIsKort();
     const soknadId = useSoknadId();
@@ -62,7 +59,7 @@ const Inntekt = () => {
         <SkjemaSteg>
             <SkjemaStegStepper page={4} onStepChange={gotoPage} />
             <SkjemaStegTitle title={t(KortSkjemaHeadings[4].tittel)} />
-            <SkattbarInntekt legend={t("utbetalinger.inntekt.skattbar.samtykke_sporsmal_v1")} />
+            <SkattbarInntekt isKortSoknad />
             <Bostotte hideHeading skipFirstStep hideSamtykkeDescription />
             <NavYtelser isKortSoknad />
             <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
