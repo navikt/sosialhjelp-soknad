@@ -32,9 +32,5 @@ export const SkjemaSteg = ({children}: {children?: ReactNode | ReactNode[]}) => 
         scrollToTop();
     }, []);
 
-    return (
-        <SoknadSide showCode={false} labelledBy="skjemasteg-title">
-            {children}
-        </SoknadSide>
-    );
+    return <SoknadSide labelledBy="skjemasteg-title">{children}</SoknadSide>;
 };

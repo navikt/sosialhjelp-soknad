@@ -14,7 +14,7 @@ interface Props {
  *
  * id="maincontent" og tabIndex={-1} gjør at dekoratøren viser sin skip-lenke og kan flytte fokus hit.
  */
-export const SoknadSide = ({children, showCode = true, labelledBy}: Props) => (
+export const SoknadSide = ({children, showCode = false, labelledBy}: Props) => (
     <VStack
         as="main"
         id="maincontent"

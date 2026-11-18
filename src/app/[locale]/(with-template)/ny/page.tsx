@@ -12,7 +12,7 @@ const Page = () => {
     }
 
     return (
-        <SoknadSide>
+        <SoknadSide showCode={true}>
             <NySoknadInnhold />
             <StartSoknadKnapp />
         </SoknadSide>

@@ -19,7 +19,7 @@ export const Informasjon = () => {
     }
 
     return featureToggles.nyIntroside ? (
-        <SoknadSide showCode={false}>
+        <SoknadSide>
             <VStack gap={{xs: "space-24", lg: "space-32"}}>
                 <LinkCard data-color="accent">
                     <LinkCard.Title>

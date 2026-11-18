@@ -52,7 +52,7 @@ export default function KvitteringPage() {
     const href = `${digisosConfig.innsynURL}/${language}/soknad/${encodeURIComponent(digisosId)}`;
 
     return (
-        <SoknadSide showCode={false} labelledBy="kvittering-heading">
+        <SoknadSide labelledBy="kvittering-heading">
             <HStack align="center" gap="space-12" wrap={false}>
                 <CheckmarkCircleFillIcon
                     fontSize={"3rem"}

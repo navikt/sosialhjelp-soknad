@@ -34,7 +34,7 @@ const Page = () => {
     }
 
     return (
-        <SoknadSide showCode={false}>
+        <SoknadSide>
             <VStack gap="space-8">
                 <Heading level="2" size="small" className="lg:text-2xl">
                     {t("title")}
