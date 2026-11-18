@@ -12,7 +12,11 @@ export const SoknadstypeValg = ({valg, setValg}: SoknadstypeValgProps) => {
 
     return (
         <Box className={"flex justify-center mb-8"}>
-            <RadioGroup legend={"Velg søknadstype"} value={valg ?? null} onChange={(value) => setValg(value)}>
+            <RadioGroup
+                legend={"Velg søknadstype (kun for testing)"}
+                value={valg ?? null}
+                onChange={(value) => setValg(value)}
+            >
                 <div className="bg-ax-bg-info-moderate p-2 rounded-md">
                     <Radio value={"standard"}>Standard</Radio>
                     <Radio value={"kort"}>Kort</Radio>
