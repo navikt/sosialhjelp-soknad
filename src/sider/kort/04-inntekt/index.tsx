@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
+import {useTranslation} from "react-i18next";
 import {BodyShort, Box} from "@navikt/ds-react";
 import {Bostotte} from "../../06-inntektFormue/bostotte/Bostotte";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
@@ -20,6 +21,7 @@ import {DocumentProvider} from "../../../lib/upload/new/DocumentContext.tsx";
 import {UploadByKategori} from "../../../lib/upload/new/UploadByKategori.tsx";
 
 const Inntekt = () => {
+    const {t} = useTranslation("skjema");
     const navigate = useNavigate();
     const isKortSoknad = useCurrentSoknadIsKort();
     const soknadId = useSoknadId();
