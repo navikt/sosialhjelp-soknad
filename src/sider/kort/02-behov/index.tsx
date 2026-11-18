@@ -4,7 +4,6 @@ import {ApplicationSpinner} from "../../../lib/components/animasjoner/Applicatio
 import {Alert, BodyShort, Box, VStack} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
 import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox";
-import {SkjemaStegBlock} from "../../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
 import {useNavigate} from "react-router";
@@ -74,51 +73,47 @@ const Behov = () => {
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={2} onStepChange={goto} />
-            <VStack gap="space-16">
-                <Alert variant="info" className={"mx-4 md:mx-12 lg:mx-24"}>
-                    <BodyShort>{t("arbeidOgFamilie.alert")}</BodyShort>
-                </Alert>
-                <SkjemaStegBlock className={"lg:space-y-12"}>
-                    <SkjemaStegTitle title={t(KortSkjemaHeadings[2].tittel)} />
-                    {isLoading ? (
-                        <ApplicationSpinner />
-                    ) : (
-                        <VStack gap={{sm: "space-48", lg: "space-64"}}>
-                            <BehovForm
-                                hvaErEndret={data?.hvaErEndret ?? undefined}
-                                onSubmit={onSubmit}
-                                hvaSokesOm={begrunnelse?.hvaSokesOm}
-                            />
-                            {newUploadEnabled ? (
-                                <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
-                                    <DocumentProvider contextId={contextId}>
-                                        <UploadByKategori
-                                            contextId={contextId}
-                                            kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
-                                            soknadId={soknadId}
-                                            hideAlreadyUploaded
-                                            label={t("begrunnelse.kort.behov.dokumentasjon.utgifterTittel")}
-                                            description={
-                                                <BodyShort>
-                                                    {t("begrunnelse.kort.behov.dokumentasjon.utgifterBeskrivelse")}
-                                                </BodyShort>
-                                            }
-                                            fileListHeadingLevel={"3"}
-                                        />
-                                    </DocumentProvider>
-                                </Box>
-                            ) : (
-                                <FileUploadBox
-                                    sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
-                                    undertekst="begrunnelse.kort.behov.dokumentasjon.beskrivelse"
-                                    liste="begrunnelse.kort.behov.dokumentasjon.liste"
+            <Alert variant="info">
+                <BodyShort>{t("arbeidOgFamilie.alert")}</BodyShort>
+            </Alert>
+            <SkjemaStegTitle title={t(KortSkjemaHeadings[2].tittel)} />
+            {isLoading ? (
+                <ApplicationSpinner />
+            ) : (
+                <VStack gap={{sm: "space-48", lg: "space-64"}}>
+                    <BehovForm
+                        hvaErEndret={data?.hvaErEndret ?? undefined}
+                        onSubmit={onSubmit}
+                        hvaSokesOm={begrunnelse?.hvaSokesOm}
+                    />
+                    {newUploadEnabled ? (
+                        <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
+                            <DocumentProvider contextId={contextId}>
+                                <UploadByKategori
+                                    contextId={contextId}
+                                    kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
+                                    soknadId={soknadId}
+                                    hideAlreadyUploaded
+                                    label={t("begrunnelse.kort.behov.dokumentasjon.utgifterTittel")}
+                                    description={
+                                        <BodyShort>
+                                            {t("begrunnelse.kort.behov.dokumentasjon.utgifterBeskrivelse")}
+                                        </BodyShort>
+                                    }
+                                    fileListHeadingLevel={"3"}
                                 />
-                            )}
-                        </VStack>
+                            </DocumentProvider>
+                        </Box>
+                    ) : (
+                        <FileUploadBox
+                            sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
+                            undertekst="begrunnelse.kort.behov.dokumentasjon.beskrivelse"
+                            liste="begrunnelse.kort.behov.dokumentasjon.liste"
+                        />
                     )}
-                    <SkjemaStegButtons onPrevious={async () => navigate("../1")} onNext={async () => goto(3)} />
-                </SkjemaStegBlock>
-            </VStack>
+                </VStack>
+            )}
+            <SkjemaStegButtons onPrevious={async () => navigate("../1")} onNext={async () => goto(3)} />
         </SkjemaSteg>
     );
 };

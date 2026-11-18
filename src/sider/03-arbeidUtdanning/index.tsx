@@ -6,7 +6,6 @@ import {ArbeidsforholdListe} from "./ArbeidsforholdListe";
 import YesNoInput from "../../lib/components/form/YesNoInput";
 import {UnmountClosed} from "react-collapse";
 import {useArbeidOgUtdanning} from "../../lib/hooks/data/useArbeidOgUtdanning";
-import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import LocalizedTextarea from "../../lib/components/LocalizedTextArea.tsx";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
@@ -28,11 +27,9 @@ const Side3 = ({children}: PropsWithChildren) => {
     return (
         <SkjemaSteg>
             <SkjemaStegStepper page={3} onStepChange={goto} />
-            <SkjemaStegBlock>
-                <SkjemaStegTitle title={t(SkjemaHeadings[3].tittel)} />
-                {children}
-                <SkjemaStegButtons onPrevious={async () => navigate("../2")} onNext={async () => await goto(4)} />
-            </SkjemaStegBlock>
+            <SkjemaStegTitle title={t(SkjemaHeadings[3].tittel)} />
+            {children}
+            <SkjemaStegButtons onPrevious={async () => navigate("../2")} onNext={async () => await goto(4)} />
         </SkjemaSteg>
     );
 };

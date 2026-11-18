@@ -5,7 +5,6 @@ export const skjema = {
     forrige: "Previous",
     forstorr: "Zoom in",
     fremdriftsindikator: "Progress indicator",
-    hoppTilHovedinnhold: "Go to main content.",
     lagreEndring: "Save change",
     lastopp: "Upload",
     lukk: "Close",

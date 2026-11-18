@@ -3,7 +3,6 @@ import {Gruppe} from "./Gruppe";
 import {InfopanelOpplysninger} from "./InfopanelOpplysninger";
 import {ApplicationSpinner} from "../../lib/components/animasjoner/ApplicationSpinner";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
-import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import {useTranslation} from "react-i18next";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
@@ -43,22 +42,20 @@ export const OkonomiskeOpplysningerView = () => {
                     navigate(`../${toPage}`);
                 }}
             />
-            <SkjemaStegBlock>
-                <SkjemaStegTitle title={t(SkjemaHeadings[8].tittel)} className={"lg:mb-8"} />
-                {hasBekreftet ? <InfopanelOpplysninger /> : <UbesvarteOpplysninger />}
-                <Box className={"space-y-8 lg:space-y-16"}>
-                    {grupper.map((gruppe) => (
-                        <Gruppe gruppeKey={gruppe} key={gruppe} />
-                    ))}
-                </Box>
-                <SkjemaStegButtons
-                    onPrevious={() => navigate(`../7`)}
-                    onNext={async () => {
-                        umamiTracker();
-                        navigate("../9");
-                    }}
-                />
-            </SkjemaStegBlock>
+            <SkjemaStegTitle title={t(SkjemaHeadings[8].tittel)} className={"lg:mb-8"} />
+            {hasBekreftet ? <InfopanelOpplysninger /> : <UbesvarteOpplysninger />}
+            <Box className={"space-y-8 lg:space-y-16"}>
+                {grupper.map((gruppe) => (
+                    <Gruppe gruppeKey={gruppe} key={gruppe} />
+                ))}
+            </Box>
+            <SkjemaStegButtons
+                onPrevious={() => navigate(`../7`)}
+                onNext={async () => {
+                    umamiTracker();
+                    navigate("../9");
+                }}
+            />
         </SkjemaSteg>
     );
 };

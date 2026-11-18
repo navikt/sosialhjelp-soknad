@@ -6,7 +6,6 @@ import {useSkjemaNavigation} from "../../lib/components/SkjemaSteg/useSkjemaNavi
 import {SkjemaStegTitle} from "../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import {SkjemaHeadings, SkjemaSteg} from "../../lib/components/SkjemaSteg/SkjemaSteg.tsx";
 import {useTranslation} from "react-i18next";
-import {SkjemaStegBlock} from "../../lib/components/SkjemaSteg/SkjemaStegBlock.tsx";
 import {SkjemaStegStepper} from "../../lib/components/SkjemaSteg/SkjemaStegStepper.tsx";
 import Feiloppsummering from "../../lib/components/Feiloppsummering.tsx";
 
@@ -18,12 +17,10 @@ export const Familie = () => {
         <SkjemaSteg>
             <SkjemaStegStepper page={4} onStepChange={handleStepChange} />
             <Feiloppsummering />
-            <SkjemaStegBlock>
-                <SkjemaStegTitle title={t(SkjemaHeadings[4].tittel)} />
-                <DinSivilstatus />
-                <ForsorgerPlikt />
-                <SkjemaStegButtons onNext={handleNext} onPrevious={handlePrevious} />
-            </SkjemaStegBlock>
+            <SkjemaStegTitle title={t(SkjemaHeadings[4].tittel)} />
+            <DinSivilstatus />
+            <ForsorgerPlikt />
+            <SkjemaStegButtons onNext={handleNext} onPrevious={handlePrevious} />
         </SkjemaSteg>
     );
 };
