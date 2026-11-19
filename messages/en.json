@@ -260,7 +260,7 @@
         },
         "status": {
             "tittel": "See the status of your application on My Page",
-            "tekst": "You can sign in to My Page for Financial Assistance at any time to view your application, submit documentation later and follow the status of your case."
+            "tekst": "You can sign in to <minSide>My Page for Financial Assistance</minSide> at any time to view your application, submit documentation later and follow the status of your case."
         },
         "tidspunkt": "{dato} at {klokkeslett}",
         "minSide": "Go to your application on My Page",

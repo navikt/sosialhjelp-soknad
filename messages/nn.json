@@ -260,7 +260,7 @@
         },
         "status": {
             "tittel": "Sjå status på søknaden din på Mi side",
-            "tekst": "Du kan når som helst logge inn på Mi side for økonomisk sosialhjelp for å sjå søknaden din, ettersende dokumentasjon og følgje status i saka di."
+            "tekst": "Du kan når som helst logge inn på <minSide>Mi side for økonomisk sosialhjelp</minSide> for å sjå søknaden din, ettersende dokumentasjon og følgje status i saka di."
         },
         "tidspunkt": "{dato}, kl. {klokkeslett}",
         "minSide": "Gå til søknaden din på Mi side",
