@@ -68,6 +68,10 @@ spec:
   replicas:
     min: {{ replicas.min }}
     max: {{ replicas.max }}
+{{#if unleashEnabled}}
+  envFrom:
+    - secret: sosialhjelp-soknad-unleash-api-token
+{{/if}}
 {{#if env}}
   env:
   {{#each env as |env|}}
