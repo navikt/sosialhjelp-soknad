@@ -102,7 +102,7 @@ const NySoknadInnhold = () => {
                                 {t.rich("personopplysninger.accordion.item2.p2", {
                                     a: (chuncks) => (
                                         <Link
-                                            href="https://www.nav.no/endringer"
+                                            href="https://www.nav.no/personopplysninger-sosialhjelp"
                                             inlineText
                                             target="_blank"
                                             rel="noopener noreferrer"

@@ -28,7 +28,7 @@ const StartSoknadKnapp = () => {
                     {t.rich("bekreftelse.tekst", {
                         a: (chuncks) => (
                             <Link
-                                href="https://www.nav.no/personopplysninger-sosialhjelp"
+                                href="https://www.nav.no/endringer"
                                 inlineText
                                 target="_blank"
                                 rel="noopener noreferrer"
