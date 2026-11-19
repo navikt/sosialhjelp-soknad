@@ -5,6 +5,7 @@ import {useRouter} from "next/navigation";
 import {useState, useTransition} from "react";
 import {useCreateSoknad} from "../../../../generated";
 import {umamiTrack} from "../../../umami";
+import {SoknadstypeValg} from "../../../../sider/hovedmeny/nySoknad/SoknadstypeValg";
 
 const StartSoknadKnapp = () => {
     const t = useTranslations("NySoknad");
@@ -18,6 +19,7 @@ const StartSoknadKnapp = () => {
             },
         },
     });
+    const [soknadstype, setSoknadstype] = useState<"kort" | "standard" | undefined>(undefined);
     const [checked, setChecked] = useState(false);
     const [validate, setValidate] = useState(false);
 
@@ -63,12 +65,13 @@ const StartSoknadKnapp = () => {
                     event.preventDefault();
                     setValidate(true);
                     if (checked) {
-                        mutate({});
+                        mutate({params: {soknadstype}});
                     }
                 }}
             >
                 {t("bekreftelse.button")}
             </Button>
+            <SoknadstypeValg valg={soknadstype} setValg={setSoknadstype} />
         </>
     );
 };

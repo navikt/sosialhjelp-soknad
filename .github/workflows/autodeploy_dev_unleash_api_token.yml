@@ -1,0 +1,29 @@
+name: "Deploy unleash api token to dev-gcp"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+    paths:
+      - ".nais/dev/unleash-api-token.yaml"
+      - ".github/workflows/autodeploy_dev_unleash_api_token.yml"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    name: "Deploy unleash api token til dev"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - name: "Deploy unleash-api-token til dev"
+        uses: nais/deploy/actions/deploy@1de80da70ad26556ecdc5964a8b7ec3bbed98120 # v2
+        env:
+          RESOURCE: .nais/dev/unleash-api-token.yaml
+          CLUSTER: dev-gcp
+          REF: ${{ github.sha }}
