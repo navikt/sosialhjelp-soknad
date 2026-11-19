@@ -9,9 +9,7 @@ const NySoknadInnhold = () => {
     return (
         <>
             <GuidePanel poster>
-                <Heading level="2" size="medium" spacing>
-                    {t("dialog.hei")}
-                </Heading>
+                <b className="block text-2xl mb-3">{t("dialog.hei")}</b>
                 <BodyLong spacing>{t("dialog.avsnitt1")}</BodyLong>
                 <BodyLong>{t("dialog.avsnitt2")}</BodyLong>
             </GuidePanel>
@@ -25,12 +23,12 @@ const NySoknadInnhold = () => {
                     <AccordionItem>
                         <AccordionHeader>{t("forDuSoker.accordion.item1.title")}</AccordionHeader>
                         <AccordionContent>
-                            <List as="ol" className="mb-7">
+                            <List as="ol" className="mt-2 mb-7">
                                 {t.rich("forDuSoker.accordion.item1.liste", {
                                     li: (chuncks) => <ListItem>{chuncks}</ListItem>,
                                 })}
                             </List>
-                            <BodyLong>
+                            <BodyLong className="mb-2">
                                 {t.rich("forDuSoker.accordion.item1.tekst", {
                                     a: (chuncks) => (
                                         <Link
@@ -49,12 +47,12 @@ const NySoknadInnhold = () => {
                     <AccordionItem>
                         <AccordionHeader>{t("forDuSoker.accordion.item2.title")}</AccordionHeader>
                         <AccordionContent>
-                            <List className="mb-7">
+                            <List className="mt-2 mb-7">
                                 {t.rich("forDuSoker.accordion.item2.liste", {
                                     li: (chuncks) => <ListItem>{chuncks}</ListItem>,
                                 })}
                             </List>
-                            <BodyLong>{t("forDuSoker.accordion.item2.tekst")}</BodyLong>
+                            <BodyLong className="mb-2">{t("forDuSoker.accordion.item2.tekst")}</BodyLong>
                         </AccordionContent>
                     </AccordionItem>
                 </Accordion>
@@ -69,14 +67,16 @@ const NySoknadInnhold = () => {
                     <AccordionItem>
                         <AccordionHeader>{t("personopplysninger.accordion.item1.title")}</AccordionHeader>
                         <AccordionContent>
-                            <BodyLong spacing>{t("personopplysninger.accordion.item1.p1")}</BodyLong>
+                            <BodyLong className="mt-2" spacing>
+                                {t("personopplysninger.accordion.item1.p1")}
+                            </BodyLong>
                             <List as="ul" className="mb-7">
                                 {t.rich("personopplysninger.accordion.item1.liste", {
                                     li: (chuncks) => <ListItem>{chuncks}</ListItem>,
                                 })}
                             </List>
                             <BodyLong spacing>{t("personopplysninger.accordion.item1.p2")}</BodyLong>
-                            <BodyLong>
+                            <BodyLong className="mb-2">
                                 {t.rich("personopplysninger.accordion.item1.p3", {
                                     a: (chuncks) => (
                                         <Link
@@ -95,12 +95,14 @@ const NySoknadInnhold = () => {
                     <AccordionItem>
                         <AccordionHeader>{t("personopplysninger.accordion.item2.title")}</AccordionHeader>
                         <AccordionContent>
-                            <BodyLong spacing>{t("personopplysninger.accordion.item2.p1")}</BodyLong>
-                            <BodyLong>
+                            <BodyLong className="mt-2" spacing>
+                                {t("personopplysninger.accordion.item2.p1")}
+                            </BodyLong>
+                            <BodyLong className="mb-2">
                                 {t.rich("personopplysninger.accordion.item2.p2", {
                                     a: (chuncks) => (
                                         <Link
-                                            href="https://www.nav.no/personopplysninger-sosialhjelp"
+                                            href="https://www.nav.no/endringer"
                                             inlineText
                                             target="_blank"
                                             rel="noopener noreferrer"
