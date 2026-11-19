@@ -15,6 +15,8 @@ const unleashCache = new QuickLRU<typeof TOGGLES_KEY, ToggleDefinitions>({
     maxSize: 10,
 });
 
+const FETCH_TIMEOUT_MS = 500;
+
 let previousValid: ToggleDefinitions | null = null;
 
 /**
@@ -29,13 +31,14 @@ export async function getAndValidateDefinitions(): Promise<ToggleDefinitions> {
 
     try {
         const definitions = await fetchDefinitions();
+        diffToggles(definitions);
         unleashCache.set(TOGGLES_KEY, definitions);
         previousValid = definitions;
-        diffToggles(definitions);
         return definitions;
     } catch (e: unknown) {
         unleashLogger.error(e, "Failed to fetch toggle definitions from Unleash");
         if (previousValid != null) {
+            unleashCache.set(TOGGLES_KEY, previousValid);
             return previousValid;
         }
         throw new Error("Failed to fetch toggles from Unleash, and no previous valid toggles available", {cause: e});
@@ -50,6 +53,7 @@ async function fetchDefinitions(): Promise<ToggleDefinitions> {
     const definitions = await getDefinitions({
         appName: "sosialhjelp-soknad",
         url: `${url}/api/client/features`,
+        fetchOptions: {signal: AbortSignal.timeout(FETCH_TIMEOUT_MS)},
     });
 
     if ("message" in definitions) {

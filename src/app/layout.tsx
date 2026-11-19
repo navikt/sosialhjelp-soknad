@@ -13,11 +13,13 @@ export const dynamic = "force-dynamic";
 export default async function RootLayout({children}: {children: React.ReactNode}) {
     const language = supportedLanguageOrFallback((await cookies()).get(DECORATOR_LANG_COOKIE)?.value);
 
-    const Decorator = await fetchDecoratorReact({
-        ...DECORATOR_SETTINGS,
-        params: {...DECORATOR_SETTINGS.params, language},
-    });
-    const toggles = await getToggles();
+    const [Decorator, toggles] = await Promise.all([
+        fetchDecoratorReact({
+            ...DECORATOR_SETTINGS,
+            params: {...DECORATOR_SETTINGS.params, language},
+        }),
+        getToggles(),
+    ]);
     // locale blir hentet via middleware.ts,
     // og html lang leses (som document.documentElement.lang) av både analytics og klientside i18n
     return (
