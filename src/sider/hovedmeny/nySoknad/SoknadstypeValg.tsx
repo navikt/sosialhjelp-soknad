@@ -1,4 +1,4 @@
-import {useConfigFeatureFlags} from "../../../lib/config.ts";
+import {useFlag} from "../../../featuretoggles/context.tsx";
 import {Box, Radio, RadioGroup} from "@navikt/ds-react";
 import * as React from "react";
 
@@ -8,7 +8,8 @@ interface SoknadstypeValgProps {
 }
 
 export const SoknadstypeValg = ({valg, setValg}: SoknadstypeValgProps) => {
-    if (!useConfigFeatureFlags().soknadstypeValg) return null;
+    const visValg = useFlag("sosialhjelp.soknad.soknadstypeValg").enabled;
+    if (!visValg) return null;
 
     return (
         <Box className={"flex justify-center mb-8"}>

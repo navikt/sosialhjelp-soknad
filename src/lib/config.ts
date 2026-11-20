@@ -2,9 +2,6 @@ export const DigisosEnvironments = ["localhost", "mock", "prod", "preprod", "dev
 export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 
 type FeatureFlags = {
-    // Vis valg for søknadstype ved opprettelse
-    soknadstypeValg: boolean;
-
     // Vis ny introsiden
     nyIntroside: boolean;
 
@@ -54,7 +51,6 @@ const isValidDigisosEnvironment = (miljo: unknown): miljo is DigisosEnvironment 
 const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     e2e: {
         featureFlags: {
-            soknadstypeValg: true,
             nyIntroside: false,
             kvittering: true,
         },
@@ -86,7 +82,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     localhost: {
         featureFlags: {
-            soknadstypeValg: true,
             nyIntroside: true,
             kvittering: true,
         },
@@ -122,7 +117,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     mock: {
         featureFlags: {
-            soknadstypeValg: true,
             nyIntroside: true,
             kvittering: true,
         },
@@ -155,7 +149,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     prod: {
         featureFlags: {
-            soknadstypeValg: false,
             nyIntroside: false,
             kvittering: false,
         },
@@ -193,7 +186,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     preprod: {
         featureFlags: {
-            soknadstypeValg: false,
             nyIntroside: false,
             kvittering: false,
         },
@@ -231,7 +223,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     dev: {
         featureFlags: {
-            soknadstypeValg: true,
             nyIntroside: true,
             kvittering: true,
         },
