@@ -54,7 +54,7 @@ jobs:
           destination: "/sosialhjelp-soknad/_next"
 
       - name: Build and push docker image to GAR
-        uses: nais/docker-build-push@v0
+        uses: nais/docker-build-push@v1
         id: docker-build-push
         with:
           team: teamdigisos
