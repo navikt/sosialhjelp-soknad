@@ -3,7 +3,8 @@ idportenEnabled: false
 ingresses: []
 wonderwallInstance: wonderwall-soknad-dev
 outboundRules: [sosialhjelp-soknad-api-dev,sosialhjelp-upload-dev]
-outboundExternalHosts: []
+unleashEnabled: true
+outboundExternalHosts: [teamdigisos-unleash-api.nav.cloud.nais.io]
 livenessPath: /sosialhjelp/soknad/internal/isAlive
 env:
   UMAMI_ID: "00a054e3-9928-4882-8e82-235940dfc04b"

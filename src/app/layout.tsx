@@ -6,16 +6,20 @@ import "../index.css";
 import {cookies} from "next/headers";
 import {DECORATOR_LANG_COOKIE} from "../lib/constants.ts";
 import Providers from "./providers.tsx";
+import {getToggles} from "../featuretoggles/unleash.ts";
 
 export const dynamic = "force-dynamic";
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
     const language = supportedLanguageOrFallback((await cookies()).get(DECORATOR_LANG_COOKIE)?.value);
 
-    const Decorator = await fetchDecoratorReact({
-        ...DECORATOR_SETTINGS,
-        params: {...DECORATOR_SETTINGS.params, language},
-    });
+    const [Decorator, toggles] = await Promise.all([
+        fetchDecoratorReact({
+            ...DECORATOR_SETTINGS,
+            params: {...DECORATOR_SETTINGS.params, language},
+        }),
+        getToggles(),
+    ]);
     // locale blir hentet via middleware.ts,
     // og html lang leses (som document.documentElement.lang) av både analytics og klientside i18n
     return (
@@ -27,7 +31,9 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             <body>
                 <Decorator.Header />
                 <div id="root" role={"none"}>
-                    <Providers locale={language}>{children}</Providers>
+                    <Providers locale={language} toggles={toggles}>
+                        {children}
+                    </Providers>
                 </div>
                 <Decorator.Footer />
                 <Decorator.Scripts loader={Script} />
