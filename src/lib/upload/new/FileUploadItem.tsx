@@ -18,6 +18,9 @@ interface Props {
     showCancelButton?: boolean;
     onTerminate?: () => void;
     deleteDisabled?: boolean;
+    /** Sync-modus: erstatter tus-terminate. Kaster ved feil, og raden beholdes. */
+    onDelete?: () => Promise<void>;
+    onRetry?: () => void;
 }
 
 const SeOverDescription = () => {
@@ -41,6 +44,8 @@ const FileUploadItem = ({
     showCancelButton,
     onTerminate,
     isConverted,
+    onDelete,
+    onRetry,
 }: Props) => {
     const t = useTranslations("FileUploadItem");
     const {mutate, isPending} = useMutation({
@@ -48,22 +53,39 @@ const FileUploadItem = ({
         onSettled: () => onTerminate?.(),
         retry: false,
     });
-    const isUploading = !url && !validations && status !== "FAILED" && status !== "COMPLETE" && !showCancelButton;
+    const {
+        mutate: mutateDelete,
+        isPending: isDeleting,
+        isError: deleteFailed,
+    } = useMutation({mutationFn: async () => onDelete?.(), retry: false});
+    const syncDelete = onDelete !== undefined;
+    const isUploading =
+        !url &&
+        !validations &&
+        status !== "FAILED" &&
+        status !== "RETRYABLE_FAILED" &&
+        status !== "COMPLETE" &&
+        !showCancelButton;
     const uploadStatus = isUploading ? "uploading" : "idle";
     return (
         <FileUpload.Item
-            file={{name: convertedFilename ?? originalFilename, size}}
+            file={{name: convertedFilename ?? originalFilename ?? "", size}}
             as="li"
             status={uploadStatus}
             button={
                 <HStack align="center" gap="space-4" flexShrink="0">
                     {showCancelButton && <Loader />}
+                    {status === "RETRYABLE_FAILED" && onRetry && (
+                        <Button variant="secondary" size="small" onClick={onRetry}>
+                            {t("provIgjen")}
+                        </Button>
+                    )}
                     <Button
                         variant="tertiary"
                         data-color="neutral"
                         icon={showCancelButton ? <XMarkIcon title={t("cancel")} /> : <TrashIcon title={t("slett")} />}
-                        onClick={() => mutate()}
-                        loading={isPending}
+                        onClick={() => (syncDelete ? mutateDelete() : mutate())}
+                        loading={syncDelete ? isDeleting : isPending}
                     />
                 </HStack>
             }
@@ -71,11 +93,15 @@ const FileUploadItem = ({
             /* @ts-expect-error Funker fint med ReactNode */
             description={isConverted ? <SeOverDescription /> : showCancelButton ? t("lasterOpp") : undefined}
             error={
-                validations?.length
-                    ? t(`validation.${validations[0]}`)
-                    : status === "FAILED"
-                      ? t("uploadFailed")
-                      : undefined
+                deleteFailed
+                    ? t("deleteFailed")
+                    : validations?.length
+                      ? t(`validation.${validations[0]}`)
+                      : status === "RETRYABLE_FAILED"
+                        ? t("retryableFailed")
+                        : status === "FAILED"
+                          ? t("uploadFailed")
+                          : undefined
             }
         />
     );

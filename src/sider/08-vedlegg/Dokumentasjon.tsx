@@ -5,6 +5,7 @@ import {DokumentasjonDtoType} from "../../generated/model";
 import {Dokumenter} from "../../lib/upload/Dokumenter.tsx";
 import {FormSwitch} from "./form/components/FormSwitch.tsx";
 import {UploadByKategori} from "../../lib/upload/new/UploadByKategori.tsx";
+import {useUploadMode} from "../../lib/hooks/featureToggles/useUploadMode.ts";
 import {useNewUploadEnabled} from "../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {DocumentProvider} from "../../lib/upload/new/DocumentContext.tsx";
@@ -13,6 +14,7 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
     const soknadId = useSoknadId();
     const {sporsmal, undertekst} = useDokumentasjonTekster(opplysningstype);
     const newUploadEnabled = useNewUploadEnabled();
+    const uploadMode = useUploadMode();
 
     const id = opplysningstype;
     const contextId = `${soknadId}-${opplysningstype}`;
@@ -26,7 +28,7 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
             <BodyShort spacing>{undertekst}</BodyShort>
             <FormSwitch opplysningstype={opplysningstype} />
             {newUploadEnabled ? (
-                <DocumentProvider contextId={contextId}>
+                <DocumentProvider contextId={contextId} mode={uploadMode}>
                     <UploadByKategori
                         className={"mt-6"}
                         describedBy={id}

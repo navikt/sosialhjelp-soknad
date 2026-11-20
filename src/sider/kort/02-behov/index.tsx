@@ -12,6 +12,7 @@ import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegBu
 import {useAnalyticsContext} from "../../../lib/providers/useAnalyticsContext.ts";
 import {useBegrunnelse} from "../../../lib/hooks/data/useBegrunnelse.tsx";
 import BehovForm, {FormValues} from "./BehovForm.tsx";
+import {useUploadMode} from "../../../lib/hooks/featureToggles/useUploadMode.ts";
 import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
 import {DokumentasjonDtoType} from "../../../generated/model";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
@@ -68,6 +69,7 @@ const Behov = () => {
     };
 
     const newUploadEnabled = useNewUploadEnabled();
+    const uploadMode = useUploadMode();
 
     const contextId = `${soknadId}-${DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}-behov`;
     return (
@@ -88,7 +90,7 @@ const Behov = () => {
                     />
                     {newUploadEnabled ? (
                         <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
-                            <DocumentProvider contextId={contextId}>
+                            <DocumentProvider contextId={contextId} mode={uploadMode}>
                                 <UploadByKategori
                                     contextId={contextId}
                                     kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}

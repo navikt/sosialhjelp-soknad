@@ -16,6 +16,7 @@ import {KortDokumentasjon} from "./KortDokumentasjon.tsx";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";
+import {useUploadMode} from "../../../lib/hooks/featureToggles/useUploadMode.ts";
 import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
 import {DocumentProvider} from "../../../lib/upload/new/DocumentContext.tsx";
 import {UploadByKategori} from "../../../lib/upload/new/UploadByKategori.tsx";
@@ -26,6 +27,7 @@ const Inntekt = () => {
     const isKortSoknad = useCurrentSoknadIsKort();
     const soknadId = useSoknadId();
     const newUploadEnabled = useNewUploadEnabled();
+    const uploadMode = useUploadMode();
 
     const gotoPage = async (page: number) => {
         umamiTrack("Skjemasteg fullført", {
@@ -67,7 +69,7 @@ const Inntekt = () => {
             <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
             {newUploadEnabled ? (
                 <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
-                    <DocumentProvider contextId={contextId}>
+                    <DocumentProvider contextId={contextId} mode={uploadMode}>
                         <UploadByKategori
                             contextId={contextId}
                             kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}

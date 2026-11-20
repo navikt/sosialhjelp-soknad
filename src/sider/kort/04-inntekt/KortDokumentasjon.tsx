@@ -6,6 +6,7 @@ import {FileUploadBoxNoStyle} from "../../../lib/components/fileupload/FileUploa
 import React from "react";
 import {BelopDto} from "../../../generated/model";
 import {UploadByKategori} from "../../../lib/upload/new/UploadByKategori.tsx";
+import {useUploadMode} from "../../../lib/hooks/featureToggles/useUploadMode.ts";
 import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {DokumentasjonDtoType} from "../../../generated/model";
@@ -15,6 +16,7 @@ export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_B
     const {t} = useTranslation("skjema");
     const soknadId = useSoknadId();
     const newUploadEnabled = useNewUploadEnabled();
+    const uploadMode = useUploadMode();
     const {updateOkonomiskOpplysning, opplysning, isLoading} =
         useOkonomiskOpplysningMutation<BelopDto>(opplysningstype);
 
@@ -41,7 +43,7 @@ export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_B
                 leggTilTekst={t("utbetalinger.inntekt.skattbar.kort_saldo_leggTil")}
             />
             {newUploadEnabled ? (
-                <DocumentProvider contextId={contextId}>
+                <DocumentProvider contextId={contextId} mode={uploadMode}>
                     <UploadByKategori
                         contextId={contextId}
                         describedBy={"kort-dokumentasjon-formue-saldo"}
