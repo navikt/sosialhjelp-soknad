@@ -21,7 +21,7 @@ const StartSoknadKnapp = () => {
     });
     const [soknadstype, setSoknadstype] = useState<"kort" | "standard" | undefined>(undefined);
     const [checked, setChecked] = useState(false);
-    const [checkboxError, setCheckboxError] = useState(false);
+    const [validate, setValidate] = useState(false);
 
     return (
         <>
@@ -30,7 +30,7 @@ const StartSoknadKnapp = () => {
                     {t.rich("bekreftelse.tekst", {
                         a: (chuncks) => (
                             <Link
-                                href="https://www.nav.no/personopplysninger-sosialhjelp"
+                                href="https://www.nav.no/endringer"
                                 inlineText
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -40,10 +40,10 @@ const StartSoknadKnapp = () => {
                         ),
                     })}
                 </BodyLong>
-                <Checkbox onChange={(e) => setChecked(e.target.checked)} error={!!checkboxError}>
+                <Checkbox onChange={(e) => setChecked(e.target.checked)} error={validate && !checked}>
                     {t("bekreftelse.checkboxLabel")}
                 </Checkbox>
-                {checkboxError && (
+                {validate && !checked && (
                     <ErrorMessage className="font-normal ml-8" size="small" role="alert">
                         {t("bekreftelse.checkboxError")}
                     </ErrorMessage>
@@ -63,11 +63,9 @@ const StartSoknadKnapp = () => {
                 disabled={isTransitioning || isPending}
                 onClick={(event) => {
                     event.preventDefault();
+                    setValidate(true);
                     if (checked) {
-                        setCheckboxError(false);
                         mutate({params: {soknadstype}});
-                    } else {
-                        setCheckboxError(true);
                     }
                 }}
             >

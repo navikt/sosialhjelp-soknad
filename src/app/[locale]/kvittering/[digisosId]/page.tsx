@@ -1,6 +1,6 @@
 "use client";
 
-import {Heading, HStack} from "@navikt/ds-react";
+import {Heading, HStack, Link} from "@navikt/ds-react";
 import {InfoCard, InfoCardContent, InfoCardHeader, InfoCardTitle} from "@navikt/ds-react/InfoCard";
 import {useLocale, useTranslations} from "next-intl";
 import {redirect, useParams} from "next/navigation";
@@ -71,7 +71,11 @@ export default function KvitteringPage() {
                 <InfoCardHeader icon={<LightBulbIcon aria-hidden />}>
                     <InfoCardTitle as="h3">{t("status.tittel")}</InfoCardTitle>
                 </InfoCardHeader>
-                <InfoCardContent>{t("status.tekst")}</InfoCardContent>
+                <InfoCardContent>
+                    {t.rich("status.tekst", {
+                        minSide: (chunks) => <Link href="https://nav.no/sosialhjelp/innsyn">{chunks}</Link>,
+                    })}
+                </InfoCardContent>
             </InfoCard>
 
             <KvitteringKnapper innsynHref={href} soknadPdfUrl={data?.soknadPdfUrl} />
