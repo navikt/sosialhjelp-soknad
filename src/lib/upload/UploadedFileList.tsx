@@ -13,6 +13,9 @@ interface UploadedFileListProps {
     showSlowProcessingWarning: boolean;
     headingLevel: "2" | "3" | "4" | "5" | "6";
     onRemove: (correlationId: string) => void;
+    /** Sync-modus: sletter via sync-API. Kaster ved feil. */
+    onDelete?: (upload: UploadState) => Promise<void>;
+    onRetry?: (correlationId: string) => void;
 }
 
 export const UploadedFileList = ({
@@ -22,6 +25,8 @@ export const UploadedFileList = ({
     showSlowProcessingWarning,
     headingLevel,
     onRemove,
+    onDelete,
+    onRetry,
 }: UploadedFileListProps) => {
     const t = useTranslations("UploadedFileList");
 
@@ -50,6 +55,8 @@ export const UploadedFileList = ({
                         showCancelButton={
                             showSlowProcessingWarning && (upload.status === "PENDING" || upload.status === "PROCESSING")
                         }
+                        onDelete={onDelete && upload.correlationId ? () => onDelete(upload) : undefined}
+                        onRetry={onRetry && upload.correlationId ? () => onRetry(upload.correlationId!) : undefined}
                         onTerminate={upload.correlationId ? () => onRemove(upload.correlationId!) : undefined}
                     />
                 ))}

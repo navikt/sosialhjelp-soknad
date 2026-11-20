@@ -11,6 +11,7 @@ import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegBu
 import {useAnalyticsContext} from "../../../lib/providers/useAnalyticsContext.ts";
 import {useBegrunnelse} from "../../../lib/hooks/data/useBegrunnelse.tsx";
 import BehovForm, {FormValues} from "./BehovForm.tsx";
+import {useUploadMode} from "../../../lib/hooks/featureToggles/useUploadMode.ts";
 import {DokumentasjonDtoType} from "../../../generated/model";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
@@ -65,6 +66,8 @@ const Behov = () => {
         });
     };
 
+    const uploadMode = useUploadMode();
+
     const contextId = `${soknadId}-${DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}-behov`;
     return (
         <SkjemaSteg>
@@ -83,7 +86,7 @@ const Behov = () => {
                         hvaSokesOm={begrunnelse?.hvaSokesOm}
                     />
                     <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
-                        <DocumentProvider contextId={contextId}>
+                        <DocumentProvider contextId={contextId} mode={uploadMode}>
                             <UploadByKategori
                                 contextId={contextId}
                                 kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}

@@ -17,12 +17,14 @@ import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";
 import {DocumentProvider} from "../../../lib/upload/DocumentContext.tsx";
 import {UploadByKategori} from "../../../lib/upload/UploadByKategori.tsx";
+import {useUploadMode} from "../../../lib/hooks/featureToggles/useUploadMode.ts";
 
 const Inntekt = () => {
     const {t} = useTranslation("skjema");
     const navigate = useNavigate();
     const isKortSoknad = useCurrentSoknadIsKort();
     const soknadId = useSoknadId();
+    const uploadMode = useUploadMode();
 
     const gotoPage = async (page: number) => {
         umamiTrack("Skjemasteg fullført", {
@@ -63,7 +65,7 @@ const Inntekt = () => {
             <NavYtelser isKortSoknad />
             <KortDokumentasjon opplysningstype={DokumentasjonDtoType.FORMUE_BRUKSKONTO} />
             <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
-                <DocumentProvider contextId={contextId}>
+                <DocumentProvider contextId={contextId} mode={uploadMode}>
                     <UploadByKategori
                         contextId={contextId}
                         kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}

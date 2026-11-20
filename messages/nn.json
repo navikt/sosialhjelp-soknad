@@ -199,7 +199,10 @@
         "seOver": "Endra til PDF",
         "slett": "Slett fil",
         "lasterOpp": "Lastar opp...",
-        "cancel": "Avbryt"
+        "cancel": "Avbryt",
+        "provIgjen": "Prøv igjen",
+        "retryableFailed": "Opplastinga vart avbroten. Prøv igjen.",
+        "deleteFailed": "Sletting feila. Prøv på nytt."
     },
     "VedleggUpload": {
         "dragAndDrop": "Dra og slepp filer her",

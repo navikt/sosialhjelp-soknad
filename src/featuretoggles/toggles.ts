@@ -4,6 +4,7 @@ export const EXPECTED_TOGGLES = [
     "sosialhjelp.soknad.soknadstypeValg",
     "sosialhjelp.soknad.kvittering",
     "sosialhjelp.soknad.nyIntroside",
+    "sosialhjelp.upload.forenklet_opplasting",
 ] as const satisfies readonly string[];
 
 export type ExpectedToggles = (typeof EXPECTED_TOGGLES)[number];

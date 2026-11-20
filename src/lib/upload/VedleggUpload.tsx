@@ -37,8 +37,19 @@ export const VedleggUpload = ({
 }: DokumenterUploadProps) => {
     const t = useTranslations("VedleggUpload");
     const isMobile = useMediaQuery("(max-width: 768px)");
-    const {uploads, validations, filesAdded, folderDropError, onSelect, onRemove, hasPendingOrProcessing, converted} =
-        useVedleggUpload({contextId, soknadId, kategori});
+    const {
+        uploads,
+        validations,
+        filesAdded,
+        folderDropError,
+        onSelect,
+        onRemove,
+        onDelete,
+        retryUpload,
+        mode,
+        hasPendingOrProcessing,
+        converted,
+    } = useVedleggUpload({contextId, soknadId, kategori});
     const {updateAlleredeLevert, alleredeLevert} = useAlleredeLevert(kategori);
     const showSlowProcessingWarning = useSlowProcessingWarning(hasPendingOrProcessing);
 
@@ -92,6 +103,8 @@ export const VedleggUpload = ({
                         converted={converted}
                         showSlowProcessingWarning={showSlowProcessingWarning}
                         onRemove={onRemove}
+                        onDelete={mode === "sync" ? onDelete : undefined}
+                        onRetry={mode === "sync" ? retryUpload : undefined}
                         headingLevel={fileListHeadingLevel}
                     />
                 )}

@@ -5,12 +5,14 @@ import BelopBeskrivelse from "../../08-vedlegg/form/BelopBeskrivelse.tsx";
 import React from "react";
 import {BelopDto, DokumentasjonDtoType} from "../../../generated/model";
 import {UploadByKategori} from "../../../lib/upload/UploadByKategori.tsx";
+import {useUploadMode} from "../../../lib/hooks/featureToggles/useUploadMode.ts";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {DocumentProvider} from "../../../lib/upload/DocumentContext.tsx";
 
 export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_BRUKSKONTO"}) => {
     const {t} = useTranslation("skjema");
     const soknadId = useSoknadId();
+    const uploadMode = useUploadMode();
     const {updateOkonomiskOpplysning, opplysning, isLoading} =
         useOkonomiskOpplysningMutation<BelopDto>(opplysningstype);
 
@@ -36,7 +38,7 @@ export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_B
                 }
                 leggTilTekst={t("utbetalinger.inntekt.skattbar.kort_saldo_leggTil")}
             />
-            <DocumentProvider contextId={contextId}>
+            <DocumentProvider contextId={contextId} mode={uploadMode}>
                 <UploadByKategori
                     contextId={contextId}
                     describedBy={"kort-dokumentasjon-formue-saldo"}

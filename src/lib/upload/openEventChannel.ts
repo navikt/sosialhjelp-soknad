@@ -1,7 +1,7 @@
 import {logger} from "@navikt/next-logger";
 import config from "../config.ts";
 
-export type UploadStatus = "PROCESSING" | "FAILED" | "COMPLETE" | "PENDING";
+export type UploadStatus = "PROCESSING" | "FAILED" | "RETRYABLE_FAILED" | "COMPLETE" | "PENDING";
 
 export type UploadState = {
     converted: boolean;

@@ -199,7 +199,10 @@
         "seOver": "Changed to PDF",
         "slett": "Delete file",
         "lasterOpp": "Uploading...",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "provIgjen": "Try again",
+        "retryableFailed": "The upload was interrupted. Please try again.",
+        "deleteFailed": "Deletion failed. Please try again."
     },
     "VedleggUpload": {
         "dragAndDrop": "Drag and drop files here",
