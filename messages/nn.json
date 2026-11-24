@@ -271,6 +271,13 @@
         "SoknadHeader": {
             "title": "Søknad om økonomisk sosialhjelp",
             "code": "NAV 35-18.01"
+        },
+        "EttersendeDokumentasjonInfo": {
+            "title": "Send dokumentasjon til ein søknad du har sendt inn",
+            "content": "Slik ettersender du dokumentasjon:",
+            "li1": "Gå til <link><bold>Aktive søknader</bold> på Mi side for økonomisk sosialhjelp</link>.",
+            "li2": "Vel søknaden du vil ettersende dokumentasjon til.",
+            "li3": "Last opp dokumenta du ønskjer å sende inn, og trykk <bold>Send inn</bold>."
         }
     }
 }

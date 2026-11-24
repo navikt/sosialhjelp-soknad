@@ -3,9 +3,10 @@ import {Heading, LinkCard, VStack} from "@navikt/ds-react";
 import {addDays, formatDistance} from "date-fns";
 import {useTranslations} from "next-intl";
 import {redirect} from "next/navigation";
+import {EttersendeDokumentasjonInfo} from "../../../../components/EttersendeDokumentasjonInfo.tsx";
+import {SoknadSide} from "../../../../components/SoknadSide.tsx";
 import {PabegyntSoknad} from "../../../../generated/model/pabegyntSoknad.ts";
 import {LocalizedDate} from "../../../../lib/components/LocalizedDate.tsx";
-import {SoknadSide} from "../../../../components/SoknadSide.tsx";
 import {useConfigFeatureFlags} from "../../../../lib/config.ts";
 import {getDateFnLocale} from "../../../../lib/i18n/dateFns.ts";
 import {useContextSessionInfo} from "../../../../lib/providers/useContextSessionInfo.ts";
@@ -61,6 +62,8 @@ const Page = () => {
                     })}
                 </VStack>
             </VStack>
+
+            <EttersendeDokumentasjonInfo />
         </SoknadSide>
     );
 };

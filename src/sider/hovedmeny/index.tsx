@@ -8,6 +8,7 @@ import {NySoknadPanel} from "./nySoknad/NySoknadPanel.tsx";
 import "./overrides.css";
 import {PabegynteSoknaderPanel} from "./PabegynteSoknader.tsx";
 import {redirect} from "next/navigation";
+import {EttersendeDokumentasjonInfo} from "../../components/EttersendeDokumentasjonInfo.tsx";
 
 export const Informasjon = () => {
     const featureToggles = useConfigFeatureFlags();
@@ -35,6 +36,7 @@ export const Informasjon = () => {
                     <LinkCard.Description>{t("fortsettSoknadDescription", {count: open?.length})}</LinkCard.Description>
                 </LinkCard>
             </VStack>
+            <EttersendeDokumentasjonInfo></EttersendeDokumentasjonInfo>
         </SoknadSide>
     ) : (
         <main aria-labelledby={"app-heading"}>
