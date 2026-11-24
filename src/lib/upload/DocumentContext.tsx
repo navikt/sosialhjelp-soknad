@@ -1,4 +1,5 @@
-import {createContext, Dispatch, ReactNode, useCallback, useContext, useEffect, useReducer, useRef} from "react";
+import {createContext, Dispatch, ReactNode, useContext, useEffect, useReducer} from "react";
+import {useQuery} from "@tanstack/react-query";
 import {DocumentState, openEventChannel, UploadState, ValidationCode} from "./openEventChannel.ts";
 import {fetchSubmissionStatus} from "./api/fetchSubmissionStatus.ts";
 
@@ -13,7 +14,7 @@ export type Action =
     | {type: "SSE_UPDATE"; payload: DocumentState}
     | {type: "ADD_UPLOADS"; uploads: UploadState[]}
     | {type: "REMOVE_UPLOAD"; correlationId: string}
-    | {type: "UPLOAD_RESULT"; correlationId: string; upload: UploadState}
+    | {type: "UPLOAD_RESULT"; correlationId: string; upload: Partial<UploadState>}
     | {type: "REFRESH"; payload: DocumentState}
     | {type: "CLEAR"};
 
@@ -27,7 +28,6 @@ export const reducer = (state: State, action: Action): State => {
         case "SSE_UPDATE": {
             const incoming = action.payload.uploads ?? [];
 
-            // Update existing entries in place, matching by correlationId or id
             const updated = state.uploads.map((existing) => {
                 const match = incoming.find(
                     (u) => (u.correlationId && u.correlationId === existing.correlationId) || u.id === existing.id
@@ -35,7 +35,6 @@ export const reducer = (state: State, action: Action): State => {
                 return match ?? existing;
             });
 
-            // Append only genuinely new uploads (no match by correlationId or id)
             const existingIds = new Set(state.uploads.map((u) => u.id));
             const existingCorrelationIds = new Set(state.uploads.map((u) => u.correlationId).filter(Boolean));
             const newFromSSE = incoming.filter(
@@ -58,19 +57,18 @@ export const reducer = (state: State, action: Action): State => {
                 uploads: state.uploads.filter((u) => u.correlationId !== action.correlationId),
             };
         case "UPLOAD_RESULT":
-            // Erstatter plassholderen med serverens svar. Ukjent correlationId (fjernet underveis) ignoreres.
             if (!state.uploads.some((u) => u.correlationId === action.correlationId)) return state;
             return {
                 ...state,
-                uploads: state.uploads.map((u) => (u.correlationId === action.correlationId ? action.upload : u)),
+                uploads: state.uploads.map((u) =>
+                    u.correlationId === action.correlationId ? {...u, ...action.upload} : u
+                ),
             };
         case "REFRESH": {
-            // Ingen innsending ennå: serveren har ingenting å si, behold lokal tilstand.
             if (!action.payload.submissionId) return state;
             const server = action.payload.uploads ?? [];
             const serverCorrelationIds = new Set(server.map((u) => u.correlationId).filter(Boolean));
             const serverIds = new Set(server.map((u) => u.id));
-            // Klientplassholdere (ikke lagret, uten filId) overlever refresh
             const clientOnly = state.uploads.filter(
                 (u) =>
                     !u.filId && !serverIds.has(u.id) && !(u.correlationId && serverCorrelationIds.has(u.correlationId))
@@ -89,8 +87,6 @@ type ContextValue = {
     validations: ValidationCode[];
     dispatch: Dispatch<Action>;
     mode: DocumentMode;
-    /** Henter status på nytt. Bare i sync-modus. */
-    refresh: () => Promise<void>;
 };
 
 const DocumentContext = createContext<ContextValue | undefined>(undefined);
@@ -105,37 +101,29 @@ export const DocumentProvider = ({
     children: ReactNode;
 }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
-    const mounted = useRef(true);
 
-    const refresh = useCallback(async () => {
-        if (mode !== "sync") return;
-        const result = await fetchSubmissionStatus(contextId);
-        if (!mounted.current) return;
-        if (result.kind === "forbidden") dispatch({type: "CLEAR"});
-        else if (result.kind === "ok") dispatch({type: "REFRESH", payload: result.state});
-    }, [contextId, mode]);
-
-    useEffect(() => {
-        mounted.current = true;
-        return () => {
-            mounted.current = false;
-        };
-    }, []);
+    const {data: status} = useQuery({
+        queryKey: ["submission-status", contextId],
+        queryFn: () => fetchSubmissionStatus(contextId),
+        enabled: mode === "sync",
+        staleTime: Infinity,
+        gcTime: 0,
+    });
 
     useEffect(() => {
-        if (mode === "sync") {
-            void refresh();
-            return;
-        }
+        if (status?.kind === "forbidden") dispatch({type: "CLEAR"});
+        else if (status?.kind === "ok") dispatch({type: "REFRESH", payload: status.state});
+    }, [status]);
+
+    useEffect(() => {
+        if (mode === "sync") return;
         return openEventChannel(contextId, (payload) => {
             dispatch({type: "SSE_UPDATE", payload});
         });
-    }, [contextId, mode, refresh]);
+    }, [contextId, mode]);
 
     return (
-        <DocumentContext.Provider
-            value={{uploads: state.uploads, validations: state.validations, dispatch, mode, refresh}}
-        >
+        <DocumentContext.Provider value={{uploads: state.uploads, validations: state.validations, dispatch, mode}}>
             {children}
         </DocumentContext.Provider>
     );

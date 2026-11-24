@@ -18,7 +18,6 @@ interface Props {
     showCancelButton?: boolean;
     onTerminate?: () => void;
     deleteDisabled?: boolean;
-    /** Sync-modus: erstatter tus-terminate. Kaster ved feil, og raden beholdes. */
     onDelete?: () => Promise<void>;
     onRetry?: () => void;
 }

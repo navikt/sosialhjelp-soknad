@@ -1,6 +1,7 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
 import {act, renderHook, waitFor} from "@testing-library/react";
 import type {ReactNode} from "react";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {DocumentProvider} from "./DocumentContext.tsx";
 import {useVedleggUpload} from "./useVedleggUpload.ts";
 import {UploadFileResult} from "./api/uploadFile.ts";
@@ -18,10 +19,13 @@ vi.mock("./openEventChannel.ts", async (orig) => ({
     openEventChannel: vi.fn(() => () => undefined),
 }));
 
+let queryClient: QueryClient;
 const wrapper = ({children}: {children: ReactNode}) => (
-    <DocumentProvider contextId="ctx" mode="sync">
-        {children}
-    </DocumentProvider>
+    <QueryClientProvider client={queryClient}>
+        <DocumentProvider contextId="ctx" mode="sync">
+            {children}
+        </DocumentProvider>
+    </QueryClientProvider>
 );
 const setup = () =>
     renderHook(
@@ -43,6 +47,7 @@ const ok = (cid: string, id = "srv-" + cid): UploadFileResult => ({
 });
 
 beforeEach(() => {
+    queryClient = new QueryClient();
     uploadMock.mockReset();
     deleteMock.mockReset();
     statusMock.mockReset();
@@ -50,16 +55,32 @@ beforeEach(() => {
 });
 
 describe("sync-modus", () => {
-    it("kjører maks 2 samtidig og starter neste når en blir ferdig", async () => {
-        const ds = [deferred(), deferred(), deferred()];
-        ds.forEach((d) => uploadMock.mockReturnValueOnce(d.promise));
+    it("starter alle opplastinger umiddelbart", async () => {
+        uploadMock.mockImplementation(() => new Promise(() => undefined));
         const {result} = setup();
         act(() => result.current.onSelect(files(3)));
-        expect(uploadMock).toHaveBeenCalledTimes(2);
-        expect(result.current.hasPendingOrProcessing).toBe(true);
-        const first = uploadMock.mock.calls[0][0].correlationId;
-        await act(async () => ds[0].resolve(ok(first)));
         await waitFor(() => expect(uploadMock).toHaveBeenCalledTimes(3));
+        expect(result.current.hasPendingOrProcessing).toBe(true);
+    });
+
+    it("rapporterer valideringsfeil på raden", async () => {
+        uploadMock.mockResolvedValueOnce({kind: "validation", validations: ["ENCRYPTED_PDF"]});
+        const {result} = setup();
+        act(() => result.current.onSelect(files(1)));
+        await waitFor(() => expect(result.current.uploads[0].status).toBe("FAILED"));
+        expect(result.current.uploads[0].validations).toEqual(["ENCRYPTED_PDF"]);
+        expect(result.current.uploads[0].originalFilename).toBe("f0.pdf");
+    });
+
+    it("setter FAILED ved retry etter at mutasjonen er garbage-collected", async () => {
+        uploadMock.mockResolvedValueOnce({kind: "retryable"});
+        const {result} = setup();
+        act(() => result.current.onSelect(files(1)));
+        await waitFor(() => expect(result.current.uploads[0].status).toBe("RETRYABLE_FAILED"));
+        queryClient.getMutationCache().clear();
+        act(() => result.current.retryUpload(result.current.uploads[0].correlationId!));
+        expect(result.current.uploads[0].status).toBe("FAILED");
+        expect(uploadMock).toHaveBeenCalledTimes(1);
     });
 
     it("prøver igjen med samme correlationId og samme fil", async () => {

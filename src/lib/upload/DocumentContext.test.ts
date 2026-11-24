@@ -20,6 +20,15 @@ describe("reducer", () => {
         });
         expect(next.uploads).toEqual([expect.objectContaining({id: "srv", filId: "f"})]);
     });
+    it("UPLOAD_RESULT slår delvis resultat inn i raden", () => {
+        const state = {...initialState, uploads: [row({id: "c1", correlationId: "c1", status: "PENDING"})]};
+        const next = reducer(state, {
+            type: "UPLOAD_RESULT",
+            correlationId: "c1",
+            upload: {status: "FAILED", validations: []},
+        });
+        expect(next.uploads[0]).toEqual({...state.uploads[0], status: "FAILED", validations: []});
+    });
     it("UPLOAD_RESULT ignoreres om raden er fjernet", () => {
         expect(
             reducer(initialState, {type: "UPLOAD_RESULT", correlationId: "c1", upload: row({correlationId: "c1"})})

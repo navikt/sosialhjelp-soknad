@@ -1,6 +1,7 @@
 import * as R from "remeda";
 import {FileObject} from "@navikt/ds-react";
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useRef, useState} from "react";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {DokumentasjonDtoType} from "../../generated/model";
 import {useDocumentContext} from "./DocumentContext.tsx";
 import {uploadFile as tusUploadFile} from "./tusUpload.ts";
@@ -10,109 +11,64 @@ import {deleteFile} from "./api/deleteFile.ts";
 
 const isFolder = (f: FileObject) => f.file.size === 0 && f.file.type === "";
 
-export const MAX_CONCURRENT_UPLOADS = 2;
-
 interface UseVedleggUploadParams {
     contextId: string;
     soknadId: string;
     kategori: DokumentasjonDtoType;
 }
 
-/** En rad som bare finnes i klienten: ikke lagret hos serveren ennå. */
 const isPlaceholder = (u: UploadState) => !u.filId && !!u.correlationId && u.id === u.correlationId;
+
+type UploadVariables = {correlationId: string; file: File};
+
+const syncUploadKey = (contextId: string) => ["sync-upload", contextId] as const;
 
 export const useVedleggUpload = ({contextId, soknadId, kategori}: UseVedleggUploadParams) => {
     const {uploads, validations, dispatch, mode} = useDocumentContext();
+    const queryClient = useQueryClient();
     const [filesAdded, setFilesAdded] = useState(0);
     const [folderDropError, setFolderDropError] = useState(false);
-    const [activeRequests, setActiveRequests] = useState(0);
+    const mutationKey = syncUploadKey(contextId);
+    const cancelled = useRef(new Set<string>());
 
-    // Filene må leve til opplastingen er vellykket, slik at "Prøv igjen" kan sende samme fil på nytt.
-    const filesRef = useRef(new Map<string, File>());
-    const queueRef = useRef<string[]>([]);
-    const inFlightRef = useRef(new Set<string>());
-    const removedInFlightRef = useRef(new Set<string>());
-    const paramsRef = useRef({contextId, soknadId, kategori});
-    useEffect(() => {
-        paramsRef.current = {contextId, soknadId, kategori};
+    const {mutate} = useMutation({
+        mutationKey,
+        mutationFn: ({correlationId, file}: UploadVariables) =>
+            syncUploadFile({file, contextId, soknadId, kategori, correlationId}),
+        onSuccess: async (result, {correlationId}) => {
+            if (cancelled.current.delete(correlationId)) {
+                if (result.kind === "success") await deleteFile(result.upload.id).catch(() => undefined);
+                return;
+            }
+            switch (result.kind) {
+                case "success":
+                    dispatch({type: "UPLOAD_RESULT", correlationId, upload: result.upload});
+                    break;
+                case "validation":
+                    dispatch({
+                        type: "UPLOAD_RESULT",
+                        correlationId,
+                        upload: {status: "FAILED", validations: result.validations},
+                    });
+                    break;
+                case "retryable":
+                    dispatch({type: "UPLOAD_RESULT", correlationId, upload: {status: "RETRYABLE_FAILED"}});
+                    break;
+                case "forbidden":
+                    dispatch({type: "CLEAR"});
+                    break;
+                case "failed":
+                    dispatch({type: "UPLOAD_RESULT", correlationId, upload: {status: "FAILED"}});
+                    break;
+            }
+        },
+        onError: (_error, {correlationId}) => {
+            if (cancelled.current.delete(correlationId)) return;
+            dispatch({type: "UPLOAD_RESULT", correlationId, upload: {status: "RETRYABLE_FAILED"}});
+        },
     });
 
-    const placeholderFor = (correlationId: string, status: UploadStatus, extra?: Partial<UploadState>): UploadState => {
-        const file = filesRef.current.get(correlationId);
-        return {
-            id: correlationId,
-            correlationId,
-            originalFilename: file?.name ?? "",
-            size: file?.size,
-            converted: false,
-            status,
-            ...extra,
-        };
-    };
-
-    const startNextRef = useRef<() => void>(() => undefined);
-    const startNext = useCallback(() => startNextRef.current(), []);
-    const pump = useCallback(() => {
-        while (inFlightRef.current.size < MAX_CONCURRENT_UPLOADS && queueRef.current.length > 0) {
-            const correlationId = queueRef.current.shift()!;
-            const file = filesRef.current.get(correlationId);
-            if (!file) continue;
-            inFlightRef.current.add(correlationId);
-            setActiveRequests(inFlightRef.current.size);
-            const params = paramsRef.current;
-
-            void syncUploadFile({
-                file,
-                contextId: params.contextId,
-                soknadId: params.soknadId,
-                kategori: params.kategori,
-                correlationId,
-            })
-                .then(async (result) => {
-                    const removed = removedInFlightRef.current.delete(correlationId);
-                    if (result.kind === "success") {
-                        filesRef.current.delete(correlationId);
-                        if (removed) {
-                            // Brukeren fjernet raden mens forespørselen pågikk: rydd opp på serveren.
-                            await deleteFile(result.upload.id).catch(() => undefined);
-                        } else {
-                            dispatch({type: "UPLOAD_RESULT", correlationId, upload: result.upload});
-                        }
-                        return;
-                    }
-                    if (removed) {
-                        filesRef.current.delete(correlationId);
-                        return;
-                    }
-                    if (result.kind === "retryable") {
-                        dispatch({
-                            type: "UPLOAD_RESULT",
-                            correlationId,
-                            upload: placeholderFor(correlationId, "RETRYABLE_FAILED"),
-                        });
-                    } else if (result.kind === "forbidden") {
-                        filesRef.current.delete(correlationId);
-                        dispatch({type: "CLEAR"});
-                    } else {
-                        const validations = result.kind === "validation" ? result.validations : undefined;
-                        const upload = placeholderFor(correlationId, "FAILED", {validations});
-                        filesRef.current.delete(correlationId);
-                        dispatch({type: "UPLOAD_RESULT", correlationId, upload});
-                    }
-                })
-                .finally(() => {
-                    inFlightRef.current.delete(correlationId);
-                    setActiveRequests(inFlightRef.current.size);
-                    startNextRef.current();
-                });
-        }
-    }, [dispatch]);
-    useEffect(() => {
-        startNextRef.current = pump;
-    }, [pump]);
-
-    const hasPendingOrProcessing =
-        uploads.some((u) => u.status === "PENDING" || u.status === "PROCESSING") || activeRequests > 0;
+    const hasPendingOrProcessing = uploads.some((u) => u.status === "PENDING" || u.status === "PROCESSING");
 
     const converted = uploads.some((upload) => upload.converted);
 
@@ -126,14 +82,19 @@ export const useVedleggUpload = ({contextId, soknadId, kategori}: UseVedleggUplo
         setTimeout(() => setFilesAdded(0), 500);
 
         if (mode === "sync") {
-            const added = valid.map((f) => {
-                const correlationId = crypto.randomUUID();
-                filesRef.current.set(correlationId, f.file);
-                queueRef.current.push(correlationId);
-                return placeholderFor(correlationId, "PENDING");
+            const started = valid.map(({file}) => ({correlationId: crypto.randomUUID(), file}));
+            dispatch({
+                type: "ADD_UPLOADS",
+                uploads: started.map(({correlationId, file}) => ({
+                    id: correlationId,
+                    correlationId,
+                    originalFilename: file.name,
+                    size: file.size,
+                    converted: false,
+                    status: "PENDING" as UploadStatus,
+                })),
             });
-            dispatch({type: "ADD_UPLOADS", uploads: added});
-            startNext();
+            started.forEach((variables) => mutate(variables));
             return;
         }
 
@@ -157,17 +118,11 @@ export const useVedleggUpload = ({contextId, soknadId, kategori}: UseVedleggUplo
         dispatch({type: "REMOVE_UPLOAD", correlationId});
     };
 
-    /**
-     * Sync-modus: sletter en rad. Lagrede rader slettes på serveren først (kaster ved feil, raden beholdes).
-     * Plassholdere har ingenting på serveren; pågår forespørselen, ryddes den opp når den er ferdig.
-     */
     const onDelete = async (upload: UploadState): Promise<void> => {
         const correlationId = upload.correlationId;
-        if (!correlationId) return; // Legacy-dokumenter slettes ikke via sync-API
+        if (!correlationId) return;
         if (isPlaceholder(upload)) {
-            queueRef.current = queueRef.current.filter((id) => id !== correlationId);
-            if (inFlightRef.current.has(correlationId)) removedInFlightRef.current.add(correlationId);
-            else filesRef.current.delete(correlationId);
+            cancelled.current.add(correlationId);
             dispatch({type: "REMOVE_UPLOAD", correlationId});
             return;
         }
@@ -176,11 +131,16 @@ export const useVedleggUpload = ({contextId, soknadId, kategori}: UseVedleggUplo
     };
 
     const retryUpload = (correlationId: string) => {
-        if (!filesRef.current.has(correlationId)) return;
-        if (inFlightRef.current.has(correlationId) || queueRef.current.includes(correlationId)) return;
-        dispatch({type: "UPLOAD_RESULT", correlationId, upload: placeholderFor(correlationId, "PENDING")});
-        queueRef.current.push(correlationId);
-        startNext();
+        const variables = queryClient.getMutationCache().find<unknown, Error, UploadVariables>({
+            mutationKey,
+            predicate: (m) => (m.state.variables as UploadVariables | undefined)?.correlationId === correlationId,
+        })?.state.variables;
+        if (!variables) {
+            dispatch({type: "UPLOAD_RESULT", correlationId, upload: {status: "FAILED"}});
+            return;
+        }
+        dispatch({type: "UPLOAD_RESULT", correlationId, upload: {status: "PENDING"}});
+        mutate(variables);
     };
 
     return {
