@@ -90,6 +90,9 @@ test.describe("Session Info 403 Error", () => {
 
         await page.goto("/sosialhjelp/soknad/nb");
 
+        // Med ny introside sendes brukeren uten påbegynte søknader til /ny, som krever bekreftelse før start
+        await page.getByRole("checkbox", {name: /Jeg vil svare så godt jeg kan/}).check();
+
         // Click the "Start søknaden" button
         const startButton = page.getByRole("button", {name: /Start søknaden/});
         await startButton.click();

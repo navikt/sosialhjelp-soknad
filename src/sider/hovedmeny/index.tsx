@@ -1,7 +1,7 @@
 import {Heading, LinkCard, VStack} from "@navikt/ds-react";
 import {useTranslations} from "next-intl";
 import {SoknadSide} from "../../components/SoknadSide.tsx";
-import {useConfigFeatureFlags} from "../../lib/config.ts";
+import {useFlag} from "../../featuretoggles/context.tsx";
 import {useContextSessionInfo} from "../../lib/providers/useContextSessionInfo.ts";
 import {EttersendDokuPanel} from "./EttersendDokuPanel.tsx";
 import {NySoknadPanel} from "./nySoknad/NySoknadPanel.tsx";
@@ -10,15 +10,15 @@ import {PabegynteSoknaderPanel} from "./PabegynteSoknader.tsx";
 import {redirect} from "next/navigation";
 
 export const Informasjon = () => {
-    const featureToggles = useConfigFeatureFlags();
+    const nyIntroside = useFlag("sosialhjelp.soknad.nyIntroside").enabled;
     const {open, numRecentlySent} = useContextSessionInfo();
     const t = useTranslations("NyEllerFortsettSoknad");
 
-    if (featureToggles.nyIntroside && open?.length === 0) {
+    if (nyIntroside && open?.length === 0) {
         redirect("/ny");
     }
 
-    return featureToggles.nyIntroside ? (
+    return nyIntroside ? (
         <SoknadSide>
             <VStack gap={{xs: "space-24", lg: "space-32"}}>
                 <LinkCard data-color="accent">

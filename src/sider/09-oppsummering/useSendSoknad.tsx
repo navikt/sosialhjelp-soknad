@@ -4,7 +4,8 @@ import {useRouter} from "../../i18n/routing.ts";
 import {useCurrentSoknadIsKort} from "../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../app/umami.ts";
-import {digisosConfig, useConfigFeatureFlags} from "../../lib/config.ts";
+import {digisosConfig} from "../../lib/config.ts";
+import {useFlag} from "../../featuretoggles/context.tsx";
 import {useLocale} from "next-intl";
 
 export const useSendSoknad = () => {
@@ -15,7 +16,7 @@ export const useSendSoknad = () => {
     const deletionDateRef = useRef("");
     const soknadId = useSoknadId();
 
-    const featureToggles = useConfigFeatureFlags(); //todo fjern når testing ferdig
+    const visKvittering = useFlag("sosialhjelp.soknad.kvittering").enabled;
     const locale = useLocale();
 
     const {mutate, isPending, error} = useSendSoknadMutation({
@@ -26,7 +27,7 @@ export const useSendSoknad = () => {
                     isKortSoknad: isKortSoknad,
                     soknadId: soknadId,
                 });
-                const href = featureToggles.kvittering
+                const href = visKvittering
                     ? `/kvittering/${encodeURIComponent(digisosId)}`
                     : `${digisosConfig.innsynURL}/${locale}/soknad/${encodeURIComponent(digisosId)}`;
                 startTransition(() => router.push(href));
