@@ -2,21 +2,8 @@ export const DigisosEnvironments = ["localhost", "mock", "prod", "preprod", "dev
 export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 
 type FeatureFlags = {
-    // Ny versjon av Personalia oppsummering
-    nyOppsummering: boolean;
-
-    // Ny Nav-kontor-visning i oppsummering
-    oppsummeringNavEnhet: boolean;
-
-    // Vis valg for søknadstype ved opprettelse
-    soknadstypeValg: boolean;
-
     // Vis ny introsiden
     nyIntroside: boolean;
-
-    // Dette er en testversjon som er blitt gitt en ingress på nav.no.
-    // Forhindrer at siden blir indeksert, og viser en synlig advarsel.
-    publicFacingTestVersion?: true;
 
     //Vis kvittering
     kvittering: boolean;
@@ -64,10 +51,6 @@ const isValidDigisosEnvironment = (miljo: unknown): miljo is DigisosEnvironment 
 const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     e2e: {
         featureFlags: {
-            nyOppsummering: false,
-            oppsummeringNavEnhet: false,
-            soknadstypeValg: true,
-            publicFacingTestVersion: true,
             nyIntroside: false,
             kvittering: true,
         },
@@ -99,10 +82,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     localhost: {
         featureFlags: {
-            nyOppsummering: false,
-            oppsummeringNavEnhet: false,
-            soknadstypeValg: true,
-            publicFacingTestVersion: true,
             nyIntroside: true,
             kvittering: true,
         },
@@ -138,9 +117,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     mock: {
         featureFlags: {
-            nyOppsummering: false,
-            oppsummeringNavEnhet: false,
-            soknadstypeValg: true,
             nyIntroside: true,
             kvittering: true,
         },
@@ -173,10 +149,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     prod: {
         featureFlags: {
-            nyOppsummering: false,
-            oppsummeringNavEnhet: false,
-            soknadstypeValg: false,
-            publicFacingTestVersion: true,
             nyIntroside: false,
             kvittering: false,
         },
@@ -214,9 +186,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     preprod: {
         featureFlags: {
-            nyOppsummering: false,
-            oppsummeringNavEnhet: false,
-            soknadstypeValg: false,
             nyIntroside: false,
             kvittering: false,
         },
@@ -254,9 +223,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     },
     dev: {
         featureFlags: {
-            nyOppsummering: false,
-            oppsummeringNavEnhet: false,
-            soknadstypeValg: true,
             nyIntroside: true,
             kvittering: true,
         },
