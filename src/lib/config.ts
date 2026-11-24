@@ -4,9 +4,6 @@ export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 type FeatureFlags = {
     // Vis ny introsiden
     nyIntroside: boolean;
-
-    //Vis kvittering
-    kvittering: boolean;
 };
 
 type ProxyOptions = {
@@ -52,7 +49,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     e2e: {
         featureFlags: {
             nyIntroside: false,
-            kvittering: true,
         },
         dekorator: {
             env: "dev",
@@ -83,7 +79,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     localhost: {
         featureFlags: {
             nyIntroside: true,
-            kvittering: true,
         },
 
         dekorator: {
@@ -118,7 +113,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     mock: {
         featureFlags: {
             nyIntroside: true,
-            kvittering: true,
         },
         dekorator: {
             env: "dev",
@@ -150,7 +144,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     prod: {
         featureFlags: {
             nyIntroside: false,
-            kvittering: false,
         },
 
         dekorator: {
@@ -187,7 +180,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     preprod: {
         featureFlags: {
             nyIntroside: false,
-            kvittering: false,
         },
 
         dekorator: {
@@ -224,7 +216,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     dev: {
         featureFlags: {
             nyIntroside: true,
-            kvittering: true,
         },
 
         dekorator: {

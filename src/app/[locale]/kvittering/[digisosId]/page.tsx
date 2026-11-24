@@ -7,7 +7,8 @@ import {redirect, useParams} from "next/navigation";
 import {isAxiosError} from "axios";
 import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
 import {useEffect} from "react";
-import digisosConfig, {useConfigFeatureFlags} from "../../../../lib/config.ts";
+import digisosConfig from "../../../../lib/config.ts";
+import {useFlag} from "../../../../featuretoggles/context.tsx";
 import {supportedLanguageOrFallback} from "../../../../lib/i18n/common.ts";
 import {useRouter} from "../../../../i18n/routing.ts";
 import {getPathPrefixIncludingLocale} from "../../../../getPathPrefixIncludingLocale.ts";
@@ -21,8 +22,8 @@ import {useHentKvittering} from "../../../../generated";
 import {ApplicationSpinner} from "../../../../lib/components/animasjoner/ApplicationSpinner.tsx";
 
 export default function KvitteringPage() {
-    const featureToggles = useConfigFeatureFlags(); //todo fjern når testing ferdig
-    if (!featureToggles.kvittering) {
+    const visKvittering = useFlag("sosialhjelp.soknad.kvittering").enabled;
+    if (!visKvittering) {
         redirect("/");
     }
 
