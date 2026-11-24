@@ -6,7 +6,7 @@ import {redirect} from "next/navigation";
 import {PabegyntSoknad} from "../../../../generated/model/pabegyntSoknad.ts";
 import {LocalizedDate} from "../../../../lib/components/LocalizedDate.tsx";
 import {SoknadSide} from "../../../../components/SoknadSide.tsx";
-import {useConfigFeatureFlags} from "../../../../lib/config.ts";
+import {useFlag} from "../../../../featuretoggles/context.tsx";
 import {getDateFnLocale} from "../../../../lib/i18n/dateFns.ts";
 import {useContextSessionInfo} from "../../../../lib/providers/useContextSessionInfo.ts";
 
@@ -24,8 +24,8 @@ const getSoknadUri = (soknadId: string, isKort: boolean) =>
 const Page = () => {
     const {open} = useContextSessionInfo();
     const t = useTranslations("FortsettSoknad");
-    const featureToggles = useConfigFeatureFlags();
-    if (!featureToggles.nyIntroside) {
+    const nyIntroside = useFlag("sosialhjelp.soknad.nyIntroside").enabled;
+    if (!nyIntroside) {
         redirect("/");
     }
 

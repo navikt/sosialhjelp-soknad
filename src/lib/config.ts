@@ -1,11 +1,6 @@
 export const DigisosEnvironments = ["localhost", "mock", "prod", "preprod", "dev", "e2e"] as const;
 export type DigisosEnvironment = (typeof DigisosEnvironments)[number];
 
-type FeatureFlags = {
-    // Vis ny introsiden
-    nyIntroside: boolean;
-};
-
 type ProxyOptions = {
     hostname: string;
     basePath: string; // no trailing slash
@@ -32,7 +27,6 @@ type SoknadConfig = {
     minSideURL: string;
     dekoratorLoginBaseUrl: string;
 
-    featureFlags: FeatureFlags;
     proxy?: ProxyOptions;
     uploadProxy?: ProxyOptions;
     dekorator: DekoratorOptions;
@@ -47,9 +41,6 @@ const isValidDigisosEnvironment = (miljo: unknown): miljo is DigisosEnvironment 
 
 const configMap: Record<DigisosEnvironment, SoknadConfig> = {
     e2e: {
-        featureFlags: {
-            nyIntroside: false,
-        },
         dekorator: {
             env: "dev",
             serviceDiscovery: false,
@@ -77,10 +68,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         dekoratorLoginBaseUrl: "https://login.ekstern.dev.nav.no",
     },
     localhost: {
-        featureFlags: {
-            nyIntroside: true,
-        },
-
         dekorator: {
             env: "dev",
             serviceDiscovery: false,
@@ -111,9 +98,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         // },
     },
     mock: {
-        featureFlags: {
-            nyIntroside: true,
-        },
         dekorator: {
             env: "dev",
             serviceDiscovery: true,
@@ -142,10 +126,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         },
     },
     prod: {
-        featureFlags: {
-            nyIntroside: false,
-        },
-
         dekorator: {
             env: "prod",
             serviceDiscovery: true,
@@ -178,10 +158,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         },
     },
     preprod: {
-        featureFlags: {
-            nyIntroside: false,
-        },
-
         dekorator: {
             env: "dev",
             serviceDiscovery: true,
@@ -214,10 +190,6 @@ const configMap: Record<DigisosEnvironment, SoknadConfig> = {
         },
     },
     dev: {
-        featureFlags: {
-            nyIntroside: true,
-        },
-
         dekorator: {
             env: "dev",
             serviceDiscovery: true,
@@ -260,4 +232,3 @@ const getConfig = (miljo: unknown): SoknadConfig => {
 export const digisosConfig = getConfig(process.env.NEXT_PUBLIC_DIGISOS_ENV);
 
 export default digisosConfig;
-export const useConfigFeatureFlags = (): FeatureFlags => digisosConfig.featureFlags;
