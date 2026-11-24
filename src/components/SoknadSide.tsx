@@ -20,7 +20,7 @@ export const SoknadSide = ({children, showCode = false, labelledBy}: Props) => (
         id="maincontent"
         tabIndex={-1}
         aria-labelledby={labelledBy}
-        className="max-w-[664px] w-full mx-auto grow px-3 py-6 lg:py-16 focus:outline-none"
+        className="max-w-2xl w-full mx-auto grow px-3 py-6 lg:py-16 focus:outline-none"
     >
         <SoknadHeader showCode={showCode} />
         <VStack gap={{xs: "space-32", lg: "space-64"}}>{children}</VStack>
