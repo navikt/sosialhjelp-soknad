@@ -1,7 +1,7 @@
 import {Heading, VStack} from "@navikt/ds-react";
 import {useTranslations} from "next-intl";
 import React from "react";
-import digisosConfig from "../../config.ts";
+import digisosConfig from "../config.ts";
 import FileUploadItem from "./FileUploadItem.tsx";
 import {UploadStatusMessages} from "./UploadStatusMessages.tsx";
 import {UploadState, ValidationCode} from "./openEventChannel.ts";

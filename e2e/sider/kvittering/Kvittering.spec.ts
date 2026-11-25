@@ -32,9 +32,6 @@ test.beforeEach(async ({page}) => {
             } satisfies SessionResponse),
         })
     );
-    await page.route("**/feature-toggle", (route) =>
-        route.fulfill({status: 200, contentType: "application/json", body: JSON.stringify({})})
-    );
     await page.route(`**/api/soknad-api/kvittering/${DIGISOS_ID}`, (route) =>
         route.fulfill({status: 200, contentType: "application/json", body: JSON.stringify(KVITTERING)})
     );

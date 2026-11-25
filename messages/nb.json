@@ -186,10 +186,6 @@
         "empty": "Vi har ingen registrerte utbetalinger på deg fra NAV den siste måneden.",
         "error": "På grunn av systemfeil klarte vi ikke å hente inn informasjon om ytelser fra NAV."
     },
-    "PageFlipperButtons": {
-        "neste": "Neste side",
-        "forrige": "Forrige side"
-    },
     "FileUploadItem": {
         "uploadFailed": "Opplasting feilet. Prøv på nytt senere.",
         "validation": {

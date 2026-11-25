@@ -4,7 +4,7 @@ import {ReactNode, useReducer, useState} from "react";
 import {initialValideringState, valideringsReducer} from "../validering.ts";
 import {AnalyticsData, DigisosContext} from "./DigisosContext.ts";
 import {SupportedLanguage} from "../i18n/common.ts";
-import {useGetSessionInfo, useFeatureToggles} from "../../generated";
+import {useGetSessionInfo} from "../../generated";
 
 interface Props {
     children: ReactNode;
@@ -23,7 +23,6 @@ export const DigisosContextProvider = ({children, locale}: Props) => {
     };
 
     const {data: sessionInfo} = useGetSessionInfo({query: {retry: 0, throwOnError: true}});
-    const {data: featureToggles} = useFeatureToggles({query: {retry: 0}});
 
     if (!sessionInfo) return null;
 
@@ -38,7 +37,6 @@ export const DigisosContextProvider = ({children, locale}: Props) => {
                     state,
                     dispatch,
                 },
-                featureToggles: featureToggles,
                 sessionInfo: sessionInfo,
                 locale,
             }}

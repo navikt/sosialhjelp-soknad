@@ -7,9 +7,9 @@ import {VedleggUploadTrigger} from "./VedleggUploadTrigger.tsx";
 import {UploadedFileList} from "./UploadedFileList.tsx";
 import InlineStatusMessage from "./InlineStatusMessage.tsx";
 import useSlowProcessingWarning from "./useSlowProcessingWarning.ts";
-import {DokumentasjonDtoType} from "../../../generated/model";
-import useAlleredeLevert from "../../hooks/dokumentasjon/useAlleredeLevert.ts";
-import {AlreadyUploadedCheckbox} from "../AlreadyUploadedCheckbox.tsx";
+import {DokumentasjonDtoType} from "../../generated/model";
+import useAlleredeLevert from "../hooks/dokumentasjon/useAlleredeLevert.ts";
+import {AlreadyUploadedCheckbox} from "./AlreadyUploadedCheckbox.tsx";
 import {useVedleggUpload} from "./useVedleggUpload.ts";
 
 export interface DokumenterUploadProps {
