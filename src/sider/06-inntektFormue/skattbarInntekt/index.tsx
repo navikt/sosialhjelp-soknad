@@ -14,7 +14,7 @@ export const SkattbarInntekt = ({isKortSoknad = false}) => {
                     {t("utbetalinger.inntekt.skattbar.inntekt.tittel")}
                 </Heading>
                 <ReadMore header={t("utbetalinger.inntekt.skattbar.informasjon.tittel")}>
-                    <div className="whitespace-pre-line">{t("utbetalinger.inntekt.skattbar.informasjon.tekst")}</div>
+                    {t("utbetalinger.inntekt.skattbar.informasjon.tekst")}
                 </ReadMore>
                 <div className={"bg-ax-bg-info-moderate border-l-ax-bg-info-strong rounded-md"}>
                     <Skatteetaten />
