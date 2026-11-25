@@ -1775,7 +1775,7 @@ export const skjema = {
                 oppsummering:
                     "Vi har registrert at du{ antall, plural,=0 { ikkje har hatt }other {har hatt{ antall, plural,=1 {{éi}}=2 {{to}}=3 {{tre}}=4 {{fire}}=5 {{fem}}=6 {{seks}}=7 {{sju}}=8 {{åtte}}=9 {{ni}}=10 {{ti}}=11 {{elleve}}=12 {{tolv}}other {{#}}}}}skattbare inntekter.",
                 informasjon: {
-                    tittel: "Informasjon om inntekt frå Skatteetaten",
+                    tittel: "Meir infomasjon om inntekt",
                     tekst: "For at me skal kunna behandla søknaden din, treng me opplysningar om inntekta di. Inntektsopplysningane dine blir henta frå Skatteetaten.",
                 },
                 skatteetaten: "Sjå detaljar hjå Skatteetaten.",
