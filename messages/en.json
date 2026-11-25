@@ -230,7 +230,7 @@
         "steg": {
             "sendt": {
                 "tittel": "Your application has been sent",
-                "tekst": "Your case has now been sent to your Nav office."
+                "tekst": "Your application has now been sent to your Nav office, and you do not need to do anything else right now."
             },
             "behandles": {
                 "tittel": "Your application is being processed",
@@ -239,7 +239,7 @@
             },
             "svar": {
                 "tittel": "You will receive a response to your application",
-                "tekst": "You will be notified when your case has been processed and you have received a decision."
+                "tekst": "When your application has been processed and the decision is ready, you will be notified in your digital mailbox (for example Digipost), Altinn or by letter."
             }
         },
         "sporsmal": {

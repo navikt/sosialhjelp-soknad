@@ -230,7 +230,7 @@
         "steg": {
             "sendt": {
                 "tittel": "Søknaden din er sendt",
-                "tekst": "Saka di er no send til Nav-kontoret ditt."
+                "tekst": "Søknaden din er no send til Nav-kontoret ditt, og du treng ikkje å gjera noko meir akkurat no."
             },
             "behandles": {
                 "tittel": "Søknaden din blir behandla",
@@ -239,7 +239,7 @@
             },
             "svar": {
                 "tittel": "Du får svar på søknaden din",
-                "tekst": "Du får beskjed når saka er behandla og du har fått eit vedtak."
+                "tekst": "Når søknaden er ferdig behandla og vedtaket er klart, får du beskjed i den digitale postkassa di (til dømes Digipost), Altinn eller per brev."
             }
         },
         "sporsmal": {
