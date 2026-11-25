@@ -1,6 +1,6 @@
 import {logger} from "@navikt/next-logger";
 import {Upload} from "tus-js-client";
-import digisosConfig from "../../config.ts";
+import digisosConfig from "../config.ts";
 
 export const uploadFile = (file: File, contextId: string, soknadId: string, kategori: string): string => {
     const correlationId = crypto.randomUUID();

@@ -2,17 +2,14 @@ import {BodyShort, Heading} from "@navikt/ds-react";
 import {useDokumentasjonTekster} from "../../lib/hooks/dokumentasjon/useDokumentasjonTekster.ts";
 import React from "react";
 import {DokumentasjonDtoType} from "../../generated/model";
-import {Dokumenter} from "../../lib/upload/Dokumenter.tsx";
 import {FormSwitch} from "./form/components/FormSwitch.tsx";
-import {UploadByKategori} from "../../lib/upload/new/UploadByKategori.tsx";
-import {useNewUploadEnabled} from "../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
+import {UploadByKategori} from "../../lib/upload/UploadByKategori.tsx";
 import {useSoknadId} from "../../lib/hooks/common/useSoknadId.ts";
-import {DocumentProvider} from "../../lib/upload/new/DocumentContext.tsx";
+import {DocumentProvider} from "../../lib/upload/DocumentContext.tsx";
 
 export const Dokumentasjon = ({opplysningstype}: {opplysningstype: DokumentasjonDtoType}) => {
     const soknadId = useSoknadId();
     const {sporsmal, undertekst} = useDokumentasjonTekster(opplysningstype);
-    const newUploadEnabled = useNewUploadEnabled();
 
     const id = opplysningstype;
     const contextId = `${soknadId}-${opplysningstype}`;
@@ -25,20 +22,16 @@ export const Dokumentasjon = ({opplysningstype}: {opplysningstype: Dokumentasjon
 
             <BodyShort spacing>{undertekst}</BodyShort>
             <FormSwitch opplysningstype={opplysningstype} />
-            {newUploadEnabled ? (
-                <DocumentProvider contextId={contextId}>
-                    <UploadByKategori
-                        className={"mt-6"}
-                        describedBy={id}
-                        contextId={contextId}
-                        soknadId={soknadId}
-                        kategori={opplysningstype}
-                        fileListHeadingLevel={"5"}
-                    />
-                </DocumentProvider>
-            ) : (
-                <Dokumenter opplysningstype={opplysningstype} />
-            )}
+            <DocumentProvider contextId={contextId}>
+                <UploadByKategori
+                    className={"mt-6"}
+                    describedBy={id}
+                    contextId={contextId}
+                    soknadId={soknadId}
+                    kategori={opplysningstype}
+                    fileListHeadingLevel={"5"}
+                />
+            </DocumentProvider>
         </div>
     );
 };

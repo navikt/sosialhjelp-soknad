@@ -2,19 +2,15 @@ import {useTranslation} from "react-i18next";
 import useOkonomiskOpplysningMutation from "../../../lib/hooks/dokumentasjon/useOkonomiskOpplysningMutation.ts";
 import {BodyShort, Heading, Loader} from "@navikt/ds-react";
 import BelopBeskrivelse from "../../08-vedlegg/form/BelopBeskrivelse.tsx";
-import {FileUploadBoxNoStyle} from "../../../lib/components/fileupload/FileUploadBox.tsx";
 import React from "react";
-import {BelopDto} from "../../../generated/model";
-import {UploadByKategori} from "../../../lib/upload/new/UploadByKategori.tsx";
-import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
+import {BelopDto, DokumentasjonDtoType} from "../../../generated/model";
+import {UploadByKategori} from "../../../lib/upload/UploadByKategori.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
-import {DokumentasjonDtoType} from "../../../generated/model";
-import {DocumentProvider} from "../../../lib/upload/new/DocumentContext.tsx";
+import {DocumentProvider} from "../../../lib/upload/DocumentContext.tsx";
 
 export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_BRUKSKONTO"}) => {
     const {t} = useTranslation("skjema");
     const soknadId = useSoknadId();
-    const newUploadEnabled = useNewUploadEnabled();
     const {updateOkonomiskOpplysning, opplysning, isLoading} =
         useOkonomiskOpplysningMutation<BelopDto>(opplysningstype);
 
@@ -40,23 +36,16 @@ export const KortDokumentasjon = ({opplysningstype}: {opplysningstype: "FORMUE_B
                 }
                 leggTilTekst={t("utbetalinger.inntekt.skattbar.kort_saldo_leggTil")}
             />
-            {newUploadEnabled ? (
-                <DocumentProvider contextId={contextId}>
-                    <UploadByKategori
-                        contextId={contextId}
-                        describedBy={"kort-dokumentasjon-formue-saldo"}
-                        kategori={DokumentasjonDtoType.FORMUE_BRUKSKONTO}
-                        soknadId={soknadId}
-                        hideAlreadyUploaded
-                        fileListHeadingLevel={"4"}
-                    />
-                </DocumentProvider>
-            ) : (
-                <FileUploadBoxNoStyle
-                    bunntekst={t("utbetalinger.inntekt.skattbar.kort_saldo_lastOpp")}
-                    dokumentasjonType={opplysningstype}
+            <DocumentProvider contextId={contextId}>
+                <UploadByKategori
+                    contextId={contextId}
+                    describedBy={"kort-dokumentasjon-formue-saldo"}
+                    kategori={DokumentasjonDtoType.FORMUE_BRUKSKONTO}
+                    soknadId={soknadId}
+                    hideAlreadyUploaded
+                    fileListHeadingLevel={"4"}
                 />
-            )}
+            </DocumentProvider>
         </div>
     );
 };

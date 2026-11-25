@@ -23,7 +23,6 @@ import {getPathPrefixIncludingLocale} from "./getPathPrefixIncludingLocale.ts";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {onLanguageSelect, setParams} from "@navikt/nav-dekoratoren-moduler";
 import useDecoratorLogin from "./lib/hooks/auth/useDecoratorLogin.ts";
-import {ValgtKategoriProvider} from "./lib/providers/KortKategorierContextProvider.tsx";
 
 const RedirectToStandard = () => {
     const location = useLocation();
@@ -31,20 +30,6 @@ const RedirectToStandard = () => {
 };
 
 export default function App() {
-    //  Polyfill for react-pdf, se https://github.com/wojtekmaj/react-pdf/issues/1831
-    if (typeof Promise.withResolvers === "undefined") {
-        // @ts-expect-error this is expected to not work
-        // TODO: react-hooks/immutability - flytt polyfill til modulnivå. Se fix/react-compiler-lint-regler
-        // eslint-disable-next-line react-hooks/immutability
-        Promise.withResolvers = function () {
-            let resolve, reject;
-            const promise = new Promise((res, rej) => {
-                resolve = res;
-                reject = rej;
-            });
-            return {promise, resolve, reject};
-        };
-    }
     const {prefix, path} = getPathPrefixIncludingLocale();
     onLanguageSelect(({locale: language, url}) =>
         setParams({language}).then(() => {
@@ -63,35 +48,33 @@ export default function App() {
     return (
         <Suspense fallback={<ApplicationSpinner />}>
             <BrowserRouter basename={prefix}>
-                <ValgtKategoriProvider>
-                    <Routes>
-                        <Route path={"skjema"}>
-                            <Route path="kort/:soknadId">
-                                <Route element={<SwitchSoknadType />}>
-                                    <Route path="1" element={<RedirectToStandard />} />
-                                    <Route path="2" element={<Behov />} />
-                                    <Route path="3" element={<ArbeidOgFamilie />} />
-                                    <Route path="4" element={<Inntekt />} />
-                                    <Route path="5" element={<Oppsummering />} />
-                                </Route>
+                <Routes>
+                    <Route path={"skjema"}>
+                        <Route path="kort/:soknadId">
+                            <Route element={<SwitchSoknadType />}>
+                                <Route path="1" element={<RedirectToStandard />} />
+                                <Route path="2" element={<Behov />} />
+                                <Route path="3" element={<ArbeidOgFamilie />} />
+                                <Route path="4" element={<Inntekt />} />
+                                <Route path="5" element={<Oppsummering />} />
                             </Route>
-                            <Route path=":soknadId">
-                                <Route index path="1" element={<Personopplysninger />} />
-                                <Route element={<SwitchSoknadType />}>
-                                    <Route path="2" element={<Begrunnelse />} />
-                                    <Route path="3" element={<ArbeidOgUtdanning />} />
-                                    <Route path="4" element={<Familie />} />
-                                    <Route path="5" element={<Bosituasjon />} />
-                                    <Route path="6" element={<InntektFormue />} />
-                                    <Route path="7" element={<UtgifterGjeld />} />
-                                    <Route path="8" element={<OkonomiskeOpplysningerView />} />
-                                    <Route path="9" element={<Oppsummering />} />
-                                </Route>
-                            </Route>
-                            <Route path="*" element={<IkkeFunnet />} />
                         </Route>
-                    </Routes>
-                </ValgtKategoriProvider>
+                        <Route path=":soknadId">
+                            <Route index path="1" element={<Personopplysninger />} />
+                            <Route element={<SwitchSoknadType />}>
+                                <Route path="2" element={<Begrunnelse />} />
+                                <Route path="3" element={<ArbeidOgUtdanning />} />
+                                <Route path="4" element={<Familie />} />
+                                <Route path="5" element={<Bosituasjon />} />
+                                <Route path="6" element={<InntektFormue />} />
+                                <Route path="7" element={<UtgifterGjeld />} />
+                                <Route path="8" element={<OkonomiskeOpplysningerView />} />
+                                <Route path="9" element={<Oppsummering />} />
+                            </Route>
+                        </Route>
+                        <Route path="*" element={<IkkeFunnet />} />
+                    </Route>
+                </Routes>
             </BrowserRouter>
             <div aria-hidden={"true"}>
                 <ReactQueryDevtools initialIsOpen={false} />

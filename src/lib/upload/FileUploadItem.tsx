@@ -3,7 +3,7 @@ import {BodyShort, Button, FileUpload, HStack, Loader} from "@navikt/ds-react";
 import {useMutation} from "@tanstack/react-query";
 import {useTranslations} from "next-intl";
 import {Upload} from "tus-js-client";
-import {digisosConfig} from "../../config.ts";
+import {digisosConfig} from "../config.ts";
 import {UploadStatus, ValidationCode} from "./openEventChannel.ts";
 
 interface Props {

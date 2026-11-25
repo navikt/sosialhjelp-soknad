@@ -3,7 +3,6 @@ import {KortSkjemaHeadings, SkjemaSteg} from "../../../lib/components/SkjemaSteg
 import {ApplicationSpinner} from "../../../lib/components/animasjoner/ApplicationSpinner";
 import {Alert, BodyShort, Box, VStack} from "@navikt/ds-react";
 import {useTranslation} from "react-i18next";
-import FileUploadBox from "../../../lib/components/fileupload/FileUploadBox";
 import {SkjemaStegTitle} from "../../../lib/components/SkjemaSteg/SkjemaStegTitle.tsx";
 import useSituasjon from "../../../lib/hooks/data/kort/useSituasjon.ts";
 import {useNavigate} from "react-router";
@@ -12,13 +11,12 @@ import {SkjemaStegButtons} from "../../../lib/components/SkjemaSteg/SkjemaStegBu
 import {useAnalyticsContext} from "../../../lib/providers/useAnalyticsContext.ts";
 import {useBegrunnelse} from "../../../lib/hooks/data/useBegrunnelse.tsx";
 import BehovForm, {FormValues} from "./BehovForm.tsx";
-import {useNewUploadEnabled} from "../../../lib/hooks/featureToggles/useNewUploadEnabled.ts";
 import {DokumentasjonDtoType} from "../../../generated/model";
 import {useCurrentSoknadIsKort} from "../../../lib/components/SkjemaSteg/useCurrentSoknadIsKort.tsx";
 import {useSoknadId} from "../../../lib/hooks/common/useSoknadId.ts";
 import {umamiTrack} from "../../../app/umami.ts";
-import {DocumentProvider} from "../../../lib/upload/new/DocumentContext.tsx";
-import {UploadByKategori} from "../../../lib/upload/new/UploadByKategori.tsx";
+import {DocumentProvider} from "../../../lib/upload/DocumentContext.tsx";
+import {UploadByKategori} from "../../../lib/upload/UploadByKategori.tsx";
 
 const Behov = () => {
     const {t} = useTranslation("skjema");
@@ -67,8 +65,6 @@ const Behov = () => {
         });
     };
 
-    const newUploadEnabled = useNewUploadEnabled();
-
     const contextId = `${soknadId}-${DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}-behov`;
     return (
         <SkjemaSteg>
@@ -86,31 +82,23 @@ const Behov = () => {
                         onSubmit={onSubmit}
                         hvaSokesOm={begrunnelse?.hvaSokesOm}
                     />
-                    {newUploadEnabled ? (
-                        <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
-                            <DocumentProvider contextId={contextId}>
-                                <UploadByKategori
-                                    contextId={contextId}
-                                    kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
-                                    soknadId={soknadId}
-                                    hideAlreadyUploaded
-                                    label={t("begrunnelse.kort.behov.dokumentasjon.utgifterTittel")}
-                                    description={
-                                        <BodyShort>
-                                            {t("begrunnelse.kort.behov.dokumentasjon.utgifterBeskrivelse")}
-                                        </BodyShort>
-                                    }
-                                    fileListHeadingLevel={"3"}
-                                />
-                            </DocumentProvider>
-                        </Box>
-                    ) : (
-                        <FileUploadBox
-                            sporsmal={t("begrunnelse.kort.behov.dokumentasjon.tittel")}
-                            undertekst="begrunnelse.kort.behov.dokumentasjon.beskrivelse"
-                            liste="begrunnelse.kort.behov.dokumentasjon.liste"
-                        />
-                    )}
+                    <Box borderRadius="16" padding={"space-16"} className={"bg-ax-bg-info-soft"}>
+                        <DocumentProvider contextId={contextId}>
+                            <UploadByKategori
+                                contextId={contextId}
+                                kategori={DokumentasjonDtoType.UTGIFTER_ANDRE_UTGIFTER}
+                                soknadId={soknadId}
+                                hideAlreadyUploaded
+                                label={t("begrunnelse.kort.behov.dokumentasjon.utgifterTittel")}
+                                description={
+                                    <BodyShort>
+                                        {t("begrunnelse.kort.behov.dokumentasjon.utgifterBeskrivelse")}
+                                    </BodyShort>
+                                }
+                                fileListHeadingLevel={"3"}
+                            />
+                        </DocumentProvider>
+                    </Box>
                 </VStack>
             )}
             <SkjemaStegButtons onPrevious={async () => navigate("../1")} onNext={async () => goto(3)} />

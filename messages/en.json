@@ -186,10 +186,6 @@
         "empty": "You have no payments registered from NAV in the last month.",
         "error": "Due to a system fault we have not been able to obtain information about benefits from NAV."
     },
-    "PageFlipperButtons": {
-        "neste": "Next page",
-        "forrige": "Previous page"
-    },
     "FileUploadItem": {
         "uploadFailed": "Upload failed. Please try again later.",
         "validation": {
