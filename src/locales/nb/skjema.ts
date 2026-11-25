@@ -1793,7 +1793,7 @@ export const skjema = {
                 oppsummering_kort_konto_saldo_ingen: "Ingen informasjon",
                 informasjon: {
                     tittel: "Informasjon om inntekt fra Skatteetaten",
-                    tekst: "For at vi skal kunne behandle søknaden din, trenger vi opplysninger om din inntekt. \n\nArbeidsgivere, pensjonsutbetalere og andre sender hver måned opplysninger om dine inntekter og arbeidsforhold til Skatteetaten, Statistisk sentralbyrå og Nav. Opplysningene som er registrert på deg, vises under.",
+                    tekst: "For at vi skal kunne behandle søknaden din, trenger vi opplysninger om din inntekt. Inntektsopplysningene dine hentes fra Skatteetaten.",
                 },
             },
             til: "til",
