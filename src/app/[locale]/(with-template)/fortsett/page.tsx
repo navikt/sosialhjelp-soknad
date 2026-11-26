@@ -1,5 +1,5 @@
 "use client";
-import {Heading, LinkCard, VStack} from "@navikt/ds-react";
+import {Button, Heading, LinkCard, VStack} from "@navikt/ds-react";
 import {addDays, formatDistance} from "date-fns";
 import {useTranslations} from "next-intl";
 import {redirect} from "next/navigation";
@@ -10,6 +10,7 @@ import {PabegyntSoknad} from "../../../../generated/model/pabegyntSoknad.ts";
 import {LocalizedDate} from "../../../../lib/components/LocalizedDate.tsx";
 import {getDateFnLocale} from "../../../../lib/i18n/dateFns.ts";
 import {useContextSessionInfo} from "../../../../lib/providers/useContextSessionInfo.ts";
+import {ArrowLeftIcon} from "@navikt/aksel-icons";
 
 const DAYS_BEFORE_DELETION = 14;
 
@@ -63,6 +64,16 @@ const Page = () => {
                 </VStack>
 
                 <EttersendeDokumentasjonInfo />
+
+                <Button
+                    as="a"
+                    icon={<ArrowLeftIcon />}
+                    variant="secondary"
+                    className="mt-4 lg:self-start"
+                    href="/sosialhjelp/soknad"
+                >
+                    {t("backButton")}
+                </Button>
             </VStack>
         </SoknadSide>
     );

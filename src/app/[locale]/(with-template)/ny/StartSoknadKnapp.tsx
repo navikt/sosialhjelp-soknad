@@ -57,6 +57,7 @@ const StartSoknadKnapp = () => {
             )}
 
             <Button
+                className="lg:self-start"
                 variant="primary"
                 iconPosition="right"
                 icon={isTransitioning || isPending ? <Loader aria-hidden /> : <ArrowRightIcon aria-hidden />}
