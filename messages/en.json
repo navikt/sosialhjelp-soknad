@@ -58,7 +58,8 @@
     "FortsettSoknad": {
         "title": "Your started applications",
         "cardTitle": "Last updated",
-        "cardDescription": "Will be deleted"
+        "cardDescription": "Will be deleted",
+        "backButton": "Back to the previous step"
     },
     "EttersendDokuPanel": {
         "title": "Send documentation for an application you have submitted",

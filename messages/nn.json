@@ -58,7 +58,8 @@
     "FortsettSoknad": {
         "title": "Dine påbyrja søknader",
         "cardTitle": "Sist oppdatert",
-        "cardDescription": "Blir sletta"
+        "cardDescription": "Blir sletta",
+        "backButton": "Tilbake til førre steig"
     },
     "EttersendDokuPanel": {
         "title": "Send dokumentasjon til ein søknad du har sendt inn",
