@@ -1,6 +1,7 @@
 import {InformationSquareIcon} from "@navikt/aksel-icons";
 import {BodyLong, InfoCard, Link, List} from "@navikt/ds-react";
 import {useTranslations} from "next-intl";
+import digisosConfig from "../lib/config";
 
 export const EttersendeDokumentasjonInfo = () => {
     const t = useTranslations("Components.EttersendeDokumentasjonInfo");
@@ -15,7 +16,7 @@ export const EttersendeDokumentasjonInfo = () => {
                 <List as="ol">
                     <List.Item>
                         {t.rich("li1", {
-                            link: (chunks) => <Link href="https://nav.no/sosialhjelp/innsyn">{chunks}</Link>,
+                            link: (chunks) => <Link href={digisosConfig.innsynURL}>{chunks}</Link>,
                             bold: (chunks) => <b>{chunks}</b>,
                         })}
                     </List.Item>
