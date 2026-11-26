@@ -14,9 +14,6 @@ test.describe("Session Info 403 Error", () => {
                 }),
             });
         });
-        await page.route("**/feature-toggle", async (route) => {
-            await route.fulfill({status: 200, contentType: "application/json", body: JSON.stringify({})});
-        });
 
         await page.goto("/sosialhjelp/soknad");
 
@@ -39,9 +36,6 @@ test.describe("Session Info 403 Error", () => {
                     message: "Server error",
                 }),
             });
-        });
-        await page.route("**/feature-toggle", async (route) => {
-            await route.fulfill({status: 200, contentType: "application/json", body: JSON.stringify({})});
         });
 
         await page.goto("/sosialhjelp/soknad");
@@ -72,10 +66,6 @@ test.describe("Session Info 403 Error", () => {
                 }),
             });
         });
-        await page.route("**/feature-toggle", async (route) => {
-            await route.fulfill({status: 200, contentType: "application/json", body: JSON.stringify({})});
-        });
-
         // Mock create endpoint to return 403 with SokerUnder18 error
         await page.route("**/soknad/create", async (route) => {
             await route.fulfill({
@@ -89,6 +79,9 @@ test.describe("Session Info 403 Error", () => {
         });
 
         await page.goto("/sosialhjelp/soknad/nb");
+
+        // Med ny introside sendes brukeren uten påbegynte søknader til /ny, som krever bekreftelse før start
+        await page.getByRole("checkbox", {name: /Jeg vil svare så godt jeg kan/}).check();
 
         // Click the "Start søknaden" button
         const startButton = page.getByRole("button", {name: /Start søknaden/});

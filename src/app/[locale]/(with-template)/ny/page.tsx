@@ -2,12 +2,12 @@
 import {redirect} from "next/navigation";
 import NySoknadInnhold from "./NySoknadInnhold";
 import StartSoknadKnapp from "./StartSoknadKnapp";
-import {useConfigFeatureFlags} from "../../../../lib/config";
+import {useFlag} from "../../../../featuretoggles/context";
 import {SoknadSide} from "../../../../components/SoknadSide";
 
 const Page = () => {
-    const featureToggles = useConfigFeatureFlags();
-    if (!featureToggles.nyIntroside) {
+    const nyIntroside = useFlag("sosialhjelp.soknad.nyIntroside").enabled;
+    if (!nyIntroside) {
         redirect("/");
     }
 

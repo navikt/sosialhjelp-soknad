@@ -34,10 +34,6 @@ test.beforeEach(async ({page}) => {
         });
     });
 
-    await page.route("**/feature-toggle", async (route) => {
-        await route.fulfill({status: 200, contentType: "application/json", body: JSON.stringify({})});
-    });
-
     await page.route(`**/${TEST_SOKNAD_ID}/isKort`, async (route) => {
         await route.fulfill({status: 200, contentType: "application/json", body: JSON.stringify(false)});
     });

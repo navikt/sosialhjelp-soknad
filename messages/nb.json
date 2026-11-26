@@ -186,10 +186,6 @@
         "empty": "Vi har ingen registrerte utbetalinger på deg fra NAV den siste måneden.",
         "error": "På grunn av systemfeil klarte vi ikke å hente inn informasjon om ytelser fra NAV."
     },
-    "PageFlipperButtons": {
-        "neste": "Neste side",
-        "forrige": "Forrige side"
-    },
     "FileUploadItem": {
         "uploadFailed": "Opplasting feilet. Prøv på nytt senere.",
         "validation": {
@@ -234,7 +230,7 @@
         "steg": {
             "sendt": {
                 "tittel": "Søknaden din er sendt",
-                "tekst": "Saken din er nå sendt til ditt Nav-kontor."
+                "tekst": "Søknaden din er nå sendt til ditt Nav-kontor, og du trenger ikke å gjøre noe mer akkurat nå."
             },
             "behandles": {
                 "tittel": "Søknaden din behandles",
@@ -243,7 +239,7 @@
             },
             "svar": {
                 "tittel": "Du får svar på søknaden din",
-                "tekst": "Du får beskjed når saken er behandlet og du har fått et vedtak."
+                "tekst": "Når søknaden er ferdig behandlet og vedtaket er klart, får du beskjed i din digitale postkasse (for eksempel Digipost), Altinn eller per brev."
             }
         },
         "sporsmal": {

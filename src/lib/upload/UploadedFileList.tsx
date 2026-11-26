@@ -1,7 +1,7 @@
 import {Heading, VStack} from "@navikt/ds-react";
 import {useTranslations} from "next-intl";
 import React from "react";
-import digisosConfig from "../../config.ts";
+import digisosConfig from "../config.ts";
 import FileUploadItem from "./FileUploadItem.tsx";
 import {UploadStatusMessages} from "./UploadStatusMessages.tsx";
 import {UploadState, ValidationCode} from "./openEventChannel.ts";
@@ -14,16 +14,6 @@ interface UploadedFileListProps {
     headingLevel: "2" | "3" | "4" | "5" | "6";
     onRemove: (correlationId: string) => void;
 }
-
-const createUrl = (upload: UploadState) => {
-    if (!upload.url) {
-        return undefined;
-    }
-    if (upload.url.startsWith("http")) {
-        return upload.url;
-    }
-    return `${digisosConfig.uploadBaseURL}/${upload.url}`;
-};
 
 export const UploadedFileList = ({
     uploads,
@@ -49,7 +39,7 @@ export const UploadedFileList = ({
                 {uploads.map((upload) => (
                     <FileUploadItem
                         key={upload.id}
-                        url={createUrl(upload)}
+                        url={upload.url ? `${digisosConfig.uploadBaseURL}/${upload.url}` : undefined}
                         uploadId={upload.id}
                         convertedFilename={upload.finalFilename}
                         originalFilename={upload.originalFilename}
