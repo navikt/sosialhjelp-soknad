@@ -267,6 +267,13 @@
         "SoknadHeader": {
             "title": "Application for financial assistance",
             "code": "NAV 35-18.01"
+        },
+        "EttersendeDokumentasjonInfo": {
+            "title": "Submit documentation for an application you have submitted",
+            "content": "How to submit documentation:",
+            "li1": "Go to <link><bold>Active applications</bold> on My Page for Financial Assistance</link>.",
+            "li2": "Select the application you want to submit documentation for.",
+            "li3": "Upload the documents you want to submit and click <bold>Submit</bold>."
         }
     }
 }

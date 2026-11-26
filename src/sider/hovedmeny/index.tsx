@@ -8,6 +8,7 @@ import {NySoknadPanel} from "./nySoknad/NySoknadPanel.tsx";
 import "./overrides.css";
 import {PabegynteSoknaderPanel} from "./PabegynteSoknader.tsx";
 import {redirect} from "next/navigation";
+import {EttersendeDokumentasjonInfo} from "../../components/EttersendeDokumentasjonInfo.tsx";
 
 export const Informasjon = () => {
     const nyIntroside = useFlag("sosialhjelp.soknad.nyIntroside").enabled;
@@ -20,7 +21,7 @@ export const Informasjon = () => {
 
     return nyIntroside ? (
         <SoknadSide>
-            <VStack gap={{xs: "space-24", lg: "space-32"}}>
+            <VStack gap="space-24">
                 <LinkCard data-color="accent">
                     <LinkCard.Title>
                         <LinkCard.Anchor href="/sosialhjelp/soknad/ny">{t("nySoknad")}</LinkCard.Anchor>
@@ -34,6 +35,7 @@ export const Informasjon = () => {
                     </LinkCard.Title>
                     <LinkCard.Description>{t("fortsettSoknadDescription", {count: open?.length})}</LinkCard.Description>
                 </LinkCard>
+                <EttersendeDokumentasjonInfo />
             </VStack>
         </SoknadSide>
     ) : (
