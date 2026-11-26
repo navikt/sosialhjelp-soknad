@@ -20,7 +20,7 @@ export default function KvitteringInformasjon({innsynHref}: {innsynHref: string}
                         <div className="py-2">
                             {t.rich("dokumentasjon.tekst", {
                                 dokumentasjon: (chunks) => (
-                                    <Link href={innsynHref} rel="noreferrer">
+                                    <Link inlineText href={innsynHref} rel="noreferrer">
                                         {chunks}
                                     </Link>
                                 ),
@@ -34,7 +34,11 @@ export default function KvitteringInformasjon({innsynHref}: {innsynHref: string}
                         <div className="py-2">
                             {t.rich("utbetaling.tekst", {
                                 utbetalinger: (chunks) => (
-                                    <Link href={`${digisosConfig.innsynURL}/${language}/utbetalinger`} rel="noreferrer">
+                                    <Link
+                                        inlineText
+                                        href={`${digisosConfig.innsynURL}/${language}/utbetalinger`}
+                                        rel="noreferrer"
+                                    >
                                         {chunks}
                                     </Link>
                                 ),
@@ -47,8 +51,16 @@ export default function KvitteringInformasjon({innsynHref}: {innsynHref: string}
                     <AccordionContent>
                         <div className="py-2">
                             {t.rich("sporsmal.tekst", {
-                                navKontor: (chunks) => <Link href="https://www.nav.no/sok-nav-kontor">{chunks}</Link>,
-                                telefon: (chunks) => <Link href="tel:+4755553333">{chunks}</Link>,
+                                navKontor: (chunks) => (
+                                    <Link inlineText href="https://www.nav.no/sok-nav-kontor">
+                                        {chunks}
+                                    </Link>
+                                ),
+                                telefon: (chunks) => (
+                                    <Link inlineText href="tel:+4755553333">
+                                        {chunks}
+                                    </Link>
+                                ),
                             })}
                         </div>
                     </AccordionContent>
