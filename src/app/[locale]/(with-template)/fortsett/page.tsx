@@ -41,7 +41,7 @@ const Page = () => {
                     {t("title")}
                 </Heading>
 
-                <VStack as="ul" gap={{xs: "space-24", lg: "space-32"}}>
+                <VStack as="ul" gap="space-24" className="mb-4">
                     {open?.map((soknad: PabegyntSoknad) => {
                         const {soknadId, isKort, sistOppdatert} = soknad;
 
@@ -61,9 +61,9 @@ const Page = () => {
                         );
                     })}
                 </VStack>
-            </VStack>
 
-            <EttersendeDokumentasjonInfo />
+                <EttersendeDokumentasjonInfo />
+            </VStack>
         </SoknadSide>
     );
 };

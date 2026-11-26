@@ -21,7 +21,7 @@ export const Informasjon = () => {
 
     return featureToggles.nyIntroside ? (
         <SoknadSide>
-            <VStack gap={{xs: "space-24", lg: "space-32"}}>
+            <VStack gap="space-24">
                 <LinkCard data-color="accent">
                     <LinkCard.Title>
                         <LinkCard.Anchor href="/sosialhjelp/soknad/ny">{t("nySoknad")}</LinkCard.Anchor>
@@ -35,8 +35,8 @@ export const Informasjon = () => {
                     </LinkCard.Title>
                     <LinkCard.Description>{t("fortsettSoknadDescription", {count: open?.length})}</LinkCard.Description>
                 </LinkCard>
+                <EttersendeDokumentasjonInfo />
             </VStack>
-            <EttersendeDokumentasjonInfo></EttersendeDokumentasjonInfo>
         </SoknadSide>
     ) : (
         <main aria-labelledby={"app-heading"}>
