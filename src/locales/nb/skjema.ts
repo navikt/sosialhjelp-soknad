@@ -1792,8 +1792,8 @@ export const skjema = {
                 oppsummering_kort_saldo_sporsmal: "Saldo konto:",
                 oppsummering_kort_konto_saldo_ingen: "Ingen informasjon",
                 informasjon: {
-                    tittel: "Mer infomasjon om inntekt",
-                    tekst: "For at vi skal kunne behandle søknaden din, trenger vi opplysninger om din inntekt. Inntektsopplysningene dine hentes fra Skatteetaten.",
+                    tittel: "Mer informasjon om inntekt",
+                    tekst: "Inntektsopplysningene hentes fra Skatteetaten, og er opplysninger som arbeidsgiveren din har sendt inn til Skatteetaten for denne måneden og forrige måned.",
                 },
             },
             til: "til",

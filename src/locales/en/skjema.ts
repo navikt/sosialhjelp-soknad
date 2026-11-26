@@ -1784,7 +1784,7 @@ export const skjema = {
                     "We have registered that you{ antall, plural,=0 { have not had }other {have had{ antall, plural,=1 {{en}}=2 {{to}}=3 {{tre}}=4 {{fire}}=5 {{fem}}=6 {{seks}}=7 {{sju}}=8 {{åtte}}=9 {{ni}}=10 {{ti}}=11 {{elleve}}=12 {{tolv}}other {{#}}}}} incomes.",
                 informasjon: {
                     tittel: "More information about income",
-                    tekst: "For us to process your application, we need information about your income. This information is obtained from the Tax Administration.",
+                    tekst: "The income information is retrieved from the Norwegian Tax Administration and consists of data that your employer has submitted to the Tax Administration for this month and the previous month.",
                 },
                 skatteetaten: "See details from the Tax Administration",
                 tidspunkt: "Information was obtained",
