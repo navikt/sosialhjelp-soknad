@@ -1791,6 +1791,10 @@ export const skjema = {
                 oppsummering_kort_saldo_tittel: "Opplysninger om saldo på dine brukskontoer",
                 oppsummering_kort_saldo_sporsmal: "Saldo konto:",
                 oppsummering_kort_konto_saldo_ingen: "Ingen informasjon",
+                informasjon: {
+                    tittel: "Mer informasjon om inntekt",
+                    tekst: "Inntektsopplysningene hentes fra Skatteetaten, og er opplysninger som arbeidsgiveren din har sendt inn til Skatteetaten for denne måneden og forrige måned.",
+                },
             },
             til: "til",
         },
